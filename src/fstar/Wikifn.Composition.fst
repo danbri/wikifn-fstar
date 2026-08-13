@@ -118,6 +118,36 @@ let z38115_expr (input:expr) : expr =
     EValue (VText du)
   ]
 
+let rec z14613_replace_character_set_fuel
+  (fuel:nat)
+  (input:text)
+  (old_alphabet:text)
+  (new_alphabet:text)
+  : Tot (kernel_result text) (decreases fuel) =
+  match fuel with
+  | 0 -> KErr KFuelExhausted
+  | _ ->
+      if z10008_is_empty_string old_alphabet then KOk input
+      else
+        let marker = z36070_first_available_private_use_character input in
+        bind_kernel
+          (z10075_replace_all_substrings
+            input
+            (z10901_get_first_character old_alphabet)
+            marker)
+          (fun marked_input ->
+            bind_kernel
+              (z14613_replace_character_set_fuel
+                (fuel - 1)
+                marked_input
+                (z14456_remove_first_character old_alphabet)
+                (z14456_remove_first_character new_alphabet))
+              (fun rest_replaced ->
+                z10075_replace_all_substrings
+                  rest_replaced
+                  marker
+                  (z10901_get_first_character new_alphabet)))
+
 let rec eval_with_policy (p:policy) (fuel:nat) (env:list value) (e:expr) : Tot (eval_result value) (decreases fuel) =
   match e with
   | EValue v -> EOk v
@@ -181,6 +211,22 @@ let rec eval_with_policy (p:policy) (fuel:nat) (env:list value) (e:expr) : Tot (
                    (match eval_with_policy p next env chars with
                     | EOk (VText chars_text) ->
                         EOk (VText (z14520_remove_all_characters_in_second_string input_text chars_text))
+                    | EOk _ -> EErr ETypeMismatch
+                    | EErr err -> EErr err)
+               | EOk _ -> EErr ETypeMismatch
+               | EErr err -> EErr err)
+          | FZ14613, input :: old_alphabet :: new_alphabet :: [] ->
+              (match eval_with_policy p next env input with
+               | EOk (VText input_text) ->
+                   (match eval_with_policy p next env old_alphabet with
+                    | EOk (VText old_alphabet_text) ->
+                        (match eval_with_policy p next env new_alphabet with
+                         | EOk (VText new_alphabet_text) ->
+                             (match lift_kernel (z14613_replace_character_set_fuel next input_text old_alphabet_text new_alphabet_text) with
+                              | EOk output -> EOk (VText output)
+                              | EErr err -> EErr err)
+                         | EOk _ -> EErr ETypeMismatch
+                         | EErr err -> EErr err)
                     | EOk _ -> EErr ETypeMismatch
                     | EErr err -> EErr err)
                | EOk _ -> EErr ETypeMismatch

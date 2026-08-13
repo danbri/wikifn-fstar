@@ -235,6 +235,46 @@ let (z38115_expr : expr -> expr) =
         [ECall (FZ10075, [input; EValue (VText de_les); EValue (VText des)]);
         EValue (VText de_le);
         EValue (VText du)])
+let rec (z14613_replace_character_set_fuel :
+  Prims.nat ->
+    Wikifn_Primitive_Kernel.text ->
+      Wikifn_Primitive_Kernel.text ->
+        Wikifn_Primitive_Kernel.text ->
+          Wikifn_Primitive_Kernel.text Wikifn_Primitive_Kernel.kernel_result)
+  =
+  fun fuel ->
+    fun input ->
+      fun old_alphabet ->
+        fun new_alphabet ->
+          match fuel with
+          | uu___ when uu___ = Prims.int_zero ->
+              Wikifn_Primitive_Kernel.KErr
+                Wikifn_Primitive_Kernel.KFuelExhausted
+          | uu___ ->
+              if Wikifn_Primitive_Kernel.z10008_is_empty_string old_alphabet
+              then Wikifn_Primitive_Kernel.KOk input
+              else
+                (let marker =
+                   Wikifn_Primitive_Kernel.z36070_first_available_private_use_character
+                     input in
+                 Wikifn_Primitive_Kernel.bind_kernel
+                   (Wikifn_Primitive_Kernel.z10075_replace_all_substrings
+                      input
+                      (Wikifn_Primitive_Kernel.z10901_get_first_character
+                         old_alphabet) marker)
+                   (fun marked_input ->
+                      Wikifn_Primitive_Kernel.bind_kernel
+                        (z14613_replace_character_set_fuel
+                           (fuel - Prims.int_one) marked_input
+                           (Wikifn_Primitive_Kernel.z14456_remove_first_character
+                              old_alphabet)
+                           (Wikifn_Primitive_Kernel.z14456_remove_first_character
+                              new_alphabet))
+                        (fun rest_replaced ->
+                           Wikifn_Primitive_Kernel.z10075_replace_all_substrings
+                             rest_replaced marker
+                             (Wikifn_Primitive_Kernel.z10901_get_first_character
+                                new_alphabet))))
 let rec (eval_with_policy :
   policy -> Prims.nat -> value Prims.list -> expr -> value eval_result) =
   fun p ->
@@ -330,6 +370,30 @@ let rec (eval_with_policy :
                                     (VText
                                        (Wikifn_Primitive_Kernel.z14520_remove_all_characters_in_second_string
                                           input_text chars_text))
+                              | EOk uu___1 -> EErr ETypeMismatch
+                              | EErr err -> EErr err)
+                         | EOk uu___1 -> EErr ETypeMismatch
+                         | EErr err -> EErr err)
+                    | (FZ14613, input::old_alphabet::new_alphabet::[]) ->
+                        (match eval_with_policy p next env input with
+                         | EOk (VText input_text) ->
+                             (match eval_with_policy p next env old_alphabet
+                              with
+                              | EOk (VText old_alphabet_text) ->
+                                  (match eval_with_policy p next env
+                                           new_alphabet
+                                   with
+                                   | EOk (VText new_alphabet_text) ->
+                                       (match lift_kernel
+                                                (z14613_replace_character_set_fuel
+                                                   next input_text
+                                                   old_alphabet_text
+                                                   new_alphabet_text)
+                                        with
+                                        | EOk output -> EOk (VText output)
+                                        | EErr err -> EErr err)
+                                   | EOk uu___1 -> EErr ETypeMismatch
+                                   | EErr err -> EErr err)
                               | EOk uu___1 -> EErr ETypeMismatch
                               | EErr err -> EErr err)
                          | EOk uu___1 -> EErr ETypeMismatch

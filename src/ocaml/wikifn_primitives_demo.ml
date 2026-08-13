@@ -129,8 +129,14 @@ let run_extracted_composition_cases () =
     "Remove regular spaces (Z10052) on \"a b c\""
     (Wikifn_Generated_Compositions.eval_generated_z10052 (Prims.of_int 50) (text_of_ascii "a b c"));
   run_composition_case
+    "ROT13 Latin alphabet (Z10627) on \"hello\""
+    (Wikifn_Generated_Compositions.eval_generated_z10627 (Prims.of_int 100) (text_of_ascii "hello"));
+  run_composition_case
     "Fallback if string is empty (Z11082) on empty"
     (Wikifn_Generated_Compositions.eval_generated_z11082 (Prims.of_int 50) [] (text_of_ascii "fallback"));
+  run_composition_case
+    "Turn to superscript (Z19612) on \"x2+y3\""
+    (Wikifn_Generated_Compositions.eval_generated_z19612 (Prims.of_int 120) (text_of_ascii "x2+y3"));
   run_composition_case
     "Decimal comma to point (Z21679) on \"3,14\""
     (Wikifn_Generated_Compositions.eval_generated_z21679 (Prims.of_int 50) (text_of_ascii "3,14"));

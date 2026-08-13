@@ -19,12 +19,12 @@ const primitiveGrounding = [
   ["Z10008", "string is empty", "fstar_checked_kernel", "Wikifn.Primitive.Kernel", "Checked as z10008_is_empty_string over codepoint-list text"],
   ["Z10075", "replace all substrings", "fstar_checked_kernel", "Wikifn.Primitive.Kernel", "Checked as z10075_replace_all_substrings over codepoint-list text"],
   ["Z10901", "get first character of string", "fstar_checked_kernel", "Wikifn.Primitive.Kernel", "Checked as z10901_get_first_character over codepoint-list text"],
-  ["Z11040", "string length", "fstar_spec_candidate", "Wikifn.Primitive.Kernel", "Specification exists; Wikifunctions argument mapping still pending"],
+  ["Z11040", "string length", "fstar_checked_kernel", "Wikifn.Primitive.Frontier", "Checked as z11040_string_length over codepoint-list text; canonical ZObject adapter still pending"],
   ["Z14124", "string of characters from unicode range", "fstar_checked_kernel", "Wikifn.Primitive.Kernel", "Checked as z14124_string_of_characters_from_unicode_range"],
   ["Z14456", "remove first character", "fstar_checked_kernel", "Wikifn.Primitive.Kernel", "Checked as z14456_remove_first_character over codepoint-list text"],
   ["Z14520", "remove all characters in second string", "fstar_checked_kernel", "Wikifn.Primitive.Kernel", "Checked as z14520_remove_all_characters_in_second_string"],
-  ["Z10000", "string concat", "fstar_spec_candidate", "Wikifn.Primitive.Kernel", "Specification exists; Wikifunctions argument mapping still pending"],
-  ["Z10615", "string starts with", "fstar_spec_candidate", "Wikifn.Primitive.Kernel", "Specification exists; Wikifunctions argument mapping still pending"]
+  ["Z10000", "join two strings", "fstar_checked_kernel", "Wikifn.Primitive.Frontier", "Checked as z10000_join_two_strings over codepoint-list text; canonical ZObject adapter still pending"],
+  ["Z10615", "string starts with", "fstar_checked_kernel", "Wikifn.Primitive.Frontier", "Checked as z10615_string_starts_with over codepoint-list text; canonical ZObject adapter still pending"]
 ];
 
 export function defaultSqliteDbPath() {

@@ -4,6 +4,7 @@ Current checked primitive modules:
 
 - `src/fstar/Wikifn.Primitives.fst`: small toy natural-number primitives used by `eval-example`.
 - `src/fstar/Wikifn.Primitive.Kernel.fst`: first reusable kernel specs for natural numbers and strings-as-codepoint-lists.
+- `src/fstar/Wikifn.Primitive.Frontier.fst`: ZID-named wrappers that ground selected high-reuse string primitives against the kernel.
 
 The kernel currently covers:
 
@@ -46,9 +47,9 @@ Immediate Wikifunctions candidates:
 - `Z10615`: string starts with
 - `Z802`: If
 
-`Z10008`, `Z10075`, `Z10901`, `Z14124`, `Z14456`, `Z14520`, and `Z802` now have checked F* kernel definitions over codepoint-list text. They still need adapter work before an extracted interpreter can run real canonical ZObjects directly.
+`Z10008`, `Z10075`, `Z10901`, `Z14124`, `Z14456`, `Z14520`, and `Z802` now have checked F* kernel definitions over codepoint-list text. `Z10000`, `Z10615`, and `Z11040` now have checked frontier wrappers against those kernel operations. They still need adapter work before an extracted interpreter can run real canonical ZObjects directly.
 
-`Z10000`, `Z10615`, `Z11040`, and `Z13522` remain lower-priority spec candidates already represented by reusable kernel operations, but not yet registered as ZID adapters.
+`Z13522` remains a lower-priority spec candidate already represented by a reusable kernel operation, but not yet registered as a ZID adapter.
 
 ## Direct Specialization Targets
 

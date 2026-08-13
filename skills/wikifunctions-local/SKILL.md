@@ -110,23 +110,23 @@ make fstar-browser-demo
 
 `make fstar-js-demo` and `make fstar-browser-demo` verify/extract `src/fstar/Wikifn.Primitive.Kernel.fst`, `src/fstar/Wikifn.Primitives.fst`, `src/fstar/Wikifn.Composition.fst`, `src/fstar/Wikifn.Generated.Compositions.fst`, and `src/fstar/Wikifn.Specialized.Compositions.fst` to OCaml, compile repo-owned OCaml runners, and invoke `js_of_ocaml`. This is not yet a general runtime canonical-ZObject interpreter.
 
-`Wikifn.Generated.Compositions` is the selected-pinned-composition interpreter path. `Wikifn.Specialized.Compositions` is the direct-function path for selected closed compositions and should be preferred when demonstrating the C-priority agenda.
+`Wikifn.Generated.Compositions` is the selected-pinned-composition interpreter path. `Wikifn.Specialized.Compositions` is the direct-function path for selected closed compositions. `Wikifn.Composition` includes a checked `Z14613` fast path, so generated IR for selected long character-set transforms can run in the web demo.
 
 `Z36070` is not primarily blocked by a Python/JavaScript-only dependency. Its direct frontier is the string/control layer: `Z10008`, `Z10075`, `Z10901`, `Z14124`, `Z14456`, `Z14520`, recursive `Z14613`, and `Z802`. The repo has checked high-level F* kernel definitions for those direct string/control operations and a selected-composition F* interpreter, but still lacks canonical-ZObject adapters and a general implementation-selection policy over pinned worlds.
 
 As of the first selected-composition specialization pass, the extracted Node/browser artifacts run both F* IR interpreter cases and direct specialized cases for:
 
 - `Z10052`: remove regular spaces
-- `Z10627`: ROT13, direct specialized demo only
+- `Z10627`: ROT13
 - `Z11082`: fallback if string is empty
-- `Z19612`: turn to superscript, direct specialized demo only
+- `Z19612`: turn to superscript
 - `Z21679`: convert decimal string from comma to point
 - `Z38114`: replace "de les" with "des" and "de le" with "du"
 - `Z22294`: Devanagari digits to Arabic digits
 - `Z22649`: Arabic numerals to Devanagari numerals
 - `Z27053`: digits to subscript
 
-Long-alphabet generated-IR cases such as `Z10627` and `Z19612` are representable but currently too slow in the simple extracted interpreter for the web demo. Use their direct specialized F* functions when demonstrating the C-priority path, and record this as input to smarter-interpreter work.
+The `Z14613` fast path is a direct F* implementation of selected string-transform semantics. Do not claim a full equivalence proof against every expansion of recursive `Z36070` until such a proof exists.
 
 Keep web/UI text label-first. Use ZIDs as provenance after the human-readable function name.
 

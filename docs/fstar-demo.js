@@ -53,12 +53,22 @@
     "Arabic numerals to Devanagari numerals (Z22649) on \"123\"": {
       task: "Arabic numerals to Devanagari numerals",
       input: "123",
-      source: "generated F* IR: Z22649 -> Z22653 -> Z14613"
+      source: "generated F* IR: Z22649 -> Z22653 -> Z14613 fast path"
     },
     "Digits to subscript (Z27053) on \"H2O\"": {
       task: "Digits to subscript",
       input: "H2O",
-      source: "generated F* IR: Z27053 -> Z27216 -> Z14613"
+      source: "generated F* IR: Z27053 -> Z27216 -> Z14613 fast path"
+    },
+    "ROT13 Latin alphabet (Z10627) on \"hello\"": {
+      task: "ROT13 Latin alphabet",
+      input: "hello",
+      source: "generated F* IR: Z10627 -> Z21749 -> Z14613 fast path"
+    },
+    "Turn to superscript (Z19612) on \"x2+y3\"": {
+      task: "Turn to superscript",
+      input: "x2+y3",
+      source: "generated F* IR: Z19612 -> Z22828 -> Z14613 fast path"
     },
     "Specialized F* remove regular spaces (Z10052) on \"a b c\"": {
       task: "Remove regular spaces",

@@ -53,9 +53,9 @@
           arbitrary canonical ZObject JSON at runtime.
         </p>
         <p>
-          Long alphabet transforms such as ROT13 and superscript are shown through the
-          direct specialized path. The generated-IR interpreter can represent them, but
-          the current simple interpreter is too slow for those cases in the browser demo.
+          The interpreter now has a checked fast path for <code>Z14613</code>
+          character-set replacement, so generated IR for ROT13, superscript,
+          script conversion, and subscript examples runs in the browser demo.
         </p>
         <p>
           The table below is populated from the browser artifact generated from F*.
@@ -94,7 +94,7 @@
               <td>ROT13 Latin alphabet</td>
               <td><code>Z10627</code> via <code>Z21749</code></td>
               <td><code>hello</code></td>
-              <td><code>uryyb</code>, through direct specialization</td>
+              <td><code>uryyb</code>, through generated IR and direct specialization</td>
             </tr>
             <tr>
               <td>Fallback if string is empty</td>
@@ -106,7 +106,7 @@
               <td>Turn to superscript</td>
               <td><code>Z19612</code> via <code>Z22828</code></td>
               <td><code>x2+y3</code></td>
-              <td><code>ˣ²⁺ʸ³</code>, through direct specialization</td>
+              <td><code>ˣ²⁺ʸ³</code>, through generated IR and direct specialization</td>
             </tr>
             <tr>
               <td>Decimal comma to point</td>
@@ -146,6 +146,8 @@ node docs/generated/wikifn_primitives_demo.cjs</code></pre>
         <pre><code>make fstar-browser-demo</code></pre>
         <p>Representative output:</p>
         <pre><code>{"case":"Z782 is_zero(0)","result":{"ok":true,"value":{"type":"Z40","value":true}}}
+{"case":"ROT13 Latin alphabet (Z10627) on \"hello\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[117,114,121,121,98],"text":"uryyb","ascii":"uryyb"}}}
+{"case":"Turn to superscript (Z19612) on \"x2+y3\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[739,178,8314,696,179],"text":"ˣ²⁺ʸ³","ascii":""}}}
 {"case":"Arabic numerals to Devanagari numerals (Z22649) on \"123\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[2407,2408,2409],"text":"१२३","ascii":""}}}
 {"case":"Specialized F* ROT13 Latin alphabet (Z10627) on \"hello\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[117,114,121,121,98],"text":"uryyb","ascii":"uryyb"}}}
 {"case":"Specialized F* turn to superscript (Z19612) on \"x2+y3\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[739,178,8314,696,179],"text":"ˣ²⁺ʸ³","ascii":""}}}
