@@ -39,8 +39,8 @@ Checked locally on 2026-08-13 in the `fstar` opam switch:
 What works in this repo today:
 
 - The F* model and primitive kernel are checked by `make fstar-check`.
-- F* extracts `Wikifn.Primitive.Kernel`, `Wikifn.Primitives`, `Wikifn.Composition`, and `Wikifn.Generated.Compositions` to OCaml with `--codegen OCaml`.
-- The extracted JS runner evaluates primitive cases, selected F* IR composition cases, and direct specialized F* functions for `Z10052`, `Z21679`, `Z38114`, and `Z22294`.
+- F* extracts `Wikifn.Primitive.Kernel`, `Wikifn.Primitives`, `Wikifn.Composition`, `Wikifn.Generated.Compositions`, and `Wikifn.Specialized.Compositions` to OCaml with `--codegen OCaml`.
+- The extracted JS runner evaluates primitive cases, selected F* IR composition cases, and direct specialized F* functions for selected string/control functions including `Z10052`, `Z10627`, `Z11082`, `Z19612`, `Z21679`, `Z22294`, `Z22649`, `Z27053`, and `Z38114`.
 
 What now works as a repo command:
 
@@ -58,25 +58,20 @@ make fstar-browser-demo
 
 `Wikifn.Generated.Compositions` is the selected-pinned-composition interpreter path: local cache objects become generated F* IR, then the extracted F* interpreter evaluates the IR. `Wikifn.Specialized.Compositions` is the C-priority path: selected closed composition paths are lowered into direct F* functions over the checked primitive kernel.
 
+The long-alphabet `Z14613` examples are intentionally run only through the direct specialized path in the browser/CLI demo. The generated IR can represent them, but the current simple interpreter is too slow for those cases; that is a concrete input to the smarter-interpreter work.
+
 `make fstar-browser-demo` uses the same extracted F* primitive module with a different OCaml runner and a tiny JavaScript output stub. The stub only appends JSON lines to the page; the primitive computation is still from extracted F*. The OCaml bytecode link uses `-no-check-prims` because `wikifn_publish` is supplied as a `js_of_ocaml` runtime primitive.
 
 The browser artifact was checked under Node with a minimal DOM shim (`document.getElementById("fstar-extraction-output")`, `TextDecoder`, and `TextEncoder`). It appended the same JSON result lines to the target element.
 
-The generated JavaScript prints:
+The generated JavaScript currently prints 20 JSON lines. Representative lines:
 
 ```json
 {"case":"Z782 is_zero(0)","result":{"ok":true,"value":{"type":"Z40","value":true}}}
-{"case":"Z783 successor(2)","result":{"ok":true,"value":{"type":"Z10","value":"3"}}}
-{"case":"Z784 predecessor(2)","result":{"ok":true,"value":{"type":"Z10","value":"1"}}}
-{"case":"Z784 predecessor(0)","result":{"ok":false,"error":"underflow"}}
-{"case":"Remove regular spaces (Z10052) on \"a b c\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[97,98,99],"ascii":"abc"}}}
-{"case":"Decimal comma to point (Z21679) on \"3,14\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[51,46,49,52],"ascii":"3.14"}}}
-{"case":"French contractions (Z38114) on \"de les amis et de le chat\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[100,101,115,32,97,109,105,115,32,101,116,32,100,117,32,99,104,97,116],"ascii":"des amis et du chat"}}}
-{"case":"Devanagari digits to Arabic digits (Z22294) on codepoints [2407,2408,2409]","result":{"ok":true,"value":{"type":"Z6","codepoints":[49,50,51],"ascii":"123"}}}
-{"case":"Specialized F* remove regular spaces (Z10052) on \"a b c\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[97,98,99],"ascii":"abc"}}}
-{"case":"Specialized F* decimal comma to point (Z21679) on \"3,14\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[51,46,49,52],"ascii":"3.14"}}}
-{"case":"Specialized F* French contractions (Z38114) on \"de les amis et de le chat\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[100,101,115,32,97,109,105,115,32,101,116,32,100,117,32,99,104,97,116],"ascii":"des amis et du chat"}}}
-{"case":"Specialized F* Devanagari digits to Arabic digits (Z22294) on codepoints [2407,2408,2409]","result":{"ok":true,"value":{"type":"Z6","codepoints":[49,50,51],"ascii":"123"}}}
+{"case":"Arabic numerals to Devanagari numerals (Z22649) on \"123\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[2407,2408,2409],"text":"१२३","ascii":""}}}
+{"case":"Specialized F* ROT13 Latin alphabet (Z10627) on \"hello\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[117,114,121,121,98],"text":"uryyb","ascii":"uryyb"}}}
+{"case":"Specialized F* turn to superscript (Z19612) on \"x2+y3\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[739,178,8314,696,179],"text":"ˣ²⁺ʸ³","ascii":""}}}
+{"case":"Specialized F* digits to subscript (Z27053) on \"H2O\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[72,8322,79],"text":"H₂O","ascii":"HO"}}}
 ```
 
 Learning from the first failed path: `fstar.exe --ocamlc` made a bytecode executable, but the generated JS failed on `caml_thread_initialize not implemented`. The working path links only the small required F* `Prims.cmo` and passes `+zarith_stubs_js/biginteger.js +zarith_stubs_js/runtime.js` to `js_of_ocaml`.

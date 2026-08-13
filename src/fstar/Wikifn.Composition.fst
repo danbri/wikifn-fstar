@@ -11,9 +11,14 @@ type function_id =
   | FZ14456
   | FZ14520
   | FZ10052
+  | FZ10627
+  | FZ11082
   | FZ14613
+  | FZ19612
   | FZ21679
   | FZ22294
+  | FZ22649
+  | FZ27053
   | FZ38114
   | FInternalFreshPrivateUse
 

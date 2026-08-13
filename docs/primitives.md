@@ -50,21 +50,28 @@ Immediate Wikifunctions candidates:
 
 `Z10000`, `Z10615`, `Z11040`, and `Z13522` remain lower-priority spec candidates already represented by reusable kernel operations, but not yet registered as ZID adapters.
 
-## Next Direct Specialization Targets
+## Direct Specialization Targets
 
 These are good follow-ons for the C-priority path: generate or hand-lower selected closed composition paths into direct F* functions, then extract them through OCaml/JavaScript before attempting a general compiler.
 
+Implemented direct specializations:
+
+| ZID | English label | Kernel coverage | Demo value |
+| --- | --- | --- | --- |
+| `Z10627` | ROT13, Latin alphabet | Covered through `Z14613` character-set replacement | Recognizable example: `hello -> uryyb`. |
+| `Z11082` | fallback if string is empty | Covered by `Z802` and `Z10008` | Demonstrates control flow, not just replacement. |
+| `Z19612` | turn to superscript | Covered through `Z14613` character-set replacement | Readable formatting example: `x2+y3 -> ˣ²⁺ʸ³`. |
+| `Z22649` | Arabic numerals to Devanagari numerals | Covered through `Z14613` character-set replacement | Shows round-trip script conversion with existing `Z22294`. |
+| `Z27053` | convert digits to lower indices | Covered through `Z14613` character-set replacement | Useful chemistry-style example: `H2O -> H₂O`. |
+
+Good remaining candidates:
+
 | Priority | ZID | English label | Kernel coverage | Blocker | Demo value |
 | ---: | --- | --- | --- | --- | --- |
-| 1 | `Z10627` | ROT13, Latin alphabet | Covered through `Z14613` character-set replacement | Add selected composition/constants to generated and specialized paths | Recognizable example: `hello -> uryyb`. |
-| 2 | `Z19612` | turn to superscript | Covered through `Z14613` character-set replacement | Add superscript alphabet constants and Unicode display checks | Readable formatting example: `x2 + y3 -> x² + y³`. |
-| 3 | `Z27053` | convert digits to lower indices | Covered through `Z14613` character-set replacement | Add subscript constants and Unicode display checks | Useful chemistry-style example: `H2O -> H₂O`. |
-| 4 | `Z15838` | ASCII Braille encode | Covered through `Z14613` character-set replacement | Add Braille constants and browser display checks | Strong visual Unicode demo. |
-| 5 | `Z22649` | Arabic numerals to Devanagari numerals | Covered through `Z14613` character-set replacement | Add as mirror of existing `Z22294` path | Shows round-trip script conversion with the same verified substrate. |
-| 6 | `Z10888` / `Z10891` | Hebrew normal/final form conversion | Covered through `Z14613` character-set replacement | Handle right-to-left rendering carefully on the site | Good internationalization example beyond digit scripts. |
-| 7 | `Z11082` | fallback if string is empty | Covered by `Z802` and `Z10008` | Add a direct branch specialization and two examples | Demonstrates control flow, not just replacement. |
-| 8 | `Z15175` | join two strings with separator | Partial: kernel has concat and starts-with | Register `Z10000` and `Z10615`; confirm separator semantics | Good readable text-composition demo after string adapters land. |
-| 9 | `Z28209` | expand condensed electron configuration | Mostly covered by repeated `Z10075` replacements | Inspect exact scientific strings and constants | Shows domain text transformation rather than toy strings. |
+| 1 | `Z15838` | ASCII Braille encode | Covered through `Z14613` | Confirm direction from cached tests and browser display | Strong visual Unicode demo. |
+| 2 | `Z10888` / `Z10891` | Hebrew normal/final form conversion | Covered through `Z14613` character-set replacement | Handle right-to-left rendering carefully on the site | Good internationalization example beyond digit scripts. |
+| 3 | `Z15175` | join two strings with separator | Partial: kernel has concat and starts-with | Register `Z10000` and `Z10615`; confirm separator semantics | Good readable text-composition demo after string adapters land. |
+| 4 | `Z28209` | expand condensed electron configuration | Mostly covered by repeated `Z10075` replacements | Inspect exact scientific strings and constants | Shows domain text transformation rather than toy strings. |
 
 Other good frontier-expansion candidates from the local dump, ordered by usefulness in composition graphs:
 

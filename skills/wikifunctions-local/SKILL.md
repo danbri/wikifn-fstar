@@ -117,9 +117,16 @@ make fstar-browser-demo
 As of the first selected-composition specialization pass, the extracted Node/browser artifacts run both F* IR interpreter cases and direct specialized cases for:
 
 - `Z10052`: remove regular spaces
+- `Z10627`: ROT13, direct specialized demo only
+- `Z11082`: fallback if string is empty
+- `Z19612`: turn to superscript, direct specialized demo only
 - `Z21679`: convert decimal string from comma to point
 - `Z38114`: replace "de les" with "des" and "de le" with "du"
 - `Z22294`: Devanagari digits to Arabic digits
+- `Z22649`: Arabic numerals to Devanagari numerals
+- `Z27053`: digits to subscript
+
+Long-alphabet generated-IR cases such as `Z10627` and `Z19612` are representable but currently too slow in the simple extracted interpreter for the web demo. Use their direct specialized F* functions when demonstrating the C-priority path, and record this as input to smarter-interpreter work.
 
 Keep web/UI text label-first. Use ZIDs as provenance after the human-readable function name.
 

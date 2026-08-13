@@ -36,6 +36,30 @@ let json_escape s =
 let show_codepoints text =
   "[" ^ String.concat "," (List.map Prims.to_string text) ^ "]"
 
+let add_utf8_codepoint buffer codepoint =
+  let code = int_of_string (Prims.to_string codepoint) in
+  let code = if code < 0 || code > 0x10ffff then 0xfffd else code in
+  if code <= 0x7f then
+    Buffer.add_char buffer (Char.chr code)
+  else if code <= 0x7ff then begin
+    Buffer.add_char buffer (Char.chr (0xc0 lor (code lsr 6)));
+    Buffer.add_char buffer (Char.chr (0x80 lor (code land 0x3f)))
+  end else if code <= 0xffff then begin
+    Buffer.add_char buffer (Char.chr (0xe0 lor (code lsr 12)));
+    Buffer.add_char buffer (Char.chr (0x80 lor ((code lsr 6) land 0x3f)));
+    Buffer.add_char buffer (Char.chr (0x80 lor (code land 0x3f)))
+  end else begin
+    Buffer.add_char buffer (Char.chr (0xf0 lor (code lsr 18)));
+    Buffer.add_char buffer (Char.chr (0x80 lor ((code lsr 12) land 0x3f)));
+    Buffer.add_char buffer (Char.chr (0x80 lor ((code lsr 6) land 0x3f)));
+    Buffer.add_char buffer (Char.chr (0x80 lor (code land 0x3f)))
+  end
+
+let show_text text =
+  let buffer = Buffer.create (List.length text) in
+  List.iter (add_utf8_codepoint buffer) text;
+  Buffer.contents buffer
+
 let show_ascii text =
   let buffer = Buffer.create (List.length text) in
   List.iter
@@ -64,8 +88,9 @@ let show_composition_error = function
       "primitive_" ^ show_kernel_error error
 
 let show_text_value text =
-  Printf.sprintf {|{"type":"Z6","codepoints":%s,"ascii":"%s"}|}
+  Printf.sprintf {|{"type":"Z6","codepoints":%s,"text":"%s","ascii":"%s"}|}
     (show_codepoints text)
+    (json_escape (show_text text))
     (json_escape (show_ascii text))
 
 let show_composition_value = function
@@ -107,6 +132,9 @@ let run_extracted_composition_cases () =
     "Remove regular spaces (Z10052) on \"a b c\""
     (Wikifn_Generated_Compositions.eval_generated_z10052 (Prims.of_int 50) (text_of_ascii "a b c"));
   run_composition_case
+    "Fallback if string is empty (Z11082) on empty"
+    (Wikifn_Generated_Compositions.eval_generated_z11082 (Prims.of_int 50) [] (text_of_ascii "fallback"));
+  run_composition_case
     "Decimal comma to point (Z21679) on \"3,14\""
     (Wikifn_Generated_Compositions.eval_generated_z21679 (Prims.of_int 50) (text_of_ascii "3,14"));
   run_composition_case
@@ -116,12 +144,27 @@ let run_extracted_composition_cases () =
     "Devanagari digits to Arabic digits (Z22294) on codepoints [2407,2408,2409]"
     (Wikifn_Generated_Compositions.eval_generated_z22294
        (Prims.of_int 500)
-       [Prims.of_int 2407; Prims.of_int 2408; Prims.of_int 2409])
+       [Prims.of_int 2407; Prims.of_int 2408; Prims.of_int 2409]);
+  run_composition_case
+    "Arabic numerals to Devanagari numerals (Z22649) on \"123\""
+    (Wikifn_Generated_Compositions.eval_generated_z22649 (Prims.of_int 500) (text_of_ascii "123"));
+  run_composition_case
+    "Digits to subscript (Z27053) on \"H2O\""
+    (Wikifn_Generated_Compositions.eval_generated_z27053 (Prims.of_int 500) (text_of_ascii "H2O"))
 
 let run_specialized_composition_cases () =
   run_specialized_case
     "Specialized F* remove regular spaces (Z10052) on \"a b c\""
     (Wikifn_Specialized_Compositions.z10052_remove_regular_spaces (text_of_ascii "a b c"));
+  run_specialized_case
+    "Specialized F* ROT13 Latin alphabet (Z10627) on \"hello\""
+    (Wikifn_Specialized_Compositions.z10627_rot13_latin_alphabet (Prims.of_int 80) (text_of_ascii "hello"));
+  run_specialized_case
+    "Specialized F* fallback if string is empty (Z11082) on empty"
+    (Wikifn_Specialized_Compositions.z11082_fallback_if_string_is_empty [] (text_of_ascii "fallback"));
+  run_specialized_case
+    "Specialized F* turn to superscript (Z19612) on \"x2+y3\""
+    (Wikifn_Specialized_Compositions.z19612_turn_to_superscript (Prims.of_int 100) (text_of_ascii "x2+y3"));
   run_specialized_case
     "Specialized F* decimal comma to point (Z21679) on \"3,14\""
     (Wikifn_Specialized_Compositions.z21679_decimal_comma_to_point (text_of_ascii "3,14"));
@@ -132,7 +175,17 @@ let run_specialized_composition_cases () =
     "Specialized F* Devanagari digits to Arabic digits (Z22294) on codepoints [2407,2408,2409]"
     (Wikifn_Specialized_Compositions.z22294_devanagari_digits_to_arabic_digits
        (Prims.of_int 20)
-       [Prims.of_int 2407; Prims.of_int 2408; Prims.of_int 2409])
+       [Prims.of_int 2407; Prims.of_int 2408; Prims.of_int 2409]);
+  run_specialized_case
+    "Specialized F* Arabic numerals to Devanagari numerals (Z22649) on \"123\""
+    (Wikifn_Specialized_Compositions.z22649_arabic_numerals_to_devanagari_numerals
+       (Prims.of_int 20)
+       (text_of_ascii "123"));
+  run_specialized_case
+    "Specialized F* digits to subscript (Z27053) on \"H2O\""
+    (Wikifn_Specialized_Compositions.z27053_digits_to_subscript
+       (Prims.of_int 20)
+       (text_of_ascii "H2O"))
 
 let () =
   let open Wikifn_Primitives in

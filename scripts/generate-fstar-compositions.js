@@ -9,9 +9,14 @@ const outPath = process.env.WIKIFN_GENERATED_FSTAR ?? path.join(root, "src", "fs
 
 const selected = [
   { functionZid: "Z10052", implementationZid: "Z10077", stem: "z10052" },
+  { functionZid: "Z10627", implementationZid: "Z21749", stem: "z10627" },
+  { functionZid: "Z11082", implementationZid: "Z31951", stem: "z11082" },
   { functionZid: "Z14613", implementationZid: "Z36070", stem: "z14613" },
+  { functionZid: "Z19612", implementationZid: "Z22828", stem: "z19612" },
   { functionZid: "Z21679", implementationZid: "Z21681", stem: "z21679" },
   { functionZid: "Z22294", implementationZid: "Z22295", stem: "z22294" },
+  { functionZid: "Z22649", implementationZid: "Z22653", stem: "z22649" },
+  { functionZid: "Z27053", implementationZid: "Z27216", stem: "z27053" },
   { functionZid: "Z38114", implementationZid: "Z38115", stem: "z38114" }
 ];
 
@@ -53,13 +58,16 @@ async function main() {
     );
   }
 
-  const wrappers = [
-    `let eval_generated_z10052 (fuel:nat) (input:text) : Tot (eval_result value) =\n  eval_with_policy generated_policy fuel [] (ECall FZ10052 [EValue (VText input)])`,
-    `let eval_generated_z14613 (fuel:nat) (input:text) (old_alphabet:text) (new_alphabet:text) : Tot (eval_result value) =\n  eval_with_policy generated_policy fuel [] (ECall FZ14613 [EValue (VText input); EValue (VText old_alphabet); EValue (VText new_alphabet)])`,
-    `let eval_generated_z21679 (fuel:nat) (input:text) : Tot (eval_result value) =\n  eval_with_policy generated_policy fuel [] (ECall FZ21679 [EValue (VText input)])`,
-    `let eval_generated_z22294 (fuel:nat) (input:text) : Tot (eval_result value) =\n  eval_with_policy generated_policy fuel [] (ECall FZ22294 [EValue (VText input)])`,
-    `let eval_generated_z38114 (fuel:nat) (input:text) : Tot (eval_result value) =\n  eval_with_policy generated_policy fuel [] (ECall FZ38114 [EValue (VText input)])`
-  ];
+  const wrappers = [];
+  for (const entry of selected) {
+    const args = await functionArgs(entry.functionZid);
+    const params = args.map((_arg, index) => `(arg${index}:text)`).join(" ");
+    const callArgs = args.map((_arg, index) => `EValue (VText arg${index})`).join("; ");
+    wrappers.push(
+      `let eval_generated_${entry.stem} (fuel:nat) ${params} : Tot (eval_result value) =\n` +
+      `  eval_with_policy generated_policy fuel [] (ECall F${entry.functionZid} [${callArgs}])`
+    );
+  }
 
   const source = [
     "module Wikifn.Generated.Compositions",

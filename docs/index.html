@@ -53,6 +53,11 @@
           arbitrary canonical ZObject JSON at runtime.
         </p>
         <p>
+          Long alphabet transforms such as ROT13 and superscript are shown through the
+          direct specialized path. The generated-IR interpreter can represent them, but
+          the current simple interpreter is too slow for those cases in the browser demo.
+        </p>
+        <p>
           The table below is populated from the browser artifact generated from F*.
           If the artifact fails to run, the table stays empty and the raw output below
           shows the failure boundary.
@@ -86,6 +91,24 @@
               <td><code>abc</code>, through generated IR and direct specialization</td>
             </tr>
             <tr>
+              <td>ROT13 Latin alphabet</td>
+              <td><code>Z10627</code> via <code>Z21749</code></td>
+              <td><code>hello</code></td>
+              <td><code>uryyb</code>, through direct specialization</td>
+            </tr>
+            <tr>
+              <td>Fallback if string is empty</td>
+              <td><code>Z11082</code> via <code>Z31951</code></td>
+              <td><code>empty</code>, <code>fallback</code></td>
+              <td><code>fallback</code>, through generated IR and direct specialization</td>
+            </tr>
+            <tr>
+              <td>Turn to superscript</td>
+              <td><code>Z19612</code> via <code>Z22828</code></td>
+              <td><code>x2+y3</code></td>
+              <td><code>ˣ²⁺ʸ³</code>, through direct specialization</td>
+            </tr>
+            <tr>
               <td>Decimal comma to point</td>
               <td><code>Z21679</code> via <code>Z21681</code></td>
               <td><code>3,14</code></td>
@@ -103,25 +126,30 @@
               <td><code>[2407,2408,2409]</code></td>
               <td><code>123</code>, through generated IR and direct specialization</td>
             </tr>
+            <tr>
+              <td>Arabic numerals to Devanagari numerals</td>
+              <td><code>Z22649</code> via <code>Z22653</code></td>
+              <td><code>123</code></td>
+              <td><code>१२३</code>, through generated IR and direct specialization</td>
+            </tr>
+            <tr>
+              <td>Digits to subscript</td>
+              <td><code>Z27053</code> via <code>Z27216</code></td>
+              <td><code>H2O</code></td>
+              <td><code>H₂O</code>, through generated IR and direct specialization</td>
+            </tr>
           </tbody>
         </table>
         <pre><code>make fstar-js-demo
 node docs/generated/wikifn_primitives_demo.cjs</code></pre>
         <p>Browser-targeted artifact:</p>
         <pre><code>make fstar-browser-demo</code></pre>
-        <p>Expected output:</p>
+        <p>Representative output:</p>
         <pre><code>{"case":"Z782 is_zero(0)","result":{"ok":true,"value":{"type":"Z40","value":true}}}
-{"case":"Z783 successor(2)","result":{"ok":true,"value":{"type":"Z10","value":"3"}}}
-{"case":"Z784 predecessor(2)","result":{"ok":true,"value":{"type":"Z10","value":"1"}}}
-{"case":"Z784 predecessor(0)","result":{"ok":false,"error":"underflow"}}
-{"case":"Remove regular spaces (Z10052) on \"a b c\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[97,98,99],"ascii":"abc"}}}
-{"case":"Decimal comma to point (Z21679) on \"3,14\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[51,46,49,52],"ascii":"3.14"}}}
-{"case":"French contractions (Z38114) on \"de les amis et de le chat\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[100,101,115,32,97,109,105,115,32,101,116,32,100,117,32,99,104,97,116],"ascii":"des amis et du chat"}}}
-{"case":"Devanagari digits to Arabic digits (Z22294) on codepoints [2407,2408,2409]","result":{"ok":true,"value":{"type":"Z6","codepoints":[49,50,51],"ascii":"123"}}}
-{"case":"Specialized F* remove regular spaces (Z10052) on \"a b c\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[97,98,99],"ascii":"abc"}}}
-{"case":"Specialized F* decimal comma to point (Z21679) on \"3,14\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[51,46,49,52],"ascii":"3.14"}}}
-{"case":"Specialized F* French contractions (Z38114) on \"de les amis et de le chat\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[100,101,115,32,97,109,105,115,32,101,116,32,100,117,32,99,104,97,116],"ascii":"des amis et du chat"}}}
-{"case":"Specialized F* Devanagari digits to Arabic digits (Z22294) on codepoints [2407,2408,2409]","result":{"ok":true,"value":{"type":"Z6","codepoints":[49,50,51],"ascii":"123"}}}</code></pre>
+{"case":"Arabic numerals to Devanagari numerals (Z22649) on \"123\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[2407,2408,2409],"text":"१२३","ascii":""}}}
+{"case":"Specialized F* ROT13 Latin alphabet (Z10627) on \"hello\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[117,114,121,121,98],"text":"uryyb","ascii":"uryyb"}}}
+{"case":"Specialized F* turn to superscript (Z19612) on \"x2+y3\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[739,178,8314,696,179],"text":"ˣ²⁺ʸ³","ascii":""}}}
+{"case":"Specialized F* digits to subscript (Z27053) on \"H2O\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[72,8322,79],"text":"H₂O","ascii":"HO"}}}</code></pre>
         <p>Browser artifact output:</p>
         <pre id="fstar-extraction-output"></pre>
         <p><a href="./generated/wikifn_primitives_demo.cjs">Generated CLI JavaScript artifact</a> and <a href="./generated/wikifn_primitives_browser.js">generated browser JavaScript artifact</a></p>

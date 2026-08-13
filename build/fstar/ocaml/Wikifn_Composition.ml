@@ -8,9 +8,14 @@ type function_id =
   | FZ14456
   | FZ14520
   | FZ10052
+  | FZ10627
+  | FZ11082
   | FZ14613
+  | FZ19612
   | FZ21679
   | FZ22294
+  | FZ22649
+  | FZ27053
   | FZ38114
   | FInternalFreshPrivateUse
 let (uu___is_FZ802 : function_id -> Prims.bool) =
@@ -29,12 +34,22 @@ let (uu___is_FZ14520 : function_id -> Prims.bool) =
   fun projectee -> match projectee with | FZ14520 -> true | uu___ -> false
 let (uu___is_FZ10052 : function_id -> Prims.bool) =
   fun projectee -> match projectee with | FZ10052 -> true | uu___ -> false
+let (uu___is_FZ10627 : function_id -> Prims.bool) =
+  fun projectee -> match projectee with | FZ10627 -> true | uu___ -> false
+let (uu___is_FZ11082 : function_id -> Prims.bool) =
+  fun projectee -> match projectee with | FZ11082 -> true | uu___ -> false
 let (uu___is_FZ14613 : function_id -> Prims.bool) =
   fun projectee -> match projectee with | FZ14613 -> true | uu___ -> false
+let (uu___is_FZ19612 : function_id -> Prims.bool) =
+  fun projectee -> match projectee with | FZ19612 -> true | uu___ -> false
 let (uu___is_FZ21679 : function_id -> Prims.bool) =
   fun projectee -> match projectee with | FZ21679 -> true | uu___ -> false
 let (uu___is_FZ22294 : function_id -> Prims.bool) =
   fun projectee -> match projectee with | FZ22294 -> true | uu___ -> false
+let (uu___is_FZ22649 : function_id -> Prims.bool) =
+  fun projectee -> match projectee with | FZ22649 -> true | uu___ -> false
+let (uu___is_FZ27053 : function_id -> Prims.bool) =
+  fun projectee -> match projectee with | FZ27053 -> true | uu___ -> false
 let (uu___is_FZ38114 : function_id -> Prims.bool) =
   fun projectee -> match projectee with | FZ38114 -> true | uu___ -> false
 let (uu___is_FInternalFreshPrivateUse : function_id -> Prims.bool) =
