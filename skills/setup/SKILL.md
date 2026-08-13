@@ -33,6 +33,7 @@ command -v fstar.exe || command -v fstar || true
 - Ensure the switch exposes `fstar.exe` or `fstar` and `z3`.
 - If F* is installed elsewhere, set `FSTAR=/absolute/path/to/fstar.exe`.
 - Verify with `make fstar-check`.
+- For detailed F* diagnosis, use `skills/fstar-env/SKILL.md`.
 
 Useful checks:
 
@@ -59,6 +60,7 @@ node ./bin/wikifn.js analyze-demo
 ```
 
 Use `wikilambda_fetch` for canonical ZObjects and `action=query&prop=revisions` for revision pins. Treat live ZIDs as mutable until pinned by revision and digest.
+Keep live analysis bounded. The CLI does not follow calls inside compositions unless `--follow-calls` is passed; use that only with an explicit `--max-objects` limit.
 
 6. Check Wikidata access when needed:
 

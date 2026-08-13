@@ -42,8 +42,7 @@ try {
     case "analyze-demo":
       await analyzeCommand([
         "--max-objects",
-        "1000",
-        "--no-follow-calls",
+        "100",
         "--primitive",
         "Z782,Z783,Z784,Z801,Z802,Z876,Z10000,Z13522,Z14003,Z14613,Z19706,Z19708",
         "Z20000",
@@ -193,7 +192,7 @@ function usage(message) {
   wikifn check-world <snapshot.json>
   wikifn eval <snapshot.json> <call.json> [fuel]
   wikifn eval-example
-  wikifn analyze [--primitive Z1,Z2] [--max-objects N] [--no-follow-calls] <zid...>
+  wikifn analyze [--primitive Z1,Z2] [--max-objects N] [--follow-calls] <zid...>
   wikifn analyze-demo`);
   process.exit(message ? 1 : 0);
 }
@@ -201,7 +200,7 @@ function usage(message) {
 function parseAnalyzeArgs(args) {
   let primitives;
   let maxObjects = 300;
-  let followCompositionCalls = true;
+  let followCompositionCalls = false;
   const zids = [];
 
   for (let index = 0; index < args.length; index += 1) {
@@ -222,8 +221,8 @@ function parseAnalyzeArgs(args) {
       maxObjects = value;
       continue;
     }
-    if (arg === "--no-follow-calls") {
-      followCompositionCalls = false;
+    if (arg === "--follow-calls") {
+      followCompositionCalls = true;
       continue;
     }
     if (arg.startsWith("--")) {

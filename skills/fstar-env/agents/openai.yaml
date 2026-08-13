@@ -1,0 +1,4 @@
+interface:
+  display_name: "F* Environment"
+  short_description: "Set up and diagnose F*, opam, OCaml, and Z3 for this repo."
+  default_prompt: "Set up or repair the F* environment for this repository."

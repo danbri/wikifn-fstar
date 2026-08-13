@@ -16,11 +16,34 @@ The runnable code is under `src/`. It currently provides:
 npm test
 node ./bin/wikifn.js eval-example
 node ./bin/wikifn.js analyze-demo
-node ./bin/wikifn.js analyze --no-follow-calls Z22294
+node ./bin/wikifn.js analyze Z22294
 make fstar-check
 ```
 
 `make fstar-check` expects `FSTAR=/path/to/fstar.exe`, `fstar.exe`/`fstar` on `PATH`, or an opam switch named `fstar`.
+
+`analyze` fetches seed functions and their listed implementations by default. Use `--follow-calls` only when you intentionally want to expand calls inside compositions, and keep `--max-objects` bounded.
+
+## Local Toy Example
+
+`node ./bin/wikifn.js eval-example` does not fetch Wikifunctions. It evaluates the local fixture in `examples/add-snapshot.json` and `examples/add-call.json`.
+
+The fixture defines a small recursive composition for `Z781/add`:
+
+```text
+add(x, y) =
+  if is_zero(y)
+  then x
+  else add(successor(x), predecessor(y))
+```
+
+The call file asks for `add(2, 2)`. The result:
+
+```json
+{ "Z1K1": "Z10", "Z10K1": "4" }
+```
+
+means "a `Z10` natural number whose stored value is the string `4`".
 
 ## Scope
 
@@ -34,3 +57,5 @@ Wikifunctions canonical JSON
 ```
 
 Foreign implementations and unverified builtins are reported as explicit frontier items.
+
+Setup skills live under `skills/`, including `setup` and `fstar-env`.

@@ -76,7 +76,11 @@ test("composition-closed analysis accepts transitive calls only through primitiv
 });
 
 test("composition analysis rejects no-op wrappers around Python-only functions", async () => {
-  const corpus = await fetchAnalysisCorpus(["Z9010"], { fetcher: fakeFetcher, maxObjects: 20 });
+  const corpus = await fetchAnalysisCorpus(["Z9010"], {
+    fetcher: fakeFetcher,
+    followCompositionCalls: true,
+    maxObjects: 20
+  });
   assert.equal(corpus.ok, true, corpus.ok ? undefined : JSON.stringify(corpus.error));
 
   const report = analyzeSeeds(corpus.value, ["Z9010"], { primitives: new Set() });
