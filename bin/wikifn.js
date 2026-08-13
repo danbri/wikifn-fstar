@@ -5,14 +5,19 @@ import path from "node:path";
 import {
   analyzeSeeds,
   buildWorld,
+  buildSqliteIndex,
   checkStructural,
   evaluate,
   evaluationSummary,
   fetchAnalysisCorpus,
+  importMediaWikiXmlDump,
   loadSnapshotFile,
   normalizeCanonical,
   parsePrimitiveOption,
   parseJsonStrict,
+  runSqliteQuery,
+  sqliteIndexStats,
+  sqliteSchema,
   toCanonicalJson,
   toNormalJson,
   WikifunctionsCache
@@ -57,6 +62,9 @@ try {
       break;
     case "cache":
       await cacheCommand(args);
+      break;
+    case "db":
+      await dbCommand(args);
       break;
     default:
       usage(command ? `unknown command ${command}` : undefined);
@@ -213,11 +221,16 @@ function usage(message) {
   wikifn check-world <snapshot.json>
   wikifn eval <snapshot.json> <call.json> [fuel] [--trace] [--profile]
   wikifn eval-example [fuel] [--trace] [--profile]
-  wikifn analyze [--json] [--primitive Z1,Z2] [--max-objects N] [--max-network-objects N] [--follow-calls] [--refresh-cache|--offline|--no-cache] <zid...>
+  wikifn analyze [--json] [--primitive Z1,Z2] [--max-objects N] [--max-network-objects N] [--follow-calls] [--live|--refresh-cache|--offline|--no-cache] <zid...>
   wikifn analyze-demo [--json]
   wikifn cache stats [--cache-dir DIR]
   wikifn cache fetch [analyze-options] <zid...>
-  wikifn cache import <content-download-dir> [--cache-dir DIR] [--limit N] [zid...]`);
+  wikifn cache import <content-download-dir> [--cache-dir DIR] [--limit N] [zid...]
+  wikifn cache import-xml <pages-meta-current.xml[.bz2|.gz]> [--cache-dir DIR] [--limit N]
+  wikifn db build [--cache-dir DIR] [--db PATH] [--include-json] [--all-revisions] [--analyze]
+  wikifn db stats [--db PATH]
+  wikifn db schema [--db PATH]
+  wikifn db query [--db PATH] [--format json|table|csv] <sql>`);
   process.exit(message ? 1 : 0);
 }
 
@@ -255,7 +268,8 @@ function parseAnalyzeArgs(args) {
   let maxNetworkObjects;
   let followCompositionCalls = false;
   let output = "text";
-  const api = {};
+  const api = { cacheMode: "offline" };
+  let cacheModeExplicit = false;
   const zids = [];
 
   for (let index = 0; index < args.length; index += 1) {
@@ -298,14 +312,22 @@ function parseAnalyzeArgs(args) {
     }
     if (arg === "--refresh-cache") {
       api.cacheMode = "refresh";
+      cacheModeExplicit = true;
+      continue;
+    }
+    if (arg === "--live") {
+      api.cacheMode = "trust";
+      cacheModeExplicit = true;
       continue;
     }
     if (arg === "--offline") {
       api.cacheMode = "offline";
+      cacheModeExplicit = true;
       continue;
     }
     if (arg === "--no-cache") {
       api.cache = false;
+      cacheModeExplicit = true;
       continue;
     }
     if (arg === "--json") {
@@ -332,6 +354,7 @@ function parseAnalyzeArgs(args) {
     maxNetworkObjects,
     followCompositionCalls,
     api,
+    cacheModeExplicit,
     output,
     zids
   };
@@ -354,7 +377,7 @@ async function cacheCommand(args) {
       maxObjects: parsed.maxObjects,
       maxNetworkObjects: parsed.maxNetworkObjects,
       followCompositionCalls: parsed.followCompositionCalls,
-      api: { ...parsed.api, cacheMode: parsed.api.cacheMode ?? "refresh" }
+      api: { ...parsed.api, cacheMode: parsed.cacheModeExplicit ? parsed.api.cacheMode : "refresh" }
     });
     if (!corpus.ok) {
       fail(corpus.error);
@@ -371,7 +394,40 @@ async function cacheCommand(args) {
     await cacheImportCommand(rest);
     return;
   }
+  if (subcommand === "import-xml") {
+    await cacheImportXmlCommand(rest);
+    return;
+  }
   usage("cache requires stats or fetch");
+}
+
+async function dbCommand(args) {
+  const [subcommand, ...rest] = args;
+  if (subcommand === "build") {
+    const parsed = parseDbBuildArgs(rest);
+    const stats = await buildSqliteIndex(parsed);
+    printJson({ ok: true, ...stats });
+    return;
+  }
+  if (subcommand === "stats") {
+    const parsed = parseDbArgs(rest);
+    printJson(await sqliteIndexStats(parsed.dbPath));
+    return;
+  }
+  if (subcommand === "schema") {
+    const parsed = parseDbArgs(rest);
+    process.stdout.write(await sqliteSchema(parsed.dbPath));
+    return;
+  }
+  if (subcommand === "query") {
+    const parsed = parseDbQueryArgs(rest);
+    if (!parsed.sql) {
+      usage("db query requires a SQL argument");
+    }
+    process.stdout.write(await runSqliteQuery(parsed.dbPath, parsed.sql, { format: parsed.format }));
+    return;
+  }
+  usage("db requires build, stats, schema, or query");
 }
 
 function parseCacheArgs(args) {
@@ -388,6 +444,87 @@ function parseCacheArgs(args) {
     }
     usage(`unknown cache option ${arg}`);
   }
+  return parsed;
+}
+
+function parseDbArgs(args) {
+  const parsed = {};
+  for (let index = 0; index < args.length; index += 1) {
+    const arg = args[index];
+    if (arg === "--db") {
+      const value = args[++index];
+      if (!value) {
+        usage("--db requires a path");
+      }
+      parsed.dbPath = value;
+      continue;
+    }
+    usage(`unknown db option ${arg}`);
+  }
+  return parsed;
+}
+
+function parseDbBuildArgs(args) {
+  const parsed = {};
+  for (let index = 0; index < args.length; index += 1) {
+    const arg = args[index];
+    if (arg === "--db") {
+      const value = args[++index];
+      if (!value) {
+        usage("--db requires a path");
+      }
+      parsed.dbPath = value;
+      continue;
+    }
+    if (arg === "--cache-dir") {
+      const value = args[++index];
+      if (!value) {
+        usage("--cache-dir requires a path");
+      }
+      parsed.cacheDir = value;
+      continue;
+    }
+    if (arg === "--include-json") {
+      parsed.includeJson = true;
+      continue;
+    }
+    if (arg === "--all-revisions") {
+      parsed.allRevisions = true;
+      continue;
+    }
+    if (arg === "--analyze") {
+      parsed.analyze = true;
+      continue;
+    }
+    usage(`unknown db build option ${arg}`);
+  }
+  return parsed;
+}
+
+function parseDbQueryArgs(args) {
+  const parsed = { format: "json" };
+  const sql = [];
+  for (let index = 0; index < args.length; index += 1) {
+    const arg = args[index];
+    if (arg === "--db") {
+      const value = args[++index];
+      if (!value) {
+        usage("--db requires a path");
+      }
+      parsed.dbPath = value;
+      continue;
+    }
+    if (arg === "--format") {
+      const value = args[++index];
+      if (value !== "json" && value !== "table" && value !== "csv") {
+        usage("--format requires json, table, or csv");
+      }
+      parsed.format = value;
+      continue;
+    }
+    sql.push(arg);
+  }
+  parsed.sql = sql.join(" ");
   return parsed;
 }
 
@@ -434,6 +571,54 @@ async function cacheImportCommand(args) {
     imported,
     cache: await cache.stats()
   });
+}
+
+async function cacheImportXmlCommand(args) {
+  const parsed = parseCacheArgsWithFile(args, "cache import-xml requires a dump XML file");
+  const result = await importMediaWikiXmlDump(parsed.file, { cacheDir: parsed.cacheDir, limit: parsed.limit });
+  if (!result.ok) {
+    fail(result.error);
+  }
+  const cache = new WikifunctionsCache(parsed.cacheDir);
+  printJson({
+    ok: true,
+    ...result.value,
+    cache: await cache.stats()
+  });
+}
+
+function parseCacheArgsWithFile(args, missingMessage) {
+  const parsed = {};
+  for (let index = 0; index < args.length; index += 1) {
+    const arg = args[index];
+    if (arg === "--cache-dir") {
+      const value = args[++index];
+      if (!value) {
+        usage("--cache-dir requires a path");
+      }
+      parsed.cacheDir = value;
+      continue;
+    }
+    if (arg === "--limit") {
+      const value = Number(args[++index]);
+      if (!Number.isSafeInteger(value) || value <= 0) {
+        usage("--limit requires a positive integer");
+      }
+      parsed.limit = value;
+      continue;
+    }
+    if (arg.startsWith("--")) {
+      usage(`unknown cache option ${arg}`);
+    }
+    if (parsed.file) {
+      usage(`unexpected extra argument ${arg}`);
+    }
+    parsed.file = arg;
+  }
+  if (!parsed.file) {
+    usage(missingMessage);
+  }
+  return parsed;
 }
 
 function parseCacheImportArgs(args) {

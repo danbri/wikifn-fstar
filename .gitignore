@@ -2,9 +2,14 @@ node_modules/
 .venv/
 coverage/
 .DS_Store
+build/
 tmp/
+cache/dumps/
 cache/wikifunctions/
+cache/*.sqlite
+cache/*.sqlite-*
 third_party/fstar-z3/
+third_party/wikifunctions-dumps/**/*.xml
 *.log
 *.checked
 src/fstar/.cache/

@@ -1,5 +1,13 @@
 export { parseJsonStrict, stableStringify } from "./canonical-json.js";
 export { defaultCacheDir, WikifunctionsCache } from "./cache.js";
+export { importMediaWikiXmlDump, parseZObjectPage, readDumpPages } from "./dump-import.js";
+export {
+  buildSqliteIndex,
+  defaultSqliteDbPath,
+  runSqliteQuery,
+  sqliteIndexStats,
+  sqliteSchema
+} from "./sqlite-index.js";
 export {
   analyzeSeeds,
   classifyCanonicalObject,

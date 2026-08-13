@@ -18,6 +18,13 @@ node ./bin/wikifn.js eval-example
 node ./bin/wikifn.js analyze-demo
 node ./bin/wikifn.js analyze Z22294
 node ./bin/wikifn.js cache stats
+make import-vendored-dump
+node ./bin/wikifn.js db build
+node ./bin/wikifn.js db stats
+make fstar-js-demo
+make fstar-browser-demo
+make download-dump
+node ./bin/wikifn.js cache import-xml <pages-meta-current.xml.bz2>
 make fstar-check
 ```
 
@@ -25,7 +32,13 @@ make fstar-check
 
 `analyze` fetches seed functions and their listed implementations by default. Use `--follow-calls` only when you intentionally want to expand calls inside compositions, and keep `--max-objects` bounded.
 
-Fetched Wikifunctions objects are cached under `cache/wikifunctions/` by default. The cache stores canonical JSON by ZID and revision with a digest. By default the CLI trusts cached objects; use `--refresh-cache` to check current revisions, `--offline` to forbid network fetches, and `--no-cache` to bypass the cache.
+Fetched or dump-imported Wikifunctions objects are cached under `cache/wikifunctions/` by default. The cache stores canonical JSON by ZID and revision with a digest. By default the CLI uses the local cache for analysis; use `--live` or `--refresh-cache` when you intentionally want public API access, and `--no-cache` to bypass the cache.
+
+The repo vendors one dated Wikifunctions current-pages dump under `third_party/wikifunctions-dumps/`. Run `make import-vendored-dump` after checkout to populate the local cache without touching Wikimedia servers. Run `make download-dump` only when intentionally refreshing from Wikimedia.
+
+`node ./bin/wikifn.js db build` creates a derived SQLite index at `cache/wikifunctions.sqlite`. It indexes object provenance, functions, implementations, composition-call edges, dynamic calls, reference edges, labels, descriptions, and primitive grounding status.
+
+`make fstar-js-demo` and `make fstar-browser-demo` are actual F* extraction paths for the tiny checked primitive module: F* verifies/extracts OCaml, OCaml compiles to bytecode, and `js_of_ocaml` emits JavaScript under `docs/generated/`. They are not the Wikifunctions interpreter yet.
 
 ## Local Toy Example
 

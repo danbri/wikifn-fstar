@@ -55,11 +55,13 @@ This project should not need `npm install` unless dependencies are later added.
 5. Check Wikifunctions access:
 
 ```sh
-curl -s 'https://www.wikifunctions.org/w/api.php?action=wikilambda_fetch&zids=Z801&format=json' | head
+make import-vendored-dump
 node ./bin/wikifn.js analyze-demo
+node ./bin/wikifn.js db build
+node ./bin/wikifn.js db stats
 ```
 
-Use `wikilambda_fetch` for canonical ZObjects and `action=query&prop=revisions` for revision pins. Treat live ZIDs as mutable until pinned by revision and digest.
+Prefer the vendored dump and local cache. Use `wikilambda_fetch` for canonical ZObjects and `action=query&prop=revisions` for revision pins only when intentionally refreshing from the live service. Treat live ZIDs as mutable until pinned by revision and digest.
 Keep live analysis bounded. The CLI does not follow calls inside compositions unless `--follow-calls` is passed; use that only with an explicit `--max-objects` limit.
 
 6. Check Wikidata access when needed:
@@ -88,4 +90,4 @@ When setup is complete, report:
 - F* and Z3 versions, or the exact missing path/tool.
 - `npm test` result.
 - `make fstar-check` result.
-- Whether `analyze-demo` can reach Wikifunctions.
+- Whether `make import-vendored-dump`, `analyze-demo`, and `db build` work locally.

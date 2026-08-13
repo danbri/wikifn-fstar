@@ -13,7 +13,12 @@
     "example:trace": "node ./bin/wikifn.js eval-example --trace --profile",
     "analyze:demo": "node ./bin/wikifn.js analyze-demo",
     "fstar:check": "make fstar-check",
-    "doctor": "make doctor"
+    "fstar:ocaml": "make fstar-ocaml",
+    "fstar:js-demo": "make fstar-js-demo",
+    "fstar:browser-demo": "make fstar-browser-demo",
+    "doctor": "make doctor",
+    "dump:import": "make import-vendored-dump",
+    "dump:download": "make download-dump"
   },
   "engines": {
     "node": ">=20"

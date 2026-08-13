@@ -23,9 +23,11 @@
           <li>Canonical ZObject JSON parsing and normalization.</li>
           <li>Basic structural checks for local snapshots.</li>
           <li>Revision and SHA-256 digest recording for imported objects.</li>
+          <li>A vendored 20260801 Wikifunctions dump and local SQLite composition graph index.</li>
           <li>A JavaScript prototype evaluator for a small `Z14K2` composition subset.</li>
           <li>A bounded Wikifunctions analyzer that reports composition-closed graphs and open frontiers.</li>
           <li>An initial F* model and primitive kernel checked by `make fstar-check`.</li>
+          <li>A real F* to OCaml to JavaScript extraction demo for the tiny checked primitive module.</li>
         </ul>
       </section>
 
@@ -36,8 +38,30 @@
           <li>It is not yet a complete Wikifunctions evaluator.</li>
           <li>It is not yet using F* as the format of record.</li>
           <li>It is not yet a Low*/KaRaMeL C extraction target.</li>
+          <li>The JavaScript composition evaluator is a pre-F* prototype, not extracted F* code.</li>
           <li>Closure claims are relative to the fetched corpus and the selected primitive policy.</li>
         </ul>
+      </section>
+
+      <section>
+        <h2>Actual F* extraction demo</h2>
+        <p>
+          This is deliberately small: it extracts the checked `Wikifn.Primitives`
+          module, compiles an OCaml runner, and emits JavaScript with `js_of_ocaml`.
+          It is not the composition interpreter yet.
+        </p>
+        <pre><code>make fstar-js-demo
+node docs/generated/wikifn_primitives_demo.cjs</code></pre>
+        <p>Browser-targeted artifact:</p>
+        <pre><code>make fstar-browser-demo</code></pre>
+        <p>Expected output:</p>
+        <pre><code>{"case":"Z782 is_zero(0)","result":{"ok":true,"value":{"type":"Z40","value":true}}}
+{"case":"Z783 successor(2)","result":{"ok":true,"value":{"type":"Z10","value":"3"}}}
+{"case":"Z784 predecessor(2)","result":{"ok":true,"value":{"type":"Z10","value":"1"}}}
+{"case":"Z784 predecessor(0)","result":{"ok":false,"error":"underflow"}}</code></pre>
+        <p>Browser artifact output:</p>
+        <pre id="fstar-extraction-output"></pre>
+        <p><a href="./generated/wikifn_primitives_demo.cjs">Generated CLI JavaScript artifact</a> and <a href="./generated/wikifn_primitives_browser.js">generated browser JavaScript artifact</a></p>
       </section>
 
       <section>
@@ -106,6 +130,7 @@ make doctor</code></pre>
         <p><a href="./setup.md">Setup notes</a>, <a href="./debugging.md">debugging notes</a>, <a href="./cache.md">cache notes</a>, <a href="./primitives.md">primitive notes</a>, and <a href="./extraction.md">extraction notes</a> are included in the repo.</p>
       </section>
     </main>
+    <script src="./generated/wikifn_primitives_browser.js"></script>
     <script type="module" src="./tree.js"></script>
   </body>
 </html>

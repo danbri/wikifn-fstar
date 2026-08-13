@@ -25,3 +25,79 @@ Do not promise C/Wasm extraction for the whole Wikifunctions object model until 
 `make fstar-check` works with F* 2025.03.25 and pinned Z3 binaries from F*'s `get_fstar_z3.sh` helper.
 
 KaRaMeL is not installed in the main `fstar` opam switch because the opam `karamel` package currently depends on F* 2022.01.15 and an older OCaml stack. C extraction should use a separate extraction switch or container rather than weakening the verification switch.
+
+## Local Extraction Status
+
+Checked locally on 2026-08-13 in the `fstar` opam switch:
+
+- `fstar.exe` is available: F* 2025.03.25~dev, OCaml 4.14.1.
+- `ocamlopt` is available: OCaml 4.14.1.
+- `js_of_ocaml` is available: 6.3.2.
+- `wasm_of_ocaml` is available: 6.3.2.
+- `krml` is not available in this switch.
+
+What works in this repo today:
+
+- The F* model and primitive kernel are checked by `make fstar-check`.
+- F* can extract the current F* modules to OCaml with `--codegen OCaml`.
+- A tiny temporary OCaml runner calling the extracted `Wikifn_Primitives.successor(2)` compiled to bytecode and printed `3` when run through `opam exec`.
+
+What now works as a repo command:
+
+```sh
+make fstar-js-demo
+node docs/generated/wikifn_primitives_demo.cjs
+make fstar-browser-demo
+```
+
+This verifies/extracts `Wikifn.Primitives`, links the extracted OCaml against F*'s `Prims.cmo`, includes `zarith_stubs_js` when invoking `js_of_ocaml`, and emits `docs/generated/wikifn_primitives_demo.cjs`.
+
+`make fstar-browser-demo` uses the same extracted F* primitive module with a different OCaml runner and a tiny JavaScript output stub. The stub only appends JSON lines to the page; the primitive computation is still from extracted F*. The OCaml bytecode link uses `-no-check-prims` because `wikifn_publish` is supplied as a `js_of_ocaml` runtime primitive.
+
+The browser artifact was checked under Node with a minimal DOM shim (`document.getElementById("fstar-extraction-output")`, `TextDecoder`, and `TextEncoder`). It appended the same four JSON result lines to the target element.
+
+The generated JavaScript prints:
+
+```json
+{"case":"Z782 is_zero(0)","result":{"ok":true,"value":{"type":"Z40","value":true}}}
+{"case":"Z783 successor(2)","result":{"ok":true,"value":{"type":"Z10","value":"3"}}}
+{"case":"Z784 predecessor(2)","result":{"ok":true,"value":{"type":"Z10","value":"1"}}}
+{"case":"Z784 predecessor(0)","result":{"ok":false,"error":"underflow"}}
+```
+
+Learning from the first failed path: `fstar.exe --ocamlc` made a bytecode executable, but the generated JS failed on `caml_thread_initialize not implemented`. The working path links only the small required F* `Prims.cmo` and passes `+zarith_stubs_js/biginteger.js +zarith_stubs_js/runtime.js` to `js_of_ocaml`.
+
+What is not wired yet:
+
+- F* extraction of the interpreter core to OCaml.
+- Low*/KaRaMeL extraction to C.
+
+Commands used for the local smoke test:
+
+```sh
+mkdir -p tmp/fstar-ocaml-extract
+
+PATH=third_party/fstar-z3/bin:$PATH opam exec --switch=fstar -- \
+  fstar.exe --codegen OCaml --extract 'Wikifn' \
+  --odir tmp/fstar-ocaml-extract \
+  src/fstar/Wikifn.Model.fst \
+  src/fstar/Wikifn.Primitive.Kernel.fst \
+  src/fstar/Wikifn.Primitives.fst \
+  src/fstar/Wikifn.Semantics.fst
+
+opam exec --switch=fstar -- fstar.exe --ocamlc \
+  -I tmp/fstar-ocaml-extract \
+  tmp/fstar-ocaml-extract/Wikifn_Primitives.ml \
+  tmp/fstar-ocaml-extract/primitive_runner.ml \
+  -o tmp/fstar-ocaml-extract/primitive_runner.byte
+
+opam exec --switch=fstar -- tmp/fstar-ocaml-extract/primitive_runner.byte
+```
+
+The final command printed:
+
+```text
+3
+```
+
+`wasm_of_ocaml` is installed but not wired into a passing repo command yet.

@@ -16,6 +16,8 @@ git clone https://github.com/danbri/wikifn-fstar.git
 cd wikifn-fstar
 make setup-fstar
 make doctor
+make import-vendored-dump
+node ./bin/wikifn.js db build
 ```
 
 `make setup-fstar` uses an opam switch named `fstar` by default. Override it with:
@@ -31,10 +33,12 @@ npm test
 node ./bin/wikifn.js eval-example --trace --profile
 node ./bin/wikifn.js analyze Z22294
 node ./bin/wikifn.js cache stats
+node ./bin/wikifn.js db stats
 make fstar-check
+make fstar-js-demo
 ```
 
-`analyze` fetches only seed functions and their listed implementations unless `--follow-calls` is passed. Keep `--max-objects` bounded when following calls.
+`analyze` uses the local cache by default. Pass `--live` or `--refresh-cache` only when you intentionally want public API access. It reads only seed functions and their listed implementations unless `--follow-calls` is passed. Keep `--max-objects` bounded when following calls.
 
 ## Cache
 
@@ -42,13 +46,19 @@ The default cache is `cache/wikifunctions/`.
 
 ```sh
 node ./bin/wikifn.js cache stats
+make import-vendored-dump
+make download-dump
+node ./bin/wikifn.js cache import-xml cache/dumps/wikifunctionswiki/20260801/wikifunctionswiki-20260801-pages-meta-current.xml.bz2
 node ./bin/wikifn.js cache fetch --follow-calls --max-objects 500 --max-network-objects 100 Z22294
-node ./bin/wikifn.js analyze --offline --follow-calls --max-objects 500 Z22294
+node ./bin/wikifn.js analyze --follow-calls --max-objects 500 Z22294
 ```
+
+`make import-vendored-dump` uses the snapshot in `third_party/wikifunctions-dumps/` and does not contact Wikimedia. `make download-dump` is for intentional refreshes.
 
 Cache modes:
 
-- default: trust cached latest revisions and fetch only misses
+- default for `analyze`: local cache only
+- `--live`: trust cached latest revisions and fetch only misses
 - `--refresh-cache`: check current revision IDs and fetch changed objects
 - `--offline`: use only the cache
 - `--no-cache`: bypass cache

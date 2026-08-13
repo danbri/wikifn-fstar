@@ -114,6 +114,52 @@ It tries, in order:
 
 If it fails, fix the toolchain rather than weakening the F* files.
 
+## Extraction Notes
+
+Current honest extraction checks:
+
+```sh
+make fstar-ocaml
+make fstar-js-demo
+make fstar-browser-demo
+```
+
+`make fstar-ocaml` extracts the tiny checked `Wikifn.Primitives` module to OCaml.
+
+`make fstar-js-demo` then compiles a repo-owned OCaml runner and invokes `js_of_ocaml` with Zarith JS stubs. This is a primitive-module extraction demo, not the full Wikifunctions interpreter.
+
+`make fstar-browser-demo` builds the browser-targeted version. The small JavaScript stub in `src/js/wikifn_publish.js` is DOM output glue only; the primitive computation comes from extracted F*. The OCaml bytecode link uses `-no-check-prims` because `wikifn_publish` is supplied by the `js_of_ocaml` runtime stub.
+
+Expected runtime check:
+
+```sh
+node docs/generated/wikifn_primitives_demo.cjs
+```
+
+It should print JSON lines for `is_zero(0)`, `successor(2)`, `predecessor(2)`, and `predecessor(0)`.
+
+Do not claim a browser demo works unless the generated artifact executes. A known current failure mode is generated JavaScript raising:
+
+```text
+caml_thread_initialize not implemented
+```
+
+or warning about missing Zarith primitives such as:
+
+```text
+ml_z_add
+ml_z_init
+ml_z_sub
+```
+
+The current script avoids that by linking F*'s small `Prims.cmo` directly and passing:
+
+```text
++zarith_stubs_js/biginteger.js +zarith_stubs_js/runtime.js
+```
+
+Those are OCaml runtime/linking issues, not proof failures and not something to hide.
+
 ## Expected Report
 
 When done, report:
