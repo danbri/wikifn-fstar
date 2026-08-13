@@ -45,12 +45,16 @@ What works in this repo today:
 What now works as a repo command:
 
 ```sh
+make fstar-generate-compositions
 make fstar-js-demo
+node ./bin/wikifn.js fstar-demo
 node docs/generated/wikifn_primitives_demo.cjs
 make fstar-browser-demo
 ```
 
-This verifies/extracts `Wikifn.Primitive.Kernel`, `Wikifn.Primitives`, and `Wikifn.Composition`, links the extracted OCaml against F*'s `Prims.cmo`, includes `zarith_stubs_js` when invoking `js_of_ocaml`, and emits `docs/generated/wikifn_primitives_demo.cjs`.
+`make fstar-generate-compositions` regenerates `src/fstar/Wikifn.Generated.Compositions.fst` from selected pinned objects in the local cache. The generated F* module records the ZID revisions and canonical digests used for the selected paths.
+
+`make fstar-js-demo` verifies/extracts `Wikifn.Primitive.Kernel`, `Wikifn.Primitives`, `Wikifn.Composition`, and `Wikifn.Generated.Compositions`, links the extracted OCaml against F*'s `Prims.cmo`, includes `zarith_stubs_js` when invoking `js_of_ocaml`, and emits `docs/generated/wikifn_primitives_demo.cjs`. `wikifn fstar-demo` only runs that generated artifact; it does not use the junk proof-of-concept evaluator.
 
 `make fstar-browser-demo` uses the same extracted F* primitive module with a different OCaml runner and a tiny JavaScript output stub. The stub only appends JSON lines to the page; the primitive computation is still from extracted F*. The OCaml bytecode link uses `-no-check-prims` because `wikifn_publish` is supplied as a `js_of_ocaml` runtime primitive.
 

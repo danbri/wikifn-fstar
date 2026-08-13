@@ -87,16 +87,16 @@ let run_composition_case name result =
 let run_extracted_composition_cases () =
   run_composition_case
     "Remove regular spaces (Z10052) on \"a b c\""
-    (Wikifn_Composition.eval_z10052 (Prims.of_int 50) (text_of_ascii "a b c"));
+    (Wikifn_Generated_Compositions.eval_generated_z10052 (Prims.of_int 50) (text_of_ascii "a b c"));
   run_composition_case
     "Decimal comma to point (Z21679) on \"3,14\""
-    (Wikifn_Composition.eval_z21679 (Prims.of_int 50) (text_of_ascii "3,14"));
+    (Wikifn_Generated_Compositions.eval_generated_z21679 (Prims.of_int 50) (text_of_ascii "3,14"));
   run_composition_case
     "French contractions (Z38114) on \"de les amis et de le chat\""
-    (Wikifn_Composition.eval_z38114 (Prims.of_int 50) (text_of_ascii "de les amis et de le chat"));
+    (Wikifn_Generated_Compositions.eval_generated_z38114 (Prims.of_int 50) (text_of_ascii "de les amis et de le chat"));
   run_composition_case
     "Devanagari digits to Arabic digits (Z22294) on codepoints [2407,2408,2409]"
-    (Wikifn_Composition.eval_z22294
+    (Wikifn_Generated_Compositions.eval_generated_z22294
        (Prims.of_int 500)
        [Prims.of_int 2407; Prims.of_int 2408; Prims.of_int 2409])
 

@@ -38,6 +38,12 @@ type eval_result (a:Type0) =
   | EOk : a -> eval_result a
   | EErr : eval_error -> eval_result a
 
+type body_option =
+  | NoBody
+  | Body : expr -> body_option
+
+type policy = function_id -> list expr -> Tot body_option
+
 let lift_kernel (#a:Type0) (r:kernel_result a) : Tot (eval_result a) =
   match r with
   | KOk x -> EOk x
@@ -107,7 +113,7 @@ let z38115_expr (input:expr) : expr =
     EValue (VText du)
   ]
 
-let rec eval (fuel:nat) (env:list value) (e:expr) : Tot (eval_result value) (decreases fuel) =
+let rec eval_with_policy (p:policy) (fuel:nat) (env:list value) (e:expr) : Tot (eval_result value) (decreases fuel) =
   match e with
   | EValue v -> EOk v
   | EArg index -> env_lookup index env
@@ -118,22 +124,22 @@ let rec eval (fuel:nat) (env:list value) (e:expr) : Tot (eval_result value) (dec
           let next = fuel - 1 in
           match fid, args with
           | FZ802, condition :: then_expr :: else_expr :: [] ->
-              (match eval next env condition with
+              (match eval_with_policy p next env condition with
                | EOk (VBool b) ->
-                   if b then eval next env then_expr else eval next env else_expr
+                   if b then eval_with_policy p next env then_expr else eval_with_policy p next env else_expr
                | EOk _ -> EErr ETypeMismatch
                | EErr err -> EErr err)
           | FZ10008, input :: [] ->
-              (match eval next env input with
+              (match eval_with_policy p next env input with
                | EOk (VText s) -> EOk (VBool (z10008_is_empty_string s))
                | EOk _ -> EErr ETypeMismatch
                | EErr err -> EErr err)
           | FZ10075, input :: substring :: replacement :: [] ->
-              (match eval next env input with
+              (match eval_with_policy p next env input with
                | EOk (VText input_text) ->
-                   (match eval next env substring with
+                   (match eval_with_policy p next env substring with
                     | EOk (VText substring_text) ->
-                        (match eval next env replacement with
+                        (match eval_with_policy p next env replacement with
                          | EOk (VText replacement_text) ->
                              (match lift_kernel (z10075_replace_all_substrings input_text substring_text replacement_text) with
                               | EOk output -> EOk (VText output)
@@ -145,14 +151,14 @@ let rec eval (fuel:nat) (env:list value) (e:expr) : Tot (eval_result value) (dec
                | EOk _ -> EErr ETypeMismatch
                | EErr err -> EErr err)
           | FZ10901, input :: [] ->
-              (match eval next env input with
+              (match eval_with_policy p next env input with
                | EOk (VText s) -> EOk (VText (z10901_get_first_character s))
                | EOk _ -> EErr ETypeMismatch
                | EErr err -> EErr err)
           | FZ14124, first :: last :: [] ->
-              (match eval next env first with
+              (match eval_with_policy p next env first with
                | EOk (VNat first_codepoint) ->
-                   (match eval next env last with
+                   (match eval_with_policy p next env last with
                     | EOk (VNat last_codepoint) ->
                         EOk (VText (z14124_string_of_characters_from_unicode_range first_codepoint last_codepoint))
                     | EOk _ -> EErr ETypeMismatch
@@ -160,14 +166,14 @@ let rec eval (fuel:nat) (env:list value) (e:expr) : Tot (eval_result value) (dec
                | EOk _ -> EErr ETypeMismatch
                | EErr err -> EErr err)
           | FZ14456, input :: [] ->
-              (match eval next env input with
+              (match eval_with_policy p next env input with
                | EOk (VText s) -> EOk (VText (z14456_remove_first_character s))
                | EOk _ -> EErr ETypeMismatch
                | EErr err -> EErr err)
           | FZ14520, input :: chars :: [] ->
-              (match eval next env input with
+              (match eval_with_policy p next env input with
                | EOk (VText input_text) ->
-                   (match eval next env chars with
+                   (match eval_with_policy p next env chars with
                     | EOk (VText chars_text) ->
                         EOk (VText (z14520_remove_all_characters_in_second_string input_text chars_text))
                     | EOk _ -> EErr ETypeMismatch
@@ -175,21 +181,27 @@ let rec eval (fuel:nat) (env:list value) (e:expr) : Tot (eval_result value) (dec
                | EOk _ -> EErr ETypeMismatch
                | EErr err -> EErr err)
           | FInternalFreshPrivateUse, input :: [] ->
-              (match eval next env input with
+              (match eval_with_policy p next env input with
                | EOk (VText s) -> EOk (VText (z36070_first_available_private_use_character s))
                | EOk _ -> EErr ETypeMismatch
                | EErr err -> EErr err)
-          | FZ10052, input :: [] ->
-              eval next env (z10077_expr input)
-          | FZ14613, input :: old_alphabet :: new_alphabet :: [] ->
-              eval next env (z36070_expr input old_alphabet new_alphabet)
-          | FZ21679, input :: [] ->
-              eval next env (z21681_expr input)
-          | FZ22294, input :: [] ->
-              eval next env (z22295_expr input)
-          | FZ38114, input :: [] ->
-              eval next env (z38115_expr input)
-          | _, _ -> EErr EArityMismatch
+          | _, _ ->
+              (match p fid args with
+               | Body body -> eval_with_policy p next env body
+               | NoBody -> EErr EArityMismatch)
+
+let manual_policy (fid:function_id) (args:list expr) : Tot body_option =
+  match fid, args with
+  | FZ10052, input :: [] -> Body (z10077_expr input)
+  | FZ14613, input :: old_alphabet :: new_alphabet :: [] ->
+      Body (z36070_expr input old_alphabet new_alphabet)
+  | FZ21679, input :: [] -> Body (z21681_expr input)
+  | FZ22294, input :: [] -> Body (z22295_expr input)
+  | FZ38114, input :: [] -> Body (z38115_expr input)
+  | _, _ -> NoBody
+
+let eval (fuel:nat) (env:list value) (e:expr) : Tot (eval_result value) =
+  eval_with_policy manual_policy fuel env e
 
 let eval_z10052 (fuel:nat) (input:text) : Tot (eval_result value) =
   eval fuel [] (ECall FZ10052 [EValue (VText input)])

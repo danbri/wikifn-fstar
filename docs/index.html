@@ -51,6 +51,23 @@
           with `js_of_ocaml`. The current interpreter uses a typed F* IR for selected
           pinned compositions; it does not yet parse arbitrary canonical ZObject JSON.
         </p>
+        <p>
+          The table below is populated from the browser artifact generated from F*.
+          If the artifact fails to run, the table stays empty and the raw output below
+          shows the failure boundary.
+        </p>
+        <div id="fstar-demo-status" class="demo-status">Waiting for extracted JavaScript output...</div>
+        <table class="demo-table" id="fstar-demo-results">
+          <thead>
+            <tr>
+              <th>What ran</th>
+              <th>Input</th>
+              <th>Result from extracted JS</th>
+              <th>Source path</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
         <table class="demo-table">
           <thead>
             <tr>
@@ -144,6 +161,52 @@ add(4, 0)
       </section>
 
       <section>
+        <h2>Next grounding frontier</h2>
+        <p>
+          The local SQLite graph says the next useful F* primitive work is mostly
+          lists, string joins/equality, booleans, and natural-number arithmetic.
+          These are high-reuse leaves in existing compositions.
+        </p>
+        <table class="demo-table">
+          <thead>
+            <tr>
+              <th>Priority</th>
+              <th>Plain name</th>
+              <th>Wikifunctions ID</th>
+              <th>Why it matters</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>List head/tail/empty/prepend/length</td>
+              <td><code>Z811</code>, <code>Z812</code>, <code>Z813</code>, <code>Z810</code>, <code>Z12681</code></td>
+              <td>These appear across hundreds of composition implementations and unlock recursive list algorithms.</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>String concatenate, equality, join-list</td>
+              <td><code>Z10000</code>, <code>Z866</code>, <code>Z21394</code>, <code>Z12899</code></td>
+              <td>Needed for readable text-generation demos, including many language and formatting functions.</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Boolean operators</td>
+              <td><code>Z10174</code>, <code>Z10184</code>, <code>Z10216</code></td>
+              <td>Small, precise F* specs; common in validation and branching-heavy compositions.</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>Natural-number arithmetic</td>
+              <td><code>Z13521</code>, <code>Z13522</code>, <code>Z13578</code>, <code>Z13582</code>, <code>Z13539</code></td>
+              <td>Necessary for algorithmic demos beyond strings, including recursive sequence and counting functions.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p><a href="./primitives.md">Detailed primitive agenda</a></p>
+      </section>
+
+      <section>
         <h2>Composition tree browser</h2>
         <p>
           The tree marks selected compositions, arguments, constants, assumed primitives,
@@ -172,6 +235,7 @@ make doctor</code></pre>
       </section>
     </main>
     <script src="./generated/wikifn_primitives_browser.js"></script>
+    <script src="./fstar-demo.js"></script>
     <script type="module" src="./tree.js"></script>
   </body>
 </html>

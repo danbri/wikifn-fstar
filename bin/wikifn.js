@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { spawn } from "node:child_process";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
@@ -42,6 +43,9 @@ try {
       break;
     case "eval-example":
       await evalCommand(["examples/add-snapshot.json", "examples/add-call.json", ...args]);
+      break;
+    case "fstar-demo":
+      await fstarDemoCommand(args);
       break;
     case "analyze":
       await analyzeCommand(args);
@@ -221,6 +225,7 @@ function usage(message) {
   wikifn check-world <snapshot.json>
   wikifn eval <snapshot.json> <call.json> [fuel] [--trace] [--profile]
   wikifn eval-example [fuel] [--trace] [--profile]
+  wikifn fstar-demo
   wikifn analyze [--json] [--primitive Z1,Z2] [--max-objects N] [--max-network-objects N] [--follow-calls] [--live|--refresh-cache|--offline|--no-cache] <zid...>
   wikifn analyze-demo [--json]
   wikifn cache stats [--cache-dir DIR]
@@ -232,6 +237,23 @@ function usage(message) {
   wikifn db schema [--db PATH]
   wikifn db query [--db PATH] [--format json|table|csv] <sql>`);
   process.exit(message ? 1 : 0);
+}
+
+async function fstarDemoCommand(args) {
+  if (args.length > 0) {
+    usage("fstar-demo does not accept arguments");
+  }
+  const artifact = path.resolve("docs/generated/wikifn_primitives_demo.cjs");
+  const child = spawn(process.execPath, [artifact], { stdio: "inherit" });
+  const exit = await new Promise((resolve) => {
+    child.on("close", (code, signal) => resolve({ code, signal }));
+  });
+  if (exit.signal) {
+    process.kill(process.pid, exit.signal);
+  }
+  if (exit.code !== 0) {
+    process.exit(exit.code ?? 1);
+  }
 }
 
 function parseEvalArgs(args) {
