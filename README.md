@@ -63,7 +63,7 @@ The repo vendors one dated Wikifunctions current-pages dump under `third_party/w
 
 `make fstar-call-browser` emits standalone `docs/generated/wikifn_call_browser.js`, which exports `wikifnFstarCall(mode, zid, fuel, arg0, arg1)` in the browser from the same extracted F*/OCaml modules. `make fstar-browser-demo` also exports that browser call API from `docs/generated/wikifn_primitives_browser.js`; the GitHub Pages demo loads only that combined artifact to avoid loading two `js_of_ocaml` runtimes on one page.
 
-The project homepage is a static overview. Browser-side running demos live at `docs/demos.html` / `https://danbri.github.io/wikifn-fstar/demos.html`.
+The project homepage is a static overview. Browser-side running demos are split up from `docs/demos.html` / `https://danbri.github.io/wikifn-fstar/demos.html`. The clearest current end-to-end browser demo is `docs/demo-z22294.html`, which runs a selected pinned `Z22294` composition through F* -> OCaml -> JavaScript.
 
 ## Local Toy Example
 

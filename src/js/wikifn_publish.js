@@ -11,8 +11,5 @@ function wikifn_publish(value) {
       target.textContent += text + "\n";
     }
   }
-  if (root.console && typeof root.console.log === "function") {
-    root.console.log(text);
-  }
   return 0;
 }

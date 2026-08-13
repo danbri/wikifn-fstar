@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Extracted F* playground</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <main>
+      <header>
+        <p class="eyebrow">wikifn-fstar</p>
+        <h1>Extracted F* Playground</h1>
+        <p>
+          User-triggered controls for the current F* to OCaml to JavaScript
+          artifact. The page loads the generated JavaScript, but it does not run
+          examples until a button is pressed.
+        </p>
+        <p><a href="./demos.html">Demos menu</a></p>
+      </header>
+
+      <section>
+        <h2>Fixed Examples</h2>
+        <p>
+          Runs a small suite through the generated F* IR interpreter, generated
+          direct F* functions, and hand-maintained F* reference functions.
+        </p>
+        <button id="fstar-demo-run" class="demo-action" type="button">Run fixed examples</button>
+        <div id="fstar-demo-status" class="demo-status">Ready. Nothing has run yet.</div>
+        <table class="demo-table" id="fstar-demo-results">
+          <thead>
+            <tr>
+              <th>What ran</th>
+              <th>Input</th>
+              <th>Result from extracted JS</th>
+              <th>Source path</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <p>Raw JSON lines from the browser artifact:</p>
+        <pre id="fstar-extraction-output"></pre>
+      </section>
+
+      <section>
+        <h2>Callable Selected Functions</h2>
+        <p>
+          These are selected real Wikifunctions composition paths currently
+          generated into F* and exposed through the browser artifact.
+        </p>
+        <form id="fstar-call-form" class="call-form">
+          <label>
+            <span>Path</span>
+            <select id="fstar-call-mode">
+              <option value="generated">generated F* IR interpreter</option>
+              <option value="compiled">generated direct F*</option>
+              <option value="specialized">hand-maintained F* reference</option>
+            </select>
+          </label>
+          <label>
+            <span>Function</span>
+            <select id="fstar-call-zid">
+              <option value="Z22294">Z22294 Devanagari digits to Arabic digits</option>
+              <option value="Z22649">Z22649 Arabic numerals to Devanagari numerals</option>
+              <option value="Z27053">Z27053 digits to subscript</option>
+              <option value="Z10627">Z10627 ROT13 Latin alphabet</option>
+              <option value="Z19612">Z19612 turn to superscript</option>
+              <option value="Z10052">Z10052 remove regular spaces</option>
+              <option value="Z21679">Z21679 decimal comma to point</option>
+              <option value="Z38114">Z38114 French contractions</option>
+              <option value="Z11082">Z11082 fallback if string is empty</option>
+            </select>
+          </label>
+          <label>
+            <span>Input</span>
+            <input id="fstar-call-arg0" value="१२३">
+          </label>
+          <label>
+            <span>Fallback</span>
+            <input id="fstar-call-arg1" value="">
+          </label>
+          <button type="submit">Run Extracted F*</button>
+        </form>
+        <pre id="fstar-call-output"><code></code></pre>
+      </section>
+
+      <section>
+        <h2>JSON IR</h2>
+        <p>
+          This small expression format is useful for testing supported scalar
+          primitives and selected calls without writing a full Wikifunctions
+          object.
+        </p>
+        <form id="fstar-ir-form" class="call-form ir-form">
+          <label class="wide-field">
+            <span>Expression JSON</span>
+            <textarea id="fstar-ir-input" rows="9">{
+  "fuel": 500,
+  "expr": {
+    "call": "Z13676",
+    "args": [
+      { "nat": 99 },
+      { "nat": 42 }
+    ]
+  }
+}</textarea>
+          </label>
+          <button type="submit">Run JSON IR</button>
+        </form>
+        <pre id="fstar-ir-output"><code></code></pre>
+      </section>
+
+      <section>
+        <h2>Supported Z7 Call</h2>
+        <p>
+          This is the beginning of the real Wikifunctions object adapter:
+          selected <code>Z7</code> calls and selected value forms lower into the
+          extracted F* evaluator. Unsupported objects fail at the boundary.
+        </p>
+        <form id="fstar-zobject-form" class="call-form ir-form">
+          <label class="wide-field">
+            <span>ZObject JSON</span>
+            <textarea id="fstar-zobject-input" rows="8">{
+  "Z1K1": "Z7",
+  "Z7K1": "Z22294",
+  "Z22294K1": "१२३"
+}</textarea>
+          </label>
+          <button type="submit">Run Z7 Call</button>
+        </form>
+        <pre id="fstar-zobject-output"><code></code></pre>
+      </section>
+    </main>
+    <script src="./generated/wikifn_primitives_browser.js"></script>
+    <script src="./fstar-demo.js"></script>
+  </body>
+</html>

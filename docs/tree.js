@@ -9,7 +9,9 @@ const select = d3.select("#tree-select");
 const note = d3.select("#tree-note");
 const meta = d3.select("#tree-meta");
 const layoutButtons = d3.selectAll("[data-layout]");
+const renderButton = d3.select("#tree-render-button");
 let layoutMode = "horizontal";
+let renderedTree = null;
 
 const data = await fetch("./data/demo-trees.json").then((response) => response.json());
 
@@ -21,7 +23,9 @@ select
   .text((tree) => `${tree.id} ${tree.title}`);
 
 select.on("change", () => {
-  render(data.trees.find((tree) => tree.id === select.property("value")));
+  renderedTree = null;
+  container.text("No tree drawn for this selection yet. Press Draw selected tree.");
+  describeSelection(selectedTree());
 });
 
 layoutButtons.on("click", (event) => {
@@ -29,12 +33,39 @@ layoutButtons.on("click", (event) => {
   layoutButtons.classed("active", function () {
     return this.dataset.layout === layoutMode;
   });
-  render(data.trees.find((tree) => tree.id === select.property("value")));
+  if (renderedTree) {
+    render(renderedTree);
+  } else {
+    note.text("Layout selected. Press Draw selected tree to render the composition graph.");
+  }
 });
 
-render(data.trees[0]);
+renderButton.on("click", () => {
+  const tree = selectedTree();
+  if (tree) {
+    render(tree);
+  }
+});
+
+container.text("No tree drawn yet. Choose a function and press Draw selected tree.");
+describeSelection(data.trees[0]);
+
+function selectedTree() {
+  return data.trees.find((tree) => tree.id === select.property("value")) || data.trees[0];
+}
+
+function describeSelection(tree) {
+  if (!tree) {
+    note.text("No tree data is available.");
+    meta.text("");
+    return;
+  }
+  note.text("Selected " + tree.id + ". Press Draw selected tree to render the composition graph.");
+  meta.text(`${statusLabel(tree.status)}${tree.implementation ? `; selected ${tree.implementation}` : ""}`);
+}
 
 function render(tree) {
+  renderedTree = tree;
   note.text(tree.note);
   meta.text(`${statusLabel(tree.status)}${tree.implementation ? `; selected ${tree.implementation}` : ""}`);
 

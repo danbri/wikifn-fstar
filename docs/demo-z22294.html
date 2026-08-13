@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Z22294 extracted F* demo</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <main>
+      <header>
+        <p class="eyebrow">wikifn-fstar</p>
+        <h1>Z22294: Devanagari digits to Arabic digits</h1>
+        <p>
+          This is the clearest current end-to-end demo: a selected pinned
+          Wikifunctions composition is generated into F*, checked by F*,
+          extracted to OCaml, compiled to JavaScript, and run in the browser.
+        </p>
+        <p><a href="./demos.html">Demos menu</a></p>
+      </header>
+
+      <section>
+        <h2>What This Shows</h2>
+        <p>
+          Input <code>१२३</code> becomes <code>123</code>. The computation is not
+          handwritten page JavaScript. The page calls JavaScript emitted by
+          <code>js_of_ocaml</code> from OCaml that was extracted from the checked
+          F* modules.
+        </p>
+        <table class="demo-table">
+          <tbody>
+            <tr>
+              <th>Wikifunctions function</th>
+              <td><code>Z22294</code>, Devanagari digits to Arabic digits</td>
+            </tr>
+            <tr>
+              <th>Selected implementation</th>
+              <td><code>Z22295</code>, a Wikifunctions composition</td>
+            </tr>
+            <tr>
+              <th>Composition dependency</th>
+              <td><code>Z14613</code>, replace character set, via recursive composition <code>Z36070</code></td>
+            </tr>
+            <tr>
+              <th>Grounded leaves</th>
+              <td><code>Z802</code>, <code>Z10008</code>, <code>Z10075</code>, <code>Z10901</code>, <code>Z14456</code>, and the checked private-use marker helper</td>
+            </tr>
+            <tr>
+              <th>Claim boundary</th>
+              <td>Complete for this selected pinned path relative to the current F* primitive kernel; not a general arbitrary-Wikifunctions evaluator.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Run In Browser</h2>
+        <p>
+          Press the button to run the extracted artifact. Nothing runs before
+          the button press.
+        </p>
+        <form id="fstar-call-form" class="call-form">
+          <label>
+            <span>Path</span>
+            <select id="fstar-call-mode">
+              <option value="generated">generated F* IR interpreter</option>
+              <option value="compiled">generated direct F*</option>
+              <option value="specialized">hand-maintained F* reference</option>
+            </select>
+          </label>
+          <label>
+            <span>Function</span>
+            <select id="fstar-call-zid">
+              <option value="Z22294">Z22294 Devanagari digits to Arabic digits</option>
+            </select>
+          </label>
+          <label>
+            <span>Input</span>
+            <input id="fstar-call-arg0" value="१२३">
+          </label>
+          <input id="fstar-call-arg1" type="hidden" value="">
+          <button type="submit">Run Extracted F*</button>
+        </form>
+        <pre id="fstar-call-output"><code></code></pre>
+      </section>
+
+      <section>
+        <h2>Run As A Z7 Call</h2>
+        <p>
+          This uses the current supported canonical-style Wikifunctions call
+          adapter, then lowers the call into the same extracted F* evaluator.
+        </p>
+        <form id="fstar-zobject-form" class="call-form ir-form">
+          <label class="wide-field">
+            <span>ZObject JSON</span>
+            <textarea id="fstar-zobject-input" rows="5">{
+  "Z1K1": "Z7",
+  "Z7K1": "Z22294",
+  "Z22294K1": "१२३"
+}</textarea>
+          </label>
+          <button type="submit">Run Z7 Call</button>
+        </form>
+        <pre id="fstar-zobject-output"><code></code></pre>
+      </section>
+
+      <section>
+        <h2>Run In Node</h2>
+        <pre><code>make fstar-call-js
+node ./bin/wikifn.js fstar-call --mode generated Z22294 १२३
+node ./bin/wikifn.js fstar-call --mode compiled Z22294 १२३
+node ./bin/wikifn.js fstar-eval-zobject '{"Z1K1":"Z7","Z7K1":"Z22294","Z22294K1":"१२३"}'</code></pre>
+      </section>
+
+      <section>
+        <h2>What This Is Not</h2>
+        <ul>
+          <li>It is not proof of arbitrary Python or JavaScript <code>Z16</code> implementations.</li>
+          <li>It is not yet a full canonical ZObject importer for arbitrary Wikifunctions pages.</li>
+          <li>It is not yet Low*/C/Wasm-from-C extraction.</li>
+        </ul>
+      </section>
+    </main>
+    <script src="./generated/wikifn_primitives_browser.js"></script>
+    <script src="./fstar-demo.js"></script>
+  </body>
+</html>

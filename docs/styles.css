@@ -90,6 +90,29 @@ a {
   font-weight: 650;
 }
 
+.demo-action {
+  border: 0;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font: inherit;
+  font-weight: 700;
+  margin: 4px 0 12px;
+  padding: 10px 12px;
+}
+
+details {
+  margin: 12px 0;
+}
+
+summary {
+  color: var(--accent);
+  cursor: pointer;
+  font-weight: 700;
+}
+
 .demo-table {
   width: 100%;
   border-collapse: collapse;

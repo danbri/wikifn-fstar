@@ -94,7 +94,7 @@ globalThis.wikifnFstarEvalZObject(jsonText)
 
 Those functions are exported from OCaml code linked against the F*-extracted modules; the page-side JavaScript only reads form inputs and displays returned JSON.
 
-The project homepage is static and does not load the generated browser artifact. The running browser demos are on `docs/demos.html`.
+The project homepage and `docs/demos.html` menu are static and do not load the generated browser artifact. The best current focused browser demo is `docs/demo-z22294.html`: it runs selected pinned `Z22294` composition code through F* -> OCaml -> JavaScript. Broader controls live on `docs/demo-playground.html`, and graph browsing lives on `docs/demo-trees.html`.
 
 `Wikifn.Generated.Compositions` is the selected-pinned-composition interpreter path: local cache objects become generated F* IR, then the extracted F* interpreter evaluates the IR. `Wikifn.Compiled.Compositions` is the generated direct-function path: selected pinned compositions are lowered directly into F* functions over the checked primitive kernel. `Wikifn.Specialized.Compositions` is the hand-maintained direct-function reference path for the same selected examples. The generated direct compiler recognizes the selected private-use marker idiom used by `Z36070`; that is an optimization, not a full equivalence proof for arbitrary compositions.
 

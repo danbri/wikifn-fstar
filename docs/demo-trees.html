@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Composition trees</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <main>
+      <header>
+        <p class="eyebrow">wikifn-fstar</p>
+        <h1>Composition Trees</h1>
+        <p>
+          A local D3 browser for selected composition graphs. It uses saved
+          local data and does not contact Wikifunctions while browsing.
+        </p>
+        <p><a href="./demos.html">Demos menu</a></p>
+      </header>
+
+      <section>
+        <h2>Draw A Tree</h2>
+        <p>
+          The tree marks selected compositions, arguments, constants, assumed
+          primitives, and foreign-code frontiers. A tree is drawn only after the
+          button is pressed.
+        </p>
+        <label class="tree-picker">
+          <span>Function</span>
+          <select id="tree-select"></select>
+        </label>
+        <div class="layout-toggle" aria-label="Tree layout">
+          <button type="button" data-layout="horizontal" class="active">Horizontal</button>
+          <button type="button" data-layout="radial">Radial</button>
+        </div>
+        <button id="tree-render-button" class="demo-action" type="button">Draw selected tree</button>
+        <p id="tree-meta" class="tree-meta"></p>
+        <div id="tree-view" class="tree-view"></div>
+        <p id="tree-note" class="tree-note"></p>
+      </section>
+
+      <section>
+        <h2>How To Read It</h2>
+        <ul>
+          <li>Composition nodes are Wikifunctions implementations written as function calls.</li>
+          <li>Primitive leaves are current assumptions or F*-grounded leaves, depending on the selected graph.</li>
+          <li>Open-frontier nodes show where the selected graph reaches unsupported or foreign implementation territory.</li>
+        </ul>
+      </section>
+    </main>
+    <script type="module" src="./tree.js"></script>
+  </body>
+</html>

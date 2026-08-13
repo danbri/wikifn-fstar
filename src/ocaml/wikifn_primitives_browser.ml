@@ -288,8 +288,7 @@ let export_call_api () =
     "wikifnFstarEvalZObject"
     (Js.Unsafe.callback eval_zobject_export)
 
-let () =
-  export_call_api ();
+let run_primitive_demo_export () =
   let open Wikifn_Primitives in
   run_case "Z782 is_zero(0)" PIsZero (VNat Prims.int_zero);
   run_case "Z783 successor(2)" PSuccessor (VNat (Prims.of_int 2));
@@ -297,4 +296,15 @@ let () =
   run_case "Z784 predecessor(0)" PPredecessor (VNat Prims.int_zero);
   run_extracted_composition_cases ();
   run_compiled_composition_cases ();
-  run_specialized_composition_cases ()
+  run_specialized_composition_cases ();
+  Js.string {|{"ok":true}|}
+
+let export_demo_api () =
+  Js.Unsafe.set
+    Js.Unsafe.global
+    "wikifnFstarRunPrimitiveDemo"
+    (Js.Unsafe.callback run_primitive_demo_export)
+
+let () =
+  export_call_api ();
+  export_demo_api ()

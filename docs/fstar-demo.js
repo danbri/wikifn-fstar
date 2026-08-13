@@ -3,6 +3,8 @@
   var rows = root.wikifnFstarPrimitiveDemoOutput || [];
   var status = document.getElementById("fstar-demo-status");
   var tbody = document.querySelector("#fstar-demo-results tbody");
+  var demoRunButton = document.getElementById("fstar-demo-run");
+  var rawOutput = document.getElementById("fstar-extraction-output");
 
   var cases = {
     "Z782 is_zero(0)": {
@@ -162,35 +164,20 @@
     }
   };
 
-  if (!tbody || !status) {
-    return;
-  }
-
-  if (rows.length === 0) {
-    status.textContent = "No extracted F* output was captured.";
-    return;
-  }
-
-  tbody.textContent = "";
-  var parsedCount = 0;
-  rows.forEach(function (line) {
-    var record;
-    try {
-      record = JSON.parse(line);
-    } catch (_error) {
-      return;
+  if (tbody && status) {
+    tbody.textContent = "";
+    status.textContent = typeof root.wikifnFstarRunPrimitiveDemo === "function"
+      ? "Ready. Nothing has run yet; press Run fixed examples to execute the extracted F* artifact."
+      : "Generated browser artifact is loaded, but the fixed-demo export was not found.";
+    if (demoRunButton) {
+      demoRunButton.addEventListener("click", function () {
+        runFixedDemoSuite();
+      });
     }
-    parsedCount += 1;
-    var meta = cases[record.case] || { task: record.case, input: "", source: "extracted F* artifact" };
-    var tr = document.createElement("tr");
-    appendCell(tr, meta.task);
-    appendCell(tr, meta.input);
-    appendCell(tr, formatResult(record.result));
-    appendCell(tr, meta.source);
-    tbody.appendChild(tr);
-  });
-
-  status.textContent = "Rendered " + parsedCount + " result lines from the extracted F* browser artifact.";
+    if (rows.length > 0) {
+      status.textContent = "Output was present before page setup; press Run fixed examples to refresh it deliberately.";
+    }
+  }
 
   function appendCell(tr, value) {
     var td = document.createElement("td");
@@ -216,6 +203,53 @@
       return "[" + value.codepoints.join(",") + "]";
     }
     return JSON.stringify(value);
+  }
+
+  function renderFixedRows(lines) {
+    if (!tbody || !status) {
+      return;
+    }
+    tbody.textContent = "";
+    var parsedCount = 0;
+    lines.forEach(function (line) {
+      var record;
+      try {
+        record = JSON.parse(line);
+      } catch (_error) {
+        return;
+      }
+      parsedCount += 1;
+      var meta = cases[record.case] || { task: record.case, input: "", source: "extracted F* artifact" };
+      var tr = document.createElement("tr");
+      appendCell(tr, meta.task);
+      appendCell(tr, meta.input);
+      appendCell(tr, formatResult(record.result));
+      appendCell(tr, meta.source);
+      tbody.appendChild(tr);
+    });
+    status.textContent = "Rendered " + parsedCount + " result lines from the extracted F* browser artifact.";
+  }
+
+  function runFixedDemoSuite() {
+    if (!tbody || !status) {
+      return;
+    }
+    if (typeof root.wikifnFstarRunPrimitiveDemo !== "function") {
+      status.textContent = "Cannot run: wikifnFstarRunPrimitiveDemo was not exported by the generated artifact.";
+      return;
+    }
+    root.wikifnFstarPrimitiveDemoOutput = [];
+    if (rawOutput) {
+      rawOutput.textContent = "";
+    }
+    tbody.textContent = "";
+    status.textContent = "Running fixed examples in the extracted F* browser artifact...";
+    try {
+      root.wikifnFstarRunPrimitiveDemo();
+      renderFixedRows(root.wikifnFstarPrimitiveDemoOutput || []);
+    } catch (error) {
+      status.textContent = "Fixed examples failed: " + String(error && error.message ? error.message : error);
+    }
   }
 
   var callForm = document.getElementById("fstar-call-form");
@@ -256,8 +290,7 @@
       event.preventDefault();
       runBrowserCall();
     });
-
-    runBrowserCall();
+    callOutput.textContent = "Choose a path and function, then press Run Extracted F*.";
   }
 
   if (irForm && irInput && irOutput) {
@@ -265,8 +298,7 @@
       event.preventDefault();
       runJsonIr();
     });
-
-    runJsonIr();
+    irOutput.textContent = "Press Run JSON IR to send this expression to the extracted F* evaluator.";
   }
 
   if (zobjectForm && zobjectInput && zobjectOutput) {
@@ -274,8 +306,7 @@
       event.preventDefault();
       runZObject();
     });
-
-    runZObject();
+    zobjectOutput.textContent = "Press Run Z7 Call to lower this supported ZObject call into the extracted F* evaluator.";
   }
 
   function runBrowserCall() {
