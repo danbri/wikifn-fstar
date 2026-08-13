@@ -49,12 +49,33 @@ make fstar-generate-compositions
 make fstar-js-demo
 node ./bin/wikifn.js fstar-demo
 node docs/generated/wikifn_primitives_demo.cjs
+make fstar-call-js
+node ./bin/wikifn.js fstar-call --mode generated Z10627 hello
+node ./bin/wikifn.js fstar-call --mode compiled Z22294 १२३
+make fstar-call-browser
 make fstar-browser-demo
 ```
 
 `make fstar-generate-compositions` regenerates `src/fstar/Wikifn.Generated.Compositions.fst` and `src/fstar/Wikifn.Compiled.Compositions.fst` from selected pinned objects in the local cache. The generated F* modules record the ZID revisions and canonical digests used for the selected paths.
 
 `make fstar-js-demo` verifies/extracts `Wikifn.Primitive.Kernel`, `Wikifn.Primitives`, `Wikifn.Composition`, `Wikifn.Generated.Compositions`, `Wikifn.Compiled.Compositions`, and `Wikifn.Specialized.Compositions`, links the extracted OCaml against F*'s `Prims.cmo`, includes `zarith_stubs_js` when invoking `js_of_ocaml`, and emits `docs/generated/wikifn_primitives_demo.cjs`. `wikifn fstar-demo` only runs that generated artifact; it does not use the junk proof-of-concept evaluator.
+
+`make fstar-call-js` builds `docs/generated/wikifn_call.cjs`, a callable Node artifact over the same extracted F* modules. The CLI wrapper is:
+
+```sh
+node ./bin/wikifn.js fstar-call [--mode generated|compiled|specialized] [--fuel N] <ZID> <text-arg>...
+```
+
+The callable artifact currently supports `Z10052`, `Z10627`, `Z11082`, `Z19612`, `Z21679`, `Z22294`, `Z22649`, `Z27053`, and `Z38114`. It decodes UTF-8 text arguments to the F* text representation and returns JSON containing the path used, input codepoints, and result.
+
+`make fstar-call-browser` builds a standalone browser-targeted callable artifact, `docs/generated/wikifn_call_browser.js`. `make fstar-browser-demo` also exports the same API from the combined page artifact, `docs/generated/wikifn_primitives_browser.js`. The page uses the combined artifact so it does not load two independent `js_of_ocaml` runtimes. Both expose:
+
+```js
+globalThis.wikifnFstarCall(mode, zid, fuel, arg0, arg1)
+globalThis.wikifnFstarSupported()
+```
+
+Those functions are exported from OCaml code linked against the F*-extracted modules; the page-side JavaScript only reads form inputs and displays returned JSON.
 
 `Wikifn.Generated.Compositions` is the selected-pinned-composition interpreter path: local cache objects become generated F* IR, then the extracted F* interpreter evaluates the IR. `Wikifn.Compiled.Compositions` is the generated direct-function path: selected pinned compositions are lowered directly into F* functions over the checked primitive kernel. `Wikifn.Specialized.Compositions` is the hand-maintained direct-function reference path for the same selected examples. The generated direct compiler recognizes the selected private-use marker idiom used by `Z36070`; that is an optimization, not a full equivalence proof for arbitrary compositions.
 

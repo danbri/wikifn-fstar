@@ -149,8 +149,52 @@
         </table>
         <pre><code>make fstar-js-demo
 node docs/generated/wikifn_primitives_demo.cjs</code></pre>
-        <p>Browser-targeted artifact:</p>
-        <pre><code>make fstar-browser-demo</code></pre>
+        <p>Callable Node artifact over the same extracted F* modules:</p>
+        <pre><code>make fstar-call-js
+node ./bin/wikifn.js fstar-call --mode generated Z10627 hello
+node ./bin/wikifn.js fstar-call --mode compiled Z22294 १२३</code></pre>
+        <p>Browser-targeted artifacts:</p>
+        <pre><code>make fstar-call-browser
+make fstar-browser-demo</code></pre>
+        <p>
+          The page uses the combined <code>wikifn_primitives_browser.js</code> artifact
+          for both the fixed table and the callable form, so it loads one
+          <code>js_of_ocaml</code> runtime.
+        </p>
+        <form id="fstar-call-form" class="call-form">
+          <label>
+            <span>Path</span>
+            <select id="fstar-call-mode">
+              <option value="compiled">compiled direct F*</option>
+              <option value="generated">generated IR interpreter</option>
+              <option value="specialized">specialized direct F*</option>
+            </select>
+          </label>
+          <label>
+            <span>Function</span>
+            <select id="fstar-call-zid">
+              <option value="Z10627">Z10627 ROT13 Latin alphabet</option>
+              <option value="Z22294">Z22294 Devanagari digits to Arabic digits</option>
+              <option value="Z22649">Z22649 Arabic numerals to Devanagari numerals</option>
+              <option value="Z27053">Z27053 digits to subscript</option>
+              <option value="Z19612">Z19612 turn to superscript</option>
+              <option value="Z10052">Z10052 remove regular spaces</option>
+              <option value="Z21679">Z21679 decimal comma to point</option>
+              <option value="Z38114">Z38114 French contractions</option>
+              <option value="Z11082">Z11082 fallback if string is empty</option>
+            </select>
+          </label>
+          <label>
+            <span>Input</span>
+            <input id="fstar-call-arg0" value="hello">
+          </label>
+          <label>
+            <span>Fallback</span>
+            <input id="fstar-call-arg1" value="fallback">
+          </label>
+          <button type="submit">Run Extracted F*</button>
+        </form>
+        <pre id="fstar-call-output"><code></code></pre>
         <p>Representative output:</p>
         <pre><code>{"case":"Z782 is_zero(0)","result":{"ok":true,"value":{"type":"Z40","value":true}}}
 {"case":"ROT13 Latin alphabet (Z10627) on \"hello\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[117,114,121,121,98],"text":"uryyb","ascii":"uryyb"}}}
@@ -163,7 +207,7 @@ node docs/generated/wikifn_primitives_demo.cjs</code></pre>
 {"case":"Specialized F* digits to subscript (Z27053) on \"H2O\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[72,8322,79],"text":"H₂O","ascii":"HO"}}}</code></pre>
         <p>Browser artifact output:</p>
         <pre id="fstar-extraction-output"></pre>
-        <p><a href="./generated/wikifn_primitives_demo.cjs">Generated CLI JavaScript artifact</a> and <a href="./generated/wikifn_primitives_browser.js">generated browser JavaScript artifact</a></p>
+        <p><a href="./generated/wikifn_primitives_demo.cjs">Generated CLI JavaScript artifact</a>, <a href="./generated/wikifn_call.cjs">generated callable Node artifact</a>, <a href="./generated/wikifn_call_browser.js">generated callable browser artifact</a>, and <a href="./generated/wikifn_primitives_browser.js">generated browser JavaScript artifact</a></p>
       </section>
 
       <section>

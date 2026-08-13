@@ -47,6 +47,9 @@ try {
     case "fstar-demo":
       await fstarDemoCommand(args);
       break;
+    case "fstar-call":
+      await fstarCallCommand(args);
+      break;
     case "analyze":
       await analyzeCommand(args);
       break;
@@ -226,6 +229,7 @@ function usage(message) {
   wikifn eval <snapshot.json> <call.json> [fuel] [--trace] [--profile]
   wikifn eval-example [fuel] [--trace] [--profile]
   wikifn fstar-demo
+  wikifn fstar-call [--mode generated|compiled|specialized] [--fuel N] <zid> <text-arg...>
   wikifn analyze [--json] [--primitive Z1,Z2] [--max-objects N] [--max-network-objects N] [--follow-calls] [--live|--refresh-cache|--offline|--no-cache] <zid...>
   wikifn analyze-demo [--json]
   wikifn cache stats [--cache-dir DIR]
@@ -244,7 +248,16 @@ async function fstarDemoCommand(args) {
     usage("fstar-demo does not accept arguments");
   }
   const artifact = path.resolve("docs/generated/wikifn_primitives_demo.cjs");
-  const child = spawn(process.execPath, [artifact], { stdio: "inherit" });
+  await spawnNodeArtifact(artifact, []);
+}
+
+async function fstarCallCommand(args) {
+  const artifact = path.resolve("docs/generated/wikifn_call.cjs");
+  await spawnNodeArtifact(artifact, args);
+}
+
+async function spawnNodeArtifact(artifact, args) {
+  const child = spawn(process.execPath, [artifact, ...args], { stdio: "inherit" });
   const exit = await new Promise((resolve) => {
     child.on("close", (code, signal) => resolve({ code, signal }));
   });

@@ -217,4 +217,68 @@
     }
     return JSON.stringify(value);
   }
+
+  var callForm = document.getElementById("fstar-call-form");
+  var callOutput = document.querySelector("#fstar-call-output code");
+  var callZid = document.getElementById("fstar-call-zid");
+  var callArg0 = document.getElementById("fstar-call-arg0");
+  var callArg1 = document.getElementById("fstar-call-arg1");
+
+  if (callForm && callOutput && callZid && callArg0 && callArg1) {
+    var examples = {
+      Z10052: ["a b c", ""],
+      Z10627: ["hello", ""],
+      Z11082: ["", "fallback"],
+      Z19612: ["x2+y3", ""],
+      Z21679: ["3,14", ""],
+      Z22294: ["१२३", ""],
+      Z22649: ["123", ""],
+      Z27053: ["H2O", ""],
+      Z38114: ["de les amis et de le chat", ""]
+    };
+
+    callZid.addEventListener("change", function () {
+      var example = examples[callZid.value];
+      if (!example) {
+        return;
+      }
+      callArg0.value = example[0];
+      callArg1.value = example[1];
+    });
+
+    callForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      runBrowserCall();
+    });
+
+    runBrowserCall();
+  }
+
+  function runBrowserCall() {
+    var mode = document.getElementById("fstar-call-mode").value;
+    var zid = document.getElementById("fstar-call-zid").value;
+    var arg0 = document.getElementById("fstar-call-arg0").value;
+    var arg1 = document.getElementById("fstar-call-arg1").value;
+    if (typeof root.wikifnFstarCall !== "function") {
+      callOutput.textContent = JSON.stringify({
+        ok: false,
+        error: "missing_browser_artifact",
+        message: "wikifnFstarCall was not exported by the generated artifact"
+      }, null, 2);
+      return;
+    }
+    try {
+      callOutput.textContent = JSON.stringify(
+        JSON.parse(root.wikifnFstarCall(mode, zid, "500", arg0, arg1)),
+        null,
+        2
+      );
+    } catch (error) {
+      callOutput.textContent = JSON.stringify({
+        ok: false,
+        error: "browser_call_failed",
+        message: String(error && error.message ? error.message : error)
+      }, null, 2);
+    }
+  }
 })();

@@ -1,4 +1,4 @@
-.PHONY: test example fstar-check fstar-ocaml fstar-generate-compositions fstar-js-demo fstar-browser-demo setup-fstar doctor verify import-vendored-dump download-dump
+.PHONY: test example fstar-check fstar-ocaml fstar-generate-compositions fstar-js-demo fstar-call-js fstar-call-browser fstar-browser-demo setup-fstar doctor verify import-vendored-dump download-dump
 
 test:
 	node --test
@@ -17,6 +17,12 @@ fstar-generate-compositions:
 
 fstar-js-demo:
 	./scripts/build-fstar-js-demo.sh
+
+fstar-call-js:
+	./scripts/build-fstar-call.sh
+
+fstar-call-browser:
+	./scripts/build-fstar-call-browser.sh
 
 fstar-browser-demo:
 	./scripts/build-fstar-browser-demo.sh

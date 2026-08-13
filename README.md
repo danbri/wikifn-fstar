@@ -27,6 +27,9 @@ node ./bin/wikifn.js db stats
 make fstar-generate-compositions
 make fstar-js-demo
 node ./bin/wikifn.js fstar-demo
+make fstar-call-js
+node ./bin/wikifn.js fstar-call --mode compiled Z22294 १२३
+make fstar-call-browser
 make fstar-browser-demo
 make download-dump
 node ./bin/wikifn.js cache import-xml <pages-meta-current.xml.bz2>
@@ -48,6 +51,10 @@ The repo vendors one dated Wikifunctions current-pages dump under `third_party/w
 `make fstar-generate-compositions` regenerates `src/fstar/Wikifn.Generated.Compositions.fst` and `src/fstar/Wikifn.Compiled.Compositions.fst` from selected pinned objects in the local cache. The generated files are tracked so extraction works from a clean checkout; regeneration is for refreshing or auditing the selected paths.
 
 `node ./bin/wikifn.js fstar-demo` runs the generated Node artifact directly. It is the current honest CLI entry point for the F*-extracted selected-composition demo.
+
+`node ./bin/wikifn.js fstar-call` runs a callable `js_of_ocaml` artifact linked against the extracted F* modules. It currently dispatches the selected text functions `Z10052`, `Z10627`, `Z11082`, `Z19612`, `Z21679`, `Z22294`, `Z22649`, `Z27053`, and `Z38114` through one of three paths: `generated` F* IR interpreted by extracted F*, `compiled` generated direct F*, or `specialized` hand-maintained direct F*. It accepts UTF-8 text arguments and returns JSON.
+
+`make fstar-call-browser` emits standalone `docs/generated/wikifn_call_browser.js`, which exports `wikifnFstarCall(mode, zid, fuel, arg0, arg1)` in the browser from the same extracted F*/OCaml modules. `make fstar-browser-demo` also exports that browser call API from `docs/generated/wikifn_primitives_browser.js`; the GitHub Pages demo loads only that combined artifact to avoid loading two `js_of_ocaml` runtimes on one page.
 
 ## Local Toy Example
 

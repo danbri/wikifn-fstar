@@ -3,11 +3,10 @@ set -euo pipefail
 
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 ocaml_out="${FSTAR_OCAML_OUT:-$root/build/fstar/ocaml}"
-js_out="${FSTAR_BROWSER_JS_OUT:-$root/docs/generated/wikifn_primitives_browser.js}"
-bytecode="$root/build/fstar/wikifn_primitives_browser.byte"
-runner="$root/src/ocaml/wikifn_primitives_browser.ml"
+js_out="${FSTAR_CALL_BROWSER_JS_OUT:-$root/docs/generated/wikifn_call_browser.js}"
+bytecode="$root/build/fstar/wikifn_call_browser.byte"
+runner="$root/src/ocaml/wikifn_call_browser.ml"
 common="$root/src/ocaml/wikifn_call_common.ml"
-publish_stub="$root/src/js/wikifn_publish.js"
 
 fstar_locate_ocaml() {
   if command -v fstar.exe >/dev/null 2>&1; then
@@ -50,7 +49,6 @@ fi
 
 if command -v ocamlfind >/dev/null 2>&1; then
   ocamlfind ocamlc \
-    -no-check-prims \
     -package zarith,yojson,ppx_deriving_yojson.runtime,ppx_deriving.runtime,js_of_ocaml \
     -linkpkg \
     -I "$prims_dir" \
@@ -68,7 +66,6 @@ if command -v ocamlfind >/dev/null 2>&1; then
     -o "$bytecode"
 elif command -v opam >/dev/null 2>&1 && opam exec --switch=fstar -- which ocamlfind >/dev/null 2>&1; then
   opam exec --switch=fstar -- ocamlfind ocamlc \
-    -no-check-prims \
     -package zarith,yojson,ppx_deriving_yojson.runtime,ppx_deriving.runtime,js_of_ocaml \
     -linkpkg \
     -I "$prims_dir" \
@@ -90,21 +87,9 @@ else
 fi
 
 if command -v js_of_ocaml >/dev/null 2>&1; then
-  js_of_ocaml \
-    --target-env=browser \
-    "$publish_stub" \
-    +zarith_stubs_js/biginteger.js \
-    +zarith_stubs_js/runtime.js \
-    "$bytecode" \
-    -o "$js_out"
+  js_of_ocaml --target-env=browser +zarith_stubs_js/biginteger.js +zarith_stubs_js/runtime.js "$bytecode" -o "$js_out"
 elif command -v opam >/dev/null 2>&1 && opam exec --switch=fstar -- which js_of_ocaml >/dev/null 2>&1; then
-  opam exec --switch=fstar -- js_of_ocaml \
-    --target-env=browser \
-    "$publish_stub" \
-    +zarith_stubs_js/biginteger.js \
-    +zarith_stubs_js/runtime.js \
-    "$bytecode" \
-    -o "$js_out"
+  opam exec --switch=fstar -- js_of_ocaml --target-env=browser +zarith_stubs_js/biginteger.js +zarith_stubs_js/runtime.js "$bytecode" -o "$js_out"
 else
   echo "js_of_ocaml not found" >&2
   exit 127

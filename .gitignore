@@ -11,6 +11,8 @@ build/fstar/*
 !build/fstar/ocaml/*.cmo
 !build/fstar/wikifn_primitives_browser.byte
 !build/fstar/wikifn_primitives_demo.byte
+!build/fstar/wikifn_call.byte
+!build/fstar/wikifn_call_browser.byte
 tmp/
 cache/dumps/
 cache/wikifunctions/

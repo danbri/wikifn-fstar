@@ -1,3 +1,5 @@
+open Js_of_ocaml
+
 external publish : string -> unit = "wikifn_publish"
 
 let show_value = function
@@ -228,7 +230,52 @@ let run_specialized_composition_cases () =
        (Prims.of_int 20)
        (text_of_ascii "H2O"))
 
+let parse_call_fuel text =
+  try
+    let value = int_of_string text in
+    if value >= 0 then value else Wikifn_call_common.default_fuel
+  with
+  | Failure _ -> Wikifn_call_common.default_fuel
+
+let args_for_zid zid arg0 arg1 =
+  match Wikifn_call_common.spec_for_zid zid with
+  | Some (_, _, 2) -> [arg0; arg1]
+  | _ -> [arg0]
+
+let call_export mode_js zid_js fuel_js arg0_js arg1_js =
+  let mode = Js.to_string mode_js in
+  let zid = Js.to_string zid_js in
+  let fuel = parse_call_fuel (Js.to_string fuel_js) in
+  let arg0 = Js.to_string arg0_js in
+  let arg1 = Js.to_string arg1_js in
+  let result =
+    match Wikifn_call_common.parse_path mode with
+    | Some path ->
+        Wikifn_call_common.evaluate path zid fuel (args_for_zid zid arg0 arg1)
+    | None ->
+        Wikifn_call_common.error_envelope
+          ~code:"mode"
+          ("unknown mode " ^ mode)
+  in
+  Js.string result
+
+let supported_export () =
+  Js.string
+    (Printf.sprintf {|{"ok":true,"supported":%s}|}
+       (Wikifn_call_common.supported_json ()))
+
+let export_call_api () =
+  Js.Unsafe.set
+    Js.Unsafe.global
+    "wikifnFstarCall"
+    (Js.Unsafe.callback call_export);
+  Js.Unsafe.set
+    Js.Unsafe.global
+    "wikifnFstarSupported"
+    (Js.Unsafe.callback supported_export)
+
 let () =
+  export_call_api ();
   let open Wikifn_Primitives in
   run_case "Z782 is_zero(0)" PIsZero (VNat Prims.int_zero);
   run_case "Z783 successor(2)" PSuccessor (VNat (Prims.of_int 2));
