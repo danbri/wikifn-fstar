@@ -10,24 +10,35 @@
     <main>
       <header>
         <p class="eyebrow">wikifn-fstar</p>
-        <h1>Wikifunctions composition analysis prototype</h1>
+        <h1>Wikifunctions compositions, checked by F*</h1>
         <p>
-          A small repository for importing pinned Wikifunctions ZObjects, running a prototype
-          composition interpreter, and checking an initial F* model.
+          745 real Wikifunctions compositions, mechanically translated into F*,
+          checked by F*, extracted to OCaml, compiled to JavaScript, and runnable
+          in a browser. 172 of them pass every Wikifunctions tester this project
+          can read.
         </p>
+        <p><a href="./demo-engine.html"><strong>Try the engine in your browser</strong></a></p>
       </header>
 
       <section>
         <h2>What works now</h2>
+        <table class="demo-table">
+          <tbody>
+            <tr><th>Functions in the corpus</th><td>4,970</td></tr>
+            <tr><th>Closing over the current primitives</th><td>890 (388 without recursion, 502 with)</td></tr>
+            <tr><th>Translated into F* and verified</th><td><strong>745</strong></td></tr>
+            <tr><th>Passing every readable Wikifunctions tester</th><td><strong>172</strong></td></tr>
+            <tr><th>Passing at least one tester</th><td>206</td></tr>
+            <tr><th>Rendered back to canonical Wikifunctions compositions</th><td>745 of 745, identical on round trip</td></tr>
+          </tbody>
+        </table>
         <ul>
-          <li>Canonical ZObject JSON parsing and normalization.</li>
-          <li>Basic structural checks for local snapshots.</li>
-          <li>Revision and SHA-256 digest recording for imported objects.</li>
-          <li>A vendored 20260801 Wikifunctions dump and local SQLite composition graph index.</li>
-          <li>A deliberately named junk proof-of-concept JavaScript evaluator for a small `Z14K2` composition subset.</li>
-          <li>A bounded Wikifunctions analyzer that reports composition-closed graphs and open frontiers.</li>
-          <li>An initial F* model and primitive kernel checked by `make fstar-check`.</li>
-          <li>A real F* to OCaml to JavaScript extraction demo for checked primitives, selected generated composition IR, generated direct F* functions, and direct specialized functions.</li>
+          <li>An F* evaluator with lists, pairs, function references, and the LISP core: <code>cons</code>, <code>car</code>, <code>cdr</code>, <code>null?</code>, <code>if</code>, <code>map</code>, <code>filter</code>, <code>fold</code>.</li>
+          <li>A ZObject model, identifier parsing, and canonical-form normalisation, all as checked F* definitions rather than assumptions.</li>
+          <li>A generator that translates pinned <code>Z14K2</code> compositions into F*, recording revision and digest for each.</li>
+          <li>A fixpoint closure analysis over the whole corpus in under a second.</li>
+          <li>Every generated body also printed as an s-expression, and rendered back to canonical Wikifunctions composition data.</li>
+          <li>A vendored 20260801 dump, local SQLite composition graph index, and digest-pinned object cache.</li>
         </ul>
       </section>
 
@@ -36,7 +47,10 @@
         <ul>
           <li>It is not a proof that arbitrary Python or JavaScript `Z16` implementations are correct.</li>
           <li>Completing evaluator coverage is the current priority; unsupported ZObject forms and foreign-code boundaries are still reported explicitly.</li>
-          <li>It is not yet using F* as the format of record.</li>
+          <li>The primitives are authored F*, not derived from Wikifunctions. They are a claim about what Wikifunctions means, checked against its own testers rather than proved.</li>
+          <li>There is no object store, so references in argument position are refused rather than resolved.</li>
+          <li>Records, errors, and monolingual text are not yet values.</li>
+          <li>Deep recursion exhausts fuel rather than returning an answer.</li>
           <li>It is not yet a Low*/KaRaMeL C extraction target.</li>
           <li>The deliberately named junk JavaScript composition evaluator is a pre-F* prototype, not extracted F* code.</li>
           <li>Closure claims are relative to the fetched corpus and the selected primitive policy.</li>
@@ -51,19 +65,23 @@
           composition graph browsing.
         </p>
         <ul>
-          <li><a href="./demo-z22294.html">Best current demo: Z22294 through extracted F*</a></li>
+          <li><a href="./demo-engine.html">Engine browser: search, read, and run all 745 functions</a></li>
+          <li><a href="./engine.md">How the engine works, and what is generated versus authored</a></li>
+          <li><a href="./demo-z22294.html">Focused demo: Z22294 through extracted F*</a></li>
           <li><a href="./demos.html">Demos menu</a></li>
           <li><a href="./extraction.md">Extraction notes and CLI commands</a></li>
-          <li><a href="./generated/wikifn_primitives_browser.js">Combined generated browser artifact</a></li>
+          <li><a href="./generated/wikifn.scm">All 745 compositions as s-expressions</a></li>
+          <li><a href="./generated/wikifn-compositions.json">All 745 rendered back as canonical Wikifunctions data</a></li>
+          <li><a href="./generated/functions.json">Function catalogue with provenance</a></li>
         </ul>
       </section>
 
       <section>
         <h2>Next grounding frontier</h2>
         <p>
-          The local SQLite graph says the next useful F* primitive work is mostly
-          lists, string joins, object access, and higher-order list traversal.
-          These are high-reuse leaves in existing compositions.
+          Lists and higher-order list functions are now implemented. The closure
+          analysis says these four are what gate the most remaining functions,
+          counted as how many functions each one blocks.
         </p>
         <table class="demo-table">
           <thead>
@@ -77,27 +95,27 @@
           <tbody>
             <tr>
               <td>1</td>
-              <td>List head/tail/empty/prepend/length</td>
-              <td><code>Z811</code>, <code>Z812</code>, <code>Z813</code>, <code>Z810</code>, <code>Z12681</code></td>
-              <td>These appear across hundreds of composition implementations and unlock recursive list algorithms.</td>
+              <td>Value by key</td>
+              <td><code>Z803</code></td>
+              <td>Blocks about 2,700 functions. Needs records as values.</td>
             </tr>
             <tr>
               <td>2</td>
-              <td>String join-list and delimiter joins</td>
-              <td><code>Z21394</code>, <code>Z12899</code></td>
-              <td>Needed for readable text-generation demos after the basic string primitives.</td>
+              <td>Throw Error</td>
+              <td><code>Z851</code></td>
+              <td>Blocks about 2,300. Needs errors (<code>Z5</code>) as values.</td>
             </tr>
             <tr>
               <td>3</td>
-              <td>Object access</td>
-              <td><code>Z803</code>, <code>Z805</code>, <code>Z808</code>, <code>Z22475</code></td>
-              <td>Large unlock, but it needs explicit ZObject/key semantics rather than a scalar primitive.</td>
+              <td>Reify and Unquote</td>
+              <td><code>Z805</code>, <code>Z899</code></td>
+              <td>Blocks about 2,200 each. Reflection over the object graph.</td>
             </tr>
             <tr>
               <td>4</td>
-              <td>Higher-order list functions</td>
-              <td><code>Z873</code>, <code>Z876</code>, <code>Z12696</code></td>
-              <td>High reuse, but requires first-class function values, equality policy, and trace/fuel semantics.</td>
+              <td>Codepoint list conversions</td>
+              <td><code>Z22693</code>, <code>Z22717</code></td>
+              <td>Blocks about 2,200. Bridges text and typed lists.</td>
             </tr>
           </tbody>
         </table>

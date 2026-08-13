@@ -26,12 +26,13 @@ let bind_kernel (#a:Type0) (#b:Type0)
   | KOk x -> f x
   | KErr e -> KErr e
 
-let rec nat_eq (a:nat) (b:nat) : Tot bool =
-  match a, b with
-  | 0, 0 -> true
-  | 0, _ -> false
-  | _, 0 -> false
-  | _, _ -> nat_eq (a - 1) (b - 1)
+(* Decidable equality on nat, not unary recursion. The recursive form costs
+   O(min a b) steps, and every codepoint comparison against a private-use
+   marker near 61000 then costs about 61000 bignum operations after
+   extraction. The comparison functions below already use the built-in
+   operators; this one was the outlier. *)
+let nat_eq (a:nat) (b:nat) : Tot bool =
+  a = b
 
 let nat_is_zero (n:nat) : Tot bool =
   match n with

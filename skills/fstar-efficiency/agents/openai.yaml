@@ -1,0 +1,4 @@
+interface:
+  display_name: "F* Efficiency"
+  short_description: "Make F*, its extracted code, and corpus analysis fast without weakening proofs."
+  default_prompt: "Find and fix the performance problem in this F* code or corpus analysis, then re-check and re-measure."

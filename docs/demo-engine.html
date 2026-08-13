@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Wikifn engine browser</title>
+    <link rel="stylesheet" href="./styles.css">
+    <style>
+      .engine-layout { display: grid; gap: 1.5rem; grid-template-columns: minmax(0, 1fr); }
+      @media (min-width: 60rem) { .engine-layout { grid-template-columns: 20rem minmax(0, 1fr); } }
+      .function-list { max-height: 30rem; overflow-y: auto; border: 1px solid var(--rule, #d8d8d8); border-radius: 0.4rem; }
+      .function-list button { display: block; width: 100%; text-align: left; border: 0; background: none;
+        padding: 0.4rem 0.6rem; cursor: pointer; font: inherit; border-bottom: 1px solid rgba(128,128,128,0.15); }
+      .function-list button:hover { background: rgba(128, 128, 128, 0.12); }
+      .function-list button[aria-pressed="true"] { background: rgba(90, 140, 220, 0.18); font-weight: 600; }
+      .function-list .zid { font-family: ui-monospace, monospace; font-size: 0.85em; opacity: 0.75; }
+      .count { opacity: 0.75; font-size: 0.9em; }
+      .arg-row { display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.4rem; }
+      .arg-row label { min-width: 9rem; font-family: ui-monospace, monospace; font-size: 0.85em; }
+      .arg-row input { flex: 1; }
+      pre.sexpr { overflow-x: auto; }
+      .provenance { font-size: 0.85em; opacity: 0.8; }
+      .provenance code { word-break: break-all; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <p class="eyebrow">wikifn-fstar</p>
+        <h1>Wikifn Engine Browser</h1>
+        <p>
+          745 real Wikifunctions compositions, mechanically translated into F*,
+          checked by F*, extracted to OCaml, compiled to JavaScript, and running
+          in this page. Search for a function, read its source as an
+          s-expression, and run it.
+        </p>
+        <p><a href="./demos.html">Demos menu</a> &middot; <a href="./engine.md">How it works</a></p>
+      </header>
+
+      <section>
+        <h2>Load the engine</h2>
+        <p>
+          The artifact is about 236&nbsp;KB and the catalogue about 380&nbsp;KB.
+          Nothing is fetched or run until you press the button.
+        </p>
+        <button id="engine-load" class="demo-action" type="button">Load engine</button>
+        <div id="engine-status" class="demo-status">Not loaded.</div>
+      </section>
+
+      <section id="engine-panel" hidden>
+        <h2>Browse and run</h2>
+        <div class="engine-layout">
+          <div>
+            <label>
+              <span>Search</span>
+              <input id="engine-search" type="search" placeholder="rot13, numerals, Z22294" autocomplete="off">
+            </label>
+            <p class="count" id="engine-count"></p>
+            <div class="function-list" id="engine-list"></div>
+          </div>
+
+          <div>
+            <h3 id="engine-title">Select a function</h3>
+            <p class="provenance" id="engine-provenance"></p>
+
+            <form id="engine-form" class="call-form" hidden>
+              <div id="engine-args"></div>
+              <div class="arg-row">
+                <label for="engine-fuel">fuel</label>
+                <input id="engine-fuel" value="5000" inputmode="numeric">
+              </div>
+              <button type="submit">Run</button>
+            </form>
+
+            <pre id="engine-output"><code></code></pre>
+
+            <h4>Source</h4>
+            <p class="count">
+              The composition, printed as an s-expression. Names are the ZID
+              followed by the English label, so the text reads as language while
+              still mapping back to identifiers. Primitives that LISP already
+              named keep the classical name.
+            </p>
+            <pre class="sexpr" id="engine-sexpr"><code></code></pre>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>What this is and is not</h2>
+        <ul>
+          <li>
+            Each body is a mechanical translation of a pinned <code>Z14K2</code>
+            composition. None of it was written by hand, and each carries the
+            revision and digest it came from.
+          </li>
+          <li>
+            The primitives underneath <em>are</em> written by hand, in F*. They
+            are a claim about what Wikifunctions means, checked against
+            Wikifunctions' own testers rather than proved.
+          </li>
+          <li>
+            172 of these functions pass every tester this project can read, and
+            206 pass at least one. The rest are unverified.
+          </li>
+          <li>
+            Arguments are literal values. There is no object store, so a
+            reference is refused rather than read as text.
+          </li>
+          <li>
+            Deep recursion runs out of fuel rather than returning an answer.
+            That is reported, not hidden.
+          </li>
+        </ul>
+        <p>
+          Downloads:
+          <a href="./generated/functions.json">catalogue</a>,
+          <a href="./generated/wikifn.scm">all 745 as s-expressions</a>,
+          <a href="./generated/wikifn-compositions.json">all 745 back as canonical Wikifunctions compositions</a>.
+        </p>
+      </section>
+    </main>
+
+    <script>
+      (function () {
+        const status = document.getElementById("engine-status");
+        const panel = document.getElementById("engine-panel");
+        const listEl = document.getElementById("engine-list");
+        const countEl = document.getElementById("engine-count");
+        const searchEl = document.getElementById("engine-search");
+        const titleEl = document.getElementById("engine-title");
+        const provenanceEl = document.getElementById("engine-provenance");
+        const formEl = document.getElementById("engine-form");
+        const argsEl = document.getElementById("engine-args");
+        const fuelEl = document.getElementById("engine-fuel");
+        const outputEl = document.querySelector("#engine-output code");
+        const sexprEl = document.querySelector("#engine-sexpr code");
+
+        let functions = [];
+        let selected = null;
+
+        document.getElementById("engine-load").addEventListener("click", async function () {
+          this.disabled = true;
+          status.textContent = "Loading catalogue and engine…";
+          try {
+            const catalogue = await fetch("./generated/functions.json").then((r) => r.json());
+            functions = catalogue.functions;
+            await new Promise((resolve, reject) => {
+              const script = document.createElement("script");
+              script.src = "./generated/wikifn_engine.js";
+              script.onload = resolve;
+              script.onerror = () => reject(new Error("could not load the engine artifact"));
+              document.head.appendChild(script);
+            });
+            if (typeof globalThis.wikifnEngineCall !== "function") {
+              throw new Error("the artifact did not export wikifnEngineCall");
+            }
+            status.textContent = functions.length + " functions ready.";
+            panel.hidden = false;
+            render("");
+          } catch (error) {
+            status.textContent = "Failed: " + error.message;
+            this.disabled = false;
+          }
+        });
+
+        function render(query) {
+          const needle = query.trim().toLowerCase();
+          const matches = needle
+            ? functions.filter((f) =>
+                f.zid.toLowerCase().includes(needle) ||
+                f.name.toLowerCase().includes(needle) ||
+                (f.label || "").toLowerCase().includes(needle))
+            : functions;
+          countEl.textContent = matches.length + " of " + functions.length + " functions";
+          listEl.replaceChildren();
+          for (const entry of matches.slice(0, 300)) {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.setAttribute("aria-pressed", String(selected && selected.zid === entry.zid));
+            const zid = document.createElement("span");
+            zid.className = "zid";
+            zid.textContent = entry.zid + " ";
+            button.append(zid, document.createTextNode(entry.label || entry.name));
+            button.addEventListener("click", () => select(entry, query));
+            listEl.append(button);
+          }
+          if (matches.length > 300) {
+            const note = document.createElement("p");
+            note.className = "count";
+            note.textContent = "Showing the first 300. Narrow the search to see more.";
+            listEl.append(note);
+          }
+        }
+
+        function select(entry, query) {
+          selected = entry;
+          titleEl.textContent = entry.zid + " " + (entry.label || entry.name);
+          provenanceEl.innerHTML =
+            "generated name <code>" + entry.name + "</code> &middot; arity " + entry.arity +
+            " &middot; from implementation <code>" + entry.implementation +
+            "</code> revision " + entry.revision +
+            "<br>digest <code>" + entry.digest + "</code>";
+          sexprEl.textContent = entry.sexpr || "";
+          outputEl.textContent = "";
+
+          argsEl.replaceChildren();
+          const keys = entry.argumentKeys || [];
+          for (let index = 0; index < entry.arity; index += 1) {
+            const row = document.createElement("div");
+            row.className = "arg-row";
+            const label = document.createElement("label");
+            const id = "engine-arg-" + index;
+            label.setAttribute("for", id);
+            label.textContent = keys[index] || ("argument " + index);
+            const input = document.createElement("input");
+            input.id = id;
+            input.dataset.argIndex = String(index);
+            row.append(label, input);
+            argsEl.append(row);
+          }
+          formEl.hidden = false;
+          render(query);
+        }
+
+        formEl.addEventListener("submit", function (event) {
+          event.preventDefault();
+          if (!selected) return;
+          const inputs = Array.from(argsEl.querySelectorAll("input"));
+          // Arguments are literal values: a quoted string, a number, true or
+          // false, or a JSON array of those. Anything else is sent as text.
+          const args = inputs.map((input) => {
+            const raw = input.value;
+            if (/^\s*(\[|\d+\s*$|true\s*$|false\s*$)/.test(raw)) {
+              try { return JSON.parse(raw); } catch (error) { return raw; }
+            }
+            return raw;
+          });
+          let response;
+          try {
+            response = globalThis.wikifnEngineCall(selected.zid, fuelEl.value || "5000", JSON.stringify(args));
+          } catch (error) {
+            response = JSON.stringify({
+              ok: false,
+              error: "depth",
+              message: "evaluation nested deeper than the browser stack allows; lower the fuel or simplify the input"
+            });
+          }
+          try {
+            outputEl.textContent = JSON.stringify(JSON.parse(response), null, 2);
+          } catch (error) {
+            outputEl.textContent = String(response);
+          }
+        });
+
+        searchEl.addEventListener("input", () => render(searchEl.value));
+      })();
+    </script>
+  </body>
+</html>

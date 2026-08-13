@@ -1,4 +1,4 @@
-.PHONY: test example fstar-check fstar-ocaml fstar-generate-compositions fstar-js-demo fstar-call-js fstar-call-browser fstar-browser-demo setup-fstar doctor verify import-vendored-dump download-dump
+.PHONY: test example fstar-generate-eval fstar-engine engine-testers closure fstar-check fstar-ocaml fstar-generate-compositions fstar-js-demo fstar-call-js fstar-call-browser fstar-browser-demo setup-fstar doctor verify import-vendored-dump download-dump
 
 test:
 	node --test
@@ -14,6 +14,18 @@ fstar-ocaml:
 
 fstar-generate-compositions:
 	node scripts/generate-fstar-compositions.js
+
+fstar-generate-eval:
+	node scripts/generate-fstar-eval.js
+
+fstar-engine:
+	./scripts/build-fstar-engine.sh
+
+engine-testers:
+	node scripts/check-engine-testers.js
+
+closure:
+	node scripts/analyze-closure.js --set engine
 
 fstar-js-demo:
 	./scripts/build-fstar-js-demo.sh

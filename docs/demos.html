@@ -21,28 +21,30 @@
       <section>
         <h2>Best Current Demo</h2>
         <p>
-          <a href="./demo-z22294.html">Z22294 Devanagari digits to Arabic digits</a>
-          is the clearest end-to-end path today. It is a real pinned
-          Wikifunctions composition, generated into F*, checked by F*, extracted
-          to OCaml, compiled to JavaScript, and runnable in Node or the browser.
+          <a href="./demo-engine.html">The engine browser</a> carries 745 real
+          Wikifunctions compositions, mechanically translated into F*, checked by
+          F*, extracted to OCaml, compiled to JavaScript, and running in the
+          page. Search by name or ZID, read each function as an s-expression,
+          and run it.
         </p>
         <p>
-          This is the best answer to: can we already get JavaScript from a
-          complete composed Wikifunction that uses only the supported primitive
-          kernel? For this selected path, yes, relative to the pinned local
-          objects and the current grounded primitives.
+          This is the answer to: can we get JavaScript from complete composed
+          Wikifunctions that bottom out in a checked primitive kernel? For 745 of
+          them, yes, relative to the pinned local objects. 172 pass every
+          Wikifunctions tester the project can read.
         </p>
         <p>
-          The current real end-to-end selected composition demos are mostly
-          text/control functions. Numeric primitives are grounded and runnable
-          through the playground JSON IR, but a real generated numeric
-          Wikifunction composition has not yet been promoted as the lead demo.
+          Each body also renders back to canonical Wikifunctions composition
+          data, identically on round trip, so the F* form is convertible into
+          wiki data rather than only derived from it.
         </p>
       </section>
 
       <section>
         <h2>Other Pages</h2>
         <ul>
+          <li><a href="./demo-z22294.html">Z22294 focused demo</a>: one composition end to end, in detail.</li>
+          <li><a href="./engine.md">Engine notes</a>: what is generated, what is authored, and the measured numbers.</li>
           <li><a href="./demo-playground.html">Extracted F* playground</a>: fixed examples, callable paths, JSON IR, and supported <code>Z7</code> calls.</li>
           <li><a href="./demo-trees.html">Composition trees</a>: local D3 graph browser for selected Wikifunctions trees.</li>
           <li><a href="./extraction.md">Extraction notes</a>: commands and current limitations.</li>

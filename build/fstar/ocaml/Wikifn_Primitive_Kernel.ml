@@ -47,15 +47,7 @@ let __proj__KErr__item___0 : 'a . 'a kernel_result -> kernel_error =
 let bind_kernel :
   'a 'b . 'a kernel_result -> ('a -> 'b kernel_result) -> 'b kernel_result =
   fun r -> fun f -> match r with | KOk x -> f x | KErr e -> KErr e
-let rec (nat_eq : Prims.nat -> Prims.nat -> Prims.bool) =
-  fun a ->
-    fun b ->
-      match (a, b) with
-      | (uu___, uu___1) when
-          (uu___ = Prims.int_zero) && (uu___1 = Prims.int_zero) -> true
-      | (uu___, uu___1) when uu___ = Prims.int_zero -> false
-      | (uu___, uu___1) when uu___1 = Prims.int_zero -> false
-      | (uu___, uu___1) -> nat_eq (a - Prims.int_one) (b - Prims.int_one)
+let (nat_eq : Prims.nat -> Prims.nat -> Prims.bool) = fun a -> fun b -> a = b
 let (nat_is_zero : Prims.nat -> Prims.bool) =
   fun n ->
     match n with | uu___ when uu___ = Prims.int_zero -> true | uu___ -> false

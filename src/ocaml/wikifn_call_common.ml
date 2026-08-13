@@ -523,8 +523,32 @@ let zobject_bool_value = function
     end
   | _ -> Error "expected Z40K1 boolean identity Z41 or Z42"
 
+(* In canonical form a bare string shaped like a ZID is a reference to another
+   object, not literal text. This adapter has no object store, so such a string
+   must be refused rather than silently read as text. An explicit Z6 object is
+   the escape hatch for text that looks like a ZID. *)
+let is_zid_string text =
+  let length = String.length text in
+  if length < 2 then false
+  else if text.[0] <> 'Z' then false
+  else if text.[1] = '0' then false
+  else begin
+    let rec all_digits index =
+      if index >= length then true
+      else match text.[index] with
+        | '0' .. '9' -> all_digits (index + 1)
+        | _ -> false
+    in
+    all_digits 1
+  end
+
 let rec parse_zobject_expr json =
   match json with
+  | `String text when is_zid_string text ->
+      Error
+        (Printf.sprintf
+           "%s is a reference; this adapter resolves no references. Use an explicit Z6 object for literal text."
+           text)
   | `String text ->
       Ok (Wikifn_Composition.EValue (Wikifn_Composition.VText (decode_utf8 text)))
   | `Assoc fields -> parse_zobject_object fields

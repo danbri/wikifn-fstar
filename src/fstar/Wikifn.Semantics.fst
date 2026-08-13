@@ -1,6 +1,17 @@
 module Wikifn.Semantics
 
+open Wikifn.Primitive.Kernel
+open Wikifn.Zid
 open Wikifn.Model
+
+(*
+  Statements about evaluation over the full ZObject model.
+
+  Everything here is still assumed. The working evaluator is Wikifn.Composition,
+  which runs over a small expression type rather than over zterm directly.
+  Connecting the two is the last step of the model work, not this file's job
+  yet; these signatures record the intended shape so the gap stays visible.
+*)
 
 type eval_error =
   | FuelExhausted
