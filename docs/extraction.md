@@ -39,8 +39,8 @@ Checked locally on 2026-08-13 in the `fstar` opam switch:
 What works in this repo today:
 
 - The F* model and primitive kernel are checked by `make fstar-check`.
-- F* extracts `Wikifn.Primitive.Kernel`, `Wikifn.Primitives`, `Wikifn.Composition`, `Wikifn.Generated.Compositions`, and `Wikifn.Specialized.Compositions` to OCaml with `--codegen OCaml`.
-- The extracted JS runner evaluates primitive cases, selected F* IR composition cases, and direct specialized F* functions for selected string/control functions including `Z10052`, `Z10627`, `Z11082`, `Z19612`, `Z21679`, `Z22294`, `Z22649`, `Z27053`, and `Z38114`.
+- F* extracts `Wikifn.Primitive.Kernel`, `Wikifn.Primitives`, `Wikifn.Composition`, `Wikifn.Generated.Compositions`, `Wikifn.Compiled.Compositions`, and `Wikifn.Specialized.Compositions` to OCaml with `--codegen OCaml`.
+- The extracted JS runner evaluates primitive cases, selected F* IR composition cases, generated direct F* functions, and direct specialized F* functions for selected string/control functions including `Z10052`, `Z10627`, `Z11082`, `Z19612`, `Z21679`, `Z22294`, `Z22649`, `Z27053`, and `Z38114`.
 
 What now works as a repo command:
 
@@ -52,11 +52,11 @@ node docs/generated/wikifn_primitives_demo.cjs
 make fstar-browser-demo
 ```
 
-`make fstar-generate-compositions` regenerates `src/fstar/Wikifn.Generated.Compositions.fst` from selected pinned objects in the local cache. The generated F* module records the ZID revisions and canonical digests used for the selected paths.
+`make fstar-generate-compositions` regenerates `src/fstar/Wikifn.Generated.Compositions.fst` and `src/fstar/Wikifn.Compiled.Compositions.fst` from selected pinned objects in the local cache. The generated F* modules record the ZID revisions and canonical digests used for the selected paths.
 
-`make fstar-js-demo` verifies/extracts `Wikifn.Primitive.Kernel`, `Wikifn.Primitives`, `Wikifn.Composition`, `Wikifn.Generated.Compositions`, and `Wikifn.Specialized.Compositions`, links the extracted OCaml against F*'s `Prims.cmo`, includes `zarith_stubs_js` when invoking `js_of_ocaml`, and emits `docs/generated/wikifn_primitives_demo.cjs`. `wikifn fstar-demo` only runs that generated artifact; it does not use the junk proof-of-concept evaluator.
+`make fstar-js-demo` verifies/extracts `Wikifn.Primitive.Kernel`, `Wikifn.Primitives`, `Wikifn.Composition`, `Wikifn.Generated.Compositions`, `Wikifn.Compiled.Compositions`, and `Wikifn.Specialized.Compositions`, links the extracted OCaml against F*'s `Prims.cmo`, includes `zarith_stubs_js` when invoking `js_of_ocaml`, and emits `docs/generated/wikifn_primitives_demo.cjs`. `wikifn fstar-demo` only runs that generated artifact; it does not use the junk proof-of-concept evaluator.
 
-`Wikifn.Generated.Compositions` is the selected-pinned-composition interpreter path: local cache objects become generated F* IR, then the extracted F* interpreter evaluates the IR. `Wikifn.Specialized.Compositions` is the C-priority path: selected closed composition paths are lowered into direct F* functions over the checked primitive kernel.
+`Wikifn.Generated.Compositions` is the selected-pinned-composition interpreter path: local cache objects become generated F* IR, then the extracted F* interpreter evaluates the IR. `Wikifn.Compiled.Compositions` is the generated direct-function path: selected pinned compositions are lowered directly into F* functions over the checked primitive kernel. `Wikifn.Specialized.Compositions` is the hand-maintained direct-function reference path for the same selected examples. The generated direct compiler recognizes the selected private-use marker idiom used by `Z36070`; that is an optimization, not a full equivalence proof for arbitrary compositions.
 
 The interpreter now has a checked `Z14613` fast path in `Wikifn.Composition`, so generated IR for ROT13, superscript, script conversion, and subscript examples can run in the browser demo. The fast path is a direct F* implementation of the selected `Z14613` string-transform semantics; a full equivalence proof against every expansion of recursive `Z36070` is still future work.
 
@@ -64,12 +64,14 @@ The interpreter now has a checked `Z14613` fast path in `Wikifn.Composition`, so
 
 The browser artifact was checked under Node with a minimal DOM shim (`document.getElementById("fstar-extraction-output")`, `TextDecoder`, and `TextEncoder`). It appended the same JSON result lines to the target element.
 
-The generated JavaScript currently prints 22 JSON lines. Representative lines:
+The generated JavaScript currently prints 31 JSON lines. Representative lines:
 
 ```json
 {"case":"Z782 is_zero(0)","result":{"ok":true,"value":{"type":"Z40","value":true}}}
 {"case":"ROT13 Latin alphabet (Z10627) on \"hello\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[117,114,121,121,98],"text":"uryyb","ascii":"uryyb"}}}
 {"case":"Turn to superscript (Z19612) on \"x2+y3\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[739,178,8314,696,179],"text":"ˣ²⁺ʸ³","ascii":""}}}
+{"case":"Compiled F* ROT13 Latin alphabet (Z10627) on \"hello\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[117,114,121,121,98],"text":"uryyb","ascii":"uryyb"}}}
+{"case":"Compiled F* turn to superscript (Z19612) on \"x2+y3\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[739,178,8314,696,179],"text":"ˣ²⁺ʸ³","ascii":""}}}
 {"case":"Arabic numerals to Devanagari numerals (Z22649) on \"123\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[2407,2408,2409],"text":"१२३","ascii":""}}}
 {"case":"Specialized F* ROT13 Latin alphabet (Z10627) on \"hello\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[117,114,121,121,98],"text":"uryyb","ascii":"uryyb"}}}
 {"case":"Specialized F* turn to superscript (Z19612) on \"x2+y3\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[739,178,8314,696,179],"text":"ˣ²⁺ʸ³","ascii":""}}}

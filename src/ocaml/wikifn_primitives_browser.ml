@@ -158,6 +158,41 @@ let run_extracted_composition_cases () =
     "Digits to subscript (Z27053) on \"H2O\""
     (Wikifn_Generated_Compositions.eval_generated_z27053 (Prims.of_int 500) (text_of_ascii "H2O"))
 
+let run_compiled_composition_cases () =
+  run_specialized_case
+    "Compiled F* remove regular spaces (Z10052) on \"a b c\""
+    (Wikifn_Compiled_Compositions.compiled_z10052_remove_regular_spaces (text_of_ascii "a b c"));
+  run_specialized_case
+    "Compiled F* ROT13 Latin alphabet (Z10627) on \"hello\""
+    (Wikifn_Compiled_Compositions.compiled_z10627_rot13_latin_alphabet (Prims.of_int 80) (text_of_ascii "hello"));
+  run_specialized_case
+    "Compiled F* fallback if string is empty (Z11082) on empty"
+    (Wikifn_Compiled_Compositions.compiled_z11082_fallback_if_string_is_empty [] (text_of_ascii "fallback"));
+  run_specialized_case
+    "Compiled F* turn to superscript (Z19612) on \"x2+y3\""
+    (Wikifn_Compiled_Compositions.compiled_z19612_turn_to_superscript (Prims.of_int 100) (text_of_ascii "x2+y3"));
+  run_specialized_case
+    "Compiled F* decimal comma to point (Z21679) on \"3,14\""
+    (Wikifn_Compiled_Compositions.compiled_z21679_decimal_comma_to_point (text_of_ascii "3,14"));
+  run_specialized_case
+    "Compiled F* French contractions (Z38114) on \"de les amis et de le chat\""
+    (Wikifn_Compiled_Compositions.compiled_z38114_french_contractions (text_of_ascii "de les amis et de le chat"));
+  run_specialized_case
+    "Compiled F* Devanagari digits to Arabic digits (Z22294) on codepoints [2407,2408,2409]"
+    (Wikifn_Compiled_Compositions.compiled_z22294_devanagari_digits_to_arabic_digits
+       (Prims.of_int 20)
+       [Prims.of_int 2407; Prims.of_int 2408; Prims.of_int 2409]);
+  run_specialized_case
+    "Compiled F* Arabic numerals to Devanagari numerals (Z22649) on \"123\""
+    (Wikifn_Compiled_Compositions.compiled_z22649_arabic_numerals_to_devanagari_numerals
+       (Prims.of_int 20)
+       (text_of_ascii "123"));
+  run_specialized_case
+    "Compiled F* digits to subscript (Z27053) on \"H2O\""
+    (Wikifn_Compiled_Compositions.compiled_z27053_digits_to_subscript
+       (Prims.of_int 20)
+       (text_of_ascii "H2O"))
+
 let run_specialized_composition_cases () =
   run_specialized_case
     "Specialized F* remove regular spaces (Z10052) on \"a b c\""
@@ -200,4 +235,5 @@ let () =
   run_case "Z784 predecessor(2)" PPredecessor (VNat (Prims.of_int 2));
   run_case "Z784 predecessor(0)" PPredecessor (VNat Prims.int_zero);
   run_extracted_composition_cases ();
+  run_compiled_composition_cases ();
   run_specialized_composition_cases ()

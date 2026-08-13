@@ -53,7 +53,7 @@ Immediate Wikifunctions candidates:
 
 ## Direct Specialization Targets
 
-These are good follow-ons for the C-priority path: generate or hand-lower selected closed composition paths into direct F* functions, then extract them through OCaml/JavaScript before attempting a general compiler.
+These are good follow-ons for the C-priority path: generate selected closed composition paths into direct F* functions, then extract them through OCaml/JavaScript before attempting a general compiler. The current generated direct module is `src/fstar/Wikifn.Compiled.Compositions.fst`; `src/fstar/Wikifn.Specialized.Compositions.fst` remains a hand-maintained reference path.
 
 Implemented direct specializations:
 

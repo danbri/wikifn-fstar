@@ -27,7 +27,7 @@
           <li>A deliberately named junk proof-of-concept JavaScript evaluator for a small `Z14K2` composition subset.</li>
           <li>A bounded Wikifunctions analyzer that reports composition-closed graphs and open frontiers.</li>
           <li>An initial F* model and primitive kernel checked by `make fstar-check`.</li>
-          <li>A real F* to OCaml to JavaScript extraction demo for checked primitives, selected generated composition IR, and direct specialized functions.</li>
+          <li>A real F* to OCaml to JavaScript extraction demo for checked primitives, selected generated composition IR, generated direct F* functions, and direct specialized functions.</li>
         </ul>
       </section>
 
@@ -48,9 +48,16 @@
         <p>
           This extracts the checked primitive kernel, `Wikifn.Primitives`, a small
           F* composition interpreter, generated F* IR for selected pinned compositions,
-          and direct specialized F* functions for the same selected paths. It compiles
+          generated direct F* functions for those compositions, and direct specialized F*
+          functions for the same selected paths. It compiles
           an OCaml runner and emits JavaScript with `js_of_ocaml`. It does not yet parse
           arbitrary canonical ZObject JSON at runtime.
+        </p>
+        <p>
+          The generated direct path is <code>Wikifn.Compiled.Compositions</code>. It bypasses
+          the expression interpreter for selected pinned compositions and still calls the
+          checked primitive kernel. It is a small compiler for this selected subset, not a
+          general Wikifunctions compiler yet.
         </p>
         <p>
           The interpreter now has a checked fast path for <code>Z14613</code>
@@ -88,55 +95,55 @@
               <td>Remove regular spaces</td>
               <td><code>Z10052</code> via <code>Z10077</code></td>
               <td><code>a b c</code></td>
-              <td><code>abc</code>, through generated IR and direct specialization</td>
+              <td><code>abc</code>, through generated IR, generated direct F*, and direct specialization</td>
             </tr>
             <tr>
               <td>ROT13 Latin alphabet</td>
               <td><code>Z10627</code> via <code>Z21749</code></td>
               <td><code>hello</code></td>
-              <td><code>uryyb</code>, through generated IR and direct specialization</td>
+              <td><code>uryyb</code>, through generated IR, generated direct F*, and direct specialization</td>
             </tr>
             <tr>
               <td>Fallback if string is empty</td>
               <td><code>Z11082</code> via <code>Z31951</code></td>
               <td><code>empty</code>, <code>fallback</code></td>
-              <td><code>fallback</code>, through generated IR and direct specialization</td>
+              <td><code>fallback</code>, through generated IR, generated direct F*, and direct specialization</td>
             </tr>
             <tr>
               <td>Turn to superscript</td>
               <td><code>Z19612</code> via <code>Z22828</code></td>
               <td><code>x2+y3</code></td>
-              <td><code>ˣ²⁺ʸ³</code>, through generated IR and direct specialization</td>
+              <td><code>ˣ²⁺ʸ³</code>, through generated IR, generated direct F*, and direct specialization</td>
             </tr>
             <tr>
               <td>Decimal comma to point</td>
               <td><code>Z21679</code> via <code>Z21681</code></td>
               <td><code>3,14</code></td>
-              <td><code>3.14</code>, through generated IR and direct specialization</td>
+              <td><code>3.14</code>, through generated IR, generated direct F*, and direct specialization</td>
             </tr>
             <tr>
               <td>French contraction replacement</td>
               <td><code>Z38114</code> via <code>Z38115</code></td>
               <td><code>de les amis et de le chat</code></td>
-              <td><code>des amis et du chat</code>, through generated IR and direct specialization</td>
+              <td><code>des amis et du chat</code>, through generated IR, generated direct F*, and direct specialization</td>
             </tr>
             <tr>
               <td>Devanagari digits to Arabic digits</td>
               <td><code>Z22294</code> via <code>Z22295</code>, <code>Z14613</code>, <code>Z36070</code></td>
               <td><code>[2407,2408,2409]</code></td>
-              <td><code>123</code>, through generated IR and direct specialization</td>
+              <td><code>123</code>, through generated IR, generated direct F*, and direct specialization</td>
             </tr>
             <tr>
               <td>Arabic numerals to Devanagari numerals</td>
               <td><code>Z22649</code> via <code>Z22653</code></td>
               <td><code>123</code></td>
-              <td><code>१२३</code>, through generated IR and direct specialization</td>
+              <td><code>१२३</code>, through generated IR, generated direct F*, and direct specialization</td>
             </tr>
             <tr>
               <td>Digits to subscript</td>
               <td><code>Z27053</code> via <code>Z27216</code></td>
               <td><code>H2O</code></td>
-              <td><code>H₂O</code>, through generated IR and direct specialization</td>
+              <td><code>H₂O</code>, through generated IR, generated direct F*, and direct specialization</td>
             </tr>
           </tbody>
         </table>
@@ -148,6 +155,8 @@ node docs/generated/wikifn_primitives_demo.cjs</code></pre>
         <pre><code>{"case":"Z782 is_zero(0)","result":{"ok":true,"value":{"type":"Z40","value":true}}}
 {"case":"ROT13 Latin alphabet (Z10627) on \"hello\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[117,114,121,121,98],"text":"uryyb","ascii":"uryyb"}}}
 {"case":"Turn to superscript (Z19612) on \"x2+y3\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[739,178,8314,696,179],"text":"ˣ²⁺ʸ³","ascii":""}}}
+{"case":"Compiled F* ROT13 Latin alphabet (Z10627) on \"hello\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[117,114,121,121,98],"text":"uryyb","ascii":"uryyb"}}}
+{"case":"Compiled F* turn to superscript (Z19612) on \"x2+y3\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[739,178,8314,696,179],"text":"ˣ²⁺ʸ³","ascii":""}}}
 {"case":"Arabic numerals to Devanagari numerals (Z22649) on \"123\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[2407,2408,2409],"text":"१२३","ascii":""}}}
 {"case":"Specialized F* ROT13 Latin alphabet (Z10627) on \"hello\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[117,114,121,121,98],"text":"uryyb","ascii":"uryyb"}}}
 {"case":"Specialized F* turn to superscript (Z19612) on \"x2+y3\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[739,178,8314,696,179],"text":"ˣ²⁺ʸ³","ascii":""}}}
@@ -190,7 +199,7 @@ add(4, 0)
         <ul>
           <li>`Z22294` has a composition implementation, `Z22295`.</li>
           <li>`Z22295` calls `Z14613`; `Z14613` has recursive composition implementation `Z36070`.</li>
-          <li>The extracted demo currently uses both generated F* IR and a direct specialized F* function for this selected path.</li>
+          <li>The extracted demo currently uses generated F* IR, generated direct F*, and a hand-specialized F* function for this selected path.</li>
           <li>The remaining generalization is canonical-ZObject-to-F*-IR adaptation for arbitrary functions at runtime or as a broader generation pass.</li>
         </ul>
       </section>

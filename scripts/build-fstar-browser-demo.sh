@@ -59,6 +59,7 @@ if command -v ocamlfind >/dev/null 2>&1; then
     "$ocaml_out/Wikifn_Primitives.ml" \
     "$ocaml_out/Wikifn_Composition.ml" \
     "$ocaml_out/Wikifn_Generated_Compositions.ml" \
+    "$ocaml_out/Wikifn_Compiled_Compositions.ml" \
     "$ocaml_out/Wikifn_Specialized_Compositions.ml" \
     "$runner" \
     -o "$bytecode"
@@ -74,6 +75,7 @@ elif command -v opam >/dev/null 2>&1 && opam exec --switch=fstar -- which ocamlf
     "$ocaml_out/Wikifn_Primitives.ml" \
     "$ocaml_out/Wikifn_Composition.ml" \
     "$ocaml_out/Wikifn_Generated_Compositions.ml" \
+    "$ocaml_out/Wikifn_Compiled_Compositions.ml" \
     "$ocaml_out/Wikifn_Specialized_Compositions.ml" \
     "$runner" \
     -o "$bytecode"

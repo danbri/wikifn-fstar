@@ -10,7 +10,8 @@ The runnable code is under `src/`. It currently provides:
 - a junk proof-of-concept fuelled evaluator for `Z14K2` compositions
 - a corpus analyzer for existing `Z14K2` implementations and their unverified dependency frontier
 - a small F*-extracted composition interpreter over selected pinned composition paths
-- direct F* specializations for the same selected closed composition paths
+- generated direct F* functions for the same selected pinned composition paths
+- hand-maintained direct F* specializations for the same selected paths
 
 ## Commands
 
@@ -42,9 +43,9 @@ The repo vendors one dated Wikifunctions current-pages dump under `third_party/w
 
 `node ./bin/wikifn.js db build` creates a derived SQLite index at `cache/wikifunctions.sqlite`. It indexes object provenance, functions, implementations, composition-call edges, dynamic calls, reference edges, labels, descriptions, and primitive grounding status.
 
-`make fstar-js-demo` and `make fstar-browser-demo` are actual F* extraction paths for the checked primitive modules, a small selected-composition interpreter, and direct specialized F* functions for the selected closed paths. F* verifies/extracts OCaml, OCaml compiles to bytecode, and `js_of_ocaml` emits JavaScript under `docs/generated/`. This path can run generated selected F* IR examples and direct specializations, including `Z22294`, `Z22649`, `Z27053`, `Z10627`, and `Z19612`. The interpreter includes a checked fast path for `Z14613` character-set replacement; it does not yet adapt arbitrary canonical ZObjects at runtime.
+`make fstar-js-demo` and `make fstar-browser-demo` are actual F* extraction paths for the checked primitive modules, a small selected-composition interpreter, generated direct F* functions, and hand-maintained direct specialized F* functions for the selected closed paths. F* verifies/extracts OCaml, OCaml compiles to bytecode, and `js_of_ocaml` emits JavaScript under `docs/generated/`. This path can run generated selected F* IR examples, generated compiled examples, and direct specializations, including `Z22294`, `Z22649`, `Z27053`, `Z10627`, and `Z19612`. The interpreter includes a checked fast path for `Z14613` character-set replacement; it does not yet adapt arbitrary canonical ZObjects at runtime.
 
-`make fstar-generate-compositions` regenerates `src/fstar/Wikifn.Generated.Compositions.fst` from selected pinned objects in the local cache. The generated file is tracked so extraction works from a clean checkout; regeneration is for refreshing or auditing the selected paths.
+`make fstar-generate-compositions` regenerates `src/fstar/Wikifn.Generated.Compositions.fst` and `src/fstar/Wikifn.Compiled.Compositions.fst` from selected pinned objects in the local cache. The generated files are tracked so extraction works from a clean checkout; regeneration is for refreshing or auditing the selected paths.
 
 `node ./bin/wikifn.js fstar-demo` runs the generated Node artifact directly. It is the current honest CLI entry point for the F*-extracted selected-composition demo.
 

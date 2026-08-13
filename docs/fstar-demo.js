@@ -70,6 +70,51 @@
       input: "x2+y3",
       source: "generated F* IR: Z19612 -> Z22828 -> Z14613 fast path"
     },
+    "Compiled F* remove regular spaces (Z10052) on \"a b c\"": {
+      task: "Remove regular spaces",
+      input: "a b c",
+      source: "generated direct F*: Z10052 -> Z10077"
+    },
+    "Compiled F* ROT13 Latin alphabet (Z10627) on \"hello\"": {
+      task: "ROT13 Latin alphabet",
+      input: "hello",
+      source: "generated direct F*: Z10627 -> Z21749 -> Z14613 marker optimization"
+    },
+    "Compiled F* fallback if string is empty (Z11082) on empty": {
+      task: "Fallback if string is empty",
+      input: "empty, fallback",
+      source: "generated direct F*: Z11082 -> Z31951"
+    },
+    "Compiled F* turn to superscript (Z19612) on \"x2+y3\"": {
+      task: "Turn to superscript",
+      input: "x2+y3",
+      source: "generated direct F*: Z19612 -> Z22828 -> Z14613 marker optimization"
+    },
+    "Compiled F* decimal comma to point (Z21679) on \"3,14\"": {
+      task: "Decimal comma to point",
+      input: "3,14",
+      source: "generated direct F*: Z21679 -> Z21681"
+    },
+    "Compiled F* French contractions (Z38114) on \"de les amis et de le chat\"": {
+      task: "French contraction replacement",
+      input: "de les amis et de le chat",
+      source: "generated direct F*: Z38114 -> Z38115"
+    },
+    "Compiled F* Devanagari digits to Arabic digits (Z22294) on codepoints [2407,2408,2409]": {
+      task: "Devanagari digits to Arabic digits",
+      input: "codepoints [2407,2408,2409]",
+      source: "generated direct F*: Z22294 -> Z22295 -> Z14613 marker optimization"
+    },
+    "Compiled F* Arabic numerals to Devanagari numerals (Z22649) on \"123\"": {
+      task: "Arabic numerals to Devanagari numerals",
+      input: "123",
+      source: "generated direct F*: Z22649 -> Z22653 -> Z14613 marker optimization"
+    },
+    "Compiled F* digits to subscript (Z27053) on \"H2O\"": {
+      task: "Digits to subscript",
+      input: "H2O",
+      source: "generated direct F*: Z27053 -> Z27216 -> Z14613 marker optimization"
+    },
     "Specialized F* remove regular spaces (Z10052) on \"a b c\"": {
       task: "Remove regular spaces",
       input: "a b c",
