@@ -99,14 +99,25 @@ Keep recursive SQL bounded and seed-specific. A first unbounded recursive CTE ov
 
 ## F* Extraction Status
 
-The current honest extraction target is tiny:
+The current honest extraction target is primitive-kernel only:
 
 ```sh
 make fstar-js-demo
 make fstar-browser-demo
 ```
 
-This verifies/extracts `src/fstar/Wikifn.Primitives.fst` to OCaml, compiles repo-owned OCaml runners, and invokes `js_of_ocaml`. It is not yet the Wikifunctions interpreter.
+This verifies/extracts `src/fstar/Wikifn.Primitive.Kernel.fst`, `src/fstar/Wikifn.Primitives.fst`, and `src/fstar/Wikifn.Composition.fst` to OCaml, compiles repo-owned OCaml runners, and invokes `js_of_ocaml`. It is not yet a general canonical-ZObject interpreter.
+
+`Z36070` is not primarily blocked by a Python/JavaScript-only dependency. Its direct frontier is the string/control layer: `Z10008`, `Z10075`, `Z10901`, `Z14124`, `Z14456`, `Z14520`, recursive `Z14613`, and `Z802`. The repo has checked high-level F* kernel definitions for those direct string/control operations and a selected-composition F* interpreter, but still lacks canonical-ZObject adapters and a general implementation-selection policy over pinned worlds.
+
+As of the first selected-composition interpreter pass, the extracted Node/browser artifacts run F* IR cases for:
+
+- `Z10052`: remove regular spaces
+- `Z21679`: convert decimal string from comma to point
+- `Z38114`: replace "de les" with "des" and "de le" with "du"
+- `Z22294`: Devanagari digits to Arabic digits
+
+Keep web/UI text label-first. Use ZIDs as provenance after the human-readable function name.
 
 Runtime check:
 

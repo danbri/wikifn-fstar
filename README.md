@@ -7,8 +7,9 @@ The runnable code is under `src/`. It currently provides:
 - canonical ZObject parsing and normalization
 - basic structural checks
 - revision-pinned snapshot import
-- a small fuelled evaluator for `Z14K2` compositions
+- a junk proof-of-concept fuelled evaluator for `Z14K2` compositions
 - a corpus analyzer for existing `Z14K2` implementations and their unverified dependency frontier
+- a small F*-extracted composition interpreter over selected pinned composition paths
 
 ## Commands
 
@@ -38,7 +39,7 @@ The repo vendors one dated Wikifunctions current-pages dump under `third_party/w
 
 `node ./bin/wikifn.js db build` creates a derived SQLite index at `cache/wikifunctions.sqlite`. It indexes object provenance, functions, implementations, composition-call edges, dynamic calls, reference edges, labels, descriptions, and primitive grounding status.
 
-`make fstar-js-demo` and `make fstar-browser-demo` are actual F* extraction paths for the tiny checked primitive module: F* verifies/extracts OCaml, OCaml compiles to bytecode, and `js_of_ocaml` emits JavaScript under `docs/generated/`. They are not the Wikifunctions interpreter yet.
+`make fstar-js-demo` and `make fstar-browser-demo` are actual F* extraction paths for the checked primitive modules and a small selected-composition interpreter. F* verifies/extracts OCaml, OCaml compiles to bytecode, and `js_of_ocaml` emits JavaScript under `docs/generated/`. This path can run selected hardwired F* IR examples, including `Z22294`; it does not yet adapt arbitrary canonical ZObjects into that IR.
 
 ## Local Toy Example
 
@@ -70,7 +71,7 @@ add(4, 0)
 4
 ```
 
-The current runnable interpreter for this is JavaScript. The F* files are the beginning of the checked model that this interpreter is meant to line up with.
+The current runnable interpreter for this is the deliberately named junk JavaScript proof of concept. The F* files are the beginning of the checked model and primitive kernel that a real extracted interpreter should use.
 
 ## Scope
 

@@ -90,6 +90,26 @@ a {
   font-weight: 650;
 }
 
+.demo-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0;
+  font-size: 0.95rem;
+}
+
+.demo-table th,
+.demo-table td {
+  border: 1px solid var(--border);
+  padding: 8px 10px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.demo-table th {
+  background: #eef3f5;
+  color: #1f2933;
+}
+
 .tree-picker {
   display: grid;
   gap: 6px;

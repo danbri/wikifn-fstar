@@ -6,6 +6,7 @@ files=(
   "$root/src/fstar/Wikifn.Model.fst"
   "$root/src/fstar/Wikifn.Primitive.Kernel.fst"
   "$root/src/fstar/Wikifn.Primitives.fst"
+  "$root/src/fstar/Wikifn.Composition.fst"
   "$root/src/fstar/Wikifn.Semantics.fst"
 )
 

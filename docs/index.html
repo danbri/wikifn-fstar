@@ -24,10 +24,10 @@
           <li>Basic structural checks for local snapshots.</li>
           <li>Revision and SHA-256 digest recording for imported objects.</li>
           <li>A vendored 20260801 Wikifunctions dump and local SQLite composition graph index.</li>
-          <li>A JavaScript prototype evaluator for a small `Z14K2` composition subset.</li>
+          <li>A deliberately named junk proof-of-concept JavaScript evaluator for a small `Z14K2` composition subset.</li>
           <li>A bounded Wikifunctions analyzer that reports composition-closed graphs and open frontiers.</li>
           <li>An initial F* model and primitive kernel checked by `make fstar-check`.</li>
-          <li>A real F* to OCaml to JavaScript extraction demo for the tiny checked primitive module.</li>
+          <li>A real F* to OCaml to JavaScript extraction demo for the checked primitive modules.</li>
         </ul>
       </section>
 
@@ -46,10 +46,47 @@
       <section>
         <h2>Actual F* extraction demo</h2>
         <p>
-          This is deliberately small: it extracts the checked `Wikifn.Primitives`
-          module, compiles an OCaml runner, and emits JavaScript with `js_of_ocaml`.
-          It is not the composition interpreter yet.
+          This extracts the checked primitive kernel, `Wikifn.Primitives`, and a small
+          F* composition interpreter, compiles an OCaml runner, and emits JavaScript
+          with `js_of_ocaml`. The current interpreter uses a typed F* IR for selected
+          pinned compositions; it does not yet parse arbitrary canonical ZObject JSON.
         </p>
+        <table class="demo-table">
+          <thead>
+            <tr>
+              <th>Plain task</th>
+              <th>Provenance</th>
+              <th>Input</th>
+              <th>Output</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Remove regular spaces</td>
+              <td><code>Z10052</code> via <code>Z10077</code></td>
+              <td><code>a b c</code></td>
+              <td><code>abc</code></td>
+            </tr>
+            <tr>
+              <td>Decimal comma to point</td>
+              <td><code>Z21679</code> via <code>Z21681</code></td>
+              <td><code>3,14</code></td>
+              <td><code>3.14</code></td>
+            </tr>
+            <tr>
+              <td>French contraction replacement</td>
+              <td><code>Z38114</code> via <code>Z38115</code></td>
+              <td><code>de les amis et de le chat</code></td>
+              <td><code>des amis et du chat</code></td>
+            </tr>
+            <tr>
+              <td>Devanagari digits to Arabic digits</td>
+              <td><code>Z22294</code> via <code>Z22295</code>, <code>Z14613</code>, <code>Z36070</code></td>
+              <td><code>[2407,2408,2409]</code></td>
+              <td><code>123</code></td>
+            </tr>
+          </tbody>
+        </table>
         <pre><code>make fstar-js-demo
 node docs/generated/wikifn_primitives_demo.cjs</code></pre>
         <p>Browser-targeted artifact:</p>
@@ -58,7 +95,11 @@ node docs/generated/wikifn_primitives_demo.cjs</code></pre>
         <pre><code>{"case":"Z782 is_zero(0)","result":{"ok":true,"value":{"type":"Z40","value":true}}}
 {"case":"Z783 successor(2)","result":{"ok":true,"value":{"type":"Z10","value":"3"}}}
 {"case":"Z784 predecessor(2)","result":{"ok":true,"value":{"type":"Z10","value":"1"}}}
-{"case":"Z784 predecessor(0)","result":{"ok":false,"error":"underflow"}}</code></pre>
+{"case":"Z784 predecessor(0)","result":{"ok":false,"error":"underflow"}}
+{"case":"Remove regular spaces (Z10052) on \"a b c\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[97,98,99],"ascii":"abc"}}}
+{"case":"Decimal comma to point (Z21679) on \"3,14\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[51,46,49,52],"ascii":"3.14"}}}
+{"case":"French contractions (Z38114) on \"de les amis et de le chat\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[100,101,115,32,97,109,105,115,32,101,116,32,100,117,32,99,104,97,116],"ascii":"des amis et du chat"}}}
+{"case":"Devanagari digits to Arabic digits (Z22294) on codepoints [2407,2408,2409]","result":{"ok":true,"value":{"type":"Z6","codepoints":[49,50,51],"ascii":"123"}}}</code></pre>
         <p>Browser artifact output:</p>
         <pre id="fstar-extraction-output"></pre>
         <p><a href="./generated/wikifn_primitives_demo.cjs">Generated CLI JavaScript artifact</a> and <a href="./generated/wikifn_primitives_browser.js">generated browser JavaScript artifact</a></p>
@@ -96,9 +137,9 @@ add(4, 0)
         <p>Current interpretation:</p>
         <ul>
           <li>`Z22294` has a composition implementation, `Z22295`.</li>
-          <li>That composition calls `Z14613`.</li>
-          <li>With the default primitive policy, `Z14613` is not classified, so the frontier is open.</li>
-          <li>If `Z14613` is explicitly treated as a verified primitive, `Z22294` is closed relative to that policy.</li>
+          <li>`Z22295` calls `Z14613`; `Z14613` has recursive composition implementation `Z36070`.</li>
+          <li>The extracted demo currently hardwires this selected path into F* IR and grounds its string frontier.</li>
+          <li>The remaining generalization is canonical-ZObject-to-F*-IR adaptation for arbitrary functions.</li>
         </ul>
       </section>
 

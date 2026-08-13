@@ -55,7 +55,9 @@ if command -v ocamlfind >/dev/null 2>&1; then
     -I "$prims_dir" \
     -I "$ocaml_out" \
     "$prims_dir/Prims.cmo" \
+    "$ocaml_out/Wikifn_Primitive_Kernel.ml" \
     "$ocaml_out/Wikifn_Primitives.ml" \
+    "$ocaml_out/Wikifn_Composition.ml" \
     "$runner" \
     -o "$bytecode"
 elif command -v opam >/dev/null 2>&1 && opam exec --switch=fstar -- which ocamlfind >/dev/null 2>&1; then
@@ -66,7 +68,9 @@ elif command -v opam >/dev/null 2>&1 && opam exec --switch=fstar -- which ocamlf
     -I "$prims_dir" \
     -I "$ocaml_out" \
     "$prims_dir/Prims.cmo" \
+    "$ocaml_out/Wikifn_Primitive_Kernel.ml" \
     "$ocaml_out/Wikifn_Primitives.ml" \
+    "$ocaml_out/Wikifn_Composition.ml" \
     "$runner" \
     -o "$bytecode"
 else

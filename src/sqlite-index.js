@@ -14,10 +14,15 @@ const primitiveGrounding = [
   ["Z783", "successor", "fstar_checked_js_builtin", "Wikifn.Primitives", "Toy natural-number primitive used by eval-example"],
   ["Z784", "predecessor", "fstar_checked_js_builtin", "Wikifn.Primitives", "Toy natural-number primitive used by eval-example"],
   ["Z801", "Boolean true", "trusted_wikifunctions_core", null, "Known Boolean identity"],
-  ["Z802", "if", "trusted_control_builtin", null, "Lazy branch selection in the JavaScript evaluator"],
+  ["Z802", "if", "fstar_checked_control", "Wikifn.Primitive.Kernel", "Lazy branch selection specified as z802_if"],
   ["Z13522", "natural equality", "fstar_spec_candidate", "Wikifn.Primitive.Kernel", "Specification exists; Wikifunctions argument mapping still pending"],
-  ["Z10008", "string is empty", "fstar_spec_candidate", "Wikifn.Primitive.Kernel", "Specification exists; Wikifunctions argument mapping still pending"],
+  ["Z10008", "string is empty", "fstar_checked_kernel", "Wikifn.Primitive.Kernel", "Checked as z10008_is_empty_string over codepoint-list text"],
+  ["Z10075", "replace all substrings", "fstar_checked_kernel", "Wikifn.Primitive.Kernel", "Checked as z10075_replace_all_substrings over codepoint-list text"],
+  ["Z10901", "get first character of string", "fstar_checked_kernel", "Wikifn.Primitive.Kernel", "Checked as z10901_get_first_character over codepoint-list text"],
   ["Z11040", "string length", "fstar_spec_candidate", "Wikifn.Primitive.Kernel", "Specification exists; Wikifunctions argument mapping still pending"],
+  ["Z14124", "string of characters from unicode range", "fstar_checked_kernel", "Wikifn.Primitive.Kernel", "Checked as z14124_string_of_characters_from_unicode_range"],
+  ["Z14456", "remove first character", "fstar_checked_kernel", "Wikifn.Primitive.Kernel", "Checked as z14456_remove_first_character over codepoint-list text"],
+  ["Z14520", "remove all characters in second string", "fstar_checked_kernel", "Wikifn.Primitive.Kernel", "Checked as z14520_remove_all_characters_in_second_string"],
   ["Z10000", "string concat", "fstar_spec_candidate", "Wikifn.Primitive.Kernel", "Specification exists; Wikifunctions argument mapping still pending"],
   ["Z10615", "string starts with", "fstar_spec_candidate", "Wikifn.Primitive.Kernel", "Specification exists; Wikifunctions argument mapping still pending"]
 ];

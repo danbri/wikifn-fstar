@@ -1,9 +1,9 @@
 # Debugging And Observability
 
-The JavaScript evaluator is a prototype interpreter for the Wikifunctions composition subset. It is useful for debugging the intended semantics before those semantics are made authoritative in F*.
+The JavaScript evaluator in `src/junk-proof-of-concept-evaluator.js` is a throwaway prototype for the Wikifunctions composition subset. It is useful for debugging the intended semantics before those semantics are made authoritative in F*.
 
 The first F*-grounded primitive specs live in `src/fstar/Wikifn.Primitives.fst`. They cover only the toy natural-number operations used by `eval-example`: zero test, successor, and predecessor with underflow.
-The broader initial kernel lives in `src/fstar/Wikifn.Primitive.Kernel.fst` and adds natural equality plus a strings-as-codepoint-lists model for empty, length, concat, and starts-with.
+The broader initial kernel lives in `src/fstar/Wikifn.Primitive.Kernel.fst` and adds natural equality plus a strings-as-codepoint-lists model for the direct string frontier under `Z36070`.
 
 ## Evaluation Trace
 

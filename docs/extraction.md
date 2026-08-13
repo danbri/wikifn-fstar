@@ -39,8 +39,8 @@ Checked locally on 2026-08-13 in the `fstar` opam switch:
 What works in this repo today:
 
 - The F* model and primitive kernel are checked by `make fstar-check`.
-- F* can extract the current F* modules to OCaml with `--codegen OCaml`.
-- A tiny temporary OCaml runner calling the extracted `Wikifn_Primitives.successor(2)` compiled to bytecode and printed `3` when run through `opam exec`.
+- F* extracts `Wikifn.Primitive.Kernel`, `Wikifn.Primitives`, and `Wikifn.Composition` to OCaml with `--codegen OCaml`.
+- The extracted JS runner evaluates primitive cases and selected F* IR composition cases for `Z10052`, `Z21679`, `Z38114`, and `Z22294`.
 
 What now works as a repo command:
 
@@ -50,7 +50,7 @@ node docs/generated/wikifn_primitives_demo.cjs
 make fstar-browser-demo
 ```
 
-This verifies/extracts `Wikifn.Primitives`, links the extracted OCaml against F*'s `Prims.cmo`, includes `zarith_stubs_js` when invoking `js_of_ocaml`, and emits `docs/generated/wikifn_primitives_demo.cjs`.
+This verifies/extracts `Wikifn.Primitive.Kernel`, `Wikifn.Primitives`, and `Wikifn.Composition`, links the extracted OCaml against F*'s `Prims.cmo`, includes `zarith_stubs_js` when invoking `js_of_ocaml`, and emits `docs/generated/wikifn_primitives_demo.cjs`.
 
 `make fstar-browser-demo` uses the same extracted F* primitive module with a different OCaml runner and a tiny JavaScript output stub. The stub only appends JSON lines to the page; the primitive computation is still from extracted F*. The OCaml bytecode link uses `-no-check-prims` because `wikifn_publish` is supplied as a `js_of_ocaml` runtime primitive.
 
@@ -63,13 +63,18 @@ The generated JavaScript prints:
 {"case":"Z783 successor(2)","result":{"ok":true,"value":{"type":"Z10","value":"3"}}}
 {"case":"Z784 predecessor(2)","result":{"ok":true,"value":{"type":"Z10","value":"1"}}}
 {"case":"Z784 predecessor(0)","result":{"ok":false,"error":"underflow"}}
+{"case":"Remove regular spaces (Z10052) on \"a b c\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[97,98,99],"ascii":"abc"}}}
+{"case":"Decimal comma to point (Z21679) on \"3,14\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[51,46,49,52],"ascii":"3.14"}}}
+{"case":"French contractions (Z38114) on \"de les amis et de le chat\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[100,101,115,32,97,109,105,115,32,101,116,32,100,117,32,99,104,97,116],"ascii":"des amis et du chat"}}}
+{"case":"Devanagari digits to Arabic digits (Z22294) on codepoints [2407,2408,2409]","result":{"ok":true,"value":{"type":"Z6","codepoints":[49,50,51],"ascii":"123"}}}
 ```
 
 Learning from the first failed path: `fstar.exe --ocamlc` made a bytecode executable, but the generated JS failed on `caml_thread_initialize not implemented`. The working path links only the small required F* `Prims.cmo` and passes `+zarith_stubs_js/biginteger.js +zarith_stubs_js/runtime.js` to `js_of_ocaml`.
 
 What is not wired yet:
 
-- F* extraction of the interpreter core to OCaml.
+- Adapters from canonical Wikifunctions ZObjects to the extracted F* IR.
+- A general implementation-selection policy over arbitrary pinned worlds.
 - Low*/KaRaMeL extraction to C.
 
 Commands used for the local smoke test:
