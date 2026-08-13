@@ -56,7 +56,7 @@ assume val has_type :
   ty:zty ->
   Type0
 
-type checked_object (w:world) = {
+noeq type checked_object (w:world) = {
   term: zterm;
   structural: structurally_valid term;
   closed: closed_in_world w term

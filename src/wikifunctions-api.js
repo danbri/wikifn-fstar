@@ -1,4 +1,5 @@
 import { parseJsonStrict } from "./canonical-json.js";
+import { WikifunctionsCache } from "./cache.js";
 import { isZid } from "./ids.js";
 import { err, ok } from "./result.js";
 import { digestCanonical } from "./world.js";
@@ -14,16 +15,19 @@ export async function fetchPinnedZObjects(zids, options = {}) {
     }
   }
 
-  const fetched = await fetchCanonicalObjects(uniqueZids, options);
-  if (!fetched.ok) {
-    return fetched;
+  if (options.cache !== false) {
+    return fetchPinnedZObjectsCached(uniqueZids, options);
   }
 
   const revisions = await fetchRevisions(uniqueZids, options);
   if (!revisions.ok) {
     return revisions;
   }
-
+  const revisionByZid = new Map([...revisions.value.entries()].map(([zid, revision]) => [zid, revision.revid]));
+  const fetched = await fetchCanonicalObjects(uniqueZids, { ...options, revisionByZid });
+  if (!fetched.ok) {
+    return fetched;
+  }
   const objects = [];
   for (const zid of uniqueZids) {
     const canonical = fetched.value.get(zid);
@@ -41,10 +45,71 @@ export async function fetchPinnedZObjects(zids, options = {}) {
       user: revision.user,
       digest: digestCanonical(canonical),
       canonical,
-      source: "wikifunctions.org"
+      source: "wikifunctions.org",
+      cacheHit: false
     });
   }
   return ok(objects);
+}
+
+async function fetchPinnedZObjectsCached(uniqueZids, options) {
+  const cache = options.objectCache ?? new WikifunctionsCache(options.cacheDir);
+  const mode = options.cacheMode ?? "trust";
+  const allowNetwork = mode !== "offline";
+  const objects = new Map();
+  const missing = [];
+
+  if (mode === "trust" || mode === "offline") {
+    for (const zid of uniqueZids) {
+      const cached = await cache.getLatest(zid);
+      if (cached) {
+        objects.set(zid, cached);
+      } else {
+        missing.push(zid);
+      }
+    }
+  } else if (mode === "refresh") {
+    const revisions = await fetchRevisions(uniqueZids, options);
+    if (!revisions.ok) {
+      return revisions;
+    }
+    for (const zid of uniqueZids) {
+      const revision = revisions.value.get(zid);
+      if (!revision) {
+        return err("missing_revision", `query/revisions did not return ${zid}`);
+      }
+      const cached = await cache.getRevision(zid, revision.revid);
+      if (cached) {
+        objects.set(zid, cached);
+      } else {
+        missing.push(zid);
+      }
+    }
+  } else {
+    return err("invalid_cache_mode", `unknown cache mode ${mode}`);
+  }
+
+  if (missing.length > 0 && !allowNetwork) {
+    return err("cache_miss", `cache does not contain ${missing.join(", ")}`, ["$"], { missing });
+  }
+
+  if (missing.length > 0) {
+    if (Number.isSafeInteger(options.networkBudget) && missing.length > options.networkBudget) {
+      return err("network_limit", `fetch would require ${missing.length} network objects but budget is ${options.networkBudget}`, ["$"], {
+        missing
+      });
+    }
+    const fetched = await fetchPinnedZObjects(missing, { ...options, cache: false });
+    if (!fetched.ok) {
+      return fetched;
+    }
+    for (const entry of fetched.value) {
+      const cached = await cache.put(entry);
+      objects.set(entry.zid, cached);
+    }
+  }
+
+  return ok(uniqueZids.map((zid) => objects.get(zid)).filter(Boolean));
 }
 
 export async function fetchCanonicalObjects(zids, options = {}) {
@@ -52,11 +117,17 @@ export async function fetchCanonicalObjects(zids, options = {}) {
   const objects = new Map();
 
   for (const chunk of chunks(zids, options.chunkSize ?? 50)) {
+    const revisionByZid = options.revisionByZid;
+    const revisions = revisionByZid ? chunk.map((zid) => revisionByZid.get(zid)) : undefined;
+    if (revisions?.some((revision) => revision === undefined)) {
+      return err("missing_revision", "revisionByZid did not contain every requested ZID");
+    }
     const response = await fetchActionApi(
       endpoint,
       {
         action: "wikilambda_fetch",
         zids: chunk.join("|"),
+        ...(revisions ? { revisions: revisions.join("|") } : {}),
         format: "json"
       },
       options

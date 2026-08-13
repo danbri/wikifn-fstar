@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>wikifn-fstar demo</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <main>
+      <header>
+        <p class="eyebrow">wikifn-fstar</p>
+        <h1>Wikifunctions composition analysis prototype</h1>
+        <p>
+          A small repository for importing pinned Wikifunctions ZObjects, running a prototype
+          composition interpreter, and checking an initial F* model.
+        </p>
+      </header>
+
+      <section>
+        <h2>What works now</h2>
+        <ul>
+          <li>Canonical ZObject JSON parsing and normalization.</li>
+          <li>Basic structural checks for local snapshots.</li>
+          <li>Revision and SHA-256 digest recording for imported objects.</li>
+          <li>A JavaScript prototype evaluator for a small `Z14K2` composition subset.</li>
+          <li>A bounded Wikifunctions analyzer that reports composition-closed graphs and open frontiers.</li>
+          <li>An initial F* model and primitive kernel checked by `make fstar-check`.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>What it is not</h2>
+        <ul>
+          <li>It is not a proof that arbitrary Python or JavaScript `Z16` implementations are correct.</li>
+          <li>It is not yet a complete Wikifunctions evaluator.</li>
+          <li>It is not yet using F* as the format of record.</li>
+          <li>It is not yet a Low*/KaRaMeL C extraction target.</li>
+          <li>Closure claims are relative to the fetched corpus and the selected primitive policy.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Toy composition demo</h2>
+        <p>The local fixture defines recursive addition using `if`, `is_zero`, `successor`, and `predecessor`.</p>
+        <pre><code>add(x, y) =
+  if is_zero(y)
+  then x
+  else add(successor(x), predecessor(y))</code></pre>
+        <p>
+          In ordinary counting terms, `successor(n)` is the next number and `predecessor(n)`
+          is the previous number. The demo moves one count from the second argument to the
+          first until the second argument is zero.
+        </p>
+        <pre><code>add(2, 2)
+add(3, 1)
+add(4, 0)
+4</code></pre>
+        <p>Run:</p>
+        <pre><code>node ./bin/wikifn.js eval-example --trace --profile</code></pre>
+        <p>The result value is a Wikifunctions-style natural number:</p>
+        <pre><code>{
+  "Z1K1": "Z10",
+  "Z10K1": "4"
+}</code></pre>
+      </section>
+
+      <section>
+        <h2>Live analysis example</h2>
+        <p>Run:</p>
+        <pre><code>node ./bin/wikifn.js analyze Z22294</code></pre>
+        <p>Current interpretation:</p>
+        <ul>
+          <li>`Z22294` has a composition implementation, `Z22295`.</li>
+          <li>That composition calls `Z14613`.</li>
+          <li>With the default primitive policy, `Z14613` is not classified, so the frontier is open.</li>
+          <li>If `Z14613` is explicitly treated as a verified primitive, `Z22294` is closed relative to that policy.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Composition tree browser</h2>
+        <p>
+          The tree marks selected compositions, arguments, constants, assumed primitives,
+          and foreign-code frontiers. Assumed primitive leaves are not F*-verified yet.
+        </p>
+        <label class="tree-picker">
+          <span>Function</span>
+          <select id="tree-select"></select>
+        </label>
+        <div class="layout-toggle" aria-label="Tree layout">
+          <button type="button" data-layout="horizontal" class="active">Horizontal</button>
+          <button type="button" data-layout="radial">Radial</button>
+        </div>
+        <p id="tree-meta" class="tree-meta"></p>
+        <div id="tree-view" class="tree-view"></div>
+        <p id="tree-note" class="tree-note"></p>
+      </section>
+
+      <section>
+        <h2>Local setup</h2>
+        <pre><code>git clone https://github.com/danbri/wikifn-fstar.git
+cd wikifn-fstar
+make setup-fstar
+make doctor</code></pre>
+        <p><a href="./setup.md">Setup notes</a>, <a href="./debugging.md">debugging notes</a>, <a href="./cache.md">cache notes</a>, <a href="./primitives.md">primitive notes</a>, and <a href="./extraction.md">extraction notes</a> are included in the repo.</p>
+      </section>
+    </main>
+    <script type="module" src="./tree.js"></script>
+  </body>
+</html>

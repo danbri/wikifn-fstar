@@ -3,5 +3,8 @@ node_modules/
 coverage/
 .DS_Store
 tmp/
+cache/wikifunctions/
+third_party/fstar-z3/
 *.log
+*.checked
 src/fstar/.cache/

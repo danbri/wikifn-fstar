@@ -10,6 +10,8 @@ export const defaultVerifiedPrimitives = new Set(["Z782", "Z783", "Z784", "Z801"
 export async function fetchAnalysisCorpus(seedZids, options = {}) {
   const fetcher = options.fetcher ?? fetchPinnedZObjects;
   const maxObjects = options.maxObjects ?? 300;
+  const maxNetworkObjects = options.maxNetworkObjects;
+  let networkObjects = 0;
   const followCompositionCalls = options.followCompositionCalls ?? false;
   const corpus = new AnalysisCorpus();
   const queue = [...new Set(seedZids)];
@@ -23,14 +25,28 @@ export async function fetchAnalysisCorpus(seedZids, options = {}) {
       });
     }
 
-    const batch = queue.splice(0, options.batchSize ?? 25).filter((zid) => !corpus.objects.has(zid));
+    const remainingCapacity = maxObjects - corpus.objects.size;
+    const batchSize = Math.min(options.batchSize ?? 25, remainingCapacity);
+    const batch = queue.splice(0, batchSize).filter((zid) => !corpus.objects.has(zid));
     if (batch.length === 0) {
       continue;
     }
 
-    const fetched = await fetcher(batch, options.api ?? {});
+    const apiOptions = { ...(options.api ?? {}) };
+    if (Number.isSafeInteger(maxNetworkObjects)) {
+      apiOptions.networkBudget = Math.max(0, maxNetworkObjects - networkObjects);
+    }
+    const fetched = await fetcher(batch, apiOptions);
     if (!fetched.ok) {
       return fetched;
+    }
+    networkObjects += fetched.value.filter((entry) => !entry.cacheHit).length;
+    if (Number.isSafeInteger(maxNetworkObjects) && networkObjects > maxNetworkObjects) {
+      return err("network_limit", `analysis stopped after ${maxNetworkObjects} network-fetched objects`, ["$"], {
+        networkObjects,
+        fetchedObjects: corpus.objects.size,
+        remainingQueue: queue
+      });
     }
 
     for (const entry of fetched.value) {

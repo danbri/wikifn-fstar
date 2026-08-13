@@ -11,3 +11,5 @@ Rules:
 - Keep generated or downloaded artifacts out of this directory unless they are intentionally vendored.
 
 No third-party code is currently vendored.
+
+Local tool installs such as `third_party/fstar-z3/` are ignored by git unless we explicitly decide to vendor them with license/version notes.

@@ -182,6 +182,27 @@ export function describeTerm(term) {
       return term.zid;
     case "record": {
       const type = typeZid(term);
+      if (type === "Z10") {
+        const value = stringValue(getField(term, "Z10K1"));
+        return value === undefined ? "Z10{...}" : `Z10(${value})`;
+      }
+      if (type === "Z40") {
+        const value = refZid(getField(term, "Z40K1"));
+        if (value === "Z41") {
+          return "Z40(true)";
+        }
+        if (value === "Z42") {
+          return "Z40(false)";
+        }
+      }
+      if (type === "Z7") {
+        const functionZid = refZid(getField(term, "Z7K1"));
+        return functionZid ? `call(${functionZid})` : "call(dynamic)";
+      }
+      if (type === "Z18") {
+        const key = stringValue(getField(term, "Z18K1"));
+        return key ? `arg(${key})` : "arg(?)";
+      }
       return type ? `${type}{...}` : "record{...}";
     }
     default:

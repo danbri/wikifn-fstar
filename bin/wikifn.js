@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { readFile } from "node:fs/promises";
+import path from "node:path";
 
 import {
   analyzeSeeds,
@@ -13,7 +14,8 @@ import {
   parsePrimitiveOption,
   parseJsonStrict,
   toCanonicalJson,
-  toNormalJson
+  toNormalJson,
+  WikifunctionsCache
 } from "../src/index.js";
 import { formatError } from "../src/result.js";
 
@@ -34,7 +36,7 @@ try {
       await evalCommand(args);
       break;
     case "eval-example":
-      await evalCommand(["examples/add-snapshot.json", "examples/add-call.json"]);
+      await evalCommand(["examples/add-snapshot.json", "examples/add-call.json", ...args]);
       break;
     case "analyze":
       await analyzeCommand(args);
@@ -49,8 +51,12 @@ try {
         "Z15121",
         "Z21394",
         "Z22294",
-        "Z38709"
+        "Z38709",
+        ...args
       ]);
+      break;
+    case "cache":
+      await cacheCommand(args);
       break;
     default:
       usage(command ? `unknown command ${command}` : undefined);
@@ -109,7 +115,8 @@ async function checkWorldCommand(args) {
 }
 
 async function evalCommand(args) {
-  const [snapshotPath, callPath, fuelText] = args;
+  const parsed = parseEvalArgs(args);
+  const { snapshotPath, callPath, fuel, trace, profile } = parsed;
   if (!snapshotPath || !callPath) {
     usage("eval requires a snapshot file and a call file");
   }
@@ -127,18 +134,26 @@ async function evalCommand(args) {
     fail(structural.error);
   }
 
-  const fuel = fuelText === undefined ? 100 : Number(fuelText);
-  if (!Number.isSafeInteger(fuel) || fuel < 0) {
-    usage("fuel must be a non-negative integer");
-  }
-
+  const startMemory = profile ? process.memoryUsage() : undefined;
+  const start = profile ? process.hrtime.bigint() : undefined;
   const result = evaluate(world.value, call.value, { fuel });
+  const elapsedMs = profile ? Number(process.hrtime.bigint() - start) / 1_000_000 : undefined;
+  const endMemory = profile ? process.memoryUsage() : undefined;
   if (!result.ok) {
     fail(result.error);
   }
-  const summary = evaluationSummary(result);
+  const summary = evaluationSummary(result, { trace });
   if (!summary.ok) {
     fail(summary.error);
+  }
+  if (profile) {
+    summary.value.profile = {
+      elapsedMs: Number(elapsedMs.toFixed(3)),
+      memory: {
+        rssDeltaBytes: endMemory.rss - startMemory.rss,
+        heapUsedDeltaBytes: endMemory.heapUsed - startMemory.heapUsed
+      }
+    };
   }
   printJson(summary.value);
 }
@@ -150,7 +165,9 @@ async function analyzeCommand(args) {
   }
   const corpus = await fetchAnalysisCorpus(parsed.zids, {
     maxObjects: parsed.maxObjects,
-    followCompositionCalls: parsed.followCompositionCalls
+    maxNetworkObjects: parsed.maxNetworkObjects,
+    followCompositionCalls: parsed.followCompositionCalls,
+    api: parsed.api
   });
   if (!corpus.ok) {
     fail(corpus.error);
@@ -158,7 +175,11 @@ async function analyzeCommand(args) {
   const report = analyzeSeeds(corpus.value, parsed.zids, {
     primitives: parsed.primitives
   });
-  printJson(report);
+  if (parsed.output === "json") {
+    printJson(report);
+  } else {
+    console.log(formatAnalysisReport(report, parsed));
+  }
 }
 
 async function readZObject(path) {
@@ -190,17 +211,51 @@ function usage(message) {
   wikifn normalize <zobject.json> [canonical|normal]
   wikifn check <zobject.json>
   wikifn check-world <snapshot.json>
-  wikifn eval <snapshot.json> <call.json> [fuel]
-  wikifn eval-example
-  wikifn analyze [--primitive Z1,Z2] [--max-objects N] [--follow-calls] <zid...>
-  wikifn analyze-demo`);
+  wikifn eval <snapshot.json> <call.json> [fuel] [--trace] [--profile]
+  wikifn eval-example [fuel] [--trace] [--profile]
+  wikifn analyze [--json] [--primitive Z1,Z2] [--max-objects N] [--max-network-objects N] [--follow-calls] [--refresh-cache|--offline|--no-cache] <zid...>
+  wikifn analyze-demo [--json]
+  wikifn cache stats [--cache-dir DIR]
+  wikifn cache fetch [analyze-options] <zid...>
+  wikifn cache import <content-download-dir> [--cache-dir DIR] [--limit N] [zid...]`);
   process.exit(message ? 1 : 0);
+}
+
+function parseEvalArgs(args) {
+  let trace = false;
+  let profile = false;
+  const positional = [];
+
+  for (const arg of args) {
+    if (arg === "--trace" || arg === "--debug") {
+      trace = true;
+      continue;
+    }
+    if (arg === "--profile") {
+      profile = true;
+      continue;
+    }
+    if (arg.startsWith("--")) {
+      usage(`unknown eval option ${arg}`);
+    }
+    positional.push(arg);
+  }
+
+  const [snapshotPath, callPath, fuelText] = positional;
+  const fuel = fuelText === undefined ? 100 : Number(fuelText);
+  if (!Number.isSafeInteger(fuel) || fuel < 0) {
+    usage("fuel must be a non-negative integer");
+  }
+  return { snapshotPath, callPath, fuel, trace, profile };
 }
 
 function parseAnalyzeArgs(args) {
   let primitives;
   let maxObjects = 300;
+  let maxNetworkObjects;
   let followCompositionCalls = false;
+  let output = "text";
+  const api = {};
   const zids = [];
 
   for (let index = 0; index < args.length; index += 1) {
@@ -221,8 +276,48 @@ function parseAnalyzeArgs(args) {
       maxObjects = value;
       continue;
     }
+    if (arg === "--max-network-objects") {
+      const value = Number(args[++index]);
+      if (!Number.isSafeInteger(value) || value < 0) {
+        usage("--max-network-objects requires a non-negative integer");
+      }
+      maxNetworkObjects = value;
+      continue;
+    }
     if (arg === "--follow-calls") {
       followCompositionCalls = true;
+      continue;
+    }
+    if (arg === "--cache-dir") {
+      const value = args[++index];
+      if (!value) {
+        usage("--cache-dir requires a path");
+      }
+      api.cacheDir = value;
+      continue;
+    }
+    if (arg === "--refresh-cache") {
+      api.cacheMode = "refresh";
+      continue;
+    }
+    if (arg === "--offline") {
+      api.cacheMode = "offline";
+      continue;
+    }
+    if (arg === "--no-cache") {
+      api.cache = false;
+      continue;
+    }
+    if (arg === "--json") {
+      output = "json";
+      continue;
+    }
+    if (arg === "--format") {
+      const value = args[++index];
+      if (value !== "json" && value !== "text") {
+        usage("--format requires json or text");
+      }
+      output = value;
       continue;
     }
     if (arg.startsWith("--")) {
@@ -234,7 +329,236 @@ function parseAnalyzeArgs(args) {
   return {
     primitives,
     maxObjects,
+    maxNetworkObjects,
     followCompositionCalls,
+    api,
+    output,
     zids
   };
+}
+
+async function cacheCommand(args) {
+  const [subcommand, ...rest] = args;
+  if (subcommand === "stats") {
+    const parsed = parseCacheArgs(rest);
+    const cache = new WikifunctionsCache(parsed.cacheDir);
+    printJson(await cache.stats());
+    return;
+  }
+  if (subcommand === "fetch") {
+    const parsed = parseAnalyzeArgs(rest);
+    if (parsed.zids.length === 0) {
+      usage("cache fetch requires at least one ZID");
+    }
+    const corpus = await fetchAnalysisCorpus(parsed.zids, {
+      maxObjects: parsed.maxObjects,
+      maxNetworkObjects: parsed.maxNetworkObjects,
+      followCompositionCalls: parsed.followCompositionCalls,
+      api: { ...parsed.api, cacheMode: parsed.api.cacheMode ?? "refresh" }
+    });
+    if (!corpus.ok) {
+      fail(corpus.error);
+    }
+    const cache = new WikifunctionsCache(parsed.api.cacheDir);
+    printJson({
+      ok: true,
+      fetchedObjects: corpus.value.objects.size,
+      cache: await cache.stats()
+    });
+    return;
+  }
+  if (subcommand === "import") {
+    await cacheImportCommand(rest);
+    return;
+  }
+  usage("cache requires stats or fetch");
+}
+
+function parseCacheArgs(args) {
+  const parsed = {};
+  for (let index = 0; index < args.length; index += 1) {
+    const arg = args[index];
+    if (arg === "--cache-dir") {
+      const value = args[++index];
+      if (!value) {
+        usage("--cache-dir requires a path");
+      }
+      parsed.cacheDir = value;
+      continue;
+    }
+    usage(`unknown cache option ${arg}`);
+  }
+  return parsed;
+}
+
+async function cacheImportCommand(args) {
+  const parsed = parseCacheImportArgs(args);
+  if (!parsed.dir) {
+    usage("cache import requires a content-download directory");
+  }
+  const indexPath = path.join(parsed.dir, "Z0.json");
+  const index = parseJsonStrict(await readFile(indexPath, "utf8"));
+  if (!index.ok) {
+    fail(index.error);
+  }
+  const cache = new WikifunctionsCache(parsed.cacheDir);
+  const requested = parsed.zids.length > 0 ? new Set(parsed.zids) : undefined;
+  const imported = [];
+
+  for (const [zid, revisionValue] of Object.entries(index.value)) {
+    if (requested && !requested.has(zid)) {
+      continue;
+    }
+    if (parsed.limit !== undefined && imported.length >= parsed.limit) {
+      break;
+    }
+    const revision = Number(revisionValue);
+    if (!Number.isSafeInteger(revision)) {
+      continue;
+    }
+    const canonical = await readContentDownloadObject(parsed.dir, zid, revision);
+    if (!canonical) {
+      continue;
+    }
+    await cache.put({
+      zid,
+      revision,
+      canonical,
+      source: "wikifunctions-content-download"
+    });
+    imported.push(`${zid}@${revision}`);
+  }
+
+  printJson({
+    ok: true,
+    imported,
+    cache: await cache.stats()
+  });
+}
+
+function parseCacheImportArgs(args) {
+  const parsed = { zids: [] };
+  for (let index = 0; index < args.length; index += 1) {
+    const arg = args[index];
+    if (arg === "--cache-dir") {
+      const value = args[++index];
+      if (!value) {
+        usage("--cache-dir requires a path");
+      }
+      parsed.cacheDir = value;
+      continue;
+    }
+    if (arg === "--limit") {
+      const value = Number(args[++index]);
+      if (!Number.isSafeInteger(value) || value <= 0) {
+        usage("--limit requires a positive integer");
+      }
+      parsed.limit = value;
+      continue;
+    }
+    if (arg.startsWith("--")) {
+      usage(`unknown cache import option ${arg}`);
+    }
+    if (!parsed.dir) {
+      parsed.dir = arg;
+    } else {
+      parsed.zids.push(arg);
+    }
+  }
+  return parsed;
+}
+
+async function readContentDownloadObject(dir, zid, revision) {
+  for (const suffix of ["json", "done.json"]) {
+    const file = path.join(dir, `${zid}.${revision}.${suffix}`);
+    try {
+      const parsed = parseJsonStrict(await readFile(file, "utf8"));
+      if (!parsed.ok) {
+        return undefined;
+      }
+      return parsed.value.canonical ?? parsed.value;
+    } catch (error) {
+      if (error.code !== "ENOENT") {
+        throw error;
+      }
+    }
+  }
+  return undefined;
+}
+
+function formatAnalysisReport(report, options) {
+  const lines = [];
+  lines.push(`Analyzed ${report.seeds.join(", ")}`);
+  lines.push(`Fetched ${report.fetchedObjects} pinned object${report.fetchedObjects === 1 ? "" : "s"}.`);
+  lines.push(`Primitive policy: ${report.primitives.length > 0 ? report.primitives.join(", ") : "(none)"}.`);
+  lines.push(`Composition call expansion: ${options.followCompositionCalls ? "on" : "off"}; max objects: ${options.maxObjects}.`);
+  if (options.maxNetworkObjects !== undefined) {
+    lines.push(`Network object fetch cap: ${options.maxNetworkObjects}. Cached objects do not count against this cap.`);
+  }
+  lines.push(`Cache mode: ${options.api.cache === false ? "off" : options.api.cacheMode ?? "trust"}.`);
+  lines.push("");
+
+  for (const result of report.results) {
+    const object = report.objects[result.seed];
+    lines.push(`${result.seed}: ${statusLabel(result.status)}`);
+    if (object?.revision !== undefined) {
+      lines.push(`  object: ${object.kind} ${object.ztype}@${object.revision}`);
+    }
+    if (result.selectedImplementation) {
+      const impl = report.objects[result.selectedImplementation];
+      const revision = impl?.revision !== undefined ? `@${impl.revision}` : "";
+      lines.push(`  selected composition: ${result.selectedImplementation}${revision}`);
+    } else {
+      lines.push("  selected composition: none");
+    }
+    if (result.functionsVisited.length > 0) {
+      lines.push(`  functions visited: ${result.functionsVisited.join(", ")}`);
+    }
+    if (result.implementationsVisited.length > 0) {
+      lines.push(`  composition implementations visited: ${result.implementationsVisited.join(", ")}`);
+    }
+    if (result.recursiveCalls.length > 0) {
+      lines.push(`  recursive calls: ${result.recursiveCalls.map((call) => call.functionZid ?? call.implementationZid).join(", ")}`);
+    }
+    if (result.frontier.length === 0) {
+      lines.push("  frontier: empty");
+      lines.push("  meaning: compositionally closed relative to the primitive policy above.");
+    } else {
+      lines.push("  frontier:");
+      for (const item of result.frontier) {
+        lines.push(`    - ${formatFrontierItem(item)}`);
+      }
+      lines.push("  meaning: not compositionally closed under this fetch/primitive policy.");
+    }
+    lines.push("");
+  }
+
+  return lines.join("\n").trimEnd();
+}
+
+function statusLabel(status) {
+  if (status === "composition_closed") {
+    return "compositionally closed";
+  }
+  if (status === "open_frontier") {
+    return "open frontier";
+  }
+  return status;
+}
+
+function formatFrontierItem(item) {
+  if (item.reason === "missing_object") {
+    return `${item.zid}: not fetched or not present in the corpus`;
+  }
+  if (item.reason === "no_composition_implementation") {
+    const impls = (item.implementations ?? []).map((impl) => `${impl.zid}:${impl.bodyKind}`).join(", ");
+    return `${item.zid}: no Z14K2 composition implementation found${impls ? `; implementations: ${impls}` : ""}`;
+  }
+  if (item.reason?.startsWith("implementation_")) {
+    return `${item.zid}: implementation body is ${item.reason.slice("implementation_".length)}`;
+  }
+  if (item.reason === "dynamic_call") {
+    return `${item.zid}: dynamic function call at ${item.path}`;
+  }
+  return `${item.zid}: ${item.reason}`;
 }

@@ -1,4 +1,5 @@
 export { parseJsonStrict, stableStringify } from "./canonical-json.js";
+export { defaultCacheDir, WikifunctionsCache } from "./cache.js";
 export {
   analyzeSeeds,
   classifyCanonicalObject,

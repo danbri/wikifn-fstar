@@ -91,6 +91,16 @@ test("composition analysis rejects no-op wrappers around Python-only functions",
   assert.equal(report.results[0].frontier[0].implementations[0].bodyKind, "code");
 });
 
+test("analysis maxObjects bounds the fetch batch size", async () => {
+  const corpus = await fetchAnalysisCorpus(["Z9000", "Z9010", "Z38709"], {
+    fetcher: fakeFetcher,
+    maxObjects: 2
+  });
+  assert.equal(corpus.ok, false);
+  assert.equal(corpus.error.code, "analysis_limit");
+  assert.equal(corpus.error.details.fetchedObjects, 2);
+});
+
 async function fakeFetcher(zids) {
   const values = [];
   for (const zid of zids) {

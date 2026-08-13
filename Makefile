@@ -1,4 +1,4 @@
-.PHONY: test example fstar-check
+.PHONY: test example fstar-check setup-fstar doctor verify
 
 test:
 	node --test
@@ -8,3 +8,11 @@ example:
 
 fstar-check:
 	./scripts/fstar-check.sh
+
+setup-fstar:
+	./scripts/setup-fstar.sh
+
+doctor:
+	./scripts/doctor.sh
+
+verify: test fstar-check

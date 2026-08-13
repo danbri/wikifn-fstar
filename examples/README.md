@@ -20,6 +20,17 @@ add(x, y) =
   else add(successor(x), predecessor(y))
 ```
 
+Read it as moving one count from `y` to `x` until `y` is empty:
+
+```text
+add(2, 2)
+add(successor(2), predecessor(2)) = add(3, 1)
+add(successor(3), predecessor(1)) = add(4, 0)
+is_zero(0), so return 4
+```
+
+`successor(n)` is `n + 1`. `predecessor(n)` is `n - 1`, and is only valid here because the code checks `is_zero(y)` before using it.
+
 `add-call.json` calls that function as `add(2, 2)`.
 
 Run:

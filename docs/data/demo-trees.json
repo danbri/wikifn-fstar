@@ -1,0 +1,238 @@
+{
+  "trees": [
+    {
+      "id": "Z20000",
+      "title": "Bayes' theorem conditional probability P(A|B)",
+      "status": "composition_closed_relative",
+      "implementation": "Z20001@152585",
+      "note": "Closed only if multiply rational numbers and divide rational numbers are trusted primitives.",
+      "root": {
+        "name": "Z20000 Bayes' theorem conditional probability P(A|B)",
+        "kind": "function",
+        "children": [
+          {
+            "name": "Z19708 divide rational numbers",
+            "kind": "assumed_primitive",
+            "children": [
+              {
+                "name": "Z19706 multiply rational numbers",
+                "kind": "assumed_primitive",
+                "children": [
+                  { "name": "arg Z20000K1 P(A)", "kind": "argument" },
+                  { "name": "arg Z20000K2 P(B|A)", "kind": "argument" }
+                ]
+              },
+              { "name": "arg Z20000K3 P(B)", "kind": "argument" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "Z15121",
+      "title": "is odious number",
+      "status": "composition_closed_relative",
+      "implementation": "Z15126@180223",
+      "note": "Closed only if Thue-Morse sequence and natural-number equality are trusted primitives.",
+      "root": {
+        "name": "Z15121 is odious number",
+        "kind": "function",
+        "children": [
+          {
+            "name": "Z13522 equality of natural numbers",
+            "kind": "assumed_primitive",
+            "children": [
+              {
+                "name": "Z14003 Thue-Morse sequence",
+                "kind": "assumed_primitive",
+                "children": [
+                  { "name": "arg Z15121K1 number", "kind": "argument" }
+                ]
+              },
+              { "name": "constant 1", "kind": "constant" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "Z21394",
+      "title": "concatenate many strings",
+      "status": "composition_closed_relative",
+      "implementation": "Z21396@205454",
+      "note": "Closed only if Reduce Function and Join strings are trusted primitives.",
+      "root": {
+        "name": "Z21394 concatenate many strings",
+        "kind": "function",
+        "children": [
+          {
+            "name": "Z876 Reduce Function",
+            "kind": "assumed_primitive",
+            "children": [
+              { "name": "Z10000 Join strings", "kind": "assumed_primitive" },
+              { "name": "arg Z21394K1 list of strings", "kind": "argument" },
+              { "name": "constant empty string", "kind": "constant" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "Z22294",
+      "title": "Devanagari numerals to Arabic numerals",
+      "status": "composition_closed_relative",
+      "implementation": "Z22295@164133",
+      "note": "Closed only if replace character set is a trusted primitive.",
+      "root": {
+        "name": "Z22294 Devanagari numerals to Arabic numerals",
+        "kind": "function",
+        "children": [
+          {
+            "name": "Z14613 replace character set",
+            "kind": "assumed_primitive",
+            "children": [
+              { "name": "arg Z22294K1 input string", "kind": "argument" },
+              { "name": "from ०१२३४५६७८९", "kind": "constant" },
+              { "name": "to 0123456789", "kind": "constant" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "Z38709",
+      "title": "Saint-Laguë method",
+      "status": "open_frontier",
+      "implementation": null,
+      "note": "Current cached object has only a Python implementation Z38717, so it is not compositionally closed.",
+      "root": {
+        "name": "Z38709 Saint-Laguë method",
+        "kind": "function_open",
+        "children": [
+          { "name": "Z38717 Python implementation", "kind": "foreign_code" }
+        ]
+      }
+    },
+    {
+      "id": "Z22294-expanded",
+      "title": "Devanagari conversion, expanded cached tree",
+      "status": "open_frontier",
+      "implementation": "Z22295@164133",
+      "note": "Expanded from the local cache after a bounded fetch. This is deeper, but not closed: orange leaves are still frontier items or assumed primitives.",
+      "root": {
+        "name": "Z22294 Devanagari numerals to Arabic numerals",
+        "kind": "function",
+        "children": [
+          {
+            "name": "Z14613 replace character set",
+            "kind": "composition_function",
+            "implementation": "Z36070@280538",
+            "children": [
+              {
+                "name": "Z10075 replace all substrings",
+                "kind": "composition_function",
+                "implementation": "Z21378@154846",
+                "children": [
+                  {
+                    "name": "Z10615 string starts with",
+                    "kind": "composition_function",
+                    "implementation": "Z31793@255344",
+                    "children": [
+                      { "name": "Z14592 first N characters of string", "kind": "open_frontier" },
+                      {
+                        "name": "Z11040 string length",
+                        "kind": "composition_function",
+                        "implementation": "Z17024@227928",
+                        "children": [
+                          { "name": "Z12681 length of a list", "kind": "open_frontier" },
+                          { "name": "Z22717 String to codepoint list", "kind": "open_frontier" }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Z10000 join two strings",
+                    "kind": "composition_function",
+                    "implementation": "Z14590@169453",
+                    "children": [
+                      {
+                        "name": "Z12899 join list of strings with delimiter",
+                        "kind": "composition_function",
+                        "implementation": "Z21304@251012",
+                        "children": [
+                          { "name": "Z19565 frontier", "kind": "open_frontier" },
+                          { "name": "Z12899 recursive call", "kind": "recursive" },
+                          { "name": "Z812 frontier", "kind": "open_frontier" }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Z14636 remove first N characters of string",
+                    "kind": "composition_function",
+                    "implementation": "Z21379@270273",
+                    "children": [
+                      { "name": "Z22693 Codepoint list to string", "kind": "open_frontier" },
+                      { "name": "Z13369 remove first N elements of list", "kind": "open_frontier" }
+                    ]
+                  },
+                  { "name": "Z10075 recursive call", "kind": "recursive" }
+                ]
+              },
+              {
+                "name": "Z10901 get first character of string",
+                "kind": "composition_function",
+                "implementation": "Z14247@159105",
+                "children": [
+                  {
+                    "name": "Z14244 get Nth character of a string",
+                    "kind": "composition_function",
+                    "implementation": "Z24456@270101",
+                    "children": [
+                      {
+                        "name": "Z10008 is empty string",
+                        "kind": "composition_function",
+                        "implementation": "Z10045@254341",
+                        "children": [
+                          {
+                            "name": "Z23883 is zero (natural number)",
+                            "kind": "composition_function",
+                            "implementation": "Z23886@222206",
+                            "children": [
+                              { "name": "Z13522 equality of natural numbers", "kind": "open_frontier" }
+                            ]
+                          }
+                        ]
+                      },
+                      { "name": "Z31490 frontier", "kind": "open_frontier" },
+                      { "name": "Z22717 String to codepoint list", "kind": "open_frontier" }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "Z14520 remove all characters in second string",
+                "kind": "composition_function",
+                "implementation": "Z34450@270225",
+                "children": [
+                  {
+                    "name": "Z19198 remove elements common to second list",
+                    "kind": "composition_function",
+                    "implementation": "Z19212@271884",
+                    "children": [
+                      { "name": "Z19198 recursive call", "kind": "recursive" },
+                      { "name": "Z813 frontier", "kind": "open_frontier" },
+                      { "name": "Z810 frontier", "kind": "open_frontier" }
+                    ]
+                  },
+                  { "name": "Z22693 Codepoint list to string", "kind": "open_frontier" }
+                ]
+              },
+              { "name": "Z14613 recursive call", "kind": "recursive" }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

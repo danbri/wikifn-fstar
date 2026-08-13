@@ -9,7 +9,11 @@
   },
   "scripts": {
     "test": "node --test",
-    "example": "node ./bin/wikifn.js eval-example"
+    "example": "node ./bin/wikifn.js eval-example",
+    "example:trace": "node ./bin/wikifn.js eval-example --trace --profile",
+    "analyze:demo": "node ./bin/wikifn.js analyze-demo",
+    "fstar:check": "make fstar-check",
+    "doctor": "make doctor"
   },
   "engines": {
     "node": ">=20"

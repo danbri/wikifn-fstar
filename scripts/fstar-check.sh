@@ -4,6 +4,8 @@ set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 files=(
   "$root/src/fstar/Wikifn.Model.fst"
+  "$root/src/fstar/Wikifn.Primitive.Kernel.fst"
+  "$root/src/fstar/Wikifn.Primitives.fst"
   "$root/src/fstar/Wikifn.Semantics.fst"
 )
 
@@ -14,6 +16,10 @@ run_fstar() {
 }
 
 mkdir -p "$root/src/fstar/.cache"
+
+if [[ -d "$root/third_party/fstar-z3/bin" ]]; then
+  export PATH="$root/third_party/fstar-z3/bin:$PATH"
+fi
 
 if [[ -n "${FSTAR:-}" ]] && command -v "$FSTAR" >/dev/null 2>&1; then
   run_fstar "$FSTAR"
