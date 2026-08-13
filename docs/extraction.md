@@ -40,7 +40,7 @@ What works in this repo today:
 
 - The F* model and primitive kernel are checked by `make fstar-check`.
 - F* extracts `Wikifn.Primitive.Kernel`, `Wikifn.Primitives`, `Wikifn.Composition`, and `Wikifn.Generated.Compositions` to OCaml with `--codegen OCaml`.
-- The extracted JS runner evaluates primitive cases and selected F* IR composition cases for `Z10052`, `Z21679`, `Z38114`, and `Z22294`.
+- The extracted JS runner evaluates primitive cases, selected F* IR composition cases, and direct specialized F* functions for `Z10052`, `Z21679`, `Z38114`, and `Z22294`.
 
 What now works as a repo command:
 
@@ -54,7 +54,9 @@ make fstar-browser-demo
 
 `make fstar-generate-compositions` regenerates `src/fstar/Wikifn.Generated.Compositions.fst` from selected pinned objects in the local cache. The generated F* module records the ZID revisions and canonical digests used for the selected paths.
 
-`make fstar-js-demo` verifies/extracts `Wikifn.Primitive.Kernel`, `Wikifn.Primitives`, `Wikifn.Composition`, and `Wikifn.Generated.Compositions`, links the extracted OCaml against F*'s `Prims.cmo`, includes `zarith_stubs_js` when invoking `js_of_ocaml`, and emits `docs/generated/wikifn_primitives_demo.cjs`. `wikifn fstar-demo` only runs that generated artifact; it does not use the junk proof-of-concept evaluator.
+`make fstar-js-demo` verifies/extracts `Wikifn.Primitive.Kernel`, `Wikifn.Primitives`, `Wikifn.Composition`, `Wikifn.Generated.Compositions`, and `Wikifn.Specialized.Compositions`, links the extracted OCaml against F*'s `Prims.cmo`, includes `zarith_stubs_js` when invoking `js_of_ocaml`, and emits `docs/generated/wikifn_primitives_demo.cjs`. `wikifn fstar-demo` only runs that generated artifact; it does not use the junk proof-of-concept evaluator.
+
+`Wikifn.Generated.Compositions` is the selected-pinned-composition interpreter path: local cache objects become generated F* IR, then the extracted F* interpreter evaluates the IR. `Wikifn.Specialized.Compositions` is the C-priority path: selected closed composition paths are lowered into direct F* functions over the checked primitive kernel.
 
 `make fstar-browser-demo` uses the same extracted F* primitive module with a different OCaml runner and a tiny JavaScript output stub. The stub only appends JSON lines to the page; the primitive computation is still from extracted F*. The OCaml bytecode link uses `-no-check-prims` because `wikifn_publish` is supplied as a `js_of_ocaml` runtime primitive.
 
@@ -71,6 +73,10 @@ The generated JavaScript prints:
 {"case":"Decimal comma to point (Z21679) on \"3,14\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[51,46,49,52],"ascii":"3.14"}}}
 {"case":"French contractions (Z38114) on \"de les amis et de le chat\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[100,101,115,32,97,109,105,115,32,101,116,32,100,117,32,99,104,97,116],"ascii":"des amis et du chat"}}}
 {"case":"Devanagari digits to Arabic digits (Z22294) on codepoints [2407,2408,2409]","result":{"ok":true,"value":{"type":"Z6","codepoints":[49,50,51],"ascii":"123"}}}
+{"case":"Specialized F* remove regular spaces (Z10052) on \"a b c\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[97,98,99],"ascii":"abc"}}}
+{"case":"Specialized F* decimal comma to point (Z21679) on \"3,14\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[51,46,49,52],"ascii":"3.14"}}}
+{"case":"Specialized F* French contractions (Z38114) on \"de les amis et de le chat\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[100,101,115,32,97,109,105,115,32,101,116,32,100,117,32,99,104,97,116],"ascii":"des amis et du chat"}}}
+{"case":"Specialized F* Devanagari digits to Arabic digits (Z22294) on codepoints [2407,2408,2409]","result":{"ok":true,"value":{"type":"Z6","codepoints":[49,50,51],"ascii":"123"}}}
 ```
 
 Learning from the first failed path: `fstar.exe --ocamlc` made a bytecode executable, but the generated JS failed on `caml_thread_initialize not implemented`. The working path links only the small required F* `Prims.cmo` and passes `+zarith_stubs_js/biginteger.js +zarith_stubs_js/runtime.js` to `js_of_ocaml`.

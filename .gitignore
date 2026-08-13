@@ -2,7 +2,15 @@ node_modules/
 .venv/
 coverage/
 .DS_Store
-build/
+build/*
+!build/fstar/
+build/fstar/*
+!build/fstar/ocaml/
+!build/fstar/ocaml/*.ml
+!build/fstar/ocaml/*.cmi
+!build/fstar/ocaml/*.cmo
+!build/fstar/wikifn_primitives_browser.byte
+!build/fstar/wikifn_primitives_demo.byte
 tmp/
 cache/dumps/
 cache/wikifunctions/

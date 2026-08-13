@@ -99,7 +99,7 @@ Keep recursive SQL bounded and seed-specific. A first unbounded recursive CTE ov
 
 ## F* Extraction Status
 
-The current honest extraction target is the primitive kernel plus generated selected-composition IR:
+The current honest extraction target is the primitive kernel plus generated selected-composition IR plus direct selected-function specializations:
 
 ```sh
 make fstar-js-demo
@@ -108,11 +108,13 @@ make fstar-browser-demo
 
 `make fstar-generate-compositions` reads selected pinned cache objects and regenerates `src/fstar/Wikifn.Generated.Compositions.fst`.
 
-`make fstar-js-demo` and `make fstar-browser-demo` verify/extract `src/fstar/Wikifn.Primitive.Kernel.fst`, `src/fstar/Wikifn.Primitives.fst`, `src/fstar/Wikifn.Composition.fst`, and `src/fstar/Wikifn.Generated.Compositions.fst` to OCaml, compile repo-owned OCaml runners, and invoke `js_of_ocaml`. This is not yet a general runtime canonical-ZObject interpreter.
+`make fstar-js-demo` and `make fstar-browser-demo` verify/extract `src/fstar/Wikifn.Primitive.Kernel.fst`, `src/fstar/Wikifn.Primitives.fst`, `src/fstar/Wikifn.Composition.fst`, `src/fstar/Wikifn.Generated.Compositions.fst`, and `src/fstar/Wikifn.Specialized.Compositions.fst` to OCaml, compile repo-owned OCaml runners, and invoke `js_of_ocaml`. This is not yet a general runtime canonical-ZObject interpreter.
+
+`Wikifn.Generated.Compositions` is the selected-pinned-composition interpreter path. `Wikifn.Specialized.Compositions` is the direct-function path for selected closed compositions and should be preferred when demonstrating the C-priority agenda.
 
 `Z36070` is not primarily blocked by a Python/JavaScript-only dependency. Its direct frontier is the string/control layer: `Z10008`, `Z10075`, `Z10901`, `Z14124`, `Z14456`, `Z14520`, recursive `Z14613`, and `Z802`. The repo has checked high-level F* kernel definitions for those direct string/control operations and a selected-composition F* interpreter, but still lacks canonical-ZObject adapters and a general implementation-selection policy over pinned worlds.
 
-As of the first selected-composition interpreter pass, the extracted Node/browser artifacts run F* IR cases for:
+As of the first selected-composition specialization pass, the extracted Node/browser artifacts run both F* IR interpreter cases and direct specialized cases for:
 
 - `Z10052`: remove regular spaces
 - `Z21679`: convert decimal string from comma to point

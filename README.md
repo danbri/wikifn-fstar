@@ -10,6 +10,7 @@ The runnable code is under `src/`. It currently provides:
 - a junk proof-of-concept fuelled evaluator for `Z14K2` compositions
 - a corpus analyzer for existing `Z14K2` implementations and their unverified dependency frontier
 - a small F*-extracted composition interpreter over selected pinned composition paths
+- direct F* specializations for the same selected closed composition paths
 
 ## Commands
 
@@ -41,7 +42,7 @@ The repo vendors one dated Wikifunctions current-pages dump under `third_party/w
 
 `node ./bin/wikifn.js db build` creates a derived SQLite index at `cache/wikifunctions.sqlite`. It indexes object provenance, functions, implementations, composition-call edges, dynamic calls, reference edges, labels, descriptions, and primitive grounding status.
 
-`make fstar-js-demo` and `make fstar-browser-demo` are actual F* extraction paths for the checked primitive modules and a small selected-composition interpreter. F* verifies/extracts OCaml, OCaml compiles to bytecode, and `js_of_ocaml` emits JavaScript under `docs/generated/`. This path can run generated selected F* IR examples, including `Z22294`; it does not yet adapt arbitrary canonical ZObjects at runtime.
+`make fstar-js-demo` and `make fstar-browser-demo` are actual F* extraction paths for the checked primitive modules, a small selected-composition interpreter, and direct specialized F* functions for the selected closed paths. F* verifies/extracts OCaml, OCaml compiles to bytecode, and `js_of_ocaml` emits JavaScript under `docs/generated/`. This path can run generated selected F* IR examples and direct specializations, including `Z22294`; it does not yet adapt arbitrary canonical ZObjects at runtime.
 
 `make fstar-generate-compositions` regenerates `src/fstar/Wikifn.Generated.Compositions.fst` from selected pinned objects in the local cache. The generated file is tracked so extraction works from a clean checkout; regeneration is for refreshing or auditing the selected paths.
 

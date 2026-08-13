@@ -43,7 +43,27 @@
     "Devanagari digits to Arabic digits (Z22294) on codepoints [2407,2408,2409]": {
       task: "Devanagari digits to Arabic digits",
       input: "codepoints [2407,2408,2409]",
-      source: "Z22294 -> Z22295 -> Z14613 -> Z36070"
+      source: "generated F* IR: Z22294 -> Z22295 -> Z14613 -> Z36070"
+    },
+    "Specialized F* remove regular spaces (Z10052) on \"a b c\"": {
+      task: "Remove regular spaces",
+      input: "a b c",
+      source: "direct specialized F* function from Z10052/Z10077"
+    },
+    "Specialized F* decimal comma to point (Z21679) on \"3,14\"": {
+      task: "Decimal comma to point",
+      input: "3,14",
+      source: "direct specialized F* function from Z21679/Z21681"
+    },
+    "Specialized F* French contractions (Z38114) on \"de les amis et de le chat\"": {
+      task: "French contraction replacement",
+      input: "de les amis et de le chat",
+      source: "direct specialized F* function from Z38114/Z38115"
+    },
+    "Specialized F* Devanagari digits to Arabic digits (Z22294) on codepoints [2407,2408,2409]": {
+      task: "Devanagari digits to Arabic digits",
+      input: "codepoints [2407,2408,2409]",
+      source: "direct specialized F* function from Z22294/Z22295/Z14613/Z36070"
     }
   };
 

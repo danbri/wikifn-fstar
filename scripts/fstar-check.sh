@@ -8,6 +8,7 @@ files=(
   "$root/src/fstar/Wikifn.Primitives.fst"
   "$root/src/fstar/Wikifn.Composition.fst"
   "$root/src/fstar/Wikifn.Generated.Compositions.fst"
+  "$root/src/fstar/Wikifn.Specialized.Compositions.fst"
   "$root/src/fstar/Wikifn.Semantics.fst"
 )
 
