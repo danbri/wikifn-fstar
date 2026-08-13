@@ -65,6 +65,28 @@ let (nat_predecessor : Prims.nat -> Prims.nat kernel_result) =
     match n with
     | uu___ when uu___ = Prims.int_zero -> KErr KUnderflow
     | uu___ -> KOk (n - Prims.int_one)
+let (nat_decrement_floor : Prims.nat -> Prims.nat) =
+  fun n ->
+    match n with
+    | uu___ when uu___ = Prims.int_zero -> Prims.int_zero
+    | uu___ -> n - Prims.int_one
+let (nat_sub_floor : Prims.nat -> Prims.nat -> Prims.nat) =
+  fun left ->
+    fun right -> if left <= right then Prims.int_zero else left - right
+let (nat_greater_than : Prims.nat -> Prims.nat -> Prims.bool) =
+  fun left -> fun right -> right < left
+let (nat_greater_than_or_equal : Prims.nat -> Prims.nat -> Prims.bool) =
+  fun left -> fun right -> right <= left
+let (nat_less_than : Prims.nat -> Prims.nat -> Prims.bool) =
+  fun left -> fun right -> left < right
+let (nat_less_than_or_equal : Prims.nat -> Prims.nat -> Prims.bool) =
+  fun left -> fun right -> left <= right
+let (bool_and : Prims.bool -> Prims.bool -> Prims.bool) =
+  fun left -> fun right -> left && right
+let (bool_or : Prims.bool -> Prims.bool -> Prims.bool) =
+  fun left -> fun right -> left || right
+let (bool_not : Prims.bool -> Prims.bool) =
+  fun input -> Prims.op_Negation input
 let (text_empty : text) = []
 let (text_is_empty : text -> Prims.bool) =
   fun s -> match s with | [] -> true | uu___ -> false
@@ -73,6 +95,15 @@ let rec (text_length : text -> Prims.nat) =
     match s with
     | [] -> Prims.int_zero
     | uu___::tail -> Prims.int_one + (text_length tail)
+let rec (text_eq : text -> text -> Prims.bool) =
+  fun left ->
+    fun right ->
+      match (left, right) with
+      | ([], []) -> true
+      | ([], uu___::uu___1) -> false
+      | (uu___::uu___1, []) -> false
+      | (lhead::ltail, rhead::rtail) ->
+          if nat_eq lhead rhead then text_eq ltail rtail else false
 let rec (text_concat : text -> text -> text) =
   fun left ->
     fun right ->
@@ -183,6 +214,32 @@ let (z14456_remove_first_character : text -> text) =
   fun input -> text_remove_first input
 let (z14520_remove_all_characters_in_second_string : text -> text -> text) =
   fun input -> fun chars -> text_remove_chars input chars
+let (z866_string_equality : text -> text -> Prims.bool) =
+  fun left -> fun right -> text_eq left right
+let (z10174_and : Prims.bool -> Prims.bool -> Prims.bool) =
+  fun left -> fun right -> bool_and left right
+let (z10184_or : Prims.bool -> Prims.bool -> Prims.bool) =
+  fun left -> fun right -> bool_or left right
+let (z10216_not : Prims.bool -> Prims.bool) = fun input -> bool_not input
+let (z13522_equality_of_natural_numbers :
+  Prims.nat -> Prims.nat -> Prims.bool) =
+  fun left -> fun right -> nat_eq left right
+let (z13569_subtract_natural_numbers_with_floor_of_0 :
+  Prims.nat -> Prims.nat -> Prims.nat) =
+  fun left -> fun right -> nat_sub_floor left right
+let (z13582_decrement_natural_number_by_one : Prims.nat -> Prims.nat) =
+  fun input -> nat_decrement_floor input
+let (z13676_greater_than_natural_numbers :
+  Prims.nat -> Prims.nat -> Prims.bool) =
+  fun left -> fun right -> nat_greater_than left right
+let (z13682_greater_than_or_equal_natural_numbers :
+  Prims.nat -> Prims.nat -> Prims.bool) =
+  fun left -> fun right -> nat_greater_than_or_equal left right
+let (z13689_less_than_natural_numbers : Prims.nat -> Prims.nat -> Prims.bool)
+  = fun left -> fun right -> nat_less_than left right
+let (z13695_less_than_or_equal_natural_numbers :
+  Prims.nat -> Prims.nat -> Prims.bool) =
+  fun left -> fun right -> nat_less_than_or_equal left right
 let rec (text_first_fresh_from_fuel : Prims.nat -> codepoint -> text -> text)
   =
   fun fuel ->

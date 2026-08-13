@@ -50,6 +50,12 @@ try {
     case "fstar-call":
       await fstarCallCommand(args);
       break;
+    case "fstar-eval-json":
+      await fstarEvalJsonCommand(args);
+      break;
+    case "fstar-eval-zobject":
+      await fstarEvalZObjectCommand(args);
+      break;
     case "analyze":
       await analyzeCommand(args);
       break;
@@ -230,6 +236,8 @@ function usage(message) {
   wikifn eval-example [fuel] [--trace] [--profile]
   wikifn fstar-demo
   wikifn fstar-call [--mode generated|compiled|specialized] [--fuel N] <zid> <text-arg...>
+  wikifn fstar-eval-json <json|-|@file>
+  wikifn fstar-eval-zobject <json|-|@file>
   wikifn analyze [--json] [--primitive Z1,Z2] [--max-objects N] [--max-network-objects N] [--follow-calls] [--live|--refresh-cache|--offline|--no-cache] <zid...>
   wikifn analyze-demo [--json]
   wikifn cache stats [--cache-dir DIR]
@@ -254,6 +262,22 @@ async function fstarDemoCommand(args) {
 async function fstarCallCommand(args) {
   const artifact = path.resolve("docs/generated/wikifn_call.cjs");
   await spawnNodeArtifact(artifact, args);
+}
+
+async function fstarEvalJsonCommand(args) {
+  if (args.length !== 1) {
+    usage("fstar-eval-json requires exactly one JSON string, -, or @file argument");
+  }
+  const artifact = path.resolve("docs/generated/wikifn_call.cjs");
+  await spawnNodeArtifact(artifact, ["--eval-json", args[0]]);
+}
+
+async function fstarEvalZObjectCommand(args) {
+  if (args.length !== 1) {
+    usage("fstar-eval-zobject requires exactly one JSON string, -, or @file argument");
+  }
+  const artifact = path.resolve("docs/generated/wikifn_call.cjs");
+  await spawnNodeArtifact(artifact, ["--eval-zobject", args[0]]);
 }
 
 async function spawnNodeArtifact(artifact, args) {

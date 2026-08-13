@@ -4,12 +4,26 @@ open Wikifn.Primitive.Kernel
 
 type function_id =
   | FZ802
+  | FZ866
   | FZ10008
+  | FZ10000
   | FZ10075
   | FZ10901
+  | FZ10615
+  | FZ11040
   | FZ14124
   | FZ14456
   | FZ14520
+  | FZ10174
+  | FZ10184
+  | FZ10216
+  | FZ13522
+  | FZ13569
+  | FZ13582
+  | FZ13676
+  | FZ13682
+  | FZ13689
+  | FZ13695
   | FZ10052
   | FZ10627
   | FZ11082
@@ -164,9 +178,27 @@ let rec eval_with_policy (p:policy) (fuel:nat) (env:list value) (e:expr) : Tot (
                    if b then eval_with_policy p next env then_expr else eval_with_policy p next env else_expr
                | EOk _ -> EErr ETypeMismatch
                | EErr err -> EErr err)
+          | FZ866, left :: right :: [] ->
+              (match eval_with_policy p next env left with
+               | EOk (VText left_text) ->
+                   (match eval_with_policy p next env right with
+                    | EOk (VText right_text) -> EOk (VBool (z866_string_equality left_text right_text))
+                    | EOk _ -> EErr ETypeMismatch
+                    | EErr err -> EErr err)
+               | EOk _ -> EErr ETypeMismatch
+               | EErr err -> EErr err)
           | FZ10008, input :: [] ->
               (match eval_with_policy p next env input with
                | EOk (VText s) -> EOk (VBool (z10008_is_empty_string s))
+               | EOk _ -> EErr ETypeMismatch
+               | EErr err -> EErr err)
+          | FZ10000, left :: right :: [] ->
+              (match eval_with_policy p next env left with
+               | EOk (VText left_text) ->
+                   (match eval_with_policy p next env right with
+                    | EOk (VText right_text) -> EOk (VText (text_concat left_text right_text))
+                    | EOk _ -> EErr ETypeMismatch
+                    | EErr err -> EErr err)
                | EOk _ -> EErr ETypeMismatch
                | EErr err -> EErr err)
           | FZ10075, input :: substring :: replacement :: [] ->
@@ -190,6 +222,20 @@ let rec eval_with_policy (p:policy) (fuel:nat) (env:list value) (e:expr) : Tot (
                | EOk (VText s) -> EOk (VText (z10901_get_first_character s))
                | EOk _ -> EErr ETypeMismatch
                | EErr err -> EErr err)
+          | FZ10615, input :: prefix :: [] ->
+              (match eval_with_policy p next env input with
+               | EOk (VText input_text) ->
+                   (match eval_with_policy p next env prefix with
+                    | EOk (VText prefix_text) -> EOk (VBool (text_starts_with prefix_text input_text))
+                    | EOk _ -> EErr ETypeMismatch
+                    | EErr err -> EErr err)
+               | EOk _ -> EErr ETypeMismatch
+               | EErr err -> EErr err)
+          | FZ11040, input :: [] ->
+              (match eval_with_policy p next env input with
+               | EOk (VText input_text) -> EOk (VNat (text_length input_text))
+               | EOk _ -> EErr ETypeMismatch
+               | EErr err -> EErr err)
           | FZ14124, first :: last :: [] ->
               (match eval_with_policy p next env first with
                | EOk (VNat first_codepoint) ->
@@ -211,6 +257,91 @@ let rec eval_with_policy (p:policy) (fuel:nat) (env:list value) (e:expr) : Tot (
                    (match eval_with_policy p next env chars with
                     | EOk (VText chars_text) ->
                         EOk (VText (z14520_remove_all_characters_in_second_string input_text chars_text))
+                    | EOk _ -> EErr ETypeMismatch
+                    | EErr err -> EErr err)
+               | EOk _ -> EErr ETypeMismatch
+               | EErr err -> EErr err)
+          | FZ10174, left :: right :: [] ->
+              (match eval_with_policy p next env left with
+               | EOk (VBool left_bool) ->
+                   (match eval_with_policy p next env right with
+                    | EOk (VBool right_bool) -> EOk (VBool (z10174_and left_bool right_bool))
+                    | EOk _ -> EErr ETypeMismatch
+                    | EErr err -> EErr err)
+               | EOk _ -> EErr ETypeMismatch
+               | EErr err -> EErr err)
+          | FZ10184, left :: right :: [] ->
+              (match eval_with_policy p next env left with
+               | EOk (VBool left_bool) ->
+                   (match eval_with_policy p next env right with
+                    | EOk (VBool right_bool) -> EOk (VBool (z10184_or left_bool right_bool))
+                    | EOk _ -> EErr ETypeMismatch
+                    | EErr err -> EErr err)
+               | EOk _ -> EErr ETypeMismatch
+               | EErr err -> EErr err)
+          | FZ10216, input :: [] ->
+              (match eval_with_policy p next env input with
+               | EOk (VBool input_bool) -> EOk (VBool (z10216_not input_bool))
+               | EOk _ -> EErr ETypeMismatch
+               | EErr err -> EErr err)
+          | FZ13522, left :: right :: [] ->
+              (match eval_with_policy p next env left with
+               | EOk (VNat left_nat) ->
+                   (match eval_with_policy p next env right with
+                    | EOk (VNat right_nat) -> EOk (VBool (z13522_equality_of_natural_numbers left_nat right_nat))
+                    | EOk _ -> EErr ETypeMismatch
+                    | EErr err -> EErr err)
+               | EOk _ -> EErr ETypeMismatch
+               | EErr err -> EErr err)
+          | FZ13569, left :: right :: [] ->
+              (match eval_with_policy p next env left with
+               | EOk (VNat left_nat) ->
+                   (match eval_with_policy p next env right with
+                    | EOk (VNat right_nat) ->
+                        EOk (VNat (z13569_subtract_natural_numbers_with_floor_of_0 left_nat right_nat))
+                    | EOk _ -> EErr ETypeMismatch
+                    | EErr err -> EErr err)
+               | EOk _ -> EErr ETypeMismatch
+               | EErr err -> EErr err)
+          | FZ13582, input :: [] ->
+              (match eval_with_policy p next env input with
+               | EOk (VNat input_nat) -> EOk (VNat (z13582_decrement_natural_number_by_one input_nat))
+               | EOk _ -> EErr ETypeMismatch
+               | EErr err -> EErr err)
+          | FZ13676, left :: right :: [] ->
+              (match eval_with_policy p next env left with
+               | EOk (VNat left_nat) ->
+                   (match eval_with_policy p next env right with
+                    | EOk (VNat right_nat) -> EOk (VBool (z13676_greater_than_natural_numbers left_nat right_nat))
+                    | EOk _ -> EErr ETypeMismatch
+                    | EErr err -> EErr err)
+               | EOk _ -> EErr ETypeMismatch
+               | EErr err -> EErr err)
+          | FZ13682, left :: right :: [] ->
+              (match eval_with_policy p next env left with
+               | EOk (VNat left_nat) ->
+                   (match eval_with_policy p next env right with
+                    | EOk (VNat right_nat) ->
+                        EOk (VBool (z13682_greater_than_or_equal_natural_numbers left_nat right_nat))
+                    | EOk _ -> EErr ETypeMismatch
+                    | EErr err -> EErr err)
+               | EOk _ -> EErr ETypeMismatch
+               | EErr err -> EErr err)
+          | FZ13689, left :: right :: [] ->
+              (match eval_with_policy p next env left with
+               | EOk (VNat left_nat) ->
+                   (match eval_with_policy p next env right with
+                    | EOk (VNat right_nat) -> EOk (VBool (z13689_less_than_natural_numbers left_nat right_nat))
+                    | EOk _ -> EErr ETypeMismatch
+                    | EErr err -> EErr err)
+               | EOk _ -> EErr ETypeMismatch
+               | EErr err -> EErr err)
+          | FZ13695, left :: right :: [] ->
+              (match eval_with_policy p next env left with
+               | EOk (VNat left_nat) ->
+                   (match eval_with_policy p next env right with
+                    | EOk (VNat right_nat) ->
+                        EOk (VBool (z13695_less_than_or_equal_natural_numbers left_nat right_nat))
                     | EOk _ -> EErr ETypeMismatch
                     | EErr err -> EErr err)
                | EOk _ -> EErr ETypeMismatch

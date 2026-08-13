@@ -135,7 +135,8 @@ a {
 }
 
 .call-form select,
-.call-form input {
+.call-form input,
+.call-form textarea {
   width: 100%;
   border: 1px solid var(--border);
   border-radius: 6px;
@@ -143,6 +144,18 @@ a {
   color: var(--text);
   font: inherit;
   padding: 9px 10px;
+}
+
+.call-form textarea {
+  min-height: 180px;
+  resize: vertical;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.wide-field {
+  grid-column: 1 / -1;
 }
 
 .call-form button {

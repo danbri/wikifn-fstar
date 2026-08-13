@@ -34,6 +34,12 @@ let list_supported () =
     (Printf.sprintf {|{"ok":true,"supported":%s}|}
        (Wikifn_call_common.supported_json ()))
 
+let eval_json json_js =
+  Js.string (Wikifn_call_common.evaluate_json_ir_text (Js.to_string json_js))
+
+let eval_zobject json_js =
+  Js.string (Wikifn_call_common.evaluate_zobject_text (Js.to_string json_js))
+
 let () =
   Js.Unsafe.set
     Js.Unsafe.global
@@ -42,4 +48,12 @@ let () =
   Js.Unsafe.set
     Js.Unsafe.global
     "wikifnFstarSupported"
-    (Js.Unsafe.callback list_supported)
+    (Js.Unsafe.callback list_supported);
+  Js.Unsafe.set
+    Js.Unsafe.global
+    "wikifnFstarEvalJson"
+    (Js.Unsafe.callback eval_json);
+  Js.Unsafe.set
+    Js.Unsafe.global
+    "wikifnFstarEvalZObject"
+    (Js.Unsafe.callback eval_zobject)

@@ -264,6 +264,12 @@ let supported_export () =
     (Printf.sprintf {|{"ok":true,"supported":%s}|}
        (Wikifn_call_common.supported_json ()))
 
+let eval_json_export json_js =
+  Js.string (Wikifn_call_common.evaluate_json_ir_text (Js.to_string json_js))
+
+let eval_zobject_export json_js =
+  Js.string (Wikifn_call_common.evaluate_zobject_text (Js.to_string json_js))
+
 let export_call_api () =
   Js.Unsafe.set
     Js.Unsafe.global
@@ -272,7 +278,15 @@ let export_call_api () =
   Js.Unsafe.set
     Js.Unsafe.global
     "wikifnFstarSupported"
-    (Js.Unsafe.callback supported_export)
+    (Js.Unsafe.callback supported_export);
+  Js.Unsafe.set
+    Js.Unsafe.global
+    "wikifnFstarEvalJson"
+    (Js.Unsafe.callback eval_json_export);
+  Js.Unsafe.set
+    Js.Unsafe.global
+    "wikifnFstarEvalZObject"
+    (Js.Unsafe.callback eval_zobject_export)
 
 let () =
   export_call_api ();

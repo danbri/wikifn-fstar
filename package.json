@@ -19,6 +19,8 @@
     "fstar:js-demo": "make fstar-js-demo",
     "fstar:call-js": "make fstar-call-js",
     "fstar:call": "node ./bin/wikifn.js fstar-call --mode compiled Z10627 hello",
+    "fstar:eval-json": "node ./bin/wikifn.js fstar-eval-json '{\"call\":\"Z22294\",\"args\":[\"१२३\"]}'",
+    "fstar:eval-zobject": "node ./bin/wikifn.js fstar-eval-zobject '{\"Z1K1\":\"Z7\",\"Z7K1\":\"Z22294\",\"Z22294K1\":\"१२३\"}'",
     "fstar:call-browser": "make fstar-call-browser",
     "fstar:browser-demo": "make fstar-browser-demo",
     "doctor": "make doctor",

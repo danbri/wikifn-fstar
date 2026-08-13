@@ -223,6 +223,12 @@
   var callZid = document.getElementById("fstar-call-zid");
   var callArg0 = document.getElementById("fstar-call-arg0");
   var callArg1 = document.getElementById("fstar-call-arg1");
+  var irForm = document.getElementById("fstar-ir-form");
+  var irInput = document.getElementById("fstar-ir-input");
+  var irOutput = document.querySelector("#fstar-ir-output code");
+  var zobjectForm = document.getElementById("fstar-zobject-form");
+  var zobjectInput = document.getElementById("fstar-zobject-input");
+  var zobjectOutput = document.querySelector("#fstar-zobject-output code");
 
   if (callForm && callOutput && callZid && callArg0 && callArg1) {
     var examples = {
@@ -254,6 +260,24 @@
     runBrowserCall();
   }
 
+  if (irForm && irInput && irOutput) {
+    irForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      runJsonIr();
+    });
+
+    runJsonIr();
+  }
+
+  if (zobjectForm && zobjectInput && zobjectOutput) {
+    zobjectForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      runZObject();
+    });
+
+    runZObject();
+  }
+
   function runBrowserCall() {
     var mode = document.getElementById("fstar-call-mode").value;
     var zid = document.getElementById("fstar-call-zid").value;
@@ -277,6 +301,54 @@
       callOutput.textContent = JSON.stringify({
         ok: false,
         error: "browser_call_failed",
+        message: String(error && error.message ? error.message : error)
+      }, null, 2);
+    }
+  }
+
+  function runJsonIr() {
+    if (typeof root.wikifnFstarEvalJson !== "function") {
+      irOutput.textContent = JSON.stringify({
+        ok: false,
+        error: "missing_browser_artifact",
+        message: "wikifnFstarEvalJson was not exported by the generated artifact"
+      }, null, 2);
+      return;
+    }
+    try {
+      irOutput.textContent = JSON.stringify(
+        JSON.parse(root.wikifnFstarEvalJson(irInput.value)),
+        null,
+        2
+      );
+    } catch (error) {
+      irOutput.textContent = JSON.stringify({
+        ok: false,
+        error: "browser_json_ir_failed",
+        message: String(error && error.message ? error.message : error)
+      }, null, 2);
+    }
+  }
+
+  function runZObject() {
+    if (typeof root.wikifnFstarEvalZObject !== "function") {
+      zobjectOutput.textContent = JSON.stringify({
+        ok: false,
+        error: "missing_browser_artifact",
+        message: "wikifnFstarEvalZObject was not exported by the generated artifact"
+      }, null, 2);
+      return;
+    }
+    try {
+      zobjectOutput.textContent = JSON.stringify(
+        JSON.parse(root.wikifnFstarEvalZObject(zobjectInput.value)),
+        null,
+        2
+      );
+    } catch (error) {
+      zobjectOutput.textContent = JSON.stringify({
+        ok: false,
+        error: "browser_zobject_failed",
         message: String(error && error.message ? error.message : error)
       }, null, 2);
     }

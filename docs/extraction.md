@@ -52,6 +52,9 @@ node docs/generated/wikifn_primitives_demo.cjs
 make fstar-call-js
 node ./bin/wikifn.js fstar-call --mode generated Z10627 hello
 node ./bin/wikifn.js fstar-call --mode compiled Z22294 १२३
+node ./bin/wikifn.js fstar-eval-json '{"call":"Z22294","args":["१२३"]}'
+node ./bin/wikifn.js fstar-eval-json '{"call":"Z13676","args":[{"nat":99},{"nat":42}]}'
+node ./bin/wikifn.js fstar-eval-zobject '{"Z1K1":"Z7","Z7K1":"Z22294","Z22294K1":"१२३"}'
 make fstar-call-browser
 make fstar-browser-demo
 ```
@@ -68,14 +71,30 @@ node ./bin/wikifn.js fstar-call [--mode generated|compiled|specialized] [--fuel 
 
 The callable artifact currently supports `Z10052`, `Z10627`, `Z11082`, `Z19612`, `Z21679`, `Z22294`, `Z22649`, `Z27053`, and `Z38114`. It decodes UTF-8 text arguments to the F* text representation and returns JSON containing the path used, input codepoints, and result.
 
+The runtime JSON IR path uses the same extracted F* interpreter and selected generated policy without going through the fixed ZID/argument wrapper:
+
+```sh
+node ./bin/wikifn.js fstar-eval-json '{"fuel":500,"expr":{"call":"Z27053","args":["H2O"]}}'
+```
+
+Supported expression forms are JSON strings for text, `{ "codepoints": [...] }`, `{ "bool": true }`, `{ "nat": 123 }`, `{ "arg": 0 }`, and `{ "call": "ZID", "args": [...] }`. This is a runtime adapter for the small F* expression calculus, not yet a canonical ZObject decoder.
+
+The grounded scalar IDs currently accepted by the JSON IR path include `Z802`, `Z866`, `Z10000`, `Z10008`, `Z10075`, `Z10615`, `Z10901`, `Z11040`, `Z14124`, `Z14456`, `Z14520`, `Z10174`, `Z10184`, `Z10216`, `Z13522`, `Z13569`, `Z13582`, `Z13676`, `Z13682`, `Z13689`, `Z13695`, plus the selected generated composition IDs.
+
+`fstar-eval-zobject` accepts a supported canonical-style `Z7` call object and selected value forms (`Z6`, `Z10`, `Z13518`, `Z40`). Its purpose is to begin the real ZObject adapter path while keeping the boundary explicit: unsupported objects fail before evaluation.
+
 `make fstar-call-browser` builds a standalone browser-targeted callable artifact, `docs/generated/wikifn_call_browser.js`. `make fstar-browser-demo` also exports the same API from the combined page artifact, `docs/generated/wikifn_primitives_browser.js`. The page uses the combined artifact so it does not load two independent `js_of_ocaml` runtimes. Both expose:
 
 ```js
 globalThis.wikifnFstarCall(mode, zid, fuel, arg0, arg1)
 globalThis.wikifnFstarSupported()
+globalThis.wikifnFstarEvalJson(jsonText)
+globalThis.wikifnFstarEvalZObject(jsonText)
 ```
 
 Those functions are exported from OCaml code linked against the F*-extracted modules; the page-side JavaScript only reads form inputs and displays returned JSON.
+
+The project homepage is static and does not load the generated browser artifact. The running browser demos are on `docs/demos.html`.
 
 `Wikifn.Generated.Compositions` is the selected-pinned-composition interpreter path: local cache objects become generated F* IR, then the extracted F* interpreter evaluates the IR. `Wikifn.Compiled.Compositions` is the generated direct-function path: selected pinned compositions are lowered directly into F* functions over the checked primitive kernel. `Wikifn.Specialized.Compositions` is the hand-maintained direct-function reference path for the same selected examples. The generated direct compiler recognizes the selected private-use marker idiom used by `Z36070`; that is an optimization, not a full equivalence proof for arbitrary compositions.
 

@@ -1,12 +1,26 @@
 open Prims
 type function_id =
   | FZ802
+  | FZ866
   | FZ10008
+  | FZ10000
   | FZ10075
   | FZ10901
+  | FZ10615
+  | FZ11040
   | FZ14124
   | FZ14456
   | FZ14520
+  | FZ10174
+  | FZ10184
+  | FZ10216
+  | FZ13522
+  | FZ13569
+  | FZ13582
+  | FZ13676
+  | FZ13682
+  | FZ13689
+  | FZ13695
   | FZ10052
   | FZ10627
   | FZ11082
@@ -20,18 +34,46 @@ type function_id =
   | FInternalFreshPrivateUse
 let (uu___is_FZ802 : function_id -> Prims.bool) =
   fun projectee -> match projectee with | FZ802 -> true | uu___ -> false
+let (uu___is_FZ866 : function_id -> Prims.bool) =
+  fun projectee -> match projectee with | FZ866 -> true | uu___ -> false
 let (uu___is_FZ10008 : function_id -> Prims.bool) =
   fun projectee -> match projectee with | FZ10008 -> true | uu___ -> false
+let (uu___is_FZ10000 : function_id -> Prims.bool) =
+  fun projectee -> match projectee with | FZ10000 -> true | uu___ -> false
 let (uu___is_FZ10075 : function_id -> Prims.bool) =
   fun projectee -> match projectee with | FZ10075 -> true | uu___ -> false
 let (uu___is_FZ10901 : function_id -> Prims.bool) =
   fun projectee -> match projectee with | FZ10901 -> true | uu___ -> false
+let (uu___is_FZ10615 : function_id -> Prims.bool) =
+  fun projectee -> match projectee with | FZ10615 -> true | uu___ -> false
+let (uu___is_FZ11040 : function_id -> Prims.bool) =
+  fun projectee -> match projectee with | FZ11040 -> true | uu___ -> false
 let (uu___is_FZ14124 : function_id -> Prims.bool) =
   fun projectee -> match projectee with | FZ14124 -> true | uu___ -> false
 let (uu___is_FZ14456 : function_id -> Prims.bool) =
   fun projectee -> match projectee with | FZ14456 -> true | uu___ -> false
 let (uu___is_FZ14520 : function_id -> Prims.bool) =
   fun projectee -> match projectee with | FZ14520 -> true | uu___ -> false
+let (uu___is_FZ10174 : function_id -> Prims.bool) =
+  fun projectee -> match projectee with | FZ10174 -> true | uu___ -> false
+let (uu___is_FZ10184 : function_id -> Prims.bool) =
+  fun projectee -> match projectee with | FZ10184 -> true | uu___ -> false
+let (uu___is_FZ10216 : function_id -> Prims.bool) =
+  fun projectee -> match projectee with | FZ10216 -> true | uu___ -> false
+let (uu___is_FZ13522 : function_id -> Prims.bool) =
+  fun projectee -> match projectee with | FZ13522 -> true | uu___ -> false
+let (uu___is_FZ13569 : function_id -> Prims.bool) =
+  fun projectee -> match projectee with | FZ13569 -> true | uu___ -> false
+let (uu___is_FZ13582 : function_id -> Prims.bool) =
+  fun projectee -> match projectee with | FZ13582 -> true | uu___ -> false
+let (uu___is_FZ13676 : function_id -> Prims.bool) =
+  fun projectee -> match projectee with | FZ13676 -> true | uu___ -> false
+let (uu___is_FZ13682 : function_id -> Prims.bool) =
+  fun projectee -> match projectee with | FZ13682 -> true | uu___ -> false
+let (uu___is_FZ13689 : function_id -> Prims.bool) =
+  fun projectee -> match projectee with | FZ13689 -> true | uu___ -> false
+let (uu___is_FZ13695 : function_id -> Prims.bool) =
+  fun projectee -> match projectee with | FZ13695 -> true | uu___ -> false
 let (uu___is_FZ10052 : function_id -> Prims.bool) =
   fun projectee -> match projectee with | FZ10052 -> true | uu___ -> false
 let (uu___is_FZ10627 : function_id -> Prims.bool) =
@@ -298,6 +340,19 @@ let rec (eval_with_policy :
                              else eval_with_policy p next env else_expr
                          | EOk uu___1 -> EErr ETypeMismatch
                          | EErr err -> EErr err)
+                    | (FZ866, left::right::[]) ->
+                        (match eval_with_policy p next env left with
+                         | EOk (VText left_text) ->
+                             (match eval_with_policy p next env right with
+                              | EOk (VText right_text) ->
+                                  EOk
+                                    (VBool
+                                       (Wikifn_Primitive_Kernel.z866_string_equality
+                                          left_text right_text))
+                              | EOk uu___1 -> EErr ETypeMismatch
+                              | EErr err -> EErr err)
+                         | EOk uu___1 -> EErr ETypeMismatch
+                         | EErr err -> EErr err)
                     | (FZ10008, input::[]) ->
                         (match eval_with_policy p next env input with
                          | EOk (VText s) ->
@@ -305,6 +360,19 @@ let rec (eval_with_policy :
                                (VBool
                                   (Wikifn_Primitive_Kernel.z10008_is_empty_string
                                      s))
+                         | EOk uu___1 -> EErr ETypeMismatch
+                         | EErr err -> EErr err)
+                    | (FZ10000, left::right::[]) ->
+                        (match eval_with_policy p next env left with
+                         | EOk (VText left_text) ->
+                             (match eval_with_policy p next env right with
+                              | EOk (VText right_text) ->
+                                  EOk
+                                    (VText
+                                       (Wikifn_Primitive_Kernel.text_concat
+                                          left_text right_text))
+                              | EOk uu___1 -> EErr ETypeMismatch
+                              | EErr err -> EErr err)
                          | EOk uu___1 -> EErr ETypeMismatch
                          | EErr err -> EErr err)
                     | (FZ10075, input::substring::replacement::[]) ->
@@ -339,6 +407,28 @@ let rec (eval_with_policy :
                                      s))
                          | EOk uu___1 -> EErr ETypeMismatch
                          | EErr err -> EErr err)
+                    | (FZ10615, input::prefix::[]) ->
+                        (match eval_with_policy p next env input with
+                         | EOk (VText input_text) ->
+                             (match eval_with_policy p next env prefix with
+                              | EOk (VText prefix_text) ->
+                                  EOk
+                                    (VBool
+                                       (Wikifn_Primitive_Kernel.text_starts_with
+                                          prefix_text input_text))
+                              | EOk uu___1 -> EErr ETypeMismatch
+                              | EErr err -> EErr err)
+                         | EOk uu___1 -> EErr ETypeMismatch
+                         | EErr err -> EErr err)
+                    | (FZ11040, input::[]) ->
+                        (match eval_with_policy p next env input with
+                         | EOk (VText input_text) ->
+                             EOk
+                               (VNat
+                                  (Wikifn_Primitive_Kernel.text_length
+                                     input_text))
+                         | EOk uu___1 -> EErr ETypeMismatch
+                         | EErr err -> EErr err)
                     | (FZ14124, first::last::[]) ->
                         (match eval_with_policy p next env first with
                          | EOk (VNat first_codepoint) ->
@@ -370,6 +460,128 @@ let rec (eval_with_policy :
                                     (VText
                                        (Wikifn_Primitive_Kernel.z14520_remove_all_characters_in_second_string
                                           input_text chars_text))
+                              | EOk uu___1 -> EErr ETypeMismatch
+                              | EErr err -> EErr err)
+                         | EOk uu___1 -> EErr ETypeMismatch
+                         | EErr err -> EErr err)
+                    | (FZ10174, left::right::[]) ->
+                        (match eval_with_policy p next env left with
+                         | EOk (VBool left_bool) ->
+                             (match eval_with_policy p next env right with
+                              | EOk (VBool right_bool) ->
+                                  EOk
+                                    (VBool
+                                       (Wikifn_Primitive_Kernel.z10174_and
+                                          left_bool right_bool))
+                              | EOk uu___1 -> EErr ETypeMismatch
+                              | EErr err -> EErr err)
+                         | EOk uu___1 -> EErr ETypeMismatch
+                         | EErr err -> EErr err)
+                    | (FZ10184, left::right::[]) ->
+                        (match eval_with_policy p next env left with
+                         | EOk (VBool left_bool) ->
+                             (match eval_with_policy p next env right with
+                              | EOk (VBool right_bool) ->
+                                  EOk
+                                    (VBool
+                                       (Wikifn_Primitive_Kernel.z10184_or
+                                          left_bool right_bool))
+                              | EOk uu___1 -> EErr ETypeMismatch
+                              | EErr err -> EErr err)
+                         | EOk uu___1 -> EErr ETypeMismatch
+                         | EErr err -> EErr err)
+                    | (FZ10216, input::[]) ->
+                        (match eval_with_policy p next env input with
+                         | EOk (VBool input_bool) ->
+                             EOk
+                               (VBool
+                                  (Wikifn_Primitive_Kernel.z10216_not
+                                     input_bool))
+                         | EOk uu___1 -> EErr ETypeMismatch
+                         | EErr err -> EErr err)
+                    | (FZ13522, left::right::[]) ->
+                        (match eval_with_policy p next env left with
+                         | EOk (VNat left_nat) ->
+                             (match eval_with_policy p next env right with
+                              | EOk (VNat right_nat) ->
+                                  EOk
+                                    (VBool
+                                       (Wikifn_Primitive_Kernel.z13522_equality_of_natural_numbers
+                                          left_nat right_nat))
+                              | EOk uu___1 -> EErr ETypeMismatch
+                              | EErr err -> EErr err)
+                         | EOk uu___1 -> EErr ETypeMismatch
+                         | EErr err -> EErr err)
+                    | (FZ13569, left::right::[]) ->
+                        (match eval_with_policy p next env left with
+                         | EOk (VNat left_nat) ->
+                             (match eval_with_policy p next env right with
+                              | EOk (VNat right_nat) ->
+                                  EOk
+                                    (VNat
+                                       (Wikifn_Primitive_Kernel.z13569_subtract_natural_numbers_with_floor_of_0
+                                          left_nat right_nat))
+                              | EOk uu___1 -> EErr ETypeMismatch
+                              | EErr err -> EErr err)
+                         | EOk uu___1 -> EErr ETypeMismatch
+                         | EErr err -> EErr err)
+                    | (FZ13582, input::[]) ->
+                        (match eval_with_policy p next env input with
+                         | EOk (VNat input_nat) ->
+                             EOk
+                               (VNat
+                                  (Wikifn_Primitive_Kernel.z13582_decrement_natural_number_by_one
+                                     input_nat))
+                         | EOk uu___1 -> EErr ETypeMismatch
+                         | EErr err -> EErr err)
+                    | (FZ13676, left::right::[]) ->
+                        (match eval_with_policy p next env left with
+                         | EOk (VNat left_nat) ->
+                             (match eval_with_policy p next env right with
+                              | EOk (VNat right_nat) ->
+                                  EOk
+                                    (VBool
+                                       (Wikifn_Primitive_Kernel.z13676_greater_than_natural_numbers
+                                          left_nat right_nat))
+                              | EOk uu___1 -> EErr ETypeMismatch
+                              | EErr err -> EErr err)
+                         | EOk uu___1 -> EErr ETypeMismatch
+                         | EErr err -> EErr err)
+                    | (FZ13682, left::right::[]) ->
+                        (match eval_with_policy p next env left with
+                         | EOk (VNat left_nat) ->
+                             (match eval_with_policy p next env right with
+                              | EOk (VNat right_nat) ->
+                                  EOk
+                                    (VBool
+                                       (Wikifn_Primitive_Kernel.z13682_greater_than_or_equal_natural_numbers
+                                          left_nat right_nat))
+                              | EOk uu___1 -> EErr ETypeMismatch
+                              | EErr err -> EErr err)
+                         | EOk uu___1 -> EErr ETypeMismatch
+                         | EErr err -> EErr err)
+                    | (FZ13689, left::right::[]) ->
+                        (match eval_with_policy p next env left with
+                         | EOk (VNat left_nat) ->
+                             (match eval_with_policy p next env right with
+                              | EOk (VNat right_nat) ->
+                                  EOk
+                                    (VBool
+                                       (Wikifn_Primitive_Kernel.z13689_less_than_natural_numbers
+                                          left_nat right_nat))
+                              | EOk uu___1 -> EErr ETypeMismatch
+                              | EErr err -> EErr err)
+                         | EOk uu___1 -> EErr ETypeMismatch
+                         | EErr err -> EErr err)
+                    | (FZ13695, left::right::[]) ->
+                        (match eval_with_policy p next env left with
+                         | EOk (VNat left_nat) ->
+                             (match eval_with_policy p next env right with
+                              | EOk (VNat right_nat) ->
+                                  EOk
+                                    (VBool
+                                       (Wikifn_Primitive_Kernel.z13695_less_than_or_equal_natural_numbers
+                                          left_nat right_nat))
                               | EOk uu___1 -> EErr ETypeMismatch
                               | EErr err -> EErr err)
                          | EOk uu___1 -> EErr ETypeMismatch

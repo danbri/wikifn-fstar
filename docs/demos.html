@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>wikifn-fstar demos</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <main>
+      <header>
+        <p class="eyebrow">wikifn-fstar</p>
+        <h1>Runnable demos</h1>
+        <p>
+          Browser-side artifacts and visualizations for the current extracted F*
+          and composition-analysis prototype.
+        </p>
+        <p><a href="./index.html">Project overview</a></p>
+      </header>
+
+      <section>
+        <h2>What works now</h2>
+        <ul>
+          <li>Canonical ZObject JSON parsing and normalization.</li>
+          <li>Basic structural checks for local snapshots.</li>
+          <li>Revision and SHA-256 digest recording for imported objects.</li>
+          <li>A vendored 20260801 Wikifunctions dump and local SQLite composition graph index.</li>
+          <li>A deliberately named junk proof-of-concept JavaScript evaluator for a small `Z14K2` composition subset.</li>
+          <li>A bounded Wikifunctions analyzer that reports composition-closed graphs and open frontiers.</li>
+          <li>An initial F* model and primitive kernel checked by `make fstar-check`.</li>
+          <li>A real F* to OCaml to JavaScript extraction demo for checked primitives, selected generated composition IR, generated direct F* functions, and direct specialized functions.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>What it is not</h2>
+        <ul>
+          <li>It is not a proof that arbitrary Python or JavaScript `Z16` implementations are correct.</li>
+          <li>Completing evaluator coverage is the current priority; unsupported ZObject forms and foreign-code boundaries are still reported explicitly.</li>
+          <li>It is not yet using F* as the format of record.</li>
+          <li>It is not yet a Low*/KaRaMeL C extraction target.</li>
+          <li>The deliberately named junk JavaScript composition evaluator is a pre-F* prototype, not extracted F* code.</li>
+          <li>Closure claims are relative to the fetched corpus and the selected primitive policy.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Actual F* extraction demo</h2>
+        <p>
+          This extracts the checked primitive kernel, `Wikifn.Primitives`, a small
+          F* composition interpreter, generated F* IR for selected pinned compositions,
+          generated direct F* functions for those compositions, and direct specialized F*
+          functions for the same selected paths. It compiles
+          an OCaml runner and emits JavaScript with `js_of_ocaml`. It does not yet parse
+          arbitrary canonical ZObject JSON at runtime.
+        </p>
+        <p>
+          The generated direct path is <code>Wikifn.Compiled.Compositions</code>. It bypasses
+          the expression interpreter for selected pinned compositions and still calls the
+          checked primitive kernel. It is a small compiler for this selected subset, not a
+          general Wikifunctions compiler yet.
+        </p>
+        <p>
+          The interpreter now has a checked fast path for <code>Z14613</code>
+          character-set replacement, so generated IR for ROT13, superscript,
+          script conversion, and subscript examples runs in the browser demo.
+        </p>
+        <p>
+          The table below is populated from the browser artifact generated from F*.
+          If the artifact fails to run, the table stays empty and the raw output below
+          shows the failure boundary.
+        </p>
+        <div id="fstar-demo-status" class="demo-status">Waiting for extracted JavaScript output...</div>
+        <table class="demo-table" id="fstar-demo-results">
+          <thead>
+            <tr>
+              <th>What ran</th>
+              <th>Input</th>
+              <th>Result from extracted JS</th>
+              <th>Source path</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <table class="demo-table">
+          <thead>
+            <tr>
+              <th>Plain task</th>
+              <th>Provenance</th>
+              <th>Input</th>
+              <th>Output</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Remove regular spaces</td>
+              <td><code>Z10052</code> via <code>Z10077</code></td>
+              <td><code>a b c</code></td>
+              <td><code>abc</code>, through generated IR, generated direct F*, and direct specialization</td>
+            </tr>
+            <tr>
+              <td>ROT13 Latin alphabet</td>
+              <td><code>Z10627</code> via <code>Z21749</code></td>
+              <td><code>hello</code></td>
+              <td><code>uryyb</code>, through generated IR, generated direct F*, and direct specialization</td>
+            </tr>
+            <tr>
+              <td>Fallback if string is empty</td>
+              <td><code>Z11082</code> via <code>Z31951</code></td>
+              <td><code>empty</code>, <code>fallback</code></td>
+              <td><code>fallback</code>, through generated IR, generated direct F*, and direct specialization</td>
+            </tr>
+            <tr>
+              <td>Turn to superscript</td>
+              <td><code>Z19612</code> via <code>Z22828</code></td>
+              <td><code>x2+y3</code></td>
+              <td><code>ˣ²⁺ʸ³</code>, through generated IR, generated direct F*, and direct specialization</td>
+            </tr>
+            <tr>
+              <td>Decimal comma to point</td>
+              <td><code>Z21679</code> via <code>Z21681</code></td>
+              <td><code>3,14</code></td>
+              <td><code>3.14</code>, through generated IR, generated direct F*, and direct specialization</td>
+            </tr>
+            <tr>
+              <td>French contraction replacement</td>
+              <td><code>Z38114</code> via <code>Z38115</code></td>
+              <td><code>de les amis et de le chat</code></td>
+              <td><code>des amis et du chat</code>, through generated IR, generated direct F*, and direct specialization</td>
+            </tr>
+            <tr>
+              <td>Devanagari digits to Arabic digits</td>
+              <td><code>Z22294</code> via <code>Z22295</code>, <code>Z14613</code>, <code>Z36070</code></td>
+              <td><code>[2407,2408,2409]</code></td>
+              <td><code>123</code>, through generated IR, generated direct F*, and direct specialization</td>
+            </tr>
+            <tr>
+              <td>Arabic numerals to Devanagari numerals</td>
+              <td><code>Z22649</code> via <code>Z22653</code></td>
+              <td><code>123</code></td>
+              <td><code>१२३</code>, through generated IR, generated direct F*, and direct specialization</td>
+            </tr>
+            <tr>
+              <td>Digits to subscript</td>
+              <td><code>Z27053</code> via <code>Z27216</code></td>
+              <td><code>H2O</code></td>
+              <td><code>H₂O</code>, through generated IR, generated direct F*, and direct specialization</td>
+            </tr>
+          </tbody>
+        </table>
+        <pre><code>make fstar-js-demo
+node docs/generated/wikifn_primitives_demo.cjs</code></pre>
+        <p>Callable Node artifact over the same extracted F* modules:</p>
+        <pre><code>make fstar-call-js
+node ./bin/wikifn.js fstar-call --mode generated Z10627 hello
+node ./bin/wikifn.js fstar-call --mode compiled Z22294 १२३</code></pre>
+        <p>Browser-targeted artifacts:</p>
+        <pre><code>make fstar-call-browser
+make fstar-browser-demo</code></pre>
+        <p>
+          The page uses the combined <code>wikifn_primitives_browser.js</code> artifact
+          for both the fixed table and the callable form, so it loads one
+          <code>js_of_ocaml</code> runtime.
+        </p>
+        <form id="fstar-call-form" class="call-form">
+          <label>
+            <span>Path</span>
+            <select id="fstar-call-mode">
+              <option value="compiled">compiled direct F*</option>
+              <option value="generated">generated IR interpreter</option>
+              <option value="specialized">specialized direct F*</option>
+            </select>
+          </label>
+          <label>
+            <span>Function</span>
+            <select id="fstar-call-zid">
+              <option value="Z10627">Z10627 ROT13 Latin alphabet</option>
+              <option value="Z22294">Z22294 Devanagari digits to Arabic digits</option>
+              <option value="Z22649">Z22649 Arabic numerals to Devanagari numerals</option>
+              <option value="Z27053">Z27053 digits to subscript</option>
+              <option value="Z19612">Z19612 turn to superscript</option>
+              <option value="Z10052">Z10052 remove regular spaces</option>
+              <option value="Z21679">Z21679 decimal comma to point</option>
+              <option value="Z38114">Z38114 French contractions</option>
+              <option value="Z11082">Z11082 fallback if string is empty</option>
+            </select>
+          </label>
+          <label>
+            <span>Input</span>
+            <input id="fstar-call-arg0" value="hello">
+          </label>
+          <label>
+            <span>Fallback</span>
+            <input id="fstar-call-arg1" value="fallback">
+          </label>
+          <button type="submit">Run Extracted F*</button>
+        </form>
+        <pre id="fstar-call-output"><code></code></pre>
+        <p>
+          Runtime JSON IR path over the same extracted F* interpreter. This is
+          a small expression format for values, calls, and fuel; it is not yet
+          the canonical ZObject adapter.
+        </p>
+        <pre><code>node ./bin/wikifn.js fstar-eval-json '{"call":"Z22294","args":["१२३"]}'</code></pre>
+        <form id="fstar-ir-form" class="call-form ir-form">
+          <label class="wide-field">
+            <span>Expression JSON</span>
+            <textarea id="fstar-ir-input" rows="9">{
+  "fuel": 500,
+  "expr": {
+    "call": "Z22294",
+    "args": [
+      "१२३"
+    ]
+  }
+}</textarea>
+          </label>
+          <button type="submit">Run JSON IR</button>
+        </form>
+        <pre id="fstar-ir-output"><code></code></pre>
+        <p>
+          Supported canonical-style <code>Z7</code> call adapter. This accepts
+          selected value forms and function calls, then lowers them to the same
+          extracted F* evaluator.
+        </p>
+        <pre><code>node ./bin/wikifn.js fstar-eval-zobject '{"Z1K1":"Z7","Z7K1":"Z22294","Z22294K1":"१२३"}'</code></pre>
+        <form id="fstar-zobject-form" class="call-form ir-form">
+          <label class="wide-field">
+            <span>ZObject JSON</span>
+            <textarea id="fstar-zobject-input" rows="8">{
+  "Z1K1": "Z7",
+  "Z7K1": "Z13676",
+  "Z13676K1": {
+    "Z1K1": "Z13518",
+    "Z13518K1": "99"
+  },
+  "Z13676K2": {
+    "Z1K1": "Z13518",
+    "Z13518K1": "42"
+  }
+}</textarea>
+          </label>
+          <button type="submit">Run Z7 Call</button>
+        </form>
+        <pre id="fstar-zobject-output"><code></code></pre>
+        <p>Representative output:</p>
+        <pre><code>{"case":"Z782 is_zero(0)","result":{"ok":true,"value":{"type":"Z40","value":true}}}
+{"case":"ROT13 Latin alphabet (Z10627) on \"hello\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[117,114,121,121,98],"text":"uryyb","ascii":"uryyb"}}}
+{"case":"Turn to superscript (Z19612) on \"x2+y3\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[739,178,8314,696,179],"text":"ˣ²⁺ʸ³","ascii":""}}}
+{"case":"Compiled F* ROT13 Latin alphabet (Z10627) on \"hello\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[117,114,121,121,98],"text":"uryyb","ascii":"uryyb"}}}
+{"case":"Compiled F* turn to superscript (Z19612) on \"x2+y3\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[739,178,8314,696,179],"text":"ˣ²⁺ʸ³","ascii":""}}}
+{"case":"Arabic numerals to Devanagari numerals (Z22649) on \"123\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[2407,2408,2409],"text":"१२३","ascii":""}}}
+{"case":"Specialized F* ROT13 Latin alphabet (Z10627) on \"hello\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[117,114,121,121,98],"text":"uryyb","ascii":"uryyb"}}}
+{"case":"Specialized F* turn to superscript (Z19612) on \"x2+y3\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[739,178,8314,696,179],"text":"ˣ²⁺ʸ³","ascii":""}}}
+{"case":"Specialized F* digits to subscript (Z27053) on \"H2O\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[72,8322,79],"text":"H₂O","ascii":"HO"}}}</code></pre>
+        <p>Browser artifact output:</p>
+        <pre id="fstar-extraction-output"></pre>
+        <p><a href="./generated/wikifn_primitives_demo.cjs">Generated CLI JavaScript artifact</a>, <a href="./generated/wikifn_call.cjs">generated callable Node artifact</a>, <a href="./generated/wikifn_call_browser.js">generated callable browser artifact</a>, and <a href="./generated/wikifn_primitives_browser.js">generated browser JavaScript artifact</a></p>
+      </section>
+
+      <section>
+        <h2>Toy composition demo</h2>
+        <p>The local fixture defines recursive addition using `if`, `is_zero`, `successor`, and `predecessor`.</p>
+        <pre><code>add(x, y) =
+  if is_zero(y)
+  then x
+  else add(successor(x), predecessor(y))</code></pre>
+        <p>
+          In ordinary counting terms, `successor(n)` is the next number and `predecessor(n)`
+          is the previous number. The demo moves one count from the second argument to the
+          first until the second argument is zero.
+        </p>
+        <pre><code>add(2, 2)
+add(3, 1)
+add(4, 0)
+4</code></pre>
+        <p>Run:</p>
+        <pre><code>node ./bin/wikifn.js eval-example --trace --profile</code></pre>
+        <p>The result value is a Wikifunctions-style natural number:</p>
+        <pre><code>{
+  "Z1K1": "Z10",
+  "Z10K1": "4"
+}</code></pre>
+      </section>
+
+      <section>
+        <h2>Live analysis example</h2>
+        <p>Run:</p>
+        <pre><code>node ./bin/wikifn.js analyze Z22294</code></pre>
+        <p>Current interpretation:</p>
+        <ul>
+          <li>`Z22294` has a composition implementation, `Z22295`.</li>
+          <li>`Z22295` calls `Z14613`; `Z14613` has recursive composition implementation `Z36070`.</li>
+          <li>The extracted demo currently uses generated F* IR, generated direct F*, and a hand-specialized F* function for this selected path.</li>
+          <li>The remaining generalization is canonical-ZObject-to-F*-IR adaptation for arbitrary functions at runtime or as a broader generation pass.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Next grounding frontier</h2>
+        <p>
+          The local SQLite graph says the next useful F* primitive work is mostly
+          lists, string joins/equality, booleans, and natural-number arithmetic.
+          These are high-reuse leaves in existing compositions.
+        </p>
+        <table class="demo-table">
+          <thead>
+            <tr>
+              <th>Priority</th>
+              <th>Plain name</th>
+              <th>Wikifunctions ID</th>
+              <th>Why it matters</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>List head/tail/empty/prepend/length</td>
+              <td><code>Z811</code>, <code>Z812</code>, <code>Z813</code>, <code>Z810</code>, <code>Z12681</code></td>
+              <td>These appear across hundreds of composition implementations and unlock recursive list algorithms.</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>String concatenate, equality, join-list</td>
+              <td><code>Z10000</code>, <code>Z866</code>, <code>Z21394</code>, <code>Z12899</code></td>
+              <td>Needed for readable text-generation demos, including many language and formatting functions.</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Boolean operators</td>
+              <td><code>Z10174</code>, <code>Z10184</code>, <code>Z10216</code></td>
+              <td>Small, precise F* specs; common in validation and branching-heavy compositions.</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>Natural-number arithmetic</td>
+              <td><code>Z13521</code>, <code>Z13522</code>, <code>Z13578</code>, <code>Z13582</code>, <code>Z13539</code></td>
+              <td>Necessary for algorithmic demos beyond strings, including recursive sequence and counting functions.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p><a href="./primitives.md">Detailed primitive agenda</a></p>
+      </section>
+
+      <section>
+        <h2>Composition tree browser</h2>
+        <p>
+          The tree marks selected compositions, arguments, constants, assumed primitives,
+          and foreign-code frontiers. Assumed primitive leaves are not F*-verified yet.
+        </p>
+        <label class="tree-picker">
+          <span>Function</span>
+          <select id="tree-select"></select>
+        </label>
+        <div class="layout-toggle" aria-label="Tree layout">
+          <button type="button" data-layout="horizontal" class="active">Horizontal</button>
+          <button type="button" data-layout="radial">Radial</button>
+        </div>
+        <p id="tree-meta" class="tree-meta"></p>
+        <div id="tree-view" class="tree-view"></div>
+        <p id="tree-note" class="tree-note"></p>
+      </section>
+
+      <section>
+        <h2>Local setup</h2>
+        <pre><code>git clone https://github.com/danbri/wikifn-fstar.git
+cd wikifn-fstar
+make setup-fstar
+make doctor</code></pre>
+        <p><a href="./setup.md">Setup notes</a>, <a href="./debugging.md">debugging notes</a>, <a href="./cache.md">cache notes</a>, <a href="./primitives.md">primitive notes</a>, and <a href="./extraction.md">extraction notes</a> are included in the repo.</p>
+      </section>
+    </main>
+    <script src="./generated/wikifn_primitives_browser.js"></script>
+    <script src="./fstar-demo.js"></script>
+    <script type="module" src="./tree.js"></script>
+  </body>
+</html>

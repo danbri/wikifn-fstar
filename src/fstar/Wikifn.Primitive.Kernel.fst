@@ -46,6 +46,35 @@ let nat_predecessor (n:nat) : Tot (kernel_result nat) =
   | 0 -> KErr KUnderflow
   | _ -> KOk (n - 1)
 
+let nat_decrement_floor (n:nat) : Tot nat =
+  match n with
+  | 0 -> 0
+  | _ -> n - 1
+
+let nat_sub_floor (left:nat) (right:nat) : Tot nat =
+  if left <= right then 0 else left - right
+
+let nat_greater_than (left:nat) (right:nat) : Tot bool =
+  right < left
+
+let nat_greater_than_or_equal (left:nat) (right:nat) : Tot bool =
+  right <= left
+
+let nat_less_than (left:nat) (right:nat) : Tot bool =
+  left < right
+
+let nat_less_than_or_equal (left:nat) (right:nat) : Tot bool =
+  left <= right
+
+let bool_and (left:bool) (right:bool) : Tot bool =
+  left && right
+
+let bool_or (left:bool) (right:bool) : Tot bool =
+  left || right
+
+let bool_not (input:bool) : Tot bool =
+  not input
+
 let text_empty : text = []
 
 let text_is_empty (s:text) : Tot bool =
@@ -57,6 +86,14 @@ let rec text_length (s:text) : Tot nat =
   match s with
   | [] -> 0
   | _ :: tail -> 1 + text_length tail
+
+let rec text_eq (left:text) (right:text) : Tot bool =
+  match left, right with
+  | [], [] -> true
+  | [], _ :: _ -> false
+  | _ :: _, [] -> false
+  | lhead :: ltail, rhead :: rtail ->
+      if nat_eq lhead rhead then text_eq ltail rtail else false
 
 let rec text_concat (left:text) (right:text) : Tot text =
   match left with
@@ -167,6 +204,57 @@ let z14520_remove_all_characters_in_second_string
   : Tot text =
   text_remove_chars input chars
 
+let z866_string_equality (left:text) (right:text) : Tot bool =
+  text_eq left right
+
+let z10174_and (left:bool) (right:bool) : Tot bool =
+  bool_and left right
+
+let z10184_or (left:bool) (right:bool) : Tot bool =
+  bool_or left right
+
+let z10216_not (input:bool) : Tot bool =
+  bool_not input
+
+let z13522_equality_of_natural_numbers
+  (left:nat)
+  (right:nat)
+  : Tot bool =
+  nat_eq left right
+
+let z13569_subtract_natural_numbers_with_floor_of_0
+  (left:nat)
+  (right:nat)
+  : Tot nat =
+  nat_sub_floor left right
+
+let z13582_decrement_natural_number_by_one (input:nat) : Tot nat =
+  nat_decrement_floor input
+
+let z13676_greater_than_natural_numbers
+  (left:nat)
+  (right:nat)
+  : Tot bool =
+  nat_greater_than left right
+
+let z13682_greater_than_or_equal_natural_numbers
+  (left:nat)
+  (right:nat)
+  : Tot bool =
+  nat_greater_than_or_equal left right
+
+let z13689_less_than_natural_numbers
+  (left:nat)
+  (right:nat)
+  : Tot bool =
+  nat_less_than left right
+
+let z13695_less_than_or_equal_natural_numbers
+  (left:nat)
+  (right:nat)
+  : Tot bool =
+  nat_less_than_or_equal left right
+
 let rec text_first_fresh_from_fuel
   (fuel:nat)
   (current:codepoint)
@@ -203,6 +291,14 @@ let text_starts_with_example () :
 
 let text_starts_with_false_example () :
   Lemma (text_starts_with [1; 3] [1; 2; 3] == false)
+  = ()
+
+let text_eq_true_example () :
+  Lemma (text_eq [1; 2; 3] [1; 2; 3] == true)
+  = ()
+
+let text_eq_false_example () :
+  Lemma (text_eq [1; 2; 3] [1; 2] == false)
   = ()
 
 let z10008_empty_example () :
@@ -254,6 +350,71 @@ let z14520_remove_chars_example () :
   Lemma (
     z14520_remove_all_characters_in_second_string [1; 2; 3; 2] [2]
     == [1; 3]
+  )
+  = ()
+
+let z866_string_equality_true_example () :
+  Lemma (z866_string_equality [1; 2; 3] [1; 2; 3] == true)
+  = ()
+
+let z866_string_equality_false_example () :
+  Lemma (z866_string_equality [1; 2; 3] [1; 2] == false)
+  = ()
+
+let z10174_and_examples () :
+  Lemma (
+    z10174_and true true == true /\
+    z10174_and true false == false /\
+    z10174_and false true == false /\
+    z10174_and false false == false
+  )
+  = ()
+
+let z10184_or_examples () :
+  Lemma (
+    z10184_or true true == true /\
+    z10184_or true false == true /\
+    z10184_or false true == true /\
+    z10184_or false false == false
+  )
+  = ()
+
+let z10216_not_examples () :
+  Lemma (
+    z10216_not true == false /\
+    z10216_not false == true
+  )
+  = ()
+
+let z13522_nat_equality_examples () :
+  Lemma (
+    z13522_equality_of_natural_numbers 2 2 == true /\
+    z13522_equality_of_natural_numbers 2 3 == false
+  )
+  = ()
+
+let z13569_subtract_floor_examples () :
+  Lemma (
+    z13569_subtract_natural_numbers_with_floor_of_0 4 2 == 2 /\
+    z13569_subtract_natural_numbers_with_floor_of_0 2 4 == 0
+  )
+  = ()
+
+let z13582_decrement_floor_examples () :
+  Lemma (
+    z13582_decrement_natural_number_by_one 7 == 6 /\
+    z13582_decrement_natural_number_by_one 0 == 0
+  )
+  = ()
+
+let natural_comparison_examples () :
+  Lemma (
+    z13676_greater_than_natural_numbers 99 42 == true /\
+    z13676_greater_than_natural_numbers 42 42 == false /\
+    z13682_greater_than_or_equal_natural_numbers 42 42 == true /\
+    z13689_less_than_natural_numbers 42 99 == true /\
+    z13689_less_than_natural_numbers 42 42 == false /\
+    z13695_less_than_or_equal_natural_numbers 42 42 == true
   )
   = ()
 

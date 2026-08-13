@@ -12,9 +12,14 @@ The kernel currently covers:
 - zero test
 - successor
 - predecessor with underflow
+- natural decrement with floor at 0
+- natural subtraction with floor at 0
+- natural greater-than / greater-or-equal / less-than / less-or-equal
+- boolean and / or / not
 - empty text
 - text emptiness
 - text length
+- text equality
 - text concatenation
 - text starts-with
 - first character as a one-codepoint text
@@ -47,9 +52,7 @@ Immediate Wikifunctions candidates:
 - `Z10615`: string starts with
 - `Z802`: If
 
-`Z10008`, `Z10075`, `Z10901`, `Z14124`, `Z14456`, `Z14520`, and `Z802` now have checked F* kernel definitions over codepoint-list text. `Z10000`, `Z10615`, and `Z11040` now have checked frontier wrappers against those kernel operations. They still need adapter work before an extracted interpreter can run real canonical ZObjects directly.
-
-`Z13522` remains a lower-priority spec candidate already represented by a reusable kernel operation, but not yet registered as a ZID adapter.
+`Z10008`, `Z10075`, `Z10901`, `Z14124`, `Z14456`, `Z14520`, and `Z802` have checked F* kernel definitions over codepoint-list text. `Z10000`, `Z10615`, `Z11040`, `Z866`, `Z10174`, `Z10184`, `Z10216`, `Z13522`, `Z13569`, `Z13582`, `Z13676`, `Z13682`, `Z13689`, and `Z13695` are now grounded for the extracted expression interpreter as scalar primitive calls. They still need canonical ZObject adapter work before arbitrary function calls can be loaded directly from wiki JSON at runtime.
 
 ## Direct Specialization Targets
 
@@ -80,12 +83,16 @@ Other good frontier-expansion candidates from the local dump, ordered by usefuln
 - `Z812`: list without first element
 - `Z813`: is empty list
 - `Z873`: map function
-- `Z866`: string equality
 - `Z12899`: join list of strings with delimiter
 - `Z21394`: concatenate many strings
-- `Z10174`: and
-- `Z10184`: or
-- `Z10216`: not
+
+## Current Priority Split
+
+The local SQLite pass shows two different notions of "important".
+
+Low-risk scalar primitives are now the immediate extracted-interpreter substrate: `Z866`, `Z10000`, `Z10174`, `Z10184`, `Z10216`, `Z10615`, `Z11040`, `Z13522`, `Z13569`, `Z13582`, `Z13676`, `Z13682`, `Z13689`, and `Z13695`. These are good eventual Low* candidates because their specs are small and deterministic.
+
+The largest graph unlocks are not all low-risk primitives. `Z803` value by key, `Z805` reify, `Z808` abstract, and `Z22475` value by key safer need an honest object/key semantics. `Z873` map function and `Z876` reduce function need first-class function values, typed-list adapters, explicit fuel, and useful trace semantics. They should be treated as evaluator work, not just more scalar builtins.
 
 ## Ranked Frontier From Local SQLite
 
@@ -94,20 +101,20 @@ Source: `cache/wikifunctions.sqlite`, built from the vendored 20260801 dump. The
 | Rank | ZID | English label | Composition-call frequency | Cached Z8 shape | Why ground it next | Representative functions moved closer to closed |
 | ---: | --- | --- | ---: | --- | --- | --- |
 | 1 | `Z811` | first element | 571 | one typed-list argument, returns `Z1` | Core recursive-list primitive; highest ungrounded call count. | `Z37209` German noun phrase from determiner and noun; `Z35874` preferred implementation of function as ZID; `Z19601` N-ifs |
-| 2 | `Z10000` | join two strings | 419 | `Z6, Z6 -> Z6` | Already has a list-spec operation in the F* kernel as `text_concat`; only the ZID adapter/registration is missing. | `Z26333` Latin first declension table; `Z35334` print Gregorian year limited by precision, English; `Z12203` English regular superlative form |
+| 2 | `Z10000` | join two strings | 419 | `Z6, Z6 -> Z6` | Grounded in the extracted expression interpreter; next work is canonical call adaptation. | `Z26333` Latin first declension table; `Z35334` print Gregorian year limited by precision, English; `Z12203` English regular superlative form |
 | 3 | `Z813` | is empty list | 229 | one typed-list argument, returns `Z40` | Pairs with `Z811`/`Z812` for structural recursion over lists. | `Z19601` N-ifs; `Z12864` lists have equal length; `Z13558` product of list natural numbers |
 | 4 | `Z812` | list without first element | 246 | one typed-list argument, returns typed list | Completes the basic list-recursion trio with head and empty. | `Z35874` preferred implementation of function as ZID; `Z13397` get nth element of a list; `Z31019` Levenshtein distance between lists is at most n? |
 | 5 | `Z873` | map function | 428 | `Z8, list Z1 -> list Z1` | Very high reuse, but it requires first-class function values and typed-list adapters, so it should follow the basic list kernel. | `Z30157` group by selector; `Z32585` group typed pairs by first element; `Z21347` sort integer-keyed list ascending |
 | 6 | `Z21394` | concatenate many strings | 283 | `list Z6 -> Z6` | A good text-generation demo primitive once list traversal and string concat are grounded. | `Z28748` name and lifespan from Wikidata item; `Z26712` subject is an instance of, German; `Z37677` inject Wikidata link if missing label |
 | 7 | `Z12899` | join list of strings with delimiter | 149 | `list Z6, Z6 -> Z6` | Common readable text output operation; gives useful end-user demos. | `Z28885` Luxembourgish short description for album; `Z17687` convert RGB to hex colour; `Z17954` substitute MediaWiki edit-change-tags query |
-| 8 | `Z13522` | equality of natural numbers | 182 | `Z13518, Z13518 -> Z40` | The F* kernel already has `nat_eq`; finish the ZID-level adapter. | `Z19343` Hindi ordinal; `Z19892` same Rational number object; `Z13397` get nth element of a list |
-| 9 | `Z10216` | not | 151 | `Z40 -> Z40` | Small and exact; commonly appears inside guards and validators. | `Z24307` fallback language codes; `Z10215` Boolean identity; `Z31019` Levenshtein distance between lists is at most n? |
-| 10 | `Z10174` | and | 160 | `Z40, Z40 -> Z40` | Small and exact; useful for validator-like compositions. | `Z24307` fallback language codes; `Z11828` and quaternary; `Z12203` English regular superlative form |
-| 11 | `Z10184` | or | 109 | `Z40, Z40 -> Z40` | Completes the basic boolean trio with `and` and `not`. | `Z11595` Breton mutation check; `Z11863` vowel membership; `Z11991` German noun declension helper |
-| 12 | `Z13582` | decrement natural number by one | 157 | `Z13518 -> Z13518` | Needed by many recursive natural-number algorithms; decide underflow/error semantics explicitly. | `Z14859` Delannoy number; `Z15334` unsigned Stirling number; `Z15386` Wedderburn-Etherington number |
+| 8 | `Z13522` | equality of natural numbers | 182 | `Z13518, Z13518 -> Z40` | Grounded in the extracted expression interpreter; next work is canonical call adaptation. | `Z19343` Hindi ordinal; `Z19892` same Rational number object; `Z13397` get nth element of a list |
+| 9 | `Z10216` | not | 151 | `Z40 -> Z40` | Grounded in the extracted expression interpreter. | `Z24307` fallback language codes; `Z10215` Boolean identity; `Z31019` Levenshtein distance between lists is at most n? |
+| 10 | `Z10174` | and | 160 | `Z40, Z40 -> Z40` | Grounded in the extracted expression interpreter. | `Z24307` fallback language codes; `Z11828` and quaternary; `Z12203` English regular superlative form |
+| 11 | `Z10184` | or | 109 | `Z40, Z40 -> Z40` | Grounded in the extracted expression interpreter. | `Z11595` Breton mutation check; `Z11863` vowel membership; `Z11991` German noun declension helper |
+| 12 | `Z13582` | decrement natural number by one | 157 | `Z13518 -> Z13518` | Grounded with floor-at-zero semantics matching local tester labels. | `Z14859` Delannoy number; `Z15334` unsigned Stirling number; `Z15386` Wedderburn-Etherington number |
 | 13 | `Z12681` | length of a list | 167 | `list Z1 -> Z13518` | Useful after list representation is in place; supports algorithms and validation. | `Z31019` Levenshtein distance bound; `Z29791` zip multiple lists; `Z30977` length of common prefix of many lists |
 | 14 | `Z810` | prepend element to list | 110 | `Z1, list Z1 -> list Z1` | Needed for constructive list recursion and map-like functions. | `Z33762` Japanese verb conjugation table; `Z13155` interleave lists; `Z27878` create wikitable with headers |
-| 15 | `Z866` | string equality | 130 | `Z6, Z6 -> Z40` | Simple, precise spec over codepoint-list text; useful for branching text functions. | `Z21438` 64-bit binary string to float64 special value; `Z21750` read special float value; `Z14392` monolingual text equality |
+| 15 | `Z866` | string equality | 130 | `Z6, Z6 -> Z40` | Grounded as codepoint-list equality in the extracted expression interpreter. | `Z21438` 64-bit binary string to float64 special value; `Z21750` read special float value; `Z14392` monolingual text equality |
 
 High-frequency functions deliberately not first in this list:
 

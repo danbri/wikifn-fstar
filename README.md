@@ -29,6 +29,9 @@ make fstar-js-demo
 node ./bin/wikifn.js fstar-demo
 make fstar-call-js
 node ./bin/wikifn.js fstar-call --mode compiled Z22294 १२३
+node ./bin/wikifn.js fstar-eval-json '{"call":"Z22294","args":["१२३"]}'
+node ./bin/wikifn.js fstar-eval-json '{"call":"Z13676","args":[{"nat":99},{"nat":42}]}'
+node ./bin/wikifn.js fstar-eval-zobject '{"Z1K1":"Z7","Z7K1":"Z22294","Z22294K1":"१२३"}'
 make fstar-call-browser
 make fstar-browser-demo
 make download-dump
@@ -54,7 +57,13 @@ The repo vendors one dated Wikifunctions current-pages dump under `third_party/w
 
 `node ./bin/wikifn.js fstar-call` runs a callable `js_of_ocaml` artifact linked against the extracted F* modules. It currently dispatches the selected text functions `Z10052`, `Z10627`, `Z11082`, `Z19612`, `Z21679`, `Z22294`, `Z22649`, `Z27053`, and `Z38114` through one of three paths: `generated` F* IR interpreted by extracted F*, `compiled` generated direct F*, or `specialized` hand-maintained direct F*. It accepts UTF-8 text arguments and returns JSON.
 
+`node ./bin/wikifn.js fstar-eval-json` sends a small runtime JSON expression IR to the extracted F* composition interpreter. The IR supports text strings, `{ "codepoints": [...] }`, `{ "bool": true }`, `{ "nat": 123 }`, `{ "arg": 0 }`, and `{ "call": "Z22294", "args": [...] }`, with an optional top-level `fuel`. It now includes grounded scalar calls for string equality/concat/starts-with/length, boolean logic, and several natural-number comparisons/arithmetic operations. This is not yet a canonical ZObject runtime importer.
+
+`node ./bin/wikifn.js fstar-eval-zobject` accepts a supported canonical-style `Z7` call object and lowers it to the same extracted F* evaluator. This is a first runtime adapter for selected calls and value forms, not a full structural verifier for arbitrary ZObjects.
+
 `make fstar-call-browser` emits standalone `docs/generated/wikifn_call_browser.js`, which exports `wikifnFstarCall(mode, zid, fuel, arg0, arg1)` in the browser from the same extracted F*/OCaml modules. `make fstar-browser-demo` also exports that browser call API from `docs/generated/wikifn_primitives_browser.js`; the GitHub Pages demo loads only that combined artifact to avoid loading two `js_of_ocaml` runtimes on one page.
+
+The project homepage is a static overview. Browser-side running demos live at `docs/demos.html` / `https://danbri.github.io/wikifn-fstar/demos.html`.
 
 ## Local Toy Example
 
