@@ -1,0 +1,17 @@
+{
+  "name": "wikifn",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A small revision-pinned Wikifunctions ZObject importer and composition evaluator.",
+  "bin": {
+    "wikifn": "./bin/wikifn.js"
+  },
+  "scripts": {
+    "test": "node --test",
+    "example": "node ./bin/wikifn.js eval-example"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

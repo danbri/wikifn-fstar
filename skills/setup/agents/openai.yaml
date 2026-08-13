@@ -1,0 +1,4 @@
+interface:
+  display_name: "Setup Wikifn F*"
+  short_description: "Prepare F*, Wikifunctions, and Wikidata tooling for this repo."
+  default_prompt: "Set up this repository for Wikifunctions/F* development."
