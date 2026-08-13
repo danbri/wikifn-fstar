@@ -39,7 +39,7 @@ Checked locally on 2026-08-13 in the `fstar` opam switch:
 What works in this repo today:
 
 - The F* model and primitive kernel are checked by `make fstar-check`.
-- F* extracts `Wikifn.Primitive.Kernel`, `Wikifn.Primitives`, and `Wikifn.Composition` to OCaml with `--codegen OCaml`.
+- F* extracts `Wikifn.Primitive.Kernel`, `Wikifn.Primitives`, `Wikifn.Composition`, and `Wikifn.Generated.Compositions` to OCaml with `--codegen OCaml`.
 - The extracted JS runner evaluates primitive cases and selected F* IR composition cases for `Z10052`, `Z21679`, `Z38114`, and `Z22294`.
 
 What now works as a repo command:
@@ -58,7 +58,7 @@ make fstar-browser-demo
 
 `make fstar-browser-demo` uses the same extracted F* primitive module with a different OCaml runner and a tiny JavaScript output stub. The stub only appends JSON lines to the page; the primitive computation is still from extracted F*. The OCaml bytecode link uses `-no-check-prims` because `wikifn_publish` is supplied as a `js_of_ocaml` runtime primitive.
 
-The browser artifact was checked under Node with a minimal DOM shim (`document.getElementById("fstar-extraction-output")`, `TextDecoder`, and `TextEncoder`). It appended the same four JSON result lines to the target element.
+The browser artifact was checked under Node with a minimal DOM shim (`document.getElementById("fstar-extraction-output")`, `TextDecoder`, and `TextEncoder`). It appended the same JSON result lines to the target element.
 
 The generated JavaScript prints:
 
