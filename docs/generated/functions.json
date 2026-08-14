@@ -571,6 +571,7 @@
     "Z14244": "Z14244_get_nth_character_of_a_string",
     "Z14260": "Z14260_contains_all_characters_of_bengali_alphabet",
     "Z14280": "Z14280_display_natural_number",
+    "Z14283": "Z14283_string_of_digits_as_natural_number",
     "Z14290": "Z14290_read_natural_number",
     "Z14295": "Z14295_add_commas_between_triples_if_more_than_four_digits",
     "Z14304": "Z14304_read_natural_numbers_leniently",
@@ -796,6 +797,7 @@
     "Z15855": "Z15855_remove_characters_not_suitable_for_markup_in_xml_or_html",
     "Z15858": "Z15858_replace_character_set_and_discard_other_characters",
     "Z15879": "Z15879_salted_md5",
+    "Z15883": "Z15883_salted_hash",
     "Z15907": "Z15907_limited_natural_number",
     "Z15914": "Z15914_string_equality_for_natural_numbers",
     "Z15946": "Z15946_are_two_numeric_strings_in_descending_order",
@@ -824,6 +826,7 @@
     "Z16293": "Z16293_n_months_before_month",
     "Z16299": "Z16299_previous_month",
     "Z16307": "Z16307_n_months_after_month",
+    "Z16313": "Z16313_l_adan_cardinals",
     "Z16316": "Z16316_days_in_month_when_not_a_leap_year",
     "Z16330": "Z16330_months_in_period_list",
     "Z16332": "Z16332_days_in_month_during_leap_year",
@@ -953,6 +956,7 @@
     "Z17517": "Z17517_advance_n_days_of_the_week",
     "Z17526": "Z17526_caesar_cipher_bengali_consonants",
     "Z17530": "Z17530_caesar_cipher_bengali_alphabets",
+    "Z17534": "Z17534_make_untyped_pair",
     "Z17536": "Z17536_total_occurrences_of_day_in_year",
     "Z17540": "Z17540_get_day_of_the_week_from_numerical_date",
     "Z17549": "Z17549_get_nth_date_of_a_given_day_in_month_as_string",
@@ -1287,6 +1291,7 @@
     "Z20669": "Z20669_caesar_cipher_dagbani_alphabet",
     "Z20673": "Z20673_gloss_of_lexeme_sense_as_text_of_language",
     "Z20679": "Z20679_two_sum",
+    "Z20687": "Z20687_occurrence_of_first_almost_equal_substring",
     "Z20692": "Z20692_is_valid_pinyin",
     "Z20698": "Z20698_german_adjective_and_noun",
     "Z20702": "Z20702_french_indefinite_singular_noun_phrase",
@@ -1354,6 +1359,7 @@
     "Z21240": "Z21240_convert_a_language_code_to_a_russian_adverb",
     "Z21249": "Z21249_rational_number_as_percentage",
     "Z21260": "Z21260_ranged_type",
+    "Z21263": "Z21263_create_rational_ranged_type",
     "Z21273": "Z21273_area_of_a_triangle",
     "Z21278": "Z21278_area_of_a_regular_polygon",
     "Z21282": "Z21282_area_of_a_pentagon",
@@ -1434,6 +1440,7 @@
     "Z22027": "Z22027_area_of_a_circle_rational_approximation",
     "Z22044": "Z22044_wrap_with_code_nowiki_xml_tags",
     "Z22049": "Z22049_futures_price",
+    "Z22074": "Z22074_apply_n_argument_function_to_list_of_arguments",
     "Z22097": "Z22097_breton_verb_form",
     "Z22120": "Z22120_kleenean_identity",
     "Z22126": "Z22126_boolean_as_kleenean",
@@ -1747,6 +1754,7 @@
     "Z24472": "Z24472_get_nth_code_point_of_string",
     "Z24487": "Z24487_square_of_rational_number",
     "Z24506": "Z24506_same_rational_within_tolerance",
+    "Z24517": "Z24517_10_n_natural_number",
     "Z24525": "Z24525_10_n_integer_to_rational",
     "Z24539": "Z24539_newton_s_method_estimate_within_tolerance",
     "Z24542": "Z24542_object_metric_meets_criteria",
@@ -1759,6 +1767,7 @@
     "Z24609": "Z24609_is_string_keyed_map_empty",
     "Z24618": "Z24618_serbian_cardinal",
     "Z24629": "Z24629_get_keys_of_json_object",
+    "Z24646": "Z24646_make_string_keyed_map",
     "Z24649": "Z24649_index_first_of_typed_pair_list_with_matching_head",
     "Z24655": "Z24655_list_with_added_element_unless_already_present",
     "Z24660": "Z24660_display_typed_pair",
@@ -1917,6 +1926,7 @@
     "Z26107": "Z26107_monolingual_text_from_language_and_string",
     "Z26111": "Z26111_display_gregorian_year_in_sinitic_langs_hans_hant",
     "Z26116": "Z26116_display_day_of_roman_year_chinese",
+    "Z26121": "Z26121_serbian_ordinal",
     "Z26130": "Z26130_date_zhwiki",
     "Z26134": "Z26134_display_day_of_roman_year_cantonese_traditional",
     "Z26139": "Z26139_display_day_of_roman_year_cantonese_simplified",
@@ -1981,6 +1991,7 @@
     "Z26671": "Z26671_swedish_article_less_instantiating_sentence",
     "Z26674": "Z26674_rational_as_comma_separator_decimal_bangla",
     "Z26676": "Z26676_grammatical_gender_of_lexeme_is_exactly",
+    "Z26686": "Z26686_swedish_label_of_wikidata_entity",
     "Z26692": "Z26692_display_gregorian_year_bangla",
     "Z26696": "Z26696_is_wikidata_item_qid_currently_alive",
     "Z26700": "Z26700_filter_statements_in_wikidata_item_by_properties",
@@ -1995,6 +2006,7 @@
     "Z26750": "Z26750_first_element_if_list_not_empty_else_void",
     "Z26766": "Z26766_hijri_calendar_month_to_month_number",
     "Z26771": "Z26771_classifying_sentence_in_swedish",
+    "Z26779": "Z26779_wikidata_reference_in_enumeration_instance",
     "Z26791": "Z26791_swedish_indefinite_noun_phrase_lex",
     "Z26809": "Z26809_move_hijri_month_by_n_months",
     "Z26821": "Z26821_indonesian_ordinal_from_natural_number",
@@ -2130,6 +2142,7 @@
     "Z27846": "Z27846_scale_wikidata_quantity_to_new_units",
     "Z27849": "Z27849_join_two_html_fragments",
     "Z27854": "Z27854_html_fragment_as_string",
+    "Z27868": "Z27868_string_to_html_fragment",
     "Z27873": "Z27873_wrap_an_html_fragment_in_a_tag",
     "Z27878": "Z27878_create_wikitable_with_columns_and_rows_headers",
     "Z27885": "Z27885_name_for_table_header",
@@ -2309,6 +2322,7 @@
     "Z29068": "Z29068_get_claim_or_child_claim",
     "Z29088": "Z29088_croatian_genitive_of_a_male_name",
     "Z29094": "Z29094_zip_strings",
+    "Z29102": "Z29102_reference_from_zid_string",
     "Z29113": "Z29113_quoted_reference_from_zid_string",
     "Z29116": "Z29116_rational_as_formatted_decimal_dot_separators",
     "Z29120": "Z29120_persistent_object_from_zid_string",
@@ -2375,6 +2389,7 @@
     "Z29580": "Z29580_add_caption_to_table_without_one",
     "Z29582": "Z29582_inject_html_fragment_inside_1st_bracket_of_another",
     "Z29588": "Z29588_link_wikidata_label_to_wikipedia_article",
+    "Z29591": "Z29591_describing_entity_w_adjective_class_monolingual",
     "Z29594": "Z29594_describing_entity_with_adjective_class_english",
     "Z29596": "Z29596_default_describing_entity_with_adjective_class",
     "Z29600": "Z29600_display_function_label",
@@ -2401,6 +2416,7 @@
     "Z29725": "Z29725_sort_according_to_other_list",
     "Z29727": "Z29727_wikidata_property_reference_from_pid_string",
     "Z29728": "Z29728_sort_wikidata_property_refs_in_typical_order",
+    "Z29743": "Z29743_description_of_class_with_adjective_and_superclass",
     "Z29748": "Z29748_articleplaceholder_render_misc_wikidata_statement",
     "Z29749": "Z29749_monolingual_text_as_html_with_visible_language_tag",
     "Z29750": "Z29750_language_is_acceptable_substitute",
@@ -2455,6 +2471,7 @@
     "Z30062": "Z30062_description_of_class_with_adj_superclass_french",
     "Z30075": "Z30075_return_list_if_non_empty_else_backup",
     "Z30092": "Z30092_html_class_attribute_string",
+    "Z30097": "Z30097_format_main_wikidata_statement_by_prop_data_type",
     "Z30098": "Z30098_format_main_wikidata_statement_by_value_s_datatype",
     "Z30099": "Z30099_articleplaceholder_format_external_id_statement",
     "Z30100": "Z30100_articleplaceholder_format_url_statement",
@@ -2567,8 +2584,10 @@
     "Z30751": "Z30751_is_valid_gnu_coreutils_size_unit",
     "Z30755": "Z30755_is_byte_mode_and_valid_size_unit",
     "Z30759": "Z30759_quiet_or_verbose_or_empty_string",
+    "Z30768": "Z30768_is_valid_arguments_to_z30708",
     "Z30774": "Z30774_nth_term_of_arithmetic_sequence",
     "Z30777": "Z30777_baoul_male_names_from_day_of_birth",
+    "Z30784": "Z30784_transform_monolingual_text_to_sentence_case",
     "Z30785": "Z30785_capitalise_first_letter_of_monolingual_text",
     "Z30795": "Z30795_append_string_to_monolingual_text",
     "Z30798": "Z30798_english_preposition_for_location_in_on_at",
@@ -2580,8 +2599,10 @@
     "Z30840": "Z30840_arithmetic_mean_of_natural_numbers_as_rational",
     "Z30847": "Z30847_articleplaceholder_format_wikidata_quantity",
     "Z30848": "Z30848_articleplaceholder_format_wikidata_time",
+    "Z30857": "Z30857",
     "Z30865": "Z30865_run_length_encoding_object_equality",
     "Z30868": "Z30868",
+    "Z30870": "Z30870_left_associative_running_fold",
     "Z30871": "Z30871_left_associative_running_reduce",
     "Z30875": "Z30875_list_of_key_id_strings_for_key_list",
     "Z30887": "Z30887_value_by_persistent_object_key",
@@ -2676,6 +2697,8 @@
     "Z31554": "Z31554_is_natural_number_2",
     "Z31563": "Z31563_start_fragment_in_korean",
     "Z31566": "Z31566_start_fragment_in_esperanto",
+    "Z31575": "Z31575_longest_common_sublist",
+    "Z31580": "Z31580_prepend_reversed_first_list_to_second_list",
     "Z31583": "Z31583_length_and_offsets_of_longest_common_sublist",
     "Z31585": "Z31585_all_k_diagonals_of_matrix",
     "Z31587": "Z31587_get_k_diagonal_of_list_of_lists",
@@ -2767,6 +2790,7 @@
     "Z32230": "Z32230_quantity_comparison_english",
     "Z32234": "Z32234_join_text_like_objects_into_html_fragment",
     "Z32238": "Z32238_english_simple_cite_web_language",
+    "Z32240": "Z32240_multiplex_test_of_chinese_defining_role_sentence",
     "Z32243": "Z32243_superlative_definition_in_malay",
     "Z32244": "Z32244_english_non_defining_role_sentence",
     "Z32249": "Z32249_english_collective_role_sentence",
@@ -2775,6 +2799,7 @@
     "Z32258": "Z32258_russian_preposition_by_location",
     "Z32261": "Z32261_are_integers_congruent_modulo_other_integer",
     "Z32272": "Z32272_location_phrase_in_russian",
+    "Z32276": "Z32276_separator_space_punctuation_for_list_items_in_lang",
     "Z32277": "Z32277_default_word_separator",
     "Z32281": "Z32281_returning_wd_sep_in_s_t_han_script_sinitic_langs",
     "Z32283": "Z32283_join_list_of_strings_in_given_language",
@@ -2782,6 +2807,7 @@
     "Z32290": "Z32290_best_values_from_wikidata_item_statements",
     "Z32293": "Z32293_labels_of_best_values_from_wikidata_item_statement",
     "Z32295": "Z32295_labels_of_best_values_concatenated",
+    "Z32297": "Z32297_word_separator_last",
     "Z32299": "Z32299_final_word_separator_in_english_lists_and",
     "Z32302": "Z32302_list_has_at_most_one_element",
     "Z32308": "Z32308_join_list_of_strings_in_given_language_proper",
@@ -2833,6 +2859,7 @@
     "Z32606": "Z32606_plural_from_wikidata_item_in_language_w_features",
     "Z32612": "Z32612_latin_collective_role_sentence",
     "Z32621": "Z32621_english_verb_describing_noun_sentence",
+    "Z32625": "Z32625_full_placename_from_hierarchical_list",
     "Z32626": "Z32626_join_list_of_places_default_format",
     "Z32631": "Z32631_join_list_of_places_sinitic_langs_hns_hnt_script",
     "Z32633": "Z32633_join_list_of_places_from_items",
@@ -3061,6 +3088,7 @@
     "Z34088": "Z34088_state_origin_using_entity_and_class_bulgarian",
     "Z34096": "Z34096_conditional_sentence_case",
     "Z34105": "Z34105_bulgarian_article_less_instantiating_sentence",
+    "Z34120": "Z34120_apply_five_argument_function",
     "Z34122": "Z34122_apply_four_or_optionally_five_argument_function",
     "Z34124": "Z34124_inject_abstract_wikilink_into_string_as_string",
     "Z34127": "Z34127_abstract_wikilink_string_w_display_text_fallback",
@@ -3138,6 +3166,9 @@
     "Z35018": "Z35018_year_specific_sentence_from_statement_in_bangla",
     "Z35022": "Z35022_inception_sentence",
     "Z35023": "Z35023_inception_sentence_english",
+    "Z35029": "Z35029_abstractwiki_periodic_table_cell",
+    "Z35031": "Z35031_abstractwiki_18_col_periodic_table_to_nth_period",
+    "Z35034": "Z35034_abstractwiki_infobox_row",
     "Z35036": "Z35036_fetch_wikidata_property_or_parts",
     "Z35049": "Z35049_wrap_an_html_fragment_in_a_simple_tag",
     "Z35072": "Z35072_multiply_complex128_by_float64",
@@ -3161,6 +3192,8 @@
     "Z35175": "Z35175_infobox_template",
     "Z35176": "Z35176_name_native_name_as_html_fragment",
     "Z35181": "Z35181_reference_html_content_from_reference_claim",
+    "Z35188": "Z35188_wikidata_statement_pair",
+    "Z35190": "Z35190_apply_fn_to_2nd_element_of_pair_optional_language",
     "Z35192": "Z35192_display_wikidata_date_from_statement",
     "Z35196": "Z35196_defining_role_sentence_in_dutch",
     "Z35199": "Z35199_abstract_wikilink_from_statement",
@@ -3245,6 +3278,7 @@
     "Z35666": "Z35666_round_wikidata_quantity_to_fixed_decimal_places",
     "Z35672": "Z35672_sentence_separator",
     "Z35677": "Z35677_single_space",
+    "Z35683": "Z35683_apply0",
     "Z35687": "Z35687_empty_string",
     "Z35693": "Z35693_is_natural_number_not_zero",
     "Z35702": "Z35702_is_integer_not_zero",
@@ -3343,6 +3377,7 @@
     "Z36218": "Z36218_specific_property_of_subject_is_value_from_wd",
     "Z36225": "Z36225_multiplication_table_natural_numbers",
     "Z36232": "Z36232_specific_property_of_subject_is_value_english",
+    "Z36240": "Z36240_wikidata_link_for_item_property",
     "Z36243": "Z36243_specific_property_of_subject_is_value_default",
     "Z36253": "Z36253_specific_property_of_subject_is_value_bangla",
     "Z36266": "Z36266_superlative_definition_default",
@@ -3391,6 +3426,7 @@
     "Z36470": "Z36470_inflection_of_french_noun",
     "Z36474": "Z36474_arabic_verb_conjugation_table",
     "Z36478": "Z36478_french_noun_inflection_table",
+    "Z36485": "Z36485_wikidata_link_for_item_with_text_string_specified",
     "Z36489": "Z36489_abstract_link_with_text_string_specified_if_qid",
     "Z36517": "Z36517_linked_label_text_or_fallback_with_edit_if_qid",
     "Z36522": "Z36522_text_string_as_html_with_if_matching_item_qid",
@@ -3589,8 +3625,11 @@
     "Z37426": "Z37426_partitive_article_conjugation_table",
     "Z37436": "Z37436_html_fragment_does_not_contain_string",
     "Z37441": "Z37441_short_name_of_species_from_single_qid",
+    "Z37450": "Z37450_monolingual_text_as_html_with_colour_span",
+    "Z37454": "Z37454_monolingual_text_as_html_with_lang_colour_span",
     "Z37459": "Z37459_monolingual_text_as_html_with_lang_default_color",
     "Z37464": "Z37464_monolingual_text_as_html_with_lang_col_links",
+    "Z37465": "Z37465_wikifunctions_link_for_zid_with_specified_text",
     "Z37481": "Z37481_does_wikidata_property_have_data_type_url",
     "Z37493": "Z37493_nlg_string_to_html_fragment_with_span_for_defaults",
     "Z37507": "Z37507_positive_adjective_from_full_adjective",
@@ -3630,10 +3669,13 @@
     "Z37777": "Z37777_entity_influenced_by_sentence",
     "Z37782": "Z37782_infobox_for_row_date",
     "Z37791": "Z37791_intro_for_species_with_hypernym_in_english",
+    "Z37801": "Z37801_xxx_is_a_city_located_in_yyy_builder_approach",
     "Z37802": "Z37802_get_element_of_language_keyed_map",
     "Z37805": "Z37805_item_developed_in",
     "Z37808": "Z37808_year_and_describing_authority_of_taxon",
     "Z37809": "Z37809_developed_in_sentence_in_english",
+    "Z37815": "Z37815_as_of_xxx_the_city_had_a_total_population_of_yyy",
+    "Z37817": "Z37817_section_header_geography_builder_approach",
     "Z37821": "Z37821_common_name_of_taxon",
     "Z37827": "Z37827_infobox_for_a_taxon",
     "Z37830": "Z37830_infobox_row_string",
@@ -3692,6 +3734,7 @@
     "Z38053": "Z38053_image_thumbnail_with_alt_text_set_by_qid",
     "Z38057": "Z38057_intro_for_species_with_hypernym_default",
     "Z38060": "Z38060_intro_for_species_without_hypernym_default",
+    "Z38068": "Z38068_gregorian_calendar_date_to_star_trek_tng_stardate",
     "Z38078": "Z38078_abstract_wikilink_string_w_text_no_fallback",
     "Z38083": "Z38083_is_item_reference_female_qid",
     "Z38086": "Z38086_infobox_row_coordinate_hyperlinked",
@@ -3768,6 +3811,7 @@
     "Z38462": "Z38462_count_of_wikidata_item_property_values",
     "Z38472": "Z38472_switch_on_string",
     "Z38477": "Z38477_switch_on_type",
+    "Z38478": "Z38478_get_parent_taxon",
     "Z38482": "Z38482_switch_on_type_of_object",
     "Z38488": "Z38488_has_use_sentence",
     "Z38495": "Z38495_named_after_sentence_in_dutch",
@@ -12141,9 +12185,9 @@
       "name": "Z12875_string_is_fixpoint_of_function",
       "label": "string is fixpoint of function",
       "arity": 2,
-      "runnable": true,
+      "runnable": false,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z12875K1",
@@ -12613,9 +12657,9 @@
       "name": "Z13036_apply",
       "label": "apply",
       "arity": 2,
-      "runnable": true,
+      "runnable": false,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z13036K1",
@@ -12626,9 +12670,9 @@
         "Object"
       ],
       "returnType": "Object",
-      "implementation": "Z13048",
-      "revision": 137124,
-      "digest": "c8fdeec28c7afbb033a83d89a982388d23f9407e53b305f13cd1076ce8ed7ae9"
+      "implementation": "Z29349",
+      "revision": 228291,
+      "digest": "34477493981e74c92c64b5bbea3660b95ef6afe228691247fb367a7ce7015e42"
     },
     {
       "zid": "Z13078",
@@ -13063,9 +13107,9 @@
       "name": "Z13351_apply_list_of_functions",
       "label": "apply list of functions",
       "arity": 2,
-      "runnable": true,
+      "runnable": false,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z13351K1",
@@ -15900,6 +15944,26 @@
       "digest": "7c834628c35a48145651aff1ae3b04d10c5ccb205038e80a47197cc783d260a6"
     },
     {
+      "zid": "Z14283",
+      "name": "Z14283_string_of_digits_as_natural_number",
+      "label": "string of digits as Natural Number",
+      "arity": 1,
+      "runnable": true,
+      "reachesCycle": false,
+      "compiled": true,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z14283K1"
+      ],
+      "argumentTypes": [
+        "String"
+      ],
+      "returnType": "Natural number",
+      "implementation": "Z14289",
+      "revision": 256261,
+      "digest": "6c18fe95db18faf28f65c353cf9fb20c06ad1a134d7a825c3814ea14300ffde6"
+    },
+    {
       "zid": "Z14290",
       "name": "Z14290_read_natural_number",
       "label": "read natural number",
@@ -16664,9 +16728,9 @@
       "name": "Z14542_natural_number_from_ordinal_with_english_suffix",
       "label": "Natural number from ordinal with English suffix",
       "arity": 1,
-      "runnable": false,
+      "runnable": true,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z14542K1"
@@ -20056,9 +20120,9 @@
       "name": "Z15651_nth_belphegor_number",
       "label": "nth Belphegor number",
       "arity": 1,
-      "runnable": false,
+      "runnable": true,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z15651K1"
@@ -20276,9 +20340,9 @@
       "name": "Z15767_reverse_decimal_digits",
       "label": "reverse decimal digits",
       "arity": 1,
-      "runnable": false,
+      "runnable": true,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z15767K1"
@@ -20296,9 +20360,9 @@
       "name": "Z15769_repunit_number",
       "label": "repunit number",
       "arity": 1,
-      "runnable": false,
+      "runnable": true,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z15769K1"
@@ -20584,6 +20648,30 @@
       "implementation": "Z15880",
       "revision": 200229,
       "digest": "b278522a71b9f4814383a99e24d5be5a02e4d06644933df50079bd8f41e8d508"
+    },
+    {
+      "zid": "Z15883",
+      "name": "Z15883_salted_hash",
+      "label": "salted hash",
+      "arity": 3,
+      "runnable": false,
+      "reachesCycle": false,
+      "compiled": true,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z15883K1",
+        "Z15883K2",
+        "Z15883K3"
+      ],
+      "argumentTypes": [
+        "Function",
+        "String",
+        "String"
+      ],
+      "returnType": "String",
+      "implementation": "Z15884",
+      "revision": 200793,
+      "digest": "efa7312fb091a8bdf682448d472a5b90ed764c3bb98dcc430321983a354dff72"
     },
     {
       "zid": "Z15907",
@@ -20886,7 +20974,7 @@
       "arity": 1,
       "runnable": false,
       "reachesCycle": true,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z16136K1"
@@ -21128,7 +21216,7 @@
         "Z16293",
         "Z16299"
       ],
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": true,
       "argumentKeys": [
         "Z16293K1",
@@ -21154,7 +21242,7 @@
         "Z16293",
         "Z16299"
       ],
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": true,
       "argumentKeys": [
         "Z16299K1"
@@ -21174,7 +21262,7 @@
       "arity": 2,
       "runnable": false,
       "reachesCycle": true,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z16307K1",
@@ -21188,6 +21276,26 @@
       "implementation": "Z18948",
       "revision": 276776,
       "digest": "aeeaba83f9232ca49943b0beae01c4f43297ffc4e402f20b3c4b36557d05862b"
+    },
+    {
+      "zid": "Z16313",
+      "name": "Z16313_l_adan_cardinals",
+      "label": "Láadan cardinals",
+      "arity": 1,
+      "runnable": true,
+      "reachesCycle": false,
+      "compiled": true,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z16313K1"
+      ],
+      "argumentTypes": [
+        "Natural number"
+      ],
+      "returnType": "String",
+      "implementation": "Z16363",
+      "revision": 213839,
+      "digest": "d4ad977cb6386ebe8eda0d3885a1017dede5b3a72e9b1d8b1bc03f36a1e9f190"
     },
     {
       "zid": "Z16316",
@@ -21216,7 +21324,7 @@
       "arity": 2,
       "runnable": false,
       "reachesCycle": true,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z16330K1",
@@ -21384,9 +21492,9 @@
       "name": "Z16467_english_holocene_calendar_conversion_strings",
       "label": "English Holocene calendar conversion (strings)",
       "arity": 3,
-      "runnable": false,
+      "runnable": true,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z16467K1",
@@ -21534,9 +21642,9 @@
       "name": "Z16493_is_leap_year_revised_julian_calendar",
       "label": "is leap year (revised Julian calendar)",
       "arity": 1,
-      "runnable": false,
+      "runnable": true,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z16493K1"
@@ -21768,7 +21876,7 @@
       "arity": 1,
       "runnable": false,
       "reachesCycle": true,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z16584K1"
@@ -21936,9 +22044,9 @@
       "name": "Z16667_same_sign",
       "label": "same sign",
       "arity": 2,
-      "runnable": false,
+      "runnable": true,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z16667K1",
@@ -21949,9 +22057,9 @@
         "Sign"
       ],
       "returnType": "Boolean",
-      "implementation": "Z17607",
-      "revision": 239715,
-      "digest": "70c4dc20df835588e15587feaba433d6aa904ba5ad294206e2080e638aec179d"
+      "implementation": "Z33752",
+      "revision": 266740,
+      "digest": "3856b9b497d8cfc69f7e2d029e3fa45446391416d58e7dd4d83f201420071f64"
     },
     {
       "zid": "Z16676",
@@ -21978,9 +22086,9 @@
       "name": "Z16688_same_integer",
       "label": "same Integer",
       "arity": 2,
-      "runnable": false,
+      "runnable": true,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z16688K1",
@@ -22179,9 +22287,9 @@
       "name": "Z16750_different_sign",
       "label": "different sign",
       "arity": 2,
-      "runnable": false,
+      "runnable": true,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z16750K1",
@@ -23197,9 +23305,9 @@
       "name": "Z17249_integers_have_the_same_sign",
       "label": "integers have the same sign",
       "arity": 2,
-      "runnable": false,
+      "runnable": true,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z17249K1",
@@ -23489,9 +23597,9 @@
       "name": "Z17352_apply_natural_number_function_to_positive_integer",
       "label": "apply natural number function to positive integer",
       "arity": 2,
-      "runnable": true,
+      "runnable": false,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z17352K1",
@@ -23972,6 +24080,28 @@
       "implementation": "Z23879",
       "revision": 179118,
       "digest": "884b7fba04628d8b170a839eabfdb589930cc40fe129798886779d4b29984ab9"
+    },
+    {
+      "zid": "Z17534",
+      "name": "Z17534_make_untyped_pair",
+      "label": "make untyped pair",
+      "arity": 2,
+      "runnable": true,
+      "reachesCycle": false,
+      "compiled": true,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z17534K1",
+        "Z17534K2"
+      ],
+      "argumentTypes": [
+        "Object",
+        "Object"
+      ],
+      "returnType": "Typed pair(Object, Object)",
+      "implementation": "Z17535",
+      "revision": 238098,
+      "digest": "7a9e22e3e6a4c683b5f4fbbb1670a68f6e536646b8c6873c94218300abfe18fa"
     },
     {
       "zid": "Z17536",
@@ -25054,9 +25184,9 @@
       "name": "Z17958_run_unary_endofunction_n_times",
       "label": "run unary endofunction n times",
       "arity": 3,
-      "runnable": true,
+      "runnable": false,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z17958K1",
@@ -28011,9 +28141,9 @@
         "String"
       ],
       "returnType": "HTML fragment",
-      "implementation": "Z19385",
-      "revision": 288778,
-      "digest": "9901522e51ca6e4d27d546de967f255932209ecd97403f8533cd6b5cc3719b6e"
+      "implementation": "Z33478",
+      "revision": 265424,
+      "digest": "ad1e71c2b7f88f0be4e1d50a046756811dd65a36ccf55ac58902617b168a63b8"
     },
     {
       "zid": "Z19403",
@@ -28530,7 +28660,7 @@
       "name": "Z19645_add_periods_between_each_triplet",
       "label": "add periods between each triplet",
       "arity": 1,
-      "runnable": true,
+      "runnable": false,
       "reachesCycle": false,
       "compiled": false,
       "mutuallyRecursive": false,
@@ -28550,7 +28680,7 @@
       "name": "Z19654_add_chars_every_n_chars",
       "label": "Add chars every n chars",
       "arity": 3,
-      "runnable": true,
+      "runnable": false,
       "reachesCycle": false,
       "compiled": false,
       "mutuallyRecursive": false,
@@ -30992,6 +31122,28 @@
       "digest": "1408c29ef567f73da9b8c0d1700f488fc8cb33c6d644e9c4030655f25e36df04"
     },
     {
+      "zid": "Z20687",
+      "name": "Z20687_occurrence_of_first_almost_equal_substring",
+      "label": "occurrence of first almost equal substring",
+      "arity": 2,
+      "runnable": false,
+      "reachesCycle": false,
+      "compiled": false,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z20687K1",
+        "Z20687K2"
+      ],
+      "argumentTypes": [
+        "String",
+        "String"
+      ],
+      "returnType": "Natural number",
+      "implementation": "Z31282",
+      "revision": 246037,
+      "digest": "0e2b31e76d88e5c6cb818a16c99da48f259bc75bedb57488a0c6327786972b7d"
+    },
+    {
       "zid": "Z20692",
       "name": "Z20692_is_valid_pinyin",
       "label": "is valid pinyin",
@@ -32468,6 +32620,28 @@
       "digest": "db4d2b4d7dba4a478e36bd1d17075f4aab87c84fd785ffd9464173a2e2ad66d0"
     },
     {
+      "zid": "Z21263",
+      "name": "Z21263_create_rational_ranged_type",
+      "label": "create rational Ranged type",
+      "arity": 2,
+      "runnable": true,
+      "reachesCycle": false,
+      "compiled": true,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z21263K1",
+        "Z21263K2"
+      ],
+      "argumentTypes": [
+        "Rational number",
+        "Rational number"
+      ],
+      "returnType": "Ranged type(Rational number)",
+      "implementation": "Z21264",
+      "revision": 151739,
+      "digest": "9ebf84ee9903ac3327a135f117a65138f23402a12f5178962d04d5a5427f3c40"
+    },
+    {
       "zid": "Z21273",
       "name": "Z21273_area_of_a_triangle",
       "label": "area of a triangle",
@@ -32714,7 +32888,7 @@
       "arity": 2,
       "runnable": false,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z21350K1",
@@ -32736,7 +32910,7 @@
       "arity": 2,
       "runnable": false,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z21356K1",
@@ -33722,7 +33896,7 @@
       "name": "Z21851_mode_of_list_integer",
       "label": "mode of list (integer)",
       "arity": 1,
-      "runnable": false,
+      "runnable": true,
       "reachesCycle": false,
       "compiled": false,
       "mutuallyRecursive": false,
@@ -34220,6 +34394,28 @@
       "implementation": "Z22051",
       "revision": 162183,
       "digest": "b8c84b560b0abe2bbf58352a2694b54447b66b9ce24c37c242bf764ffa64b553"
+    },
+    {
+      "zid": "Z22074",
+      "name": "Z22074_apply_n_argument_function_to_list_of_arguments",
+      "label": "apply N-argument function to list of arguments",
+      "arity": 2,
+      "runnable": false,
+      "reachesCycle": false,
+      "compiled": false,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z22074K1",
+        "Z22074K2"
+      ],
+      "argumentTypes": [
+        "Function",
+        "Typed list(Object)"
+      ],
+      "returnType": "Object",
+      "implementation": "Z31741",
+      "revision": 254659,
+      "digest": "036881d4b20d14422aa915c566b6e639b4b3cf878d08c0950487bc40709b1954"
     },
     {
       "zid": "Z22097",
@@ -36421,9 +36617,9 @@
         "Wikidata lexeme"
       ],
       "returnType": "String",
-      "implementation": "Z22970",
-      "revision": 206229,
-      "digest": "fb1d3743ab5e931ba7d98a9fd47a2936fc595767eb1aa5275c84c60dddb6971d"
+      "implementation": "Z22972",
+      "revision": 170853,
+      "digest": "553cffb62ccc010ca81c86a2c01dc0779da9c1440936341ab53dfdb98e73f633"
     },
     {
       "zid": "Z22973",
@@ -36538,9 +36734,9 @@
       "name": "Z23028_digit_string_to_codepoint",
       "label": "digit string to codepoint",
       "arity": 1,
-      "runnable": false,
+      "runnable": true,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z23028K1"
@@ -37612,9 +37808,9 @@
       "name": "Z23356_compare_after_applying_a_single_unary_function",
       "label": "compare after applying a single unary function",
       "arity": 4,
-      "runnable": true,
+      "runnable": false,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z23356K1",
@@ -39706,9 +39902,9 @@
       "name": "Z24117_if_true_returns_tested_argument",
       "label": "if true, returns tested argument",
       "arity": 3,
-      "runnable": true,
+      "runnable": false,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z24117K1",
@@ -40890,6 +41086,26 @@
       "digest": "c1eaaac2dceacd732b8178a04162bd05fc96307869203f85e18cd44c7d47de64"
     },
     {
+      "zid": "Z24517",
+      "name": "Z24517_10_n_natural_number",
+      "label": "10^n (natural number)",
+      "arity": 1,
+      "runnable": true,
+      "reachesCycle": false,
+      "compiled": true,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z24517K1"
+      ],
+      "argumentTypes": [
+        "Natural number"
+      ],
+      "returnType": "Natural number",
+      "implementation": "Z24520",
+      "revision": 185429,
+      "digest": "499b8a2f852c3e9c9fef0e6b124a49ae82b3a6723df6dfe595acf0e0af3ebb45"
+    },
+    {
       "zid": "Z24525",
       "name": "Z24525_10_n_integer_to_rational",
       "label": "10^n (integer to rational)",
@@ -40940,9 +41156,9 @@
       "name": "Z24542_object_metric_meets_criteria",
       "label": "object metric meets criteria",
       "arity": 3,
-      "runnable": true,
+      "runnable": false,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z24542K1",
@@ -40999,9 +41215,9 @@
         "float64"
       ],
       "returnType": "Boolean",
-      "implementation": "Z21161",
-      "revision": 185825,
-      "digest": "6fa9627778751db13604a97eb3e297064d0b3871a430b4f48f9076c2c7cbc1ab"
+      "implementation": "Z21162",
+      "revision": 185826,
+      "digest": "90cca19d7811b7a91afee0ff8937b064ab38dd23c964ca5f1ef881e4a701d2ea"
     },
     {
       "zid": "Z24591",
@@ -41146,6 +41362,26 @@
       "implementation": "Z34987",
       "revision": 273356,
       "digest": "bc2537e1337af0d98987b43ab658d7769237468391c7153414e15fd4f616709e"
+    },
+    {
+      "zid": "Z24646",
+      "name": "Z24646_make_string_keyed_map",
+      "label": "make string-keyed map",
+      "arity": 1,
+      "runnable": true,
+      "reachesCycle": false,
+      "compiled": true,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z24646K1"
+      ],
+      "argumentTypes": [
+        "Typed list(Typed pair(String, Object))"
+      ],
+      "returnType": "Typed map(String, Object)",
+      "implementation": "Z24647",
+      "revision": 186722,
+      "digest": "992bbc154788288c5c02b22b6f81dda4108d86f4a10cb53f2678bc14829b84de"
     },
     {
       "zid": "Z24649",
@@ -43440,9 +43676,9 @@
       "name": "Z25647_decimal_places_to_preserve_the_significant_figures",
       "label": "decimal places to preserve the significant figures",
       "arity": 1,
-      "runnable": false,
-      "reachesCycle": true,
-      "compiled": false,
+      "runnable": true,
+      "reachesCycle": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z25647K1"
@@ -43451,9 +43687,9 @@
         "Rational number"
       ],
       "returnType": "Natural number",
-      "implementation": "Z28998",
-      "revision": 224791,
-      "digest": "5f9c0208d98a87ea15313fd19dc68e1ca5350eea9e1aec341b6ab1fd15b0ab8e"
+      "implementation": "Z25648",
+      "revision": 224794,
+      "digest": "e13bbca36770a814ec592076697135f6eaee6b28733e4b9cdcd26a1e1d85eb3b"
     },
     {
       "zid": "Z25656",
@@ -43542,9 +43778,9 @@
       "name": "Z25714_if_function_in_list_apply_2_arguments_else_1",
       "label": "if function in list apply 2 arguments, else 1",
       "arity": 4,
-      "runnable": true,
+      "runnable": false,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z25714K1",
@@ -44484,6 +44720,26 @@
       "digest": "78e0fcae3b18a51e49030e0be4374863ca262a54829e7d79b8f3d9e1868cae78"
     },
     {
+      "zid": "Z26121",
+      "name": "Z26121_serbian_ordinal",
+      "label": "Serbian ordinal",
+      "arity": 1,
+      "runnable": false,
+      "reachesCycle": true,
+      "compiled": false,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z26121K1"
+      ],
+      "argumentTypes": [
+        "Natural number"
+      ],
+      "returnType": "String",
+      "implementation": "Z26230",
+      "revision": 202817,
+      "digest": "69242fd64f7838cf3ebbe068b9414e2a4379a6ead64fba3f437d63f2ca4b120b"
+    },
+    {
       "zid": "Z26130",
       "name": "Z26130_date_zhwiki",
       "label": "date (zhwiki)",
@@ -45046,9 +45302,9 @@
       "name": "Z26394_converge_iteratively_to_fixed_point",
       "label": "converge iteratively to fixed point",
       "arity": 3,
-      "runnable": true,
+      "runnable": false,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z26394K1",
@@ -45850,6 +46106,26 @@
       "digest": "f6986ff930ed87885709f799f3df12642d613b4b5e026cd4dafaefc4a4d993ae"
     },
     {
+      "zid": "Z26686",
+      "name": "Z26686_swedish_label_of_wikidata_entity",
+      "label": "swedish label of Wikidata entity",
+      "arity": 1,
+      "runnable": false,
+      "reachesCycle": false,
+      "compiled": false,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z26686K1"
+      ],
+      "argumentTypes": [
+        "Wikidata item reference"
+      ],
+      "returnType": "String",
+      "implementation": "Z26719",
+      "revision": 296421,
+      "digest": "cdbd2db22763e93675e1761ef24f71d314c3efc32c136ae7dabfd7f4806361f7"
+    },
+    {
       "zid": "Z26692",
       "name": "Z26692_display_gregorian_year_bangla",
       "label": "display Gregorian year, Bangla",
@@ -46146,6 +46422,28 @@
       "implementation": "Z26786",
       "revision": 206355,
       "digest": "99f90ff9e3e78176cfe47083ce19bf881b5a88907a41c8f15ff8396c55ab8a57"
+    },
+    {
+      "zid": "Z26779",
+      "name": "Z26779_wikidata_reference_in_enumeration_instance",
+      "label": "Wikidata reference in enumeration instance",
+      "arity": 2,
+      "runnable": false,
+      "reachesCycle": false,
+      "compiled": false,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z26779K1",
+        "Z26779K2"
+      ],
+      "argumentTypes": [
+        "Type",
+        "Object"
+      ],
+      "returnType": "Object",
+      "implementation": "Z37139",
+      "revision": 287523,
+      "digest": "649fb632d76648514b9da874b2cd74b27f73cf7bb29b482e45dd18aeb19e3341"
     },
     {
       "zid": "Z26791",
@@ -46960,9 +47258,9 @@
       "name": "Z27068_if_true_pass_input_through_function",
       "label": "if true, pass input through function",
       "arity": 3,
-      "runnable": true,
+      "runnable": false,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z27068K1",
@@ -48588,9 +48886,9 @@
       "name": "Z27622_compare_after_applying_several_unary_functions",
       "label": "compare after applying several unary functions",
       "arity": 4,
-      "runnable": true,
+      "runnable": false,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z27622K1",
@@ -49093,6 +49391,26 @@
       "digest": "291df4e15bd7fd3130db15c75e9fc85b6c307d6931834956d360360da9fb6d6e"
     },
     {
+      "zid": "Z27868",
+      "name": "Z27868_string_to_html_fragment",
+      "label": "string to HTML fragment",
+      "arity": 1,
+      "runnable": false,
+      "reachesCycle": false,
+      "compiled": false,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z27868K1"
+      ],
+      "argumentTypes": [
+        "String"
+      ],
+      "returnType": "HTML fragment",
+      "implementation": "Z32143",
+      "revision": 258165,
+      "digest": "d466c38d4eea167abbd3d9319ba6a7065be73c9020cde891e55e5bc151de9622"
+    },
+    {
       "zid": "Z27873",
       "name": "Z27873_wrap_an_html_fragment_in_a_tag",
       "label": "wrap an HTML fragment in a tag",
@@ -49488,9 +49806,9 @@
         "Natural language"
       ],
       "returnType": "Monolingual text",
-      "implementation": "Z36298",
-      "revision": 282398,
-      "digest": "c3fd478912fac00881034cae30911eb50a2d6e8f99c63b3eddcc8dcdadad0880"
+      "implementation": "Z28032",
+      "revision": 216453,
+      "digest": "114f797e32a9601e6f6dcf4991fc23b759e79ffc83d71f9b1792feadad0d881d"
     },
     {
       "zid": "Z28018",
@@ -52254,9 +52572,9 @@
         "Natural language"
       ],
       "returnType": "Monolingual text",
-      "implementation": "Z28809",
-      "revision": 223535,
-      "digest": "27377dcb34d93a8d699b88a99209fa8b759d31cca82e8544e2fafa5692ce77c0"
+      "implementation": "Z28807",
+      "revision": 223533,
+      "digest": "29416aebbfa042a0a5488dbd5326e7619dbfa6a4fd1148fdf610eec78950f43d"
     },
     {
       "zid": "Z28811",
@@ -52981,6 +53299,26 @@
       "implementation": "Z31159",
       "revision": 242685,
       "digest": "8245b1134b4f08f12e4526b52e1d034ccc964bbf7dbbc0df8ee42b53e4a017c5"
+    },
+    {
+      "zid": "Z29102",
+      "name": "Z29102_reference_from_zid_string",
+      "label": "Reference from ZID string",
+      "arity": 1,
+      "runnable": false,
+      "reachesCycle": false,
+      "compiled": false,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z29102K1"
+      ],
+      "argumentTypes": [
+        "String"
+      ],
+      "returnType": "Object",
+      "implementation": "Z32144",
+      "revision": 258185,
+      "digest": "370fb9e02d794c7212de9564d8ce9ac08e446c1316ff2ae65649329d76ea0dda"
     },
     {
       "zid": "Z29113",
@@ -54425,6 +54763,32 @@
       "digest": "25a9b6928361459c36e1fbff1ca07049f068159544cca774ff682a46be8b3256"
     },
     {
+      "zid": "Z29591",
+      "name": "Z29591_describing_entity_w_adjective_class_monolingual",
+      "label": "describing entity w. adjective/class (monolingual)",
+      "arity": 4,
+      "runnable": false,
+      "reachesCycle": false,
+      "compiled": false,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z29591K1",
+        "Z29591K2",
+        "Z29591K3",
+        "Z29591K4"
+      ],
+      "argumentTypes": [
+        "Wikidata item reference",
+        "Wikidata item reference",
+        "Wikidata item reference",
+        "Natural language"
+      ],
+      "returnType": "Monolingual text",
+      "implementation": "Z29598",
+      "revision": 287061,
+      "digest": "5af351f056088717ed32f8190d050af608b5c94c92f7099ad861cd03f76d2190"
+    },
+    {
       "zid": "Z29594",
       "name": "Z29594_describing_entity_with_adjective_class_english",
       "label": "describing entity with adjective / class English",
@@ -54854,7 +55218,7 @@
       "label": "ArticlePlaceholder render main Wikidata statement",
       "arity": 2,
       "runnable": false,
-      "reachesCycle": false,
+      "reachesCycle": true,
       "compiled": false,
       "mutuallyRecursive": false,
       "argumentKeys": [
@@ -54977,6 +55341,32 @@
       "implementation": "Z29729",
       "revision": 240017,
       "digest": "6d7996ddb19bb95c7c2a8f2852557272f48bdaba8edbb60acf66f1ac8d220eb5"
+    },
+    {
+      "zid": "Z29743",
+      "name": "Z29743_description_of_class_with_adjective_and_superclass",
+      "label": "description of class with adjective and superclass",
+      "arity": 4,
+      "runnable": false,
+      "reachesCycle": false,
+      "compiled": false,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z29743K1",
+        "Z29743K2",
+        "Z29743K3",
+        "Z29743K4"
+      ],
+      "argumentTypes": [
+        "Wikidata item reference",
+        "Wikidata item reference",
+        "Wikidata item reference",
+        "Natural language"
+      ],
+      "returnType": "Monolingual text",
+      "implementation": "Z29815",
+      "revision": 231478,
+      "digest": "30f00bf238eae66951fe9faccd2b65d96413d0b6187cdb835bfb452b73e45be0"
     },
     {
       "zid": "Z29748",
@@ -55923,9 +56313,9 @@
       "name": "Z30009_apply_string_transformation_to_monolingual_text",
       "label": "apply String transformation to Monolingual text",
       "arity": 2,
-      "runnable": true,
+      "runnable": false,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z30009K1",
@@ -56185,6 +56575,28 @@
       "digest": "0a4e4055c2a5425ef3b52e1a6b883b5b174ed2f89b57b5d93534861ff1bd8aec"
     },
     {
+      "zid": "Z30097",
+      "name": "Z30097_format_main_wikidata_statement_by_prop_data_type",
+      "label": "format main Wikidata statement by prop data type",
+      "arity": 2,
+      "runnable": false,
+      "reachesCycle": true,
+      "compiled": false,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z30097K1",
+        "Z30097K2"
+      ],
+      "argumentTypes": [
+        "Natural language",
+        "Wikidata statement"
+      ],
+      "returnType": "HTML fragment",
+      "implementation": "Z30102",
+      "revision": 292552,
+      "digest": "aa95cdd31f3ae6613ea81e2bdac9ff4966d81964fc10089268164d7ef917f4c4"
+    },
+    {
       "zid": "Z30098",
       "name": "Z30098_format_main_wikidata_statement_by_value_s_datatype",
       "label": "format main Wikidata statement by value's datatype",
@@ -56430,7 +56842,7 @@
       "label": "ArticlePlaceholder render multi-main WD statement",
       "arity": 2,
       "runnable": false,
-      "reachesCycle": false,
+      "reachesCycle": true,
       "compiled": false,
       "mutuallyRecursive": false,
       "argumentKeys": [
@@ -56626,7 +57038,7 @@
       "label": "relevant Grammatical number enum for language",
       "arity": 1,
       "runnable": false,
-      "reachesCycle": true,
+      "reachesCycle": false,
       "compiled": false,
       "mutuallyRecursive": false,
       "argumentKeys": [
@@ -56636,9 +57048,9 @@
         "Natural language"
       ],
       "returnType": "Type",
-      "implementation": "Z30455",
-      "revision": 234840,
-      "digest": "0a5f7de87086889753e032c8c30dcc0a288be59f0ef451db5f0cb49fc2b787f9"
+      "implementation": "Z30198",
+      "revision": 234739,
+      "digest": "5a69795a341a75149624455be66aac8fdd9f885a4196105d87c33afd6efad6ea"
     },
     {
       "zid": "Z30201",
@@ -56883,9 +57295,9 @@
       "name": "Z30271_typed_map_from_two_lists",
       "label": "typed map from two lists",
       "arity": 2,
-      "runnable": false,
+      "runnable": true,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z30271K1",
@@ -58161,9 +58573,9 @@
       "name": "Z30617_reified_value_after_type",
       "label": "reified value after Type",
       "arity": 1,
-      "runnable": false,
+      "runnable": true,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z30617K1"
@@ -58172,9 +58584,9 @@
         "Object"
       ],
       "returnType": "Typed list(Typed pair(Key reference, Object))",
-      "implementation": "Z33629",
-      "revision": 265873,
-      "digest": "9b00dd622098d9873e08886697cd0babfcac1b5ed85a9222ce35957917a26470"
+      "implementation": "Z30619",
+      "revision": 236261,
+      "digest": "3a6e376f9c71713826264392b9913d9fadff6bc4e46b38e8188b8ea64d927b15"
     },
     {
       "zid": "Z30631",
@@ -58633,6 +59045,32 @@
       "digest": "3a02f8518bbe67a6fd5ea193e90654fa34e98f88bb6783c9142142d61f61ea40"
     },
     {
+      "zid": "Z30768",
+      "name": "Z30768_is_valid_arguments_to_z30708",
+      "label": "is valid arguments to Z30708?",
+      "arity": 4,
+      "runnable": false,
+      "reachesCycle": false,
+      "compiled": true,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z30768K1",
+        "Z30768K2",
+        "Z30768K3",
+        "Z30768K4"
+      ],
+      "argumentTypes": [
+        "Boolean",
+        "Boolean",
+        "Boolean",
+        "String"
+      ],
+      "returnType": "Boolean",
+      "implementation": "Z30771",
+      "revision": 237283,
+      "digest": "cf8d241294ebea49c3686133fc30f88ebbf256b69eb06fe421aa934a34ef287d"
+    },
+    {
       "zid": "Z30774",
       "name": "Z30774_nth_term_of_arithmetic_sequence",
       "label": "nth term of arithmetic sequence",
@@ -58675,6 +59113,26 @@
       "implementation": "Z36506",
       "revision": 284295,
       "digest": "2f3409feb8d2fdb32d8d879866227e34148749cde2817065a4ee2ae3548036d6"
+    },
+    {
+      "zid": "Z30784",
+      "name": "Z30784_transform_monolingual_text_to_sentence_case",
+      "label": "transform Monolingual text to sentence case",
+      "arity": 1,
+      "runnable": false,
+      "reachesCycle": false,
+      "compiled": false,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z30784K1"
+      ],
+      "argumentTypes": [
+        "Monolingual text"
+      ],
+      "returnType": "Monolingual text",
+      "implementation": "Z30791",
+      "revision": 237400,
+      "digest": "88237f57da2becb95dd396c7a1424cccbb00047b4ff197a436a819da2a0950af"
     },
     {
       "zid": "Z30785",
@@ -58907,6 +59365,30 @@
       "digest": "13a38818f31ff7e45168aea10932340d4a11e51401e4f7b453064386c507de31"
     },
     {
+      "zid": "Z30857",
+      "name": "Z30857",
+      "label": "",
+      "arity": 3,
+      "runnable": false,
+      "reachesCycle": false,
+      "compiled": false,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z30857K1",
+        "Z30857K2",
+        "Z30857K3"
+      ],
+      "argumentTypes": [
+        "Wikidata lexeme",
+        "Wikidata lexeme",
+        "Sign"
+      ],
+      "returnType": "String",
+      "implementation": "Z30860",
+      "revision": 237903,
+      "digest": "8edc19aaf2141bdbbfd1eac00d552ed43461a15b3d1088175e61e4bdd44a6cbf"
+    },
+    {
       "zid": "Z30865",
       "name": "Z30865_run_length_encoding_object_equality",
       "label": "run-length encoding (object equality)",
@@ -58951,13 +59433,37 @@
       "digest": "8c278c59e69a4156c77a3d2d522f0a43e6c38f000bdbf5548272dcdee32c834f"
     },
     {
+      "zid": "Z30870",
+      "name": "Z30870_left_associative_running_fold",
+      "label": "left-associative running fold",
+      "arity": 3,
+      "runnable": true,
+      "reachesCycle": false,
+      "compiled": true,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z30870K1",
+        "Z30870K2",
+        "Z30870K3"
+      ],
+      "argumentTypes": [
+        "Function",
+        "Typed list(Object)",
+        "Object"
+      ],
+      "returnType": "Typed list(Object)",
+      "implementation": "Z30873",
+      "revision": 238048,
+      "digest": "68b28b2e71759c82d3fe08e8b7e05cc8fd0ee51ce6f088a4154eb2583f52bf36"
+    },
+    {
       "zid": "Z30871",
       "name": "Z30871_left_associative_running_reduce",
       "label": "left-associative running reduce",
       "arity": 2,
-      "runnable": false,
+      "runnable": true,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z30871K1",
@@ -59524,14 +60030,9 @@
       "label": "pass object if predicate is true",
       "arity": 4,
       "runnable": false,
-      "reachesCycle": true,
-      "cycle": [
-        "Z31065",
-        "Z31078",
-        "Z31120"
-      ],
+      "reachesCycle": false,
       "compiled": false,
-      "mutuallyRecursive": true,
+      "mutuallyRecursive": false,
       "argumentKeys": [
         "Z31065K1",
         "Z31065K2",
@@ -59545,9 +60046,9 @@
         "String"
       ],
       "returnType": "Object",
-      "implementation": "Z31191",
-      "revision": 243191,
-      "digest": "186c98963316ce7978dc13a32f59cbd9462fe69b74dc8b432be2c7585f24d72c"
+      "implementation": "Z31119",
+      "revision": 243115,
+      "digest": "4fbd30ddda7f333f4cf987c62c75b6fdbdca758a692af662d652485a6850c5c4"
     },
     {
       "zid": "Z31078",
@@ -59555,14 +60056,9 @@
       "label": "enclose string from object",
       "arity": 4,
       "runnable": false,
-      "reachesCycle": true,
-      "cycle": [
-        "Z31065",
-        "Z31078",
-        "Z31120"
-      ],
+      "reachesCycle": false,
       "compiled": false,
-      "mutuallyRecursive": true,
+      "mutuallyRecursive": false,
       "argumentKeys": [
         "Z31078K1",
         "Z31078K2",
@@ -59816,14 +60312,9 @@
       "label": "string from object",
       "arity": 1,
       "runnable": false,
-      "reachesCycle": true,
-      "cycle": [
-        "Z31065",
-        "Z31078",
-        "Z31120"
-      ],
+      "reachesCycle": false,
       "compiled": false,
-      "mutuallyRecursive": true,
+      "mutuallyRecursive": false,
       "argumentKeys": [
         "Z31120K1"
       ],
@@ -60065,7 +60556,7 @@
       "label": "error argument list as ordered strings",
       "arity": 2,
       "runnable": false,
-      "reachesCycle": true,
+      "reachesCycle": false,
       "compiled": false,
       "mutuallyRecursive": false,
       "argumentKeys": [
@@ -61042,6 +61533,50 @@
       "implementation": "Z31728",
       "revision": 255072,
       "digest": "e5860b8000b50b0f43190562ac70869ff528650b393fdae17bb6061ba379c391"
+    },
+    {
+      "zid": "Z31575",
+      "name": "Z31575_longest_common_sublist",
+      "label": "longest common sublist",
+      "arity": 3,
+      "runnable": false,
+      "reachesCycle": true,
+      "compiled": false,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z31575K1",
+        "Z31575K2",
+        "Z31575K3"
+      ],
+      "argumentTypes": [
+        "Typed list(Object)",
+        "Typed list(Object)",
+        "Function"
+      ],
+      "returnType": "Typed list(Object)",
+      "implementation": "Z31631",
+      "revision": 252269,
+      "digest": "953b4bcb5fd96442aa4552bbb6ffa0ea02eadbafb3446746ea9625b4b9c1f63d"
+    },
+    {
+      "zid": "Z31580",
+      "name": "Z31580_prepend_reversed_first_list_to_second_list",
+      "label": "prepend reversed first list to second list",
+      "arity": 1,
+      "runnable": true,
+      "reachesCycle": false,
+      "compiled": true,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z31580K1"
+      ],
+      "argumentTypes": [
+        "Typed pair(Typed list(Object), Typed list(Object))"
+      ],
+      "returnType": "Typed pair(Object, Object)",
+      "implementation": "Z31582",
+      "revision": 252135,
+      "digest": "b78026bab7b70b168e17403fd8412a319349d88e18bbe310f381212d3242a72a"
     },
     {
       "zid": "Z31583",
@@ -63042,6 +63577,30 @@
       "digest": "b983bcfe9f01859c702e0001425ef3806f9f2fb8f553ef6acd0223e4f1ca1b69"
     },
     {
+      "zid": "Z32240",
+      "name": "Z32240_multiplex_test_of_chinese_defining_role_sentence",
+      "label": "Multiplex test of Chinese defining role sentence",
+      "arity": 3,
+      "runnable": false,
+      "reachesCycle": false,
+      "compiled": false,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z32240K1",
+        "Z32240K2",
+        "Z32240K3"
+      ],
+      "argumentTypes": [
+        "Wikidata item reference",
+        "Wikidata item reference",
+        "Wikidata item reference"
+      ],
+      "returnType": "Typed map(Natural language, Monolingual text)",
+      "implementation": "Z32241",
+      "revision": 264111,
+      "digest": "1609d3b232438bfddcda918ee7f9da83357ed997230a8687c6603754bf003c7f"
+    },
+    {
       "zid": "Z32243",
       "name": "Z32243_superlative_definition_in_malay",
       "label": "Superlative definition, in Malay",
@@ -63234,6 +63793,26 @@
       "digest": "a4a2a1b6bfc66a63a18c949e281defa2048c224c5338c0e098799e8cf71c3c17"
     },
     {
+      "zid": "Z32276",
+      "name": "Z32276_separator_space_punctuation_for_list_items_in_lang",
+      "label": "separator space/punctuation for list items in lang",
+      "arity": 1,
+      "runnable": false,
+      "reachesCycle": false,
+      "compiled": false,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z32276K1"
+      ],
+      "argumentTypes": [
+        "Natural language"
+      ],
+      "returnType": "String",
+      "implementation": "Z32280",
+      "revision": 288309,
+      "digest": "7f58538bc2b3d5b904ada0e69b6cfeee0b713a61f6841345873b871c44141e60"
+    },
+    {
       "zid": "Z32277",
       "name": "Z32277_default_word_separator",
       "label": "default word separator \", \"",
@@ -63388,6 +63967,26 @@
       "implementation": "Z32296",
       "revision": 293304,
       "digest": "01e88110000e692788f23458b24e959c325280223d31a108ba7bc937aada39b1"
+    },
+    {
+      "zid": "Z32297",
+      "name": "Z32297_word_separator_last",
+      "label": "Word separator (last)",
+      "arity": 1,
+      "runnable": false,
+      "reachesCycle": false,
+      "compiled": false,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z32297K1"
+      ],
+      "argumentTypes": [
+        "Natural language"
+      ],
+      "returnType": "String",
+      "implementation": "Z32301",
+      "revision": 293303,
+      "digest": "87352aeda27e26ccd6641bf955216f7a69e29f52253cc3fe30bd33c93cb26cb9"
     },
     {
       "zid": "Z32299",
@@ -64586,6 +65185,28 @@
       "digest": "a45e26a36cf0b8c340299479e3c907e88e50a6fd472660a5fdc28a1c0484b7e9"
     },
     {
+      "zid": "Z32625",
+      "name": "Z32625_full_placename_from_hierarchical_list",
+      "label": "full placename from hierarchical list",
+      "arity": 2,
+      "runnable": false,
+      "reachesCycle": false,
+      "compiled": false,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z32625K1",
+        "Z32625K2"
+      ],
+      "argumentTypes": [
+        "Typed list(String)",
+        "Natural language"
+      ],
+      "returnType": "String",
+      "implementation": "Z32630",
+      "revision": 288315,
+      "digest": "00f8c216267c93d70827bc788089474d859931e1ca7710cf4c6005bcc7c25e89"
+    },
+    {
       "zid": "Z32626",
       "name": "Z32626_join_list_of_places_default_format",
       "label": "join list of places (default format)",
@@ -65290,9 +65911,9 @@
       "name": "Z32806_transform_elements_of_list_of_lists",
       "label": "transform elements of list of lists",
       "arity": 2,
-      "runnable": true,
+      "runnable": false,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z32806K1",
@@ -65312,9 +65933,9 @@
       "name": "Z32807_transform_elements_of_list_of_lists_at_depth",
       "label": "transform elements of list of lists at depth",
       "arity": 3,
-      "runnable": true,
+      "runnable": false,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z32807K1",
@@ -65637,9 +66258,9 @@
         "Natural language"
       ],
       "returnType": "HTML fragment",
-      "implementation": "Z32879",
-      "revision": 261752,
-      "digest": "7479dd627cf51866bb646ad0d625e6ac6597ec4cd01fad35e09df0537744ee2e"
+      "implementation": "Z33773",
+      "revision": 266943,
+      "digest": "3da92f91265c8cae14524dcb2527a197688352812d723ddca7a06c12192d6020"
     },
     {
       "zid": "Z32881",
@@ -65737,7 +66358,7 @@
       "label": "get latest software version",
       "arity": 1,
       "runnable": false,
-      "reachesCycle": true,
+      "reachesCycle": false,
       "compiled": false,
       "mutuallyRecursive": false,
       "argumentKeys": [
@@ -67727,7 +68348,7 @@
       "label": "Error to descriptive string",
       "arity": 1,
       "runnable": false,
-      "reachesCycle": true,
+      "reachesCycle": false,
       "compiled": false,
       "mutuallyRecursive": false,
       "argumentKeys": [
@@ -68109,7 +68730,7 @@
       "label": "MIDI number of pitch item",
       "arity": 1,
       "runnable": false,
-      "reachesCycle": true,
+      "reachesCycle": false,
       "compiled": false,
       "mutuallyRecursive": false,
       "argumentKeys": [
@@ -68129,7 +68750,7 @@
       "label": "integer from object",
       "arity": 1,
       "runnable": false,
-      "reachesCycle": true,
+      "reachesCycle": false,
       "compiled": false,
       "mutuallyRecursive": false,
       "argumentKeys": [
@@ -68237,7 +68858,7 @@
       "label": "MIDI number of reference note",
       "arity": 1,
       "runnable": false,
-      "reachesCycle": true,
+      "reachesCycle": false,
       "compiled": false,
       "mutuallyRecursive": false,
       "argumentKeys": [
@@ -68408,7 +69029,7 @@
       "name": "Z33646_intersperse_delimiter_throughout_list",
       "label": "intersperse delimiter throughout list",
       "arity": 4,
-      "runnable": true,
+      "runnable": false,
       "reachesCycle": false,
       "compiled": false,
       "mutuallyRecursive": false,
@@ -69756,13 +70377,43 @@
       "digest": "af031155968b26d82c8410d00e37abeda6ba88a37db9720bd1ccf5424d8c8615"
     },
     {
+      "zid": "Z34120",
+      "name": "Z34120_apply_five_argument_function",
+      "label": "apply five-argument function",
+      "arity": 6,
+      "runnable": false,
+      "reachesCycle": false,
+      "compiled": true,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z34120K1",
+        "Z34120K2",
+        "Z34120K3",
+        "Z34120K4",
+        "Z34120K5",
+        "Z34120K6"
+      ],
+      "argumentTypes": [
+        "Function",
+        "Object",
+        "Object",
+        "Object",
+        "Object",
+        "Object"
+      ],
+      "returnType": "Object",
+      "implementation": "Z34121",
+      "revision": 268666,
+      "digest": "1522dc82280ffbc68ca08c3f255f1a6a20abf7bdf4debe926406aefeabfa0bac"
+    },
+    {
       "zid": "Z34122",
       "name": "Z34122_apply_four_or_optionally_five_argument_function",
       "label": "apply four or optionally five-argument function",
       "arity": 6,
       "runnable": false,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z34122K1",
@@ -70310,9 +70961,9 @@
       "name": "Z34367_any_boolean_equal_to",
       "label": "any boolean equal to",
       "arity": 2,
-      "runnable": true,
+      "runnable": false,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z34367K1",
@@ -71462,6 +72113,74 @@
       "digest": "179e44cffaf60f1a446a71bdcd564dd98096d33cb5b539477b6c482d0e072aba"
     },
     {
+      "zid": "Z35029",
+      "name": "Z35029_abstractwiki_periodic_table_cell",
+      "label": "abstractwiki periodic table cell",
+      "arity": 3,
+      "runnable": false,
+      "reachesCycle": false,
+      "compiled": false,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z35029K1",
+        "Z35029K2",
+        "Z35029K3"
+      ],
+      "argumentTypes": [
+        "Wikidata item",
+        "Natural number",
+        "Natural language"
+      ],
+      "returnType": "HTML fragment",
+      "implementation": "Z35030",
+      "revision": 274108,
+      "digest": "10a3e9dea7e6efc85435e369baa2a3ad1d3b66729be99e7f170820564dca5dc4"
+    },
+    {
+      "zid": "Z35031",
+      "name": "Z35031_abstractwiki_18_col_periodic_table_to_nth_period",
+      "label": "abstractwiki 18-col periodic table to nth period",
+      "arity": 2,
+      "runnable": false,
+      "reachesCycle": false,
+      "compiled": false,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z35031K1",
+        "Z35031K2"
+      ],
+      "argumentTypes": [
+        "Natural number",
+        "Natural language"
+      ],
+      "returnType": "HTML fragment",
+      "implementation": "Z35048",
+      "revision": 274121,
+      "digest": "b187b5c1ea599e46f6720aeebdc2fed79325e2e87bde53ae263c9bde164df630"
+    },
+    {
+      "zid": "Z35034",
+      "name": "Z35034_abstractwiki_infobox_row",
+      "label": "abstractwiki infobox row",
+      "arity": 2,
+      "runnable": false,
+      "reachesCycle": true,
+      "compiled": false,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z35034K1",
+        "Z35034K2"
+      ],
+      "argumentTypes": [
+        "Natural language",
+        "Wikidata statement"
+      ],
+      "returnType": "HTML fragment",
+      "implementation": "Z35035",
+      "revision": 273593,
+      "digest": "49059349c952887c3107212339349de8bb00783fa2e02f577e27e8f43ecdbb0f"
+    },
+    {
       "zid": "Z35036",
       "name": "Z35036_fetch_wikidata_property_or_parts",
       "label": "fetch Wikidata property or parts",
@@ -71964,6 +72683,54 @@
       "implementation": "Z35182",
       "revision": 274876,
       "digest": "fc744c86abefe8874895e702ffb87616f3bff11fd27a988ed876319bc68ab93a"
+    },
+    {
+      "zid": "Z35188",
+      "name": "Z35188_wikidata_statement_pair",
+      "label": "Wikidata statement pair",
+      "arity": 3,
+      "runnable": false,
+      "reachesCycle": false,
+      "compiled": false,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z35188K1",
+        "Z35188K2",
+        "Z35188K3"
+      ],
+      "argumentTypes": [
+        "Wikidata item",
+        "Wikidata property reference",
+        "Natural language"
+      ],
+      "returnType": "Typed pair(String, Wikidata statement)",
+      "implementation": "Z35369",
+      "revision": 276223,
+      "digest": "7a2b0f6f6ae1e6d3f3901c4edb675cfcd79a0aae0ca229a0dedc37e0ca74ca33"
+    },
+    {
+      "zid": "Z35190",
+      "name": "Z35190_apply_fn_to_2nd_element_of_pair_optional_language",
+      "label": "apply fn to 2nd element of pair, optional language",
+      "arity": 3,
+      "runnable": false,
+      "reachesCycle": false,
+      "compiled": false,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z35190K1",
+        "Z35190K2",
+        "Z35190K3"
+      ],
+      "argumentTypes": [
+        "Typed pair(Object, Object)",
+        "Function",
+        "Natural language"
+      ],
+      "returnType": "Typed pair(Object, Object)",
+      "implementation": "Z35191",
+      "revision": 274922,
+      "digest": "ecf9c9b8be1d9f39ebffca69407594c93d6ded03686a738ee38339fd2521f4cb"
     },
     {
       "zid": "Z35192",
@@ -73246,9 +74013,9 @@
       "name": "Z35475_are_integers_different",
       "label": "are Integers different?",
       "arity": 2,
-      "runnable": false,
+      "runnable": true,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z35475K1",
@@ -73780,6 +74547,26 @@
       "implementation": "Z35679",
       "revision": 278308,
       "digest": "952da563ecc6d998d431fc3c4cd03d4533d1ffb14554cfd1dd1d16a30d5d4cde"
+    },
+    {
+      "zid": "Z35683",
+      "name": "Z35683_apply0",
+      "label": "apply0",
+      "arity": 1,
+      "runnable": false,
+      "reachesCycle": false,
+      "compiled": true,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z35683K1"
+      ],
+      "argumentTypes": [
+        "Function"
+      ],
+      "returnType": "Object",
+      "implementation": "Z35685",
+      "revision": 278323,
+      "digest": "128cc6992e120c3967c6404832030e60ccdb9a1733d16fae6feb10ed9488bea7"
     },
     {
       "zid": "Z35687",
@@ -74688,9 +75475,9 @@
       "name": "Z35941_iterate_function_over_string_to_string",
       "label": "iterate function over string to string",
       "arity": 2,
-      "runnable": true,
+      "runnable": false,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z35941K1",
@@ -75932,6 +76719,30 @@
       "digest": "39bfe604d7abd08bc3d78f580739e29687fb9958502d6a57db7e80cc68239b9c"
     },
     {
+      "zid": "Z36240",
+      "name": "Z36240_wikidata_link_for_item_property",
+      "label": "Wikidata link for item#property",
+      "arity": 3,
+      "runnable": false,
+      "reachesCycle": false,
+      "compiled": false,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z36240K1",
+        "Z36240K2",
+        "Z36240K3"
+      ],
+      "argumentTypes": [
+        "Wikidata item reference",
+        "Wikidata property reference",
+        "Natural language"
+      ],
+      "returnType": "HTML fragment",
+      "implementation": "Z36242",
+      "revision": 281914,
+      "digest": "9a0ce18d3548bd7aca4edc91db934edc259ad0e6e027de53833e861420e3b6c5"
+    },
+    {
       "zid": "Z36243",
       "name": "Z36243_specific_property_of_subject_is_value_default",
       "label": "specific property of subject is value, default",
@@ -77000,6 +77811,28 @@
       "implementation": "Z36481",
       "revision": 283897,
       "digest": "5ba347497e67357bc992c8c9be6f09e9d02a705768420642549b8438128a0b43"
+    },
+    {
+      "zid": "Z36485",
+      "name": "Z36485_wikidata_link_for_item_with_text_string_specified",
+      "label": "Wikidata link for item with text string specified",
+      "arity": 2,
+      "runnable": false,
+      "reachesCycle": false,
+      "compiled": false,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z36485K1",
+        "Z36485K2"
+      ],
+      "argumentTypes": [
+        "Wikidata item reference",
+        "String"
+      ],
+      "returnType": "HTML fragment",
+      "implementation": "Z36486",
+      "revision": 284155,
+      "digest": "89e274408a1e7aeb06f98ed03e576e3a0450d2eaa99298d08f89971747281a46"
     },
     {
       "zid": "Z36489",
@@ -81452,12 +82285,60 @@
       "digest": "d64a9d03e6101d98a7a7d045c9bd776bf9f6e15372983c4f2e873637de7d0faa"
     },
     {
+      "zid": "Z37450",
+      "name": "Z37450_monolingual_text_as_html_with_colour_span",
+      "label": "monolingual text as HTML with colour span",
+      "arity": 3,
+      "runnable": false,
+      "reachesCycle": true,
+      "compiled": false,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z37450K1",
+        "Z37450K2",
+        "Z37450K3"
+      ],
+      "argumentTypes": [
+        "Monolingual text",
+        "RGBA color",
+        "Natural language"
+      ],
+      "returnType": "HTML fragment",
+      "implementation": "Z37451",
+      "revision": 289569,
+      "digest": "4357c01aeddcf42a2a4b07f59cb53501028762c95c430a37a57eb87e092876d3"
+    },
+    {
+      "zid": "Z37454",
+      "name": "Z37454_monolingual_text_as_html_with_lang_colour_span",
+      "label": "monolingual text as HTML with lang & colour span",
+      "arity": 3,
+      "runnable": false,
+      "reachesCycle": true,
+      "compiled": false,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z37454K1",
+        "Z37454K2",
+        "Z37454K3"
+      ],
+      "argumentTypes": [
+        "Monolingual text",
+        "RGBA color",
+        "Natural language"
+      ],
+      "returnType": "HTML fragment",
+      "implementation": "Z37456",
+      "revision": 289587,
+      "digest": "803d57e2ad72092c7b77b52ece349e5c036692edca4ebf258c4d65c464640494"
+    },
+    {
       "zid": "Z37459",
       "name": "Z37459_monolingual_text_as_html_with_lang_default_color",
       "label": "monolingual text as HTML with lang & default color",
       "arity": 2,
       "runnable": false,
-      "reachesCycle": false,
+      "reachesCycle": true,
       "compiled": false,
       "mutuallyRecursive": false,
       "argumentKeys": [
@@ -81500,6 +82381,28 @@
       "implementation": "Z37540",
       "revision": 290815,
       "digest": "8b472931e3498f850952a3a22e25eb0a16853d63d941d337f943c0047eb157aa"
+    },
+    {
+      "zid": "Z37465",
+      "name": "Z37465_wikifunctions_link_for_zid_with_specified_text",
+      "label": "Wikifunctions link for ZID with specified text",
+      "arity": 2,
+      "runnable": false,
+      "reachesCycle": false,
+      "compiled": false,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z37465K1",
+        "Z37465K2"
+      ],
+      "argumentTypes": [
+        "String",
+        "String"
+      ],
+      "returnType": "HTML fragment",
+      "implementation": "Z37467",
+      "revision": 289609,
+      "digest": "d1fd216059fa1c08297f885ab1c29163d1f4fb343a719e8a36a9568c8b2270bb"
     },
     {
       "zid": "Z37481",
@@ -82384,6 +83287,30 @@
       "digest": "76476d690558b183b5708fbdfe31eaeeaf3654bb78244d42cc9b2724de04a3ea"
     },
     {
+      "zid": "Z37801",
+      "name": "Z37801_xxx_is_a_city_located_in_yyy_builder_approach",
+      "label": "xxx is a city located in yyy (builder approach)",
+      "arity": 3,
+      "runnable": false,
+      "reachesCycle": false,
+      "compiled": false,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z37801K1",
+        "Z37801K2",
+        "Z37801K3"
+      ],
+      "argumentTypes": [
+        "Natural language",
+        "String",
+        "String"
+      ],
+      "returnType": "String",
+      "implementation": "Z37812",
+      "revision": 292701,
+      "digest": "07e1f7ade3faa17da963c5bf9272a75e7a08d7edecbca86f6e8899f3a482e73b"
+    },
+    {
       "zid": "Z37802",
       "name": "Z37802_get_element_of_language_keyed_map",
       "label": "get element of language-keyed map",
@@ -82468,6 +83395,50 @@
       "implementation": "Z37811",
       "revision": 291431,
       "digest": "30711a265abf630c96c3414a0fe9ff168772558c9f976d48dd9ee9fa270398af"
+    },
+    {
+      "zid": "Z37815",
+      "name": "Z37815_as_of_xxx_the_city_had_a_total_population_of_yyy",
+      "label": "As of xxx, the city had a total population of yyy ",
+      "arity": 3,
+      "runnable": false,
+      "reachesCycle": false,
+      "compiled": false,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z37815K1",
+        "Z37815K2",
+        "Z37815K3"
+      ],
+      "argumentTypes": [
+        "Natural language",
+        "String",
+        "String"
+      ],
+      "returnType": "String",
+      "implementation": "Z37816",
+      "revision": 292699,
+      "digest": "47a0cfe337c4ae031439e9006b617bfeda0c03d20a257c7b48a3229065802a29"
+    },
+    {
+      "zid": "Z37817",
+      "name": "Z37817_section_header_geography_builder_approach",
+      "label": "section header \"Geography\" (builder approach)",
+      "arity": 1,
+      "runnable": false,
+      "reachesCycle": false,
+      "compiled": false,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z37817K1"
+      ],
+      "argumentTypes": [
+        "Natural language"
+      ],
+      "returnType": "HTML fragment",
+      "implementation": "Z37818",
+      "revision": 292698,
+      "digest": "f8b35731668c994c844587b55888c81e7a442c912ea05ef08ce3b1a66a11996f"
     },
     {
       "zid": "Z37821",
@@ -83752,6 +84723,26 @@
       "implementation": "Z38062",
       "revision": 292781,
       "digest": "e84fba6c3c5562199cbc0c7d60fabfbd692a57aeaa896713f58f5a68202a59a4"
+    },
+    {
+      "zid": "Z38068",
+      "name": "Z38068_gregorian_calendar_date_to_star_trek_tng_stardate",
+      "label": "Gregorian calendar date to Star Trek: TNG stardate",
+      "arity": 1,
+      "runnable": false,
+      "reachesCycle": true,
+      "compiled": false,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z38068K1"
+      ],
+      "argumentTypes": [
+        "Gregorian calendar date"
+      ],
+      "returnType": "float64",
+      "implementation": "Z38069",
+      "revision": 294784,
+      "digest": "f240749d19991a9cdae8b6f6e03c70eea5cd634def18aacfb56b794170f95842"
     },
     {
       "zid": "Z38078",
@@ -85516,6 +86507,26 @@
       "digest": "61e807f474198d3d77f498de3ea0f2b6b455cb5405527d6dc4d443674f7bc350"
     },
     {
+      "zid": "Z38478",
+      "name": "Z38478_get_parent_taxon",
+      "label": "Get parent taxon",
+      "arity": 1,
+      "runnable": false,
+      "reachesCycle": false,
+      "compiled": true,
+      "mutuallyRecursive": false,
+      "argumentKeys": [
+        "Z38478K1"
+      ],
+      "argumentTypes": [
+        "Wikidata item"
+      ],
+      "returnType": "Wikidata item",
+      "implementation": "Z38487",
+      "revision": 295755,
+      "digest": "bc80766d5870fa79e5eb6e49080afd685be3b73a78a10c409b5bb2571aabc62d"
+    },
+    {
       "zid": "Z38482",
       "name": "Z38482_switch_on_type_of_object",
       "label": "switch on Type of Object",
@@ -87266,7 +88277,7 @@
       "arity": 6,
       "runnable": false,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z38857K1",

@@ -11,8 +11,16 @@ open Wikifn.Eval
 
   part:      3 of 10
   functions: 400
-  ZID range: Z15969 to Z19841
+  ZID range: Z15953 to Z19814
 *)
+
+(* Z15953 Ukrainian cardinal | Z15953@202705 -> Z22599@168334 digest dc6ff7d3d83c99dfc80fdc02ff79381bac142f22ab62a8d1f3c0a3c126bb6aa9 *)
+let body_Z15953_ukrainian_cardinal : expr =
+  ECall 22576 [EValue (VList [VText [1085; 1091; 1083; 1100]; VText [1086; 1076; 1080; 1085]; VText [1076; 1074; 1072]; VText [1090; 1088; 1080]; VText [1095; 1086; 1090; 1080; 1088; 1080]; VText [1087; 39; 1103; 1090; 1100]; VText [1096; 1110; 1089; 1090; 1100]; VText [1089; 1110; 1084]; VText [1074; 1110; 1089; 1110; 1084]; VText [1076; 1077; 1074; 39; 1103; 1090; 1100]]); EValue (VList [VText [1086; 1076; 1080; 1085; 1072; 1076; 1094; 1103; 1090; 1100]; VText [1076; 1074; 1072; 1085; 1072; 1076; 1094; 1103; 1090; 1100]; VText [1090; 1088; 1080; 1085; 1072; 1076; 1094; 1103; 1090; 1100]; VText [1095; 1086; 1090; 1080; 1088; 1085; 1072; 1076; 1094; 1103; 1090; 1100]; VText [1087; 39; 1103; 1090; 1085; 1072; 1076; 1094; 1103; 1090; 1100]; VText [1096; 1110; 1089; 1090; 1085; 1072; 1076; 1094; 1103; 1090; 1100]; VText [1089; 1110; 1084; 1085; 1072; 1076; 1094; 1103; 1090; 1100]; VText [1074; 1110; 1089; 1110; 1084; 1085; 1072; 1076; 1094; 1103; 1090; 1100]]); EValue (VList [VText [1076; 1077; 1089; 1103; 1090; 1100]; VText [1076; 1074; 1072; 1076; 1094; 1103; 1090; 1100]; VText [1090; 1088; 1080; 1076; 1094; 1103; 1090; 1100]; VText [1089; 1086; 1088; 1086; 1082]; VText [1087; 39; 1103; 1090; 1076; 1077; 1089; 1103; 1090]; VText [1096; 1110; 1089; 1090; 1076; 1077; 1089; 1103; 1090]; VText [1089; 1110; 1084; 1076; 1077; 1089; 1103; 1090]; VText [1074; 1110; 1089; 1110; 1084; 1076; 1077; 1089; 1103; 1090]; VText [1076; 1077; 1074; 39; 1103; 1085; 1086; 1089; 1090; 1086]]); EValue (VList [VText [1089; 1090; 1086]; VText [1076; 1074; 1110; 1089; 1090; 1110]; VText [1090; 1088; 1080; 1089; 1090; 1072]; VText [1095; 1086; 1090; 1080; 1088; 1080; 1089; 1090; 1072]; VText [1087; 39; 1103; 1090; 1089; 1086; 1090]; VText [1096; 1110; 1089; 1090; 1089; 1086; 1090]; VText [1089; 1110; 1084; 1089; 1086; 1090]; VText [1074; 1110; 1089; 1110; 1084; 1089; 1086; 1090]; VText [1076; 1077; 1074; 39; 1103; 1090; 1089; 1086; 1090]]); EValue (VList [VText [1086; 1076; 1085; 1072]; VText [1076; 1074; 1110]; VText [1090; 1088; 1080]; VText [1095; 1086; 1090; 1080; 1088; 1080]; VText [1087; 39; 1103; 1090; 1100]; VText [1096; 1110; 1089; 1090; 1100]; VText [1089; 1110; 1084]; VText [1074; 1110; 1089; 1110; 1084]; VText [1076; 1077; 1074; 39; 1103; 1090; 1100]]); EValue (VList [VText [1090; 1080; 1089; 1103; 1095; 1072]; VText [1090; 1080; 1089; 1103; 1095; 1110]; VText [1090; 1080; 1089; 1103; 1095]]); EValue (VList [VText [1084; 1110]; VText [1090; 1088; 1080]; VText [1082; 1074; 1072; 1076; 1088; 1080]; VText [1082; 1074; 1110; 1085; 1090; 1080]; VText [1089; 1077; 1082; 1089; 1090; 1080]; VText [1089; 1077; 1087; 1090; 1080]; VText [1086; 1082; 1090; 1080]; VText [1085; 1086; 1085; 1080]; VText [1076; 1077; 1094; 1080]]); EValue (VList [VText [1083; 1100; 1081; 1086; 1085]; VText [1083; 1100; 1081; 1086; 1085; 1080]; VText [1083; 1100; 1081; 1086; 1085; 1110; 1074]]); EValue (VList [VText [1083; 1100; 1103; 1088; 1076]; VText [1083; 1100; 1103; 1088; 1076; 1080]; VText [1083; 1100; 1103; 1088; 1076; 1110; 1074]]); EArg 0]
+
+(* Z15965 Polish cardinal | Z15965@202795 -> Z22613@168353 digest e6f33c2402ffdb1112e47d530b85dc59c455b78cfc3ea38eb634b0264cd4c340 *)
+let body_Z15965_polish_cardinal : expr =
+  ECall 22576 [EValue (VList [VText [122; 101; 114; 111]; VText [106; 101; 100; 101; 110]; VText [100; 119; 97]; VText [116; 114; 122; 121]; VText [99; 122; 116; 101; 114; 121]; VText [112; 105; 281; 263]; VText [115; 122; 101; 347; 263]; VText [115; 105; 101; 100; 101; 109]; VText [111; 115; 105; 101; 109]; VText [100; 122; 105; 101; 119; 105; 281; 263]]); EValue (VList [VText [106; 101; 100; 101; 110; 97; 347; 99; 105; 101]; VText [100; 119; 97; 110; 97; 347; 99; 105; 101]; VText [116; 114; 122; 121; 110; 97; 347; 99; 105; 101]; VText [99; 122; 116; 101; 114; 110; 97; 347; 99; 105; 101]; VText [112; 105; 281; 116; 110; 97; 347; 99; 105; 101]; VText [115; 122; 101; 115; 110; 97; 347; 99; 105; 101]; VText [115; 105; 101; 100; 101; 109; 110; 97; 347; 99; 105; 101]; VText [111; 115; 105; 101; 109; 110; 97; 347; 99; 105; 101]; VText [100; 122; 105; 101; 119; 105; 281; 116; 110; 97; 347; 99; 105; 101]]); EValue (VList [VText [100; 122; 105; 101; 115; 105; 281; 263]; VText [100; 119; 97; 100; 122; 105; 101; 347; 99; 105; 97]; VText [116; 114; 122; 121; 100; 122; 105; 101; 347; 99; 105]; VText [99; 122; 116; 101; 114; 100; 122; 105; 101; 347; 99; 105]; VText [112; 105; 281; 263; 100; 122; 105; 101; 115; 105; 261; 116]; VText [115; 122; 101; 347; 263; 100; 122; 105; 101; 115; 105; 261; 116]; VText [115; 105; 101; 100; 101; 109; 100; 122; 105; 101; 115; 105; 261; 116]; VText [111; 115; 105; 101; 109; 100; 122; 105; 101; 115; 105; 261; 116]; VText [100; 122; 105; 101; 119; 105; 281; 263; 100; 122; 105; 101; 115; 105; 261; 116]]); EValue (VList [VText [115; 116; 111]; VText [100; 119; 105; 101; 347; 99; 105; 101]; VText [116; 114; 122; 121; 115; 116; 97]; VText [99; 122; 116; 101; 114; 121; 115; 116; 97]; VText [112; 105; 281; 263; 115; 101; 116]; VText [115; 122; 101; 347; 263; 115; 101; 116]; VText [115; 105; 101; 100; 101; 109; 115; 101; 116]; VText [111; 115; 105; 101; 109; 115; 101; 116]; VText [100; 122; 105; 101; 119; 105; 281; 263; 115; 101; 116]]); EValue (VList []); EValue (VList [VText [116; 121; 115; 105; 261; 99]; VText [116; 121; 115; 105; 261; 99; 101]; VText [116; 121; 115; 105; 281; 99; 121]]); EValue (VList [VText [109; 105]; VText [98; 105]; VText [116; 114; 121]; VText [107; 119; 97; 100; 114; 121]; VText [107; 119; 105; 110; 116; 121]; VText [115; 101; 107; 115; 116; 121]; VText [115; 101; 112; 116; 121]; VText [111; 107; 116; 121]; VText [110; 111; 110; 121]; VText [100; 101; 99; 121]]); EValue (VList [VText [108; 105; 111; 110]; VText [108; 105; 111; 110; 121]; VText [108; 105; 111; 110; 243; 119]]); EValue (VList [VText [108; 105; 97; 114; 100]; VText [108; 105; 97; 114; 100; 121]; VText [108; 105; 97; 114; 100; 243; 119]]); EArg 0]
 
 (* Z15969 reified Z1K1 (object for Key reference) | Z15969@202800 -> Z15970@290216 digest f54f4a88a07d0af438594c8fb250cf45e56d3a3084992e4359db26967a596805 *)
 let body_Z15969_reified_z1k1_object_for_key_reference : expr =
@@ -106,6 +114,10 @@ let body_Z16299_previous_month : expr =
 let body_Z16307_n_months_after_month : expr =
   ECall 802 [ECall 13522 [EArg 1; EValue (VNat 0)]; EArg 0; ECall 16307 [ECall 16136 [EArg 0]; ECall 13582 [EArg 1]]]
 
+(* Z16313 Láadan cardinals | Z16313@216912 -> Z16363@213839 digest d4ad977cb6386ebe8eda0d3885a1017dede5b3a72e9b1d8b1bc03f36a1e9f190 *)
+let body_Z16313_l_adan_cardinals : expr =
+  ECall 13713 [EValue (VText [36; 49])]
+
 (* Z16316 days in month when not a leap year | Z16316@290828 -> Z32890@261856 digest ada20f4e89bb8981505161170d9517dddbdd3765835e48df0fc68b5057d77791 *)
 let body_Z16316_days_in_month_when_not_a_leap_year : expr =
   ECall 19565 [ECall 16137 [EArg 0; EValue (VFunc 16102)]; EValue (VNat 28); ECall 16289 [EArg 0; EValue (VList [VFunc 16104; VFunc 16106; VFunc 16109; VFunc 16111])]; EValue (VNat 30); EValue (VNat 31)]
@@ -184,7 +196,7 @@ let body_Z16515_holocene_calendar_conversion_numbers_and_strings : expr =
 
 (* Z16524 Suffix a verb to get it negative imperative form (Igbo) | Z16524@218835 -> Z16525@218836 digest 3264a28631aa7ca246d597f2419fd65c8ab6ce4d3f99710ae4da75fc27fa4c9f *)
 let body_Z16524_suffix_a_verb_to_get_it_negative_imperative_form_igbo : expr =
-  ECall 802 [ECall 13916 [EArg 0]; ECall 15991 [EValue (VRecord 86 [({ key_owner = Some 86; key_index = 1 }, VText [97])]); ECall 10047 [ECall 10000 [EArg 0; EValue (VText [108; 97])]]]; ECall 802 [ECall 13922 [EArg 0]; ECall 15991 [EValue (VRecord 86 [({ key_owner = Some 86; key_index = 1 }, VText [101])]); ECall 10047 [ECall 10000 [EArg 0; EValue (VText [108; 97])]]]; EValue (VText [])]]
+  ECall 802 [ECall 13916 [EArg 0]; ECall 15991 [EValue (VText [97]); ECall 10047 [ECall 10000 [EArg 0; EValue (VText [108; 97])]]]; ECall 802 [ECall 13922 [EArg 0]; ECall 15991 [EValue (VText [101]); ECall 10047 [ECall 10000 [EArg 0; EValue (VText [108; 97])]]]; EValue (VText [])]]
 
 (* Z16542 is this month earlier than that month in the year? | Z16542@271275 -> Z34613@271273 digest d0e94ad2e8b3d55692eb817860760758843e4bbc8580513045fa8b3e8ae6f62d *)
 let body_Z16542_is_this_month_earlier_than_that_month_in_the_year : expr =
@@ -246,9 +258,9 @@ let body_Z16634_is_function_commutative_for_this_first_argument_with_all_arg : e
 let body_Z16648_is_later_month_in_the_year : expr =
   ECall 16542 [EArg 1; EArg 0]
 
-(* Z16667 same sign | Z16667@266742 -> Z17607@239715 digest 70c4dc20df835588e15587feaba433d6aa904ba5ad294206e2080e638aec179d *)
+(* Z16667 same sign | Z16667@266742 -> Z33752@266740 digest 3856b9b497d8cfc69f7e2d029e3fa45446391416d58e7dd4d83f201420071f64 *)
 let body_Z16667_same_sign : expr =
-  ECall 17464 [EArg 0; EArg 1]
+  ECall 866 [ECall 822 [ECall 29446 [ECall 30617 [EArg 0]]]; ECall 822 [ECall 29446 [ECall 30617 [EArg 1]]]]
 
 (* Z16676 invert sign | Z16676@207238 -> Z16682@221655 digest a697cd767bc7f6ba35186680ccf222dbd473ed3eb1c980be355c763166cb5a9d *)
 let body_Z16676_invert_sign : expr =
@@ -621,6 +633,10 @@ let body_Z17526_caesar_cipher_bengali_consonants : expr =
 (* Z17530 Caesar cipher (Bengali alphabets) | Z17530@271370 -> Z23879@179118 digest 884b7fba04628d8b170a839eabfdb589930cc40fe129798886779d4b29984ab9 *)
 let body_Z17530_caesar_cipher_bengali_alphabets : expr =
   ECall 23869 [EValue (VFunc 23872); EArg 0; EArg 1]
+
+(* Z17534 make untyped pair | Z17534@287112 -> Z17535@238098 digest 7a9e22e3e6a4c683b5f4fbbb1670a68f6e536646b8c6873c94218300abfe18fa *)
+let body_Z17534_make_untyped_pair : expr =
+  ERecord 882 [({ key_owner = None; key_index = 1 }, EArg 0); ({ key_owner = None; key_index = 2 }, EArg 1)]
 
 (* Z17536 total occurrences of day in year | Z17536@270992 -> Z17543@250939 digest c7f896585c0aa7e2fcbcc4569ef28f9c4f28abb8c59644a1a3735925ba20b1e1 *)
 let body_Z17536_total_occurrences_of_day_in_year : expr =
@@ -1028,7 +1044,7 @@ let body_Z18391_carbon_dioxide_emissions_of_mk1_diesel_car_journey : expr =
 
 (* Z18403 (!) Korean add (-eul) to the end of a noun | Z18403@284031 -> Z18404@260713 digest a67320292ea6ab273150a923c63e9972fc06351a9fdc92b95211c99274b0503f *)
 let body_Z18403_korean_add_eul_to_the_end_of_a_noun : expr =
-  ECall 886 [ECall 810 [ERecord 86 [({ key_owner = Some 86; key_index = 1 }, EArg 0)]; ECall 810 [ERecord 86 [({ key_owner = Some 86; key_index = 1 }, ECall 802 [ECall 12778 [ECall 11060 [EArg 0]]; EValue (VText [51012]); EValue (VText [47484])])]; EValue (VList [])]]]
+  ECall 886 [ECall 810 [EArg 0; ECall 810 [ECall 802 [ECall 12778 [ECall 11060 [EArg 0]]; EValue (VText [51012]); EValue (VText [47484])]; EValue (VList [])]]]
 
 (* Z18406 (!) carbon dioxide emissions of ethanol E85 car journey | Z18406@260714 -> Z18408@260716 digest 388e56adf432b86ccf4101782373f8949dd5c27afd329d600ab9e45d3b748a41 *)
 let body_Z18406_carbon_dioxide_emissions_of_ethanol_e85_car_journey : expr =
@@ -1088,7 +1104,7 @@ let body_Z18479_reverse_typed_list : expr =
 
 (* Z18504 Indo-Arabic to Arabic numerals | Z18504@283303 -> Z36380@283300 digest 97359dfc2d076dab21d829e46282751175156b39a1f3dbc13f8c8b83db1f4534 *)
 let body_Z18504_indo_arabic_to_arabic_numerals : expr =
-  ECall 14613 [EArg 0; ECall 22693 [EValue (VList [VRecord 86 [({ key_owner = Some 86; key_index = 1 }, VNat 1632)]; VRecord 86 [({ key_owner = Some 86; key_index = 1 }, VNat 1633)]; VRecord 86 [({ key_owner = Some 86; key_index = 1 }, VNat 1634)]; VRecord 86 [({ key_owner = Some 86; key_index = 1 }, VNat 1635)]; VRecord 86 [({ key_owner = Some 86; key_index = 1 }, VNat 1636)]; VRecord 86 [({ key_owner = Some 86; key_index = 1 }, VNat 1637)]; VRecord 86 [({ key_owner = Some 86; key_index = 1 }, VNat 1638)]; VRecord 86 [({ key_owner = Some 86; key_index = 1 }, VNat 1639)]; VRecord 86 [({ key_owner = Some 86; key_index = 1 }, VNat 1640)]; VRecord 86 [({ key_owner = Some 86; key_index = 1 }, VNat 1641)]; VRecord 86 [({ key_owner = Some 86; key_index = 1 }, VNat 1643)]; VRecord 86 [({ key_owner = Some 86; key_index = 1 }, VNat 1642)]])]; EValue (VText [48; 49; 50; 51; 52; 53; 54; 55; 56; 57; 46; 37])]
+  ECall 14613 [EArg 0; ECall 22693 [EValue (VList [VNat 1632; VNat 1633; VNat 1634; VNat 1635; VNat 1636; VNat 1637; VNat 1638; VNat 1639; VNat 1640; VNat 1641; VNat 1643; VNat 1642])]; EValue (VText [48; 49; 50; 51; 52; 53; 54; 55; 56; 57; 46; 37])]
 
 (* Z18531 Byzantine to Arabic numeral | Z18531@264041 -> Z36511@284319 digest 7a68ec74985473ff1e11e9605f6199ebcc99ecef6340235c9def28945589c87b *)
 let body_Z18531_byzantine_to_arabic_numeral : expr =
@@ -1398,9 +1414,9 @@ let body_Z19348_object_by_index_from_referenced_list : expr =
 let body_Z19352_object_has_this_type : expr =
   ECall 19084 [ECall 16829 [EArg 0]; EArg 1]
 
-(* Z19384 wrap with HTML tag | Z19384@288777 -> Z19385@288778 digest 9901522e51ca6e4d27d546de967f255932209ecd97403f8533cd6b5cc3719b6e *)
+(* Z19384 wrap with HTML tag | Z19384@288777 -> Z33478@265424 digest ad1e71c2b7f88f0be4e1d50a046756811dd65a36ccf55ac58902617b168a63b8 *)
 let body_Z19384_wrap_with_html_tag : expr =
-  ECall 27861 [ECall 21394 [ECall 810 [EValue (VText [60]); ECall 810 [EArg 1; ECall 810 [EValue (VText [62]); ECall 810 [EArg 0; ECall 810 [EValue (VText [60; 47]); ECall 810 [EArg 1; ECall 810 [EValue (VText [62]); EValue (VList [])]]]]]]]]]
+  ECall 33470 [EArg 0; EArg 1; EValue (VRecord 883 [({ key_owner = None; key_index = 1 }, VList [])])]
 
 (* Z19403 wrap with XML tag and attributes | Z19403@292988 -> Z35927@280128 digest e0c7783d3aaac77ff5f46a0fa49437c362b38d03a6f513ce27fde1b49240c68b *)
 let body_Z19403_wrap_with_xml_tag_and_attributes : expr =
@@ -1598,24 +1614,10 @@ let body_Z19806_is_rational_number_an_integer : expr =
 let body_Z19814_nearest_rational_with_specified_denominator : expr =
   ECall 19854 [ECall 19841 [ECall 19826 [EArg 0; EArg 1]]; EArg 1]
 
-(* Z19826 multiply rational by natural number | Z19826@236473 -> Z19830@137801 digest 3ee111d360914c49ca910c1f6b510ef2e0b491ee816f7b7c728bcf921804ad68 *)
-let body_Z19826_multiply_rational_by_natural_number : expr =
-  ERecord 19677 [({ key_owner = Some 19677; key_index = 1 }, ECall 19717 [EArg 0]); ({ key_owner = Some 19677; key_index = 2 }, ECall 13539 [ECall 19722 [EArg 0]; EArg 1]); ({ key_owner = Some 19677; key_index = 3 }, ECall 19724 [EArg 0])]
-
-(* Z19827 Rational number to string | Z19827@296359 -> Z19865@296360 digest 65c48dde238c34e5ad62c68c2ceaf892b8cffd48b3bcadaef2c457720c69b41a *)
-let body_Z19827_rational_number_to_string : expr =
-  ECall 19858 [ECall 19717 [EArg 0]; ECall 19733 [EArg 0]; ECall 19862 [EArg 0]]
-
-(* Z19833 average of two rationals | Z19833@273428 -> Z33939@267704 digest 5d11a2d0fa2a110fde91579fa256be3fcb2877d38df00d9e2ee6ff6fa217c879 *)
-let body_Z19833_average_of_two_rationals : expr =
-  ECall 33933 [ECall 810 [EArg 0; ECall 810 [EArg 1; EValue (VList [])]]]
-
-(* Z19841 rational to nearest integer, even integer tiebreak | Z19841@276820 -> Z27711@212744 digest c0f7af075383523b48bfcde9ccf253ed6253ee0fc02961189b9746698a050a8d *)
-let body_Z19841_rational_to_nearest_integer_even_integer_tiebreak : expr =
-  ECall 19682 [ECall 27705 [EArg 0; EValue (VRecord 16683 [({ key_owner = Some 16683; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16661)]); ({ key_owner = Some 16683; key_index = 2 }, VNat 0)])]]
-
 let part_policy (fid:zid) : Tot (option expr) =
   match fid with
+  | 15953 -> Some body_Z15953_ukrainian_cardinal
+  | 15965 -> Some body_Z15965_polish_cardinal
   | 15969 -> Some body_Z15969_reified_z1k1_object_for_key_reference
   | 15977 -> Some body_Z15977_return_grammatical_number_for_an_integer_and_language
   | 15982 -> Some body_Z15982_grammatical_number_for_languages_with_only_singular_and_plur
@@ -1639,6 +1641,7 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 16293 -> Some body_Z16293_n_months_before_month
   | 16299 -> Some body_Z16299_previous_month
   | 16307 -> Some body_Z16307_n_months_after_month
+  | 16313 -> Some body_Z16313_l_adan_cardinals
   | 16316 -> Some body_Z16316_days_in_month_when_not_a_leap_year
   | 16330 -> Some body_Z16330_months_in_period_list
   | 16332 -> Some body_Z16332_days_in_month_during_leap_year
@@ -1768,6 +1771,7 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 17517 -> Some body_Z17517_advance_n_days_of_the_week
   | 17526 -> Some body_Z17526_caesar_cipher_bengali_consonants
   | 17530 -> Some body_Z17530_caesar_cipher_bengali_alphabets
+  | 17534 -> Some body_Z17534_make_untyped_pair
   | 17536 -> Some body_Z17536_total_occurrences_of_day_in_year
   | 17540 -> Some body_Z17540_get_day_of_the_week_from_numerical_date
   | 17549 -> Some body_Z17549_get_nth_date_of_a_given_day_in_month_as_string
@@ -2012,8 +2016,4 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 19800 -> Some body_Z19800_limit_denominator
   | 19806 -> Some body_Z19806_is_rational_number_an_integer
   | 19814 -> Some body_Z19814_nearest_rational_with_specified_denominator
-  | 19826 -> Some body_Z19826_multiply_rational_by_natural_number
-  | 19827 -> Some body_Z19827_rational_number_to_string
-  | 19833 -> Some body_Z19833_average_of_two_rationals
-  | 19841 -> Some body_Z19841_rational_to_nearest_integer_even_integer_tiebreak
   | _ -> None

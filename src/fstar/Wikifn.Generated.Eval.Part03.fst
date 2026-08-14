@@ -11,8 +11,24 @@ open Wikifn.Eval
 
   part:      4 of 10
   functions: 400
-  ZID range: Z19848 to Z23397
+  ZID range: Z19826 to Z23349
 *)
+
+(* Z19826 multiply rational by natural number | Z19826@236473 -> Z19830@137801 digest 3ee111d360914c49ca910c1f6b510ef2e0b491ee816f7b7c728bcf921804ad68 *)
+let body_Z19826_multiply_rational_by_natural_number : expr =
+  ERecord 19677 [({ key_owner = Some 19677; key_index = 1 }, ECall 19717 [EArg 0]); ({ key_owner = Some 19677; key_index = 2 }, ECall 13539 [ECall 19722 [EArg 0]; EArg 1]); ({ key_owner = Some 19677; key_index = 3 }, ECall 19724 [EArg 0])]
+
+(* Z19827 Rational number to string | Z19827@296359 -> Z19865@296360 digest 65c48dde238c34e5ad62c68c2ceaf892b8cffd48b3bcadaef2c457720c69b41a *)
+let body_Z19827_rational_number_to_string : expr =
+  ECall 19858 [ECall 19717 [EArg 0]; ECall 19733 [EArg 0]; ECall 19862 [EArg 0]]
+
+(* Z19833 average of two rationals | Z19833@273428 -> Z33939@267704 digest 5d11a2d0fa2a110fde91579fa256be3fcb2877d38df00d9e2ee6ff6fa217c879 *)
+let body_Z19833_average_of_two_rationals : expr =
+  ECall 33933 [ECall 810 [EArg 0; ECall 810 [EArg 1; EValue (VList [])]]]
+
+(* Z19841 rational to nearest integer, even integer tiebreak | Z19841@276820 -> Z27711@212744 digest c0f7af075383523b48bfcde9ccf253ed6253ee0fc02961189b9746698a050a8d *)
+let body_Z19841_rational_to_nearest_integer_even_integer_tiebreak : expr =
+  ECall 19682 [ECall 27705 [EArg 0; EValue (VRecord 16683 [({ key_owner = Some 16683; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16661)]); ({ key_owner = Some 16683; key_index = 2 }, VNat 0)])]]
 
 (* Z19848 rational from integer numerator and denominator | Z19848@271976 -> Z34729@271975 digest b6331c1d69c3bbe56ea8493b4ded8846f0252a3e6c1c52aa64e95182f8536bb1 *)
 let body_Z19848_rational_from_integer_numerator_and_denominator : expr =
@@ -358,6 +374,10 @@ let body_Z20673_gloss_of_lexeme_sense_as_text_of_language : expr =
 let body_Z20679_two_sum : expr =
   ECall 13464 [EValue (VFunc 13708); ECall 13397 [ECall 31379 [EArg 0; EValue (VNat 2)]; ECall 28755 [EArg 1; ECall 873 [EValue (VFunc 22469); ECall 31379 [EArg 0; EValue (VNat 2)]]]]; EArg 0]
 
+(* Z20687 occurrence of first almost equal substring | Z20687@246040 -> Z31282@246037 digest 0e2b31e76d88e5c6cb818a16c99da48f259bc75bedb57488a0c6327786972b7d *)
+let body_Z20687_occurrence_of_first_almost_equal_substring : expr =
+  ECall 19602 [ECall 29370 [EValue (VFunc 31019); EValue (VText []); ECall 22717 [EArg 1]; ECall 873 [EValue (VFunc 22717); ECall 13436 [EValue (VFunc 14636); EArg 0; ECall 17895 [ECall 13831 [EValue (VNat 0); ECall 13582 [ECall 11040 [EArg 0]]]]]]]]
+
 (* Z20692 is valid pinyin | Z20692@273633 -> Z35041@273627 digest e61e2978b2f64f2c5880d49f9d4c7287b1af155a765769ee1ec4c0fd33c07f56 *)
 let body_Z20692_is_valid_pinyin : expr =
   ECall 34293 [ECall 873 [EValue (VFunc 34797); ECall 34212 [EArg 0]]; EValue (VBool true)]
@@ -625,6 +645,10 @@ let body_Z21249_rational_number_as_percentage : expr =
 (* Z21260 Ranged type | Z21260@185891 -> Z21261@151722 digest db4d2b4d7dba4a478e36bd1d17075f4aab87c84fd785ffd9464173a2e2ad66d0 *)
 let body_Z21260_ranged_type : expr =
   ECall 801 [EValue (VText [])]
+
+(* Z21263 create rational Ranged type | Z21263@151740 -> Z21264@151739 digest 9ebf84ee9903ac3327a135f117a65138f23402a12f5178962d04d5a5427f3c40 *)
+let body_Z21263_create_rational_ranged_type : expr =
+  ERecord 21260 [({ key_owner = None; key_index = 1 }, EArg 0); ({ key_owner = None; key_index = 2 }, EArg 1)]
 
 (* Z21273 area of a triangle | Z21273@269050 -> Z21274@153333 digest 77951a6bafe0837e0d490be14957ce65c69d02971aa86d757453c31c6cf73f2b *)
 let body_Z21273_area_of_a_triangle : expr =
@@ -945,6 +969,10 @@ let body_Z22044_wrap_with_code_nowiki_xml_tags : expr =
 (* Z22049 futures price | Z22049@169574 -> Z22051@162183 digest b8c84b560b0abe2bbf58352a2694b54447b66b9ce24c37c242bf764ffa64b553 *)
 let body_Z22049_futures_price : expr =
   ECall 21032 [EArg 0; ECall 21028 [EArg 1; ECall 21032 [EArg 2; ECall 20936 [EArg 3]]]]
+
+(* Z22074 apply N-argument function to list of arguments | Z22074@254664 -> Z31741@254659 digest 036881d4b20d14422aa915c566b6e639b4b3cf878d08c0950487bc40709b1954 *)
+let body_Z22074_apply_n_argument_function_to_list_of_arguments : expr =
+  ECall 802 [ECall 12864 [EArg 1; ECall 21177 [EArg 0]]; ECall 19565 [ECall 813 [EArg 1]; ECall 1000000002 [EArg 0]; ECall 12755 [EArg 1]; ECall 1000000002 [EArg 0; ECall 811 [EArg 1]]; ECall 19565 [ECall 12759 [EArg 1]; ECall 13318 [EArg 0; ECall 811 [EArg 1]; ECall 29446 [EArg 1]]; ECall 31500 [EArg 1]; ECall 21216 [EArg 0; ECall 811 [EArg 1]; ECall 29446 [EArg 1]; ECall 13397 [EArg 1; EValue (VNat 3)]]; ECall 19565 [ECall 30164 [EArg 1; EValue (VNat 4)]; ECall 30438 [EArg 0; ECall 811 [EArg 1]; ECall 29446 [EArg 1]; ECall 13397 [EArg 1; EValue (VNat 3)]; ECall 13397 [EArg 1; EValue (VNat 4)]]; ECall 30164 [EArg 1; EValue (VNat 5)]; ECall 1000000002 [EArg 0; ECall 811 [EArg 1]; ECall 29446 [EArg 1]; ECall 13397 [EArg 1; EValue (VNat 3)]; ECall 13397 [EArg 1; EValue (VNat 4)]; ECall 13397 [EArg 1; EValue (VNat 5)]]; ECall 851 [EValue (VFunc 516); ECall 810 [EValue (VText [90; 50; 50; 48; 55; 52; 75; 49]); ECall 810 [EArg 0; EValue (VList [])]]]]]]; ECall 851 [EValue (VFunc 505); ECall 810 [EValue (VText [90; 50; 50; 48; 55; 52; 75; 50]); ECall 810 [EArg 1; EValue (VList [])]]]]
 
 (* Z22097 Breton verb form | Z22097@162423 -> Z22099@163192 digest 61cae8b0a18c49a61c2d5dc7fc0b5404b4edd546ac4a67a9402d1444abb3b6a4 *)
 let body_Z22097_breton_verb_form : expr =
@@ -1362,9 +1390,9 @@ let body_Z22941_display_day_of_roman_year : expr =
 let body_Z22946_binary_string_as_byte : expr =
   ECall 22535 [ECall 13797 [EArg 0]]
 
-(* Z22964 Italian indefinite article | Z22964@176722 -> Z22970@206229 digest fb1d3743ab5e931ba7d98a9fd47a2936fc595767eb1aa5275c84c60dddb6971d *)
+(* Z22964 Italian indefinite article | Z22964@176722 -> Z22972@170853 digest 553cffb62ccc010ca81c86a2c01dc0779da9c1440936341ab53dfdb98e73f633 *)
 let body_Z22964_italian_indefinite_article : expr =
-  ECall 802 [ECall 12696 [ECall 20616 [EArg 0]; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 52; 57; 57; 51; 50; 55])])]; ECall 802 [ECall 22791 [ECall 14396 [ECall 19252 [EArg 0]]]; EValue (VText [117; 110; 111; 32]); EValue (VText [117; 110; 32])]; ECall 802 [ECall 22786 [ECall 14396 [ECall 19252 [EArg 0]]]; EValue (VText [117; 110; 39]); EValue (VText [117; 110; 97; 32])]]
+  ECall 802 [ECall 20643 [EArg 0]; ECall 802 [ECall 22786 [ECall 19252 [EArg 0]]; EValue (VText [117; 110; 39]); EValue (VText [117; 110; 97; 32])]; ECall 802 [ECall 22791 [ECall 19252 [EArg 0]]; EValue (VText [117; 110; 111; 32]); EValue (VText [117; 110; 32])]]
 
 (* Z22973 String for function signature search | Z22973@206477 -> Z22975@170864 digest 8c6e53a5de4b8b7e957e128900ea4b39592361d1cc872080a910faab8150961e *)
 let body_Z22973_string_for_function_signature_search : expr =
@@ -1384,7 +1412,7 @@ let body_Z23006_italian_plural_definite_article : expr =
 
 (* Z23022 natural number to codepoint | Z23022@257847 -> Z23023@171081 digest 0f9627943662d13dcb9f83c435fe39046ac5feb73fda6f2c9201e40c87ec6ef2 *)
 let body_Z23022_natural_number_to_codepoint : expr =
-  ERecord 86 [({ key_owner = Some 86; key_index = 1 }, EArg 0)]
+  EArg 0
 
 (* Z23028 digit string to codepoint | Z23028@171101 -> Z23030@171095 digest dd216ccccdd6d4529d59f6f1776d58fc3825b4d731ac20ce19dbf4eaca7628b6 *)
 let body_Z23028_digit_string_to_codepoint : expr =
@@ -1586,36 +1614,12 @@ let body_Z23344_natural_numbers_in_devanagari_script : expr =
 let body_Z23349_approximated_land_g_factor : expr =
   ECall 19679 [EValue (VRecord 19677 [({ key_owner = Some 19677; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16660)]); ({ key_owner = Some 19677; key_index = 2 }, VNat 1); ({ key_owner = Some 19677; key_index = 3 }, VNat 1)]); ECall 19708 [ECall 19699 [ECall 19679 [ECall 19706 [EArg 0; ECall 19679 [EArg 0; EValue (VRecord 19677 [({ key_owner = Some 19677; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16660)]); ({ key_owner = Some 19677; key_index = 2 }, VNat 1); ({ key_owner = Some 19677; key_index = 3 }, VNat 1)])]]; ECall 19706 [EArg 1; ECall 19679 [EArg 1; EValue (VRecord 19677 [({ key_owner = Some 19677; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16660)]); ({ key_owner = Some 19677; key_index = 2 }, VNat 1); ({ key_owner = Some 19677; key_index = 3 }, VNat 1)])]]]; ECall 19706 [EArg 2; ECall 19679 [EArg 2; EValue (VRecord 19677 [({ key_owner = Some 19677; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16660)]); ({ key_owner = Some 19677; key_index = 2 }, VNat 1); ({ key_owner = Some 19677; key_index = 3 }, VNat 1)])]]]; ECall 19706 [ECall 19706 [EValue (VRecord 19677 [({ key_owner = Some 19677; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16660)]); ({ key_owner = Some 19677; key_index = 2 }, VNat 2); ({ key_owner = Some 19677; key_index = 3 }, VNat 1)]); EArg 0]; ECall 19679 [EArg 0; EValue (VRecord 19677 [({ key_owner = Some 19677; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16660)]); ({ key_owner = Some 19677; key_index = 2 }, VNat 1); ({ key_owner = Some 19677; key_index = 3 }, VNat 1)])]]]]
 
-(* Z23352 Lorentz factor from velocity | Z23352@184623 -> Z24366@184620 digest 2e1cd676e09a62b5a2748b72ce9c966517b132fa77ea5c37e43994641fe3fd83 *)
-let body_Z23352_lorentz_factor_from_velocity : expr =
-  ECall 19711 [ECall 24081 [ECall 19699 [EValue (VRecord 19677 [({ key_owner = Some 19677; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16660)]); ({ key_owner = Some 19677; key_index = 2 }, VNat 1); ({ key_owner = Some 19677; key_index = 3 }, VNat 1)]); ECall 19706 [EArg 0; EArg 0]]]]
-
-(* Z23356 compare after applying a single unary function | Z23356@289234 -> Z37380@289232 digest a90f1ada1d01d3ef6d011adaa208208c8b47ea97bf05bdecf7a6f7832a473684 *)
-let body_Z23356_compare_after_applying_a_single_unary_function : expr =
-  ECall 13318 [EArg 3; ECall 13036 [EArg 1; EArg 0]; EArg 2]
-
-(* Z23360 object comparison | Z23360@203847 -> Z23369@174139 digest 919534c25eac78f4787f3c70159b36aded5b6e0c4ca6c005af09278d7de271cb *)
-let body_Z23360_object_comparison : expr =
-  ECall 13318 [EArg 2; EArg 0; EArg 1]
-
-(* Z23372 same Wikidata lexeme form reference | Z23372@174251 -> Z23373@174155 digest e8a3b449851ae01ab6ae9e457a3e44c92ea8efac01cbd286a8ba253f723501c8 *)
-let body_Z23372_same_wikidata_lexeme_form_reference : expr =
-  ECall 13052 [EArg 0; EArg 1]
-
-(* Z23379 same programming language | Z23379@219308 -> Z23380@174175 digest be474a465199596ab38349b3e0a8ce263ccaca476be4cf1ac779267015657f17 *)
-let body_Z23379_same_programming_language : expr =
-  ECall 13052 [EArg 0; EArg 1]
-
-(* Z23393 test cases of function | Z23393@265937 -> Z23394@174356 digest 90ea4270b1b98f87ec1fa5e8ba42e522e1a92e412f0e6e0d095799ae6381d1c2 *)
-let body_Z23393_test_cases_of_function : expr =
-  ECall 803 [EValue (VRecord 39 [({ key_owner = Some 39; key_index = 1 }, VText [90; 56; 75; 51])]); EArg 0]
-
-(* Z23397 implementations of function | Z23397@174364 -> Z23398@174363 digest 16d8ca22e0a65c9e0b12ec1f13e29670950ce0a4537e9168a205fef4ec24de52 *)
-let body_Z23397_implementations_of_function : expr =
-  ECall 803 [EValue (VRecord 39 [({ key_owner = Some 39; key_index = 1 }, VText [90; 56; 75; 52])]); EArg 0]
-
 let part_policy (fid:zid) : Tot (option expr) =
   match fid with
+  | 19826 -> Some body_Z19826_multiply_rational_by_natural_number
+  | 19827 -> Some body_Z19827_rational_number_to_string
+  | 19833 -> Some body_Z19833_average_of_two_rationals
+  | 19841 -> Some body_Z19841_rational_to_nearest_integer_even_integer_tiebreak
   | 19848 -> Some body_Z19848_rational_from_integer_numerator_and_denominator
   | 19854 -> Some body_Z19854_simplified_rational_from_z_numerator_denominator
   | 19858 -> Some body_Z19858_format_sign_numerator_denominator_as_string
@@ -1702,6 +1706,7 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 20669 -> Some body_Z20669_caesar_cipher_dagbani_alphabet
   | 20673 -> Some body_Z20673_gloss_of_lexeme_sense_as_text_of_language
   | 20679 -> Some body_Z20679_two_sum
+  | 20687 -> Some body_Z20687_occurrence_of_first_almost_equal_substring
   | 20692 -> Some body_Z20692_is_valid_pinyin
   | 20698 -> Some body_Z20698_german_adjective_and_noun
   | 20702 -> Some body_Z20702_french_indefinite_singular_noun_phrase
@@ -1769,6 +1774,7 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 21240 -> Some body_Z21240_convert_a_language_code_to_a_russian_adverb
   | 21249 -> Some body_Z21249_rational_number_as_percentage
   | 21260 -> Some body_Z21260_ranged_type
+  | 21263 -> Some body_Z21263_create_rational_ranged_type
   | 21273 -> Some body_Z21273_area_of_a_triangle
   | 21278 -> Some body_Z21278_area_of_a_regular_polygon
   | 21282 -> Some body_Z21282_area_of_a_pentagon
@@ -1849,6 +1855,7 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 22027 -> Some body_Z22027_area_of_a_circle_rational_approximation
   | 22044 -> Some body_Z22044_wrap_with_code_nowiki_xml_tags
   | 22049 -> Some body_Z22049_futures_price
+  | 22074 -> Some body_Z22074_apply_n_argument_function_to_list_of_arguments
   | 22097 -> Some body_Z22097_breton_verb_form
   | 22120 -> Some body_Z22120_kleenean_identity
   | 22126 -> Some body_Z22126_boolean_as_kleenean
@@ -2009,11 +2016,4 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 23341 -> Some body_Z23341_same_argument_reference
   | 23344 -> Some body_Z23344_natural_numbers_in_devanagari_script
   | 23349 -> Some body_Z23349_approximated_land_g_factor
-  | 23352 -> Some body_Z23352_lorentz_factor_from_velocity
-  | 23356 -> Some body_Z23356_compare_after_applying_a_single_unary_function
-  | 23360 -> Some body_Z23360_object_comparison
-  | 23372 -> Some body_Z23372_same_wikidata_lexeme_form_reference
-  | 23379 -> Some body_Z23379_same_programming_language
-  | 23393 -> Some body_Z23393_test_cases_of_function
-  | 23397 -> Some body_Z23397_implementations_of_function
   | _ -> None

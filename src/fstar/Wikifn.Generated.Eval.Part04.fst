@@ -11,8 +11,36 @@ open Wikifn.Eval
 
   part:      5 of 10
   functions: 400
-  ZID range: Z23403 to Z26838
+  ZID range: Z23352 to Z26733
 *)
+
+(* Z23352 Lorentz factor from velocity | Z23352@184623 -> Z24366@184620 digest 2e1cd676e09a62b5a2748b72ce9c966517b132fa77ea5c37e43994641fe3fd83 *)
+let body_Z23352_lorentz_factor_from_velocity : expr =
+  ECall 19711 [ECall 24081 [ECall 19699 [EValue (VRecord 19677 [({ key_owner = Some 19677; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16660)]); ({ key_owner = Some 19677; key_index = 2 }, VNat 1); ({ key_owner = Some 19677; key_index = 3 }, VNat 1)]); ECall 19706 [EArg 0; EArg 0]]]]
+
+(* Z23356 compare after applying a single unary function | Z23356@289234 -> Z37380@289232 digest a90f1ada1d01d3ef6d011adaa208208c8b47ea97bf05bdecf7a6f7832a473684 *)
+let body_Z23356_compare_after_applying_a_single_unary_function : expr =
+  ECall 13318 [EArg 3; ECall 13036 [EArg 1; EArg 0]; EArg 2]
+
+(* Z23360 object comparison | Z23360@203847 -> Z23369@174139 digest 919534c25eac78f4787f3c70159b36aded5b6e0c4ca6c005af09278d7de271cb *)
+let body_Z23360_object_comparison : expr =
+  ECall 13318 [EArg 2; EArg 0; EArg 1]
+
+(* Z23372 same Wikidata lexeme form reference | Z23372@174251 -> Z23373@174155 digest e8a3b449851ae01ab6ae9e457a3e44c92ea8efac01cbd286a8ba253f723501c8 *)
+let body_Z23372_same_wikidata_lexeme_form_reference : expr =
+  ECall 13052 [EArg 0; EArg 1]
+
+(* Z23379 same programming language | Z23379@219308 -> Z23380@174175 digest be474a465199596ab38349b3e0a8ce263ccaca476be4cf1ac779267015657f17 *)
+let body_Z23379_same_programming_language : expr =
+  ECall 13052 [EArg 0; EArg 1]
+
+(* Z23393 test cases of function | Z23393@265937 -> Z23394@174356 digest 90ea4270b1b98f87ec1fa5e8ba42e522e1a92e412f0e6e0d095799ae6381d1c2 *)
+let body_Z23393_test_cases_of_function : expr =
+  ECall 803 [EValue (VRecord 39 [({ key_owner = Some 39; key_index = 1 }, VText [90; 56; 75; 51])]); EArg 0]
+
+(* Z23397 implementations of function | Z23397@174364 -> Z23398@174363 digest 16d8ca22e0a65c9e0b12ec1f13e29670950ce0a4537e9168a205fef4ec24de52 *)
+let body_Z23397_implementations_of_function : expr =
+  ECall 803 [EValue (VRecord 39 [({ key_owner = Some 39; key_index = 1 }, VText [90; 56; 75; 52])]); EArg 0]
 
 (* Z23403 Wikidata item reference to Gregorian month | Z23403@272845 -> Z34918@272844 digest 2a045421f1fc1487092a99a8cb12b7d084d731b81722a99d7ff1eb33b71e8130 *)
 let body_Z23403_wikidata_item_reference_to_gregorian_month : expr =
@@ -598,6 +626,10 @@ let body_Z24487_square_of_rational_number : expr =
 let body_Z24506_same_rational_within_tolerance : expr =
   ECall 19754 [ECall 21692 [ECall 19699 [EArg 0; EArg 1]]; EArg 2]
 
+(* Z24517 10^n (natural number) | Z24517@236960 -> Z24520@185429 digest 499b8a2f852c3e9c9fef0e6b124a49ae82b3a6723df6dfe595acf0e0af3ebb45 *)
+let body_Z24517_10_n_natural_number : expr =
+  ECall 10000 [EValue (VText [49]); ECall 12624 [EValue (VText [48]); EArg 0]]
+
 (* Z24525 10^n (integer to rational) | Z24525@237057 -> Z24528@185452 digest c85b9ae9650f5c5c1175d59fa8e027c8429b35194ecb601b3f20035c145d5927 *)
 let body_Z24525_10_n_integer_to_rational : expr =
   ECall 21320 [EValue (VRecord 19677 [({ key_owner = Some 19677; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16660)]); ({ key_owner = Some 19677; key_index = 2 }, VNat 10); ({ key_owner = Some 19677; key_index = 3 }, VNat 1)]); EArg 0]
@@ -614,9 +646,9 @@ let body_Z24542_object_metric_meets_criteria : expr =
 let body_Z24546_square_root_of_rational_as_decimal_string : expr =
   ECall 21787 [ECall 24505 [EArg 0; ECall 24525 [ECall 17267 [EArg 1]]]; EArg 1]
 
-(* Z24582 exactly identical float64 objects | Z24582@284093 -> Z21161@185825 digest 6fa9627778751db13604a97eb3e297064d0b3871a430b4f48f9076c2c7cbc1ab *)
+(* Z24582 exactly identical float64 objects | Z24582@284093 -> Z21162@185826 digest 90cca19d7811b7a91afee0ff8937b064ab38dd23c964ca5f1ef881e4a701d2ea *)
 let body_Z24582_exactly_identical_float64_objects : expr =
-  ECall 18683 [EArg 0; EArg 1]
+  ECall 11828 [ECall 16667 [ECall 21136 [EArg 0]; ECall 21136 [EArg 1]]; ECall 16688 [ECall 21139 [EArg 0]; ECall 21139 [EArg 1]]; ECall 13522 [ECall 21142 [EArg 0]; ECall 21142 [EArg 1]]; ECall 13052 [EArg 0; EArg 1]]
 
 (* Z24591 integer square root | Z24591@185876 -> Z24592@185878 digest 59b4940d3723d828e86e49b27ad2586b28b561f5fe8f2ea9cb88eda195606034 *)
 let body_Z24591_integer_square_root : expr =
@@ -645,6 +677,10 @@ let body_Z24618_serbian_cardinal : expr =
 (* Z24629 get keys of JSON object | Z24629@186261 -> Z34987@273356 digest bc2537e1337af0d98987b43ab658d7769237468391c7153414e15fd4f616709e *)
 let body_Z24629_get_keys_of_json_object : expr =
   ECall 33357 [ECall 24602 [EArg 0]]
+
+(* Z24646 make string-keyed map | Z24646@186724 -> Z24647@186722 digest 992bbc154788288c5c02b22b6f81dda4108d86f4a10cb53f2678bc14829b84de *)
+let body_Z24646_make_string_keyed_map : expr =
+  ERecord 883 [({ key_owner = None; key_index = 1 }, EArg 0)]
 
 (* Z24649 index first of typed pair list with matching head | Z24649@186789 -> Z24651@284774 digest 9347fca583fe39da1b214b3a811ae3bf368b163e59ba9365710384dc8057eea4 *)
 let body_Z24649_index_first_of_typed_pair_list_with_matching_head : expr =
@@ -1082,9 +1118,9 @@ let body_Z25639_rational_as_formatted_decimal_nbsp_separators : expr =
 let body_Z25642_digits_in_denominator_of_unsimplified_rational : expr =
   ECall 14344 [ECall 19862 [EArg 0]]
 
-(* Z25647 decimal places to preserve the significant figures | Z25647@224795 -> Z28998@224791 digest 5f9c0208d98a87ea15313fd19dc68e1ca5350eea9e1aec341b6ab1fd15b0ab8e *)
+(* Z25647 decimal places to preserve the significant figures | Z25647@224795 -> Z25648@224794 digest e13bbca36770a814ec592076697135f6eaee6b28733e4b9cdcd26a1e1d85eb3b *)
 let body_Z25647_decimal_places_to_preserve_the_significant_figures : expr =
-  ECall 28986 [ECall 19733 [EArg 0]; ECall 19862 [EArg 0]]
+  ECall 802 [ECall 13522 [ECall 19862 [EArg 0]; ECall 24517 [ECall 13582 [ECall 25642 [EArg 0]]]]; ECall 13582 [ECall 25642 [EArg 0]]; ECall 802 [ECall 13682 [ECall 13539 [ECall 19733 [EArg 0]; ECall 24517 [ECall 25642 [EArg 0]]]; ECall 13539 [ECall 19862 [EArg 0]; ECall 24517 [ECall 28982 [EArg 0]]]]; ECall 13582 [ECall 25642 [EArg 0]]; ECall 25642 [EArg 0]]]
 
 (* Z25656 display rational as formatted decimal inferring sf | Z25656@224643 -> Z25657@196611 digest 3ec284454296af80b58b5d0e2fe849ebbd9b62913d720f5fb59b6b307d1c4767 *)
 let body_Z25656_display_rational_as_formatted_decimal_inferring_sf : expr =
@@ -1277,6 +1313,10 @@ let body_Z26111_display_gregorian_year_in_sinitic_langs_hans_hant : expr =
 (* Z26116 display Day of Roman year, Chinese | Z26116@202031 -> Z26119@202019 digest 78e0fcae3b18a51e49030e0be4374863ca262a54829e7d79b8f3d9e1868cae78 *)
 let body_Z26116_display_day_of_roman_year_chinese : expr =
   ECall 12899 [ECall 810 [ECall 13713 [ECall 16230 [ECall 20343 [EArg 0]]]; ECall 810 [EValue (VText [26376]); ECall 810 [ECall 13713 [ECall 20388 [EArg 0]]; ECall 810 [EValue (VText [26085]); EValue (VList [])]]]]; EValue (VText [])]
+
+(* Z26121 Serbian ordinal | Z26121@202829 -> Z26230@202817 digest 69242fd64f7838cf3ebbe068b9414e2a4379a6ead64fba3f437d63f2ca4b120b *)
+let body_Z26121_serbian_ordinal : expr =
+  ECall 19565 [ECall 13381 [ECall 12964 [ECall 13407 [ECall 24618 [EArg 0]]]; EValue (VList [VText [1087; 1077; 1090]; VText [1112; 1077; 1076; 1072; 1085; 1072; 1077; 1089; 1090]; VText [1076; 1074; 1072; 1085; 1072; 1077; 1089; 1090]; VText [1090; 1088; 1080; 1085; 1072; 1077; 1089; 1090]; VText [1095; 1077; 1090; 1088; 1085; 1072; 1077; 1089; 1090]; VText [1087; 1077; 1090; 1085; 1072; 1077; 1089; 1090]; VText [1096; 1077; 1089; 1090; 1085; 1072; 1077; 1089; 1090]; VText [1089; 1077; 1076; 1072; 1084; 1085; 1072; 1077; 1089; 1090]; VText [1086; 1089; 1072; 1084; 1085; 1072; 1077; 1089; 1090]; VText [1076; 1077; 1074; 1077; 1090; 1085; 1072; 1077; 1089; 1090]; VText [1076; 1074; 1072; 1076; 1077; 1089; 1077; 1090]; VText [1090; 1088; 1080; 1076; 1077; 1089; 1077; 1090]; VText [1095; 1077; 1090; 1088; 1076; 1077; 1089; 1077; 1090]; VText [1087; 1077; 1076; 1077; 1089; 1077; 1090]; VText [1096; 1077; 1079; 1076; 1077; 1089; 1077; 1090]; VText [1089; 1077; 1076; 1072; 1084; 1076; 1077; 1089; 1077; 1090]; VText [1086; 1089; 1072; 1084; 1076; 1077; 1089; 1077; 1090]; VText [1076; 1077; 1074; 1077; 1076; 1077; 1089; 1077; 1090]; VText [1096; 1077; 1089; 1090]; VText [1076; 1077; 1074; 1077; 1090]; VText [1076; 1077; 1089; 1077; 1090]])]; ECall 10000 [ECall 24618 [EArg 0]; EValue (VText [1080])]; ECall 13381 [ECall 12964 [ECall 13407 [ECall 24618 [EArg 0]]]; EValue (VList [VText [1089; 1090; 1086]; VText [1095; 1077; 1090; 1080; 1088; 1080; 1089; 1090; 1086]; VText [1087; 1077; 1090; 1089; 1090; 1086]; VText [1096; 1077; 1089; 1090; 1089; 1090; 1086]; VText [1089; 1077; 1076; 1072; 1084; 1089; 1090; 1086]; VText [1086; 1089; 1072; 1084; 1089; 1090; 1086]; VText [1076; 1077; 1074; 1077; 1090; 1089; 1090; 1086]])]; ECall 10000 [ECall 24618 [EArg 0]; EValue (VText [1090; 1080])]; ECall 22504 [ECall 12767 [ECall 12967 [ECall 13407 [ECall 24618 [EArg 0]]]; ECall 810 [ECall 24606 [ECall 883 [EValue (VFunc 6); EValue (VFunc 1)]; ECall 12964 [ECall 13407 [ECall 24618 [EArg 0]]]]; EValue (VList [])]]]]
 
 (* Z26130 date (zhwiki) | Z26130@202100 -> Z26133@202063 digest ea14ae2d9d97105d69c25421a92746471034524286c40dd26a56e76319f3a4b2 *)
 let body_Z26130_date_zhwiki : expr =
@@ -1534,6 +1574,10 @@ let body_Z26674_rational_as_comma_separator_decimal_bangla : expr =
 let body_Z26676_grammatical_gender_of_lexeme_is_exactly : expr =
   ECall 889 [ECall 20616 [EArg 0]; ECall 810 [EArg 1; EValue (VList [])]; EValue (VFunc 19316)]
 
+(* Z26686 swedish label of Wikidata entity | Z26686@234117 -> Z26719@296421 digest cdbd2db22763e93675e1761ef24f71d314c3efc32c136ae7dabfd7f4806361f7 *)
+let body_Z26686_swedish_label_of_wikidata_entity : expr =
+  ECall 802 [EValue (VBool false); EValue (VText [91; 101; 103; 101; 110; 110; 97; 109; 110; 93]); ECall 802 [ECall 889 [ECall 810 [ECall 811 [ECall 873 [EValue (VFunc 20616); ECall 810 [ECall 22696 [EArg 0; EValue (VFunc 1592)]; EValue (VList [])]]]; EValue (VList [])]; EValue (VList [VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 51; 48; 53; 48; 51; 55])]]); EValue (VFunc 19316)]; ECall 10000 [EValue (VText [101; 110; 32]); ECall 23753 [EArg 0; EValue (VFunc 1592)]]; ECall 10000 [EValue (VText [101; 116; 116; 32]); ECall 21806 [ECall 22696 [EArg 0; EValue (VFunc 1592)]; EValue (VFunc 1592)]]]]
+
 (* Z26692 display Gregorian year, Bangla | Z26692@207755 -> Z26695@205712 digest 7d3adc1d233c92bc241a5048773e5cee0195313d45e94be629805761ed561ebb *)
 let body_Z26692_display_gregorian_year_bangla : expr =
   ECall 22504 [ECall 810 [ECall 26656 [ECall 13713 [ECall 20160 [EArg 0]]]; ECall 810 [ECall 802 [ECall 18084 [ECall 20185 [EArg 0]]; EValue (VText [2454; 2509; 2480; 2495; 2488; 2509; 2463; 2494; 2476; 2509; 2470]); EValue (VText [2454; 2509; 2480; 2495; 2488; 2509; 2463; 2474; 2498; 2480; 2509; 2476])]; EValue (VList [])]]]
@@ -1570,52 +1614,15 @@ let body_Z26723_latin_article_less_instantiating_sentence : expr =
 let body_Z26733_apply_if_not_empty_else_return_empty : expr =
   ECall 802 [ECall 17180 [EArg 0]; EValue (VFunc 24); ECall 13036 [EArg 1; EArg 0]]
 
-(* Z26737 first part of Italian instantiating sentence | Z26737@210377 -> Z26743@276291 digest b9de7f3612b6f230e455c619e24d90c85ddcaee29bab71bf6ee04774a627cb83 *)
-let body_Z26737_first_part_of_italian_instantiating_sentence : expr =
-  ECall 802 [ECall 10184 [ECall 17180 [EArg 1]; ECall 10216 [ECall 26548 [EArg 0]]]; ECall 21394 [ECall 810 [ECall 27899 [EArg 0; EValue (VFunc 1787)]; ECall 810 [EValue (VText [32; 232]); EValue (VList [])]]]; ECall 802 [ECall 10184 [ECall 26729 [EArg 1]; ECall 27340 [ECall 27292 [EArg 1; ECall 23756 [EArg 0]]; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 53; 55; 49; 51])]); EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 52; 54; 55; 56; 54])])]]; ECall 21394 [ECall 810 [ECall 27115 [EArg 1; EValue (VRecord 26934 [({ key_owner = Some 26934; key_index = 1 }, VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 52; 54; 55; 56; 54])])])]; ECall 810 [EValue (VText [32; 115; 111; 110; 111]); EValue (VList [])]]]; ECall 21394 [ECall 810 [ECall 27115 [EArg 1; EValue (VRecord 26934 [({ key_owner = Some 26934; key_index = 1 }, VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 49; 48; 55; 56; 54])])])]; ECall 810 [EValue (VText [32; 232]); EValue (VList [])]]]]]
-
-(* Z26745 grammatical gender (m/f) of lexeme | Z26745@235090 -> Z26748@206214 digest f9a8d949cab00e8c1b6d4ac12b77ec9803151c60c2586da4d9977749bf488d7e *)
-let body_Z26745_grammatical_gender_m_f_of_lexeme : expr =
-  ECall 802 [ECall 20643 [EArg 0]; EValue (VRecord 25340 [({ key_owner = Some 25340; key_index = 1 }, VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 55; 55; 53; 52; 49; 53])])]); EValue (VRecord 25340 [({ key_owner = Some 25340; key_index = 1 }, VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 52; 57; 57; 51; 50; 55])])])]
-
-(* Z26750 first element if list not empty, else void | Z26750@208301 -> Z27013@208300 digest 7ecf03f9cdddb04beaf762aef426ded7ec8fcbd8ae22da245a6c020138e14ad6 *)
-let body_Z26750_first_element_if_list_not_empty_else_void : expr =
-  ECall 22839 [EArg 0; EValue (VRecord 21 [])]
-
-(* Z26766 Hijri calendar month to month number | Z26766@208205 -> Z26886@207131 digest 8a1cba33174169f22982ed2228dc004f37992e105ca5dc5cce650b09504fdb4c *)
-let body_Z26766_hijri_calendar_month_to_month_number : expr =
-  ECall 26882 [EArg 0]
-
-(* Z26771 Classifying sentence in Swedish | Z26771@286588 -> Z26786@206355 digest 99f90ff9e3e78176cfe47083ce19bf881b5a88907a41c8f15ff8396c55ab8a57 *)
-let body_Z26771_classifying_sentence_in_swedish : expr =
-  ECall 26671 [EArg 0; ECall 803 [EValue (VRecord 39 [({ key_owner = Some 39; key_index = 1 }, VText [90; 54; 48; 48; 51; 75; 51])]); ECall 811 [ECall 26700 [ECall 6821 [EArg 0]; EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 51; 49])]])]]]]
-
-(* Z26791 Swedish indefinite noun phrase, lex | Z26791@234627 -> Z26794@290452 digest 4adb189624e9756b50a74053c3401f725066c1b6da2aa2f71c3b7125e545d3d6 *)
-let body_Z26791_swedish_indefinite_noun_phrase_lex : expr =
-  ECall 21394 [ECall 810 [ECall 802 [ECall 12696 [ECall 20616 [EArg 0]; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 55; 55; 53; 52; 54; 49])])]; EValue (VText [101; 116; 116; 32]); EValue (VText [101; 110; 32])]; ECall 810 [ECall 19241 [EArg 0; EValue (VList [VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 49; 48; 55; 56; 54])]])]; EValue (VList [])]]]
-
-(* Z26809 move Hijri month by N months | Z26809@206528 -> Z26814@206516 digest a8d961860fda340aea054976caafd8b26fad1616e90ab69d2b409a941943c02b *)
-let body_Z26809_move_hijri_month_by_n_months : expr =
-  ECall 26774 [ECall 25196 [ECall 16693 [ECall 17101 [ECall 26766 [EArg 0]]; EArg 1]; EValue (VNat 12)]]
-
-(* Z26821 Indonesian ordinal from natural number | Z26821@283323 -> Z26822@206559 digest 72a91151dd0fe13deb2e15a25babc77300aa1538695191df273c741834173660 *)
-let body_Z26821_indonesian_ordinal_from_natural_number : expr =
-  ECall 802 [ECall 13522 [EArg 0; EValue (VNat 1)]; EValue (VText [112; 101; 114; 116; 97; 109; 97]); ECall 21394 [ECall 810 [EValue (VText [107; 101]); ECall 810 [ECall 18546 [EArg 0]; EValue (VList [])]]]]
-
-(* Z26829 ordinal in chosen language | Z26829@208923 -> Z27130@208922 digest 368f8c9971e390e1ab708067efa1cbbbeefa4c54941aaa344203a8bee3525188 *)
-let body_Z26829_ordinal_in_chosen_language : expr =
-  ECall 25714 [ECall 14310 [EValue (VFunc 27129); EArg 1]; EValue (VList [VFunc 14280]); EArg 0; EArg 1]
-
-(* Z26830 Get SSHWS category from sustained winds (English) | Z26830@288353 -> Z37268@288352 digest 95db652ccd3fdb47c93f6f23d777d941823e8003c514b22e461947ae4e18f918 *)
-let body_Z26830_get_sshws_category_from_sustained_winds_english : expr =
-  ECall 37201 [EValue (VList [VNat 33; VNat 63; VNat 82; VNat 95; VNat 112; VNat 136]); EValue (VList [VText [100; 101; 112; 114; 101; 115; 115; 105; 111; 110]; VText [115; 116; 111; 114; 109]; VText [99; 97; 116; 101; 103; 111; 114; 121; 32; 49]; VText [99; 97; 116; 101; 103; 111; 114; 121; 32; 50]; VText [99; 97; 116; 101; 103; 111; 114; 121; 32; 51]; VText [99; 97; 116; 101; 103; 111; 114; 121; 32; 52]; VText [99; 97; 116; 101; 103; 111; 114; 121; 32; 53]]); EArg 0]
-
-(* Z26838 geo-coordinate of wikidata item location | Z26838@288832 -> Z30132@283354 digest 803dc3a49526bedf63036adb2bbcf2273cc9fa72c972a42f49c803680bd5796d *)
-let body_Z26838_geo_coordinate_of_wikidata_item_location : expr =
-  ECall 19308 [ECall 811 [ECall 29688 [ECall 22220 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList []); EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 54; 50; 53])]])]]]]]
-
 let part_policy (fid:zid) : Tot (option expr) =
   match fid with
+  | 23352 -> Some body_Z23352_lorentz_factor_from_velocity
+  | 23356 -> Some body_Z23356_compare_after_applying_a_single_unary_function
+  | 23360 -> Some body_Z23360_object_comparison
+  | 23372 -> Some body_Z23372_same_wikidata_lexeme_form_reference
+  | 23379 -> Some body_Z23379_same_programming_language
+  | 23393 -> Some body_Z23393_test_cases_of_function
+  | 23397 -> Some body_Z23397_implementations_of_function
   | 23403 -> Some body_Z23403_wikidata_item_reference_to_gregorian_month
   | 23407 -> Some body_Z23407_wikidata_item_reference_to_roman_day
   | 23410 -> Some body_Z23410_subject_is_a_kind_of_english_sentence
@@ -1762,6 +1769,7 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 24472 -> Some body_Z24472_get_nth_code_point_of_string
   | 24487 -> Some body_Z24487_square_of_rational_number
   | 24506 -> Some body_Z24506_same_rational_within_tolerance
+  | 24517 -> Some body_Z24517_10_n_natural_number
   | 24525 -> Some body_Z24525_10_n_integer_to_rational
   | 24539 -> Some body_Z24539_newton_s_method_estimate_within_tolerance
   | 24542 -> Some body_Z24542_object_metric_meets_criteria
@@ -1774,6 +1782,7 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 24609 -> Some body_Z24609_is_string_keyed_map_empty
   | 24618 -> Some body_Z24618_serbian_cardinal
   | 24629 -> Some body_Z24629_get_keys_of_json_object
+  | 24646 -> Some body_Z24646_make_string_keyed_map
   | 24649 -> Some body_Z24649_index_first_of_typed_pair_list_with_matching_head
   | 24655 -> Some body_Z24655_list_with_added_element_unless_already_present
   | 24660 -> Some body_Z24660_display_typed_pair
@@ -1932,6 +1941,7 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 26107 -> Some body_Z26107_monolingual_text_from_language_and_string
   | 26111 -> Some body_Z26111_display_gregorian_year_in_sinitic_langs_hans_hant
   | 26116 -> Some body_Z26116_display_day_of_roman_year_chinese
+  | 26121 -> Some body_Z26121_serbian_ordinal
   | 26130 -> Some body_Z26130_date_zhwiki
   | 26134 -> Some body_Z26134_display_day_of_roman_year_cantonese_traditional
   | 26139 -> Some body_Z26139_display_day_of_roman_year_cantonese_simplified
@@ -1996,6 +2006,7 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 26671 -> Some body_Z26671_swedish_article_less_instantiating_sentence
   | 26674 -> Some body_Z26674_rational_as_comma_separator_decimal_bangla
   | 26676 -> Some body_Z26676_grammatical_gender_of_lexeme_is_exactly
+  | 26686 -> Some body_Z26686_swedish_label_of_wikidata_entity
   | 26692 -> Some body_Z26692_display_gregorian_year_bangla
   | 26696 -> Some body_Z26696_is_wikidata_item_qid_currently_alive
   | 26700 -> Some body_Z26700_filter_statements_in_wikidata_item_by_properties
@@ -2005,15 +2016,4 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 26717 -> Some body_Z26717_low_german_instantiating_sentence_without_article
   | 26723 -> Some body_Z26723_latin_article_less_instantiating_sentence
   | 26733 -> Some body_Z26733_apply_if_not_empty_else_return_empty
-  | 26737 -> Some body_Z26737_first_part_of_italian_instantiating_sentence
-  | 26745 -> Some body_Z26745_grammatical_gender_m_f_of_lexeme
-  | 26750 -> Some body_Z26750_first_element_if_list_not_empty_else_void
-  | 26766 -> Some body_Z26766_hijri_calendar_month_to_month_number
-  | 26771 -> Some body_Z26771_classifying_sentence_in_swedish
-  | 26791 -> Some body_Z26791_swedish_indefinite_noun_phrase_lex
-  | 26809 -> Some body_Z26809_move_hijri_month_by_n_months
-  | 26821 -> Some body_Z26821_indonesian_ordinal_from_natural_number
-  | 26829 -> Some body_Z26829_ordinal_in_chosen_language
-  | 26830 -> Some body_Z26830_get_sshws_category_from_sustained_winds_english
-  | 26838 -> Some body_Z26838_geo_coordinate_of_wikidata_item_location
   | _ -> None

@@ -11,7 +11,7 @@ open Wikifn.Eval
 
   part:      2 of 10
   functions: 400
-  ZID range: Z12936 to Z15965
+  ZID range: Z12936 to Z15946
 *)
 
 (* Z12936 Esperanto conditional verb | Z12936@130320 -> Z12937@130321 digest a7beff5bdba5232c09dcf927b9c110853f88619581d4d343b9fd332d7337a2c3 *)
@@ -66,9 +66,9 @@ let body_Z13013_thai_nominalization_of_adjective : expr =
 let body_Z13034_thai_nominalization_of_verb : expr =
   ECall 10000 [EValue (VText [3585; 3634; 3619]); EArg 0]
 
-(* Z13036 apply | Z13036@267674 -> Z13048@137124 digest c8fdeec28c7afbb033a83d89a982388d23f9407e53b305f13cd1076ce8ed7ae9 *)
+(* Z13036 apply | Z13036@267674 -> Z29349@228291 digest 34477493981e74c92c64b5bbea3660b95ef6afe228691247fb367a7ce7015e42 *)
 let body_Z13036_apply : expr =
-  ECall 811 [ECall 873 [EArg 0; ECall 810 [EArg 1; EValue (VList [])]]]
+  ECall 1000000002 [ECall 29350 [EArg 0]; EArg 1]
 
 (* Z13078 remove duplicates from untyped list | Z13078@267887 -> Z24659@186881 digest 4c80b06a03282cd262e43703744a62b09805b604d637f73eb943ad3ad03d6382 *)
 let body_Z13078_remove_duplicates_from_untyped_list : expr =
@@ -464,7 +464,7 @@ let body_Z13857_catalan_number : expr =
 
 (* Z13860 binary weight of n | Z13860@277291 -> Z31027@241059 digest bb5daaa9d5c3aa0d776bff28ac79f25746c134a2ede81d8311467e441d3e8237 *)
 let body_Z13860_binary_weight_of_n : expr =
-  ECall 29413 [EValue (VRecord 86 [({ key_owner = Some 86; key_index = 1 }, VNat 49)]); ECall 22717 [ECall 13779 [EArg 0]]]
+  ECall 29413 [EValue (VNat 49); ECall 22717 [ECall 13779 [EArg 0]]]
 
 (* Z13909 rectified linear unit | Z13909@269658 -> Z34290@269656 digest e0e16de49276142aa7a05155b247ff1cb708bd50c3ffc2ce5f0e5d306dcb6d1d *)
 let body_Z13909_rectified_linear_unit : expr =
@@ -694,6 +694,10 @@ let body_Z14260_contains_all_characters_of_bengali_alphabet : expr =
 let body_Z14280_display_natural_number : expr =
   ECall 13713 [EArg 0]
 
+(* Z14283 string of digits as Natural Number | Z14283@265727 -> Z14289@256261 digest 6c18fe95db18faf28f65c353cf9fb20c06ad1a134d7a825c3814ea14300ffde6 *)
+let body_Z14283_string_of_digits_as_natural_number : expr =
+  ECall 11082 [ECall 31880 [EArg 0; EValue (VNat 48)]; EValue (VText [48])]
+
 (* Z14290 read natural number | Z14290@270115 -> Z22270@270107 digest 668ac6c7860d164679b5ef0c59249f893c3d3fd30fa93899ecbf4aa2ced1e482 *)
 let body_Z14290_read_natural_number : expr =
   ECall 28236 [ECall 14310 [EValue (VFunc 14303); EArg 1]; EArg 0; EArg 1]
@@ -756,7 +760,7 @@ let body_Z14364_add_periods_between_triples_if_more_than_4_digits : expr =
 
 (* Z14368 add thin space between triples if more than four digits | Z14368@270176 -> Z34438@270175 digest 46e0aec87e53b16929494a5d964cb41c4e74543150f6e4fbe42aed8a13427d3c *)
 let body_Z14368_add_thin_space_between_triples_if_more_than_four_digits : expr =
-  ECall 10075 [ECall 14295 [EArg 0]; EValue (VText [44]); ECall 15631 [EValue (VRecord 86 [({ key_owner = Some 86; key_index = 1 }, VNat 8201)])]]
+  ECall 10075 [ECall 14295 [EArg 0]; EValue (VText [44]); ECall 15631 [EValue (VNat 8201)]]
 
 (* Z14374 remove all spaces of all kinds | Z14374@280550 -> Z36073@280547 digest 74b19534170f34cd328873106a7f5bb8d52ad569aed88a99a5f1a091d139fddc *)
 let body_Z14374_remove_all_spaces_of_all_kinds : expr =
@@ -792,7 +796,7 @@ let body_Z14416_unequal_natural_numbers : expr =
 
 (* Z14435 add narrow nonbreaking space between triples if more than four digits | Z14435@270187 -> Z34440@270186 digest bc342f5ce47573188eb4bd78473c2b2261498793c56fc4a8076b0ff92873134c *)
 let body_Z14435_add_narrow_nonbreaking_space_between_triples_if_more_than_fo : expr =
-  ECall 10075 [ECall 14295 [EArg 0]; EValue (VText [44]); ECall 15631 [EValue (VRecord 86 [({ key_owner = Some 86; key_index = 1 }, VNat 8239)])]]
+  ECall 10075 [ECall 14295 [EArg 0]; EValue (VText [44]); ECall 15631 [EValue (VNat 8239)]]
 
 (* Z14438 add nonbreaking space between triples if more than four digits | Z14438@270189 -> Z34441@285330 digest 66ad667736ecbbaf861e075f7784dbe5a7342f37a34d7696572ad615ae10c02a *)
 let body_Z14438_add_nonbreaking_space_between_triples_if_more_than_four_digi : expr =
@@ -952,11 +956,11 @@ let body_Z14770_pad_string_with_leading_characters_to_specified_length : expr =
 
 (* Z14773 binary string to list of booleans | Z14773@270577 -> Z34466@270576 digest a868a4f64f838c5ae2679b6558b51f324042a4f653e3c8975ab46ea4a686aee1 *)
 let body_Z14773_binary_string_to_list_of_booleans : expr =
-  ECall 13464 [EValue (VFunc 22683); ECall 22717 [ECall 31955 [EArg 0; EValue (VText [48; 98])]]; EValue (VRecord 86 [({ key_owner = Some 86; key_index = 1 }, VNat 49)])]
+  ECall 13464 [EValue (VFunc 22683); ECall 22717 [ECall 31955 [EArg 0; EValue (VText [48; 98])]]; EValue (VNat 49)]
 
 (* Z14775 list of booleans to binary string | Z14775@270583 -> Z34468@270582 digest f47cecbf10919781e57eaf425a4840be1cd5e7371a274b2d6867cf948b75f2ea *)
 let body_Z14775_list_of_booleans_to_binary_string : expr =
-  ECall 22693 [ECall 18475 [ECall 32695 [EValue (VFunc 802); EArg 0; EValue (VRecord 86 [({ key_owner = Some 86; key_index = 1 }, VNat 49)]); EValue (VRecord 86 [({ key_owner = Some 86; key_index = 1 }, VNat 48)])]]]
+  ECall 22693 [ECall 18475 [ECall 32695 [EValue (VFunc 802); EArg 0; EValue (VNat 49); EValue (VNat 48)]]]
 
 (* Z14783 is Fermat pseudoprime | Z14783@189309 -> Z14784@189310 digest efb856e7aae1f4d637996c62d831e480c73d381056e5581bfa3a92be825fb6ad *)
 let body_Z14783_is_fermat_pseudoprime : expr =
@@ -1594,6 +1598,10 @@ let body_Z15858_replace_character_set_and_discard_other_characters : expr =
 let body_Z15879_salted_md5 : expr =
   ECall 10137 [ECall 10000 [EArg 1; EArg 0]]
 
+(* Z15883 salted hash | Z15883@200792 -> Z15884@200793 digest efa7312fb091a8bdf682448d472a5b90ed764c3bb98dcc430321983a354dff72 *)
+let body_Z15883_salted_hash : expr =
+  ECall 13036 [EArg 0; ECall 10000 [EArg 2; EArg 1]]
+
 (* Z15907 limited Natural number | Z15907@264931 -> Z27925@214370 digest e2d6119fe5b1a9086c97be48f4a2aef810a51211c889a94fed62e18c85478612 *)
 let body_Z15907_limited_natural_number : expr =
   ECall 21951 [EArg 1; EArg 0; EArg 2]
@@ -1605,14 +1613,6 @@ let body_Z15914_string_equality_for_natural_numbers : expr =
 (* Z15946 are two numeric strings in descending order | Z15946@280233 -> Z36016@280232 digest 29575f81dbabc4e85a4b10b60c6909f49d3e193ee9d9d77bd2e2f47f574cfda6 *)
 let body_Z15946_are_two_numeric_strings_in_descending_order : expr =
   ECall 850 [ECall 17132 [ECall 16705 [EArg 0; EValue (VFunc 1002)]; ECall 16705 [EArg 1; EValue (VFunc 1002)]]; EValue (VFunc 500); EValue (VBool false)]
-
-(* Z15953 Ukrainian cardinal | Z15953@202705 -> Z22599@168334 digest dc6ff7d3d83c99dfc80fdc02ff79381bac142f22ab62a8d1f3c0a3c126bb6aa9 *)
-let body_Z15953_ukrainian_cardinal : expr =
-  ECall 22576 [EValue (VList [VText [1085; 1091; 1083; 1100]; VText [1086; 1076; 1080; 1085]; VText [1076; 1074; 1072]; VText [1090; 1088; 1080]; VText [1095; 1086; 1090; 1080; 1088; 1080]; VText [1087; 39; 1103; 1090; 1100]; VText [1096; 1110; 1089; 1090; 1100]; VText [1089; 1110; 1084]; VText [1074; 1110; 1089; 1110; 1084]; VText [1076; 1077; 1074; 39; 1103; 1090; 1100]]); EValue (VList [VText [1086; 1076; 1080; 1085; 1072; 1076; 1094; 1103; 1090; 1100]; VText [1076; 1074; 1072; 1085; 1072; 1076; 1094; 1103; 1090; 1100]; VText [1090; 1088; 1080; 1085; 1072; 1076; 1094; 1103; 1090; 1100]; VText [1095; 1086; 1090; 1080; 1088; 1085; 1072; 1076; 1094; 1103; 1090; 1100]; VText [1087; 39; 1103; 1090; 1085; 1072; 1076; 1094; 1103; 1090; 1100]; VText [1096; 1110; 1089; 1090; 1085; 1072; 1076; 1094; 1103; 1090; 1100]; VText [1089; 1110; 1084; 1085; 1072; 1076; 1094; 1103; 1090; 1100]; VText [1074; 1110; 1089; 1110; 1084; 1085; 1072; 1076; 1094; 1103; 1090; 1100]]); EValue (VList [VText [1076; 1077; 1089; 1103; 1090; 1100]; VText [1076; 1074; 1072; 1076; 1094; 1103; 1090; 1100]; VText [1090; 1088; 1080; 1076; 1094; 1103; 1090; 1100]; VText [1089; 1086; 1088; 1086; 1082]; VText [1087; 39; 1103; 1090; 1076; 1077; 1089; 1103; 1090]; VText [1096; 1110; 1089; 1090; 1076; 1077; 1089; 1103; 1090]; VText [1089; 1110; 1084; 1076; 1077; 1089; 1103; 1090]; VText [1074; 1110; 1089; 1110; 1084; 1076; 1077; 1089; 1103; 1090]; VText [1076; 1077; 1074; 39; 1103; 1085; 1086; 1089; 1090; 1086]]); EValue (VList [VText [1089; 1090; 1086]; VText [1076; 1074; 1110; 1089; 1090; 1110]; VText [1090; 1088; 1080; 1089; 1090; 1072]; VText [1095; 1086; 1090; 1080; 1088; 1080; 1089; 1090; 1072]; VText [1087; 39; 1103; 1090; 1089; 1086; 1090]; VText [1096; 1110; 1089; 1090; 1089; 1086; 1090]; VText [1089; 1110; 1084; 1089; 1086; 1090]; VText [1074; 1110; 1089; 1110; 1084; 1089; 1086; 1090]; VText [1076; 1077; 1074; 39; 1103; 1090; 1089; 1086; 1090]]); EValue (VList [VText [1086; 1076; 1085; 1072]; VText [1076; 1074; 1110]; VText [1090; 1088; 1080]; VText [1095; 1086; 1090; 1080; 1088; 1080]; VText [1087; 39; 1103; 1090; 1100]; VText [1096; 1110; 1089; 1090; 1100]; VText [1089; 1110; 1084]; VText [1074; 1110; 1089; 1110; 1084]; VText [1076; 1077; 1074; 39; 1103; 1090; 1100]]); EValue (VList [VText [1090; 1080; 1089; 1103; 1095; 1072]; VText [1090; 1080; 1089; 1103; 1095; 1110]; VText [1090; 1080; 1089; 1103; 1095]]); EValue (VList [VText [1084; 1110]; VText [1090; 1088; 1080]; VText [1082; 1074; 1072; 1076; 1088; 1080]; VText [1082; 1074; 1110; 1085; 1090; 1080]; VText [1089; 1077; 1082; 1089; 1090; 1080]; VText [1089; 1077; 1087; 1090; 1080]; VText [1086; 1082; 1090; 1080]; VText [1085; 1086; 1085; 1080]; VText [1076; 1077; 1094; 1080]]); EValue (VList [VText [1083; 1100; 1081; 1086; 1085]; VText [1083; 1100; 1081; 1086; 1085; 1080]; VText [1083; 1100; 1081; 1086; 1085; 1110; 1074]]); EValue (VList [VText [1083; 1100; 1103; 1088; 1076]; VText [1083; 1100; 1103; 1088; 1076; 1080]; VText [1083; 1100; 1103; 1088; 1076; 1110; 1074]]); EArg 0]
-
-(* Z15965 Polish cardinal | Z15965@202795 -> Z22613@168353 digest e6f33c2402ffdb1112e47d530b85dc59c455b78cfc3ea38eb634b0264cd4c340 *)
-let body_Z15965_polish_cardinal : expr =
-  ECall 22576 [EValue (VList [VText [122; 101; 114; 111]; VText [106; 101; 100; 101; 110]; VText [100; 119; 97]; VText [116; 114; 122; 121]; VText [99; 122; 116; 101; 114; 121]; VText [112; 105; 281; 263]; VText [115; 122; 101; 347; 263]; VText [115; 105; 101; 100; 101; 109]; VText [111; 115; 105; 101; 109]; VText [100; 122; 105; 101; 119; 105; 281; 263]]); EValue (VList [VText [106; 101; 100; 101; 110; 97; 347; 99; 105; 101]; VText [100; 119; 97; 110; 97; 347; 99; 105; 101]; VText [116; 114; 122; 121; 110; 97; 347; 99; 105; 101]; VText [99; 122; 116; 101; 114; 110; 97; 347; 99; 105; 101]; VText [112; 105; 281; 116; 110; 97; 347; 99; 105; 101]; VText [115; 122; 101; 115; 110; 97; 347; 99; 105; 101]; VText [115; 105; 101; 100; 101; 109; 110; 97; 347; 99; 105; 101]; VText [111; 115; 105; 101; 109; 110; 97; 347; 99; 105; 101]; VText [100; 122; 105; 101; 119; 105; 281; 116; 110; 97; 347; 99; 105; 101]]); EValue (VList [VText [100; 122; 105; 101; 115; 105; 281; 263]; VText [100; 119; 97; 100; 122; 105; 101; 347; 99; 105; 97]; VText [116; 114; 122; 121; 100; 122; 105; 101; 347; 99; 105]; VText [99; 122; 116; 101; 114; 100; 122; 105; 101; 347; 99; 105]; VText [112; 105; 281; 263; 100; 122; 105; 101; 115; 105; 261; 116]; VText [115; 122; 101; 347; 263; 100; 122; 105; 101; 115; 105; 261; 116]; VText [115; 105; 101; 100; 101; 109; 100; 122; 105; 101; 115; 105; 261; 116]; VText [111; 115; 105; 101; 109; 100; 122; 105; 101; 115; 105; 261; 116]; VText [100; 122; 105; 101; 119; 105; 281; 263; 100; 122; 105; 101; 115; 105; 261; 116]]); EValue (VList [VText [115; 116; 111]; VText [100; 119; 105; 101; 347; 99; 105; 101]; VText [116; 114; 122; 121; 115; 116; 97]; VText [99; 122; 116; 101; 114; 121; 115; 116; 97]; VText [112; 105; 281; 263; 115; 101; 116]; VText [115; 122; 101; 347; 263; 115; 101; 116]; VText [115; 105; 101; 100; 101; 109; 115; 101; 116]; VText [111; 115; 105; 101; 109; 115; 101; 116]; VText [100; 122; 105; 101; 119; 105; 281; 263; 115; 101; 116]]); EValue (VList []); EValue (VList [VText [116; 121; 115; 105; 261; 99]; VText [116; 121; 115; 105; 261; 99; 101]; VText [116; 121; 115; 105; 281; 99; 121]]); EValue (VList [VText [109; 105]; VText [98; 105]; VText [116; 114; 121]; VText [107; 119; 97; 100; 114; 121]; VText [107; 119; 105; 110; 116; 121]; VText [115; 101; 107; 115; 116; 121]; VText [115; 101; 112; 116; 121]; VText [111; 107; 116; 121]; VText [110; 111; 110; 121]; VText [100; 101; 99; 121]]); EValue (VList [VText [108; 105; 111; 110]; VText [108; 105; 111; 110; 121]; VText [108; 105; 111; 110; 243; 119]]); EValue (VList [VText [108; 105; 97; 114; 100]; VText [108; 105; 97; 114; 100; 121]; VText [108; 105; 97; 114; 100; 243; 119]]); EArg 0]
 
 let part_policy (fid:zid) : Tot (option expr) =
   match fid with
@@ -1786,6 +1786,7 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 14244 -> Some body_Z14244_get_nth_character_of_a_string
   | 14260 -> Some body_Z14260_contains_all_characters_of_bengali_alphabet
   | 14280 -> Some body_Z14280_display_natural_number
+  | 14283 -> Some body_Z14283_string_of_digits_as_natural_number
   | 14290 -> Some body_Z14290_read_natural_number
   | 14295 -> Some body_Z14295_add_commas_between_triples_if_more_than_four_digits
   | 14304 -> Some body_Z14304_read_natural_numbers_leniently
@@ -2011,9 +2012,8 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 15855 -> Some body_Z15855_remove_characters_not_suitable_for_markup_in_xml_or_html
   | 15858 -> Some body_Z15858_replace_character_set_and_discard_other_characters
   | 15879 -> Some body_Z15879_salted_md5
+  | 15883 -> Some body_Z15883_salted_hash
   | 15907 -> Some body_Z15907_limited_natural_number
   | 15914 -> Some body_Z15914_string_equality_for_natural_numbers
   | 15946 -> Some body_Z15946_are_two_numeric_strings_in_descending_order
-  | 15953 -> Some body_Z15953_ukrainian_cardinal
-  | 15965 -> Some body_Z15965_polish_cardinal
   | _ -> None

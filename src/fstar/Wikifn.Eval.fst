@@ -185,6 +185,13 @@ let fid_z14520_remove_characters : zid = 14520
    Numbered outside the Wikifunctions range so it cannot collide. *)
 let internal_fresh_private_use : zid = 1000000001
 
+(* Applying a function value to however many arguments it takes. Wikifunctions
+   has Z13318, Z21216 and Z30438 for two, three and four; the corpus also writes
+   calls whose function is computed with none, one and five, and those have no
+   named function to use. Numbered outside the Wikifunctions range so it cannot
+   collide with one. *)
+let internal_apply : zid = 1000000002
+
 let rec codepoints_as_values (s:text) : Tot (list value) =
   match s with
   | [] -> []
@@ -369,13 +376,18 @@ let apply_primitive (fid:zid) (args:list value) : Tot (option (eval_result value
         Some (match as_list fid a with
               | EOk items -> EOk (VList (value_reverse items))
               | EErr e -> EErr e)
+      (* A Z882 pair is written two ways: as a pair value, and as an object with
+         K1 and K2 whose type is the generic Z882 applied to its element types.
+         Both are pairs, so both accessors read both. *)
       else if fid = fid_fst then
         Some (match a with
               | VPair l _ -> EOk l
+              | VRecord _ ((_, l) :: _) -> EOk l
               | _ -> EErr (ETypeMismatch fid))
       else if fid = fid_snd then
         Some (match a with
               | VPair _ r -> EOk r
+              | VRecord _ (_ :: (_, r) :: _) -> EOk r
               | _ -> EErr (ETypeMismatch fid))
       else if fid = fid_type_of then
         Some (match a with
@@ -649,6 +661,10 @@ and higher_order (p:policy) (fuel:nat) (depth:nat) (fid:zid) (args:list value)
   else if fid = fid_zip_with then
     (match args with
      | [VFunc f; VList left; VList right] -> Some (zip_with_values p fuel depth f left right)
+     | _ -> None)
+  else if fid = internal_apply then
+    (match args with
+     | VFunc f :: rest -> Some (eval p fuel depth [] (ECall f (values_as_exprs rest)))
      | _ -> None)
   else if fid = fid_apply2 then
     (match args with

@@ -43,6 +43,13 @@ const PART_SIZE = 400;
 // not to this generator.
 const MAX_BODY_BYTES = 65536;
 
+// How much of a text literal goes in one chunk. A text is a list of codepoints,
+// so a long one renders to a very long term - Z24460 carries the whole Unicode
+// Extended_Pictographic table and reaches 164 KB, which F* cannot check at any
+// module size. Split into chunks joined by concatenation, each chunk is an
+// ordinary small term and the join is checked once.
+const TEXT_CHUNK = 400;
+
 // Bodies per part, and bytes per part. Both matter: verification cost grows
 // with the number of definitions and with the size of the terms in them, and a
 // handful of large bodies can make a part of ordinary length expensive.
@@ -84,6 +91,33 @@ const PRIMITIVES = new Set([
 ]);
 
 const INTERNAL_FRESH_PRIVATE_USE = "1000000001";
+const INTERNAL_APPLY = "1000000002";
+
+// A text literal long enough that F* cannot check it in one piece.
+//
+// Text is a list of codepoints, so a string of n characters renders to a term
+// of roughly 5n. Z24460 carries the whole Unicode Extended_Pictographic table:
+// 38 KB of canonical JSON becomes a 164 KB F* term, and such a term cannot be
+// checked at any module size - measured at 7.95 GB and killed, on its own, in
+// its own module.
+//
+// Joining chunks with Z10000 costs one concatenation per chunk at run time and
+// leaves every term small. No new expression form is needed, so the
+// interpreter, the printer and the compiler all handle it already.
+const chunkedText = (value) => {
+  const codepoints = [...value];
+  if (codepoints.length <= TEXT_CHUNK) return { kind: "text", value };
+  const chunks = [];
+  for (let at = 0; at < codepoints.length; at += TEXT_CHUNK) {
+    chunks.push({ kind: "text", value: codepoints.slice(at, at + TEXT_CHUNK).join("") });
+  }
+  const chain = chunks.reduceRight((rest, chunk) =>
+    ({ kind: "call", zid: "Z10000", args: [chunk, rest], calleeKeys: [] }));
+  // Chunking is for F*, not for the corpus. Rendering back produces the string
+  // that was split, so a body still converts to the composition it came from.
+  chain.chunkedFrom = value;
+  return chain;
+};
 
 // Where Wikifunctions has reinvented something LISP already named, use the
 // classical name. The wiki label is kept in the legend at the top of the
@@ -221,9 +255,9 @@ async function resolveValueReference(zid) {
   if (body !== undefined) {
     const type = refZid(body?.Z1K1);
     if (typeof body === "string" && !/^Z[1-9][0-9]*$/.test(body)) {
-      result = { kind: "text", value: body };
+      result = chunkedText(body);
     } else if (type === "Z6" && typeof stringOf(body) === "string") {
-      result = { kind: "text", value: stringOf(body) };
+      result = chunkedText(stringOf(body));
     } else if (type === "Z40") {
       const identity = refZid(body.Z40K1);
       if (identity === "Z41") result = { kind: "bool", value: true };
@@ -283,7 +317,7 @@ async function translate(term, context) {
       if (value) return value;
       return { kind: "func", zid };
     }
-    return { kind: "text", value: term };
+    return chunkedText(term);
   }
 
   if (Array.isArray(term)) {
@@ -311,12 +345,29 @@ async function translate(term, context) {
     return { kind: "arg", index };
   }
 
-  if (type === "Z6") return { kind: "text", value: stringOf(term) ?? "" };
+  if (type === "Z6") {
+    const literal = stringOf(term);
+    if (literal !== undefined) return chunkedText(literal);
+    // A Z6 whose content is computed is that computation.
+    if (term.Z6K1 !== undefined) return translate(term.Z6K1, context);
+    return { kind: "text", value: "" };
+  }
 
+  // A wrapper around one piece of content. When the content is a literal the
+  // object is a value; when it is a call or an argument the object *is* that
+  // computation, and reading only the literal case is what made a natural
+  // number written as Z13518(<call>) look like a malformed literal.
   if (type === "Z13518") {
     const raw = stringOf(term.Z13518K1);
-    if (!/^[0-9]+$/.test(raw ?? "")) throw new Unsupported("non-decimal natural literal");
-    return { kind: "nat", value: raw };
+    if (raw !== undefined && /^[0-9]+$/.test(raw)) return { kind: "nat", value: raw };
+    if (term.Z13518K1 !== undefined) return translate(term.Z13518K1, context);
+    throw new Unsupported("a natural number with no value");
+  }
+
+  // A character is its codepoint, which is how the kernel holds text.
+  if (type === "Z86") {
+    if (term.Z86K1 !== undefined) return translate(term.Z86K1, context);
+    throw new Unsupported("a character with no codepoint");
   }
 
   if (type === "Z40") {
@@ -334,11 +385,30 @@ async function translate(term, context) {
     return { kind: "func", zid: target };
   }
 
+  // An object written as nothing but a computed type. The corpus writes a call
+  // this way in a handful of places; the object has no content of its own, so
+  // it is the call.
+  if (type === undefined && term.Z1K1 !== undefined
+      && Object.keys(term).length === 1 && typeof term.Z1K1 === "object") {
+    return translate(term.Z1K1, context);
+  }
+
   if (type !== "Z7") {
     // A typed object literal: Wikidata references, monolingual text, rationals
     // and floats are all written this way. Fields that are themselves literals
     // make the whole thing a value.
-    if (type && /^Z[1-9][0-9]*$/.test(type)) {
+    // A type can be a generic applied to its parameters - Z882(Z6, Z6) for a
+    // pair of strings, Z881(Z6) for a list of them. The object's type is the
+    // generic being applied; refusing the object because its type was not a
+    // plain ZID discarded twenty-one functions over a detail of how the type
+    // was written.
+    const generic = type ?? (refZid(term.Z1K1?.Z1K1) === "Z7" ? refZid(term.Z1K1.Z7K1) : undefined);
+    if (generic && /^Z[1-9][0-9]*$/.test(generic)) {
+      const type = generic;
+      // The type as it was written, kept so that rendering back produces the
+      // same object. The engine only needs the generic being applied; the
+      // round trip needs the application.
+      const typeTerm = type === generic && term.Z1K1 !== generic ? term.Z1K1 : undefined;
       const fields = [];
       let readable = true;
       for (const key of Object.keys(term)) {
@@ -357,15 +427,33 @@ async function translate(term, context) {
         // recursion when neither function recurses at all and the way out was a
         // plain record.
         return fields.every(([, v]) => isLiteral(v))
-          ? { kind: "record", type, fields }
-          : { kind: "record", type, fields, computed: true };
+          ? { kind: "record", type, fields, typeTerm }
+          : { kind: "record", type, fields, typeTerm, computed: true };
       }
     }
     throw new Unsupported(`object of type ${type ?? "unknown"}`);
   }
 
   const functionZid = refZid(term.Z7K1);
-  if (!functionZid) throw new Unsupported("call to a computed function reference");
+  if (!functionZid) {
+    // The function is computed - an argument, or the result of a call. That is
+    // ordinary higher-order code, not a malformed call, and the corpus already
+    // has primitives for it: Z13318, Z21216 and Z30438 apply a function value
+    // to two, three and four arguments.
+    const APPLY = { 2: "Z13318", 3: "Z21216", 4: "Z30438" };
+    const supplied = Object.keys(term)
+      .filter((key) => key !== "Z1K1" && key !== "Z7K1")
+      .sort((a, b) => Number(a.split("K")[1]) - Number(b.split("K")[1]));
+    // Wikifunctions names an apply for two, three and four arguments. For any
+    // other count the engine supplies one, because the alternative is refusing
+    // the call over how many arguments it happens to have.
+    const applyZid = APPLY[supplied.length] ?? `Z${INTERNAL_APPLY}`;
+    const applied = [await translate(term.Z7K1, context)];
+    for (const key of supplied) applied.push(await translate(term[key], context));
+    // appliedKeys records the keys the original call used, so rendering back
+    // produces the same computed call rather than a call to the apply function.
+    return { kind: "call", zid: applyZid, args: applied, calleeKeys: [], appliedKeys: supplied };
+  }
 
   const keys = await argumentKeys(functionZid);
   if (!keys) throw new Unsupported(`unknown argument order for ${functionZid}`);
@@ -423,11 +511,17 @@ function renderFstarValue(node) {
 // and the interpreter, the printer and the compiler all already handle it.
 const isComputedList = (node) =>
   node.kind === "list" && !node.items.every((item) => isLiteral(item));
-const asConsChain = (node) =>
-  node.items.reduceRight(
+const asConsChain = (node) => {
+  const chain = node.items.reduceRight(
     (rest, item) => ({ kind: "call", zid: "Z810", args: [item, rest] }),
     { kind: "list", items: [] }
   );
+  // Cons is how the evaluator builds a list; an array is how the corpus writes
+  // one. The chain remembers the list it stands for so that rendering back
+  // produces the composition it came from rather than a pile of conses.
+  if (chain.kind === "call") chain.consFrom = node;
+  return chain;
+};
 
 function renderFstar(node) {
   if (node.kind === "arg") return `EArg ${node.index}`;
@@ -452,9 +546,19 @@ function renderZ14K2(node, argKeys) {
     case "arg":
       return { Z1K1: "Z18", Z18K1: argKeys[node.index] };
     case "text":
-      return { Z1K1: "Z6", Z6K1: node.value };
+      // Canonical form writes a string as a bare string. The object form is
+      // also valid and means the same, but emitting it everywhere made 2,166
+      // sites differ from the composition they came from for no reason. A
+      // ZID-shaped string keeps the object form, because bare it would read as
+      // a reference.
+      return /^Z[1-9][0-9]*$/.test(node.value)
+        ? { Z1K1: "Z6", Z6K1: node.value }
+        : node.value;
     case "nat":
-      return { Z1K1: "Z13518", Z13518K1: { Z1K1: "Z6", Z6K1: node.value } };
+      // The value is a bare string, which is how the corpus writes it. Wrapping
+      // it in a Z6 object round-trips through our own reader and still does not
+      // match the pinned composition.
+      return { Z1K1: "Z13518", Z13518K1: node.value };
     case "bool":
       return { Z1K1: "Z40", Z40K1: node.value ? "Z41" : "Z42" };
     case "boolref":
@@ -464,11 +568,20 @@ function renderZ14K2(node, argKeys) {
     case "list":
       return ["Z1", ...node.items.map((item) => renderZ14K2(item, argKeys))];
     case "record": {
-      const out = { Z1K1: node.type };
+      const out = { Z1K1: node.typeTerm ?? node.type };
       for (const [key, v] of node.fields) out[key] = renderZ14K2(v, argKeys);
       return out;
     }
     case "call": {
+      if (node.chunkedFrom !== undefined) return { Z1K1: "Z6", Z6K1: node.chunkedFrom };
+      if (node.consFrom !== undefined) return renderZ14K2(node.consFrom, argKeys);
+      if (node.appliedKeys) {
+        const out = { Z1K1: "Z7", Z7K1: renderZ14K2(node.args[0], argKeys) };
+        node.appliedKeys.forEach((key, index) => {
+          out[key] = renderZ14K2(node.args[index + 1], argKeys);
+        });
+        return out;
+      }
       if (node.zid === `Z${INTERNAL_FRESH_PRIVATE_USE}`) {
         // The marker helper is an optimisation, not a Wikifunctions function.
         // Emit the idiom it stands for so the output stays contributable.
@@ -763,7 +876,8 @@ async function main() {
   }
 
   const emittedIndex = new Map(emitted.map((entry) => [entry.zid, entry]));
-  const isPrimitive = (zid) => PRIMITIVES.has(zid) || zid === `Z${INTERNAL_FRESH_PRIVATE_USE}`;
+  const isPrimitive = (zid) =>
+    PRIMITIVES.has(zid) || zid === `Z${INTERNAL_FRESH_PRIVATE_USE}` || zid === `Z${INTERNAL_APPLY}`;
 
   // Choose which implementation each function uses, preferring one whose calls
   // all reach something that exists. Repeat until no choice improves, since one

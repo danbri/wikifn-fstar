@@ -62,10 +62,32 @@ const OURS = [
   {
     name: "a body too large for F* to check",
     pattern: /over the \d+ F\* can check/,
+    // Not zero, and the reason is written down rather than the number being
+    // quietly raised. Text is a list of codepoints, so a string of n characters
+    // renders to a term of roughly 5n; a long string literal is now split into
+    // chunks joined by concatenation, which fixed every case but these two.
+    // What is left is not one long string but thousands of short ones - Z24460
+    // is the Unicode Extended_Pictographic table - and making those small needs
+    // a different representation for text, not a smaller chunk size.
+    budget: 2,
+    why: "Two bodies remain over the limit because their bulk is thousands of "
+       + "short literals rather than one long one. Lowering this needs text to "
+       + "stop being a list of codepoints in the value model."
+  },
+  {
+    name: "a typed wrapper whose content is computed",
+    pattern: /non-decimal natural literal|a natural number with no value|a character with no codepoint/,
     budget: 0,
-    why: "Z24460 carries the whole Unicode Extended_Pictographic table inline as "
-       + "a list of forty thousand numbers. The list is the wrong representation "
-       + "for text that size, not the wrong size for a list."
+    why: "A Z13518 or Z86 whose content is a call is that computation. Reading "
+       + "only the literal case made a natural number written as Z13518(<call>) "
+       + "look like a malformed literal."
+  },
+  {
+    name: "applying a computed function of an unusual arity",
+    pattern: /applying a computed function/,
+    budget: 0,
+    why: "Wikifunctions names an apply for two, three and four arguments. Any "
+       + "other count needs one supplying, not refusing."
   }
 ];
 

@@ -74,6 +74,86 @@ const lines = [
   ""
 ];
 
+// (cons a (cons b (cons c (list)))) reads as (list a b c).
+//
+// A list built from computed elements has to be a chain of conses for the
+// evaluator - that is what a list is - but nobody reads Lisp that way, and the
+// nesting is not incidental: Z37311 is a switch over fourteen languages and its
+// chain is 46 levels deep, which is 46 levels of indentation for something that
+// is one list.
+//
+// This is a printing choice, so it belongs here rather than in the evaluator.
+// The s-expression is parsed and rebuilt; nothing is matched textually, so a
+// string containing the word "cons" is untouched.
+function readSexpr(text) {
+  let at = 0;
+  const skip = () => { while (at < text.length && /\s/.test(text[at])) at += 1; };
+  const read = () => {
+    skip();
+    if (text[at] === "(") {
+      at += 1;
+      const items = [];
+      for (;;) {
+        skip();
+        if (at >= text.length) throw new Error("unbalanced s-expression");
+        if (text[at] === ")") { at += 1; return items; }
+        items.push(read());
+      }
+    }
+    if (text[at] === '"') {
+      let out = '"';
+      at += 1;
+      while (at < text.length && text[at] !== '"') {
+        if (text[at] === "\\") { out += text[at] + text[at + 1]; at += 2; continue; }
+        out += text[at];
+        at += 1;
+      }
+      at += 1;
+      return out + '"';
+    }
+    let atom = "";
+    while (at < text.length && !/[\s()"]/.test(text[at])) { atom += text[at]; at += 1; }
+    if (!atom) throw new Error(`cannot read at ${at}`);
+    return atom;
+  };
+  const form = read();
+  skip();
+  return at === text.length ? form : null;
+}
+
+const isEmptyList = (form) => Array.isArray(form) && form.length === 1 && form[0] === "list";
+
+function collapseCons(form) {
+  if (!Array.isArray(form)) return form;
+  const parts = form.map(collapseCons);
+  if (parts.length === 3 && parts[0] === "cons") {
+    const tail = parts[2];
+    if (isEmptyList(tail)) return ["list", parts[1]];
+    if (Array.isArray(tail) && tail[0] === "list") return ["list", parts[1], ...tail.slice(1)];
+  }
+  return parts;
+}
+
+function writeSexpr(form, indent = 0) {
+  if (!Array.isArray(form)) return form;
+  const parts = form.map((item) => writeSexpr(item, indent + 2));
+  const oneLine = `(${parts.join(" ")})`;
+  if (oneLine.length <= 96 - indent || parts.length < 2) return oneLine;
+  const pad = " ".repeat(indent + 2);
+  return `(${parts[0]}\n${pad}${parts.slice(1).join(`\n${pad}`)})`;
+}
+
+// Printed by Wikifn.Print, then rebuilt for reading. If anything about the text
+// is unexpected it is left exactly as the checked printer produced it.
+function readable(source) {
+  try {
+    const form = readSexpr(source);
+    return form === null ? source : writeSexpr(collapseCons(form));
+  } catch {
+    return source;
+  }
+}
+
 // Declared types, printed as a comment above each definition.
 //
 // Wikifunctions is typed and this listing was not saying so, which left no way
@@ -114,7 +194,7 @@ for (const entry of catalog.functions) {
   if (entry.mutuallyRecursive) notes.push("mutually recursive: may not terminate");
   lines.push(`;; ${entry.zid} ${entry.label}${notes.length ? "  [" + notes.join("; ") + "]" : ""}`);
   lines.push(`;;   ${signatureComment(entry)}`);
-  lines.push(result.source);
+  lines.push(readable(result.source));
   // The ZID alone is the identity; everything after the underscore is a hint
   // for the reader. Binding the bare ZID too means a caller can write either,
   // and a program written with one spelling of the hint keeps working when the
