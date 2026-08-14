@@ -82,8 +82,12 @@ let classical_name (f:zid) : Tot (option text) =
   else if f = 872 then Some [102; 105; 108; 116; 101; 114]                 (* filter *)
   else if f = 873 then Some [109; 97; 112]                                 (* map *)
   else if f = 876 then Some [102; 111; 108; 100]                           (* fold *)
-  else if f = 10174 then Some [97; 110; 100]                               (* and *)
-  else if f = 10184 then Some [111; 114]                                   (* or *)
+  (* Not Scheme's and/or. Those are syntax and they short-circuit; Z10174 and
+     Z10184 are ordinary functions that evaluate both arguments. Rendering them
+     as plain procedures is both more faithful and safe to mention in value
+     position. *)
+  else if f = 10174 then Some [98; 111; 111; 108; 45; 97; 110; 100]
+  else if f = 10184 then Some [98; 111; 111; 108; 45; 111; 114]
   else if f = 10216 then Some [110; 111; 116]                              (* not *)
   else if f = 12681 then Some [108; 101; 110; 103; 116; 104]               (* length *)
   else if f = 13521 then Some [43]                                         (* + *)
@@ -132,10 +136,11 @@ let if_wrapper () : Tot text =
     parenthesise (join_with [cp_space] [[105; 102]; c; t; e])
   ])
 
+(* Only if remains a special form here, and only if can appear in value
+   position needing a wrapper. The wrapper is eager where the special form is
+   lazy, which is a real difference; in operator position if is left alone. *)
 let syntactic_wrapper (f:zid) : Tot (option text) =
-  if f = 10174 then Some (binary_wrapper [97; 110; 100])
-  else if f = 10184 then Some (binary_wrapper [111; 114])
-  else if f = 802 || f = 13846 then Some (if_wrapper ())
+  if f = 802 || f = 13846 then Some (if_wrapper ())
   else None
 
 let name_of (lookup:name_lookup) (f:zid) : Tot text =
@@ -226,24 +231,28 @@ let escaping_a_quote_example () :
   Lemma (quoted [97; 34; 98] == [34; 97; 92; 34; 98; 34])
   = assert_norm (quoted [97; 34; 98] == [34; 97; 92; 34; 98; 34])
 
-let syntax_in_value_position_is_wrapped () :
+let boolean_and_is_a_procedure_not_syntax () :
   Lemma (
-    print_value no_names (VFunc 10174)
-    == [40; 108; 97; 109; 98; 100; 97; 32; 40; 97; 32; 98; 41; 32; 40; 97; 110; 100; 32; 97; 32; 98; 41; 41]
+    print_value no_names (VFunc 10174) == [98; 111; 111; 108; 45; 97; 110; 100]
+  )
+  = assert_norm (print_value no_names (VFunc 10174) == [98; 111; 111; 108; 45; 97; 110; 100])
+
+let if_in_value_position_is_wrapped () :
+  Lemma (
+    print_value no_names (VFunc 802) == [40; 108; 97; 109; 98; 100; 97; 32; 40; 99; 32; 116; 32; 101; 41; 32; 40; 105; 102; 32; 99; 32; 116; 32; 101; 41; 41]
   )
   = assert_norm (
-      print_value no_names (VFunc 10174)
-      == [40; 108; 97; 109; 98; 100; 97; 32; 40; 97; 32; 98; 41; 32; 40; 97; 110; 100; 32; 97; 32; 98; 41; 41]
+      print_value no_names (VFunc 802) == [40; 108; 97; 109; 98; 100; 97; 32; 40; 99; 32; 116; 32; 101; 41; 32; 40; 105; 102; 32; 99; 32; 116; 32; 101; 41; 41]
     )
 
-let syntax_in_operator_position_is_not_wrapped () :
+let if_in_operator_position_is_not_wrapped () :
   Lemma (
-    print_expr no_names [] (ECall 10174 [EValue (VBool true); EValue (VBool false)])
-    == [40; 97; 110; 100; 32; 35; 116; 32; 35; 102; 41]
+    print_expr no_names [] (ECall 802 [EValue (VBool true); EValue (VNat 1); EValue (VNat 2)])
+    == [40; 105; 102; 32; 35; 116; 32; 49; 32; 50; 41]
   )
   = assert_norm (
-      print_expr no_names [] (ECall 10174 [EValue (VBool true); EValue (VBool false)])
-      == [40; 97; 110; 100; 32; 35; 116; 32; 35; 102; 41]
+      print_expr no_names [] (ECall 802 [EValue (VBool true); EValue (VNat 1); EValue (VNat 2)])
+      == [40; 105; 102; 32; 35; 116; 32; 49; 32; 50; 41]
     )
 
 let classical_names_are_used () :

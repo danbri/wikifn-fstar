@@ -81,6 +81,29 @@ test("parentheses balance across the whole listing", { skip }, () => {
   assert.equal(depth, 0, "listing does not close every parenthesis");
 });
 
+// Some Scheme editors object to any mention of a syntactic keyword, not only
+// to one in value position, so the generated files avoid and/or entirely.
+// Z10174 and Z10184 are Wikifunctions functions rather than short-circuit
+// syntax, so plain strict procedures are the faithful rendering anyway.
+test("the generated files never mention and or or", { skip }, () => {
+  for (const file of [listing, prelude, path.resolve("docs/generated/wikifn-bundle.scm")]) {
+    if (!existsSync(file)) continue;
+    const mentions = tokensWithPosition(readFileSync(file, "utf8"))
+      .filter((entry) => entry.token === "and" || entry.token === "or");
+    assert.equal(mentions.length, 0, `${path.basename(file)} mentions ${mentions[0]?.token}`);
+  }
+});
+
+test("the bundle loads its prelude before anything that needs it", { skip }, () => {
+  const bundlePath = path.resolve("docs/generated/wikifn-bundle.scm");
+  if (!existsSync(bundlePath)) return;
+  const source = readFileSync(bundlePath, "utf8");
+  const preludeMark = source.indexOf("(define (identity x) x)");
+  const firstGenerated = source.search(/\(define \(Z[1-9][0-9]*_/);
+  assert.ok(preludeMark >= 0, "bundle has no prelude");
+  assert.ok(preludeMark < firstGenerated, "bundle defines a composition before the prelude");
+});
+
 test("the prelude defines every primitive the listing needs", { skip }, () => {
   const preludeSource = readFileSync(prelude, "utf8");
   const defined = new Set(

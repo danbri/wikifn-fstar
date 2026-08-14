@@ -35,11 +35,19 @@
 
 (define (Z10615_string_starts_with s prefix)
   (let ((k (string-length prefix)))
-    (and (>= (string-length s) k) (string=? (substring s 0 k) prefix))))
+    (if (>= (string-length s) k)
+        (string=? (substring s 0 k) prefix)
+        #f)))
 
 (define (Z11040_string_length s) (string-length s))
 
 (define (Z10000_join_two_strings a b) (string-append a b))
+
+;; Strict, unlike Scheme's and: Z10174 is a function, so both
+;; arguments are evaluated.
+(define (bool-and a b) (if a (if b #t #f) #f))
+
+(define (bool-or a b) (if a #t (if b #t #f)))
 
 (define (Z866_string_equality a b) (string=? a b))
 

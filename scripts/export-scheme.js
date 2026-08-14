@@ -47,6 +47,7 @@ const NATIVE = new Set([
   "string-length", "<", "<=", "=", ">", ">=", "+", "*", "max", "min", "expt",
   "add1"
 ]);
+// bool-and and bool-or come from the prelude, not from Scheme.
 
 // Wikifunctions primitives with no native Scheme equivalent, keyed by ZID and
 // parameterised by the name the printer chose, so a label change cannot break
@@ -55,9 +56,14 @@ export const PRELUDE = new Map([
   ["Z10008", (n) => `(define (${n} s) (string=? s ""))`],
   ["Z10901", (n) => `(define (${n} s)\n  (if (string=? s "") "" (substring s 0 1)))`],
   ["Z14456", (n) => `(define (${n} s)\n  (if (string=? s "") "" (substring s 1 (string-length s))))`],
-  ["Z10615", (n) => `(define (${n} s prefix)\n  (let ((k (string-length prefix)))\n    (and (>= (string-length s) k) (string=? (substring s 0 k) prefix))))`],
+  // Written with nested if rather than and, so nothing in the generated files
+  // relies on a syntactic keyword at all. Some Scheme editors object to any
+  // mention of one.
+  ["Z10615", (n) => `(define (${n} s prefix)\n  (let ((k (string-length prefix)))\n    (if (>= (string-length s) k)\n        (string=? (substring s 0 k) prefix)\n        #f)))`],
   ["Z11040", (n) => `(define (${n} s) (string-length s))`],
   ["Z10000", (n) => `(define (${n} a b) (string-append a b))`],
+  ["Z10174", (n) => `;; Strict, unlike Scheme's and: Z10174 is a function, so both\n;; arguments are evaluated.\n(define (${n} a b) (if a (if b #t #f) #f))`],
+  ["Z10184", (n) => `(define (${n} a b) (if a #t (if b #t #f)))`],
   ["Z866", (n) => `(define (${n} a b) (string=? a b))`],
   ["Z13569", (n) => `(define (${n} a b) (if (< a b) 0 (- a b)))`],
   ["Z13582", (n) => `(define (${n} k) (if (= k 0) 0 (- k 1)))`],
@@ -72,9 +78,8 @@ export const PRELUDE = new Map([
 // The name the printer uses for each prelude primitive.
 export const preludeNames = new Map();
 for (const zid of PRELUDE.keys()) {
-  const name = zid === "Z1000000001"
-    ? "fresh-private-use-char"
-    : (catalog.names || {})[zid] || zid;
+  const classical = { Z1000000001: "fresh-private-use-char", Z10174: "bool-and", Z10184: "bool-or" };
+  const name = classical[zid] || (catalog.names || {})[zid] || zid;
   preludeNames.set(name, zid);
 }
 
