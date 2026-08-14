@@ -11,12 +11,8 @@ open Wikifn.Eval
 
   part:      6 of 10
   functions: 400
-  ZID range: Z27209 to Z30151
+  ZID range: Z27219 to Z30153
 *)
-
-(* Z27209 em dash instantiating sentence | Z27209@211221 -> Z27210@209212 digest 101fca61243c9d69f75db3706df9c0c991e092abdcd308959c9fc91f461e4d34 *)
-let body_Z27209_em_dash_instantiating_sentence : expr =
-  ECall 22511 [ECall 21394 [ECall 810 [ECall 24102 [EArg 0; EArg 2]; ECall 810 [EValue (VText [32; 8212; 32]); ECall 810 [ECall 24102 [EArg 1; EArg 2]; EValue (VList [])]]]]]
 
 (* Z27219 State location using entity and class, Italian | Z27219@268963 -> Z27375@266893 digest 4a124fc53ba8690a8dc2cfdfd4d29621c703eff82f25cc9b16a07ad30217cf49 *)
 let body_Z27219_state_location_using_entity_and_class_italian : expr =
@@ -1614,9 +1610,12 @@ let body_Z30148_hatnote : expr =
 let body_Z30151_articleplaceholder_format_wikidata_geo_coordinate : expr =
   ECall 30106 [EArg 0; ECall 25629 [EArg 1; EArg 0]]
 
+(* Z30153 ArticlePlaceholder render multi-main WD statement | Z30153@294887 -> Z30154@289781 digest e9735d451874ba33f7fa51ba92c11f9912278806f3ddcc8988a3970ed5a78dc1 *)
+let body_Z30153_articleplaceholder_render_multi_main_wd_statement : expr =
+  ECall 27873 [ECall 27926 [ECall 33646 [ECall 13436 [EValue (VFunc 29717); EArg 0; ECall 873 [EValue (VFunc 30155); EArg 1]]; EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [44; 32])]); EValue (VBool false); EValue (VBool false)]]; EValue (VText [115; 112; 97; 110]); EValue (VList []); EValue (VList [])]
+
 let part_policy (fid:zid) : Tot (option expr) =
   match fid with
-  | 27209 -> Some body_Z27209_em_dash_instantiating_sentence
   | 27219 -> Some body_Z27219_state_location_using_entity_and_class_italian
   | 27225 -> Some body_Z27225_divide_day_in_regular_intervals
   | 27232 -> Some body_Z27232_rational_from_two_natural_numbers
@@ -2016,4 +2015,5 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 30145 -> Some body_Z30145_html_key_value_string
   | 30148 -> Some body_Z30148_hatnote
   | 30151 -> Some body_Z30151_articleplaceholder_format_wikidata_geo_coordinate
+  | 30153 -> Some body_Z30153_articleplaceholder_render_multi_main_wd_statement
   | _ -> None

@@ -11,12 +11,8 @@ open Wikifn.Eval
 
   part:      5 of 10
   functions: 400
-  ZID range: Z23604 to Z27198
+  ZID range: Z23606 to Z27209
 *)
-
-(* Z23604 plural Lexeme forms for a Wikidata Item | Z23604@178111 -> Z23605@176526 digest ecd39ed7fe3f679b4a7e140f96a43bcabd2d517f6ad300e9aac7a5c6d982deb6 *)
-let body_Z23604_plural_lexeme_forms_for_a_wikidata_item : expr =
-  ECall 872 [EValue (VFunc 22490); ECall 23610 [EArg 0; EArg 1]]
 
 (* Z23606 flatten Typed list | Z23606@176471 -> Z23607@176465 digest 3d4dfea50dcfd0de2b6a0039c6e544c7161daa9aa7a546158bbc0d3966461f53 *)
 let body_Z23606_flatten_typed_list : expr =
@@ -1614,9 +1610,12 @@ let body_Z27190_months_between : expr =
 let body_Z27198_time_between_two_dates_with_unit_chosen_language : expr =
   ECall 802 [ECall 13676 [ECall 24918 [EArg 0; EArg 1]; EValue (VNat 0)]; ECall 27137 [ECall 24918 [EArg 0; EArg 1]; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 53; 55; 55])]); EArg 2]; ECall 802 [ECall 13676 [ECall 27190 [EArg 0; EArg 1]; EValue (VNat 0)]; ECall 27137 [ECall 27190 [EArg 0; EArg 1]; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 53; 49; 53; 49])]); EArg 2]; ECall 27137 [ECall 17144 [ECall 20744 [EArg 0; EArg 1]]; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 53; 55; 51])]); EArg 2]]]
 
+(* Z27209 em dash instantiating sentence | Z27209@211221 -> Z27210@209212 digest 101fca61243c9d69f75db3706df9c0c991e092abdcd308959c9fc91f461e4d34 *)
+let body_Z27209_em_dash_instantiating_sentence : expr =
+  ECall 22511 [ECall 21394 [ECall 810 [ECall 24102 [EArg 0; EArg 2]; ECall 810 [EValue (VText [32; 8212; 32]); ECall 810 [ECall 24102 [EArg 1; EArg 2]; EValue (VList [])]]]]]
+
 let part_policy (fid:zid) : Tot (option expr) =
   match fid with
-  | 23604 -> Some body_Z23604_plural_lexeme_forms_for_a_wikidata_item
   | 23606 -> Some body_Z23606_flatten_typed_list
   | 23610 -> Some body_Z23610_lexeme_forms_representing_item
   | 23616 -> Some body_Z23616_lexemes_from_wikidata_item_reference
@@ -2016,4 +2015,5 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 27182 -> Some body_Z27182_join_two_strings_with_space
   | 27190 -> Some body_Z27190_months_between
   | 27198 -> Some body_Z27198_time_between_two_dates_with_unit_chosen_language
+  | 27209 -> Some body_Z27209_em_dash_instantiating_sentence
   | _ -> None

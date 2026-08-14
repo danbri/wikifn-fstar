@@ -95,6 +95,7 @@ let fid_filter : zid = 872          // Z872 Filter Function
 let fid_map : zid = 873             // Z873 map function
 let fid_fold : zid = 876            // Z876 Reduce Function
 let fid_string_eq : zid = 866       // Z866 string equality, string=? in Scheme
+let fid_object_eq : zid = 13052     // Z13052 object equality, over any two values
 let fid_string_append : zid = 10000 // Z10000 join two strings
 let fid_not : zid = 10216           // Z10216 not
 let fid_and : zid = 10174           // Z10174 and
@@ -201,6 +202,40 @@ let value_reverse (items:list value) : Tot (list value) = value_rev_onto items [
    thing is two passes and no intermediate append. *)
 let value_append_last (items:list value) (x:value) : Tot (list value) =
   value_rev_onto (value_reverse items) [x]
+
+(* Structural equality over values, grounded for the same reason reverse is.
+   Z13052 object equality is written as Z23360(a, b, Z13052) and Z23360 applies
+   its third argument to its first two, so Z13052(a,b) reduces to Z13052(a,b)
+   and never bottoms out. It is the comparator underneath contains, index-of,
+   is-permutation and anagrams, so following it strands all of them. The wiki
+   does not hit this because Z13052 has two code implementations. *)
+let rec value_eq (left:value) (right:value) : Tot bool (decreases left) =
+  match left, right with
+  | VText l, VText r -> text_eq l r
+  | VNat l, VNat r -> l = r
+  | VBool l, VBool r -> l = r
+  | VFunc l, VFunc r -> l = r
+  | VPair la lb, VPair ra rb -> if value_eq la ra then value_eq lb rb else false
+  | VList l, VList r -> value_list_eq l r
+  | VRecord lt lf, VRecord rt rf -> if lt = rt then field_list_eq lf rf else false
+  | _, _ -> false
+
+and value_list_eq (left:list value) (right:list value) : Tot bool (decreases left) =
+  match left, right with
+  | [], [] -> true
+  | lh :: lt, rh :: rt -> if value_eq lh rh then value_list_eq lt rt else false
+  | _, _ -> false
+
+(* Field order is part of the record as the corpus writes it, so this compares
+   position by position rather than as a set. *)
+and field_list_eq (left:list (zkey & value)) (right:list (zkey & value))
+  : Tot bool (decreases left)
+=
+  match left, right with
+  | [], [] -> true
+  | (lk, lv) :: lt, (rk, rv) :: rt ->
+      if zkey_eq lk rk then (if value_eq lv rv then field_list_eq lt rt else false) else false
+  | _, _ -> false
 
 let rec value_count (items:list value) : Tot nat =
   match items with
@@ -436,6 +471,8 @@ let apply_primitive (fid:zid) (args:list value) : Tot (option (eval_result value
                 end
               | EErr e, _ -> EErr e
               | _, EErr e -> EErr e)
+      else if fid = fid_object_eq then
+        Some (EOk (VBool (value_eq a b)))
       else if fid = fid_nat_divide then
         Some (match as_nat fid a, as_nat fid b with
               | EOk l, EOk r -> if r = 0 then EErr (EDivisionByZero fid) else EOk (VNat (l / r))

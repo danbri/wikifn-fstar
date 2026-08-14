@@ -11,12 +11,8 @@ open Wikifn.Eval
 
   part:      3 of 10
   functions: 400
-  ZID range: Z16012 to Z20032
+  ZID range: Z16015 to Z20041
 *)
-
-(* Z16012 (!) grammatical number for languages with singular, dual and plural | Z16012@271191 -> Z34594@271190 digest a0c189fcce8af7fc434045433c6d628e1beebe7c1aca3e3f6243b92e297e72f7 *)
-let body_Z16012_grammatical_number_for_languages_with_singular_dual_and_plur : expr =
-  ECall 19565 [ECall 31547 [EArg 0]; EValue (VText [115; 105; 110; 103; 117; 108; 97; 114]); ECall 31554 [EArg 0]; EValue (VText [100; 117; 97; 108]); EValue (VText [112; 108; 117; 114; 97; 108])]
 
 (* Z16015 (!) grammatical number for languages with singular, paucal (2-5) and plural | Z16015@271193 -> Z34595@271192 digest e49b1d72af72ffd2aa403cc23bd52f04b891865326f8b5787446ba790ad24f0e *)
 let body_Z16015_grammatical_number_for_languages_with_singular_paucal_2_5_an : expr =
@@ -1614,9 +1610,12 @@ let body_Z20020_sort_rational_numbers : expr =
 let body_Z20032_floor_of_rational_number : expr =
   ECall 13546 [ECall 19722 [EArg 0]; ECall 19724 [EArg 0]]
 
+(* Z20041 Wikidata item reference ID string | Z20041@185963 -> Z20043@138932 digest 26a41560a4a3aeb9500410600f0caac56b87e142e3bc104c141542da49232039 *)
+let body_Z20041_wikidata_item_reference_id_string : expr =
+  ECall 803 [EValue (VRecord 39 [({ key_owner = Some 39; key_index = 1 }, VText [90; 54; 48; 57; 49; 75; 49])]); EArg 0]
+
 let part_policy (fid:zid) : Tot (option expr) =
   match fid with
-  | 16012 -> Some body_Z16012_grammatical_number_for_languages_with_singular_dual_and_plur
   | 16015 -> Some body_Z16015_grammatical_number_for_languages_with_singular_paucal_2_5_an
   | 16085 -> Some body_Z16085_croatian_cardinal
   | 16136 -> Some body_Z16136_following_month
@@ -2016,4 +2015,5 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 20006 -> Some body_Z20006_rational_modulo
   | 20020 -> Some body_Z20020_sort_rational_numbers
   | 20032 -> Some body_Z20032_floor_of_rational_number
+  | 20041 -> Some body_Z20041_wikidata_item_reference_id_string
   | _ -> None

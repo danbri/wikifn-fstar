@@ -74,6 +74,12 @@
 
 (define (Z866_string_equality a b) (string=? a b))
 
+(define (Z13052_object_equality a b) (equal? a b))
+
+(define (fst p) (car p))
+
+(define (snd p) (cdr p))
+
 (define (Z13569_subtract_natural_numbers_with_floor_of_0 a b) (if (< a b) 0 (- a b)))
 
 (define (Z13582_decrement_natural_number_by_one k) (if (= k 0) 0 (- k 1)))
@@ -147,6 +153,69 @@
       (cond ((> code 63487) "")
             ((memv (integer->char code) used) (loop (+ code 1)))
             (else (string (integer->char code)))))))
+
+;; Primitives by ZID.
+;;
+;; The classical name is for reading and the ZID is the identity, so both
+;; work: (cons 1 (list)) and (Z810 1 (list)) are the same call.
+
+(define Z801 identity)
+(define-syntax Z802
+  (syntax-rules ()
+    ((_ condition consequent alternative)
+     (if condition consequent alternative))))
+
+(define Z810 cons)
+(define Z811 car)
+(define Z812 cdr)
+(define Z813 null?)
+(define Z821 fst)
+(define Z822 snd)
+(define Z866 string=?)
+(define Z872 filter)
+(define Z873 map)
+(define Z876 fold)
+(define Z10174 bool-and)
+(define Z10184 bool-or)
+(define Z10216 not)
+(define Z12681 length)
+(define Z13521 +)
+(define Z13522 =)
+(define Z13539 *)
+(define Z13578 add1)
+(define Z13630 max)
+(define Z13633 min)
+(define Z13647 expt)
+(define Z13676 >)
+(define Z13682 >=)
+(define Z13689 <)
+(define Z13695 <=)
+(define Z10008 Z10008_is_empty_string)
+(define Z10901 Z10901_get_first_character_of_string)
+(define Z14456 Z14456_remove_first_character)
+(define Z10615 Z10615_string_starts_with)
+(define Z11040 Z11040_string_length)
+(define Z10000 Z10000_join_two_strings)
+(define Z13052 Z13052_object_equality)
+(define Z13569 Z13569_subtract_natural_numbers_with_floor_of_0)
+(define Z13582 Z13582_decrement_natural_number_by_one)
+(define Z12668 Z12668_reverse_untyped_list)
+(define Z12961 Z12961_append_element_to_typed_list)
+(define Z22717 Z22717_string_to_codepoint_list)
+(define Z868 Z868_deprecated_z22717)
+(define Z886 Z886_deprecated_z22693)
+(define Z13546 Z13546_divide_natural_numbers)
+(define Z22693 Z22693_codepoint_list_to_string)
+(define Z14520 Z14520_remove_all_characters_in_second_string)
+(define Z14124 Z14124_string_of_characters_from_unicode_range)
+(define Z10075 Z10075_replace_all_substrings)
+(define Z13318 Z13318_apply_two_argument_function)
+(define Z21216 Z21216_apply_three_argument_function)
+(define Z30438 Z30438_apply_four_argument_function)
+(define Z14779 Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l)
+(define Z16829 Z16829_type_of_object)
+(define Z803 Z803_value_by_key)
+(define Z1000000001 fresh-private-use-char)
 
 
 
@@ -2189,11 +2258,6 @@
 ;;   Z13036K1: Function, Z13036K2: Object -> Object   [declared, not checked]
 (define (Z13036_apply a0 a1) (car (map a0 (cons a1 (list)))))
 (define Z13036 Z13036_apply)
-
-;; Z13052 object equality
-;;   Z13052K1: Object, Z13052K2: Object -> Boolean   [declared, not checked]
-(define (Z13052_object_equality a0 a1) (Z23360_object_comparison a0 a1 Z13052_object_equality))
-(define Z13052 Z13052_object_equality)
 
 ;; Z13078 remove duplicates from untyped list
 ;;   Z13078K1: Typed list(Object) -> Typed list(Object)   [declared, not checked]

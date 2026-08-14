@@ -65,6 +65,14 @@ export const PRELUDE = new Map([
   ["Z10174", (n) => `;; Strict, unlike Scheme's and: Z10174 is a function, so both\n;; arguments are evaluated.\n(define (${n} a b) (if a (if b #t #f) #f))`],
   ["Z10184", (n) => `(define (${n} a b) (if a #t (if b #t #f)))`],
   ["Z866", (n) => `(define (${n} a b) (string=? a b))`],
+  // Structural equality over any two values, grounded for the same reason:
+  // Z13052 is written as apply(self, a, b) and never bottoms out.
+  ["Z13052", (n) => `(define (${n} a b) (equal? a b))`],
+  // A Z882 pair prints as (cons left right), so its accessors are car and cdr.
+  // These were used by the listing and defined nowhere, which made every body
+  // mentioning a pair fail to run.
+  ["Z821", (n) => `(define (${n} p) (car p))`],
+  ["Z822", (n) => `(define (${n} p) (cdr p))`],
   ["Z13569", (n) => `(define (${n} a b) (if (< a b) 0 (- a b)))`],
   ["Z13582", (n) => `(define (${n} k) (if (= k 0) 0 (- k 1)))`],
   // Reverse and append are primitives here for the same reason they are in the
@@ -105,7 +113,11 @@ export const PRELUDE = new Map([
 // The name the printer uses for each prelude primitive.
 export const preludeNames = new Map();
 for (const zid of PRELUDE.keys()) {
-  const classical = { Z1000000001: "fresh-private-use-char", Z10174: "bool-and", Z10184: "bool-or" };
+  const classical = {
+    Z1000000001: "fresh-private-use-char",
+    Z10174: "bool-and", Z10184: "bool-or",
+    Z821: "fst", Z822: "snd"
+  };
   const name = classical[zid] || (catalog.names || {})[zid] || zid;
   preludeNames.set(name, zid);
 }

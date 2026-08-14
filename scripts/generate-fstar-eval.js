@@ -72,6 +72,9 @@ const PRIMITIVES = new Set([
   // Z13546 natural division, and Z868 and Z886, which are Z22717 and Z22693
   // under names the wiki marks deprecated.
   "Z13546", "Z868", "Z886",
+  // Z13052 object equality, which is written as apply(self, a, b) and so never
+  // bottoms out. It is the comparator under contains, index-of and permutation.
+  "Z13052",
   // Text and codepoint lists are the same data in two shapes.
   "Z22693", "Z22717",
   // Higher-order application, which is how the corpus writes higher-order code.

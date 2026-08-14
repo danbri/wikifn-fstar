@@ -10,13 +10,9 @@ open Wikifn.Eval
   Z14K2 composition; none of it is authored.
 
   part:      10 of 10
-  functions: 76
-  ZID range: Z38428 to Z38857
+  functions: 75
+  ZID range: Z38435 to Z38857
 *)
-
-(* Z38428 symbolizes-sentence | Z38428@294653 -> Z38429@294659 digest b87a49d9a4e8b44ebda6b48e9a653b6fbe88a8fc723bff539ecba562132f88c9 *)
-let body_Z38428_symbolizes_sentence : expr =
-  ECall 30438 [ECall 14310 [EValue (VFunc 38423); EArg 3]; EArg 0; EArg 1; EArg 2; EArg 3]
 
 (* Z38435 depends on software-sentence | Z38435@294674 -> Z38436@294671 digest 8f2ef35e5e24bcfd0beccf76ec52d49224952ce8c0d7f2382442680d1783256b *)
 let body_Z38435_depends_on_software_sentence : expr =
@@ -320,7 +316,6 @@ let body_Z38857_apply_a_5_param_fn_to_a_list_of_firsts_same_2_5 : expr =
 
 let part_policy (fid:zid) : Tot (option expr) =
   match fid with
-  | 38428 -> Some body_Z38428_symbolizes_sentence
   | 38435 -> Some body_Z38435_depends_on_software_sentence
   | 38440 -> Some body_Z38440_characteristic_of_sentence
   | 38443 -> Some body_Z38443_named_after_sentence

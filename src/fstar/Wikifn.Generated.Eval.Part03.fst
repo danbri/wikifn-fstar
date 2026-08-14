@@ -11,12 +11,8 @@ open Wikifn.Eval
 
   part:      4 of 10
   functions: 400
-  ZID range: Z20041 to Z23600
+  ZID range: Z20046 to Z23604
 *)
-
-(* Z20041 Wikidata item reference ID string | Z20041@185963 -> Z20043@138932 digest 26a41560a4a3aeb9500410600f0caac56b87e142e3bc104c141542da49232039 *)
-let body_Z20041_wikidata_item_reference_id_string : expr =
-  ECall 803 [EValue (VRecord 39 [({ key_owner = Some 39; key_index = 1 }, VText [90; 54; 48; 57; 49; 75; 49])]); EArg 0]
 
 (* Z20046 Wikidata property id string | Z20046@193986 -> Z20048@138947 digest 29c03bf9df4c23bdcd3f0a3c25ab4d2d94d3803462280a695125c984be758d48 *)
 let body_Z20046_wikidata_property_id_string : expr =
@@ -1614,9 +1610,12 @@ let body_Z23596_is_wikidata_day_of_the_week_within_a_given_month : expr =
 let body_Z23600_is_wikidata_reference_of_day_relative_to_easter : expr =
   ECall 10174 [ECall 23120 [ECall 22220 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList [VFunc 1360]); EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 52; 56; 57; 53])]])]]]; ECall 29868 [ECall 811 [ECall 22220 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList [VFunc 1360]); EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 52; 56; 57; 53])]])]]]; EValue (VRecord 6007 [({ key_owner = Some 6007; key_index = 1 }, VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 50; 50; 49; 48])]); ({ key_owner = Some 6007; key_index = 2 }, VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 53; 49; 50; 50; 52; 53; 51; 54])]); ({ key_owner = Some 6007; key_index = 3 }, VFunc 6021)])]]
 
+(* Z23604 plural Lexeme forms for a Wikidata Item | Z23604@178111 -> Z23605@176526 digest ecd39ed7fe3f679b4a7e140f96a43bcabd2d517f6ad300e9aac7a5c6d982deb6 *)
+let body_Z23604_plural_lexeme_forms_for_a_wikidata_item : expr =
+  ECall 872 [EValue (VFunc 22490); ECall 23610 [EArg 0; EArg 1]]
+
 let part_policy (fid:zid) : Tot (option expr) =
   match fid with
-  | 20041 -> Some body_Z20041_wikidata_item_reference_id_string
   | 20046 -> Some body_Z20046_wikidata_property_id_string
   | 20053 -> Some body_Z20053_ceiling_of_rational_number
   | 20065 -> Some body_Z20065_is_unit_fraction
@@ -2016,4 +2015,5 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 23592 -> Some body_Z23592_is_wikidata_reference_to_roman_day
   | 23596 -> Some body_Z23596_is_wikidata_day_of_the_week_within_a_given_month
   | 23600 -> Some body_Z23600_is_wikidata_reference_of_day_relative_to_easter
+  | 23604 -> Some body_Z23604_plural_lexeme_forms_for_a_wikidata_item
   | _ -> None

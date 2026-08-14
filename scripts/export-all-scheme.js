@@ -146,6 +146,43 @@ for (const [name, zid] of preludeNames) {
   const build = PRELUDE.get(zid);
   if (build) preludeLines.push(build(name), "");
 }
+
+// Every primitive reachable by its ZID as well as by its name.
+//
+// Without this, the primitives were the one part of the language you could not
+// address the way Wikifunctions addresses everything else. A caller who knows
+// Z810 had to know that it is spelled cons here, and the hint macro in
+// wikifn-hints.scm could not help either, because it rewrites Znnnn_... down to
+// Znnnn and there was no Znnnn to rewrite to.
+preludeLines.push(
+  ";; Primitives by ZID.",
+  ";;",
+  ";; The classical name is for reading and the ZID is the identity, so both",
+  ";; work: (cons 1 (list)) and (Z810 1 (list)) are the same call.",
+  ""
+);
+const aliased = new Set();
+for (const [name, zid] of [...CLASSIC, ...[...preludeNames].map(([n, z]) => [n, z])]) {
+  if (aliased.has(zid)) continue;
+  aliased.add(zid);
+  // Z802 and Z13846 choose a branch, and in Scheme if is syntax rather than a
+  // procedure. Binding them with define would evaluate both branches, and 230
+  // of the 288 directly self-recursive compositions in the corpus guard their
+  // recursive branch with Z802, so all of them would diverge. A macro keeps the
+  // branch lazy and the ZID callable.
+  if (zid === "Z802" || zid === "Z13846") {
+    preludeLines.push(
+      `(define-syntax ${zid}`,
+      "  (syntax-rules ()",
+      "    ((_ condition consequent alternative)",
+      "     (if condition consequent alternative))))",
+      ""
+    );
+    continue;
+  }
+  preludeLines.push(`(define ${zid} ${name})`);
+}
+preludeLines.push("");
 await writeFile(
   path.join(root, "docs", "generated", "wikifn-prelude.scm"),
   preludeLines.join("\n"),

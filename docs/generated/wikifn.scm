@@ -2100,11 +2100,6 @@
 (define (Z13036_apply a0 a1) (car (map a0 (cons a1 (list)))))
 (define Z13036 Z13036_apply)
 
-;; Z13052 object equality
-;;   Z13052K1: Object, Z13052K2: Object -> Boolean   [declared, not checked]
-(define (Z13052_object_equality a0 a1) (Z23360_object_comparison a0 a1 Z13052_object_equality))
-(define Z13052 Z13052_object_equality)
-
 ;; Z13078 remove duplicates from untyped list
 ;;   Z13078K1: Typed list(Object) -> Typed list(Object)   [declared, not checked]
 (define (Z13078_remove_duplicates_from_untyped_list a0) (fold Z24655_list_with_added_element_unless_already_present a0 (list)))

@@ -409,7 +409,6 @@
     "Z13013": "Z13013_thai_nominalization_of_adjective",
     "Z13034": "Z13034_thai_nominalization_of_verb",
     "Z13036": "Z13036_apply",
-    "Z13052": "Z13052_object_equality",
     "Z13078": "Z13078_remove_duplicates_from_untyped_list",
     "Z13081": "Z13081_remove_all_matching_elements_from_list",
     "Z13085": "Z13085_hyperbolic_arccotangent",
@@ -3721,6 +3720,7 @@
     "Z13546": "Z13546_divide_natural_numbers",
     "Z868": "Z868_deprecated_z22717",
     "Z886": "Z886_deprecated_z22693",
+    "Z13052": "Z13052_object_equality",
     "Z22693": "Z22693_codepoint_list_to_string",
     "Z22717": "Z22717_string_to_codepoint_list",
     "Z13318": "Z13318_apply_two_argument_function",
@@ -11472,26 +11472,6 @@
       "implementation": "Z13048",
       "revision": 137124,
       "digest": "c8fdeec28c7afbb033a83d89a982388d23f9407e53b305f13cd1076ce8ed7ae9"
-    },
-    {
-      "zid": "Z13052",
-      "name": "Z13052_object_equality",
-      "label": "object equality",
-      "arity": 2,
-      "runnable": true,
-      "mutuallyRecursive": false,
-      "argumentKeys": [
-        "Z13052K1",
-        "Z13052K2"
-      ],
-      "argumentTypes": [
-        "Object",
-        "Object"
-      ],
-      "returnType": "Boolean",
-      "implementation": "Z23367",
-      "revision": 174099,
-      "digest": "d6cab6e0375d489993aef33f6f0f413b31be08f0e3dced16500732727b6a01c5"
     },
     {
       "zid": "Z13078",

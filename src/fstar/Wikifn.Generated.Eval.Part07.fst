@@ -11,12 +11,8 @@ open Wikifn.Eval
 
   part:      8 of 10
   functions: 400
-  ZID range: Z32881 to Z36001
+  ZID range: Z32891 to Z36004
 *)
-
-(* Z32881 Japanese simple present collective sentence | Z32881@261750 -> Z32882@296459 digest fbfd26418a0ff93aa0d1cfb9c186ef10374092dc12d8b914e761f34210d8e2d7 *)
-let body_Z32881_japanese_simple_present_collective_sentence : expr =
-  ECall 26107 [EArg 3; ECall 21394 [ECall 810 [ECall 23753 [EArg 0; EArg 3]; ECall 810 [EValue (VText [12399]); ECall 810 [ECall 23753 [EArg 1; EArg 3]; ECall 810 [EValue (VText [12434]); ECall 810 [ECall 27410 [ECall 27327 [EArg 2; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 57; 57; 55; 48])]); EArg 3]; EValue (VList [VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 50; 56; 57; 56; 55; 50; 55])]])]; ECall 810 [EValue (VText [12290]); EValue (VList [])]]]]]]]]
 
 (* Z32891 reference marker HTML from HTML | Z32891@261854 -> Z32894@261851 digest 2c9f2d863c508f6da12536dcff624c0fa00f6f125580be3ec43d8da723148d29 *)
 let body_Z32891_reference_marker_html_from_html : expr =
@@ -1614,9 +1610,12 @@ let body_Z35999_apply_function_with_2_or_3_arguments_in_order : expr =
 let body_Z36001_defining_role_sentence_in_swedish : expr =
   ECall 26107 [EArg 3; ECall 22511 [ECall 22504 [ECall 810 [ECall 23753 [EArg 0; EArg 3]; ECall 810 [EValue (VText [228; 114]); ECall 810 [ECall 18020 [ECall 23753 [EArg 2; EArg 3]]; ECall 810 [ECall 23753 [EArg 1; EArg 3]; EValue (VList [])]]]]]]]
 
+(* Z36004 format Gregorian date in Swedish | Z36004@290668 -> Z37688@292743 digest 2d32957af733f813a210b32259cd098f0b85cf7b372c0a14fb5319524654e6b5 *)
+let body_Z36004_format_gregorian_date_in_swedish : expr =
+  ECall 27182 [ECall 22941 [ECall 24936 [EArg 0]; EValue (VFunc 1592)]; ECall 20241 [ECall 24948 [EArg 0]; EValue (VFunc 1592)]]
+
 let part_policy (fid:zid) : Tot (option expr) =
   match fid with
-  | 32881 -> Some body_Z32881_japanese_simple_present_collective_sentence
   | 32891 -> Some body_Z32891_reference_marker_html_from_html
   | 32897 -> Some body_Z32897_default_australian_place_population_sentence
   | 32900 -> Some body_Z32900_chinese_trad_article_ful_instantiating_fragment
@@ -2016,4 +2015,5 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 35993 -> Some body_Z35993_infobox_for_film
   | 35999 -> Some body_Z35999_apply_function_with_2_or_3_arguments_in_order
   | 36001 -> Some body_Z36001_defining_role_sentence_in_swedish
+  | 36004 -> Some body_Z36004_format_gregorian_date_in_swedish
   | _ -> None

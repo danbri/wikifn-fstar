@@ -11,12 +11,8 @@ open Wikifn.Eval
 
   part:      9 of 10
   functions: 400
-  ZID range: Z36004 to Z38425
+  ZID range: Z36007 to Z38428
 *)
-
-(* Z36004 format Gregorian date in Swedish | Z36004@290668 -> Z37688@292743 digest 2d32957af733f813a210b32259cd098f0b85cf7b372c0a14fb5319524654e6b5 *)
-let body_Z36004_format_gregorian_date_in_swedish : expr =
-  ECall 27182 [ECall 22941 [ECall 24936 [EArg 0]; EValue (VFunc 1592)]; ECall 20241 [ECall 24948 [EArg 0]; EValue (VFunc 1592)]]
 
 (* Z36007 select Wikidata item with matching label | Z36007@280225 -> Z36013@280219 digest 4575d9d0815b7c5a817d842e368cb031f57e25faedb73cb0dd35cc2eec06a6a3 *)
 let body_Z36007_select_wikidata_item_with_matching_label : expr =
@@ -1614,9 +1610,12 @@ let body_Z38395_is_language_written_from_right_to_left : expr =
 let body_Z38425_shares_border_with_sentence : expr =
   ECall 30438 [ECall 14310 [EValue (VFunc 38424); EArg 3]; EArg 0; EArg 1; EArg 2; EArg 3]
 
+(* Z38428 symbolizes-sentence | Z38428@294653 -> Z38429@294659 digest b87a49d9a4e8b44ebda6b48e9a653b6fbe88a8fc723bff539ecba562132f88c9 *)
+let body_Z38428_symbolizes_sentence : expr =
+  ECall 30438 [ECall 14310 [EValue (VFunc 38423); EArg 3]; EArg 0; EArg 1; EArg 2; EArg 3]
+
 let part_policy (fid:zid) : Tot (option expr) =
   match fid with
-  | 36004 -> Some body_Z36004_format_gregorian_date_in_swedish
   | 36007 -> Some body_Z36007_select_wikidata_item_with_matching_label
   | 36011 -> Some body_Z36011_list_of_strings_from_multilingual_text
   | 36018 -> Some body_Z36018_generate_finite_arithmetic_progression_of_integers
@@ -2016,4 +2015,5 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 38388 -> Some body_Z38388_entity_supports_paradigms_sentence
   | 38395 -> Some body_Z38395_is_language_written_from_right_to_left
   | 38425 -> Some body_Z38425_shares_border_with_sentence
+  | 38428 -> Some body_Z38428_symbolizes_sentence
   | _ -> None

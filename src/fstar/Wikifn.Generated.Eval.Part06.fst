@@ -11,12 +11,8 @@ open Wikifn.Eval
 
   part:      7 of 10
   functions: 400
-  ZID range: Z30153 to Z32878
+  ZID range: Z30155 to Z32881
 *)
-
-(* Z30153 ArticlePlaceholder render multi-main WD statement | Z30153@294887 -> Z30154@289781 digest e9735d451874ba33f7fa51ba92c11f9912278806f3ddcc8988a3970ed5a78dc1 *)
-let body_Z30153_articleplaceholder_render_multi_main_wd_statement : expr =
-  ECall 27873 [ECall 27926 [ECall 33646 [ECall 13436 [EValue (VFunc 29717); EArg 0; ECall 873 [EValue (VFunc 30155); EArg 1]]; EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [44; 32])]); EValue (VBool false); EValue (VBool false)]]; EValue (VText [115; 112; 97; 110]); EValue (VList []); EValue (VList [])]
 
 (* Z30155 emulate WD statement object from WD property claim | Z30155@259010 -> Z30156@233111 digest e96cf467dd339884e53e7f12412f117ed2963e01b880573d2d05100dc83929df *)
 let body_Z30155_emulate_wd_statement_object_from_wd_property_claim : expr =
@@ -1614,9 +1610,12 @@ let body_Z32871_filter_mismatching_functions_of_per_lang_config : expr =
 let body_Z32878_wikidata_link_for_item : expr =
   ECall 27873 [ECall 27868 [ECall 15175 [ECall 803 [EValue (VRecord 39 [({ key_owner = Some 39; key_index = 1 }, VText [90; 54; 48; 57; 49; 75; 49])]); EArg 0]; ECall 24766 [EArg 0; EArg 1]; EValue (VText [58; 32])]]; EValue (VText [97]); EValue (VList [VText [104; 114; 101; 102]]); ECall 810 [ECall 10000 [EValue (VText [104; 116; 116; 112; 115; 58; 47; 47; 119; 119; 119; 46; 119; 105; 107; 105; 100; 97; 116; 97; 46; 111; 114; 103; 47; 119; 105; 107; 105; 47]); ECall 803 [EValue (VRecord 39 [({ key_owner = Some 39; key_index = 1 }, VText [90; 54; 48; 57; 49; 75; 49])]); EArg 0]]; EValue (VList [])]]
 
+(* Z32881 Japanese simple present collective sentence | Z32881@261750 -> Z32882@296459 digest fbfd26418a0ff93aa0d1cfb9c186ef10374092dc12d8b914e761f34210d8e2d7 *)
+let body_Z32881_japanese_simple_present_collective_sentence : expr =
+  ECall 26107 [EArg 3; ECall 21394 [ECall 810 [ECall 23753 [EArg 0; EArg 3]; ECall 810 [EValue (VText [12399]); ECall 810 [ECall 23753 [EArg 1; EArg 3]; ECall 810 [EValue (VText [12434]); ECall 810 [ECall 27410 [ECall 27327 [EArg 2; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 57; 57; 55; 48])]); EArg 3]; EValue (VList [VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 50; 56; 57; 56; 55; 50; 55])]])]; ECall 810 [EValue (VText [12290]); EValue (VList [])]]]]]]]]
+
 let part_policy (fid:zid) : Tot (option expr) =
   match fid with
-  | 30153 -> Some body_Z30153_articleplaceholder_render_multi_main_wd_statement
   | 30155 -> Some body_Z30155_emulate_wd_statement_object_from_wd_property_claim
   | 30157 -> Some body_Z30157_group_by_selector_func_and_apply_func_w_key_vals
   | 30159 -> Some body_Z30159_list_of_names_for_table_header
@@ -2016,4 +2015,5 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 32869 -> Some body_Z32869_all_functions_incl_default_from_per_lang_config
   | 32871 -> Some body_Z32871_filter_mismatching_functions_of_per_lang_config
   | 32878 -> Some body_Z32878_wikidata_link_for_item
+  | 32881 -> Some body_Z32881_japanese_simple_present_collective_sentence
   | _ -> None

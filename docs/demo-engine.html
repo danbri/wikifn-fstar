@@ -19,6 +19,13 @@
       .arg-row label { min-width: 9rem; font-family: ui-monospace, monospace; font-size: 0.85em; }
       .arg-row input { flex: 1; }
       pre.sexpr { overflow-x: auto; }
+      .examples { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: baseline; margin-bottom: 0.6rem; }
+      .examples button.example { font: inherit; font-size: 0.85em; font-family: ui-monospace, monospace;
+        padding: 0.15rem 0.5rem; border: 1px solid rgba(128,128,128,0.45); border-radius: 0.8rem;
+        background: none; cursor: pointer; max-width: 22rem; overflow: hidden; text-overflow: ellipsis;
+        white-space: nowrap; }
+      .examples button.example:hover { background: rgba(128,128,128,0.12); }
+      .examples button.example-known-bad { border-style: dashed; opacity: 0.7; }
       .provenance { font-size: 0.85em; opacity: 0.8; }
       .provenance code { word-break: break-all; }
     </style>
@@ -44,13 +51,17 @@
       </header>
 
       <section>
-        <h2>Load the engine</h2>
+        <h2 id="engine-heading">Loading the engine</h2>
         <p>
-          The artifact and catalogue are a few hundred kilobytes, served
-          compressed. Nothing is fetched or run until you press the button.
+          The artifact and catalogue are a couple of megabytes, served
+          compressed. They start downloading as soon as you arrive; nothing can
+          be searched or run until they finish, and the status below says which
+          it is.
         </p>
-        <button id="engine-load" class="demo-action" type="button">Load engine</button>
-        <div id="engine-status" class="demo-status">Not loaded.</div>
+        <div id="engine-status" class="demo-status" role="status" aria-live="polite">
+          Starting…
+        </div>
+        <button id="engine-load" class="demo-action" type="button" hidden>Try again</button>
       </section>
 
       <section id="engine-panel" hidden>
@@ -75,6 +86,7 @@
 
             <form id="engine-form" class="call-form" hidden>
               <div id="engine-args"></div>
+              <div id="engine-examples" class="examples"></div>
               <div class="arg-row">
                 <label for="engine-fuel" title="A budget for total evaluation steps, not nesting depth">fuel</label>
                 <input id="engine-fuel" value="100000" inputmode="numeric">
@@ -168,7 +180,22 @@
         const formEl = document.getElementById("engine-form");
         const argsEl = document.getElementById("engine-args");
         const fuelEl = document.getElementById("engine-fuel");
+        const exampleEl = document.getElementById("engine-examples");
         const outputEl = document.querySelector("#engine-output code");
+
+        // Puts one example into the argument boxes. A string goes in as itself
+        // so the box shows what a person would type; anything else goes in as
+        // JSON, which is how the form reads it back.
+        function fill(sample) {
+          const inputs = Array.from(argsEl.querySelectorAll("input"));
+          sample.args.forEach((value, index) => {
+            if (!inputs[index]) return;
+            inputs[index].value = typeof value === "string" ? value : JSON.stringify(value);
+          });
+          outputEl.textContent = sample.expected === undefined
+            ? ""
+            : "// its tester expects: " + JSON.stringify(sample.expected);
+        }
         const sexprEl = document.querySelector("#engine-sexpr code");
 
         // Type names come from the pinned corpus, so they are data rather than
@@ -177,17 +204,28 @@
           String(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
         let functions = [];
+        let examples = {};
         let nameTable = "{}";
         let selected = null;
         const runnableOnly = document.getElementById("engine-runnable-only");
 
-        document.getElementById("engine-load").addEventListener("click", async function () {
-          this.disabled = true;
-          status.textContent = "Loading catalogue and engine…";
+        const retry = document.getElementById("engine-load");
+        const heading = document.getElementById("engine-heading");
+
+        // Loading starts on arrival rather than on a click. The status line is
+        // the only thing that says whether the page is usable yet, so it is
+        // aria-live and it names the stage rather than just spinning.
+        async function load() {
+          retry.hidden = true;
+          heading.textContent = "Loading the engine";
           try {
+            status.textContent = "Fetching the catalogue…";
             const catalogue = await fetch("./generated/functions.json").then((r) => r.json());
             functions = catalogue.functions;
             nameTable = JSON.stringify(catalogue.names || {});
+
+            status.textContent =
+              functions.length.toLocaleString() + " functions catalogued. Fetching the engine…";
             await new Promise((resolve, reject) => {
               const script = document.createElement("script");
               script.src = "./generated/wikifn_engine.js";
@@ -198,16 +236,36 @@
             if (typeof globalThis.wikifnEngineCall !== "function") {
               throw new Error("the artifact did not export wikifnEngineCall");
             }
+
+            // Example arguments are optional: the page is fully usable without
+            // them, so a failure here is not a failure to load.
+            try {
+              const sampled = await fetch("./generated/examples.json").then((r) => r.json());
+              examples = sampled.examples || {};
+            } catch (error) {
+              examples = {};
+            }
+
             const runnable = functions.filter((f) => f.runnable).length;
+            heading.textContent = "Browse and run";
             status.textContent =
-              functions.length + " functions loaded, " + runnable + " of them runnable.";
+              "Ready. " + functions.length.toLocaleString() + " functions, " +
+              runnable.toLocaleString() + " of them runnable" +
+              (Object.keys(examples).length
+                ? ", " + Object.keys(examples).length.toLocaleString() +
+                  " with example arguments from Wikifunctions' own testers."
+                : ".");
             panel.hidden = false;
             render("");
           } catch (error) {
+            heading.textContent = "The engine did not load";
             status.textContent = "Failed: " + error.message;
-            this.disabled = false;
+            retry.hidden = false;
           }
-        });
+        }
+
+        retry.addEventListener("click", load);
+        load();
 
         function render(query) {
           const needle = query.trim().toLowerCase();
@@ -276,7 +334,6 @@
           outputEl.textContent = "";
 
           argsEl.replaceChildren();
-          const keys = entry.argumentKeys || [];
           for (let index = 0; index < entry.arity; index += 1) {
             const row = document.createElement("div");
             row.className = "arg-row";
@@ -287,8 +344,46 @@
             const input = document.createElement("input");
             input.id = id;
             input.dataset.argIndex = String(index);
+            // The declared type, in the box that wants it. Without this the
+            // only way to learn that Z844 wants a Boolean was to type a string
+            // and get back a type mismatch naming Z10174, a function you never
+            // called.
+            const declared = types[index];
+            if (declared) {
+              input.placeholder = declared;
+              input.dataset.declared = declared;
+            }
             row.append(label, input);
             argsEl.append(row);
+          }
+
+          // Arguments taken from this function's own Wikifunctions testers, so
+          // a visitor can run it without inventing input for a type they have
+          // never seen. The first is filled in; the rest are offered.
+          const sampled = examples[entry.zid] || [];
+          exampleEl.replaceChildren();
+          if (sampled.length) {
+            fill(sampled[0]);
+            const note = document.createElement("span");
+            note.className = "count";
+            note.textContent = sampled.length === 1
+              ? "example from tester " + sampled[0].tester + ": "
+              : "examples from its testers: ";
+            exampleEl.append(note);
+            for (const sample of sampled) {
+              const button = document.createElement("button");
+              button.type = "button";
+              button.className = "example";
+              button.textContent = sample.args.map((a) => JSON.stringify(a)).join(", ");
+              // An example the engine cannot yet run is still a real example.
+              // Marking it is more useful than hiding it.
+              if (sample.status !== "pass") {
+                button.title = "this engine currently reports " + sample.status + " for this input";
+                button.classList.add("example-known-bad");
+              }
+              button.addEventListener("click", () => fill(sample));
+              exampleEl.append(button);
+            }
           }
           formEl.hidden = false;
           render(query);

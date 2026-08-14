@@ -61,7 +61,8 @@ export const ENGINE_PRIMITIVES = [
   "Z13318", "Z21216", "Z30438", "Z14779",
   "Z803", "Z16829",
   "Z12668", "Z12961",
-  "Z13546", "Z868", "Z886"
+  "Z13546", "Z868", "Z886",
+  "Z13052"
 ];
 
 const PRIMITIVE_SETS = {

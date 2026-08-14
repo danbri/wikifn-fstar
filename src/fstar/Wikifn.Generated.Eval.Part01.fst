@@ -11,7 +11,7 @@ open Wikifn.Eval
 
   part:      2 of 10
   functions: 400
-  ZID range: Z12975 to Z16000
+  ZID range: Z12975 to Z16012
 *)
 
 (* Z12975 Ones complement binary subtraction | Z12975@267867 -> Z33970@267866 digest 2cb92e2763ed9f76e468ee9d5a9394c615f8e4f806c9821eb44cbe6c77f087f2 *)
@@ -45,10 +45,6 @@ let body_Z13034_thai_nominalization_of_verb : expr =
 (* Z13036 apply | Z13036@267674 -> Z13048@137124 digest c8fdeec28c7afbb033a83d89a982388d23f9407e53b305f13cd1076ce8ed7ae9 *)
 let body_Z13036_apply : expr =
   ECall 811 [ECall 873 [EArg 0; ECall 810 [EArg 1; EValue (VList [])]]]
-
-(* Z13052 object equality | Z13052@255261 -> Z23367@174099 digest d6cab6e0375d489993aef33f6f0f413b31be08f0e3dced16500732727b6a01c5 *)
-let body_Z13052_object_equality : expr =
-  ECall 23360 [EArg 0; EArg 1; EValue (VFunc 13052)]
 
 (* Z13078 remove duplicates from untyped list | Z13078@267887 -> Z24659@186881 digest 4c80b06a03282cd262e43703744a62b09805b604d637f73eb943ad3ad03d6382 *)
 let body_Z13078_remove_duplicates_from_untyped_list : expr =
@@ -1614,6 +1610,10 @@ let body_Z15996_first_n_code_points : expr =
 let body_Z16000_igbo_month_name_in_igbo : expr =
   ECall 10000 [EValue (VText [7884; 110; 119; 97; 32]); ECall 14396 [ECall 16273 [ECall 20607 [ECall 16365 [EArg 0]]; EValue (VFunc 1002)]]]
 
+(* Z16012 (!) grammatical number for languages with singular, dual and plural | Z16012@271191 -> Z34594@271190 digest a0c189fcce8af7fc434045433c6d628e1beebe7c1aca3e3f6243b92e297e72f7 *)
+let body_Z16012_grammatical_number_for_languages_with_singular_dual_and_plur : expr =
+  ECall 19565 [ECall 31547 [EArg 0]; EValue (VText [115; 105; 110; 103; 117; 108; 97; 114]); ECall 31554 [EArg 0]; EValue (VText [100; 117; 97; 108]); EValue (VText [112; 108; 117; 114; 97; 108])]
+
 let part_policy (fid:zid) : Tot (option expr) =
   match fid with
   | 12975 -> Some body_Z12975_ones_complement_binary_subtraction
@@ -1624,7 +1624,6 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 13013 -> Some body_Z13013_thai_nominalization_of_adjective
   | 13034 -> Some body_Z13034_thai_nominalization_of_verb
   | 13036 -> Some body_Z13036_apply
-  | 13052 -> Some body_Z13052_object_equality
   | 13078 -> Some body_Z13078_remove_duplicates_from_untyped_list
   | 13081 -> Some body_Z13081_remove_all_matching_elements_from_list
   | 13085 -> Some body_Z13085_hyperbolic_arccotangent
@@ -2016,4 +2015,5 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 15991 -> Some body_Z15991_code_point_prefix
   | 15996 -> Some body_Z15996_first_n_code_points
   | 16000 -> Some body_Z16000_igbo_month_name_in_igbo
+  | 16012 -> Some body_Z16012_grammatical_number_for_languages_with_singular_dual_and_plur
   | _ -> None

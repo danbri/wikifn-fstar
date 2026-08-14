@@ -203,6 +203,62 @@ async function main() {
     });
   }
 
+  // Sample arguments for the demo page, taken from the testers this sweep just
+  // read. Written here rather than by a separate script so there is one piece
+  // of code that knows how to turn a tester's call into engine arguments; a
+  // second copy would drift, and a wrong example is worse than none.
+  //
+  // Ordered so a visitor sees a case that works first: passing, then any that
+  // was at least readable. The expected value comes along when the tester
+  // stated one, so the page can say what the answer should be.
+  const examplesFile = valueOf(args, "--examples");
+  if (examplesFile) {
+    const rank = { pass: 0, fail: 1, error: 2 };
+    const byFunction = new Map();
+    for (const entry of cases) {
+      if (!(entry.status in rank) || !Array.isArray(entry.input)) continue;
+      const list = byFunction.get(entry.function_zid) ?? [];
+      list.push(entry);
+      byFunction.set(entry.function_zid, list);
+    }
+    const examples = {};
+    for (const [zid, list] of byFunction) {
+      list.sort((a, b) => rank[a.status] - rank[b.status]);
+      const seen = new Set();
+      const picked = [];
+      for (const entry of list) {
+        const key = JSON.stringify(entry.input);
+        if (seen.has(key)) continue;
+        seen.add(key);
+        picked.push({
+          args: entry.input,
+          ...(entry.expected === undefined ? {} : { expected: entry.expected }),
+          tester: entry.tester_zid,
+          status: entry.status
+        });
+        if (picked.length === 4) break;
+      }
+      if (picked.length) examples[zid] = picked;
+    }
+    await writeFile(
+      examplesFile,
+      JSON.stringify(
+        {
+          generated: "scripts/check-engine-testers.js --examples",
+          note: "Arguments taken from Wikifunctions' own Z20 testers. status says what "
+            + "this engine did with them, so 'error' means the example is real and the "
+            + "engine cannot yet run it.",
+          functions: Object.keys(examples).length,
+          examples
+        },
+        null,
+        2
+      ),
+      "utf8"
+    );
+    console.error(`${Object.keys(examples).length} functions have example arguments -> ${examplesFile}`);
+  }
+
   const tally = (status) => cases.filter((entry) => entry.status === status).length;
   const functionsWithPass = new Set(cases.filter((c) => c.status === "pass").map((c) => c.function_zid));
   const functionsWithFail = new Set(cases.filter((c) => c.status === "fail" || c.status === "error").map((c) => c.function_zid));

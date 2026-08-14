@@ -25,6 +25,7 @@
 
 import { execFile } from "node:child_process";
 import { availableParallelism } from "node:os";
+import { existsSync } from "node:fs";
 import { mkdir, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -32,6 +33,14 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const functionDir = path.join(root, "build", "fstar", "fn");
 const includeDir = path.join(root, "src", "fstar");
+
+// The pinned Z3, exactly as scripts/fstar-check.sh does it. F* wants a specific
+// version and refuses any other, so without this a module that actually needs
+// the solver fails with a version complaint rather than a verification result -
+// and it would look like a failed proof. Most function modules discharge no Z3
+// query at all, which is why this was easy to miss.
+const pinnedZ3 = path.join(root, "third_party", "fstar-z3", "bin");
+if (existsSync(pinnedZ3)) process.env.PATH = `${pinnedZ3}:${process.env.PATH}`;
 
 const args = process.argv.slice(2);
 const valueOf = (flag) => {
