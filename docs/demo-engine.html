@@ -76,8 +76,8 @@
             <form id="engine-form" class="call-form" hidden>
               <div id="engine-args"></div>
               <div class="arg-row">
-                <label for="engine-fuel">fuel</label>
-                <input id="engine-fuel" value="5000" inputmode="numeric">
+                <label for="engine-fuel" title="A budget for total evaluation steps, not nesting depth">fuel</label>
+                <input id="engine-fuel" value="100000" inputmode="numeric">
               </div>
               <button type="submit">Run</button>
             </form>
@@ -121,8 +121,10 @@
             reference is refused rather than read as text.
           </li>
           <li>
-            Deep recursion runs out of fuel rather than returning an answer.
-            That is reported, not hidden.
+            Fuel is a budget for total evaluation steps, not a depth limit.
+            Running out is reported, not hidden. Naively recursive functions
+            can need a lot: the corpus's Fibonacci needs about 200,000 steps
+            for <code>n = 20</code>, because it is written without memoisation.
           </li>
         </ul>
         <p>
@@ -272,7 +274,7 @@
           });
           let response;
           try {
-            response = globalThis.wikifnEngineCall(selected.zid, fuelEl.value || "5000", JSON.stringify(args));
+            response = globalThis.wikifnEngineCall(selected.zid, fuelEl.value || "100000", JSON.stringify(args));
           } catch (error) {
             response = JSON.stringify({
               ok: false,
