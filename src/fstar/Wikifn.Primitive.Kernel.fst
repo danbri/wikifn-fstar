@@ -1,5 +1,6 @@
 module Wikifn.Primitive.Kernel
 
+open FStar.Mul
 type codepoint = nat
 type text = list codepoint
 
@@ -51,6 +52,22 @@ let nat_decrement_floor (n:nat) : Tot nat =
   match n with
   | 0 -> 0
   | _ -> n - 1
+
+(* Exponentiation is bounded. The evaluator's fuel counts calls, not work inside
+   a primitive, so an unbounded power here would be a way to spend arbitrary
+   time without spending fuel. A cap keeps every primitive finishing in
+   predictable time, and going past it is reported like any other exhaustion
+   rather than hanging. *)
+let max_exponent : nat = 4096
+
+let rec nat_pow_unbounded (base:nat) (power:nat) : Tot nat (decreases power) =
+  match power with
+  | 0 -> 1
+  | _ -> base * nat_pow_unbounded base (power - 1)
+
+let nat_pow (base:nat) (power:nat) : Tot (kernel_result nat) =
+  if power > max_exponent then KErr KFuelExhausted
+  else KOk (nat_pow_unbounded base power)
 
 let nat_sub_floor (left:nat) (right:nat) : Tot nat =
   if left <= right then 0 else left - right
@@ -144,10 +161,15 @@ let rec text_range_from_len (start:codepoint) (len:nat) : Tot text (decreases le
   | 0 -> []
   | _ -> start :: text_range_from_len (start + 1) (len - 1)
 
-let text_unicode_range (first:codepoint) (last:codepoint) : Tot text =
-  if first <= last
-  then text_range_from_len first (last - first + 1)
-  else []
+(* Bounded for the same reason as exponentiation: a range spanning the whole of
+   Unicode would build a list of a million codepoints inside one primitive
+   call. *)
+let max_range_length : nat = 65536
+
+let text_unicode_range (first:codepoint) (last:codepoint) : Tot (kernel_result text) =
+  if first > last then KOk []
+  else if last - first + 1 > max_range_length then KErr KFuelExhausted
+  else KOk (text_range_from_len first (last - first + 1))
 
 let rec text_replace_all_fuel
   (fuel:nat)
@@ -193,7 +215,7 @@ let z10901_get_first_character (input:text) : Tot text =
 let z14124_string_of_characters_from_unicode_range
   (first:codepoint)
   (last:codepoint)
-  : Tot text =
+  : Tot (kernel_result text) =
   text_unicode_range first last
 
 let z14456_remove_first_character (input:text) : Tot text =
@@ -328,10 +350,16 @@ let z10901_first_character_example () :
   Lemma (z10901_get_first_character [116; 101; 115; 116] == [116])
   = ()
 
+let z14124_rejects_an_oversized_range () :
+  Lemma (
+    z14124_string_of_characters_from_unicode_range 0 1114111 == KErr KFuelExhausted
+  )
+  = ()
+
 let z14124_small_range_example () :
   Lemma (
     z14124_string_of_characters_from_unicode_range 1 3
-    == [1; 2; 3]
+    == KOk [1; 2; 3]
   )
   = ()
 

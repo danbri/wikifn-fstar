@@ -31,7 +31,13 @@ const PRIMITIVES = new Set([
   "Z872", "Z873", "Z876", "Z10000", "Z10008", "Z10075", "Z10174", "Z10184",
   "Z10216", "Z10615", "Z10901", "Z11040", "Z12681", "Z13522", "Z13569",
   "Z13582", "Z13676", "Z13682", "Z13689", "Z13695", "Z14124", "Z14456",
-  "Z14520"
+  "Z14520",
+  // Arithmetic, grounded in the kernel rather than expanded. The Peano-style
+  // compositions for these are mutually circular (increment is add(n,1) and add
+  // is defined via increment), so unfolding them does not terminate.
+  "Z13521", "Z13539", "Z13578", "Z13630", "Z13633", "Z13647", "Z13846",
+  // Text and codepoint lists are the same data in two shapes.
+  "Z22693", "Z22717"
 ]);
 
 const INTERNAL_FRESH_PRIVATE_USE = "1000000001";
@@ -47,7 +53,9 @@ const CLASSIC_NAMES = new Map([
   ["Z866", "string=?"], ["Z10000", "string-append"],
   ["Z10216", "not"], ["Z10174", "and"], ["Z10184", "or"],
   ["Z12681", "length"], ["Z11040", "string-length"],
-  ["Z13522", "="], ["Z13676", ">"], ["Z13682", ">="], ["Z13689", "<"], ["Z13695", "<="]
+  ["Z13522", "="], ["Z13676", ">"], ["Z13682", ">="], ["Z13689", "<"], ["Z13695", "<="],
+  ["Z13521", "+"], ["Z13539", "*"], ["Z13578", "add1"], ["Z13630", "max"],
+  ["Z13633", "min"], ["Z13647", "expt"], ["Z13846", "if"]
 ]);
 
 const objectCache = new Map();
@@ -144,6 +152,9 @@ async function translate(term, context) {
 
   if (typeof term === "string") {
     const zid = refZid(term);
+    // Z41 and Z42 are the boolean values, not references to functions.
+    if (zid === "Z41") return { kind: "bool", value: true };
+    if (zid === "Z42") return { kind: "bool", value: false };
     if (zid) return { kind: "func", zid };
     return { kind: "text", value: term };
   }
@@ -189,6 +200,8 @@ async function translate(term, context) {
   if (type === "Z9") {
     const target = refZid(term.Z9K1);
     if (!target) throw new Unsupported("reference without a target");
+    if (target === "Z41") return { kind: "bool", value: true };
+    if (target === "Z42") return { kind: "bool", value: false };
     return { kind: "func", zid: target };
   }
 
@@ -246,6 +259,8 @@ function renderZ14K2(node, argKeys) {
       return { Z1K1: "Z13518", Z13518K1: { Z1K1: "Z6", Z6K1: node.value } };
     case "bool":
       return { Z1K1: "Z40", Z40K1: node.value ? "Z41" : "Z42" };
+    case "boolref":
+      return node.value ? "Z41" : "Z42";
     case "func":
       return node.zid;
     case "list":
@@ -311,6 +326,20 @@ function renderSexpr(node, names, argNames) {
 // its first token is the identifier, so a reader who trusts the words and a
 // reader who needs the identifier are both served. English here; the dump
 // carries other languages and the scheme is the same for any of them.
+// Every function ZID a translated body calls.
+function collectCalls(node, acc = []) {
+  if (!node || typeof node !== "object") return acc;
+  if (node.kind === "call") {
+    acc.push(node.zid);
+    for (const argument of node.args) collectCalls(argument, acc);
+  } else if (node.kind === "list") {
+    for (const item of node.items) collectCalls(item, acc);
+  } else if (node.kind === "func") {
+    acc.push(node.zid);
+  }
+  return acc;
+}
+
 function sanitize(label, zid, used) {
   let base = (label ?? "")
     .toLowerCase()
@@ -359,8 +388,14 @@ async function main() {
     implsByFunction.get(row.function_zid).push(row.zid);
   }
 
-  const targets = [...closed]
-    .filter((zid) => !PRIMITIVES.has(zid) && implsByFunction.has(zid))
+  // Emit every composition we can translate, not only those whose whole
+  // transitive closure is already grounded. Calls are by reference: the
+  // evaluator looks a body up when the call happens, so a function whose
+  // callees are not yet implemented is still worth carrying. It simply reports
+  // "no implementation" if evaluation actually reaches the gap, and it starts
+  // working the moment that gap is filled, with no regeneration.
+  const targets = [...implsByFunction.keys()]
+    .filter((zid) => !PRIMITIVES.has(zid))
     .sort((a, b) => Number(a.slice(1)) - Number(b.slice(1)));
 
   const used = new Set();
@@ -369,13 +404,6 @@ async function main() {
 
   for (const functionZid of targets) {
     if (limit && emitted.length >= limit) break;
-
-    const candidates = (implsByFunction.get(functionZid) ?? []).filter((implZid) =>
-      (callsByImpl.get(implZid) ?? []).every((callee) => closed.has(callee)));
-    if (candidates.length === 0) {
-      skipped.push({ zid: functionZid, reason: "no implementation with all callees closed" });
-      continue;
-    }
 
     const keys = await argumentKeys(functionZid);
     if (!keys) {
@@ -389,30 +417,39 @@ async function main() {
       if (local) argIndex.set(local[0], index);
     });
 
-    let translated;
-    let chosen;
+    // Translate every candidate implementation. Which one to keep is decided
+    // later, once it is known which functions actually run: a function can have
+    // several composition implementations, and picking arbitrarily among them
+    // is how ROT13 ended up as thirteen nested rot1 calls that do not evaluate.
+    const all = implsByFunction.get(functionZid) ?? [];
+    const translations = [];
     let failure;
-    for (const implZid of candidates) {
+    for (const implZid of all) {
       const implementation = await loadObject(implZid);
       const body = implementation?.canonical?.Z2K2?.Z14K2;
-      if (!body) {
-        failure = "implementation has no composition body in cache";
-        continue;
-      }
+      if (!body) { failure = "implementation has no composition body in cache"; continue; }
       try {
-        translated = await translate(body, { argIndex });
-        renderFstar(translated);
-        chosen = { zid: implZid, revision: implementation.revision, digest: implementation.digest };
-        break;
+        const tree = await translate(body, { argIndex });
+        renderFstar(tree);
+        translations.push({
+          zid: implZid,
+          revision: implementation.revision,
+          digest: implementation.digest,
+          tree,
+          calls: [...new Set(collectCalls(tree))]
+        });
       } catch (error) {
         failure = error instanceof Unsupported ? error.reason : String(error.message ?? error);
       }
     }
 
-    if (!translated) {
+    if (translations.length === 0) {
       skipped.push({ zid: functionZid, reason: failure ?? "no usable implementation" });
       continue;
     }
+
+    const chosen = translations[0];
+    const translated = chosen.tree;
 
     // Round-trip check: render the tree back to a canonical composition, read it
     // again, and require an identical tree. This is what makes the F* form
@@ -435,13 +472,54 @@ async function main() {
       name: sanitize(labels.get(functionZid), functionZid, used),
       label: labels.get(functionZid) ?? "",
       arity: keys.length,
+      // Callees this body actually mentions, so runnability can be computed
+      // from what was emitted rather than from what the corpus analysis hoped
+      // for. The analysis can call a function closed while the translator has
+      // skipped one of its callees.
+      calls: chosen.calls,
+      translations,
       argNames: keys.map((key, index) => `a${index}`),
       argKeys: keys,
       tree: translated,
-      implementation: chosen,
+      implementation: { zid: chosen.zid, revision: chosen.revision, digest: chosen.digest },
       functionRevision: functionObject?.revision ?? 0,
     });
   }
+
+  const emittedIndex = new Map(emitted.map((entry) => [entry.zid, entry]));
+  const isPrimitive = (zid) => PRIMITIVES.has(zid) || zid === `Z${INTERNAL_FRESH_PRIVATE_USE}`;
+
+  // Choose which implementation each function uses, preferring one whose calls
+  // all reach something that exists. Repeat until no choice improves, since one
+  // function becoming reachable can make another's alternative viable.
+  const reaches = (calls, ok, self) =>
+    calls.every((callee) => isPrimitive(callee) || callee === self || ok.has(callee));
+
+  let improved = true;
+  let rounds = 0;
+  while (improved && rounds < 12) {
+    improved = false;
+    rounds += 1;
+    const ok = new Set(emittedIndex.keys());
+    let shrinking = true;
+    while (shrinking) {
+      shrinking = false;
+      for (const zid of [...ok]) {
+        if (!reaches(emittedIndex.get(zid).calls, ok, zid)) { ok.delete(zid); shrinking = true; }
+      }
+    }
+    for (const entry of emitted) {
+      if (ok.has(entry.zid)) continue;
+      const better = entry.translations.find((candidate) => reaches(candidate.calls, ok, entry.zid));
+      if (better) {
+        entry.tree = better.tree;
+        entry.calls = better.calls;
+        entry.implementation = { zid: better.zid, revision: better.revision, digest: better.digest };
+        improved = true;
+      }
+    }
+  }
+
 
   const lines = [
     "module Wikifn.Generated.Eval",
@@ -482,6 +560,28 @@ async function main() {
 
   await writeFile(outPath, lines.join("\n"), "utf8");
 
+  // A function is runnable when every function reachable from its body is
+  // either a primitive or itself emitted. Cycles are fine: the interpreter is
+  // fuel-bounded, so mutual recursion terminates with an error rather than
+  // hanging. This is a greatest fixpoint - assume runnable, then remove any
+  // function that reaches something nobody implements.
+  const available = new Set([...PRIMITIVES, `Z${INTERNAL_FRESH_PRIVATE_USE}`, ...emittedIndex.keys()]);
+  const runnable = new Set(emittedIndex.keys());
+  let shrinking = true;
+  while (shrinking) {
+    shrinking = false;
+    for (const zid of [...runnable]) {
+      const entry = emittedIndex.get(zid);
+      const reachesGap = entry.calls.some((callee) =>
+        !PRIMITIVES.has(callee) && callee !== `Z${INTERNAL_FRESH_PRIVATE_USE}` && !runnable.has(callee));
+      if (reachesGap) {
+        runnable.delete(zid);
+        shrinking = true;
+      }
+    }
+  }
+  for (const entry of emitted) entry.runnable = runnable.has(entry.zid);
+
   const emittedByZid = new Map(emitted.map((entry) => [entry.zid, entry]));
   const usedClassics = new Map();
   const nameOf = (zid) => {
@@ -504,6 +604,12 @@ async function main() {
     JSON.stringify(
       {
         generated: "scripts/generate-fstar-eval.js",
+        // Every name a rendered body can mention, so the printer in F* can be
+        // handed a complete table.
+        names: Object.fromEntries([
+          ...emitted.map((entry) => [entry.zid, entry.name]),
+          ...[...PRIMITIVES].map((zid) => [zid, sanitize(labels.get(zid), zid, new Set())])
+        ]),
         primitives: [...CLASSIC_NAMES.entries()].map(([zid, classic]) => ({
           zid,
           classic,
@@ -514,8 +620,9 @@ async function main() {
           name: entry.name,
           label: entry.label,
           arity: entry.arity,
+          runnable: entry.runnable,
           argumentKeys: entry.argKeys,
-          sexpr: `(define (${entry.name}${entry.argNames.length ? " " + entry.argNames.join(" ") : ""})\n  ${renderSexpr(entry.tree, nameOf, entry.argNames)})`,
+
           implementation: entry.implementation.zid,
           revision: entry.implementation.revision,
           digest: entry.implementation.digest
@@ -592,7 +699,9 @@ async function main() {
   for (const entry of emitted) {
     roundTripCounts.set(entry.roundTrip, (roundTripCounts.get(entry.roundTrip) ?? 0) + 1);
   }
+  const runnableCount = emitted.filter((e) => e.runnable).length;
   console.log(`candidates ${targets.length}, emitted ${emitted.length}, skipped ${skipped.length}`);
+  console.log(`  of the emitted, ${runnableCount} are runnable and ${emitted.length - runnableCount} reach a gap`);
   console.log("round trip to canonical Wikifunctions composition:");
   for (const [status, count] of roundTripCounts) console.log(`  ${String(count).padStart(4)}  ${status}`);
   for (const row of report.skippedByReason.slice(0, 12)) {

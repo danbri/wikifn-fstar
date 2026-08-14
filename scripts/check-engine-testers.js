@@ -126,6 +126,10 @@ async function main() {
   const asJson = args.includes("--json");
   const outFile = valueOf(args, "--out");
   const fuel = valueOf(args, "--fuel") ?? "5000";
+  // Report any single evaluation slower than this, so a pathological case can
+  // be found without waiting for the whole sweep.
+  const slowMs = Number(valueOf(args, "--slow-ms") ?? 0);
+  const trace = args.includes("--trace");
 
   require(path.join(root, "docs", "generated", "wikifn_engine.cjs"));
   const catalog = require(path.join(root, "docs", "generated", "functions.json"));
@@ -140,7 +144,8 @@ async function main() {
     ],
     { maxBuffer: 256 * 1024 * 1024 }
   );
-  const rows = JSON.parse(stdout);
+  const limit = Number(valueOf(args, "--limit") ?? 0);
+  const rows = limit ? JSON.parse(stdout).slice(0, limit) : JSON.parse(stdout);
 
   const cases = [];
   for (const row of rows) {
@@ -169,10 +174,17 @@ async function main() {
     }
 
     let response;
+    // Written before the call, so a stall names the case that caused it.
+    if (trace) process.stderr.write(`> ${row.function_zid} ${row.tester_zid}\n`);
+    const startedAt = Date.now();
     try {
       response = JSON.parse(
         globalThis.wikifnEngineCall(row.function_zid, fuel, JSON.stringify(converted))
       );
+      const elapsed = Date.now() - startedAt;
+      if (slowMs > 0 && elapsed > slowMs) {
+        console.error(`slow ${elapsed}ms ${row.function_zid} ${row.tester_zid} ${JSON.stringify(converted).slice(0, 80)}`);
+      }
     } catch (error) {
       cases.push({ ...row, status: "error", reason: String(error.message ?? error) });
       continue;

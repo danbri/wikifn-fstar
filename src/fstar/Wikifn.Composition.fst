@@ -241,7 +241,9 @@ let rec eval_with_policy (p:policy) (fuel:nat) (env:list value) (e:expr) : Tot (
                | EOk (VNat first_codepoint) ->
                    (match eval_with_policy p next env last with
                     | EOk (VNat last_codepoint) ->
-                        EOk (VText (z14124_string_of_characters_from_unicode_range first_codepoint last_codepoint))
+                        (match lift_kernel (z14124_string_of_characters_from_unicode_range first_codepoint last_codepoint) with
+                         | EOk range -> EOk (VText range)
+                         | EErr err -> EErr err)
                     | EOk _ -> EErr ETypeMismatch
                     | EErr err -> EErr err)
                | EOk _ -> EErr ETypeMismatch

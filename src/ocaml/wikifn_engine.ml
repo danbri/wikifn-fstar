@@ -201,8 +201,69 @@ let parse_zid text =
     if digits 1 = n then (try Some (Z.of_string (String.sub text 1 (n - 1))) with _ -> None)
     else None
 
+(* Source rendering, delegated to Wikifn.Print so the s-expression form comes
+   from the same checked module as evaluation. Only the name table is supplied
+   here, which is an edge concern: the label language is the caller's choice. *)
+
+let parse_name_table text =
+  let n = String.length text in
+  let table = Hashtbl.create 64 in
+  let rec skip i = if i < n && (text.[i] = ' ' || text.[i] = '\n' || text.[i] = '\t' || text.[i] = '\r') then skip (i + 1) else i in
+  let rec entries i =
+    let i = skip i in
+    if i >= n || text.[i] = '}' then ()
+    else
+      let (key, next) = parse_string_literal text i in
+      let next = skip next in
+      if next >= n || text.[next] <> ':' then ()
+      else
+        let (value, next) = parse_string_literal text (skip (next + 1)) in
+        Hashtbl.replace table key value;
+        let next = skip next in
+        if next < n && text.[next] = ',' then entries (next + 1) else ()
+  in
+  let start = skip 0 in
+  if start < n && text.[start] = '{' then entries (start + 1);
+  table
+
+let lookup_of_table table zid =
+  match Hashtbl.find_opt table ("Z" ^ Z.to_string zid) with
+  | Some name -> FStar_Pervasives_Native.Some (List.map Z.of_int (decode_utf8 name))
+  | None -> FStar_Pervasives_Native.None
+
+let argument_names arity =
+  let rec go i acc =
+    if i >= arity then List.rev acc
+    else go (i + 1) (List.map Z.of_int (decode_utf8 (Printf.sprintf "a%d" i)) :: acc)
+  in
+  go 0 []
+
 let error code message =
   Printf.sprintf "{\"ok\":false,\"error\":%s,\"message\":%s}" (quote code) (quote message)
+
+let source zid_text arity names_json =
+  match parse_zid zid_text with
+  | None -> Printf.sprintf "{\"ok\":false,\"error\":\"zid\",\"message\":%s}" (quote (zid_text ^ " is not a ZID"))
+  | Some zid -> (
+      match Wikifn_Generated_Eval.generated_policy zid with
+      | FStar_Pervasives_Native.None ->
+          Printf.sprintf
+            "{\"ok\":false,\"error\":\"unknown\",\"message\":%s}"
+            (quote (zid_text ^ " has no generated body"))
+      | FStar_Pervasives_Native.Some body ->
+          let table = parse_name_table names_json in
+          let name =
+            match lookup_of_table table zid with
+            | FStar_Pervasives_Native.Some n -> n
+            | FStar_Pervasives_Native.None -> Wikifn_Zid.render_zid zid
+          in
+          let rendered =
+            Wikifn_Print.print_definition
+              (lookup_of_table table) name (argument_names arity) body
+          in
+          Printf.sprintf
+            "{\"ok\":true,\"zid\":%s,\"source\":%s}"
+            (quote zid_text) (quote (encode_utf8 rendered)))
 
 let call zid_text fuel arguments_json =
   match parse_zid zid_text with

@@ -92,6 +92,26 @@ let fid_and : zid = 10174           // Z10174 and
 let fid_or : zid = 10184            // Z10184 or
 let fid_length : zid = 12681        // Z12681 length of a list
 
+// Natural-number arithmetic. Wikifunctions also defines these as Peano-style
+// compositions, but those definitions are mutually circular: increment is
+// defined as add(n, 1), and add is defined in terms of increment, so add(n, 1)
+// never bottoms out. The wiki does not hit this because its own evaluator
+// prefers the code implementations. Grounding them here keeps the arithmetic
+// correct and fast without changing what any composition above them says.
+let fid_add : zid = 13521           // Z13521 add two Natural numbers
+let fid_multiply : zid = 13539      // Z13539 multiply two natural numbers
+let fid_increment : zid = 13578     // Z13578 increment natural number
+let fid_max : zid = 13630           // Z13630 greater of two natural numbers
+let fid_min : zid = 13633           // Z13633 lesser of two natural numbers
+let fid_expt : zid = 13647          // Z13647 exponentiation of natural numbers
+let fid_if_nat : zid = 13846        // Z13846 if natural number output
+
+// Text and codepoint lists are the same data in two shapes. These conversions
+// bridge the string primitives and the list primitives, which is why they gate
+// so much of the corpus.
+let fid_string_to_codepoints : zid = 22717  // Z22717 String to codepoint list
+let fid_codepoints_to_string : zid = 22693  // Z22693 Codepoint list to string
+
 // No classical equivalent; these keep their Wikifunctions spelling.
 let fid_z10008_is_empty_string : zid = 10008
 let fid_z10075_replace_all : zid = 10075
@@ -112,6 +132,21 @@ let fid_z14520_remove_characters : zid = 14520
 (* An internal helper the generator emits for the private-use marker idiom.
    Numbered outside the Wikifunctions range so it cannot collide. *)
 let internal_fresh_private_use : zid = 1000000001
+
+let rec codepoints_as_values (s:text) : Tot (list value) =
+  match s with
+  | [] -> []
+  | head :: tail -> VNat head :: codepoints_as_values tail
+
+let rec values_as_codepoints (items:list value) : Tot (option text) =
+  match items with
+  | [] -> Some []
+  | VNat n :: tail -> begin
+      match values_as_codepoints tail with
+      | Some rest -> Some (n :: rest)
+      | None -> None
+    end
+  | _ -> None
 
 let rec value_count (items:list value) : Tot nat =
   match items with
@@ -172,6 +207,10 @@ let apply_primitive (fid:zid) (args:list value) : Tot (option (eval_result value
         Some (match as_bool fid a with
               | EOk b -> EOk (VBool (not b))
               | EErr e -> EErr e)
+      else if fid = fid_increment then
+        Some (match as_nat fid a with
+              | EOk n -> EOk (VNat (n + 1))
+              | EErr e -> EErr e)
       else if fid = fid_z13582_decrement then
         Some (match as_nat fid a with
               | EOk n -> EOk (VNat (nat_decrement_floor n))
@@ -202,6 +241,18 @@ let apply_primitive (fid:zid) (args:list value) : Tot (option (eval_result value
         Some (match a with
               | VPair _ r -> EOk r
               | _ -> EErr (ETypeMismatch fid))
+      else if fid = fid_string_to_codepoints then
+        Some (match as_text fid a with
+              | EOk t -> EOk (VList (codepoints_as_values t))
+              | EErr e -> EErr e)
+      else if fid = fid_codepoints_to_string then
+        Some (match as_list fid a with
+              | EOk items -> begin
+                  match values_as_codepoints items with
+                  | Some t -> EOk (VText t)
+                  | None -> EErr (ETypeMismatch fid)
+                end
+              | EErr e -> EErr e)
       else if fid = internal_fresh_private_use then
         Some (match as_text fid a with
               | EOk t -> EOk (VText (z36070_first_available_private_use_character t))
@@ -230,7 +281,11 @@ let apply_primitive (fid:zid) (args:list value) : Tot (option (eval_result value
               | _, EErr e -> EErr e)
       else if fid = fid_z14124_unicode_range then
         Some (match as_nat fid a, as_nat fid b with
-              | EOk first, EOk last -> EOk (VText (text_unicode_range first last))
+              | EOk first, EOk last -> begin
+                  match lift_kernel fid (text_unicode_range first last) with
+                  | EOk t -> EOk (VText t)
+                  | EErr e -> EErr e
+                end
               | EErr e, _ -> EErr e
               | _, EErr e -> EErr e)
       else if fid = fid_and then
@@ -273,6 +328,35 @@ let apply_primitive (fid:zid) (args:list value) : Tot (option (eval_result value
               | EOk l, EOk r -> EOk (VBool (l <= r))
               | EErr e, _ -> EErr e
               | _, EErr e -> EErr e)
+      else if fid = fid_add then
+        Some (match as_nat fid a, as_nat fid b with
+              | EOk l, EOk r -> EOk (VNat (l + r))
+              | EErr e, _ -> EErr e
+              | _, EErr e -> EErr e)
+      else if fid = fid_multiply then
+        Some (match as_nat fid a, as_nat fid b with
+              | EOk l, EOk r -> EOk (VNat (l * r))
+              | EErr e, _ -> EErr e
+              | _, EErr e -> EErr e)
+      else if fid = fid_max then
+        Some (match as_nat fid a, as_nat fid b with
+              | EOk l, EOk r -> EOk (VNat (if l >= r then l else r))
+              | EErr e, _ -> EErr e
+              | _, EErr e -> EErr e)
+      else if fid = fid_min then
+        Some (match as_nat fid a, as_nat fid b with
+              | EOk l, EOk r -> EOk (VNat (if l <= r then l else r))
+              | EErr e, _ -> EErr e
+              | _, EErr e -> EErr e)
+      else if fid = fid_expt then
+        Some (match as_nat fid a, as_nat fid b with
+              | EOk base, EOk power -> begin
+                  match lift_kernel fid (nat_pow base power) with
+                  | EOk n -> EOk (VNat n)
+                  | EErr e -> EErr e
+                end
+              | EErr e, _ -> EErr e
+              | _, EErr e -> EErr e)
       else if fid = fid_cons then
         Some (match as_list fid b with
               | EOk items -> EOk (VList (a :: items))
@@ -290,63 +374,75 @@ let apply_primitive (fid:zid) (args:list value) : Tot (option (eval_result value
       else None
   | _ -> None
 
+(* Fuel is a budget for total work, not a limit on nesting depth.
+
+   Passing the same fuel down every branch bounds how deep evaluation goes but
+   says nothing about how wide it goes, so a naive Fibonacci with a depth of
+   thirty can still make millions of calls and never run out. Threading the
+   remaining budget through every result fixes that: each call spends from what
+   the previous one left, and the total number of steps is bounded by the fuel
+   the caller supplied.
+
+   The returned budget is refined to be no larger than the one supplied, which
+   is what lets F* see that the recursion terminates. *)
+
 let rec eval (p:policy) (fuel:nat) (env:list value) (e:expr)
-  : Tot (eval_result value) (decreases %[fuel; 0; 0])
+  : Tot (eval_result value & (remaining:nat{remaining <= fuel})) (decreases %[fuel; 0; 0])
 =
   match e with
-  | EValue v -> EOk v
-  | EArg index -> env_lookup index env
+  | EValue v -> (EOk v, fuel)
+  | EArg index -> (env_lookup index env, fuel)
   | ECall fid args ->
-      if fuel = 0 then EErr EFuelExhausted
+      if fuel = 0 then (EErr EFuelExhausted, 0)
       else
         let next : nat = fuel - 1 in
-        (* Z802 is lazy in its branches; the condition alone is evaluated. *)
-        if fid = fid_if then
+        if fid = fid_if || fid = fid_if_nat then
           match args with
           | [condition; then_branch; else_branch] -> begin
               match eval p next env condition with
-              | EOk (VBool b) -> eval p next env (if b then then_branch else else_branch)
-              | EOk _ -> EErr (ETypeMismatch fid)
-              | EErr err -> EErr err
+              | (EOk (VBool b), after) ->
+                  let (result, left) = eval p after env (if b then then_branch else else_branch) in
+                  (result, left)
+              | (EOk _, after) -> (EErr (ETypeMismatch fid), after)
+              | (EErr err, after) -> (EErr err, after)
             end
-          | _ -> EErr (EArityMismatch fid)
+          | _ -> (EErr (EArityMismatch fid), next)
         else
           match eval_list p next env args with
-          | EErr err -> EErr err
-          | EOk values -> begin
+          | (EErr err, after) -> (EErr err, after)
+          | (EOk values, after) -> begin
               match apply_primitive fid values with
-              | Some result -> result
+              | Some result -> (result, after)
               | None -> begin
-                  (* Higher-order primitives need the evaluator itself. *)
-                  match higher_order p next fid values with
-                  | Some result -> result
+                  match higher_order p after fid values with
+                  | Some (result, left) -> (result, left)
                   | None -> begin
                       match p fid with
-                      | Some body -> eval p next values body
-                      | None -> EErr (ENoImplementation fid)
+                      | Some body ->
+                          let (result, left) = eval p after values body in
+                          (result, left)
+                      | None -> (EErr (ENoImplementation fid), after)
                     end
                 end
             end
 
 and eval_list (p:policy) (fuel:nat) (env:list value) (es:list expr)
-  : Tot (eval_result (list value)) (decreases %[fuel; 1; es])
+  : Tot (eval_result (list value) & (remaining:nat{remaining <= fuel})) (decreases %[fuel; 1; es])
 =
   match es with
-  | [] -> EOk []
+  | [] -> (EOk [], fuel)
   | head :: rest -> begin
       match eval p fuel env head with
-      | EErr err -> EErr err
-      | EOk value -> begin
-          match eval_list p fuel env rest with
-          | EErr err -> EErr err
-          | EOk others -> EOk (value :: others)
+      | (EErr err, after) -> (EErr err, after)
+      | (EOk value, after) -> begin
+          match eval_list p after env rest with
+          | (EErr err, left) -> (EErr err, left)
+          | (EOk others, left) -> (EOk (value :: others), left)
         end
     end
 
-(* map, filter and reduce take a function reference as a value and therefore
-   have to call back into evaluation. *)
 and higher_order (p:policy) (fuel:nat) (fid:zid) (args:list value)
-  : Tot (option (eval_result value)) (decreases %[fuel; 3; 0])
+  : Tot (option (eval_result value & (remaining:nat{remaining <= fuel}))) (decreases %[fuel; 3; 0])
 =
   match args with
   | [VFunc f; VList items] ->
@@ -359,50 +455,61 @@ and higher_order (p:policy) (fuel:nat) (fid:zid) (args:list value)
   | _ -> None
 
 and map_values (p:policy) (fuel:nat) (f:zid) (items:list value)
-  : Tot (eval_result value) (decreases %[fuel; 2; items])
+  : Tot (eval_result value & (remaining:nat{remaining <= fuel})) (decreases %[fuel; 2; items])
 =
   match items with
-  | [] -> EOk (VList [])
+  | [] -> (EOk (VList []), fuel)
   | head :: rest -> begin
       match eval p fuel [] (ECall f [EValue head]) with
-      | EErr err -> EErr err
-      | EOk mapped -> begin
-          match map_values p fuel f rest with
-          | EErr err -> EErr err
-          | EOk (VList others) -> EOk (VList (mapped :: others))
-          | EOk _ -> EErr (ETypeMismatch f)
+      | (EErr err, after) -> (EErr err, after)
+      | (EOk mapped, after) -> begin
+          match map_values p after f rest with
+          | (EErr err, left) -> (EErr err, left)
+          | (EOk (VList others), left) -> (EOk (VList (mapped :: others)), left)
+          | (EOk _, left) -> (EErr (ETypeMismatch f), left)
         end
     end
 
 and filter_values (p:policy) (fuel:nat) (f:zid) (items:list value)
-  : Tot (eval_result value) (decreases %[fuel; 2; items])
+  : Tot (eval_result value & (remaining:nat{remaining <= fuel})) (decreases %[fuel; 2; items])
 =
   match items with
-  | [] -> EOk (VList [])
+  | [] -> (EOk (VList []), fuel)
   | head :: rest -> begin
       match eval p fuel [] (ECall f [EValue head]) with
-      | EErr err -> EErr err
-      | EOk (VBool keep) -> begin
-          match filter_values p fuel f rest with
-          | EErr err -> EErr err
-          | EOk (VList others) -> EOk (VList (if keep then head :: others else others))
-          | EOk _ -> EErr (ETypeMismatch f)
+      | (EErr err, after) -> (EErr err, after)
+      | (EOk (VBool keep), after) -> begin
+          match filter_values p after f rest with
+          | (EErr err, left) -> (EErr err, left)
+          | (EOk (VList others), left) -> (EOk (VList (if keep then head :: others else others)), left)
+          | (EOk _, left) -> (EErr (ETypeMismatch f), left)
         end
-      | EOk _ -> EErr (ETypeMismatch f)
+      | (EOk _, after) -> (EErr (ETypeMismatch f), after)
     end
 
 and reduce_values (p:policy) (fuel:nat) (f:zid) (acc:value) (items:list value)
-  : Tot (eval_result value) (decreases %[fuel; 2; items])
+  : Tot (eval_result value & (remaining:nat{remaining <= fuel})) (decreases %[fuel; 2; items])
 =
   match items with
-  | [] -> EOk acc
+  | [] -> (EOk acc, fuel)
   | head :: rest -> begin
       match eval p fuel [] (ECall f [EValue acc; EValue head]) with
-      | EErr err -> EErr err
-      | EOk next_acc -> reduce_values p fuel f next_acc rest
+      | (EErr err, after) -> (EErr err, after)
+      | (EOk next_acc, after) ->
+          let (result, left) = reduce_values p after f next_acc rest in
+          (result, left)
     end
 
 let empty_policy : policy = fun _ -> None
 
 let run (p:policy) (fuel:nat) (fid:zid) (args:list value) : Tot (eval_result value) =
-  eval p fuel [] (ECall fid (values_as_exprs args))
+  let (result, _) = eval p fuel [] (ECall fid (values_as_exprs args)) in
+  result
+
+(* How much of the budget a call actually spent, which is the useful number when
+   choosing a fuel setting. *)
+let run_with_cost (p:policy) (fuel:nat) (fid:zid) (args:list value)
+  : Tot (eval_result value & nat)
+=
+  let (result, remaining) = eval p fuel [] (ECall fid (values_as_exprs args)) in
+  (result, fuel - remaining)

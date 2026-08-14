@@ -1,5 +1,16 @@
 # Primitive Grounding
 
+> **Status note.** Lists, pairs and the higher-order list functions described
+> below as future work are now implemented in `Wikifn.Eval`: `Z810` cons,
+> `Z811` car, `Z812` cdr, `Z813` null?, `Z12681` length, `Z821`/`Z822` pair
+> accessors, `Z872` filter, `Z873` map, `Z876` fold, plus natural-number
+> arithmetic (`Z13521`, `Z13539`, `Z13578`, `Z13630`, `Z13633`, `Z13647`).
+> The current frontier is `Z803` value by key, `Z851` throw, `Z805` reify,
+> `Z899` unquote, and the codepoint-list conversions `Z22693`/`Z22717`.
+> See [engine.md](./engine.md) for what is grounded today, and run
+> `make closure` for the live ranking. The rankings below are kept as a record
+> of how the frontier was chosen and are no longer current.
+
 Current checked primitive modules:
 
 - `src/fstar/Wikifn.Primitives.fst`: small toy natural-number primitives used by `eval-example`.

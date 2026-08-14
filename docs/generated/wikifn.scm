@@ -9,22 +9,29 @@
 ;; Primitives that LISP already named keep the classical name. The mapping
 ;; back to Wikifunctions is one to one:
 ;;
+;;   *                Z13539   multiply two natural numbers
+;;   +                Z13521   add two Natural numbers
 ;;   <                Z13689   less than (natural numbers)
 ;;   <=               Z13695   less than or equal (natural numbers)
 ;;   =                Z13522   equality of natural numbers
 ;;   >                Z13676   greater than (natural numbers)
 ;;   >=               Z13682   greater than or equal (natural numbers)
+;;   add1             Z13578   increment natural number
 ;;   and              Z10174   and
 ;;   car              Z811     first element
 ;;   cdr              Z812     list without first element
 ;;   cons             Z810     prepend element to list
+;;   expt             Z13647   exponentiation of natural numbers
 ;;   filter           Z872     Filter Function
 ;;   fold             Z876     Reduce Function
 ;;   fst              Z821     Get first element of a Typed pair
 ;;   identity         Z801     Echo
 ;;   if               Z802     If
+;;   if               Z13846   if (natural number output)
 ;;   length           Z12681   length of a list
 ;;   map              Z873     map function
+;;   max              Z13630   greater of two natural numbers
+;;   min              Z13633   lesser of two natural numbers
 ;;   not              Z10216   not
 ;;   null?            Z813     Is empty list
 ;;   or               Z10184   or
@@ -50,9 +57,95 @@
 (define (Z6807_same_wikidata_claim a0 a1)
   (Z13052_object_equality a0 a1))
 
+;; Z6839 fetch Wikidata sitelinks
+(define (Z6839_fetch_wikidata_sitelinks a0 a1 a2)
+  (if
+    (null? a1)
+    (Z35207_take_sitelinks_from_wikidata_item
+    (Z30120_fetch_wikidata_item_or_parts a0 (list Z6038_sitelinks_urls) a2 (list )))
+    (Z22820_compress_list
+    (Z35207_take_sitelinks_from_wikidata_item
+    (Z30120_fetch_wikidata_item_or_parts a0 (list Z6038_sitelinks_urls) a2 (list )))
+    (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an
+    Z12696_contains
+    a1
+    (map
+    Z31976_project_of_wikidata_sitelink
+    (Z35207_take_sitelinks_from_wikidata_item
+    (Z30120_fetch_wikidata_item_or_parts a0 (list Z6038_sitelinks_urls) a2 (list ))))))))
+
+;; Z6894 same Wikidata enum instance
+(define (Z6894_same_wikidata_enum_instance a0 a1)
+  (and
+    (Z19316_same_wikidata_item_reference
+    (Z6895_get_wikidata_reference_from_enum_instance a0)
+    (Z6895_get_wikidata_reference_from_enum_instance a1))
+    (Z15801_object_type_equality a0 a1)))
+
+;; Z10012 reverse string
+(define (Z10012_reverse_string a0)
+  (Z22693_codepoint_list_to_string
+    (Z18479_reverse_typed_list (Z22717_string_to_codepoint_list a0))))
+
+;; Z10029 Turkish syllable counter
+(define (Z10029_turkish_syllable_counter a0)
+  (Z14038_sum_the_elements_of_a_list_of_natural_numbers
+    (Z29438_count_occurrences_of_list_1_elements_in_list_2
+    (Z22717_string_to_codepoint_list "aıoueiöü")
+    (Z22717_string_to_codepoint_list (Z10384_normalize_unicode a0)))))
+
 ;; Z10052 remove regular spaces
 (define (Z10052_remove_regular_spaces a0)
   (Z10075_replace_all_substrings a0 " " ""))
+
+;; Z10062 Base64 decode
+(define (Z10062_base64_decode a0)
+  (Z14576_list_of_bytes_to_string_utf_8
+    (map
+    Z22672_list_of_booleans_to_byte
+    (Z29795_chunk_list_into_lists_of_length_n
+    (Z27665_concatenate_many_untyped_lists
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    Z31716_natural_number_as_list_of_booleans
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    Z13551_remainder_of_natural_number_division
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    Z13569_subtract_natural_numbers_with_floor_of_0
+    (map
+    Z23063_code_point_to_natural_number
+    (Z22717_string_to_codepoint_list
+    (Z14613_replace_character_set
+    a0
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
+    " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_")))
+    32)
+    64)
+    6))
+    8))))
+
+;; Z10070 has substring
+(define (Z10070_has_substring a0 a1)
+  (not (Z23883_is_zero_natural_number (Z31826_position_1_n_of_first_matching_substring a0 a1))))
+
+;; Z10079 trim string
+(define (Z10079_trim_string a0)
+  (Z10084_remove_leading_spaces (Z10095_remove_trailing_spaces a0)))
+
+;; Z10083 is string blank
+(define (Z10083_is_string_blank a0)
+  (Z10008_is_empty_string (Z10079_trim_string a0)))
+
+;; Z10084 remove leading spaces
+(define (Z10084_remove_leading_spaces a0)
+  (Z10012_reverse_string (Z10095_remove_trailing_spaces (Z10012_reverse_string a0))))
+
+;; Z10095 Remove trailing spaces
+(define (Z10095_remove_trailing_spaces a0)
+  (Z10012_reverse_string (Z10084_remove_leading_spaces (Z10012_reverse_string a0))))
+
+;; Z10096 is a palindrome
+(define (Z10096_is_a_palindrome a0)
+  (string=? (Z10012_reverse_string a0) a0))
 
 ;; Z10108 string end padding
 (define (Z10108_string_end_padding a0 a1 a2)
@@ -70,6 +163,50 @@
 (define (Z10119_sandbox_function_z8 a0)
   (string-append "hm" "m"))
 
+;; Z10137 MD5
+(define (Z10137_md5 a0)
+  (Z15553_md5_from_hex_string (Z10366_string_to_hex_utf_8 a0)))
+
+;; Z10140 BLAKE2b-160
+(define (Z10140_blake2b_160 a0)
+  (Z15575_blake2b a0 20))
+
+;; Z10141 BLAKE2b-256
+(define (Z10141_blake2b_256 a0)
+  (Z15575_blake2b a0 32))
+
+;; Z10142 BLAKE2b-384
+(define (Z10142_blake2b_384 a0)
+  (Z15575_blake2b a0 48))
+
+;; Z10143 BLAKE2b-512
+(define (Z10143_blake2b_512 a0)
+  (Z15575_blake2b a0 64))
+
+;; Z10144 BLAKE2s-128
+(define (Z10144_blake2s_128 a0)
+  (Z15581_blake2s a0 16))
+
+;; Z10145 BLAKE2s-160
+(define (Z10145_blake2s_160 a0)
+  (Z15581_blake2s a0 20))
+
+;; Z10146 BLAKE2s-224
+(define (Z10146_blake2s_224 a0)
+  (Z15581_blake2s a0 28))
+
+;; Z10147 BLAKE2s-256
+(define (Z10147_blake2s_256 a0)
+  (Z15581_blake2s a0 32))
+
+;; Z10171 remove all characters except ASCII alphanumerics
+(define (Z10171_remove_all_characters_except_ascii_alphanumerics a0)
+  (Z10193_replace_all_regex_case_sensitive a0 "[^A-Za-z0-9]" Z11853_empty_string))
+
+;; Z10193 replace all (regex, case sensitive)
+(define (Z10193_replace_all_regex_case_sensitive a0 a1 a2)
+  (Z12316_regular_expression_substitute_with_flags a1 a2 a0 "gm"))
+
 ;; Z10199 replace Punjabi Shahmukhi arlam with original lam
 (define (Z10199_replace_punjabi_shahmukhi_arlam_with_original_lam a0)
   (Z10075_replace_all_substrings a0 "ࣇ" "ل"))
@@ -84,7 +221,7 @@
 
 ;; Z10214 unary false
 (define (Z10214_unary_false a0)
-  Z42_false)
+  #f)
 
 ;; Z10215 Boolean identity
 (define (Z10215_boolean_identity a0)
@@ -106,9 +243,15 @@
 (define (Z10243_nand a0 a1)
   (not (and a0 a1)))
 
+;; Z10251 to Title Case
+(define (Z10251_to_title_case a0)
+  (Z12899_join_list_of_strings_with_delimiter
+    (map Z10771_sentence_case (Z13407_tokenize_on_white_space (Z10047_to_lowercase a0)))
+    " "))
+
 ;; Z10257 binary false
 (define (Z10257_binary_false a0 a1)
-  Z42_false)
+  #f)
 
 ;; Z10265 Boolean left
 (define (Z10265_boolean_left a0 a1)
@@ -118,9 +261,20 @@
 (define (Z10272_boolean_not_left a0 a1)
   (not (Z10265_boolean_left a0 a1)))
 
+;; Z10281 to snake_case
+(define (Z10281_to_snake_case a0)
+  (Z10075_replace_all_substrings (Z10047_to_lowercase a0) " " "_"))
+
 ;; Z10287 binary true
 (define (Z10287_binary_true a0 a1)
-  Z41_true)
+  #t)
+
+;; Z10290 to PascalCase
+(define (Z10290_to_pascalcase a0)
+  (Z21394_concatenate_many_strings
+    (map
+    Z10771_sentence_case
+    (Z13407_tokenize_on_white_space (Z10075_replace_all_substrings a0 "_" " ")))))
 
 ;; Z10298 Boolean right
 (define (Z10298_boolean_right a0 a1)
@@ -130,17 +284,100 @@
 (define (Z10306_boolean_not_right a0 a1)
   (not (Z10298_boolean_right a0 a1)))
 
+;; Z10313 replace all kind of whitespaces with a single U+0020 space
+(define (Z10313_replace_all_kind_of_whitespaces_with_a_single_u_0020_space a0)
+  (Z10193_replace_all_regex_case_sensitive a0 "\\s+" " "))
+
+;; Z10324 is snake case
+(define (Z10324_is_snake_case a0)
+  (string=? a0 (Z10281_to_snake_case a0)))
+
 ;; Z10329 Boolean implication
 (define (Z10329_boolean_implication a0 a1)
   (or (not a0) a1))
+
+;; Z10336 is uppercase
+(define (Z10336_is_uppercase a0)
+  (string=? a0 (Z10018_to_uppercase a0)))
+
+;; Z10346 is lowercase
+(define (Z10346_is_lowercase a0)
+  (string=? a0 (Z10047_to_lowercase a0)))
 
 ;; Z10348 backwards Boolean implication
 (define (Z10348_backwards_boolean_implication a0 a1)
   (Z10329_boolean_implication a1 a0))
 
+;; Z10363 is pascal case
+(define (Z10363_is_pascal_case a0)
+  (string=? a0 (Z10290_to_pascalcase a0)))
+
+;; Z10366 string to hex (UTF-8)
+(define (Z10366_string_to_hex_utf_8 a0)
+  (Z10047_to_lowercase (Z11003_base16_encode a0)))
+
+;; Z10375 is title case
+(define (Z10375_is_title_case a0)
+  (string=? a0 (Z10251_to_title_case a0)))
+
 ;; Z10379 string inequality
 (define (Z10379_string_inequality a0 a1)
   (not (string=? a0 a1)))
+
+;; Z10393 Levenshtein distance
+(define (Z10393_levenshtein_distance a0 a1)
+  (Z31013_levenshtein_distance_between_two_lists
+    (Z22717_string_to_codepoint_list a0)
+    (Z22717_string_to_codepoint_list a1)))
+
+;; Z10423 are strings anagrams
+(define (Z10423_are_strings_anagrams a0 a1)
+  (Z12741_is_permutation
+    (Z22717_string_to_codepoint_list a0)
+    (Z22717_string_to_codepoint_list a1)))
+
+;; Z10476 is IPv4
+(define (Z10476_is_ipv4 a0)
+  (Z10196_is_regular_expression_match
+    a0
+    "^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\\.){1,3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])$"))
+
+;; Z10539 case-insensitive string equality
+(define (Z10539_case_insensitive_string_equality a0 a1)
+  (string=? (Z10047_to_lowercase a0) (Z10047_to_lowercase a1)))
+
+;; Z10548 reverse string (grapheme level)
+(define (Z10548_reverse_string_grapheme_level a0)
+  (Z21394_concatenate_many_strings
+    (Z18479_reverse_typed_list (Z24453_string_to_grapheme_list a0))))
+
+;; Z10553 is palindrome (grapheme level)
+(define (Z10553_is_palindrome_grapheme_level a0)
+  (string=? (Z10548_reverse_string_grapheme_level a0) a0))
+
+;; Z10559 inverse binary number
+(define (Z10559_inverse_binary_number a0)
+  (string-append
+    "0b"
+    (Z10075_replace_all_substrings
+    (Z10075_replace_all_substrings
+    (Z10075_replace_all_substrings (Z14636_remove_first_n_characters_of_string a0 2) "1" "2")
+    "0"
+    "1")
+    "2"
+    "0")))
+
+;; Z10561 is character Hebrew?
+(define (Z10561_is_character_hebrew a0)
+  (Z10070_has_substring Z14598_hebrew_string a0))
+
+;; Z10603 number is between (float64)
+(define (Z10603_number_is_between_float64 a0 a1 a2)
+  (and (Z20941_less_than_or_equal_to_float64 a1 a0) (Z20941_less_than_or_equal_to_float64 a0 a2)))
+
+;; Z10618 string ends with
+(define (Z10618_string_ends_with a0 a1)
+  (Z13052_object_equality (Z14460_final_n_characters_of_string a0 (string-length a1)) a1))
 
 ;; Z10627 ROT13 (Latin alphabet)
 (define (Z10627_rot13_latin_alphabet a0)
@@ -148,6 +385,22 @@
     a0
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
     "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm"))
+
+;; Z10641 is alphanumeric
+(define (Z10641_is_alphanumeric a0)
+  (Z10196_is_regular_expression_match a0 "^[a-zA-Z0-9]*$"))
+
+;; Z10645 Tajik morpheme join
+(define (Z10645_tajik_morpheme_join a0 a1)
+  (string-append (Z11178_replace_at_end a0 "ӣ" "и") a1))
+
+;; Z10673 get URI scheme
+(define (Z10673_get_uri_scheme a0)
+  (Z10193_replace_all_regex_case_sensitive a0 "([A-Za-z][A-Za-z0-9+-.]*|):.*" "$1"))
+
+;; Z10715 is numeric
+(define (Z10715_is_numeric a0)
+  (Z10196_is_regular_expression_match a0 "^[0-9]*$"))
 
 ;; Z10725 join booleans
 (define (Z10725_join_booleans a0 a1)
@@ -157,13 +410,133 @@
 (define (Z10730_boolean_to_string a0)
   (if a0 "true" "false"))
 
+;; Z10737 reverse lines
+(define (Z10737_reverse_lines a0)
+  (Z12899_join_list_of_strings_with_delimiter
+    (Z18479_reverse_typed_list
+    (Z25614_split_string_to_list a0 (Z10373_hex_string_to_string_utf_8 "0A")))
+    (Z10373_hex_string_to_string_utf_8 "0A")))
+
+;; Z10742 remove all non-digits
+(define (Z10742_remove_all_non_digits a0)
+  (Z10193_replace_all_regex_case_sensitive a0 "[^0-9]" ""))
+
 ;; Z10753 duplicate string
 (define (Z10753_duplicate_string a0)
   (string-append a0 a0))
 
+;; Z10761 URI percent encode
+(define (Z10761_uri_percent_encode a0)
+  (if
+    (Z10008_is_empty_string a0)
+    a0
+    (string-append
+    (Z19565_triple_if
+    (> (Z11515_unicode_of_first_character a0) 126)
+    (string-append
+    "%"
+    (Z19654_add_chars_every_n_chars
+    (Z10018_to_uppercase (Z10366_string_to_hex_utf_8 (Z10901_get_first_character_of_string a0)))
+    2
+    "%"))
+    (Z10070_has_substring " \"%<>[\\]^`{|}" (Z10901_get_first_character_of_string a0))
+    (Z22193_switch
+    (Z10901_get_first_character_of_string a0)
+    (list Z13128_space_char_as_string "\"" "%" "<" ">" "[" "\\" "]" "^" "`" "{" "|" "}")
+    (list "%20" "%22" "%25" "%3C" "%3E" "%5B" "%5C" "%5D" "%5E" "%60" "%7B" "%7C" "%7D"))
+    (Z10901_get_first_character_of_string a0))
+    (Z10761_uri_percent_encode (Z14456_remove_first_character a0)))))
+
+;; Z10765 is ISSN
+(define (Z10765_is_issn a0)
+  (and
+    (Z10196_is_regular_expression_match a0 "^[0-9]{4}-[0-9]{3}[0-9X]$")
+    (Z23883_is_zero_natural_number
+    (Z13551_remainder_of_natural_number_division
+    (Z14038_sum_the_elements_of_a_list_of_natural_numbers
+    (Z18475_return_typed_list
+    (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l
+    *
+    (map
+    Z31907_value_of_numeric_type_digit_or_decimal_code_point
+    (Z22717_string_to_codepoint_list (Z14494_remove_all_characters_except_arabic_numerals a0)))
+    (list 8 7 6 5 4 3 2 1))))
+    11))))
+
 ;; Z10770 duplication with space
 (define (Z10770_duplication_with_space a0)
   (string-append a0 (string-append " " a0)))
+
+;; Z10771 sentence case
+(define (Z10771_sentence_case a0)
+  (string-append
+    (if (> (string-length a0) 0) (Z10018_to_uppercase (Z10901_get_first_character_of_string a0)) "")
+    (if (> (string-length a0) 1) (Z14636_remove_first_n_characters_of_string a0 1) "")))
+
+;; Z10782 add two integer strings
+(define (Z10782_add_two_integer_strings a0 a1)
+  (Z25073_integer_to_digit_string_hyphen_negative
+    (Z16693_add_integers
+    (Z16705_read_integer a0 Z1002_english)
+    (Z16705_read_integer a1 Z1002_english))))
+
+;; Z10785 Unicode code point encode hex
+(define (Z10785_unicode_code_point_encode_hex a0)
+  (Z10018_to_uppercase
+    (Z22504_join_list_of_strings_with_spaces
+    (map
+    Z13781_natural_number_to_hexadecimal_lowercase_without_prefix
+    (map Z23063_code_point_to_natural_number (Z22717_string_to_codepoint_list a0))))))
+
+;; Z10786 is IPv6
+(define (Z10786_is_ipv6 a0)
+  (Z10196_is_regular_expression_match
+    a0
+    "(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))"))
+
+;; Z10802 is IP
+(define (Z10802_is_ip a0)
+  (or (Z10476_is_ipv4 a0) (Z10786_is_ipv6 a0)))
+
+;; Z10831 string intersperse
+(define (Z10831_string_intersperse a0 a1)
+  (Z12899_join_list_of_strings_with_delimiter
+    (map Z15631_codepoint_to_string (Z22717_string_to_codepoint_list a0))
+    a1))
+
+;; Z10846 ROT1 (Latin alphabet)
+(define (Z10846_rot1_latin_alphabet a0)
+  (Z12812_caesar_cipher_latin_alphabet a0 1))
+
+;; Z10851 ROT25 (Latin alphabet)
+(define (Z10851_rot25_latin_alphabet a0)
+  (Z12812_caesar_cipher_latin_alphabet a0 25))
+
+;; Z10862 (!) multiply two numeric strings (full stop input/output format)
+(define (Z10862_multiply_two_numeric_strings_full_stop_input_output_format a0 a1)
+  (Z20844_float_as_string_js_conventions
+    (Z21032_multiply_float64
+    (Z21925_read_float64 a0 Z1002_english)
+    (Z21925_read_float64 a1 Z1002_english))))
+
+;; Z10866 string after other string
+(define (Z10866_string_after_other_string a0 a1)
+  (if
+    (Z23883_is_zero_natural_number (Z31826_position_1_n_of_first_matching_substring a0 a1))
+    Z11853_empty_string
+    (Z14636_remove_first_n_characters_of_string
+    a0
+    (+
+    (Z13582_decrement_natural_number_by_one (Z31826_position_1_n_of_first_matching_substring a0 a1))
+    (string-length a1)))))
+
+;; Z10878 is hiragana
+(define (Z10878_is_hiragana a0)
+  (Z10070_has_substring (Z10507_unicode_character_name a0) "HIRAGANA"))
+
+;; Z10883 is katakana
+(define (Z10883_is_katakana a0)
+  (Z10070_has_substring (Z10507_unicode_character_name a0) "KATAKANA"))
 
 ;; Z10888 to final form (Hebrew)
 (define (Z10888_to_final_form_hebrew a0)
@@ -179,6 +552,19 @@
     Z14600_hebrew_string_ordered_string
     Z14601_hebrew_string_ordered_string))
 
+;; Z10897 is camel case
+(define (Z10897_is_camel_case a0)
+  (and
+    (Z10346_is_lowercase (Z10901_get_first_character_of_string a0))
+    (not (Z10070_has_substring a0 " "))))
+
+;; Z10908 dashes to hyphen-minus
+(define (Z10908_dashes_to_hyphen_minus a0)
+  (Z10193_replace_all_regex_case_sensitive
+    a0
+    "­|‾|_|_|-|－|﹣|֊|᐀|᠆|‑|‒|‒|–|–|︲|—|—|—|﹘|︱|―|⸺|⸺|⸻|⸻|⁓|⁓|⸗|⹝|〜|〰|゠|𐺭|꓾|۔|𑂾|⁃|⸏|⸚|־|־|𑁋|˜|¯|ˉ|ˍ|˗|᭸|᭸|~|～|−|⁻|₋|∼|⎯|⏤|─|─|➖|𐆑|ー|𐄐|𑁒|𝍠|ᐨ|ㅡ|ㅡ|ㅡ|一"
+    "-"))
+
 ;; Z10911 duplicate string N times
 (define (Z10911_duplicate_string_n_times a0 a1 a2)
   (Z12899_join_list_of_strings_with_delimiter (Z21389_replicate_object_n_times a0 a1) a2))
@@ -186,6 +572,54 @@
 ;; Z10919 csv record to wikitable row
 (define (Z10919_csv_record_to_wikitable_row a0)
   (Z10075_replace_all_substrings (Z10075_replace_all_substrings a0 "|" "&#124;") "," "||"))
+
+;; Z10927 is Han character
+(define (Z10927_is_han_character a0)
+  (Z12698_is_any_true
+    (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an
+    Z10615_string_starts_with
+    (Z10507_unicode_character_name a0)
+    (list "CJK UNIFIED IDEOGRAPH" "CJK COMPATIBILITY IDEOGRAPH" "IDEOGRAPHIC NUMBER ZERO"))))
+
+;; Z10944 international morse code encode
+(define (Z10944_international_morse_code_encode a0)
+  (Z12899_join_list_of_strings_with_delimiter
+    (map
+    Z22504_join_list_of_strings_with_spaces
+    (Z29370_apply3_to_a_common_1st_and_2nd_arg_and_list_of_3rd
+    Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an
+    Z13397_get_the_nth_element_of_a_list
+    (list "." ".." "..." "...-" "...--" "...." "....." "....-" "..-" "..-." "..-.." "..--.." "..---" ".-" ".-." ".-.." ".-..-." ".-.-." ".-.-.-" ".--" ".--." ".--.-." ".---" ".----" ".----." "-" "-." "-.." "-..." "-...." "-....-" "-...-" "-..-" "-..-." "-.-" "-.-." "-.--" "-.--." "-.--.-" "--" "--." "--.." "--..." "--..--" "--.-" "---" "---.." "---..." "----." "-----")
+    (map
+    Z17895_untype_a_list
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    Z13081_remove_all_matching_elements_from_list
+    (Z31262_apply_with_common_1st_and_3rd_args_and_n_2nd_args
+    Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    Z31268_first_index_1_n_of_character_in_string
+    (map
+    Z17895_untype_a_list
+    (map Z22717_string_to_codepoint_list (Z13407_tokenize_on_white_space (Z10047_to_lowercase a0))))
+    "eisv3h54ufé?2arl\"+.wp@j1'tndb6-=x/kcy()mgz7,qo8:90")
+    0))))
+    " / "))
+
+;; Z10956 international morse code decode
+(define (Z10956_international_morse_code_decode a0)
+  (Z22504_join_list_of_strings_with_spaces
+    (map
+    Z21394_concatenate_many_strings
+    (Z29370_apply3_to_a_common_1st_and_2nd_arg_and_list_of_3rd
+    Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an
+    Z14244_get_nth_character_of_a_string
+    "eisv3h54ufé?2arl\"+.wp@j1'tndb6-=x/kcy()mgz7,qo8:90"
+    (Z31262_apply_with_common_1st_and_3rd_args_and_n_2nd_args
+    Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    Z13708_index_of_first_listing_1_n_note_limitation
+    (filter
+    Z23120_is_non_empty_list
+    (map Z13407_tokenize_on_white_space (Z25614_split_string_to_list a0 "/")))
+    (list "." ".." "..." "...-" "...--" "...." "....." "....-" "..-" "..-." "..-.." "..--.." "..---" ".-" ".-." ".-.." ".-..-." ".-.-." ".-.-.-" ".--" ".--." ".--.-." ".---" ".----" ".----." "-" "-." "-.." "-..." "-...." "-....-" "-...-" "-..-" "-..-." "-.-" "-.-." "-.--" "-.--." "-.--.-" "--" "--." "--.." "--..." "--..--" "--.-" "---" "---.." "---..." "----." "-----"))))))
 
 ;; Z10962 not boolean implication
 (define (Z10962_not_boolean_implication a0 a1)
@@ -195,6 +629,30 @@
 (define (Z10964_not_backwards_boolean_implication a0 a1)
   (not (Z10348_backwards_boolean_implication a0 a1)))
 
+;; Z10973 is anagram (simple)
+(define (Z10973_is_anagram_simple a0 a1)
+  (Z12741_is_permutation
+    (Z22717_string_to_codepoint_list a0)
+    (Z22717_string_to_codepoint_list a1)))
+
+;; Z10993 Hebrew convert to Maqaf / En dash
+(define (Z10993_hebrew_convert_to_maqaf_en_dash a0)
+  (Z10193_replace_all_regex_case_sensitive
+    (Z10193_replace_all_regex_case_sensitive
+    (Z10894_hebrew_convert_to_maqaf_en_dash_basic a0)
+    "((^|[^\\u05D0-\\u05EA])([משהוכלב]{1,4})?(אי|אין|אל|בין|בלתי|ב[ןרת]|בתר|דו|חד|חוץ|חצי|טרום|יתר|כלל?|כמו|לא|מ[יא]?קרו|מט[אה]|מסב|מעין|מצד|מ?תוך|על|פנים|פסא?ודו|קדם|רב|תלת|תת))\\-(?=[\\u05D0-\\u05EA])"
+    "\\1־")
+    "(?<=[\\u05D0-\\u05EA])\\-(?=(אחר|ות|יחד|י|י?ים|למחצה|מדומה|נגד|על)([^\\u05D0-\\u05EA]|$))"
+    "־"))
+
+;; Z11003 Base16 Encode
+(define (Z11003_base16_encode a0)
+  (Z10018_to_uppercase (Z10366_string_to_hex_utf_8 a0)))
+
+;; Z11007 Base16 Decode
+(define (Z11007_base16_decode a0)
+  (Z10373_hex_string_to_string_utf_8 a0))
+
 ;; Z11015 is leap year (Julian calendar)
 (define (Z11015_is_leap_year_julian_calendar a0)
   (Z13740_is_natural_number_divisible a0 4))
@@ -202,6 +660,27 @@
 ;; Z11019 italicise in Wikitext
 (define (Z11019_italicise_in_wikitext a0)
   (string-append (string-append "''" a0) "''"))
+
+;; Z11044 URL Fragment
+(define (Z11044_url_fragment a0)
+  (Z10866_string_after_other_string a0 "#"))
+
+;; Z11053 URL query string
+(define (Z11053_url_query_string a0)
+  (Z11542_if_string_output
+    (Z10070_has_substring a0 "?")
+    (Z11410_discard_from_start_of_first_substring
+    (Z11420_discard_until_end_of_first_substring a0 "?")
+    "#")
+    Z11853_empty_string))
+
+;; Z11060 get last character of string
+(define (Z11060_get_last_character_of_string a0)
+  (Z10901_get_first_character_of_string (Z10012_reverse_string a0)))
+
+;; Z11071 Get Text Fragment
+(define (Z11071_get_text_fragment a0)
+  (Z10193_replace_all_regex_case_sensitive (Z11044_url_fragment a0) ":~:text=(.*)" "\\1"))
 
 ;; Z11082 fallback if string is empty
 (define (Z11082_fallback_if_string_is_empty a0 a1)
@@ -211,6 +690,25 @@
 (define (Z11089_english_plural a0)
   (string-append a0 "s"))
 
+;; Z11094 string is element of CSV
+(define (Z11094_string_is_element_of_csv a0 a1)
+  (Z10962_not_boolean_implication
+    (or
+    (Z10070_has_substring a1 (string-append "," (string-append a0 ",")))
+    (or
+    (Z10615_string_starts_with a1 (string-append a0 ","))
+    (Z10618_string_ends_with a1 (string-append "," a0))))
+    (Z10070_has_substring a0 ",")))
+
+;; Z11102 remove duplicate characters
+(define (Z11102_remove_duplicate_characters a0)
+  (Z22693_codepoint_list_to_string
+    (Z19202_remove_duplicates_from_typed_list (Z22717_string_to_codepoint_list a0))))
+
+;; Z11129 is valid positive integer
+(define (Z11129_is_valid_positive_integer a0)
+  (Z10196_is_regular_expression_match a0 "^[0-9]*[1-9][0-9]*$"))
+
 ;; Z11139 bold in Wikitext
 (define (Z11139_bold_in_wikitext a0)
   (string-append "'''" (string-append a0 "'''")))
@@ -219,25 +717,237 @@
 (define (Z11145_wrap_string a0 a1)
   (string-append a1 (string-append a0 a1)))
 
+;; Z11151 unwrap string
+(define (Z11151_unwrap_string a0 a1)
+  (if
+    (and (Z10615_string_starts_with a0 a1) (Z10618_string_ends_with a0 a1))
+    (Z11170_string_without_suffix (Z31955_string_without_prefix a0 a1) a1)
+    a0))
+
+;; Z11165 regular Croatian feminine genitive singular
+(define (Z11165_regular_croatian_feminine_genitive_singular a0)
+  (if (Z10618_string_ends_with a0 "a") (Z11178_replace_at_end a0 "a" "e") (string-append a0 "i")))
+
+;; Z11170 String without suffix
+(define (Z11170_string_without_suffix a0 a1)
+  (Z11178_replace_at_end a0 a1 ""))
+
+;; Z11178 replace at end
+(define (Z11178_replace_at_end a0 a1 a2)
+  (if (Z10618_string_ends_with a0 a1) (string-append (Z11170_string_without_suffix a0 a1) a2) a0))
+
+;; Z11199 regular Croatian feminine dative singular
+(define (Z11199_regular_croatian_feminine_dative_singular a0)
+  (if
+    (Z10618_string_ends_with a0 "ka")
+    (Z11178_replace_at_end a0 "ka" "ci")
+    (if (Z10618_string_ends_with a0 "a") (Z11178_replace_at_end a0 "a" "i") (string-append a0 "i"))))
+
+;; Z11204 regular Croatian feminine accusative singular
+(define (Z11204_regular_croatian_feminine_accusative_singular a0)
+  (Z11178_replace_at_end a0 "a" "u"))
+
+;; Z11208 is SMILES notation
+(define (Z11208_is_smiles_notation a0)
+  (Z11849_and_octonary
+    (Z11678_has_specified_chars_paired a0 "([" ")]")
+    (Z11899_all_characters_in_smiles_string_are_valid a0)
+    (Z11903_all_bonds_in_smiles_string_have_atoms_in_between a0)
+    (Z11917_correct_unbracketed_atoms_in_smiles_string a0)
+    #t
+    (Z11891_correct_bracketed_atoms_in_smiles a0)
+    #t
+    #t))
+
 ;; Z11218 English count plurality
 (define (Z11218_english_count_plurality a0 a1 a2)
   (if (Z31547_is_natural_number_1 a0) a1 a2))
+
+;; Z11231 regular Croatian feminine locative singular
+(define (Z11231_regular_croatian_feminine_locative_singular a0)
+  (string-append (Z11170_string_without_suffix (Z11178_replace_at_end a0 "ka" "ca") "a") "i"))
+
+;; Z11245 regular Croatian feminine vocative singular
+(define (Z11245_regular_croatian_feminine_vocative_singular a0)
+  (if (Z10618_string_ends_with a0 "a") (Z11178_replace_at_end a0 "a" "o") (string-append a0 "i")))
+
+;; Z11254 regular Croatian feminine instrumental singular
+(define (Z11254_regular_croatian_feminine_instrumental_singular a0)
+  (if (Z10618_string_ends_with a0 "a") (Z11178_replace_at_end a0 "a" "om") (string-append a0 "i")))
+
+;; Z11256 regular German First person singular present verb
+(define (Z11256_regular_german_first_person_singular_present_verb a0)
+  (string-append (Z11259_stem_german_verb a0) "e"))
+
+;; Z11259 stem German verb
+(define (Z11259_stem_german_verb a0)
+  (Z11170_string_without_suffix a0 "en"))
+
+;; Z11264 regular German Second person singular present verb
+(define (Z11264_regular_german_second_person_singular_present_verb a0)
+  (string-append (Z11259_stem_german_verb a0) "st"))
 
 ;; Z11268 regular German First person plural present verb
 (define (Z11268_regular_german_first_person_plural_present_verb a0)
   a0)
 
+;; Z11272 regular German verb in the second person plural present
+(define (Z11272_regular_german_verb_in_the_second_person_plural_present a0)
+  (string-append (Z11259_stem_german_verb a0) "t"))
+
 ;; Z11277 regular Croatian feminine nominative singular
 (define (Z11277_regular_croatian_feminine_nominative_singular a0)
   a0)
+
+;; Z11284 regular Croatian feminine nominative plural
+(define (Z11284_regular_croatian_feminine_nominative_plural a0)
+  (if (Z10618_string_ends_with a0 "a") (Z11178_replace_at_end a0 "a" "e") (string-append a0 "i")))
+
+;; Z11288 regular Croatian feminine genitive plural
+(define (Z11288_regular_croatian_feminine_genitive_plural a0)
+  (if (not (Z10618_string_ends_with a0 "a")) (string-append a0 "i") a0))
+
+;; Z11289 sort letters of a string
+(define (Z11289_sort_letters_of_a_string a0)
+  (Z22693_codepoint_list_to_string
+    (Z32109_sort_list_of_unicode_code_points_ascending (Z22717_string_to_codepoint_list a0))))
+
+;; Z11298 regular Croatian feminine dative plural
+(define (Z11298_regular_croatian_feminine_dative_plural a0)
+  (if (Z10618_string_ends_with a0 "a") (string-append a0 "ma") (string-append a0 "ima")))
+
+;; Z11302 English possessive
+(define (Z11302_english_possessive a0)
+  (Z11542_if_string_output
+    (Z10618_string_ends_with a0 "s")
+    (if (string=? a0 "us") "ours" (string-append a0 "'"))
+    (if
+    (Z23883_is_zero_natural_number
+    (Z13708_index_of_first_listing_1_n_note_limitation
+    a0
+    (list "me" "us" "thee" "you" "him" "her" "it" "them" "whom" "I" "we" "thou" "ye" "he" "she" "they" "who")))
+    (string-append a0 "'s")
+    (Z13397_get_the_nth_element_of_a_list
+    (list "mine" "ours" "thine" "yours" "his" "hers" "its" "theirs" "whose" "mine" "ours" "thine" "yours" "his" "hers" "theirs" "whose")
+    (Z13708_index_of_first_listing_1_n_note_limitation
+    a0
+    (list "me" "us" "thee" "you" "him" "her" "it" "them" "whom" "I" "we" "thou" "ye" "he" "she" "they" "who"))))))
+
+;; Z11306 is an Igbo vowel
+(define (Z11306_is_an_igbo_vowel a0)
+  (and
+    (Z31547_is_natural_number_1 (string-length a0))
+    (Z11693_string_only_has_characters_from_alphabet a0 "aeiịoọuụAEIỊOỌUỤ")))
+
+;; Z11308 regular Croatian feminine accusative plural
+(define (Z11308_regular_croatian_feminine_accusative_plural a0)
+  (if (Z10618_string_ends_with a0 "a") (Z11178_replace_at_end a0 "a" "e") (string-append a0 "i")))
+
+;; Z11314 regular Croatian feminine locative plural
+(define (Z11314_regular_croatian_feminine_locative_plural a0)
+  (if (Z10618_string_ends_with a0 "a") (string-append a0 "ma") (string-append a0 "ima")))
+
+;; Z11319 regular Croatian feminine vocative plural
+(define (Z11319_regular_croatian_feminine_vocative_plural a0)
+  (if (Z10618_string_ends_with a0 "a") (Z11178_replace_at_end a0 "a" "e") (string-append a0 "i")))
+
+;; Z11332 regular Croatian feminine instrumental plural
+(define (Z11332_regular_croatian_feminine_instrumental_plural a0)
+  (if (Z10618_string_ends_with a0 "a") (string-append a0 "ma") (string-append a0 "ima")))
 
 ;; Z11336 regular Croatian masculine nominative singular
 (define (Z11336_regular_croatian_masculine_nominative_singular a0)
   a0)
 
+;; Z11340 regular Croatian masculine genitive singular
+(define (Z11340_regular_croatian_masculine_genitive_singular a0)
+  (if
+    (Z10618_string_ends_with a0 "ak")
+    (Z11178_replace_at_end a0 "ak" "ka")
+    (if
+    (Z10618_string_ends_with a0 "ac")
+    (Z11178_replace_at_end a0 "ac" "ca")
+    (string-append a0 "a"))))
+
+;; Z11342 is DNA nucleic acid notation
+(define (Z11342_is_dna_nucleic_acid_notation a0)
+  (Z11693_string_only_has_characters_from_alphabet a0 " ACGT"))
+
+;; Z11349 has and is uppercase
+(define (Z11349_has_and_is_uppercase a0)
+  (Z10962_not_boolean_implication (Z10336_is_uppercase a0) (Z10346_is_lowercase a0)))
+
+;; Z11355 Croatian masculine noun declension
+(define (Z11355_croatian_masculine_noun_declension a0 a1)
+  (string-append
+    (if
+    (Z10618_string_ends_with a0 "ak")
+    (Z11178_replace_at_end a0 "ak" "k")
+    (Z11178_replace_at_end a0 "ac" "c"))
+    a1))
+
+;; Z11361 regular Croatian masculine dative singular
+(define (Z11361_regular_croatian_masculine_dative_singular a0)
+  (Z11355_croatian_masculine_noun_declension a0 "u"))
+
 ;; Z11366 regular Croatian masculine accusative singular
 (define (Z11366_regular_croatian_masculine_accusative_singular a0)
   a0)
+
+;; Z11370 regular Croatian masculine locative singular
+(define (Z11370_regular_croatian_masculine_locative_singular a0)
+  (Z11355_croatian_masculine_noun_declension a0 "u"))
+
+;; Z11383 has and is lowercase
+(define (Z11383_has_and_is_lowercase a0)
+  (Z10962_not_boolean_implication (Z10346_is_lowercase a0) (Z10336_is_uppercase a0)))
+
+;; Z11410 discard from start of first substring
+(define (Z11410_discard_from_start_of_first_substring a0 a1)
+  (Z11414_discard_from_start_of_last_substring
+    (Z11412_discard_from_end_of_first_substring a0 a1)
+    a1))
+
+;; Z11412 discard from end of first substring
+(define (Z11412_discard_from_end_of_first_substring a0 a1)
+  (string-append
+    (Z11410_discard_from_start_of_first_substring a0 a1)
+    (Z11542_if_string_output (Z10070_has_substring a0 a1) a1 "")))
+
+;; Z11414 discard from start of last substring
+(define (Z11414_discard_from_start_of_last_substring a0 a1)
+  (Z11170_string_without_suffix (Z11416_discard_from_end_of_last_substring a0 a1) a1))
+
+;; Z11416 discard from end of last substring
+(define (Z11416_discard_from_end_of_last_substring a0 a1)
+  (string-append
+    (Z11414_discard_from_start_of_last_substring a0 a1)
+    (Z11542_if_string_output (Z10070_has_substring a0 a1) a1 Z11853_empty_string)))
+
+;; Z11418 discard until start of first substring
+(define (Z11418_discard_until_start_of_first_substring a0 a1)
+  (string-append
+    (Z11542_if_string_output (Z10070_has_substring a0 a1) a1 Z11853_empty_string)
+    (Z11420_discard_until_end_of_first_substring a0 a1)))
+
+;; Z11420 discard until end of first substring
+(define (Z11420_discard_until_end_of_first_substring a0 a1)
+  (Z10012_reverse_string
+    (Z11414_discard_from_start_of_last_substring
+    (Z10012_reverse_string a0)
+    (Z10012_reverse_string a1))))
+
+;; Z11422 discard until start of last substring
+(define (Z11422_discard_until_start_of_last_substring a0 a1)
+  (string-append
+    (Z11542_if_string_output (Z10070_has_substring a0 a1) a1 Z11853_empty_string)
+    (Z11424_discard_until_end_of_last_substring a0 a1)))
+
+;; Z11424 discard until end of last substring
+(define (Z11424_discard_until_end_of_last_substring a0 a1)
+  (Z11420_discard_until_end_of_first_substring
+    (Z11422_discard_until_start_of_last_substring a0 a1)
+    a1))
 
 ;; Z11441 regular Croatian masculine vocative singular
 (define (Z11441_regular_croatian_masculine_vocative_singular a0)
@@ -246,6 +956,10 @@
 ;; Z11445 regular Croatian masculine instrumental singular
 (define (Z11445_regular_croatian_masculine_instrumental_singular a0)
   (string-append a0 "om"))
+
+;; Z11449 regular Croatian masculine nominative plural
+(define (Z11449_regular_croatian_masculine_nominative_plural a0)
+  (Z11355_croatian_masculine_noun_declension a0 "i"))
 
 ;; Z11453 regular Croatian masculine genitive plural
 (define (Z11453_regular_croatian_masculine_genitive_plural a0)
@@ -267,17 +981,120 @@
 (define (Z11478_regular_croatian_masculine_instrumental_plural a0)
   (Z11457_regular_croatian_masculine_dative_plural a0))
 
+;; Z11480 regular Croatian masculine vocative plural
+(define (Z11480_regular_croatian_masculine_vocative_plural a0)
+  (Z11449_regular_croatian_masculine_nominative_plural a0))
+
 ;; Z11482 regular Croatian neuter nominative singular
 (define (Z11482_regular_croatian_neuter_nominative_singular a0)
   a0)
+
+;; Z11484 pretty "
+(define (Z11484_pretty a0 a1 a2)
+  (Z10193_replace_all_regex_case_sensitive
+    (Z10193_replace_all_regex_case_sensitive
+    (Z10193_replace_all_regex_case_sensitive a0 "\"$" a2)
+    "\" "
+    (string-append a2 " "))
+    "\""
+    a1))
+
+;; Z11490 pretty '
+(define (Z11490_pretty a0 a1 a2)
+  (Z10193_replace_all_regex_case_sensitive
+    (Z10193_replace_all_regex_case_sensitive
+    (Z10193_replace_all_regex_case_sensitive
+    (Z10193_replace_all_regex_case_sensitive
+    (Z10193_replace_all_regex_case_sensitive a0 "'$" a2)
+    "^'"
+    a1)
+    "' "
+    (string-append a2 " "))
+    " '"
+    (string-append " " a1))
+    "'"
+    a2))
+
+;; Z11492 left/inner/right mark replacement
+(define (Z11492_left_inner_right_mark_replacement a0 a1 a2 a3 a4)
+  (Z10193_replace_all_regex_case_sensitive
+    (Z10193_replace_all_regex_case_sensitive
+    (Z10193_replace_all_regex_case_sensitive
+    (Z10193_replace_all_regex_case_sensitive
+    (Z10193_replace_all_regex_case_sensitive a0 (string-append (Z11461_pcre_escape a1) "$") a4)
+    (string-append "^" (Z11461_pcre_escape a1))
+    a2)
+    (string-append (Z11461_pcre_escape a1) " ")
+    (string-append a4 " "))
+    (string-append " " (Z11461_pcre_escape a1))
+    (string-append " " a2))
+    a1
+    a3))
+
+;; Z11501 general positional mark replacement
+(define (Z11501_general_positional_mark_replacement a0 a1 a2 a3 a4 a5 a6 a7 a8)
+  (Z10193_replace_all_regex_case_sensitive
+    (Z10193_replace_all_regex_case_sensitive
+    (Z10193_replace_all_regex_case_sensitive
+    (Z10193_replace_all_regex_case_sensitive
+    (Z10193_replace_all_regex_case_sensitive
+    (Z10193_replace_all_regex_case_sensitive a0 (string-append (Z11461_pcre_escape a1) "$") a8)
+    (string-append "^" (Z11461_pcre_escape a1))
+    a7)
+    (Z11145_wrap_string (Z11461_pcre_escape a1) (Z11461_pcre_escape a2))
+    (Z11145_wrap_string a6 a2))
+    (string-append (Z11461_pcre_escape a2) (Z11461_pcre_escape a1))
+    (string-append a2 a1))
+    (string-append (Z11461_pcre_escape a1) (Z11461_pcre_escape a2))
+    (string-append a4 a2))
+    (Z11461_pcre_escape a1)
+    a5))
+
+;; Z11515 unicode of first character
+(define (Z11515_unicode_of_first_character a0)
+  (if
+    (Z10008_is_empty_string a0)
+    Z24_void
+    (Z23063_code_point_to_natural_number (car (Z22717_string_to_codepoint_list a0)))))
 
 ;; Z11519 longer of two Strings
 (define (Z11519_longer_of_two_strings a0 a1)
   (if (Z13324_is_longer_or_equal_length_string a0 a1) a0 a1))
 
+;; Z11523 first letter of strings: codepoints in ascending order
+(define (Z11523_first_letter_of_strings_codepoints_in_ascending_order a0 a1)
+  (<=
+    (Z23063_code_point_to_natural_number (Z32065_get_first_code_point_of_string a0))
+    (Z23063_code_point_to_natural_number (Z32065_get_first_code_point_of_string a1))))
+
+;; Z11528 in codepoint order (three characters)
+(define (Z11528_in_codepoint_order_three_characters a0 a1 a2)
+  (and
+    (Z11523_first_letter_of_strings_codepoints_in_ascending_order a0 a1)
+    (Z11523_first_letter_of_strings_codepoints_in_ascending_order a1 a2)))
+
+;; Z11531 remove characters in character range
+(define (Z11531_remove_characters_in_character_range a0 a1 a2)
+  (Z11542_if_string_output
+    (Z11523_first_letter_of_strings_codepoints_in_ascending_order a1 a2)
+    (Z11531_remove_characters_in_character_range
+    (Z10075_replace_all_substrings a0 a1 "")
+    (Z11538_successor_of_code_point_as_string a1)
+    a2)
+    a0))
+
+;; Z11538 successor of Code point (as String)
+(define (Z11538_successor_of_code_point_as_string a0)
+  (Z15631_codepoint_to_string
+    (Z23022_natural_number_to_codepoint (add1 (Z11515_unicode_of_first_character a0)))))
+
 ;; Z11542 if (string output)
 (define (Z11542_if_string_output a0 a1 a2)
   (if a0 a1 a2))
+
+;; Z11553 remove emoticons/emoji
+(define (Z11553_remove_emoticons_emoji a0)
+  (Z11531_remove_characters_in_character_range a0 "😀" "🛌"))
 
 ;; Z11557 is Breton plural
 (define (Z11557_is_breton_plural a0)
@@ -286,6 +1103,27 @@
     Z10618_string_ends_with
     a0
     (list "où" "ed" "ien" "ion" "ier" "idi"))))
+
+;; Z11564 predecessor of Code point (as String)
+(define (Z11564_predecessor_of_code_point_as_string a0)
+  (Z15631_codepoint_to_string
+    (Z23022_natural_number_to_codepoint
+    (Z13582_decrement_natural_number_by_one (Z11515_unicode_of_first_character a0)))))
+
+;; Z11573 is heterogram
+(define (Z11573_is_heterogram a0)
+  (Z22874_list_is_duplicate_free (Z22717_string_to_codepoint_list a0)))
+
+;; Z11577 is tautogram
+(define (Z11577_is_tautogram a0)
+  (=
+    1
+    (string-length
+    (Z10193_replace_all_regex_case_sensitive
+    (Z11102_remove_duplicate_characters
+    (Z10193_replace_all_regex_case_sensitive (Z10047_to_lowercase a0) "(([^\\s])[^\\s]*)*" "$2"))
+    "\\s"
+    ""))))
 
 ;; Z11585 link in wikitext
 (define (Z11585_link_in_wikitext a0 a1)
@@ -321,13 +1159,50 @@
 (define (Z11616_breton_singulative a0)
   (string-append a0 "enn"))
 
+;; Z11637 Breton plural in -où and soft mutation
+(define (Z11637_breton_plural_in_o_and_soft_mutation a0)
+  (Z11611_breton_plural_in_o (Z11619_breton_soft_mutation a0)))
+
 ;; Z11646 English adjective to adverb
 (define (Z11646_english_adjective_to_adverb a0)
   (string-append a0 "ly"))
 
+;; Z11660 Breton plural in -où and hard mutation
+(define (Z11660_breton_plural_in_o_and_hard_mutation a0)
+  (Z11611_breton_plural_in_o (Z11627_breton_hard_mutation a0)))
+
+;; Z11663 Breton aspirant plural in -où
+(define (Z11663_breton_aspirant_plural_in_o a0)
+  (Z11632_breton_aspirant_mutation (Z11611_breton_plural_in_o a0)))
+
+;; Z11684 has all brackets paired
+(define (Z11684_has_all_brackets_paired a0)
+  (Z11678_has_specified_chars_paired
+    a0
+    Z14608_left_brackets_ordered_string
+    Z14609_right_brackets_ordered_string))
+
 ;; Z11690 strings equal length
 (define (Z11690_strings_equal_length a0 a1)
   (= (string-length a0) (string-length a1)))
+
+;; Z11693 string only has characters from alphabet
+(define (Z11693_string_only_has_characters_from_alphabet a0 a1)
+  (Z12846_contains_all_of_list
+    (Z22717_string_to_codepoint_list a1)
+    (Z22717_string_to_codepoint_list (Z11102_remove_duplicate_characters a0))))
+
+;; Z11729 German noun, -s declension
+(define (Z11729_german_noun_s_declension a0)
+  (if (Z10618_string_ends_with a0 "s") a0 (string-append a0 "s")))
+
+;; Z11749 German noun, -n declension
+(define (Z11749_german_noun_n_declension a0)
+  (if (Z10618_string_ends_with a0 "n") a0 (string-append a0 "n")))
+
+;; Z11753 German noun, umlaut + -en declension
+(define (Z11753_german_noun_umlaut_en_declension a0)
+  (Z11749_german_noun_n_declension (Z11739_german_noun_umlaut_e_declension a0)))
 
 ;; Z11770 Breton plural in -ioù
 (define (Z11770_breton_plural_in_io a0)
@@ -337,9 +1212,47 @@
 (define (Z11775_breton_plural_in_ed a0)
   (string-append a0 "ed"))
 
+;; Z11779 Breton plural -ien
+(define (Z11779_breton_plural_ien a0)
+  (string-append (Z11170_string_without_suffix a0 "g") "ien"))
+
+;; Z11786 Breton plural -ioù and soft mutation
+(define (Z11786_breton_plural_io_and_soft_mutation a0)
+  (Z11770_breton_plural_in_io (Z11619_breton_soft_mutation a0)))
+
+;; Z11789 German noun, -e declension
+(define (Z11789_german_noun_e_declension a0)
+  (if (Z10618_string_ends_with a0 "e") a0 (string-append a0 "e")))
+
+;; Z11795 English comparative adjective
+(define (Z11795_english_comparative_adjective a0)
+  (Z11542_if_string_output
+    (Z10618_string_ends_with a0 "e")
+    (string-append a0 "r")
+    (string-append a0 "er")))
+
+;; Z11811 remove isotopic specificity in SMILES
+(define (Z11811_remove_isotopic_specificity_in_smiles a0)
+  (Z10193_replace_all_regex_case_sensitive a0 "\\[\\d*" "["))
+
+;; Z11815 remove stereochemical specificity at tetrahedral sites in SMILES string
+(define (Z11815_remove_stereochemical_specificity_at_tetrahedral_sites_in_sm a0)
+  (Z10193_replace_all_regex_case_sensitive
+    (Z10193_replace_all_regex_case_sensitive a0 "(?<!@)@(?!@)" "")
+    "(?<!@)@@(?!@)"
+    ""))
+
 ;; Z11828 and (quaternary)
 (define (Z11828_and_quaternary a0 a1 a2 a3)
   (and (and a0 a1) (and a2 a3)))
+
+;; Z11834 German noun, -(e)n declension
+(define (Z11834_german_noun_e_n_declension a0)
+  (Z11749_german_noun_n_declension (Z11789_german_noun_e_declension a0)))
+
+;; Z11839 regular Croatian neuter genitive singular
+(define (Z11839_regular_croatian_neuter_genitive_singular a0)
+  (Z11874_replace_vowel_at_end_with_suffix_else_just_add_suffix a0 "a"))
 
 ;; Z11843 regular Croatian neuter accusative singular
 (define (Z11843_regular_croatian_neuter_accusative_singular a0)
@@ -349,9 +1262,232 @@
 (define (Z11849_and_octonary a0 a1 a2 a3 a4 a5 a6 a7)
   (and (Z11828_and_quaternary a0 a1 a2 a3) (Z11828_and_quaternary a4 a5 a6 a7)))
 
+;; Z11854 is a chemical element symbol
+(define (Z11854_is_a_chemical_element_symbol a0)
+  (Z11094_string_is_element_of_csv
+    a0
+    (Z10075_replace_all_substrings Z11852_pipe_separated_chemical_element_symbols "|" ",")))
+
+;; Z11863 is it one of AEIOU
+(define (Z11863_is_it_one_of_aeiou a0)
+  (or
+    (or
+    (or
+    (Z10539_case_insensitive_string_equality a0 "a")
+    (Z10539_case_insensitive_string_equality a0 "e"))
+    (Z10539_case_insensitive_string_equality a0 "i"))
+    (or
+    (Z10539_case_insensitive_string_equality a0 "o")
+    (Z10539_case_insensitive_string_equality a0 "u"))))
+
+;; Z11874 replace vowel at end with suffix, else just add suffix
+(define (Z11874_replace_vowel_at_end_with_suffix_else_just_add_suffix a0 a1)
+  (if
+    (Z11863_is_it_one_of_aeiou (Z11060_get_last_character_of_string a0))
+    (string-append (Z11879_remove_last_character a0) a1)
+    (string-append a0 a1)))
+
+;; Z11879 remove last character
+(define (Z11879_remove_last_character a0)
+  (Z22693_codepoint_list_to_string
+    (Z12967_list_without_last_element (Z22717_string_to_codepoint_list a0))))
+
+;; Z11891 correct bracketed atoms in SMILES
+(define (Z11891_correct_bracketed_atoms_in_smiles a0)
+  (not
+    (Z10196_is_regular_expression_match
+    (Z10193_replace_all_regex_case_sensitive
+    a0
+    (string-append
+    (string-append "\\[(\\d*)?(b|c|n|o|p|s|" Z11852_pipe_separated_chemical_element_symbols)
+    ")[\\@]?(([\\@]*)|((TH|AL|SQ|TB|OH)?(\\d*)?)?)H?(\\d)?[\\+\\-]*(\\d)?\\]")
+    Z11853_empty_string)
+    ".*\\[.*\\].*")))
+
+;; Z11903 all bonds in SMILES string have atoms in between
+(define (Z11903_all_bonds_in_smiles_string_have_atoms_in_between a0)
+  (Z11828_and_quaternary
+    (not
+    (Z10196_is_regular_expression_match
+    a0
+    "[\\.\\-\\=\\#\\$\\:\\/\\\\][\\(\\)\\+\\.\\=\\#\\$\\:\\/\\\\\\@]"))
+    (not
+    (Z10196_is_regular_expression_match
+    a0
+    "[\\.\\=\\#\\$\\:\\/\\\\][\\(\\)\\+\\-\\.\\=\\#\\$\\:\\/\\\\\\@]"))
+    (not (Z10196_is_regular_expression_match a0 "[\\-][\\-](?![\\-\\]])"))
+    #t))
+
+;; Z11917 correct unbracketed atoms in SMILES string
+(define (Z11917_correct_unbracketed_atoms_in_smiles_string a0)
+  (not
+    (Z10196_is_regular_expression_match
+    (Z10193_replace_all_regex_case_sensitive
+    (Z10193_replace_all_regex_case_sensitive a0 "\\[[^\\]]*\\]" Z11853_empty_string)
+    "B|C|N|O|P|S|F|Cl|Br|I|b|c|n|o|p|s"
+    Z11853_empty_string)
+    "[A-Za-z]")))
+
+;; Z11944 regular Croatian neuter dative singular
+(define (Z11944_regular_croatian_neuter_dative_singular a0)
+  (Z11874_replace_vowel_at_end_with_suffix_else_just_add_suffix a0 "u"))
+
+;; Z11949 regular Croatian neuter locative singular
+(define (Z11949_regular_croatian_neuter_locative_singular a0)
+  (Z11944_regular_croatian_neuter_dative_singular a0))
+
+;; Z11954 regular Croatian neuter vocative singular
+(define (Z11954_regular_croatian_neuter_vocative_singular a0)
+  (if
+    (Z11863_is_it_one_of_aeiou (Z11060_get_last_character_of_string a0))
+    a0
+    (string-append a0 "u")))
+
+;; Z11960 regular Croatian neuter instrumental singular
+(define (Z11960_regular_croatian_neuter_instrumental_singular a0)
+  (if (Z11961_ends_with_one_of_aeiou a0) (string-append a0 "m") (string-append a0 "om")))
+
+;; Z11961 ends with one of AEIOU
+(define (Z11961_ends_with_one_of_aeiou a0)
+  (Z11863_is_it_one_of_aeiou (Z11060_get_last_character_of_string a0)))
+
+;; Z11969 regular Croatian neuter nominative plural
+(define (Z11969_regular_croatian_neuter_nominative_plural a0)
+  (Z11874_replace_vowel_at_end_with_suffix_else_just_add_suffix a0 "a"))
+
+;; Z11973 regular Croatian neuter genitive plural
+(define (Z11973_regular_croatian_neuter_genitive_plural a0)
+  (Z11874_replace_vowel_at_end_with_suffix_else_just_add_suffix a0 "a"))
+
+;; Z11978 regular Croatian neuter dative plural
+(define (Z11978_regular_croatian_neuter_dative_plural a0)
+  (Z11874_replace_vowel_at_end_with_suffix_else_just_add_suffix a0 "ima"))
+
+;; Z11983 regular Croatian neuter accusative plural
+(define (Z11983_regular_croatian_neuter_accusative_plural a0)
+  (Z11973_regular_croatian_neuter_genitive_plural a0))
+
+;; Z11985 regular Croatian neuter vocative plural
+(define (Z11985_regular_croatian_neuter_vocative_plural a0)
+  (Z11973_regular_croatian_neuter_genitive_plural a0))
+
+;; Z11987 regular Croatian neuter locative plural
+(define (Z11987_regular_croatian_neuter_locative_plural a0)
+  (Z11978_regular_croatian_neuter_dative_plural a0))
+
+;; Z11989 regular Croatian neuter instrumental plural
+(define (Z11989_regular_croatian_neuter_instrumental_plural a0)
+  (Z11978_regular_croatian_neuter_dative_plural a0))
+
+;; Z11991 deprecated: German noun, -(e)s genitive declension
+(define (Z11991_deprecated_german_noun_e_s_genitive_declension a0)
+  (string-append
+    a0
+    (if
+    (or
+    (or (Z10618_string_ends_with a0 "s") (Z10618_string_ends_with a0 "z"))
+    (or (Z10618_string_ends_with a0 "ß") (Z10618_string_ends_with a0 "zt")))
+    "es"
+    "s")))
+
+;; Z11996 German noun, umlaut + -er declension
+(define (Z11996_german_noun_umlaut_er_declension a0)
+  (string-append (Z11739_german_noun_umlaut_e_declension a0) "r"))
+
+;; Z12004 German noun, umlaut + -ern declension
+(define (Z12004_german_noun_umlaut_ern_declension a0)
+  (Z11749_german_noun_n_declension (Z11996_german_noun_umlaut_er_declension a0)))
+
+;; Z12128 Rohingya Hanifi noun object case
+(define (Z12128_rohingya_hanifi_noun_object_case a0)
+  (string-append (Z12116_rohingya_hanifi_noun_genitive_case a0) "𐴠"))
+
+;; Z12132 Rohingya Hanifi noun ablative case
+(define (Z12132_rohingya_hanifi_noun_ablative_case a0)
+  (Z11178_replace_at_end (Z12130_rohingya_hanifi_noun_locative_case a0) "𐴢" "𐴧𐴟"))
+
+;; Z12137 Tajik plural
+(define (Z12137_tajik_plural a0)
+  (Z10645_tajik_morpheme_join a0 "ҳо"))
+
+;; Z12141 Brahui (Perso-Arabic) genitive case plural
+(define (Z12141_brahui_perso_arabic_genitive_case_plural a0)
+  (Z11178_replace_at_end (Z12082_brahui_perso_arabic_nominative_case_plural a0) "ک" "تا"))
+
+;; Z12144 Brahui (Perso-Arabic) object case plural
+(define (Z12144_brahui_perso_arabic_object_case_plural a0)
+  (Z11178_replace_at_end (Z12082_brahui_perso_arabic_nominative_case_plural a0) "ک" "تے"))
+
+;; Z12147 Brahui (Perso-Arabic) ablative case plural
+(define (Z12147_brahui_perso_arabic_ablative_case_plural a0)
+  (Z11178_replace_at_end (Z12144_brahui_perso_arabic_object_case_plural a0) "ے" "یان"))
+
+;; Z12149 Brahui (Perso-Arabic) instrumental case plural
+(define (Z12149_brahui_perso_arabic_instrumental_case_plural a0)
+  (Z11178_replace_at_end (Z12144_brahui_perso_arabic_object_case_plural a0) "ے" "یئٹ"))
+
+;; Z12151 Brahui (Perso-Arabic) comitative case plural
+(define (Z12151_brahui_perso_arabic_comitative_case_plural a0)
+  (string-append (Z12144_brahui_perso_arabic_object_case_plural a0) "تو"))
+
+;; Z12153 Brahui (Perso-Arabic) inessive case plural
+(define (Z12153_brahui_perso_arabic_inessive_case_plural a0)
+  (string-append (Z12144_brahui_perso_arabic_object_case_plural a0) "ٹی"))
+
+;; Z12155 Brahui (Perso-Arabic) allative case plural
+(define (Z12155_brahui_perso_arabic_allative_case_plural a0)
+  (Z11178_replace_at_end (Z12144_brahui_perso_arabic_object_case_plural a0) "ے" "یائے"))
+
 ;; Z12157 Brahui (Perso-Arabic) benefactive case plural
 (define (Z12157_brahui_perso_arabic_benefactive_case_plural a0)
   (string-append a0 "کِہ"))
+
+;; Z12159 Brahui (Perso-Arabic) adessive case plural
+(define (Z12159_brahui_perso_arabic_adessive_case_plural a0)
+  (Z11178_replace_at_end (Z12144_brahui_perso_arabic_object_case_plural a0) "ے" "یک"))
+
+;; Z12161 Brahui (Perso-Arabic) terminative case plural
+(define (Z12161_brahui_perso_arabic_terminative_case_plural a0)
+  (string-append (Z12159_brahui_perso_arabic_adessive_case_plural a0) "ا"))
+
+;; Z12163 Sindhi (Perso-Arabic) masculine u > a
+(define (Z12163_sindhi_perso_arabic_masculine_u_a a0)
+  (Z11178_replace_at_end a0 "ُ" "َ"))
+
+;; Z12166 Sindhi (Devanagari) masculine u > a
+(define (Z12166_sindhi_devanagari_masculine_u_a a0)
+  (Z11178_replace_at_end a0 "ु" ""))
+
+;; Z12168 Sindhi (Perso-Arabic) masculine u > ā~
+(define (Z12168_sindhi_perso_arabic_masculine_u a0)
+  (string-append (Z12163_sindhi_perso_arabic_masculine_u_a a0) "ان"))
+
+;; Z12170 Sindhi (Devanagari) masculine u > ā~
+(define (Z12170_sindhi_devanagari_masculine_u a0)
+  (string-append (Z12166_sindhi_devanagari_masculine_u_a a0) "ां"))
+
+;; Z12172 Sindhi (Perso-Arabic) masculine u > ani
+(define (Z12172_sindhi_perso_arabic_masculine_u_ani a0)
+  (string-append (Z12163_sindhi_perso_arabic_masculine_u_a a0) "نِ"))
+
+;; Z12174 Sindhi (Devanagari) masculine u > ani
+(define (Z12174_sindhi_devanagari_masculine_u_ani a0)
+  (string-append (Z12166_sindhi_devanagari_masculine_u_a a0) "नि"))
+
+;; Z12180 Sindhi (Perso-Arabic) feminine u > uni
+(define (Z12180_sindhi_perso_arabic_feminine_u_uni a0)
+  (Z11178_replace_at_end a0 "ُ" "ُنِ"))
+
+;; Z12183 Sindhi (Devanagari) feminine u > uni
+(define (Z12183_sindhi_devanagari_feminine_u_uni a0)
+  (Z11178_replace_at_end a0 "ु" "ुनि"))
+
+;; Z12203 English regular superlative form
+(define (Z12203_english_regular_superlative_form a0)
+  (Z11542_if_string_output
+    (Z10618_string_ends_with a0 "e")
+    (string-append a0 "st")
+    (string-append a0 "est")))
 
 ;; Z12230 Urdu join verb stem to conjunctive adverbial
 (define (Z12230_urdu_join_verb_stem_to_conjunctive_adverbial a0)
@@ -373,9 +1509,77 @@
 (define (Z12238_urdu_join_masculine_plural_suffix a0)
   (string-append a0 "ے"))
 
+;; Z12240 Urdu oblique gerund / masculine plural
+(define (Z12240_urdu_oblique_gerund_masculine_plural a0)
+  (Z12238_urdu_join_masculine_plural_suffix
+    (Z12232_urdu_join_verb_stem_to_potential_participle_gerund
+    (Z12225_urdu_remove_gerund_suffix a0))))
+
+;; Z12242 Urdu conjunctive adverbial
+(define (Z12242_urdu_conjunctive_adverbial a0)
+  (Z12238_urdu_join_masculine_plural_suffix
+    (Z12230_urdu_join_verb_stem_to_conjunctive_adverbial (Z12228_urdu_verb_stem_from_gerund a0))))
+
+;; Z12244 Urdu absolute construction
+(define (Z12244_urdu_absolute_construction a0)
+  (string-append
+    (Z12230_urdu_join_verb_stem_to_conjunctive_adverbial (Z12228_urdu_verb_stem_from_gerund a0))
+    "ر"))
+
+;; Z12246 Urdu feminine singular potential participle
+(define (Z12246_urdu_feminine_singular_potential_participle a0)
+  (Z12247_urdu_join_feminine_singular_suffix
+    (Z12232_urdu_join_verb_stem_to_potential_participle_gerund
+    (Z12225_urdu_remove_gerund_suffix a0))))
+
 ;; Z12247 Urdu join feminine singular suffix
 (define (Z12247_urdu_join_feminine_singular_suffix a0)
   (string-append a0 "ی"))
+
+;; Z12281 Breton plural in –ioù with hard mutation
+(define (Z12281_breton_plural_in_io_with_hard_mutation a0)
+  (Z11770_breton_plural_in_io (Z11627_breton_hard_mutation a0)))
+
+;; Z12284 Breton aspirant plural in -ioù
+(define (Z12284_breton_aspirant_plural_in_io a0)
+  (Z11770_breton_plural_in_io (Z11632_breton_aspirant_mutation a0)))
+
+;; Z12288 Breton plural in -ed and soft mutation
+(define (Z12288_breton_plural_in_ed_and_soft_mutation a0)
+  (Z11619_breton_soft_mutation (Z11775_breton_plural_in_ed a0)))
+
+;; Z12291 Breton plural in -ed and hard mutation
+(define (Z12291_breton_plural_in_ed_and_hard_mutation a0)
+  (Z11775_breton_plural_in_ed (Z11627_breton_hard_mutation a0)))
+
+;; Z12294 is leap year (Hebrew Calendar)
+(define (Z12294_is_leap_year_hebrew_calendar a0)
+  (Z12696_contains
+    (list 0 3 6 8 11 14 17)
+    (Z13551_remainder_of_natural_number_division (Z14290_read_natural_number a0 Z1002_english) 19)))
+
+;; Z12295 Breton plural in -ed and aspirant mutation
+(define (Z12295_breton_plural_in_ed_and_aspirant_mutation a0)
+  (Z11775_breton_plural_in_ed (Z11632_breton_aspirant_mutation a0)))
+
+;; Z12298 Breton plural in -ien and soft mutation
+(define (Z12298_breton_plural_in_ien_and_soft_mutation a0)
+  (Z11779_breton_plural_ien (Z11619_breton_soft_mutation a0)))
+
+;; Z12301 Breton plural in -ien and hard mutation
+(define (Z12301_breton_plural_in_ien_and_hard_mutation a0)
+  (Z11779_breton_plural_ien (Z11627_breton_hard_mutation a0)))
+
+;; Z12305 Breton plural in -ien and aspirant mutation
+(define (Z12305_breton_plural_in_ien_and_aspirant_mutation a0)
+  (Z11779_breton_plural_ien (Z11632_breton_aspirant_mutation a0)))
+
+;; Z12315 Convert line endings: CRLF to LF
+(define (Z12315_convert_line_endings_crlf_to_lf a0)
+  (Z10075_replace_all_substrings
+    a0
+    (Z10373_hex_string_to_string_utf_8 "0d0a")
+    (Z10373_hex_string_to_string_utf_8 "0a")))
 
 ;; Z12320 Konjugasi Breton kala kini orang pertama tunggal
 (define (Z12320_konjugasi_breton_kala_kini_orang_pertama_tunggal a0)
@@ -464,6 +1668,25 @@
 ;; Z12384 Breton conjugated form
 (define (Z12384_breton_conjugated_form a0)
   (string-append a0 "ed"))
+
+;; Z12391 Remove diacritics
+(define (Z12391_remove_diacritics a0)
+  (Z22693_codepoint_list_to_string
+    (Z22820_compress_list
+    (Z22717_string_to_codepoint_list (Z10387_to_nfd a0))
+    (map
+    not
+    (map
+    Z32715_is_unicode_code_point_a_combining_mark
+    (Z22717_string_to_codepoint_list (Z10387_to_nfd a0)))))))
+
+;; Z12400 Has diacritics
+(define (Z12400_has_diacritics a0)
+  (Z10379_string_inequality a0 (Z12391_remove_diacritics a0)))
+
+;; Z12427 is prime
+(define (Z12427_is_prime a0)
+  (Z14946_is_k_almost_prime a0 1))
 
 ;; Z12429 is odd (integer)
 (define (Z12429_is_odd_integer a0)
@@ -581,14 +1804,43 @@
 (define (Z12599_classical_chinese_arrange_and_negate_verb_direct_object a0 a1)
   (string-append (string-append "不" a1) a0))
 
+;; Z12606 Round to decimal places (string)
+(define (Z12606_round_to_decimal_places_string a0 a1)
+  (Z33672_float_as_plain_decimal_to_decimal_places
+    (Z21047_round_to_decimal_places_float64
+    (Z21642_read_floating_point_number_leniently a0)
+    (Z14283_string_of_digits_as_natural_number a1))
+    (Z14304_read_natural_numbers_leniently a1)))
+
+;; Z12617 remove charges from SMILES string
+(define (Z12617_remove_charges_from_smiles_string a0)
+  (Z10193_replace_all_regex_case_sensitive a0 "[+-]\\d*" ""))
+
 ;; Z12624 Replicate string n-times
 (define (Z12624_replicate_string_n_times a0 a1)
-  (Z11542_if_string_output
-    (= a1 0)
-    Z11853_empty_string
-    (string-append
-    a0
-    (Z12624_replicate_string_n_times a0 (Z13582_decrement_natural_number_by_one a1)))))
+  (Z21394_concatenate_many_strings (Z21389_replicate_object_n_times a0 a1)))
+
+;; Z12626 is pangram (Latin alphabet)
+(define (Z12626_is_pangram_latin_alphabet a0)
+  (Z13119_is_pangram_of_alphabet a0 Z13117_latin_lowercase_alphabet_letters))
+
+;; Z12630 Esperanto accusative
+(define (Z12630_esperanto_accusative a0)
+  (if
+    (Z12696_contains (list "a" "e" "j" "o") (Z11060_get_last_character_of_string a0))
+    (string-append a0 "n")
+    a0))
+
+;; Z12636 is Armstrong number
+(define (Z12636_is_armstrong_number a0)
+  (=
+    (Z14038_sum_the_elements_of_a_list_of_natural_numbers
+    (Z18475_return_typed_list
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    expt
+    (Z25520_list_of_decimal_digits_in_a_number a0)
+    (length (Z25520_list_of_decimal_digits_in_a_number a0)))))
+    a0))
 
 ;; Z12668 reverse untyped list
 (define (Z12668_reverse_untyped_list a0)
@@ -624,6 +1876,28 @@
 ;; Z12698 is any true
 (define (Z12698_is_any_true a0)
   (if (null? a0) #f (if (car a0) #t (Z12698_is_any_true (cdr a0)))))
+
+;; Z12720 (!) sum list of numerical strings
+(define (Z12720_sum_list_of_numerical_strings a0)
+  (Z20844_float_as_string_js_conventions
+    (Z22579_sum_a_list_of_floating_point_numbers_float64
+    (Z18475_return_typed_list (map Z21642_read_floating_point_number_leniently a0)))))
+
+;; Z12723 arithmetic mean of numeric strings as string
+(define (Z12723_arithmetic_mean_of_numeric_strings_as_string a0)
+  (Z25656_display_rational_as_formatted_decimal_inferring_sf
+    (Z33933_arithmetic_mean_of_rational_numbers
+    (Z18475_return_typed_list (map Z19866_string_to_rational_number a0)))
+    Z1002_english))
+
+;; Z12727 list median
+(define (Z12727_list_median a0)
+  (Z25656_display_rational_as_formatted_decimal_inferring_sf
+    (Z26985_rational_with_power_of_10_denominator
+    (Z21071_float_as_rational
+    (Z22588_median_of_float64_list
+    (Z18475_return_typed_list (map Z21642_read_floating_point_number_leniently a0)))))
+    Z1002_english))
 
 ;; Z12735 all meet criteria
 (define (Z12735_all_meet_criteria a0 a1)
@@ -667,9 +1941,42 @@
     (Z17895_untype_a_list (Z18597_append_element_to_untyped_list (car a1) a0))
     (cdr a1))))
 
+;; Z12778 has Korean jongseong
+(define (Z12778_has_korean_jongseong a0)
+  (not (Z10008_is_empty_string (Z12775_korean_jongseong a0))))
+
 ;; Z12781 left fold
 (define (Z12781_left_fold a0 a1)
   (fold a1 (cdr a0) (car a0)))
+
+;; Z12812 Caesar cipher (Latin alphabet)
+(define (Z12812_caesar_cipher_latin_alphabet a0 a1)
+  (Z14613_replace_character_set
+    a0
+    (string-append Z13117_latin_lowercase_alphabet_letters Z13718_latin_uppercase_alphabet_letters)
+    (string-append
+    (string-append
+    (Z14636_remove_first_n_characters_of_string
+    Z13117_latin_lowercase_alphabet_letters
+    (Z13551_remainder_of_natural_number_division a1 26))
+    (Z14592_first_n_characters_of_string
+    Z13117_latin_lowercase_alphabet_letters
+    (Z13551_remainder_of_natural_number_division a1 26)))
+    (string-append
+    (Z14636_remove_first_n_characters_of_string
+    Z13718_latin_uppercase_alphabet_letters
+    (Z13551_remainder_of_natural_number_division a1 26))
+    (Z14592_first_n_characters_of_string
+    Z13718_latin_uppercase_alphabet_letters
+    (Z13551_remainder_of_natural_number_division a1 26))))))
+
+;; Z12815 remove html tags
+(define (Z12815_remove_html_tags a0)
+  (Z10193_replace_all_regex_case_sensitive a0 "<[^>]*>" ""))
+
+;; Z12828 English adjective based on scientific name of plant family
+(define (Z12828_english_adjective_based_on_scientific_name_of_plant_family a0)
+  (Z11178_replace_at_end (Z11178_replace_at_end a0 "CEAE" "CEOUS") "ceae" "ceous"))
 
 ;; Z12846 contains all of list
 (define (Z12846_contains_all_of_list a0 a1)
@@ -689,9 +1996,13 @@
 
 ;; Z12856 remove first matching element from list
 (define (Z12856_remove_first_matching_element_from_list a0 a1)
-  (Z13429_remove_the_nth_element_from_a_list
-    (Z17895_untype_a_list a0)
-    (Z13708_index_of_first_listing_1_n_note_limitation a1 a0)))
+  (if
+    (null? a0)
+    a0
+    (if
+    (Z18683_strict_object_equality a1 (car a0))
+    (cdr a0)
+    (cons (car a0) (Z12856_remove_first_matching_element_from_list (cdr a0) a1)))))
 
 ;; Z12864 lists have equal length
 (define (Z12864_lists_have_equal_length a0 a1)
@@ -700,6 +2011,14 @@
 ;; Z12875 string is fixpoint of function
 (define (Z12875_string_is_fixpoint_of_function a0 a1)
   (string=? a1 (Z13036_apply a0 a1)))
+
+;; Z12892 Is or has Bengali character
+(define (Z12892_is_or_has_bengali_character a0)
+  (Z14483_common_codepoints_in_strings a0 "অআইঈউঊঋএঐওঔকখগঘঙচছজঝঞটঠডঢণতথদধনপফবভমযরলশষসহড়ঢ়য়ংঃঁ"))
+
+;; Z12895 Esperanto accusative plural
+(define (Z12895_esperanto_accusative_plural a0)
+  (Z10482_esperanto_plural (Z12630_esperanto_accusative a0)))
 
 ;; Z12899 join list of strings with delimiter
 (define (Z12899_join_list_of_strings_with_delimiter a0 a1)
@@ -713,6 +2032,45 @@
     (Z12899_join_list_of_strings_with_delimiter (cdr a0) a1)
     a1)))
 
+;; Z12905 Decimal to ASCII
+(define (Z12905_decimal_to_ascii a0)
+  (Z22693_codepoint_list_to_string
+    (Z18475_return_typed_list
+    (map
+    Z23022_natural_number_to_codepoint
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    Z14290_read_natural_number
+    (Z13407_tokenize_on_white_space a0)
+    Z1002_english)))))
+
+;; Z12910 (!) Acceleration (m/s2, Newton's Second law)
+(define (Z12910_acceleration_m_s2_newton_s_second_law a0 a1)
+  (Z12522_division_of_numeric_strings a1 a0))
+
+;; Z12930 Esperanto indicative present tense
+(define (Z12930_esperanto_indicative_present_tense a0)
+  (string-append (Z12908_esperanto_verb_stem a0) "as"))
+
+;; Z12932 Esperanto indicative past tense
+(define (Z12932_esperanto_indicative_past_tense a0)
+  (string-append (Z12908_esperanto_verb_stem a0) "is"))
+
+;; Z12934 Esperanto indicative future tense
+(define (Z12934_esperanto_indicative_future_tense a0)
+  (string-append (Z12908_esperanto_verb_stem a0) "os"))
+
+;; Z12936 Esperanto conditional verb
+(define (Z12936_esperanto_conditional_verb a0)
+  (string-append (Z12908_esperanto_verb_stem a0) "us"))
+
+;; Z12938 Esperanto volitive mood
+(define (Z12938_esperanto_volitive_mood a0)
+  (string-append (Z12908_esperanto_verb_stem a0) "u"))
+
+;; Z12941 debug
+(define (Z12941_debug a0)
+  (Z820_trigger_metadata "executorDebugLogs" a0))
+
 ;; Z12961 append element to Typed list
 (define (Z12961_append_element_to_typed_list a0 a1)
   (Z18479_reverse_typed_list (cons a0 (Z18479_reverse_typed_list a1))))
@@ -724,6 +2082,27 @@
 ;; Z12967 list without last element
 (define (Z12967_list_without_last_element a0)
   (Z18479_reverse_typed_list (cdr (Z18479_reverse_typed_list a0))))
+
+;; Z12971 Ones complement binary addition
+(define (Z12971_ones_complement_binary_addition a0 a1)
+  (Z13779_natural_number_to_binary_string_without_prefix
+    (+ (Z13797_binary_string_to_natural_number a0) (Z13797_binary_string_to_natural_number a1))))
+
+;; Z12982 Binary to decimal
+(define (Z12982_binary_to_decimal a0)
+  (Z13713_natural_number_to_digit_string (Z13797_binary_string_to_natural_number a0)))
+
+;; Z12997 mix colours (string)
+(define (Z12997_mix_colours_string a0 a1)
+  (if
+    (and
+    (Z10196_is_regular_expression_match (Z17713_convert_x11_color_to_hex a0) "#[0-9a-fA-F]{6}")
+    (Z10196_is_regular_expression_match (Z17713_convert_x11_color_to_hex a1) "#[0-9a-fA-F]{6}"))
+    (Z17687_convert_r_g_b_to_hex_colour
+    (Z17675_average_vectors_containing_natural_numbers
+    (Z17664_convert_hex_colour_to_r_g_b (Z17713_convert_x11_color_to_hex a0))
+    (Z17664_convert_hex_colour_to_r_g_b (Z17713_convert_x11_color_to_hex a1))))
+    "Invalid color format."))
 
 ;; Z13006 is the day name part of the French Republican Calendar 'rural' naming?
 (define (Z13006_is_the_day_name_part_of_the_french_republican_calendar_rural a0)
@@ -768,9 +2147,20 @@
     a1)
     a0))
 
+;; Z13085 hyperbolic arccotangent
+(define (Z13085_hyperbolic_arccotangent a0)
+  (Z21949_float64_as_string_multilingual_default
+    (Z20972_inverse_hyperbolic_cotangent (Z21642_read_floating_point_number_leniently a0))))
+
 ;; Z13087 English -ing form
 (define (Z13087_english_ing_form a0)
   (string-append a0 "ing"))
+
+;; Z13119 is pangram of alphabet
+(define (Z13119_is_pangram_of_alphabet a0 a1)
+  (Z12846_contains_all_of_list
+    (Z868_deprecated_z22717 (Z10047_to_lowercase a0))
+    (Z868_deprecated_z22717 a1)))
 
 ;; Z13155 interleave lists
 (define (Z13155_interleave_lists a0)
@@ -797,6 +2187,35 @@
     (string=? a1 (car (car a0)))
     (Z12964_last_element (car a0))
     (Z13173_get_value_string_from_key_string (cdr a0) a1 a2))))
+
+;; Z13177 English -ed form (regular)
+(define (Z13177_english_ed_form_regular a0)
+  (Z13254_suffix_english_word a0 "ed"))
+
+;; Z13213 Regular English past participle
+(define (Z13213_regular_english_past_participle a0)
+  (if
+    (Z13206_is_irregular_english_word_lemma a0)
+    (string-append a0 " appears to be irregular, sorry.")
+    (Z13177_english_ed_form_regular a0)))
+
+;; Z13220 are all elements of the list the same type
+(define (Z13220_are_all_elements_of_the_list_the_same_type a0)
+  (Z20305_unless_exception
+    (Z20305_unless_exception
+    (Z17900_is_this_list_typed (Z18475_return_typed_list a0))
+    (null? (cdr a0))
+    #t)
+    (null? a0)
+    #t))
+
+;; Z13224 split list into a list of two ~equal length lists
+(define (Z13224_split_list_into_a_list_of_two_equal_length_lists a0)
+  (if
+    (Z17879_is_this_list_untyped a0)
+    (Z13224_split_list_into_a_list_of_two_equal_length_lists a0)
+    (Z18475_return_typed_list
+    (Z13224_split_list_into_a_list_of_two_equal_length_lists (Z17895_untype_a_list a0)))))
 
 ;; Z13247 faro out-shuffle
 (define (Z13247_faro_out_shuffle a0)
@@ -856,6 +2275,41 @@
     (car a0)
     (Z13397_get_the_nth_element_of_a_list (cdr a0) (Z13582_decrement_natural_number_by_one a1))))
 
+;; Z13402 words from string
+(define (Z13402_words_from_string a0)
+  (Z13407_tokenize_on_white_space (Z11193_remove_interpunction a0)))
+
+;; Z13407 tokenize on white space
+(define (Z13407_tokenize_on_white_space a0)
+  (if
+    (Z12755_is_single_element_list
+    (Z25614_split_string_to_list
+    (Z10079_trim_string
+    (Z12316_regular_expression_substitute_with_flags
+    "\\s+"
+    Z13128_space_char_as_string
+    a0
+    Z11853_empty_string))
+    Z13128_space_char_as_string))
+    (list )
+    (Z25614_split_string_to_list
+    (Z10079_trim_string
+    (Z12316_regular_expression_substitute_with_flags
+    "\\s+"
+    Z13128_space_char_as_string
+    a0
+    Z11853_empty_string))
+    Z13128_space_char_as_string)))
+
+;; Z13411 distinct words from string
+(define (Z13411_distinct_words_from_string a0)
+  (Z13078_remove_duplicates_from_untyped_list (Z13402_words_from_string a0)))
+
+;; Z13415 distinct lowercased words from string
+(define (Z13415_distinct_lowercased_words_from_string a0)
+  (Z13078_remove_duplicates_from_untyped_list
+    (Z13407_tokenize_on_white_space (Z11193_remove_interpunction (Z10047_to_lowercase a0)))))
+
 ;; Z13429 remove the nth element from a list
 (define (Z13429_remove_the_nth_element_from_a_list a0 a1)
   (Z12767_concatenate_two_untyped_lists
@@ -874,6 +2328,10 @@
     (Z13318_apply_two_argument_function a0 a1 (car a2))
     (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an a0 a1 (cdr a2)))))
 
+;; Z13440 check if string is lower camelcase
+(define (Z13440_check_if_string_is_lower_camelcase a0)
+  (not (string=? a0 (Z10816_to_camelcase a0))))
+
 ;; Z13445 are all false
 (define (Z13445_are_all_false a0)
   (not (Z12698_is_any_true a0)))
@@ -887,27 +2345,28 @@
     (Z13318_apply_two_argument_function a0 (car a1) a2)
     (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments a0 (cdr a1) a2))))
 
-;; Z13521 add two Natural numbers
-(define (Z13521_add_two_natural_numbers a0 a1)
-  (Z13846_if_natural_number_output
-    (= (Z13633_lesser_of_two_natural_numbers a0 a1) 0)
-    (Z13630_greater_of_two_natural_numbers a0 a1)
-    (Z13578_increment_natural_number
-    (Z13521_add_two_natural_numbers
-    (Z13630_greater_of_two_natural_numbers a0 a1)
-    (Z13582_decrement_natural_number_by_one (Z13633_lesser_of_two_natural_numbers a0 a1))))))
+;; Z13473 format digit strings with commas
+(define (Z13473_format_digit_strings_with_commas a0)
+  (Z10193_replace_all_regex_case_sensitive a0 "\\d{1,3}(?=(\\d{3})+(?!\\d))" "$&,"))
 
-;; Z13539 multiply two natural numbers
-(define (Z13539_multiply_two_natural_numbers a0 a1)
-  (Z31490_if_either
-    (Z23883_is_zero_natural_number a0)
-    (Z23883_is_zero_natural_number a1)
+;; Z13482 is ISO 639-1 language code
+(define (Z13482_is_iso_639_1_language_code a0)
+  (Z10196_is_regular_expression_match
+    a0
+    "^(a[abefkmnrsvyz]|b[aeghimnors]|c[aehorsuvy]|d[aevz]|e[elnostu]|f[afijory]|g[adlnuv]|h[aeiortuyz]|i[adegikostu]|j[av]|k[agijklmnorsuvwy]|l[abginotuv]|m[ghiklnrsty]|n[abdeglnorvy]|o[cjmrs]|p[ailst]|qu|r[mnouw]|s[acdegiklmnoqrstuvw]|t[aeghiklnorstwy]|u[gkrz]|v[eio]|w[ao]|xh|y[io]|z[ahu])$"))
+
+;; Z13489 is decimal natural number string of Arabic numerals
+(define (Z13489_is_decimal_natural_number_string_of_arabic_numerals a0)
+  (Z10196_is_regular_expression_match a0 "^(0|[1-9]\\d*)$"))
+
+;; Z13551 remainder of natural number division
+(define (Z13551_remainder_of_natural_number_division a0 a1)
+  (if
+    (= a1 0)
     0
-    (Z13521_add_two_natural_numbers
-    (Z13630_greater_of_two_natural_numbers a0 a1)
-    (Z13539_multiply_two_natural_numbers
-    (Z13630_greater_of_two_natural_numbers a0 a1)
-    (Z13582_decrement_natural_number_by_one (Z13633_lesser_of_two_natural_numbers a0 a1))))))
+    (Z13569_subtract_natural_numbers_with_floor_of_0
+    a0
+    (* a1 (Z13546_divide_natural_numbers a0 a1)))))
 
 ;; Z13555 natural number is even
 (define (Z13555_natural_number_is_even a0)
@@ -915,37 +2374,32 @@
 
 ;; Z13558 product of list (natural numbers)
 (define (Z13558_product_of_list_natural_numbers a0)
-  (if (null? a0) 1 (Z12753_right_fold a0 Z13539_multiply_two_natural_numbers)))
+  (if
+    (Z12755_is_single_element_list a0)
+    (car a0)
+    (if (null? a0) 1 (* (car a0) (Z13558_product_of_list_natural_numbers (cdr a0))))))
 
 ;; Z13561 Collatz conjecture function
 (define (Z13561_collatz_conjecture_function a0)
-  (if
-    (= a0 1)
-    1
-    (Z13397_get_the_nth_element_of_a_list (Z36069_all_steps_in_collatz_conjecture_sequence a0) 2)))
+  (if (Z13555_natural_number_is_even a0) (Z13546_divide_natural_numbers a0 2) (+ (* a0 3) 1)))
 
-;; Z13578 increment natural number
-(define (Z13578_increment_natural_number a0)
-  (Z13521_add_two_natural_numbers a0 1))
+;; Z13576 absolute difference between natural numbers
+(define (Z13576_absolute_difference_between_natural_numbers a0 a1)
+  (Z17144_absolute_value_of_integer_as_natural_number
+    (Z17315_subtract_natural_numbers_as_integer a0 a1)))
+
+;; Z13596 English name of month
+(define (Z13596_english_name_of_month a0)
+  (if (Z17180_is_void a0) "unknown" (Z24086_display_gregorian_calendar_month a0 Z1002_english)))
 
 ;; Z13612 greatest common divisor
 (define (Z13612_greatest_common_divisor a0 a1)
   (if
-    (= (Z13633_lesser_of_two_natural_numbers a0 a1) 0)
-    (Z13630_greater_of_two_natural_numbers a0 a1)
+    (= (min a0 a1) 0)
+    (max a0 a1)
     (Z13612_greatest_common_divisor
-    (Z13633_lesser_of_two_natural_numbers a0 a1)
-    (Z13551_remainder_of_natural_number_division
-    (Z13630_greater_of_two_natural_numbers a0 a1)
-    (Z13633_lesser_of_two_natural_numbers a0 a1)))))
-
-;; Z13630 greater of two natural numbers
-(define (Z13630_greater_of_two_natural_numbers a0 a1)
-  (if (> a0 a1) a0 a1))
-
-;; Z13633 lesser of two natural numbers
-(define (Z13633_lesser_of_two_natural_numbers a0 a1)
-  (Z13846_if_natural_number_output (< a0 a1) a0 a1))
+    (min a0 a1)
+    (Z13551_remainder_of_natural_number_division (max a0 a1) (min a0 a1)))))
 
 ;; Z13636 natural number identity
 (define (Z13636_natural_number_identity a0)
@@ -957,33 +2411,55 @@
 
 ;; Z13644 2^n
 (define (Z13644_2_n a0)
-  (Z13647_exponentiation_of_natural_numbers 2 a0))
+  (expt 2 a0))
 
-;; Z13647 exponentiation of natural numbers
-(define (Z13647_exponentiation_of_natural_numbers a0 a1)
-  (Z31490_if_either
-    (Z23883_is_zero_natural_number a1)
-    (Z31547_is_natural_number_1 a0)
-    1
-    (Z13846_if_natural_number_output
-    (Z23883_is_zero_natural_number a0)
-    0
-    (Z13539_multiply_two_natural_numbers
+;; Z13651 bitwise and
+(define (Z13651_bitwise_and a0 a1)
+  (Z34178_natural_number_from_list_of_booleans
+    (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l
+    and
+    (Z31716_natural_number_as_list_of_booleans
     a0
-    (Z13647_exponentiation_of_natural_numbers a0 (Z13582_decrement_natural_number_by_one a1))))))
+    (max (Z13928_length_of_binary_representation a0) (Z13928_length_of_binary_representation a1)))
+    (Z31716_natural_number_as_list_of_booleans
+    a1
+    (max (Z13928_length_of_binary_representation a0) (Z13928_length_of_binary_representation a1))))))
+
+;; Z13652 bitwise or
+(define (Z13652_bitwise_or a0 a1)
+  (Z34178_natural_number_from_list_of_booleans
+    (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l
+    or
+    (Z31716_natural_number_as_list_of_booleans
+    a0
+    (max (Z13928_length_of_binary_representation a0) (Z13928_length_of_binary_representation a1)))
+    (Z31716_natural_number_as_list_of_booleans
+    a1
+    (max (Z13928_length_of_binary_representation a0) (Z13928_length_of_binary_representation a1))))))
+
+;; Z13653 bitwise xor
+(define (Z13653_bitwise_xor a0 a1)
+  (Z34178_natural_number_from_list_of_booleans
+    (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l
+    Z10237_boolean_inequality
+    (Z31716_natural_number_as_list_of_booleans
+    a0
+    (max (Z13928_length_of_binary_representation a0) (Z13928_length_of_binary_representation a1)))
+    (Z31716_natural_number_as_list_of_booleans
+    a1
+    (max (Z13928_length_of_binary_representation a0) (Z13928_length_of_binary_representation a1))))))
+
+;; Z13660 least common multiple
+(define (Z13660_least_common_multiple a0 a1)
+  (Z13546_divide_natural_numbers (* a0 a1) (Z13612_greatest_common_divisor a0 a1)))
 
 ;; Z13663 n^2 (natural number)
 (define (Z13663_n_2_natural_number a0)
-  (Z13647_exponentiation_of_natural_numbers a0 2))
+  (expt a0 2))
 
 ;; Z13667 factorial
 (define (Z13667_factorial a0)
-  (if
-    (= a0 0)
-    1
-    (Z13539_multiply_two_natural_numbers
-    a0
-    (Z13667_factorial (Z13582_decrement_natural_number_by_one a0)))))
+  (if (= a0 0) 1 (* a0 (Z13667_factorial (Z13582_decrement_natural_number_by_one a0)))))
 
 ;; Z13701 are coprime (natural numbers)
 (define (Z13701_are_coprime_natural_numbers a0 a1)
@@ -997,8 +2473,11 @@
     (if
     (Z13052_object_equality a0 (car a1))
     1
-    (Z13578_increment_natural_number
-    (Z13708_index_of_first_listing_1_n_note_limitation a0 (cdr a1))))))
+    (add1 (Z13708_index_of_first_listing_1_n_note_limitation a0 (cdr a1))))))
+
+;; Z13713 natural number to digit string
+(define (Z13713_natural_number_to_digit_string a0)
+  (Z16365_zid_string_from_identity_object a0))
 
 ;; Z13717 replace elements of list according to key-value lookup lists
 (define (Z13717_replace_elements_of_list_according_to_key_value_lookup_lists a0 a1 a2)
@@ -1014,9 +2493,49 @@
     (car a0))
     (Z13717_replace_elements_of_list_according_to_key_value_lookup_lists (cdr a0) a1 a2))))
 
+;; Z13726 divisors
+(define (Z13726_divisors a0)
+  (if
+    (Z23883_is_zero_natural_number a0)
+    (list )
+    (Z17873_sort_list_ascending_natural_numbers
+    (Z19202_remove_duplicates_from_typed_list
+    (map
+    Z13558_product_of_list_natural_numbers
+    (Z18475_return_typed_list
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    Z30075_return_list_if_non_empty_else_backup
+    (Z18194_powerset (Z17895_untype_a_list (Z13728_prime_divisors a0)))
+    (list 1))))))))
+
+;; Z13728 prime divisors
+(define (Z13728_prime_divisors a0)
+  (if
+    (<= a0 1)
+    (list )
+    (Z12961_append_element_to_typed_list
+    (Z13735_largest_prime_divisor a0)
+    (Z13728_prime_divisors (Z13745_n_largest_prime_dividing_n a0)))))
+
+;; Z13730 unique prime divisors
+(define (Z13730_unique_prime_divisors a0)
+  (Z19205_remove_duplicates_preserving_typing_untyping (Z13728_prime_divisors a0)))
+
+;; Z13732 smallest prime divisor
+(define (Z13732_smallest_prime_divisor a0)
+  (Z19509_minimum_of_natural_number_list (Z13728_prime_divisors a0)))
+
+;; Z13735 largest prime divisor
+(define (Z13735_largest_prime_divisor a0)
+  (Z12964_last_element (Z13728_prime_divisors a0)))
+
 ;; Z13740 is natural number divisible
 (define (Z13740_is_natural_number_divisible a0 a1)
   (if (= a1 0) #f (= (Z13551_remainder_of_natural_number_division a0 a1) 0)))
+
+;; Z13745 n/(largest prime dividing n)
+(define (Z13745_n_largest_prime_dividing_n a0)
+  (Z13546_divide_natural_numbers a0 (Z13735_largest_prime_divisor a0)))
 
 ;; Z13752 is there a common element on these lists?
 (define (Z13752_is_there_a_common_element_on_these_lists a0 a1)
@@ -1028,19 +2547,81 @@
     #t
     (Z13752_is_there_a_common_element_on_these_lists (cdr a0) a1))))
 
+;; Z13760 number of divisors
+(define (Z13760_number_of_divisors a0)
+  (length (Z13726_divisors a0)))
+
+;; Z13764 number of prime divisors
+(define (Z13764_number_of_prime_divisors a0)
+  (length (Z13728_prime_divisors a0)))
+
+;; Z13767 number of unique prime divisors
+(define (Z13767_number_of_unique_prime_divisors a0)
+  (length (Z13730_unique_prime_divisors a0)))
+
+;; Z13770 sum of divisors
+(define (Z13770_sum_of_divisors a0)
+  (+ (Z13993_sum_of_proper_divisors a0) a0))
+
+;; Z13773 sum of prime divisors
+(define (Z13773_sum_of_prime_divisors a0)
+  (Z14038_sum_the_elements_of_a_list_of_natural_numbers (Z13728_prime_divisors a0)))
+
+;; Z13776 sum of unique prime divisors
+(define (Z13776_sum_of_unique_prime_divisors a0)
+  (Z14038_sum_the_elements_of_a_list_of_natural_numbers (Z13730_unique_prime_divisors a0)))
+
+;; Z13779 natural number to binary string (without prefix)
+(define (Z13779_natural_number_to_binary_string_without_prefix a0)
+  (Z15671_natural_number_to_base_n a0 2))
+
+;; Z13780 natural number to octal (without prefix)
+(define (Z13780_natural_number_to_octal_without_prefix a0)
+  (Z15671_natural_number_to_base_n a0 8))
+
+;; Z13781 natural number to hexadecimal (lowercase, without prefix)
+(define (Z13781_natural_number_to_hexadecimal_lowercase_without_prefix a0)
+  (Z15671_natural_number_to_base_n a0 16))
+
+;; Z13782 natural number to binary (with prefix)
+(define (Z13782_natural_number_to_binary_with_prefix a0)
+  (string-append "0b" (Z13779_natural_number_to_binary_string_without_prefix a0)))
+
+;; Z13783 natural number to octal (with prefix)
+(define (Z13783_natural_number_to_octal_with_prefix a0)
+  (string-append "0o" (Z13780_natural_number_to_octal_without_prefix a0)))
+
+;; Z13784 natural number to hexadecimal (lowercase, with prefix)
+(define (Z13784_natural_number_to_hexadecimal_lowercase_with_prefix a0)
+  (string-append "0x" (Z13781_natural_number_to_hexadecimal_lowercase_without_prefix a0)))
+
+;; Z13797 binary string to natural number
+(define (Z13797_binary_string_to_natural_number a0)
+  (Z13806_base_n_to_natural_number a0 2))
+
+;; Z13798 octal to natural number
+(define (Z13798_octal_to_natural_number a0)
+  (Z13806_base_n_to_natural_number a0 8))
+
+;; Z13799 hexadecimal to natural number
+(define (Z13799_hexadecimal_to_natural_number a0)
+  (Z13806_base_n_to_natural_number (Z31955_string_without_prefix a0 "0x") 16))
+
 ;; Z13809 n^n
 (define (Z13809_n_n a0)
-  (Z13647_exponentiation_of_natural_numbers a0 a0))
+  (expt a0 a0))
 
 ;; Z13812 left shift
 (define (Z13812_left_shift a0 a1)
-  (Z13539_multiply_two_natural_numbers a0 (Z13644_2_n a1)))
+  (* a0 (Z13644_2_n a1)))
+
+;; Z13813 right shift
+(define (Z13813_right_shift a0 a1)
+  (Z13546_divide_natural_numbers a0 (expt 2 a1)))
 
 ;; Z13818 modular exponentiation
 (define (Z13818_modular_exponentiation a0 a1 a2)
-  (Z13551_remainder_of_natural_number_division
-    (Z13647_exponentiation_of_natural_numbers a0 a1)
-    a2))
+  (Z13551_remainder_of_natural_number_division (expt a0 a1) a2))
 
 ;; Z13825 n mod 2
 (define (Z13825_n_mod_2 a0)
@@ -1056,17 +2637,14 @@
 
 ;; Z13831 natural number range
 (define (Z13831_natural_number_range a0 a1)
-  (if
-    (> a0 a1)
-    (list )
-    (cons a0 (Z13831_natural_number_range (Z13578_increment_natural_number a0) a1))))
+  (if (> a0 a1) (list ) (cons a0 (Z13831_natural_number_range (add1 a0) a1))))
 
 ;; Z13835 nth Fibonacci number
 (define (Z13835_nth_fibonacci_number a0)
   (if
     (<= a0 1)
     a0
-    (Z13521_add_two_natural_numbers
+    (+
     (Z13835_nth_fibonacci_number (Z13582_decrement_natural_number_by_one a0))
     (Z13835_nth_fibonacci_number (Z13569_subtract_natural_numbers_with_floor_of_0 a0 2)))))
 
@@ -1081,17 +2659,13 @@
     (Z13582_decrement_natural_number_by_one
     (Z13843_sylvester_s_sequence_nth_term (Z13582_decrement_natural_number_by_one a0))))))
 
-;; Z13846 if (natural number output)
-(define (Z13846_if_natural_number_output a0 a1 a2)
-  (if a0 a1 a2))
-
 ;; Z13848 binomial coefficient
 (define (Z13848_binomial_coefficient a0 a1)
   (Z31490_if_either
     (Z23883_is_zero_natural_number a1)
     (= a1 a0)
     1
-    (Z13521_add_two_natural_numbers
+    (+
     (Z13848_binomial_coefficient
     (Z13582_decrement_natural_number_by_one a0)
     (Z13582_decrement_natural_number_by_one a1))
@@ -1099,7 +2673,34 @@
 
 ;; Z13854 k-permutation
 (define (Z13854_k_permutation a0 a1)
-  (Z13539_multiply_two_natural_numbers (Z13848_binomial_coefficient a0 a1) (Z13667_factorial a1)))
+  (* (Z13848_binomial_coefficient a0 a1) (Z13667_factorial a1)))
+
+;; Z13857 Catalan number
+(define (Z13857_catalan_number a0)
+  (Z13546_divide_natural_numbers (Z13989_central_binomial_coefficient a0) (add1 a0)))
+
+;; Z13909 rectified linear unit
+(define (Z13909_rectified_linear_unit a0)
+  (Z17101_natural_number_to_integer (Z20391_integer_to_exact_natural_number_or_0 a0)))
+
+;; Z13916 is light vowel (ụdamfe) in Igbo
+(define (Z13916_is_light_vowel_damfe_in_igbo a0)
+  (Z14483_common_codepoints_in_strings a0 "aịọụAỊỌỤ"))
+
+;; Z13922 Is heavy vowel (udaarọ)
+(define (Z13922_is_heavy_vowel_udaar a0)
+  (Z14483_common_codepoints_in_strings a0 "eiouEIOU"))
+
+;; Z13927 Igbo infinitive form of verb
+(define (Z13927_igbo_infinitive_form_of_verb a0)
+  (if
+    (Z13916_is_light_vowel_damfe_in_igbo a0)
+    (string-append "ị" (Z10047_to_lowercase a0))
+    (if (Z13922_is_heavy_vowel_udaar a0) (string-append "i" (Z10047_to_lowercase a0)) "")))
+
+;; Z13928 length of binary representation
+(define (Z13928_length_of_binary_representation a0)
+  (string-length (Z13779_natural_number_to_binary_string_without_prefix a0)))
 
 ;; Z13932 nth Mersenne exponent
 (define (Z13932_nth_mersenne_exponent a0)
@@ -1116,7 +2717,7 @@
 ;; Z13952 nth Lucas number
 (define (Z13952_nth_lucas_number a0)
   (Z13569_subtract_natural_numbers_with_floor_of_0
-    (Z15107_double (Z13835_nth_fibonacci_number (Z13578_increment_natural_number a0)))
+    (Z15107_double (Z13835_nth_fibonacci_number (add1 a0)))
     (Z13835_nth_fibonacci_number a0)))
 
 ;; Z13955 Euler totient function
@@ -1128,9 +2729,22 @@
     a0
     (Z13831_natural_number_range 1 a0))))
 
+;; Z13957 Dedekind psi function
+(define (Z13957_dedekind_psi_function a0)
+  (Z20391_integer_to_exact_natural_number_or_0
+    (Z19682_truncate_rational_number
+    (Z23909_product_of_list_rational_numbers
+    (Z18475_return_typed_list
+    (cons
+    (Z19854_simplified_rational_from_z_numerator_denominator a0 1)
+    (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l
+    Z19854_simplified_rational_from_z_numerator_denominator
+    (map add1 (Z13730_unique_prime_divisors a0))
+    (Z13730_unique_prime_divisors a0))))))))
+
 ;; Z13959 n^(n-1)
 (define (Z13959_n_n_1 a0)
-  (Z13647_exponentiation_of_natural_numbers a0 (Z13582_decrement_natural_number_by_one a0)))
+  (expt a0 (Z13582_decrement_natural_number_by_one a0)))
 
 ;; Z13961 triangular number
 (define (Z13961_triangular_number a0)
@@ -1138,13 +2752,11 @@
 
 ;; Z13963 3^n
 (define (Z13963_3_n a0)
-  (Z13647_exponentiation_of_natural_numbers 3 a0))
+  (expt 3 a0))
 
 ;; Z13965 n^(n-2)
 (define (Z13965_n_n_2 a0)
-  (Z13647_exponentiation_of_natural_numbers
-    a0
-    (Z13569_subtract_natural_numbers_with_floor_of_0 a0 2)))
+  (expt a0 (Z13569_subtract_natural_numbers_with_floor_of_0 a0 2)))
 
 ;; Z13967 tetrahedral number
 (define (Z13967_tetrahedral_number a0)
@@ -1164,11 +2776,20 @@
 
 ;; Z13977 n^3
 (define (Z13977_n_3 a0)
-  (Z13647_exponentiation_of_natural_numbers a0 3))
+  (expt a0 3))
 
 ;; Z13979 n^4
 (define (Z13979_n_4 a0)
-  (Z13647_exponentiation_of_natural_numbers a0 4))
+  (expt a0 4))
+
+;; Z13982 odd part
+(define (Z13982_odd_part a0)
+  (if (Z13555_natural_number_is_even a0) (Z13982_odd_part (Z15111_floor_n_2 a0)) a0))
+
+;; Z13984 sum of odd divisors
+(define (Z13984_sum_of_odd_divisors a0)
+  (Z14038_sum_the_elements_of_a_list_of_natural_numbers
+    (Z18475_return_typed_list (filter Z34353_is_natural_number_odd (Z13726_divisors a0)))))
 
 ;; Z13986 number of primes <= n
 (define (Z13986_number_of_primes_n a0)
@@ -1176,16 +2797,57 @@
 
 ;; Z13989 central binomial coefficient
 (define (Z13989_central_binomial_coefficient a0)
-  (Z13848_binomial_coefficient (Z13539_multiply_two_natural_numbers a0 2) a0))
+  (Z13848_binomial_coefficient (* a0 2) a0))
+
+;; Z13993 sum of proper divisors
+(define (Z13993_sum_of_proper_divisors a0)
+  (Z14038_sum_the_elements_of_a_list_of_natural_numbers
+    (Z12856_remove_first_matching_element_from_list (Z13726_divisors a0) a0)))
+
+;; Z13995 double factorial
+(define (Z13995_double_factorial a0)
+  (if
+    (Z13555_natural_number_is_even a0)
+    (Z13812_left_shift (Z13667_factorial (Z15111_floor_n_2 a0)) (Z15111_floor_n_2 a0))
+    (Z13813_right_shift
+    (Z13854_k_permutation (add1 a0) (Z15111_floor_n_2 (add1 a0)))
+    (Z15111_floor_n_2 (add1 a0)))))
+
+;; Z13997 double factorial of 2n-1
+(define (Z13997_double_factorial_of_2n_1 a0)
+  (Z13995_double_factorial (Z13582_decrement_natural_number_by_one (Z15107_double a0))))
+
+;; Z13999 sum of squares of divisors
+(define (Z13999_sum_of_squares_of_divisors a0)
+  (Z14038_sum_the_elements_of_a_list_of_natural_numbers
+    (Z18475_return_typed_list (map Z13663_n_2_natural_number (Z13726_divisors a0)))))
+
+;; Z14001 number of odd divisors
+(define (Z14001_number_of_odd_divisors a0)
+  (length (filter Z34353_is_natural_number_odd (Z13726_divisors a0))))
+
+;; Z14003 Thue-Morse sequence
+(define (Z14003_thue_morse_sequence a0)
+  (Z17065_boolean_to_natural_number (Z34353_is_natural_number_odd (Z13860_binary_weight_of_n a0))))
+
+;; Z14005 1-2 Thue-Morse sequence
+(define (Z14005_1_2_thue_morse_sequence a0)
+  (add1 (Z14003_thue_morse_sequence a0)))
+
+;; Z14007 binomial(n, floor(n/2))
+(define (Z14007_binomial_n_floor_n_2 a0)
+  (Z13848_binomial_coefficient a0 (Z15111_floor_n_2 a0)))
+
+;; Z14023 East Asian age reckoning
+(define (Z14023_east_asian_age_reckoning a0 a1)
+  (add1
+    (Z13569_subtract_natural_numbers_with_floor_of_0
+    (Z20160_gregorian_year_to_year_number a1)
+    (Z20160_gregorian_year_to_year_number a0))))
 
 ;; Z14038 sum the elements of a list of natural numbers
 (define (Z14038_sum_the_elements_of_a_list_of_natural_numbers a0)
-  (Z13846_if_natural_number_output
-    (null? a0)
-    0
-    (Z13521_add_two_natural_numbers
-    (car a0)
-    (Z14038_sum_the_elements_of_a_list_of_natural_numbers (cdr a0)))))
+  (if (null? a0) 0 (+ (car a0) (Z14038_sum_the_elements_of_a_list_of_natural_numbers (cdr a0)))))
 
 ;; Z14046 element to list
 (define (Z14046_element_to_list a0)
@@ -1193,11 +2855,10 @@
 
 ;; Z14058 total stopping time (Collatz function)
 (define (Z14058_total_stopping_time_collatz_function a0)
-  (Z13846_if_natural_number_output
+  (if
     (<= a0 1)
     0
-    (Z13578_increment_natural_number
-    (Z14058_total_stopping_time_collatz_function (Z13561_collatz_conjecture_function a0)))))
+    (add1 (Z14058_total_stopping_time_collatz_function (Z13561_collatz_conjecture_function a0)))))
 
 ;; Z14112 is empty relation over elements of list
 (define (Z14112_is_empty_relation_over_elements_of_list a0 a1)
@@ -1209,25 +2870,270 @@
     (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an a0 (car a1) a1))
     (Z14112_is_empty_relation_over_elements_of_list a0 (cdr a1)))))
 
+;; Z14119 remove characters in unicode range
+(define (Z14119_remove_characters_in_unicode_range a0 a1 a2)
+  (Z11531_remove_characters_in_character_range
+    a0
+    (Z11534_chr_of_codepoint_value a1)
+    (Z11534_chr_of_codepoint_value a2)))
+
+;; Z14127 remove obsolete characters for Khmer
+(define (Z14127_remove_obsolete_characters_for_khmer a0)
+  (Z14119_remove_characters_in_unicode_range a0 6051 6099))
+
+;; Z14130 remove clones of grave and acute
+(define (Z14130_remove_clones_of_grave_and_acute a0)
+  (Z14119_remove_characters_in_unicode_range a0 832 833))
+
+;; Z14133 remove line and paragraph separator
+(define (Z14133_remove_line_and_paragraph_separator a0)
+  (Z14119_remove_characters_in_unicode_range a0 8232 8233))
+
+;; Z14136 remove BIDI embedding controls
+(define (Z14136_remove_bidi_embedding_controls a0)
+  (Z14119_remove_characters_in_unicode_range a0 8234 8238))
+
+;; Z14139 remove Unicode characters 8298 to 8303
+(define (Z14139_remove_unicode_characters_8298_to_8303 a0)
+  (Z14119_remove_characters_in_unicode_range a0 8298 8303))
+
+;; Z14142 remove interlinear annotation characters
+(define (Z14142_remove_interlinear_annotation_characters a0)
+  (Z14119_remove_characters_in_unicode_range a0 65529 65531))
+
+;; Z14145 remove U+FEFF
+(define (Z14145_remove_u_feff a0)
+  (Z14119_remove_characters_in_unicode_range a0 65279 65279))
+
+;; Z14148 remove U+FFFC
+(define (Z14148_remove_u_fffc a0)
+  (Z14119_remove_characters_in_unicode_range a0 65532 65532))
+
+;; Z14151 remove scoping for musical notation
+(define (Z14151_remove_scoping_for_musical_notation a0)
+  (Z14119_remove_characters_in_unicode_range a0 119155 119162))
+
+;; Z14154 remove language tag code points
+(define (Z14154_remove_language_tag_code_points a0)
+  (Z14119_remove_characters_in_unicode_range a0 917504 917631))
+
 ;; Z14166 nth digit of π
 (define (Z14166_nth_digit_of a0)
   (Z14175_nth_decimal_place_of (Z13582_decrement_natural_number_by_one a0)))
 
 ;; Z14175 nth decimal place of π
 (define (Z14175_nth_decimal_place_of a0)
-  (Z14166_nth_digit_of (Z13578_increment_natural_number a0)))
+  (Z14166_nth_digit_of (add1 a0)))
+
+;; Z14180 pi string up to the nth digit
+(define (Z14180_pi_string_up_to_the_nth_digit a0)
+  (Z11542_if_string_output
+    (<= a0 1)
+    "3"
+    (Z11542_if_string_output
+    (= a0 2)
+    "3.1"
+    (string-append
+    (Z14180_pi_string_up_to_the_nth_digit (Z13582_decrement_natural_number_by_one a0))
+    (Z13713_natural_number_to_digit_string (Z14166_nth_digit_of a0))))))
 
 ;; Z14209 sum of natural numbers in interval
 (define (Z14209_sum_of_natural_numbers_in_interval a0 a1)
   (Z14038_sum_the_elements_of_a_list_of_natural_numbers (Z13831_natural_number_range a0 a1)))
 
+;; Z14244 get Nth character of a string
+(define (Z14244_get_nth_character_of_a_string a0 a1)
+  (Z31490_if_either
+    (Z10008_is_empty_string a0)
+    (not
+    (Z16773_first_natural_number_is_in_closed_interval_of_the_other_two a1 1 (string-length a0)))
+    Z11853_empty_string
+    (Z15631_codepoint_to_string
+    (Z13397_get_the_nth_element_of_a_list (Z22717_string_to_codepoint_list a0) a1))))
+
+;; Z14260 contains all characters of Bengali alphabet
+(define (Z14260_contains_all_characters_of_bengali_alphabet a0)
+  (Z11693_string_only_has_characters_from_alphabet
+    "অআইঈউঊঋএঐওঔকখগঘঙচছজঝঞটঠডঢণতথদধনপফবভমযরলশষসহড়ঢ়য় ং ঃ ঁ "
+    a0))
+
+;; Z14280 display natural number
+(define (Z14280_display_natural_number a0 a1)
+  (Z13713_natural_number_to_digit_string a0))
+
+;; Z14290 read natural number
+(define (Z14290_read_natural_number a0 a1)
+  (Z28236_apply_function_with_1_or_2_arguments
+    (Z14310_select_a_function_based_on_language Z14303_config_for_reading_natural_number a1)
+    a0
+    a1))
+
+;; Z14295 add commas between triples if more than four digits
+(define (Z14295_add_commas_between_triples_if_more_than_four_digits a0)
+  (if
+    (> (Z14344_number_of_digits_in_decimal_string_representation_of_a_natur a0) 4)
+    (Z13473_format_digit_strings_with_commas (Z13713_natural_number_to_digit_string a0))
+    (Z13713_natural_number_to_digit_string a0)))
+
+;; Z14304 read natural numbers leniently
+(define (Z14304_read_natural_numbers_leniently a0)
+  (Z14283_string_of_digits_as_natural_number
+    (Z11193_remove_interpunction (Z14374_remove_all_spaces_of_all_kinds a0))))
+
+;; Z14310 select a function based on language
+(define (Z14310_select_a_function_based_on_language a0 a1)
+  (Z14311_select_a_function_based_on_lists_of_languages
+    (Z14312_list_of_function_options_for_languages_from_configuration a0)
+    (Z14313_default_function_from_configuration a0)
+    a1))
+
+;; Z14311 select a function based on lists of languages
+(define (Z14311_select_a_function_based_on_lists_of_languages a0 a1 a2)
+  (if
+    (null? a0)
+    a1
+    (if
+    (Z14321_is_language_in_list a2 (Z14317_list_of_languages_from_function_option (car a0)))
+    (Z14319_function_from_function_option (car a0))
+    (Z14311_select_a_function_based_on_lists_of_languages (cdr a0) a1 a2))))
+
 ;; Z14321 is language in list
 (define (Z14321_is_language_in_list a0 a1)
-  (Z12696_contains a1 a0))
+  (if
+    (null? a1)
+    #f
+    (if (Z862_natural_language_equality (car a1) a0) #t (Z14321_is_language_in_list a0 (cdr a1)))))
+
+;; Z14326 same language
+(define (Z14326_same_language a0 a1)
+  (string=? (Z14329_language_to_language_tag a0) (Z14329_language_to_language_tag a1)))
+
+;; Z14334 monolingual strings are from the same language
+(define (Z14334_monolingual_strings_are_from_the_same_language a0 a1)
+  (string=?
+    (Z12877_language_tag_of_monolingual_text a0)
+    (Z12877_language_tag_of_monolingual_text a1)))
+
+;; Z14344 number of digits in decimal string representation of a natural number
+(define (Z14344_number_of_digits_in_decimal_string_representation_of_a_natur a0)
+  (string-length (Z13713_natural_number_to_digit_string a0)))
+
+;; Z14364 add periods between triples if more than 4 digits
+(define (Z14364_add_periods_between_triples_if_more_than_4_digits a0)
+  (Z10075_replace_all_substrings
+    (Z14295_add_commas_between_triples_if_more_than_four_digits a0)
+    ","
+    "."))
+
+;; Z14374 remove all spaces of all kinds
+(define (Z14374_remove_all_spaces_of_all_kinds a0)
+  (Z10052_remove_regular_spaces
+    (Z10313_replace_all_kind_of_whitespaces_with_a_single_u_0020_space a0)))
+
+;; Z14376 sum of decimal digits
+(define (Z14376_sum_of_decimal_digits a0)
+  (Z14038_sum_the_elements_of_a_list_of_natural_numbers
+    (Z25520_list_of_decimal_digits_in_a_number a0)))
+
+;; Z14391 plural in language of monolingual text
+(define (Z14391_plural_in_language_of_monolingual_text a0)
+  (Z30009_apply_string_transformation_to_monolingual_text
+    a0
+    (Z14310_select_a_function_based_on_language
+    Z14401_config_for_plural
+    (Z14404_language_of_monolingual_text a0))))
+
+;; Z14392 monolingual text equality
+(define (Z14392_monolingual_text_equality a0 a1)
+  (and
+    (string=?
+    (Z12877_language_tag_of_monolingual_text a0)
+    (Z12877_language_tag_of_monolingual_text a1))
+    (string=? (Z14396_string_of_monolingual_text a0) (Z14396_string_of_monolingual_text a1))))
+
+;; Z14404 language of monolingual text
+(define (Z14404_language_of_monolingual_text a0)
+  (Z860_language_tag_to_language (Z12877_language_tag_of_monolingual_text a0)))
 
 ;; Z14416 unequal natural numbers
 (define (Z14416_unequal_natural_numbers a0 a1)
   (not (= a0 a1)))
+
+;; Z14438 add nonbreaking space between triples if more than four digits
+(define (Z14438_add_nonbreaking_space_between_triples_if_more_than_four_digi a0)
+  (Z10075_replace_all_substrings
+    (Z14295_add_commas_between_triples_if_more_than_four_digits a0)
+    ","
+    Z36687_non_breaking_space_char_as_string))
+
+;; Z14450 count substrings
+(define (Z14450_count_substrings a0 a1)
+  (if
+    (Z10070_has_substring a0 a1)
+    (add1 (Z14450_count_substrings (Z11420_discard_until_end_of_first_substring a0 a1) a1))
+    0))
+
+;; Z14460 final N characters of string
+(define (Z14460_final_n_characters_of_string a0 a1)
+  (Z10012_reverse_string (Z14592_first_n_characters_of_string (Z10012_reverse_string a0) a1)))
+
+;; Z14469 blood compatibility
+(define (Z14469_blood_compatibility a0 a1)
+  (and
+    (Z17173_greater_than_or_equal_integer
+    (Z17151_sign_to_unit_integer
+    (Z18939_character_to_sign (Z11060_get_last_character_of_string a0)))
+    (Z17151_sign_to_unit_integer
+    (Z18939_character_to_sign (Z11060_get_last_character_of_string a1))))
+    (Z10070_has_substring
+    a0
+    (Z10075_replace_all_substrings (Z11879_remove_last_character a1) "O" Z11853_empty_string))))
+
+;; Z14483 common codepoints in strings
+(define (Z14483_common_codepoints_in_strings a0 a1)
+  (Z13752_is_there_a_common_element_on_these_lists
+    (Z22717_string_to_codepoint_list a0)
+    (Z22717_string_to_codepoint_list a1)))
+
+;; Z14494 remove all characters except Arabic numerals
+(define (Z14494_remove_all_characters_except_arabic_numerals a0)
+  (Z10193_replace_all_regex_case_sensitive a0 "[^\\d]" Z11853_empty_string))
+
+;; Z14515 remove all characters not in second string
+(define (Z14515_remove_all_characters_not_in_second_string a0 a1)
+  (Z22693_codepoint_list_to_string
+    (Z22865_keep_elements_common_with_other_list
+    (Z17895_untype_a_list (Z22717_string_to_codepoint_list a0))
+    (Z17895_untype_a_list (Z22717_string_to_codepoint_list a1)))))
+
+;; Z14526 English ordinal
+(define (Z14526_english_ordinal a0)
+  (Z14523_english_cardinal_to_ordinal (Z13587_english_cardinal a0)))
+
+;; Z14531 Natural number with English ordinal suffix
+(define (Z14531_natural_number_with_english_ordinal_suffix a0)
+  (string-append
+    (Z13713_natural_number_to_digit_string a0)
+    (Z14460_final_n_characters_of_string (Z14526_english_ordinal a0) 2)))
+
+;; Z14542 Natural number from ordinal with English suffix
+(define (Z14542_natural_number_from_ordinal_with_english_suffix a0)
+  (Z14283_string_of_digits_as_natural_number
+    (Z11542_if_string_output
+    (Z12696_contains (list "nd" "rd" "th") (Z14460_final_n_characters_of_string a0 2))
+    (Z11879_remove_last_character (Z11879_remove_last_character a0))
+    a0)))
+
+;; Z14552 equality of function options for list of languages
+(define (Z14552_equality_of_function_options_for_list_of_languages a0 a1)
+  (and
+    (Z13052_object_equality
+    (Z14319_function_from_function_option a0)
+    (Z14319_function_from_function_option a1))
+    (Z889_list_equality
+    (Z14317_list_of_languages_from_function_option a0)
+    (Z14317_list_of_languages_from_function_option a1)
+    Z14326_same_language)))
 
 ;; Z14570 list of bytes to list of Natural numbers
 (define (Z14570_list_of_bytes_to_list_of_natural_numbers a0)
@@ -1236,6 +3142,23 @@
 ;; Z14573 list of bytes to hex (lowercase)
 (define (Z14573_list_of_bytes_to_hex_lowercase a0)
   (Z21394_concatenate_many_strings (map Z15702_byte_as_hex_string a0)))
+
+;; Z14576 list of bytes to string (UTF-8)
+(define (Z14576_list_of_bytes_to_string_utf_8 a0)
+  (Z10373_hex_string_to_string_utf_8 (Z14573_list_of_bytes_to_hex_lowercase a0)))
+
+;; Z14581 number of words in string
+(define (Z14581_number_of_words_in_string a0)
+  (length (Z13402_words_from_string a0)))
+
+;; Z14592 first N characters of string
+(define (Z14592_first_n_characters_of_string a0 a1)
+  (Z886_deprecated_z22693
+    (Z13366_get_the_first_n_elements_of_an_untyped_list (Z868_deprecated_z22717 a0) a1)))
+
+;; Z14610 Atbash (Hebrew)
+(define (Z14610_atbash_hebrew a0)
+  (Z14615_atbash (Z10891_final_to_normal_form_hebrew a0) Z14599_hebrew_alphabet))
 
 ;; Z14613 replace character set
 (define (Z14613_replace_character_set a0 a1 a2)
@@ -1250,13 +3173,34 @@
     (Z1000000001 a0)
     (Z10901_get_first_character_of_string a2))))
 
+;; Z14615 Atbash
+(define (Z14615_atbash a0 a1)
+  (Z14613_replace_character_set a0 a1 (Z10012_reverse_string a1)))
+
+;; Z14620 pretty " (Hebrew)
+(define (Z14620_pretty_hebrew a0)
+  (Z11484_pretty a0 "„" "”"))
+
 ;; Z14624 Unicode character parser
 (define (Z14624_unicode_character_parser a0)
   (map Z10507_unicode_character_name a0))
 
 ;; Z14629 Fermat number, F_n = 2^2^n + 1
 (define (Z14629_fermat_number_f_n_2_2_n_1 a0)
-  (Z13578_increment_natural_number (Z13644_2_n (Z13644_2_n a0))))
+  (add1 (Z13644_2_n (Z13644_2_n a0))))
+
+;; Z14636 remove first N characters of string
+(define (Z14636_remove_first_n_characters_of_string a0 a1)
+  (Z22693_codepoint_list_to_string
+    (Z13369_remove_first_n_elements_of_list
+    (Z17895_untype_a_list (Z22717_string_to_codepoint_list a0))
+    a1)))
+
+;; Z14672 is FEN field 6
+(define (Z14672_is_fen_field_6 a0)
+  (Z10962_not_boolean_implication
+    (Z13489_is_decimal_natural_number_string_of_arabic_numerals a0)
+    (string=? a0 "0")))
 
 ;; Z14686 satisfies congruence relation: b^n = b mod n
 (define (Z14686_satisfies_congruence_relation_b_n_b_mod_n a0 a1)
@@ -1264,17 +3208,27 @@
 
 ;; Z14694 multiply three natural numbers
 (define (Z14694_multiply_three_natural_numbers a0 a1 a2)
-  (Z13539_multiply_two_natural_numbers a0 (Z13539_multiply_two_natural_numbers a1 a2)))
+  (* a0 (* a1 a2)))
 
 ;; Z14711 Natural number is between
 (define (Z14711_natural_number_is_between a0 a1 a2)
   (if (>= a2 a0) (if (<= a1 a0) #t #f) #f))
 
+;; Z14726 English denominator to fractional ordinal
+(define (Z14726_english_denominator_to_fractional_ordinal a0)
+  (Z11542_if_string_output
+    (Z14711_natural_number_is_between a0 1 4)
+    (Z11542_if_string_output
+    (<= a0 2)
+    (Z11542_if_string_output (= a0 1) "whole" "half")
+    (Z11542_if_string_output (= a0 3) "third" "quarter"))
+    (Z14526_english_ordinal a0)))
+
 ;; Z14732 hyperoperation
 (define (Z14732_hyperoperation a0 a1 a2)
   (if
     (Z23883_is_zero_natural_number a0)
-    (Z13578_increment_natural_number a2)
+    (add1 a2)
     (if
     (and (Z31547_is_natural_number_1 a0) (Z23883_is_zero_natural_number a2))
     a1
@@ -1291,9 +3245,7 @@
 
 ;; Z14742 Ackermann function (two-argument version)
 (define (Z14742_ackermann_function_two_argument_version a0 a1)
-  (Z13569_subtract_natural_numbers_with_floor_of_0
-    (Z14732_hyperoperation a0 2 (Z13521_add_two_natural_numbers a1 3))
-    3))
+  (Z13569_subtract_natural_numbers_with_floor_of_0 (Z14732_hyperoperation a0 2 (+ a1 3)) 3))
 
 ;; Z14762 is function commutative for these arguments
 (define (Z14762_is_function_commutative_for_these_arguments a0 a1 a2)
@@ -1307,6 +3259,34 @@
     (Z13318_apply_two_argument_function a0 a1 (Z13318_apply_two_argument_function a0 a2 a3))
     (Z13318_apply_two_argument_function a0 (Z13318_apply_two_argument_function a0 a1 a2) a3)))
 
+;; Z14770 pad string with leading characters to specified length
+(define (Z14770_pad_string_with_leading_characters_to_specified_length a0 a1 a2)
+  (Z22693_codepoint_list_to_string
+    (Z31721_pad_start_of_list
+    (Z32065_get_first_code_point_of_string a2)
+    a1
+    (Z22717_string_to_codepoint_list a0))))
+
+;; Z14783 is Fermat pseudoprime
+(define (Z14783_is_fermat_pseudoprime a0 a1)
+  (if
+    (Z12427_is_prime a0)
+    #f
+    (= (Z13818_modular_exponentiation a1 (Z13582_decrement_natural_number_by_one a0) a0) 1)))
+
+;; Z14792 is Poulet number
+(define (Z14792_is_poulet_number a0)
+  (Z14783_is_fermat_pseudoprime a0 2))
+
+;; Z14810 is Wieferich prime
+(define (Z14810_is_wieferich_prime a0)
+  (if
+    (Z12427_is_prime a0)
+    (Z13740_is_natural_number_divisible
+    (Z13948_2_n_1 (Z13582_decrement_natural_number_by_one a0))
+    (Z13663_n_2_natural_number a0))
+    #f))
+
 ;; Z14815 is Wieferich number
 (define (Z14815_is_wieferich_number a0)
   (if
@@ -1319,14 +3299,22 @@
     (Z13663_n_2_natural_number a0))
     1)))
 
+;; Z14847 Narayana number
+(define (Z14847_narayana_number a0 a1)
+  (Z13546_divide_natural_numbers
+    (*
+    (Z13848_binomial_coefficient a0 a1)
+    (Z13848_binomial_coefficient a0 (Z13582_decrement_natural_number_by_one a1)))
+    a0))
+
 ;; Z14859 Delannoy number
 (define (Z14859_delannoy_number a0 a1)
   (Z31490_if_either
     (Z23883_is_zero_natural_number a0)
     (Z23883_is_zero_natural_number a1)
     1
-    (Z13521_add_two_natural_numbers
-    (Z13521_add_two_natural_numbers
+    (+
+    (+
     (Z14859_delannoy_number (Z13582_decrement_natural_number_by_one a0) a1)
     (Z14859_delannoy_number
     (Z13582_decrement_natural_number_by_one a0)
@@ -1337,38 +3325,57 @@
 (define (Z14864_central_delannoy_number a0)
   (Z14859_delannoy_number a0 a0))
 
+;; Z14871 Motzkin number
+(define (Z14871_motzkin_number a0)
+  (+ (Z15061_riordan_number a0) (Z15061_riordan_number (add1 a0))))
+
 ;; Z14876 Schröder number
 (define (Z14876_schr_der_number a0)
-  (Z13846_if_natural_number_output
+  (if
     (= a0 0)
     1
     (Z13569_subtract_natural_numbers_with_floor_of_0
     (Z14864_central_delannoy_number a0)
-    (Z14859_delannoy_number
-    (Z13578_increment_natural_number a0)
-    (Z13582_decrement_natural_number_by_one a0)))))
+    (Z14859_delannoy_number (add1 a0) (Z13582_decrement_natural_number_by_one a0)))))
+
+;; Z14883 little Schröder number
+(define (Z14883_little_schr_der_number a0)
+  (if
+    (<= a0 1)
+    1
+    (Z13546_divide_natural_numbers
+    (Z13569_subtract_natural_numbers_with_floor_of_0
+    (*
+    (Z13569_subtract_natural_numbers_with_floor_of_0 (* 6 a0) 3)
+    (Z14883_little_schr_der_number (Z13582_decrement_natural_number_by_one a0)))
+    (*
+    (Z13569_subtract_natural_numbers_with_floor_of_0 a0 2)
+    (Z14883_little_schr_der_number (Z13569_subtract_natural_numbers_with_floor_of_0 a0 2))))
+    (add1 a0))))
+
+;; Z14888 cake number
+(define (Z14888_cake_number a0)
+  (Z13546_divide_natural_numbers (+ (+ (Z13977_n_3 a0) (* 5 a0)) 6) 6))
 
 ;; Z14894 Eulerian number
 (define (Z14894_eulerian_number a0 a1)
   (if
     (Z23883_is_zero_natural_number a1)
     1
-    (Z13521_add_two_natural_numbers
-    (Z13539_multiply_two_natural_numbers
+    (+
+    (*
     (Z13569_subtract_natural_numbers_with_floor_of_0 a0 a1)
     (Z14894_eulerian_number
     (Z13582_decrement_natural_number_by_one a0)
     (Z13582_decrement_natural_number_by_one a1)))
-    (Z13539_multiply_two_natural_numbers
-    (Z13578_increment_natural_number a1)
-    (Z14894_eulerian_number (Z13582_decrement_natural_number_by_one a0) a1)))))
+    (* (add1 a1) (Z14894_eulerian_number (Z13582_decrement_natural_number_by_one a0) a1)))))
 
 ;; Z14900 Lah number
 (define (Z14900_lah_number a0 a1)
   (Z14038_sum_the_elements_of_a_list_of_natural_numbers
     (Z18475_return_typed_list
     (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l
-    Z13539_multiply_two_natural_numbers
+    *
     (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an
     Z15334_unsigned_stirling_number_of_the_first_kind
     a0
@@ -1378,25 +3385,137 @@
     (Z13831_natural_number_range a1 a0)
     a1)))))
 
+;; Z14905 Lobb number
+(define (Z14905_lobb_number a0 a1)
+  (Z13546_divide_natural_numbers
+    (* (Z13848_binomial_coefficient (* a1 2) (+ a0 a1)) (add1 (* a0 2)))
+    (add1 (+ a0 a1))))
+
+;; Z14924 is harmonic divisor number
+(define (Z14924_is_harmonic_divisor_number a0)
+  (Z13740_is_natural_number_divisible
+    (* a0 (Z13760_number_of_divisors a0))
+    (Z13770_sum_of_divisors a0)))
+
+;; Z14933 is perfect number
+(define (Z14933_is_perfect_number a0)
+  (= (Z13993_sum_of_proper_divisors a0) a0))
+
+;; Z14938 is k-hyperperfect number
+(define (Z14938_is_k_hyperperfect_number a0 a1)
+  (= (add1 (* a1 (Z13582_decrement_natural_number_by_one (Z13993_sum_of_proper_divisors a0)))) a0))
+
+;; Z14946 is k-almost prime
+(define (Z14946_is_k_almost_prime a0 a1)
+  (= (Z13764_number_of_prime_divisors a0) a1))
+
+;; Z14953 is semiprime
+(define (Z14953_is_semiprime a0)
+  (Z14946_is_k_almost_prime a0 2))
+
+;; Z14958 is sphenic number
+(define (Z14958_is_sphenic_number a0)
+  (and
+    (= (Z13764_number_of_prime_divisors a0) 3)
+    (= (Z13767_number_of_unique_prime_divisors a0) 3)))
+
+;; Z14966 is factorial prime
+(define (Z14966_is_factorial_prime a0)
+  (and
+    (Z12427_is_prime a0)
+    (or
+    (Z14961_is_factorial (add1 a0))
+    (Z14961_is_factorial (Z13582_decrement_natural_number_by_one a0)))))
+
+;; Z14971 is deficient number
+(define (Z14971_is_deficient_number a0)
+  (< (Z13993_sum_of_proper_divisors a0) a0))
+
+;; Z14976 is abundant number
+(define (Z14976_is_abundant_number a0)
+  (> (Z13993_sum_of_proper_divisors a0) a0))
+
+;; Z14991 is weird number
+(define (Z14991_is_weird_number a0)
+  (and (Z14976_is_abundant_number a0) (not (Z14980_is_semiperfect_number a0))))
+
+;; Z14999 is superperfect number
+(define (Z14999_is_superperfect_number a0)
+  (= (Z13770_sum_of_divisors (Z13770_sum_of_divisors a0)) (* a0 2)))
+
+;; Z15013 is m-superperfect number
+(define (Z15013_is_m_superperfect_number a0 a1)
+  (Z15007_is_m_k_perfect_number a0 a1 2))
+
+;; Z15018 is k-perfect number
+(define (Z15018_is_k_perfect_number a0 a1)
+  (Z15007_is_m_k_perfect_number a0 1 a1))
+
+;; Z15026 is Erdős–Nicolas number
+(define (Z15026_is_erd_s_nicolas_number a0)
+  (Z12696_contains
+    (Z18475_return_typed_list
+    (map
+    Z14038_sum_the_elements_of_a_list_of_natural_numbers
+    (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an
+    Z13366_get_the_first_n_elements_of_an_untyped_list
+    (Z17895_untype_a_list (Z13726_divisors a0))
+    (Z13831_natural_number_range 1 (length (Z13726_divisors a0))))))
+    a0))
+
+;; Z15031 is arithmetic number
+(define (Z15031_is_arithmetic_number a0)
+  (Z13740_is_natural_number_divisible (Z13770_sum_of_divisors a0) (Z13760_number_of_divisors a0)))
+
 ;; Z15037 pronic number P_n
 (define (Z15037_pronic_number_p_n a0)
-  (Z13539_multiply_two_natural_numbers a0 (Z13578_increment_natural_number a0)))
+  (* a0 (add1 a0)))
 
 ;; Z15044 Cullen number
 (define (Z15044_cullen_number a0)
-  (Z13578_increment_natural_number (Z13539_multiply_two_natural_numbers a0 (Z13644_2_n a0))))
+  (add1 (* a0 (Z13644_2_n a0))))
 
 ;; Z15047 Woodall number
 (define (Z15047_woodall_number a0)
-  (Z13582_decrement_natural_number_by_one
-    (Z13539_multiply_two_natural_numbers a0 (Z13644_2_n a0))))
+  (Z13582_decrement_natural_number_by_one (* a0 (Z13644_2_n a0))))
+
+;; Z15050 is palindromic number
+(define (Z15050_is_palindromic_number a0)
+  (Z10096_is_a_palindrome (Z13713_natural_number_to_digit_string a0)))
+
+;; Z15055 is palindromic prime
+(define (Z15055_is_palindromic_prime a0)
+  (and (Z12427_is_prime a0) (Z15050_is_palindromic_number a0)))
+
+;; Z15061 Riordan number
+(define (Z15061_riordan_number a0)
+  (if
+    (<= a0 1)
+    (if (Z23883_is_zero_natural_number a0) 1 0)
+    (Z13546_divide_natural_numbers
+    (*
+    (Z13582_decrement_natural_number_by_one a0)
+    (+
+    (* 2 (Z15061_riordan_number (Z13582_decrement_natural_number_by_one a0)))
+    (* 3 (Z15061_riordan_number (Z13569_subtract_natural_numbers_with_floor_of_0 a0 2)))))
+    (add1 a0))))
+
+;; Z15068 nth number in Baum–Sweet sequence
+(define (Z15068_nth_number_in_baum_sweet_sequence a0)
+  (Z17065_boolean_to_natural_number
+    (null?
+    (filter
+    Z34353_is_natural_number_odd
+    (map
+    string-length
+    (Z25614_split_string_to_list (Z13779_natural_number_to_binary_string_without_prefix a0) "1"))))))
 
 ;; Z15075 Padovan number
 (define (Z15075_padovan_number a0)
-  (Z13846_if_natural_number_output
+  (if
     (<= a0 2)
-    (Z13846_if_natural_number_output (= a0 0) 1 0)
-    (Z13521_add_two_natural_numbers
+    (if (= a0 0) 1 0)
+    (+
     (Z15075_padovan_number (Z13569_subtract_natural_numbers_with_floor_of_0 a0 2))
     (Z15075_padovan_number (Z13569_subtract_natural_numbers_with_floor_of_0 a0 3)))))
 
@@ -1405,13 +3524,13 @@
   (if
     (<= a0 3)
     (Z19565_triple_if (Z23883_is_zero_natural_number a0) 3 (Z31547_is_natural_number_1 a0) 0 2)
-    (Z13521_add_two_natural_numbers
+    (+
     (Z15080_perrin_number (Z13569_subtract_natural_numbers_with_floor_of_0 a0 2))
     (Z15080_perrin_number (Z13569_subtract_natural_numbers_with_floor_of_0 a0 3)))))
 
 ;; Z15085 Padovan's spiral number
 (define (Z15085_padovan_s_spiral_number a0)
-  (Z15075_padovan_number (Z13521_add_two_natural_numbers a0 4)))
+  (Z15075_padovan_number (+ a0 4)))
 
 ;; Z15104 sandbox-function (n-ary)
 (define (Z15104_sandbox_function_n_ary a0 a1 a2 a3 a4 a5)
@@ -1419,11 +3538,48 @@
 
 ;; Z15107 double
 (define (Z15107_double a0)
-  (Z13521_add_two_natural_numbers a0 a0))
+  (+ a0 a0))
 
 ;; Z15108 2*n+1
 (define (Z15108_2_n_1 a0)
-  (Z13521_add_two_natural_numbers (Z13539_multiply_two_natural_numbers 2 a0) 1))
+  (+ (* 2 a0) 1))
+
+;; Z15111 floor(n/2)
+(define (Z15111_floor_n_2 a0)
+  (Z13546_divide_natural_numbers a0 2))
+
+;; Z15115 exponent of highest power of 2 dividing n
+(define (Z15115_exponent_of_highest_power_of_2_dividing_n a0)
+  (if
+    (Z13555_natural_number_is_even a0)
+    (add1 (Z15115_exponent_of_highest_power_of_2_dividing_n (Z15111_floor_n_2 a0)))
+    0))
+
+;; Z15117 highest power of 2 dividing n
+(define (Z15117_highest_power_of_2_dividing_n a0)
+  (expt 2 (Z15115_exponent_of_highest_power_of_2_dividing_n a0)))
+
+;; Z15121 is odious number
+(define (Z15121_is_odious_number a0)
+  (= (Z14003_thue_morse_sequence a0) 1))
+
+;; Z15127 is evil number
+(define (Z15127_is_evil_number a0)
+  (= (Z14003_thue_morse_sequence a0) 0))
+
+;; Z15134 nth number in lower Wythoff sequence
+(define (Z15134_nth_number_in_lower_wythoff_sequence a0)
+  (Z20391_integer_to_exact_natural_number_or_0
+    (Z20841_floor_float64_to_integer
+    (Z21032_multiply_float64 (Z20936_natural_number_to_float64 a0) Z20894_golden_ratio))))
+
+;; Z15138 nth number in upper Wythoff sequence
+(define (Z15138_nth_number_in_upper_wythoff_sequence a0)
+  (Z20391_integer_to_exact_natural_number_or_0
+    (Z20841_floor_float64_to_integer
+    (Z21032_multiply_float64
+    (Z20936_natural_number_to_float64 a0)
+    (Z31135_square_of_float64 Z20894_golden_ratio)))))
 
 ;; Z15142 list identity
 (define (Z15142_list_identity a0)
@@ -1438,14 +3594,16 @@
     (Z13667_factorial a0)
     (Z15143_alternating_factorial (Z13582_decrement_natural_number_by_one a0)))))
 
+;; Z15151 is eban number
+(define (Z15151_is_eban_number a0)
+  (not (Z10070_has_substring (Z13587_english_cardinal a0) "e")))
+
 ;; Z15157 exponential factorial
 (define (Z15157_exponential_factorial a0)
-  (Z13846_if_natural_number_output
+  (if
     (= a0 0)
     1
-    (Z13647_exponentiation_of_natural_numbers
-    a0
-    (Z15157_exponential_factorial (Z13582_decrement_natural_number_by_one a0)))))
+    (expt a0 (Z15157_exponential_factorial (Z13582_decrement_natural_number_by_one a0)))))
 
 ;; Z15163 hyperfactorial
 (define (Z15163_hyperfactorial a0)
@@ -1457,10 +3615,18 @@
   (if
     (<= a0 1)
     1
-    (Z13578_increment_natural_number
-    (Z13521_add_two_natural_numbers
+    (add1
+    (+
     (Z15169_nth_leonardo_number (Z13582_decrement_natural_number_by_one a0))
     (Z15169_nth_leonardo_number (Z13569_subtract_natural_numbers_with_floor_of_0 a0 2))))))
+
+;; Z15174 nth polite number
+(define (Z15174_nth_polite_number a0)
+  (Z13582_decrement_natural_number_by_one
+    (+
+    a0
+    (Z13928_length_of_binary_representation
+    (Z13582_decrement_natural_number_by_one (+ a0 (Z13928_length_of_binary_representation a0)))))))
 
 ;; Z15175 join two strings with separator
 (define (Z15175_join_two_strings_with_separator a0 a1 a2)
@@ -1473,6 +3639,27 @@
     (if (Z10615_string_starts_with a2 "​") (Z14456_remove_first_character a2) a2))
     a1)))
 
+;; Z15186 is refactorable number
+(define (Z15186_is_refactorable_number a0)
+  (Z13740_is_natural_number_divisible a0 (Z13760_number_of_divisors a0)))
+
+;; Z15190 is square number
+(define (Z15190_is_square_number a0)
+  (= (Z13663_n_2_natural_number (Z15256_natural_number_square_root a0)) a0))
+
+;; Z15195 is strobogrammatic number
+(define (Z15195_is_strobogrammatic_number a0)
+  (string=?
+    (Z13713_natural_number_to_digit_string a0)
+    (Z14613_replace_character_set
+    (Z10012_reverse_string (Z13713_natural_number_to_digit_string a0))
+    "0123456789"
+    "01abcd9e86")))
+
+;; Z15201 is Størmer number
+(define (Z15201_is_st_rmer_number a0)
+  (>= (Z13735_largest_prime_divisor (add1 (Z13663_n_2_natural_number a0))) (Z15107_double a0)))
+
 ;; Z15207 superfactorial
 (define (Z15207_superfactorial a0)
   (Z13558_product_of_list_natural_numbers
@@ -1484,14 +3671,79 @@
     (Z23883_is_zero_natural_number a0)
     0
     (Z13582_decrement_natural_number_by_one
-    (Z13539_multiply_two_natural_numbers 3 (Z13644_2_n (Z13582_decrement_natural_number_by_one a0))))))
+    (* 3 (Z13644_2_n (Z13582_decrement_natural_number_by_one a0))))))
+
+;; Z15218 is k-smooth number
+(define (Z15218_is_k_smooth_number a0 a1)
+  (<= (Z13735_largest_prime_divisor a0) a1))
+
+;; Z15224 is regular number
+(define (Z15224_is_regular_number a0)
+  (Z15218_is_k_smooth_number a0 5))
+
+;; Z15228 is unusual number
+(define (Z15228_is_unusual_number a0)
+  (> (Z13663_n_2_natural_number (Z13735_largest_prime_divisor a0)) a0))
 
 ;; Z15232 McCarthy 91 function
 (define (Z15232_mccarthy_91_function a0)
-  (Z13846_if_natural_number_output
-    (<= a0 100)
-    91
-    (Z13569_subtract_natural_numbers_with_floor_of_0 a0 10)))
+  (if (<= a0 100) 91 (Z13569_subtract_natural_numbers_with_floor_of_0 a0 10)))
+
+;; Z15241 is k-rough number
+(define (Z15241_is_k_rough_number a0 a1)
+  (>= (Z13732_smallest_prime_divisor a0) a1))
+
+;; Z15247 is perfect cube
+(define (Z15247_is_perfect_cube a0)
+  (Z15251_is_perfect_kth_power a0 3))
+
+;; Z15251 is perfect kth power
+(define (Z15251_is_perfect_kth_power a0 a1)
+  (=
+    (expt
+    (Z20391_integer_to_exact_natural_number_or_0
+    (Z19841_rational_to_nearest_integer_even_integer_tiebreak
+    (Z19953_exponentiate_rational_number
+    a0
+    (Z19711_multiplicative_inverse_of_rational_number (Z21653_natural_number_as_rational_number a1)))))
+    a1)
+    a0))
+
+;; Z15265 is perfect power
+(define (Z15265_is_perfect_power a0)
+  (and
+    (>= (Z13764_number_of_prime_divisors a0) 2)
+    (Z31547_is_natural_number_1 (Z13767_number_of_unique_prime_divisors a0))))
+
+;; Z15272 product of unique prime divisors of Natural number
+(define (Z15272_product_of_unique_prime_divisors_of_natural_number a0)
+  (Z13558_product_of_list_natural_numbers (Z13730_unique_prime_divisors a0)))
+
+;; Z15276 is square-free integer
+(define (Z15276_is_square_free_integer a0)
+  (= (Z15272_product_of_unique_prime_divisors_of_natural_number a0) a0))
+
+;; Z15282 is Lucas–Carmichael number
+(define (Z15282_is_lucas_carmichael_number a0)
+  (and
+    (and (Z34353_is_natural_number_odd a0) (Z15276_is_square_free_integer a0))
+    (Z12684_are_all_true
+    (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an
+    Z13740_is_natural_number_divisible
+    (add1 a0)
+    (map add1 (Z13728_prime_divisors a0))))))
+
+;; Z15287 primorial p(n)#
+(define (Z15287_primorial_p_n a0)
+  (Z15291_primorial_of_natural_number (Z15362_nth_prime a0)))
+
+;; Z15291 primorial of natural number
+(define (Z15291_primorial_of_natural_number a0)
+  (Z15287_primorial_p_n (Z13986_number_of_primes_n a0)))
+
+;; Z15299 compositorial of natural number
+(define (Z15299_compositorial_of_natural_number a0)
+  (Z13546_divide_natural_numbers (Z13667_factorial a0) (Z15291_primorial_of_natural_number a0)))
 
 ;; Z15302 Euler zigzag number
 (define (Z15302_euler_zigzag_number a0)
@@ -1499,14 +3751,14 @@
 
 ;; Z15313 number of alternating permutations
 (define (Z15313_number_of_alternating_permutations a0)
-  (Z13846_if_natural_number_output (<= a0 1) 1 (Z15107_double (Z15302_euler_zigzag_number a0))))
+  (if (<= a0 1) 1 (Z15107_double (Z15302_euler_zigzag_number a0))))
 
 ;; Z15318 Entringer number
 (define (Z15318_entringer_number a0 a1)
   (if
     (Z23883_is_zero_natural_number a1)
     (if (Z23883_is_zero_natural_number a0) 1 0)
-    (Z13521_add_two_natural_numbers
+    (+
     (Z15318_entringer_number a0 (Z13582_decrement_natural_number_by_one a1))
     (Z15318_entringer_number
     (Z13582_decrement_natural_number_by_one a0)
@@ -1527,8 +3779,8 @@
     (if (Z23883_is_zero_natural_number a1) 1 0)
     (Z23883_is_zero_natural_number a1)
     0
-    (Z13521_add_two_natural_numbers
-    (Z13539_multiply_two_natural_numbers
+    (+
+    (*
     (Z13582_decrement_natural_number_by_one a0)
     (Z15334_unsigned_stirling_number_of_the_first_kind
     (Z13582_decrement_natural_number_by_one a0)
@@ -1546,19 +3798,69 @@
     (Z23883_is_zero_natural_number a0)
     (Z23883_is_zero_natural_number a1)
     0
-    (Z13521_add_two_natural_numbers
-    (Z13539_multiply_two_natural_numbers
+    (+
+    (*
     a1
     (Z15337_stirling_number_of_the_second_kind (Z13582_decrement_natural_number_by_one a0) a1))
     (Z15337_stirling_number_of_the_second_kind
     (Z13582_decrement_natural_number_by_one a0)
     (Z13582_decrement_natural_number_by_one a1))))))
 
+;; Z15341 Fuss–Catalan number
+(define (Z15341_fuss_catalan_number a0 a1 a2)
+  (Z13546_divide_natural_numbers
+    (*
+    a2
+    (Z13848_binomial_coefficient
+    (Z13582_decrement_natural_number_by_one (+ (* a0 a1) a2))
+    (Z13582_decrement_natural_number_by_one a0)))
+    a0))
+
+;; Z15386 Wedderburn–Etherington number
+(define (Z15386_wedderburn_etherington_number a0)
+  (if
+    (Z13555_natural_number_is_even a0)
+    (+
+    (Z15111_floor_n_2
+    (*
+    (Z15386_wedderburn_etherington_number (Z15111_floor_n_2 a0))
+    (add1 (Z15386_wedderburn_etherington_number (Z15111_floor_n_2 a0)))))
+    (Z14038_sum_the_elements_of_a_list_of_natural_numbers
+    (Z18475_return_typed_list
+    (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l
+    *
+    (map
+    Z15386_wedderburn_etherington_number
+    (Z13831_natural_number_range 1 (Z13582_decrement_natural_number_by_one (Z15111_floor_n_2 a0))))
+    (map
+    Z15386_wedderburn_etherington_number
+    (Z18759_reverse_list_preserving_list_typing_untyping
+    (Z13831_natural_number_range
+    (Z13569_subtract_natural_numbers_with_floor_of_0
+    a0
+    (Z13582_decrement_natural_number_by_one (Z15111_floor_n_2 a0)))
+    (Z13582_decrement_natural_number_by_one a0))))))))
+    (Z14038_sum_the_elements_of_a_list_of_natural_numbers
+    (Z18475_return_typed_list
+    (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l
+    *
+    (map
+    Z15386_wedderburn_etherington_number
+    (Z13831_natural_number_range
+    1
+    (Z13569_subtract_natural_numbers_with_floor_of_0 a0 (Z15111_floor_n_2 (add1 a0)))))
+    (map
+    Z15386_wedderburn_etherington_number
+    (Z18759_reverse_list_preserving_list_typing_untyping
+    (Z13831_natural_number_range
+    (Z15111_floor_n_2 (add1 a0))
+    (Z13582_decrement_natural_number_by_one a0)))))))))
+
 ;; Z15391 nth Fibonacci number of order k
 (define (Z15391_nth_fibonacci_number_of_order_k a0 a1)
   (if
-    (<= a0 (Z13578_increment_natural_number a1))
-    (if (< a0 (Z13578_increment_natural_number a1)) 0 1)
+    (<= a0 (add1 a1))
+    (if (< a0 (add1 a1)) 0 1)
     (Z14038_sum_the_elements_of_a_list_of_natural_numbers
     (Z18475_return_typed_list
     (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
@@ -1596,16 +3898,67 @@
 (define (Z15422_nth_enneanacci_number a0)
   (Z15391_nth_fibonacci_number_of_order_k a0 9))
 
+;; Z15425 nth Euclid number
+(define (Z15425_nth_euclid_number a0)
+  (add1 (Z15287_primorial_p_n a0)))
+
+;; Z15429 nth Kummer number
+(define (Z15429_nth_kummer_number a0)
+  (Z13582_decrement_natural_number_by_one (Z15287_primorial_p_n a0)))
+
+;; Z15433 is harshad number
+(define (Z15433_is_harshad_number a0)
+  (Z13740_is_natural_number_divisible a0 (Z14376_sum_of_decimal_digits a0)))
+
 ;; Z15438 nth star number
 (define (Z15438_nth_star_number a0)
-  (Z13578_increment_natural_number
-    (Z14694_multiply_three_natural_numbers a0 (Z13582_decrement_natural_number_by_one a0) 6)))
+  (add1 (Z14694_multiply_three_natural_numbers a0 (Z13582_decrement_natural_number_by_one a0) 6)))
+
+;; Z15443 nth centered k-gonal number
+(define (Z15443_nth_centered_k_gonal_number a0 a1)
+  (add1
+    (Z15111_floor_n_2
+    (Z14694_multiply_three_natural_numbers a1 (Z13582_decrement_natural_number_by_one a0) a0))))
+
+;; Z15446 nth centered triangular number
+(define (Z15446_nth_centered_triangular_number a0)
+  (Z15443_nth_centered_k_gonal_number a0 3))
+
+;; Z15450 nth centered square number
+(define (Z15450_nth_centered_square_number a0)
+  (Z15443_nth_centered_k_gonal_number a0 4))
+
+;; Z15454 nth centered pentagonal number
+(define (Z15454_nth_centered_pentagonal_number a0)
+  (Z15443_nth_centered_k_gonal_number a0 5))
+
+;; Z15458 nth centered hexagonal number
+(define (Z15458_nth_centered_hexagonal_number a0)
+  (Z15443_nth_centered_k_gonal_number a0 6))
+
+;; Z15462 nth centered heptagonal number
+(define (Z15462_nth_centered_heptagonal_number a0)
+  (Z15443_nth_centered_k_gonal_number a0 7))
+
+;; Z15466 nth centered octagonal number
+(define (Z15466_nth_centered_octagonal_number a0)
+  (Z15443_nth_centered_k_gonal_number a0 8))
+
+;; Z15470 nth centered nonagonal number
+(define (Z15470_nth_centered_nonagonal_number a0)
+  (Z15443_nth_centered_k_gonal_number a0 9))
+
+;; Z15474 nth centered decagonal number
+(define (Z15474_nth_centered_decagonal_number a0)
+  (Z15443_nth_centered_k_gonal_number a0 10))
+
+;; Z15478 nth centered hendecagonal number
+(define (Z15478_nth_centered_hendecagonal_number a0)
+  (Z15443_nth_centered_k_gonal_number a0 11))
 
 ;; Z15483 nth r-simplex number
 (define (Z15483_nth_r_simplex_number a0 a1)
-  (Z13848_binomial_coefficient
-    (Z13521_add_two_natural_numbers a0 (Z13582_decrement_natural_number_by_one a1))
-    a1))
+  (Z13848_binomial_coefficient (+ a0 (Z13582_decrement_natural_number_by_one a1)) a1))
 
 ;; Z15491 nth pentatope number
 (define (Z15491_nth_pentatope_number a0)
@@ -1617,8 +3970,8 @@
 
 ;; Z15500 nth k-gonal number
 (define (Z15500_nth_k_gonal_number a0 a1)
-  (Z13521_add_two_natural_numbers
-    (Z13539_multiply_two_natural_numbers
+  (+
+    (*
     (Z13569_subtract_natural_numbers_with_floor_of_0 a1 2)
     (Z13961_triangular_number (Z13582_decrement_natural_number_by_one a0)))
     a0))
@@ -1651,36 +4004,77 @@
 (define (Z15533_nth_dodecagonal_number a0)
   (Z15500_nth_k_gonal_number a0 12))
 
+;; Z15537 nth centered tetrahedral number
+(define (Z15537_nth_centered_tetrahedral_number a0)
+  (Z13546_divide_natural_numbers
+    (* (Z15108_2_n_1 a0) (+ (+ (Z13663_n_2_natural_number a0) a0) 3))
+    3))
+
+;; Z15540 nth centered octahedral number
+(define (Z15540_nth_centered_octahedral_number a0)
+  (Z13546_divide_natural_numbers
+    (* (Z15108_2_n_1 a0) (+ (Z15107_double (+ (Z13663_n_2_natural_number a0) a0)) 3))
+    3))
+
 ;; Z15544 nth centered cube number
 (define (Z15544_nth_centered_cube_number a0)
-  (Z13521_add_two_natural_numbers
-    (Z13977_n_3 a0)
-    (Z13977_n_3 (Z13578_increment_natural_number a0))))
+  (+ (Z13977_n_3 a0) (Z13977_n_3 (add1 a0))))
 
 ;; Z15547 nth centered dodecahedral number
 (define (Z15547_nth_centered_dodecahedral_number a0)
-  (Z13539_multiply_two_natural_numbers
-    (Z15108_2_n_1 a0)
-    (Z13578_increment_natural_number
-    (Z13539_multiply_two_natural_numbers
-    5
-    (Z13521_add_two_natural_numbers (Z13663_n_2_natural_number a0) a0)))))
+  (* (Z15108_2_n_1 a0) (add1 (* 5 (+ (Z13663_n_2_natural_number a0) a0)))))
+
+;; Z15550 nth centered icosahedral number
+(define (Z15550_nth_centered_icosahedral_number a0)
+  (Z13546_divide_natural_numbers
+    (* (Z15108_2_n_1 a0) (+ (* 5 (+ (Z13663_n_2_natural_number a0) a0)) 3))
+    3))
+
+;; Z15553 MD5 from hex (string)
+(define (Z15553_md5_from_hex_string a0)
+  (Z10137_md5 (Z10373_hex_string_to_string_utf_8 a0)))
+
+;; Z15593 is valid hex string
+(define (Z15593_is_valid_hex_string a0)
+  (Z10196_is_regular_expression_match a0 "^[A-Fa-f0-9]+$"))
 
 ;; Z15598 nth Pell number
 (define (Z15598_nth_pell_number a0)
   (if
     (<= a0 1)
     a0
-    (Z13521_add_two_natural_numbers
+    (+
     (Z15598_nth_pell_number (Z13569_subtract_natural_numbers_with_floor_of_0 a0 2))
     (Z15107_double (Z15598_nth_pell_number (Z13582_decrement_natural_number_by_one a0))))))
+
+;; Z15605 nth Pell–Lucas number
+(define (Z15605_nth_pell_lucas_number a0)
+  (Z13546_divide_natural_numbers
+    (Z15598_nth_pell_number (Z15107_double a0))
+    (Z15598_nth_pell_number a0)))
+
+;; Z15617 is Fibonacci number
+(define (Z15617_is_fibonacci_number a0)
+  (or
+    (Z15190_is_square_number (+ (* 5 (Z13663_n_2_natural_number a0)) 4))
+    (Z15190_is_square_number
+    (Z13569_subtract_natural_numbers_with_floor_of_0 (* 5 (Z13663_n_2_natural_number a0)) 4))))
+
+;; Z15626 is string in hiragana
+(define (Z15626_is_string_in_hiragana a0)
+  (Z12735_all_meet_criteria
+    (map
+    Z15631_codepoint_to_string
+    (Z22717_string_to_codepoint_list
+    (Z11193_remove_interpunction (Z14374_remove_all_spaces_of_all_kinds a0))))
+    Z10878_is_hiragana))
 
 ;; Z15643 nth central trinomial coefficient
 (define (Z15643_nth_central_trinomial_coefficient a0)
   (Z14038_sum_the_elements_of_a_list_of_natural_numbers
     (Z18475_return_typed_list
     (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l
-    Z13539_multiply_two_natural_numbers
+    *
     (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an
     Z13848_binomial_coefficient
     a0
@@ -1697,7 +4091,7 @@
     (map
     Z13663_n_2_natural_number
     (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l
-    Z13539_multiply_two_natural_numbers
+    *
     (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an
     Z13848_binomial_coefficient
     a0
@@ -1705,22 +4099,95 @@
     (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l
     Z13848_binomial_coefficient
     (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an
-    Z13521_add_two_natural_numbers
+    +
     a0
     (Z13831_natural_number_range 0 a0))
     (Z13831_natural_number_range 0 a0)))))))
 
+;; Z15659 subfactorial
+(define (Z15659_subfactorial a0)
+  (Z20391_integer_to_exact_natural_number_or_0
+    (Z19682_truncate_rational_number
+    (Z20080_sum_the_elements_of_a_list_of_rational_numbers
+    (Z18475_return_typed_list
+    (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l
+    Z19854_simplified_rational_from_z_numerator_denominator
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    Z17120_multiply_integers
+    (Z34575_generate_alternating_sign_terms_for_summation (add1 a0) #f)
+    (Z17101_natural_number_to_integer (Z13667_factorial a0)))
+    (map Z13667_factorial (Z13831_natural_number_range 0 a0))))))))
+
+;; Z15671 natural number to base n
+(define (Z15671_natural_number_to_base_n a0 a1)
+  (Z21394_concatenate_many_strings
+    (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an
+    Z14244_get_nth_character_of_a_string
+    "0123456789abcdefghijklmnopqrstuvwxyz"
+    (map add1 (Z31177_list_of_digits_in_base_n a0 a1)))))
+
 ;; Z15684 is truthy
 (define (Z15684_is_truthy a0)
-  (if (Z15684_is_truthy a0) Z41_true Z42_false))
+  (if (Z15684_is_truthy a0) #t #f))
+
+;; Z15702 byte as hex string
+(define (Z15702_byte_as_hex_string a0)
+  (Z14770_pad_string_with_leading_characters_to_specified_length
+    (Z13781_natural_number_to_hexadecimal_lowercase_without_prefix
+    (Z14567_byte_to_natural_number a0))
+    2
+    "0"))
 
 ;; Z15717 is Boolean
 (define (Z15717_is_boolean a0)
-  (if (Z15717_is_boolean a0) Z41_true Z42_false))
+  (if (Z15717_is_boolean a0) #t #f))
 
 ;; Z15728 iffy
 (define (Z15728_iffy a0 a1 a2 a3)
   (if (Z15717_is_boolean a0) (if a0 a1 a2) a3))
+
+;; Z15735 is power of 2
+(define (Z15735_is_power_of_2 a0)
+  (Z15741_is_power_of_k a0 2))
+
+;; Z15741 is power of k
+(define (Z15741_is_power_of_k a0 a1)
+  (Z31490_if_either
+    (<= a1 1)
+    (Z23883_is_zero_natural_number a0)
+    (= a0 a1)
+    (if
+    (Z13740_is_natural_number_divisible a0 a1)
+    (Z15741_is_power_of_k (Z13546_divide_natural_numbers a0 a1) a1)
+    (Z31547_is_natural_number_1 a0))))
+
+;; Z15757 is Cunningham number
+(define (Z15757_is_cunningham_number a0)
+  (or
+    (Z15265_is_perfect_power (add1 a0))
+    (Z15265_is_perfect_power (Z13582_decrement_natural_number_by_one a0))))
+
+;; Z15767 reverse decimal digits
+(define (Z15767_reverse_decimal_digits a0)
+  (Z14283_string_of_digits_as_natural_number
+    (Z10012_reverse_string (Z13713_natural_number_to_digit_string a0))))
+
+;; Z15769 repunit number
+(define (Z15769_repunit_number a0)
+  (Z14283_string_of_digits_as_natural_number (Z12624_replicate_string_n_times "1" a0)))
+
+;; Z15771 nth binary number in decimal
+(define (Z15771_nth_binary_number_in_decimal a0)
+  (Z14283_string_of_digits_as_natural_number
+    (Z13779_natural_number_to_binary_string_without_prefix a0)))
+
+;; Z15777 is String
+(define (Z15777_is_string a0)
+  (Z13052_object_equality (snd (car (Z805_reify a0))) "Z6"))
+
+;; Z15801 object type equality
+(define (Z15801_object_type_equality a0 a1)
+  (Z889_list_equality (car (Z805_reify a0)) (car (Z805_reify a1)) Z13052_object_equality))
 
 ;; Z15811 if is Boolean
 (define (Z15811_if_is_boolean a0 a1 a2)
@@ -1728,14 +4195,13 @@
 
 ;; Z15818 is Natural number
 (define (Z15818_is_natural_number a0)
-  (if (Z15824_is_integer_equivalent a0) (if (Z15818_is_natural_number a0) #t #f) #f))
+  (Z13052_object_equality (car (Z805_reify a0)) (car (Z805_reify 0))))
 
 ;; Z15824 is integer equivalent
 (define (Z15824_is_integer_equivalent a0)
   (or
     (Z15818_is_natural_number a0)
-    (Z15818_is_natural_number
-    (Z13539_multiply_two_natural_numbers a0 (Z13582_decrement_natural_number_by_one 0)))))
+    (Z15818_is_natural_number (* a0 (Z13582_decrement_natural_number_by_one 0)))))
 
 ;; Z15838 ASCII Braille encode
 (define (Z15838_ascii_braille_encode a0)
@@ -1744,9 +4210,20 @@
     "⠀⠁⠂⠃⠄⠅⠆⠇⠈⠉⠊⠋⠌⠍⠎⠏⠐⠑⠒⠓⠔⠕⠖⠗⠘⠙⠚⠛⠜⠝⠞⠟⠠⠡⠢⠣⠤⠥⠦⠧⠨⠩⠪⠫⠬⠭⠮⠯⠰⠱⠲⠳⠴⠵⠶⠷⠸⠹⠺⠻⠼⠽⠾⠿"
     " A1B'K2L@CIF/MSP\"E3H9O6R^DJG>NTQ,*5<-U8V.%[$+X!&;:4\\0Z7(_?W]#Y)="))
 
+;; Z15840 ASCII Braille decode
+(define (Z15840_ascii_braille_decode a0)
+  (Z15858_replace_character_set_and_discard_other_characters
+    a0
+    " A1B'K2L@CIF/MSP\"E3H9O6R^DJG>NTQ,*5<-U8V.%[$+X!&;:4\\0Z7(_?W]#Y)="
+    "⠀⠁⠂⠃⠄⠅⠆⠇⠈⠉⠊⠋⠌⠍⠎⠏⠐⠑⠒⠓⠔⠕⠖⠗⠘⠙⠚⠛⠜⠝⠞⠟⠠⠡⠢⠣⠤⠥⠦⠧⠨⠩⠪⠫⠬⠭⠮⠯⠰⠱⠲⠳⠴⠵⠶⠷⠸⠹⠺⠻⠼⠽⠾⠿"))
+
+;; Z15844 unit integer sign of integer
+(define (Z15844_unit_integer_sign_of_integer a0)
+  (Z17151_sign_to_unit_integer (Z17105_sign_of_integer a0)))
+
 ;; Z15849 Kronecker delta
 (define (Z15849_kronecker_delta a0 a1)
-  (Z13846_if_natural_number_output (= a0 a1) 1 0))
+  (if (= a0 a1) 1 0))
 
 ;; Z15855 remove characters not suitable for markup in XML or HTML
 (define (Z15855_remove_characters_not_suitable_for_markup_in_xml_or_html a0)
@@ -1754,9 +4231,13 @@
     (list Z14130_remove_clones_of_grave_and_acute Z14127_remove_obsolete_characters_for_khmer Z14133_remove_line_and_paragraph_separator Z14136_remove_bidi_embedding_controls Z14139_remove_unicode_characters_8298_to_8303 Z14142_remove_interlinear_annotation_characters Z14145_remove_u_feff Z14148_remove_u_fffc Z14151_remove_scoping_for_musical_notation Z14154_remove_language_tag_code_points)
     a0))
 
+;; Z15858 replace character set and discard other characters
+(define (Z15858_replace_character_set_and_discard_other_characters a0 a1 a2)
+  (Z14613_replace_character_set (Z14515_remove_all_characters_not_in_second_string a0 a1) a1 a2))
+
 ;; Z15879 salted MD5
 (define (Z15879_salted_md5 a0 a1)
-  (Z15883_salted_hash Z10137_md5 a0 a1))
+  (Z10137_md5 (string-append a1 a0)))
 
 ;; Z15907 limited Natural number
 (define (Z15907_limited_natural_number a0 a1 a2)
@@ -1765,9 +4246,74 @@
     a0
     (if (Z14711_natural_number_is_between a0 0 a1) a1 a2)))
 
+;; Z15914 string equality for Natural numbers
+(define (Z15914_string_equality_for_natural_numbers a0 a1)
+  (string=? a1 (Z13713_natural_number_to_digit_string a0)))
+
+;; Z15946 are two numeric strings in descending order
+(define (Z15946_are_two_numeric_strings_in_descending_order a0 a1)
+  (Z850_try_catch_function
+    (Z17132_greater_than_integer
+    (Z16705_read_integer a0 Z1002_english)
+    (Z16705_read_integer a1 Z1002_english))
+    Z500_unspecified_error
+    #f))
+
+;; Z15953 Ukrainian cardinal
+(define (Z15953_ukrainian_cardinal a0)
+  (Z22576_slavic_languages_cardinal
+    (list "нуль" "один" "два" "три" "чотири" "п'ять" "шість" "сім" "вісім" "дев'ять")
+    (list "одинадцять" "дванадцять" "тринадцять" "чотирнадцять" "п'ятнадцять" "шістнадцять" "сімнадцять" "вісімнадцять")
+    (list "десять" "двадцять" "тридцять" "сорок" "п'ятдесят" "шістдесят" "сімдесят" "вісімдесят" "дев'яносто")
+    (list "сто" "двісті" "триста" "чотириста" "п'ятсот" "шістсот" "сімсот" "вісімсот" "дев'ятсот")
+    (list "одна" "дві" "три" "чотири" "п'ять" "шість" "сім" "вісім" "дев'ять")
+    (list "тисяча" "тисячі" "тисяч")
+    (list "мі" "три" "квадри" "квінти" "сексти" "септи" "окти" "нони" "деци")
+    (list "льйон" "льйони" "льйонів")
+    (list "льярд" "льярди" "льярдів")
+    a0))
+
+;; Z15965 Polish cardinal
+(define (Z15965_polish_cardinal a0)
+  (Z22576_slavic_languages_cardinal
+    (list "zero" "jeden" "dwa" "trzy" "cztery" "pięć" "sześć" "siedem" "osiem" "dziewięć")
+    (list "jedenaście" "dwanaście" "trzynaście" "czternaście" "piętnaście" "szesnaście" "siedemnaście" "osiemnaście" "dziewiętnaście")
+    (list "dziesięć" "dwadzieścia" "trzydzieści" "czterdzieści" "pięćdziesiąt" "sześćdziesiąt" "siedemdziesiąt" "osiemdziesiąt" "dziewięćdziesiąt")
+    (list "sto" "dwieście" "trzysta" "czterysta" "pięćset" "sześćset" "siedemset" "osiemset" "dziewięćset")
+    (list )
+    (list "tysiąc" "tysiące" "tysięcy")
+    (list "mi" "bi" "try" "kwadry" "kwinty" "seksty" "septy" "okty" "nony" "decy")
+    (list "lion" "liony" "lionów")
+    (list "liard" "liardy" "liardów")
+    a0))
+
+;; Z15969 reified Z1K1 (object for Key reference)
+(define (Z15969_reified_z1k1_object_for_key_reference a0)
+  (snd (car (Z805_reify a0))))
+
+;; Z15977 (!) return grammatical number for an integer and language
+(define (Z15977_return_grammatical_number_for_an_integer_and_language a0 a1)
+  (if
+    (Z14326_same_language a1 Z1002_english)
+    (Z15982_grammatical_number_for_languages_with_only_singular_and_plur a0)
+    (Z15988_grammatical_number_for_languages_with_singular_paucal_and_pl a0)))
+
 ;; Z15982 (!) grammatical number for languages with only singular and plural
 (define (Z15982_grammatical_number_for_languages_with_only_singular_and_plur a0)
   (if (Z31547_is_natural_number_1 a0) "singular" "plural"))
+
+;; Z15991 code point prefix
+(define (Z15991_code_point_prefix a0 a1)
+  (Z22693_codepoint_list_to_string (cons a0 (Z22717_string_to_codepoint_list a1))))
+
+;; Z16000 Igbo month name in Igbo
+(define (Z16000_igbo_month_name_in_igbo a0)
+  (string-append
+    "Ọnwa "
+    (Z14396_string_of_monolingual_text
+    (Z16273_monolingual_text_in_specified_language_from_multilingual_tex
+    (Z20607_get_labels_of_object_from_zid_string (Z16365_zid_string_from_identity_object a0))
+    Z1002_english))))
 
 ;; Z16012 (!) grammatical number for languages with singular, dual and plural
 (define (Z16012_grammatical_number_for_languages_with_singular_dual_and_plur a0)
@@ -1782,42 +4328,33 @@
 (define (Z16015_grammatical_number_for_languages_with_singular_paucal_2_5_an a0)
   (Z19565_triple_if (Z31547_is_natural_number_1 a0) "singular" (<= a0 5) "paucal" "plural"))
 
+;; Z16085 Croatian cardinal
+(define (Z16085_croatian_cardinal a0)
+  (Z22576_slavic_languages_cardinal
+    (list "nula" "jedan" "dva" "tri" "četiri" "pet" "šest" "sedam" "osam" "devet")
+    (list "jedanaest" "dvanaest" "trinaest" "četrnaest" "petnaest" "šesnaest" "sedamnaest" "osamnaest" "devetnaest")
+    (list "deset" "dvadeset" "trideset" "četrdeset" "pedeset" "šezdeset" "sedamdeset" "osamdeset" "devedeset")
+    (list "sto" "dvjesto" "trista" "četiristo" "petsto" "šeststo" "sedamsto" "osamsto" "devetsto ")
+    (list )
+    (list "tisuća" "tisuće" "tisuća")
+    (list "mi")
+    (list "lijun" "lijuna" "lijuna")
+    (list "lijarda" "lijarde" "lijardi")
+    a0))
+
 ;; Z16136 following month
 (define (Z16136_following_month a0)
-  (if
-    (Z16137_same_month a0 Z16101_january)
-    Z16102_february
-    (if
-    (Z16137_same_month a0 Z16102_february)
-    Z16103_march
-    (if
-    (Z16137_same_month a0 Z16103_march)
-    Z16104_april
-    (if
-    (Z16137_same_month a0 Z16104_april)
-    Z16105_may
-    (if
-    (Z16137_same_month a0 Z16105_may)
-    Z16106_june
-    (if
-    (Z16137_same_month a0 Z16106_june)
-    Z16107_july
-    (if
-    (Z16137_same_month a0 Z16107_july)
-    Z16108_august
-    (if
-    (Z16137_same_month a0 Z16108_august)
-    Z16109_september
-    (if
-    (Z16137_same_month a0 Z16109_september)
-    Z16110_october
-    (if
-    (Z16137_same_month a0 Z16110_october)
-    Z16111_november
-    (if
-    (Z16137_same_month a0 Z16111_november)
-    Z16112_december
-    (if (Z16137_same_month a0 Z16112_december) Z16101_january Z24_void)))))))))))))
+  (Z16293_n_months_before_month a0 11))
+
+;; Z16137 same month
+(define (Z16137_same_month a0 a1)
+  (string=?
+    (snd
+    (Z16360_second_element_error_handling
+    (snd (Z16360_second_element_error_handling (Z805_reify a0)))))
+    (snd
+    (Z16360_second_element_error_handling
+    (snd (Z16360_second_element_error_handling (Z805_reify a1)))))))
 
 ;; Z16199 rest of list
 (define (Z16199_rest_of_list a0 a1 a2)
@@ -1835,11 +4372,11 @@
 (define (Z16245_element_following_match_0_to_n a0 a1 a2 a3)
   (Z13397_get_the_nth_element_of_a_list
     a2
-    (Z13521_add_two_natural_numbers a1 (Z13708_index_of_first_listing_1_n_note_limitation a0 a2))))
+    (+ a1 (Z13708_index_of_first_listing_1_n_note_limitation a0 a2))))
 
 ;; Z16250 index in cycle
 (define (Z16250_index_in_cycle a0 a1 a2)
-  (Z13551_remainder_of_natural_number_division (Z13521_add_two_natural_numbers a1 a2) a0))
+  (Z13551_remainder_of_natural_number_division (+ a1 a2) a0))
 
 ;; Z16255 month number to month
 (define (Z16255_month_number_to_month a0)
@@ -1853,6 +4390,12 @@
 ;; Z16272 twelve months
 (define (Z16272_twelve_months)
   (list Z16101_january Z16102_february Z16103_march Z16104_april Z16105_may Z16106_june Z16107_july Z16108_august Z16109_september Z16110_october Z16111_november Z16112_december))
+
+;; Z16273 monolingual text in specified language from multilingual text
+(define (Z16273_monolingual_text_in_specified_language_from_multilingual_tex a0 a1)
+  (Z16277_first_monolingual_text_in_specified_language
+    (Z19279_multilingual_text_to_list_of_monolingual_texts a0)
+    a1))
 
 ;; Z16289 month is in list
 (define (Z16289_month_is_in_list a0 a1)
@@ -1886,10 +4429,10 @@
 
 ;; Z16348 days in list of months (non-leap year)
 (define (Z16348_days_in_list_of_months_non_leap_year a0)
-  (Z13846_if_natural_number_output
+  (if
     (null? a0)
     0
-    (Z13521_add_two_natural_numbers
+    (+
     (Z16316_days_in_month_when_not_a_leap_year (car a0))
     (Z16348_days_in_list_of_months_non_leap_year (cdr a0)))))
 
@@ -1897,9 +4440,111 @@
 (define (Z16360_second_element_error_handling a0)
   (car (cdr a0)))
 
+;; Z16365 ZID string from identity object
+(define (Z16365_zid_string_from_identity_object a0)
+  (Z20305_unless_exception
+    (if
+    (Z17180_is_void a0)
+    (Z30805_note "there is one void and \"Z24\" is its identity" "Z24")
+    (Z20305_unless_exception
+    (if
+    (Z15777_is_string (Z30811_value_after_type a0))
+    (Z30805_note
+    "# but it might be the first item in a list, for example"
+    (Z30811_value_after_type a0))
+    (Z30805_note "# an enum?" "⚠️ to do: enum?"))
+    (Z17180_is_void (Z30811_value_after_type a0))
+    (Z851_throw_error Z516_argument_value_error (list "probably not an identity object"))))
+    #f
+    (Z30805_note "# exclude by type: Wikidata entities" "⛔️ to do: Wikidata (unreachable)")))
+
+;; Z16372 identity identity identity
+(define (Z16372_identity_identity_identity a0 a1)
+  (string=?
+    (Z16365_zid_string_from_identity_object a0)
+    (Z16365_zid_string_from_identity_object a1)))
+
+;; Z16437 cardinal in chosen language
+(define (Z16437_cardinal_in_chosen_language a0 a1)
+  (Z13036_apply
+    (Z14310_select_a_function_based_on_language Z16435_config_for_cardinal_from_natural_number a1)
+    a0))
+
+;; Z16468 (!) subtract floating point numbers (strings)
+(define (Z16468_subtract_floating_point_numbers_strings a0 a1)
+  (Z21949_float64_as_string_multilingual_default
+    (Z21031_subtract_float64
+    (Z21642_read_floating_point_number_leniently a0)
+    (Z21642_read_floating_point_number_leniently a1))))
+
+;; Z16470 (!) subtract one integer string from another
+(define (Z16470_subtract_one_integer_string_from_another a0 a1)
+  (Z25073_integer_to_digit_string_hyphen_negative
+    (Z17111_subtract_an_integer
+    (Z16705_read_integer a0 Z1002_english)
+    (Z16705_read_integer a1 Z1002_english))))
+
+;; Z16472 (!) add integer strings
+(define (Z16472_add_integer_strings a0 a1)
+  (Z16700_display_integer
+    (Z16693_add_integers
+    (Z16705_read_integer a0 Z1002_english)
+    (Z16705_read_integer a1 Z1002_english))
+    Z1002_english))
+
+;; Z16475 tangent (float64)
+(define (Z16475_tangent_float64 a0)
+  (Z21033_divide_float64 (Z16463_sine_float64_rad a0) (Z12473_cosine a0)))
+
+;; Z16483 (!) gamma function (strings)
+(define (Z16483_gamma_function_strings a0)
+  (Z21949_float64_as_string_multilingual_default
+    (Z21009_gamma_function_float64 (Z21642_read_floating_point_number_leniently a0))))
+
+;; Z16493 is leap year (revised Julian calendar)
+(define (Z16493_is_leap_year_revised_julian_calendar a0)
+  (and
+    (Z23883_is_zero_natural_number
+    (Z13551_remainder_of_natural_number_division (Z14283_string_of_digits_as_natural_number a0) 4))
+    (or
+    (not
+    (Z23883_is_zero_natural_number
+    (Z13551_remainder_of_natural_number_division (Z14283_string_of_digits_as_natural_number a0) 100)))
+    (or
+    (=
+    (Z13551_remainder_of_natural_number_division (Z14283_string_of_digits_as_natural_number a0) 900)
+    200)
+    (=
+    (Z13551_remainder_of_natural_number_division (Z14283_string_of_digits_as_natural_number a0) 900)
+    600)))))
+
+;; Z16502 (!) count decimal places
+(define (Z16502_count_decimal_places a0)
+  (Z13569_subtract_natural_numbers_with_floor_of_0
+    (string-length a0)
+    (string-length (Z11416_discard_from_end_of_last_substring a0 "."))))
+
+;; Z16542 is this month earlier than that month in the year?
+(define (Z16542_is_this_month_earlier_than_that_month_in_the_year a0 a1)
+  (and
+    (Z10231_nor (Z17180_is_void a0) (Z17180_is_void a1))
+    (< (Z16230_month_to_month_number a0) (Z16230_month_to_month_number a1))))
+
 ;; Z16546 is summer in southern hemisphere
 (define (Z16546_is_summer_in_southern_hemisphere a0)
   (Z12696_contains (list Z16112_december Z16101_january Z16102_february) a0))
+
+;; Z16560 string for a language
+(define (Z16560_string_for_a_language a0 a1)
+  (Z14396_string_of_monolingual_text (Z16277_first_monolingual_text_in_specified_language a0 a1)))
+
+;; Z16568 object label
+(define (Z16568_object_label a0 a1)
+  (Z16560_string_for_a_language (Z16556_object_labels a0) a1))
+
+;; Z16580 month label
+(define (Z16580_month_label a0 a1)
+  (Z24086_display_gregorian_calendar_month a0 a1))
 
 ;; Z16584 opposite month
 (define (Z16584_opposite_month a0)
@@ -1947,11 +4592,16 @@
     (Z16634_is_function_commutative_for_this_first_argument_with_all_arg a0 a1 (cdr a2))
     #f)))
 
+;; Z16648 is later month in the year
+(define (Z16648_is_later_month_in_the_year a0 a1)
+  (if
+    (or (Z16137_same_month a0 a1) (or (Z17180_is_void a0) (Z17180_is_void a1)))
+    #f
+    (not (Z16542_is_this_month_earlier_than_that_month_in_the_year a0 a1))))
+
 ;; Z16667 same sign
 (define (Z16667_same_sign a0 a1)
-  (string=?
-    (snd (Z29446_second_element_performance (Z30617_reified_value_after_type a0)))
-    (snd (Z29446_second_element_performance (Z30617_reified_value_after_type a1)))))
+  (Z17464_same_reference_object a0 a1))
 
 ;; Z16676 invert sign
 (define (Z16676_invert_sign a0)
@@ -1960,9 +4610,50 @@
     Z16662_negative
     (if (Z16667_same_sign a0 Z16662_negative) Z16660_positive Z16661_neutral)))
 
+;; Z16688 same Integer
+(define (Z16688_same_integer a0 a1)
+  (and
+    (Z17249_integers_have_the_same_sign a0 a1)
+    (Z17254_integers_have_the_same_absolute_magnitude a0 a1)))
+
+;; Z16693 add Integers
+(define (Z16693_add_integers a0 a1)
+  (Z17307_integer_represented_by_ordered_pair_of_natural_numbers
+    (Z17340_add_integers_represented_by_an_ordered_pair_of_natural_numbe
+    (Z17301_ordered_pair_of_natural_numbers_representing_integer a0)
+    (Z17301_ordered_pair_of_natural_numbers_representing_integer a1))))
+
+;; Z16705 read Integer
+(define (Z16705_read_integer a0 a1)
+  (Z17192_if_integer_output
+    (string=? (Z10908_dashes_to_hyphen_minus (Z10901_get_first_character_of_string a0)) "-")
+    (Z17267_negate_natural_number_to_integer
+    (Z14290_read_natural_number (Z14456_remove_first_character a0) a1))
+    (Z17101_natural_number_to_integer
+    (Z14290_read_natural_number (Z10075_replace_all_substrings a0 "+" "") a1))))
+
 ;; Z16711 subsequence exists
 (define (Z16711_subsequence_exists a0 a1)
   (not (Z23883_is_zero_natural_number (Z28715_index_of_first_sub_list_start a0 a1))))
+
+;; Z16714 DNA sequence complement
+(define (Z16714_dna_sequence_complement a0)
+  (if
+    (Z11693_string_only_has_characters_from_alphabet a0 "ACGTacgt")
+    (Z14613_replace_character_set (Z10018_to_uppercase a0) "ACGT" "TGCA")
+    "invalid DNA sequence"))
+
+;; Z16718 sign of net charge from SMILES string
+(define (Z16718_sign_of_net_charge_from_smiles_string a0)
+  (Z16731_sign_of_difference
+    (Z14450_count_substrings
+    (Z12611_expand_from_numeric_charges_in_smiles_string
+    (Z16741_remove_non_stereochemical_single_bonds_from_smiles a0))
+    "+")
+    (Z14450_count_substrings
+    (Z12611_expand_from_numeric_charges_in_smiles_string
+    (Z16741_remove_non_stereochemical_single_bonds_from_smiles a0))
+    "-")))
 
 ;; Z16728 multiply signs
 (define (Z16728_multiply_signs a0 a1)
@@ -1970,6 +4661,10 @@
     (or (Z16667_same_sign a0 Z16661_neutral) (Z16667_same_sign a1 Z16661_neutral))
     Z16661_neutral
     (if (Z16667_same_sign a0 a1) Z16660_positive Z16662_negative)))
+
+;; Z16731 sign of difference
+(define (Z16731_sign_of_difference a0 a1)
+  (Z17105_sign_of_integer (Z17315_subtract_natural_numbers_as_integer a0 a1)))
 
 ;; Z16750 different sign
 (define (Z16750_different_sign a0 a1)
@@ -1985,7 +4680,7 @@
 
 ;; Z16773 first natural number is in closed interval of the other two
 (define (Z16773_first_natural_number_is_in_closed_interval_of_the_other_two a0 a1 a2)
-  (Z16768_sign_is_non_positive (Z16762_sign_a_b_a_c a0 a1 a2)))
+  (Z14711_natural_number_is_between a0 a1 a2))
 
 ;; Z16798 is any false
 (define (Z16798_is_any_false a0)
@@ -1995,19 +4690,58 @@
 (define (Z16821_sign_identity a0)
   (identity a0))
 
+;; Z16834 ISBN validator
+(define (Z16834_isbn_validator a0)
+  (or (Z11705_is_isbn_10 a0) (Z23561_is_isbn_13 a0)))
+
 ;; Z16855 English number <20 to natural number
 (define (Z16855_english_number_20_to_natural_number a0)
   (Z13708_index_of_first_listing_1_n_note_limitation
     a0
     (list "one" "two" "three" "four" "five" "six" "seven" "eight" "nine" "ten" "eleven" "twelve" "thirteen" "fourteen" "fifteen" "sixteen" "seventeen" "eighteen" "nineteen")))
 
+;; Z16862 English number <100 to natural number
+(define (Z16862_english_number_100_to_natural_number a0)
+  (+
+    (Z16855_english_number_20_to_natural_number
+    (Z11420_discard_until_end_of_first_substring a0 "-"))
+    (Z16869_english_multiple_of_10_between_20_and_90_inclusive_to_natura
+    (Z11410_discard_from_start_of_first_substring a0 "-"))))
+
 ;; Z16869 English multiple of 10 between 20 and 90 (inclusive) to natural number
 (define (Z16869_english_multiple_of_10_between_20_and_90_inclusive_to_natura a0)
-  (Z13539_multiply_two_natural_numbers
+  (*
     (Z13708_index_of_first_listing_1_n_note_limitation
     a0
     (list "" "twenty" "thirty" "forty" "fifty" "sixty" "seventy" "eighty" "ninety"))
     10))
+
+;; Z16878 English number <1000 to natural number
+(define (Z16878_english_number_1000_to_natural_number a0)
+  (+
+    (if
+    (Z10070_has_substring a0 "hundred")
+    (*
+    (Z16855_english_number_20_to_natural_number
+    (Z11410_discard_from_start_of_first_substring a0 " hundred"))
+    100)
+    0)
+    (Z16862_english_number_100_to_natural_number
+    (Z11420_discard_until_end_of_first_substring a0 "hundred and "))))
+
+;; Z16885 has generic Type
+(define (Z16885_has_generic_type a0)
+  (if
+    (Z15777_is_string a0)
+    #f
+    (if
+    (string=?
+    (snd
+    (Z16360_second_element_error_handling
+    (snd (car (Z15969_reified_z1k1_object_for_key_reference a0)))))
+    "Z7")
+    #t
+    #f)))
 
 ;; Z16888 reference String
 (define (Z16888_reference_string a0)
@@ -2018,16 +4752,19 @@
   (Z17485_day_to_day_number_starting_sunday_1
     (Z17540_get_day_of_the_week_from_numerical_date a2 (Z16230_month_to_month_number a1) a0)))
 
+;; Z16945 same Igbo month
+(define (Z16945_same_igbo_month a0 a1)
+  (Z16372_identity_identity_identity a0 a1))
+
 ;; Z16955 month number to Igbo month
 (define (Z16955_month_number_to_igbo_month a0)
   (Z13397_get_the_nth_element_of_a_list
     (list Z16940_z_al_s Z16928_mb Z16929_ab_o Z16930_ife_eke Z16931_an Z16932_agw Z16933_ifeji_k Z16934_al_m_chi Z16935_ilo_mm Z16936_ana Z16937_okike Z16938_ajana Z16939_ede_ajana)
-    (Z13578_increment_natural_number (Z13551_remainder_of_natural_number_division a0 13))))
+    (add1 (Z13551_remainder_of_natural_number_division a0 13))))
 
 ;; Z16972 following month (Igbo)
 (define (Z16972_following_month_igbo a0)
-  (Z16955_month_number_to_igbo_month
-    (Z13578_increment_natural_number (Z16973_igbo_month_to_month_number a0))))
+  (Z16955_month_number_to_igbo_month (add1 (Z16973_igbo_month_to_month_number a0))))
 
 ;; Z16973 Igbo month to month number
 (define (Z16973_igbo_month_to_month_number a0)
@@ -2035,23 +4772,171 @@
     a0
     (list Z16928_mb Z16929_ab_o Z16930_ife_eke Z16931_an Z16932_agw Z16933_ifeji_k Z16934_al_m_chi Z16935_ilo_mm Z16936_ana Z16937_okike Z16938_ajana Z16939_ede_ajana Z16940_z_al_s)))
 
+;; Z16990 previous month (Igbo)
+(define (Z16990_previous_month_igbo a0)
+  (if
+    (Z16945_same_igbo_month a0 Z16928_mb)
+    Z16940_z_al_s
+    (Z16955_month_number_to_igbo_month
+    (Z13582_decrement_natural_number_by_one (Z16973_igbo_month_to_month_number a0)))))
+
+;; Z17036 string length in UTF-8 code units
+(define (Z17036_string_length_in_utf_8_code_units a0)
+  (Z15111_floor_n_2 (string-length (Z10366_string_to_hex_utf_8 a0))))
+
 ;; Z17065 Boolean to natural number
 (define (Z17065_boolean_to_natural_number a0)
   (if a0 1 0))
+
+;; Z17073 Vietnamese cardinal
+(define (Z17073_vietnamese_cardinal a0)
+  (Z17081_vietnamese_cardinal_from_up_to_3_digit_natural_number a0))
+
+;; Z17111 subtract an Integer
+(define (Z17111_subtract_an_integer a0 a1)
+  (Z16693_add_integers a0 (Z17186_negate_integer a1)))
+
+;; Z17120 multiply Integers
+(define (Z17120_multiply_integers a0 a1)
+  (Z17192_if_integer_output
+    (Z17249_integers_have_the_same_sign a0 a1)
+    (Z17101_natural_number_to_integer
+    (*
+    (Z17144_absolute_value_of_integer_as_natural_number a0)
+    (Z17144_absolute_value_of_integer_as_natural_number a1)))
+    (Z17267_negate_natural_number_to_integer
+    (*
+    (Z17144_absolute_value_of_integer_as_natural_number a0)
+    (Z17144_absolute_value_of_integer_as_natural_number a1)))))
+
+;; Z17128 absolute value of integer
+(define (Z17128_absolute_value_of_integer a0)
+  (Z17192_if_integer_output (Z17215_is_negative_integer a0) (Z17186_negate_integer a0) a0))
+
+;; Z17132 greater than (integer)
+(define (Z17132_greater_than_integer a0 a1)
+  (if
+    (Z16667_same_sign (Z17105_sign_of_integer a0) Z16662_negative)
+    (if
+    (Z16667_same_sign (Z17105_sign_of_integer a1) Z16662_negative)
+    (>
+    (Z17144_absolute_value_of_integer_as_natural_number a1)
+    (Z17144_absolute_value_of_integer_as_natural_number a0))
+    #f)
+    (if
+    (Z16667_same_sign (Z17105_sign_of_integer a1) Z16662_negative)
+    #t
+    (>
+    (Z17144_absolute_value_of_integer_as_natural_number a0)
+    (Z17144_absolute_value_of_integer_as_natural_number a1)))))
+
+;; Z17140 less than (integer)
+(define (Z17140_less_than_integer a0 a1)
+  (not (Z17173_greater_than_or_equal_integer a0 a1)))
+
+;; Z17153 increment integer
+(define (Z17153_increment_integer a0)
+  (Z17192_if_integer_output
+    (Z17229_is_non_negative_integer a0)
+    (Z17101_natural_number_to_integer
+    (add1 (Z17144_absolute_value_of_integer_as_natural_number a0)))
+    (Z17267_negate_natural_number_to_integer
+    (Z13582_decrement_natural_number_by_one (Z17144_absolute_value_of_integer_as_natural_number a0)))))
+
+;; Z17167 integer modulo another integer
+(define (Z17167_integer_modulo_another_integer a0 a1)
+  (Z17192_if_integer_output
+    (Z17204_is_positive_integer a1)
+    (Z17192_if_integer_output
+    (Z17204_is_positive_integer a0)
+    (Z13551_remainder_of_natural_number_division
+    (Z17144_absolute_value_of_integer_as_natural_number a0)
+    (Z17144_absolute_value_of_integer_as_natural_number a1))
+    (Z13551_remainder_of_natural_number_division
+    (Z13569_subtract_natural_numbers_with_floor_of_0
+    (Z17144_absolute_value_of_integer_as_natural_number a1)
+    (Z13551_remainder_of_natural_number_division
+    (Z17144_absolute_value_of_integer_as_natural_number a0)
+    (Z17144_absolute_value_of_integer_as_natural_number a1)))
+    (Z17144_absolute_value_of_integer_as_natural_number a1)))
+    (Z17186_negate_integer
+    (Z17167_integer_modulo_another_integer (Z17186_negate_integer a0) (Z17186_negate_integer a1)))))
+
+;; Z17173 greater than or equal (integer)
+(define (Z17173_greater_than_or_equal_integer a0 a1)
+  (or (Z17132_greater_than_integer a0 a1) (Z16688_same_integer a0 a1)))
+
+;; Z17180 is void
+(define (Z17180_is_void a0)
+  (Z18683_strict_object_equality a0 Z24_void))
+
+;; Z17186 negate integer
+(define (Z17186_negate_integer a0)
+  (Z17307_integer_represented_by_ordered_pair_of_natural_numbers
+    (Z17326_negate_ordered_pair_of_natural_numbers_representing_integer
+    (Z17301_ordered_pair_of_natural_numbers_representing_integer a0))))
 
 ;; Z17192 if (integer output)
 (define (Z17192_if_integer_output a0 a1 a2)
   (if a0 a1 a2))
 
+;; Z17204 is positive integer
+(define (Z17204_is_positive_integer a0)
+  (Z16667_same_sign (Z17105_sign_of_integer a0) Z16660_positive))
+
+;; Z17215 is negative integer
+(define (Z17215_is_negative_integer a0)
+  (Z16667_same_sign (Z17105_sign_of_integer a0) Z16662_negative))
+
+;; Z17225 value by key as quoted object
+(define (Z17225_value_by_key_as_quoted_object a0 a1)
+  (Z16575_make_quote (Z22475_value_by_key_safer a1 a0)))
+
+;; Z17229 is non-negative integer
+(define (Z17229_is_non_negative_integer a0)
+  (not (Z17215_is_negative_integer a0)))
+
+;; Z17239 is zero (integer)
+(define (Z17239_is_zero_integer a0)
+  (Z16667_same_sign (Z17105_sign_of_integer a0) Z16661_neutral))
+
+;; Z17249 integers have the same sign
+(define (Z17249_integers_have_the_same_sign a0 a1)
+  (Z16667_same_sign (Z17105_sign_of_integer a0) (Z17105_sign_of_integer a1)))
+
+;; Z17254 integers have the same absolute magnitude
+(define (Z17254_integers_have_the_same_absolute_magnitude a0 a1)
+  (=
+    (Z17144_absolute_value_of_integer_as_natural_number a0)
+    (Z17144_absolute_value_of_integer_as_natural_number a1)))
+
+;; Z17263 natural number exponentiation of integers
+(define (Z17263_natural_number_exponentiation_of_integers a0 a1)
+  (Z13036_apply
+    (Z31490_if_either
+    (Z17229_is_non_negative_integer a0)
+    (Z13555_natural_number_is_even a1)
+    Z17101_natural_number_to_integer
+    Z17267_negate_natural_number_to_integer)
+    (expt (Z17144_absolute_value_of_integer_as_natural_number a0) a1)))
+
+;; Z17267 negate natural number to integer
+(define (Z17267_negate_natural_number_to_integer a0)
+  (Z17186_negate_integer (Z17101_natural_number_to_integer a0)))
+
 ;; Z17307 integer represented by ordered pair of natural numbers
 (define (Z17307_integer_represented_by_ordered_pair_of_natural_numbers a0)
   (Z17315_subtract_natural_numbers_as_integer (car a0) (Z12964_last_element a0)))
 
+;; Z17315 subtract natural numbers as integer
+(define (Z17315_subtract_natural_numbers_as_integer a0 a1)
+  (Z17111_subtract_an_integer
+    (Z17101_natural_number_to_integer a0)
+    (Z17101_natural_number_to_integer a1)))
+
 ;; Z17321 are equivalent ordered pairs representing integers
 (define (Z17321_are_equivalent_ordered_pairs_representing_integers a0 a1)
-  (=
-    (Z13521_add_two_natural_numbers (car a0) (Z12964_last_element a1))
-    (Z13521_add_two_natural_numbers (Z12964_last_element a0) (car a1))))
+  (= (+ (car a0) (Z12964_last_element a1)) (+ (Z12964_last_element a0) (car a1))))
 
 ;; Z17326 negate ordered pair of natural numbers representing integer
 (define (Z17326_negate_ordered_pair_of_natural_numbers_representing_integer a0)
@@ -2059,17 +4944,70 @@
 
 ;; Z17330 less than (ordered pairs of natural numbers representing integers)
 (define (Z17330_less_than_ordered_pairs_of_natural_numbers_representing_inte a0 a1)
-  (<
-    (Z13521_add_two_natural_numbers (car a0) (Z12964_last_element a1))
-    (Z13521_add_two_natural_numbers (Z12964_last_element a0) (car a1))))
+  (< (+ (car a0) (Z12964_last_element a1)) (+ (Z12964_last_element a0) (car a1))))
+
+;; Z17352 apply natural number function to positive integer
+(define (Z17352_apply_natural_number_function_to_positive_integer a0 a1)
+  (Z13036_apply a0 (Z17144_absolute_value_of_integer_as_natural_number a1)))
 
 ;; Z17355 apply integer function to natural number
 (define (Z17355_apply_integer_function_to_natural_number a0 a1)
   (Z13036_apply a0 (Z17101_natural_number_to_integer a1)))
 
+;; Z17363 less than or equal (integer)
+(define (Z17363_less_than_or_equal_integer a0 a1)
+  (or (Z17140_less_than_integer a0 a1) (Z16688_same_integer a0 a1)))
+
+;; Z17376 greater of two integers
+(define (Z17376_greater_of_two_integers a0 a1)
+  (if (Z17140_less_than_integer a0 a1) a1 a0))
+
+;; Z17380 lesser of two integers
+(define (Z17380_lesser_of_two_integers a0 a1)
+  (if (Z17140_less_than_integer a0 a1) a0 a1))
+
+;; Z17386 Lucas sequence U_n(P,Q)
+(define (Z17386_lucas_sequence_u_n_p_q a0 a1 a2)
+  (Z17192_if_integer_output
+    (<= a2 1)
+    (Z17101_natural_number_to_integer a2)
+    (Z17111_subtract_an_integer
+    (Z17120_multiply_integers
+    a0
+    (Z17386_lucas_sequence_u_n_p_q a0 a1 (Z13582_decrement_natural_number_by_one a2)))
+    (Z17120_multiply_integers
+    a1
+    (Z17386_lucas_sequence_u_n_p_q a0 a1 (Z13569_subtract_natural_numbers_with_floor_of_0 a2 2))))))
+
+;; Z17414 same day of the week
+(define (Z17414_same_day_of_the_week a0 a1)
+  (Z17464_same_reference_object a0 a1))
+
+;; Z17424 day number to day (integer, starting 1=Sunday)
+(define (Z17424_day_number_to_day_integer_starting_1_sunday a0)
+  (Z17478_day_number_to_day_starting_1_sunday
+    (Z17144_absolute_value_of_integer_as_natural_number a0)))
+
 ;; Z17442 day to day number (starting Sunday=1, integer)
 (define (Z17442_day_to_day_number_starting_sunday_1_integer a0)
   (Z17101_natural_number_to_integer (Z17485_day_to_day_number_starting_sunday_1 a0)))
+
+;; Z17452 total occurrences of day in month
+(define (Z17452_total_occurrences_of_day_in_month a0 a1 a2)
+  (Z13546_divide_natural_numbers
+    (Z13569_subtract_natural_numbers_with_floor_of_0
+    (+
+    (if
+    (Z10996_is_leap_year_natural_number_gregorian_calendar a2)
+    (Z16332_days_in_month_during_leap_year a1)
+    (Z16316_days_in_month_when_not_a_leap_year a1))
+    6)
+    (Z17578_days_from_one_day_to_another (Z13163_get_day_of_week_from_date a2 a1 1) a0))
+    7))
+
+;; Z17464 ⚠️ same Reference object
+(define (Z17464_same_reference_object a0 a1)
+  (string=? (Z22764_string_from_type a0) (Z22764_string_from_type a1)))
 
 ;; Z17478 day number to day (starting 1=Sunday)
 (define (Z17478_day_number_to_day_starting_1_sunday a0)
@@ -2083,21 +5021,93 @@
     a0
     (list Z17409_sunday Z17403_monday Z17404_tuesday Z17405_wednesday Z17406_thursday Z17407_friday Z17408_saturday)))
 
+;; Z17491 is Monday to Friday
+(define (Z17491_is_monday_to_friday a0)
+  (if
+    (or
+    (Z17414_same_day_of_the_week a0 Z17408_saturday)
+    (Z17414_same_day_of_the_week a0 Z17409_sunday))
+    #f
+    #t))
+
+;; Z17517 advance N days of the week
+(define (Z17517_advance_n_days_of_the_week a0 a1)
+  (if
+    (Z17204_is_positive_integer a1)
+    (Z17958_run_unary_endofunction_n_times
+    Z17420_next_day_of_the_week
+    a0
+    (Z17144_absolute_value_of_integer_as_natural_number a1))
+    (Z17958_run_unary_endofunction_n_times
+    Z17435_previous_day_of_the_week
+    a0
+    (Z17144_absolute_value_of_integer_as_natural_number a1))))
+
+;; Z17526 Caesar cipher (Bengali Consonants)
+(define (Z17526_caesar_cipher_bengali_consonants a0 a1)
+  (Z23869_encrypt_caesar_custom_alphabet Z23951_bengali_consonants_as_list a0 a1))
+
+;; Z17530 Caesar cipher (Bengali alphabets)
+(define (Z17530_caesar_cipher_bengali_alphabets a0 a1)
+  (Z23869_encrypt_caesar_custom_alphabet Z23872_bengali_alphabet_as_list a0 a1))
+
+;; Z17536 total occurrences of day in year
+(define (Z17536_total_occurrences_of_day_in_year a0 a1)
+  (Z31490_if_either
+    (Z17414_same_day_of_the_week a1 (Z17540_get_day_of_the_week_from_numerical_date 1 1 a0))
+    (and
+    (Z10996_is_leap_year_natural_number_gregorian_calendar a0)
+    (Z17414_same_day_of_the_week a1 (Z17540_get_day_of_the_week_from_numerical_date 2 1 a0)))
+    53
+    52))
+
 ;; Z17540 get day of the week from numerical date
 (define (Z17540_get_day_of_the_week_from_numerical_date a0 a1 a2)
   (Z17478_day_number_to_day_starting_1_sunday
     (Z16914_get_weekday_number_starting_sunday_1_from_date a2 (Z16255_month_number_to_month a1) a0)))
 
+;; Z17549 get nth date of a given day in month as string
+(define (Z17549_get_nth_date_of_a_given_day_in_month_as_string a0 a1 a2 a3)
+  (Z13397_get_the_nth_element_of_a_list
+    (Z17516_date_list_for_a_specific_day_in_a_given_month_and_year a1 a2 a3)
+    a0))
+
+;; Z17556 is date on day
+(define (Z17556_is_date_on_day a0 a1 a2 a3)
+  (Z17414_same_day_of_the_week
+    (Z17540_get_day_of_the_week_from_numerical_date a3 (Z16230_month_to_month_number a2) a1)
+    a0))
+
+;; Z17591 Integer in range
+(define (Z17591_integer_in_range a0 a1 a2)
+  (and (Z17363_less_than_or_equal_integer a1 a0) (Z17363_less_than_or_equal_integer a0 a2)))
+
+;; Z17599 Arabic to Bangla numerals
+(define (Z17599_arabic_to_bangla_numerals a0)
+  (Z14613_replace_character_set
+    (Z25073_integer_to_digit_string_hyphen_negative a0)
+    "0123456789"
+    "০১২৩৪৫৬৭৮৯"))
+
 ;; Z17628 same list of natural numbers
 (define (Z17628_same_list_of_natural_numbers a0 a1)
   (Z889_list_equality a0 a1 =))
 
+;; Z17639 Spanish plural
+(define (Z17639_spanish_plural a0)
+  (Z11542_if_string_output
+    (Z12696_contains
+    (list "l" "r" "n" "j" "d" "s" "í" "ú")
+    (Z11060_get_last_character_of_string a0))
+    (string-append a0 "es")
+    (Z11542_if_string_output
+    (string=? (Z11060_get_last_character_of_string a0) "z")
+    (string-append (Z11879_remove_last_character a0) "ces")
+    (string-append a0 "s"))))
+
 ;; Z17670 add vectors (containing natural numbers)
 (define (Z17670_add_vectors_containing_natural_numbers a0 a1)
-  (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l
-    Z13521_add_two_natural_numbers
-    a0
-    a1))
+  (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l + a0 a1))
 
 ;; Z17675 average vectors (containing natural numbers)
 (define (Z17675_average_vectors_containing_natural_numbers a0 a1)
@@ -2113,11 +5123,35 @@
     (map Z13781_natural_number_to_hexadecimal_lowercase_without_prefix a0))
     "")))
 
+;; Z17703 replace suffix "a" with "or"
+(define (Z17703_replace_suffix_a_with_or a0)
+  (if (Z10618_string_ends_with a0 "a") (Z11178_replace_at_end a0 "a" "or") Z11853_empty_string))
+
+;; Z17725 Swedish noun, first declension, definite singular, -n
+(define (Z17725_swedish_noun_first_declension_definite_singular_n a0)
+  (Z17791_add_suffix_n_to_string_if_it_does_not_already_end_with_n a0))
+
+;; Z17736 Swedish noun, second declension, definite singular, -en/-eln
+(define (Z17736_swedish_noun_second_declension_definite_singular_en_eln a0)
+  (string-append
+    a0
+    (Z31490_if_either (Z10618_string_ends_with a0 "e") (Z10618_string_ends_with a0 "el") "n" "en")))
+
+;; Z17741 Swedish noun, third declension, definite singular, -en/-en
+(define (Z17741_swedish_noun_third_declension_definite_singular_en_en a0)
+  (string-append a0 (if (Z10618_string_ends_with a0 "el") "n" "en")))
+
+;; Z17749 add suffix "r" to string if it does not end with "r"
+(define (Z17749_add_suffix_r_to_string_if_it_does_not_end_with_r a0)
+  (Z17973_add_suffix_to_string_if_it_does_not_already_end_with_the_suf a0 "r"))
+
+;; Z17763 prefixed reversed list
+(define (Z17763_prefixed_reversed_list a0)
+  (cons (list Z11853_empty_string) (Z18759_reverse_list_preserving_list_typing_untyping a0)))
+
 ;; Z17770 reverse list (of natural numbers)
 (define (Z17770_reverse_list_of_natural_numbers a0)
-  (map
-    Z17144_absolute_value_of_integer_as_natural_number
-    (Z17774_reverse_list_of_integers (map Z17101_natural_number_to_integer a0))))
+  (Z18479_reverse_typed_list a0))
 
 ;; Z17774 reverse list (of integers)
 (define (Z17774_reverse_list_of_integers a0)
@@ -2130,6 +5164,34 @@
 ;; Z17783 Swedish noun, sixth declension, indefinite plural (same as singular)
 (define (Z17783_swedish_noun_sixth_declension_indefinite_plural_same_as_sing a0)
   (Z11602_string_identity a0))
+
+;; Z17791 add suffix "n" to string if it does not already end with "n"
+(define (Z17791_add_suffix_n_to_string_if_it_does_not_already_end_with_n a0)
+  (Z17973_add_suffix_to_string_if_it_does_not_already_end_with_the_suf a0 "n"))
+
+;; Z17794 signed bitwise not
+(define (Z17794_signed_bitwise_not a0)
+  (Z17160_decrement_integer (Z17186_negate_integer a0)))
+
+;; Z17817 same Gregorian era
+(define (Z17817_same_gregorian_era a0 a1)
+  (Z17464_same_reference_object a0 a1))
+
+;; Z17827 replace suffix "a" with "on"
+(define (Z17827_replace_suffix_a_with_on a0)
+  (Z11178_replace_at_end a0 "a" "on"))
+
+;; Z17832 Swedish noun, ninth declension, indefinite plural, -en
+(define (Z17832_swedish_noun_ninth_declension_indefinite_plural_en a0)
+  (Z18050_add_suffix_en_to_string_if_it_does_not_end_with_en a0))
+
+;; Z17845 pad string with leading 0 until it is two characters long
+(define (Z17845_pad_string_with_leading_0_until_it_is_two_characters_long a0)
+  (Z14770_pad_string_with_leading_characters_to_specified_length a0 2 "0"))
+
+;; Z17853 Swedish noun, fourth declension, singular definite, -n
+(define (Z17853_swedish_noun_fourth_declension_singular_definite_n a0)
+  (Z17791_add_suffix_n_to_string_if_it_does_not_already_end_with_n a0))
 
 ;; Z17869 sort list ascending (integers)
 (define (Z17869_sort_list_ascending_integers a0)
@@ -2148,9 +5210,94 @@
     (Z17869_sort_list_ascending_integers
     (identity (Z18475_return_typed_list (map Z17101_natural_number_to_integer a0))))))
 
+;; Z17879 is this list untyped?
+(define (Z17879_is_this_list_untyped a0)
+  (Z15801_object_type_equality a0 (list )))
+
+;; Z17893 ZID of object type
+(define (Z17893_zid_of_object_type a0)
+  (Z22764_string_from_type (Z16829_type_of_object a0)))
+
 ;; Z17895 untype a list
 (define (Z17895_untype_a_list a0)
   (cdr (cdr (cons "dummy string for removal" (cons 0 a0)))))
+
+;; Z17900 is this list typed?
+(define (Z17900_is_this_list_typed a0)
+  (not (Z17879_is_this_list_untyped a0)))
+
+;; Z17904 add suffix "t" to string if it does not end with "t"
+(define (Z17904_add_suffix_t_to_string_if_it_does_not_end_with_t a0)
+  (Z17973_add_suffix_to_string_if_it_does_not_already_end_with_the_suf a0 "t"))
+
+;; Z17907 Swedish noun declension, singular definite, -n/-et
+(define (Z17907_swedish_noun_declension_singular_definite_n_et a0)
+  (string-append
+    a0
+    (Z31490_if_either (Z10618_string_ends_with a0 "d") (Z10618_string_ends_with a0 "s") "et" "n")))
+
+;; Z17911 Swedish noun declension, singular definite, -nen/-en
+(define (Z17911_swedish_noun_declension_singular_definite_nen_en a0)
+  (Z27385_enclose_string
+    a0
+    (if
+    (Z10618_string_ends_with a0 "s")
+    Z11853_empty_string
+    (Z11060_get_last_character_of_string a0))
+    "en"))
+
+;; Z17915 replace suffix "a" with "orna"
+(define (Z17915_replace_suffix_a_with_orna a0)
+  (Z17931_add_suffix_na_if_string_does_not_already_end_with_na
+    (Z17703_replace_suffix_a_with_or a0)))
+
+;; Z17918 replace suffix "a" with "ornas"
+(define (Z17918_replace_suffix_a_with_ornas a0)
+  (Z11178_replace_at_end a0 "a" "ornas"))
+
+;; Z17921 Swedish noun, second declension, definite plural, -arna/-larna
+(define (Z17921_swedish_noun_second_declension_definite_plural_arna_larna a0)
+  (Z17931_add_suffix_na_if_string_does_not_already_end_with_na
+    (Z17721_swedish_noun_second_declension_indefinite_plural_ar_rar a0)))
+
+;; Z17923 Swedish noun, second declension, definite plural genitive, -arnas/-larnas
+(define (Z17923_swedish_noun_second_declension_definite_plural_genitive_arna a0)
+  (Z17973_add_suffix_to_string_if_it_does_not_already_end_with_the_suf
+    (Z17921_swedish_noun_second_declension_definite_plural_arna_larna a0)
+    "s"))
+
+;; Z17928 Swedish noun, third declension, definite plural, -erna/-äderna/-terna/-öckna
+(define (Z17928_swedish_noun_third_declension_definite_plural_erna_derna_ter a0)
+  (Z17931_add_suffix_na_if_string_does_not_already_end_with_na
+    (Z17745_swedish_noun_3rd_decl_indef_pl_er a0)))
+
+;; Z17931 add suffix "na" if string does not already end with "na"
+(define (Z17931_add_suffix_na_if_string_does_not_already_end_with_na a0)
+  (Z17973_add_suffix_to_string_if_it_does_not_already_end_with_the_suf a0 "na"))
+
+;; Z17934 Swedish noun, third declension, definite genitive plural, -ernas/-ädernas/-ternas/-öcknas
+(define (Z17934_swedish_noun_third_declension_definite_genitive_plural_ernas a0)
+  (Z17973_add_suffix_to_string_if_it_does_not_already_end_with_the_suf
+    (Z17745_swedish_noun_3rd_decl_indef_pl_er a0)
+    "nas"))
+
+;; Z17939 add suffix "rna" to string if it does not end with "rna"
+(define (Z17939_add_suffix_rna_to_string_if_it_does_not_end_with_rna a0)
+  (Z17973_add_suffix_to_string_if_it_does_not_already_end_with_the_suf a0 "rna"))
+
+;; Z17942 add suffix "rnas" to string if it does not end with "rnas"
+(define (Z17942_add_suffix_rnas_to_string_if_it_does_not_end_with_rnas a0)
+  (Z17973_add_suffix_to_string_if_it_does_not_already_end_with_the_suf
+    (Z17939_add_suffix_rna_to_string_if_it_does_not_end_with_rna a0)
+    "s"))
+
+;; Z17948 add suffix "a" to string if it does not end in "a"
+(define (Z17948_add_suffix_a_to_string_if_it_does_not_end_in_a a0)
+  (Z17973_add_suffix_to_string_if_it_does_not_already_end_with_the_suf a0 "a"))
+
+;; Z17952 add suffix "nas" to string if it does not already end with "nas"
+(define (Z17952_add_suffix_nas_to_string_if_it_does_not_already_end_with_nas a0)
+  (Z17973_add_suffix_to_string_if_it_does_not_already_end_with_the_suf a0 "nas"))
 
 ;; Z17956 substitute mediawiki revisiondelete query
 (define (Z17956_substitute_mediawiki_revisiondelete_query a0)
@@ -2169,9 +5316,147 @@
     (Z13036_apply a0 a1)
     (Z13582_decrement_natural_number_by_one a2))))
 
+;; Z17970 Swedish noun, sixth declension, definite genitive plural, -ens/-rnas
+(define (Z17970_swedish_noun_sixth_declension_definite_genitive_plural_ens_r a0)
+  (Z17973_add_suffix_to_string_if_it_does_not_already_end_with_the_suf
+    (Z17966_swedish_noun_sixth_declension_definite_plural_en_rna a0)
+    "s"))
+
+;; Z17973 add suffix to string if it does not already end with the suffix
+(define (Z17973_add_suffix_to_string_if_it_does_not_already_end_with_the_suf a0 a1)
+  (if (Z10618_string_ends_with a0 a1) a0 (string-append a0 a1)))
+
+;; Z17977 opposite era
+(define (Z17977_opposite_era a0)
+  (if (Z17817_same_gregorian_era Z17814_ad a0) Z17815_bc Z17814_ad))
+
 ;; Z18010 Plural of a masculine noun [Hebrew; Naive]
 (define (Z18010_plural_of_a_masculine_noun_hebrew_naive a0)
   (string-append (Z10891_final_to_normal_form_hebrew a0) "ים"))
+
+;; Z18011 Plural of a feminine noun [Hebrew; naive]
+(define (Z18011_plural_of_a_feminine_noun_hebrew_naive a0)
+  (string-append (Z10891_final_to_normal_form_hebrew (Z11178_replace_at_end a0 "ה" "")) "ות"))
+
+;; Z18012 replace suffix "a" with "onen"
+(define (Z18012_replace_suffix_a_with_onen a0)
+  (Z11178_replace_at_end a0 "a" "onen"))
+
+;; Z18017 add suffix "ts" to string if it does not already end with "ts"
+(define (Z18017_add_suffix_ts_to_string_if_it_does_not_already_end_with_ts a0)
+  (Z17973_add_suffix_to_string_if_it_does_not_already_end_with_the_suf a0 "ts"))
+
+;; Z18020 add suffix "s" to string if it does not already end with "s"
+(define (Z18020_add_suffix_s_to_string_if_it_does_not_already_end_with_s a0)
+  (Z17973_add_suffix_to_string_if_it_does_not_already_end_with_the_suf a0 "s"))
+
+;; Z18023 replace suffix "a" with "onens"
+(define (Z18023_replace_suffix_a_with_onens a0)
+  (Z11178_replace_at_end a0 "a" "onens"))
+
+;; Z18032 add suffix "ena" if string does not end with "ena"
+(define (Z18032_add_suffix_ena_if_string_does_not_end_with_ena a0)
+  (Z17973_add_suffix_to_string_if_it_does_not_already_end_with_the_suf a0 "ena"))
+
+;; Z18036 add suffix "enas" to string if it does not end with "enas"
+(define (Z18036_add_suffix_enas_to_string_if_it_does_not_end_with_enas a0)
+  (Z17973_add_suffix_to_string_if_it_does_not_already_end_with_the_suf a0 "enas"))
+
+;; Z18039 add suffix "ens" to string if it does not end with "ens"
+(define (Z18039_add_suffix_ens_to_string_if_it_does_not_end_with_ens a0)
+  (Z17973_add_suffix_to_string_if_it_does_not_already_end_with_the_suf a0 "ens"))
+
+;; Z18042 add suffix "ets" to string if not end with "ets"
+(define (Z18042_add_suffix_ets_to_string_if_not_end_with_ets a0)
+  (Z17973_add_suffix_to_string_if_it_does_not_already_end_with_the_suf a0 "ets"))
+
+;; Z18045 Swedish noun seventh declension singular definite genitive -sens/-nens
+(define (Z18045_swedish_noun_seventh_declension_singular_definite_genitive_s a0)
+  (Z18020_add_suffix_s_to_string_if_it_does_not_already_end_with_s
+    (Z17911_swedish_noun_declension_singular_definite_nen_en a0)))
+
+;; Z18048 Swedish noun seventh declension plural definite umlaut + -en
+(define (Z18048_swedish_noun_seventh_declension_plural_definite_umlaut_en a0)
+  (Z18050_add_suffix_en_to_string_if_it_does_not_end_with_en
+    (Z17822_swedish_noun_decl_indef_pl_irreg_umlauting a0)))
+
+;; Z18050 add suffix "en" to string if it does not end with "en"
+(define (Z18050_add_suffix_en_to_string_if_it_does_not_end_with_en a0)
+  (Z17973_add_suffix_to_string_if_it_does_not_already_end_with_the_suf a0 "en"))
+
+;; Z18055  Swedish noun seventh declension plural definite umlaut + -ens
+(define (Z18055_swedish_noun_seventh_declension_plural_definite_umlaut_ens a0)
+  (Z18039_add_suffix_ens_to_string_if_it_does_not_end_with_ens
+    (Z17822_swedish_noun_decl_indef_pl_irreg_umlauting a0)))
+
+;; Z18063 Swedish noun, sixth declension, singular definite genitive -ns/-ets
+(define (Z18063_swedish_noun_sixth_declension_singular_definite_genitive_ns a0)
+  (Z18020_add_suffix_s_to_string_if_it_does_not_already_end_with_s
+    (Z17907_swedish_noun_declension_singular_definite_n_et a0)))
+
+;; Z18066 add suffix "ns" to string if it does not end with "ns"
+(define (Z18066_add_suffix_ns_to_string_if_it_does_not_end_with_ns a0)
+  (Z17973_add_suffix_to_string_if_it_does_not_already_end_with_the_suf a0 "ns"))
+
+;; Z18072 Gregorian era to sign
+(define (Z18072_gregorian_era_to_sign a0)
+  (if (Z17817_same_gregorian_era a0 Z17814_ad) Z16660_positive Z16662_negative))
+
+;; Z18084 Gregorian era is AD
+(define (Z18084_gregorian_era_is_ad a0)
+  (Z17817_same_gregorian_era Z17814_ad a0))
+
+;; Z18092 replace suffix "a" with "ors"
+(define (Z18092_replace_suffix_a_with_ors a0)
+  (Z11178_replace_at_end a0 "a" "ors"))
+
+;; Z18095 add suffix "rs" to end if string does not already end with "rs"
+(define (Z18095_add_suffix_rs_to_end_if_string_does_not_already_end_with_rs a0)
+  (Z17973_add_suffix_to_string_if_it_does_not_already_end_with_the_suf a0 "rs"))
+
+;; Z18098 Swedish noun, third declension, definite singular genitive, -ens/-lens
+(define (Z18098_swedish_noun_third_declension_definite_singular_genitive_ens a0)
+  (Z18020_add_suffix_s_to_string_if_it_does_not_already_end_with_s
+    (Z17741_swedish_noun_third_declension_definite_singular_en_en a0)))
+
+;; Z18101 Swedish noun 3rd decl indef pl gen -ers/-öckers
+(define (Z18101_swedish_noun_3rd_decl_indef_pl_gen_ers_ckers a0)
+  (Z18020_add_suffix_s_to_string_if_it_does_not_already_end_with_s
+    (Z17745_swedish_noun_3rd_decl_indef_pl_er a0)))
+
+;; Z18104 Swedish noun, second declension, definite singular genitive, -ens/-elns
+(define (Z18104_swedish_noun_second_declension_definite_singular_genitive_en a0)
+  (Z18020_add_suffix_s_to_string_if_it_does_not_already_end_with_s
+    (Z17736_swedish_noun_second_declension_definite_singular_en_eln a0)))
+
+;; Z18108 Swedish noun, second declension, indefinite plural genitive, -ars/-rars
+(define (Z18108_swedish_noun_second_declension_indefinite_plural_genitive_ar a0)
+  (Z18020_add_suffix_s_to_string_if_it_does_not_already_end_with_s
+    (Z17721_swedish_noun_second_declension_indefinite_plural_ar_rar a0)))
+
+;; Z18142 add suffix "de" to string if it does not already end with "de"
+(define (Z18142_add_suffix_de_to_string_if_it_does_not_already_end_with_de a0)
+  (Z17973_add_suffix_to_string_if_it_does_not_already_end_with_the_suf a0 "de"))
+
+;; Z18145 Swedish verb, group 2, imperative
+(define (Z18145_swedish_verb_group_2_imperative a0)
+  (Z11879_remove_last_character a0))
+
+;; Z18148 replace suffix "a" with "t"
+(define (Z18148_replace_suffix_a_with_t a0)
+  (Z11178_replace_at_end a0 "a" "t"))
+
+;; Z18151 add suffix "dde" if string does not already end with "dde"
+(define (Z18151_add_suffix_dde_if_string_does_not_already_end_with_dde a0)
+  (Z17973_add_suffix_to_string_if_it_does_not_already_end_with_the_suf a0 "dde"))
+
+;; Z18154 add suffix "tt" if string does not end with "tt"
+(define (Z18154_add_suffix_tt_if_string_does_not_end_with_tt a0)
+  (Z17973_add_suffix_to_string_if_it_does_not_already_end_with_the_suf a0 "tt"))
+
+;; Z18157 replace suffix "a" with "er"
+(define (Z18157_replace_suffix_a_with_er a0)
+  (Z11178_replace_at_end a0 "a" "er"))
 
 ;; Z18194 powerset
 (define (Z18194_powerset a0)
@@ -2187,7 +5472,7 @@
 
 ;; Z18276 append natural number to list
 (define (Z18276_append_natural_number_to_list a0 a1)
-  (Z17770_reverse_list_of_natural_numbers (cons a0 (Z17770_reverse_list_of_natural_numbers a1))))
+  (Z12961_append_element_to_typed_list a0 a1))
 
 ;; Z18281 sort in alphabetic order
 (define (Z18281_sort_in_alphabetic_order a0)
@@ -2204,6 +5489,46 @@
 ;; Z18291 remove all matching elements from list (of natural numbers)
 (define (Z18291_remove_all_matching_elements_from_list_of_natural_numbers a0 a1)
   (Z13081_remove_all_matching_elements_from_list a0 a1))
+
+;; Z18321 base n to base m
+(define (Z18321_base_n_to_base_m a0 a1 a2)
+  (Z15671_natural_number_to_base_n (Z13806_base_n_to_natural_number a0 a1) a2))
+
+;; Z18362 distance between two points on earth in kilometers (Haversine)
+(define (Z18362_distance_between_two_points_on_earth_in_kilometers_haversine a0 a1 a2 a3)
+  (Z18353_metres_to_kilometres_float
+    (Z20937_integer_to_float64
+    (Z14446_distance_between_two_points_on_earth_si_unit_output_in_meter a0 a1 a2 a3))))
+
+;; Z18364 (!) carbon dioxide emissions of MK1 petrol car journey
+(define (Z18364_carbon_dioxide_emissions_of_mk1_petrol_car_journey a0)
+  (Z10862_multiply_two_numeric_strings_full_stop_input_output_format
+    (Z10075_replace_all_substrings a0 "," ".")
+    "2.66"))
+
+;; Z18391 (!) carbon dioxide emissions of MK1 diesel car journey
+(define (Z18391_carbon_dioxide_emissions_of_mk1_diesel_car_journey a0)
+  (Z10862_multiply_two_numeric_strings_full_stop_input_output_format a0 "2.36"))
+
+;; Z18406 (!) carbon dioxide emissions of ethanol E85 car journey
+(define (Z18406_carbon_dioxide_emissions_of_ethanol_e85_car_journey a0)
+  (Z10862_multiply_two_numeric_strings_full_stop_input_output_format a0 "1.15"))
+
+;; Z18409 (!) carbon dioxide emissions of biogas (CNG) car journey
+(define (Z18409_carbon_dioxide_emissions_of_biogas_cng_car_journey a0)
+  (Z10862_multiply_two_numeric_strings_full_stop_input_output_format a0 "0.11"))
+
+;; Z18412 (!) carbon dioxide emissions of electric car journey (Sweden)
+(define (Z18412_carbon_dioxide_emissions_of_electric_car_journey_sweden a0)
+  (Z10862_multiply_two_numeric_strings_full_stop_input_output_format a0 "0.026"))
+
+;; Z18415 (!) carbon dioxide emissions of fatty acid methyl ester car journey
+(define (Z18415_carbon_dioxide_emissions_of_fatty_acid_methyl_ester_car_jour a0)
+  (Z10862_multiply_two_numeric_strings_full_stop_input_output_format a0 "1.09"))
+
+;; Z18418 (!) carbon dioxide emissions of HVO car journey
+(define (Z18418_carbon_dioxide_emissions_of_hvo_car_journey a0)
+  (Z10862_multiply_two_numeric_strings_full_stop_input_output_format a0 "0.357"))
 
 ;; Z18421 carbon dioxide emissions of journey
 (define (Z18421_carbon_dioxide_emissions_of_journey a0 a1)
@@ -2228,13 +5553,97 @@
     (Z17895_untype_a_list
     (list 1 2 3 4 5 6 7 8 9 10 20 30 40 50 60 70 80 90 100 200 300 400 500 600 700 800 900))))))
 
+;; Z18556 get middle character or characters of a string
+(define (Z18556_get_middle_character_or_characters_of_a_string a0)
+  (if
+    (Z13555_natural_number_is_even (string-length a0))
+    (Z14592_first_n_characters_of_string
+    (Z14636_remove_first_n_characters_of_string
+    a0
+    (Z13582_decrement_natural_number_by_one (Z15111_floor_n_2 (string-length a0))))
+    2)
+    (Z10901_get_first_character_of_string
+    (Z14636_remove_first_n_characters_of_string a0 (Z15111_floor_n_2 (string-length a0))))))
+
+;; Z18569 type of list (as string)
+(define (Z18569_type_of_list_as_string a0)
+  (snd
+    (Z16360_second_element_error_handling
+    (snd (Z13397_get_the_nth_element_of_a_list (snd (car (Z805_reify a0))) 3)))))
+
+;; Z18582 Is same Bengali month days
+(define (Z18582_is_same_bengali_month_days a0 a1)
+  (= (Z18169_days_in_bengali_month_bangladesh a0 a1) (Z18573_days_in_bengali_month_india a0 a1)))
+
 ;; Z18597 append element to untyped list
 (define (Z18597_append_element_to_untyped_list a0 a1)
   (Z12668_reverse_untyped_list (cons a0 (Z12668_reverse_untyped_list a1))))
 
+;; Z18616 List words with sequence of vowels in Kurdish
+(define (Z18616_list_words_with_sequence_of_vowels_in_kurdish a0)
+  (filter
+    Z18603_has_sequence_of_vowels_in_kurdish
+    (Z13411_distinct_words_from_string (Z10812_remove_punctuation a0))))
+
+;; Z18636 Typed list has the same Object for its Type
+(define (Z18636_typed_list_has_the_same_object_for_its_type a0 a1)
+  (Z19084_same_type (Z18626_type_of_typed_list a0) a1))
+
+;; Z18646 same list
+(define (Z18646_same_list a0 a1 a2)
+  (if
+    (Z18636_typed_list_has_the_same_object_for_its_type a0 (Z18626_type_of_typed_list a1))
+    (Z889_list_equality a0 a1 a2)
+    #f))
+
+;; Z18683 strict object equality
+(define (Z18683_strict_object_equality a0 a1)
+  (if (Z13052_object_equality a0 a1) (Z15801_object_type_equality a0 a1) #f))
+
+;; Z18716 get words containing non-standard Kurdish letters
+(define (Z18716_get_words_containing_non_standard_kurdish_letters a0)
+  (filter
+    Z18708_contains_non_standard_kurdish_characters
+    (Z13402_words_from_string (Z10812_remove_punctuation a0))))
+
+;; Z18729 return Typed or untyped list
+(define (Z18729_return_typed_or_untyped_list a0 a1)
+  (if
+    a1
+    (Z18475_return_typed_list
+    (if (Z19084_same_type (Z18626_type_of_typed_list a0) Z1_object) a0 (Z17895_untype_a_list a0)))
+    (if (Z19084_same_type (Z18626_type_of_typed_list a0) Z1_object) a0 (Z17895_untype_a_list a0))))
+
+;; Z18746 Basque Ordinals
+(define (Z18746_basque_ordinals a0)
+  (Z18742_basque_cardinal_to_ordinal (Z18733_basque_cardinal a0)))
+
 ;; Z18755 concatenate Typed lists
 (define (Z18755_concatenate_typed_lists a0 a1)
   (Z12767_concatenate_two_untyped_lists (Z17895_untype_a_list a0) (Z17895_untype_a_list a1)))
+
+;; Z18759 reverse list preserving list typing/untyping
+(define (Z18759_reverse_list_preserving_list_typing_untyping a0)
+  (if
+    (Z17900_is_this_list_typed a0)
+    (Z18479_reverse_typed_list a0)
+    (Z17895_untype_a_list (Z12668_reverse_untyped_list a0))))
+
+;; Z18770 prepend element (Typed or untyped list)
+(define (Z18770_prepend_element_typed_or_untyped_list a0 a1 a2)
+  (Z18729_return_typed_or_untyped_list (cons a0 a1) a2))
+
+;; Z18804 English antonym using prefix
+(define (Z18804_english_antonym_using_prefix a0 a1)
+  (Z18796_prefix_english_word a0 a1))
+
+;; Z18859 Filter shouting words
+(define (Z18859_filter_shouting_words a0)
+  (filter Z10336_is_uppercase (Z13402_words_from_string a0)))
+
+;; Z18889 validate hex colour
+(define (Z18889_validate_hex_colour a0)
+  (Z10196_is_regular_expression_match a0 "^#[0-9a-fA-F]{6}$"))
 
 ;; Z18898 echo string except for specific replacement
 (define (Z18898_echo_string_except_for_specific_replacement a0 a1 a2)
@@ -2249,11 +5658,37 @@
     Z16662_negative
     Z16661_neutral))
 
+;; Z18983 Convert Bangla numerals to Arabic numerals
+(define (Z18983_convert_bangla_numerals_to_arabic_numerals a0)
+  (Z14613_replace_character_set
+    a0
+    (Z22302_string_of_numeral_digits_in_order_from_language Z1011_bangla)
+    (Z22302_string_of_numeral_digits_in_order_from_language Z1002_english)))
+
+;; Z19026 is Mersenne prime
+(define (Z19026_is_mersenne_prime a0)
+  (and
+    (Z11693_string_only_has_characters_from_alphabet
+    (Z13779_natural_number_to_binary_string_without_prefix a0)
+    "1")
+    (Z12427_is_prime a0)))
+
+;; Z19033 Hamming distance on strings of binary digits
+(define (Z19033_hamming_distance_on_strings_of_binary_digits a0 a1)
+  (Z13860_binary_weight_of_n
+    (Z13653_bitwise_xor
+    (Z13797_binary_string_to_natural_number a0)
+    (Z13797_binary_string_to_natural_number a1))))
+
 ;; Z19041 Anno Domini to Common Era and vice versa (English)
 (define (Z19041_anno_domini_to_common_era_and_vice_versa_english a0)
   (Z13397_get_the_nth_element_of_a_list
     (list "CE" "AD" "BCE" "BC")
     (Z13708_index_of_first_listing_1_n_note_limitation a0 (list "AD" "CE" "BC" "BCE"))))
+
+;; Z19065 Gregorian era of year number
+(define (Z19065_gregorian_era_of_year_number a0)
+  (Z18080_sign_to_gregorian_era (Z17105_sign_of_integer a0)))
 
 ;; Z19077 Type identity
 (define (Z19077_type_identity a0)
@@ -2262,6 +5697,74 @@
 ;; Z19084 same Type
 (define (Z19084_same_type a0 a1)
   (Z13052_object_equality (Z19077_type_identity a0) (Z19077_type_identity a1)))
+
+;; Z19108 same Key value
+(define (Z19108_same_key_value a0 a1 a2)
+  (Z13052_object_equality (Z803_value_by_key a1 a0) (Z803_value_by_key a1 a2)))
+
+;; Z19112 Reverse domain name notation
+(define (Z19112_reverse_domain_name_notation a0)
+  (Z12899_join_list_of_strings_with_delimiter
+    (Z18759_reverse_list_preserving_list_typing_untyping (Z25614_split_string_to_list a0 "."))
+    "."))
+
+;; Z19121 to s-expression
+(define (Z19121_to_s_expression a0)
+  (Z11542_if_string_output
+    (Z19020_is_a_typed_list a0)
+    (string-append
+    "("
+    (string-append
+    (Z12899_join_list_of_strings_with_delimiter (map Z19121_to_s_expression a0) " ")
+    ")"))
+    (if
+    (Z15777_is_string a0)
+    (Z11145_wrap_string a0 "\"")
+    (Z11542_if_string_output
+    (Z15818_is_natural_number a0)
+    (Z13713_natural_number_to_digit_string a0)
+    a0))))
+
+;; Z19125 English plural possessive
+(define (Z19125_english_plural_possessive a0)
+  (Z11302_english_possessive (Z11089_english_plural a0)))
+
+;; Z19170 has double letter
+(define (Z19170_has_double_letter a0)
+  (and
+    (Z24331_is_not_empty_string a0)
+    (Z14416_unequal_natural_numbers
+    (Z31032_index_of_first_mismatching_element
+    (map
+    fst
+    (Z34790_run_length_encoding (Z22717_string_to_codepoint_list a0) Z22683_code_point_equality))
+    1
+    =)
+    (length
+    (Z34790_run_length_encoding (Z22717_string_to_codepoint_list a0) Z22683_code_point_equality)))))
+
+;; Z19177 is subword of string
+(define (Z19177_is_subword_of_string a0 a1)
+  (or
+    (Z10008_is_empty_string a0)
+    (and
+    (not
+    (Z23883_is_zero_natural_number
+    (Z31268_first_index_1_n_of_character_in_string (Z32065_get_first_code_point_of_string a0) a1)))
+    (Z19177_is_subword_of_string
+    (Z14456_remove_first_character a0)
+    (Z14636_remove_first_n_characters_of_string
+    a1
+    (Z31268_first_index_1_n_of_character_in_string (Z32065_get_first_code_point_of_string a0) a1))))))
+
+;; Z19185 remove repeated characters
+(define (Z19185_remove_repeated_characters a0)
+  (Z22693_codepoint_list_to_string
+    (Z19202_remove_duplicates_from_typed_list (Z22717_string_to_codepoint_list a0))))
+
+;; Z19191 is square-free
+(define (Z19191_is_square_free a0)
+  (not (Z19170_has_double_letter a0)))
 
 ;; Z19198 remove elements common to second list
 (define (Z19198_remove_elements_common_to_second_list a0 a1)
@@ -2277,6 +5780,13 @@
 (define (Z19202_remove_duplicates_from_typed_list a0)
   (Z13078_remove_duplicates_from_untyped_list (map identity a0)))
 
+;; Z19205 remove duplicates preserving typing/untyping
+(define (Z19205_remove_duplicates_preserving_typing_untyping a0)
+  (if
+    (Z17900_is_this_list_typed a0)
+    (Z19202_remove_duplicates_from_typed_list a0)
+    (Z17895_untype_a_list (Z13078_remove_duplicates_from_untyped_list a0))))
+
 ;; Z19232 count lexeme forms in lexeme
 (define (Z19232_count_lexeme_forms_in_lexeme a0)
   (length (Z19302_lexeme_forms_from_lexeme a0)))
@@ -2284,6 +5794,11 @@
 ;; Z19234 count matching lexeme forms in lexeme
 (define (Z19234_count_matching_lexeme_forms_in_lexeme a0 a1)
   (length (Z24240_select_representations_from_forms_by_language a0 a1 (list ))))
+
+;; Z19241 first matching representation string from lexeme
+(define (Z19241_first_matching_representation_string_from_lexeme a0 a1)
+  (Z14396_string_of_monolingual_text
+    (Z19530_first_text_of_lexeme_matching_grammatical_features a0 a1)))
 
 ;; Z19243 select lexeme forms from lexeme
 (define (Z19243_select_lexeme_forms_from_lexeme a0 a1)
@@ -2298,6 +5813,28 @@
 (define (Z19248_number_of_forms_in_lexeme a0)
   (Z19232_count_lexeme_forms_in_lexeme a0))
 
+;; Z19254 first monolingual text from multilingual text
+(define (Z19254_first_monolingual_text_from_multilingual_text a0)
+  (car (Z19279_multilingual_text_to_list_of_monolingual_texts a0)))
+
+;; Z19265 Count lexeme senses in lexeme
+(define (Z19265_count_lexeme_senses_in_lexeme a0)
+  (length (Z19282_list_of_lexeme_senses_from_lexeme a0)))
+
+;; Z19267 same Wikidata property reference
+(define (Z19267_same_wikidata_property_reference a0 a1)
+  (string=? (Z20046_wikidata_property_id_string a0) (Z20046_wikidata_property_id_string a1)))
+
+;; Z19271 languages of lexeme form
+(define (Z19271_languages_of_lexeme_form a0)
+  (Z19272_languages_of_multilingual_text (Z22399_representations_of_lexeme_form a0)))
+
+;; Z19272 languages of multilingual text
+(define (Z19272_languages_of_multilingual_text a0)
+  (map
+    Z14404_language_of_monolingual_text
+    (Z19279_multilingual_text_to_list_of_monolingual_texts a0)))
+
 ;; Z19276 languages of lexeme
 (define (Z19276_languages_of_lexeme a0)
   (Z13078_remove_duplicates_from_untyped_list
@@ -2308,9 +5845,51 @@
     (identity (Z19243_select_lexeme_forms_from_lexeme a0 (list ))))
     1))))
 
+;; Z19287 same lexeme reference
+(define (Z19287_same_lexeme_reference a0 a1)
+  (string=?
+    (Z19310_wikidata_lexeme_reference_to_string a0)
+    (Z19310_wikidata_lexeme_reference_to_string a1)))
+
 ;; Z19302 lexeme forms from lexeme
 (define (Z19302_lexeme_forms_from_lexeme a0)
   (Z19243_select_lexeme_forms_from_lexeme a0 (list )))
+
+;; Z19312 same multilingual text
+(define (Z19312_same_multilingual_text a0 a1)
+  (Z889_list_equality
+    (Z19279_multilingual_text_to_list_of_monolingual_texts a0)
+    (Z19279_multilingual_text_to_list_of_monolingual_texts a1)
+    Z14392_monolingual_text_equality))
+
+;; Z19316 same Wikidata item reference
+(define (Z19316_same_wikidata_item_reference a0 a1)
+  (string=?
+    (Z20041_wikidata_item_reference_id_string a0)
+    (Z20041_wikidata_item_reference_id_string a1)))
+
+;; Z19340 English lexeme plural matches pluralised singular
+(define (Z19340_english_lexeme_plural_matches_pluralised_singular a0)
+  (string=?
+    (Z14396_string_of_monolingual_text (Z19260_plural_form_of_lexeme_as_monolingual_text a0))
+    (Z11089_english_plural
+    (Z14396_string_of_monolingual_text (Z19252_singular_form_of_lexeme_as_monolingual_text a0)))))
+
+;; Z19348 object by index from referenced list
+(define (Z19348_object_by_index_from_referenced_list a0 a1 a2)
+  (Z13397_get_the_nth_element_of_a_list (Z803_value_by_key a1 a2) a0))
+
+;; Z19352 Object has this Type
+(define (Z19352_object_has_this_type a0 a1)
+  (Z19084_same_type (Z16829_type_of_object a0) a1))
+
+;; Z19405 wrap with HTML tag and attributes
+(define (Z19405_wrap_with_html_tag_and_attributes a0 a1 a2 a3)
+  (Z19403_wrap_with_xml_tag_and_attributes a0 a1 a2 a3))
+
+;; Z19418 wrap string as an HTML list item
+(define (Z19418_wrap_string_as_an_html_list_item a0)
+  (Z19384_wrap_with_html_tag a0 "li"))
 
 ;; Z19499 sort English adjectives
 (define (Z19499_sort_english_adjectives a0)
@@ -2320,8 +5899,8 @@
 (define (Z19509_minimum_of_natural_number_list a0)
   (if
     (<= (length a0) 1)
-    (Z13846_if_natural_number_output (null? a0) 0 (car a0))
-    (Z13633_lesser_of_two_natural_numbers (car a0) (Z19509_minimum_of_natural_number_list (cdr a0)))))
+    (if (null? a0) 0 (car a0))
+    (min (car a0) (Z19509_minimum_of_natural_number_list (cdr a0)))))
 
 ;; Z19510 sort list by increasing metric function
 (define (Z19510_sort_list_by_increasing_metric_function a0 a1)
@@ -2367,15 +5946,29 @@
 (define (Z19565_triple_if a0 a1 a2 a3 a4)
   (if a0 a1 (if a2 a3 a4)))
 
+;; Z19571 (sample) validator for floats
+(define (Z19571_sample_validator_for_floats a0)
+  (Z10196_is_regular_expression_match
+    a0
+    "^([Nn][Aa][Nn]|[+-]?[Ii][Nn][Ff]|[+-]?(\\d+\\.\\d*|\\.?\\d+)(([Ee][+-]|[Ee])?\\d+)?)$"))
+
 ;; Z19586 equal Typed pairs
 (define (Z19586_equal_typed_pairs a0 a1)
-  (and (Z13052_object_equality (fst a0) (fst a1)) (Z13052_object_equality (snd a0) (snd a1))))
+  (if
+    (and
+    (Z15801_object_type_equality (fst a0) (fst a1))
+    (Z15801_object_type_equality (snd a0) (snd a1)))
+    (and (Z13052_object_equality (fst a0) (fst a1)) (Z13052_object_equality (snd a0) (snd a1)))
+    #f))
 
 ;; Z19601 N-ifs
 (define (Z19601_n_ifs a0 a1)
-  (Z13397_get_the_nth_element_of_a_list
-    a1
-    (if (= (Z19602_first_true a0) 0) (length a1) (Z19602_first_true a0))))
+  (Z19565_triple_if
+    (null? a0)
+    (Z12964_last_element a1)
+    (car a0)
+    (car a1)
+    (Z19601_n_ifs (cdr a0) (cdr a1))))
 
 ;; Z19602 First true
 (define (Z19602_first_true a0)
@@ -2388,9 +5981,107 @@
     "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+-=()"
     "⁰¹²³⁴⁵⁶⁷⁸⁹ᵃᵇᶜᵈᵉᶠᵍʰᶦʲᵏˡᵐⁿᵒᵖᵠʳˢᵗᵘᵛʷˣʸᶻᴬᴮᶜᴰᴱᶠᴳᴴᴵᴶᴷᴸᴹᴺᴼᴾꟴᴿˢᵀᵁⱽᵂˣʸᶻ⁺⁻⁼⁽⁾"))
 
+;; Z19639 Random number, with additional natural number
+(define (Z19639_random_number_with_additional_natural_number a0 a1 a2 a3)
+  (Z19446_double_run_mulberry_32 (Z17120_multiply_integers a0 a3) a1 a2))
+
+;; Z19645 add periods between each triplet
+(define (Z19645_add_periods_between_each_triplet a0)
+  (Z19654_add_chars_every_n_chars (Z13713_natural_number_to_digit_string a0) 3 "."))
+
+;; Z19654 Add chars every n chars
+(define (Z19654_add_chars_every_n_chars a0 a1 a2)
+  (Z21394_concatenate_many_strings
+    (Z33646_intersperse_delimiter_throughout_list
+    (map
+    Z22693_codepoint_list_to_string
+    (map
+    Z18475_return_typed_list
+    (Z29795_chunk_list_into_lists_of_length_n
+    (Z17895_untype_a_list (Z22717_string_to_codepoint_list a0))
+    a1)))
+    a2
+    #f
+    #f)))
+
+;; Z19658 convert a language object to a Russian adverb
+(define (Z19658_convert_a_language_object_to_a_russian_adverb a0)
+  (Z18784_convert_a_language_name_in_russian_to_an_adverb
+    (Z16568_object_label (Z16575_make_quote a0) Z1005_russian)))
+
 ;; Z19661 Echo (string)
 (define (Z19661_echo_string a0)
   (identity a0))
+
+;; Z19686 same Rational number
+(define (Z19686_same_rational_number a0 a1)
+  (Z19892_same_rational_number_object
+    (Z20112_rational_number_identity a0)
+    (Z20112_rational_number_identity a1)))
+
+;; Z19699 subtract rational numbers
+(define (Z19699_subtract_rational_numbers a0 a1)
+  (Z19679_add_rational_numbers a0 (Z19694_negate_rational_number a1)))
+
+;; Z19708 divide rational numbers
+(define (Z19708_divide_rational_numbers a0 a1)
+  (Z19706_multiply_rational_numbers a0 (Z19711_multiplicative_inverse_of_rational_number a1)))
+
+;; Z19722 numerator of simplified rational number
+(define (Z19722_numerator_of_simplified_rational_number a0)
+  (Z13546_divide_natural_numbers
+    (Z19733_numerator_of_unsimplified_rational_number a0)
+    (Z13612_greatest_common_divisor
+    (Z19733_numerator_of_unsimplified_rational_number a0)
+    (Z19862_denominator_of_unsimplified_rational_number a0))))
+
+;; Z19724 denominator of simplified rational number
+(define (Z19724_denominator_of_simplified_rational_number a0)
+  (Z13546_divide_natural_numbers
+    (Z19862_denominator_of_unsimplified_rational_number a0)
+    (Z13612_greatest_common_divisor
+    (Z19733_numerator_of_unsimplified_rational_number a0)
+    (Z19862_denominator_of_unsimplified_rational_number a0))))
+
+;; Z19736 max of rational numbers
+(define (Z19736_max_of_rational_numbers a0 a1)
+  (if (Z19753_less_than_rational_numbers a0 a1) a1 a0))
+
+;; Z19740 min of rational numbers
+(define (Z19740_min_of_rational_numbers a0 a1)
+  (if (Z19753_less_than_rational_numbers a0 a1) a0 a1))
+
+;; Z19744 Integer as Rational number
+(define (Z19744_integer_as_rational_number a0)
+  (Z19854_simplified_rational_from_z_numerator_denominator a0 1))
+
+;; Z19751 Greater than (rational numbers)
+(define (Z19751_greater_than_rational_numbers a0 a1)
+  (Z19753_less_than_rational_numbers a1 a0))
+
+;; Z19752 Greater than or equal to (rational numbers)
+(define (Z19752_greater_than_or_equal_to_rational_numbers a0 a1)
+  (or (Z19751_greater_than_rational_numbers a0 a1) (Z19686_same_rational_number a0 a1)))
+
+;; Z19753 less than (rational numbers)
+(define (Z19753_less_than_rational_numbers a0 a1)
+  (Z17140_less_than_integer
+    (Z27826_multiply_natural_by_integer
+    (Z19724_denominator_of_simplified_rational_number a1)
+    (Z27820_signed_numerator_of_simplified_rational_number a0))
+    (Z27826_multiply_natural_by_integer
+    (Z19724_denominator_of_simplified_rational_number a0)
+    (Z27820_signed_numerator_of_simplified_rational_number a1))))
+
+;; Z19754 less than or equal to (rational numbers)
+(define (Z19754_less_than_or_equal_to_rational_numbers a0 a1)
+  (Z17363_less_than_or_equal_integer
+    (Z27826_multiply_natural_by_integer
+    (Z19724_denominator_of_simplified_rational_number a1)
+    (Z27820_signed_numerator_of_simplified_rational_number a0))
+    (Z27826_multiply_natural_by_integer
+    (Z19724_denominator_of_simplified_rational_number a0)
+    (Z27820_signed_numerator_of_simplified_rational_number a1))))
 
 ;; Z19800 limit denominator
 (define (Z19800_limit_denominator a0 a1)
@@ -2416,33 +6107,310 @@
     (Z13831_natural_number_range 1 a1))
     a0))))
 
+;; Z19806 is rational number an integer
+(define (Z19806_is_rational_number_an_integer a0)
+  (Z31547_is_natural_number_1 (Z19724_denominator_of_simplified_rational_number a0)))
+
+;; Z19814 nearest rational with specified denominator
+(define (Z19814_nearest_rational_with_specified_denominator a0 a1)
+  (Z19854_simplified_rational_from_z_numerator_denominator
+    (Z19841_rational_to_nearest_integer_even_integer_tiebreak
+    (Z19826_multiply_rational_by_natural_number a0 a1))
+    a1))
+
+;; Z19827 Rational number to string
+(define (Z19827_rational_number_to_string a0)
+  (Z19858_format_sign_numerator_denominator_as_string
+    (Z19717_sign_of_rational_number a0)
+    (Z19733_numerator_of_unsimplified_rational_number a0)
+    (Z19862_denominator_of_unsimplified_rational_number a0)))
+
+;; Z19866 string to rational number
+(define (Z19866_string_to_rational_number a0)
+  (Z19896_create_rational_number_from_list_and_sign
+    (Z19901_sign_of_string_representing_rational_number a0)
+    (Z19886_split_and_return_natural_numbers_removing a0)))
+
+;; Z19892 same Rational number object
+(define (Z19892_same_rational_number_object a0 a1)
+  (Z889_list_equality (Z805_reify a0) (Z805_reify a1) Z13052_object_equality))
+
+;; Z19901 sign of string representing rational number
+(define (Z19901_sign_of_string_representing_rational_number a0)
+  (Z19565_triple_if
+    (or (Z10070_has_substring a0 "-") (Z10070_has_substring a0 "−"))
+    Z16662_negative
+    (Z10615_string_starts_with a0 "0")
+    Z16661_neutral
+    Z16660_positive))
+
+;; Z19914 Are rational numbers additive inverses?
+(define (Z19914_are_rational_numbers_additive_inverses a0 a1)
+  (Z19922_is_rational_number_0 (Z19679_add_rational_numbers a0 a1)))
+
+;; Z19922 Is rational number 0
+(define (Z19922_is_rational_number_0 a0)
+  (= (Z19733_numerator_of_unsimplified_rational_number a0) 0))
+
+;; Z19931 Are rational numbers multiplicative inverse?
+(define (Z19931_are_rational_numbers_multiplicative_inverse a0 a1)
+  (Z25200_is_rational_number_1 (Z19706_multiply_rational_numbers a0 a1)))
+
+;; Z20000 Bayes' theorem conditional probability P(A|B)
+(define (Z20000_bayes_theorem_conditional_probability_p_a_b a0 a1 a2)
+  (Z19708_divide_rational_numbers (Z19706_multiply_rational_numbers a0 a1) a2))
+
+;; Z20006 rational modulo
+(define (Z20006_rational_modulo a0 a1)
+  (if
+    (Z16667_same_sign (Z19717_sign_of_rational_number a0) (Z19717_sign_of_rational_number a1))
+    (if
+    (Z19753_less_than_rational_numbers
+    (Z21692_absolute_value_of_rational_number a0)
+    (Z21692_absolute_value_of_rational_number a1))
+    a0
+    (Z20006_rational_modulo (Z19699_subtract_rational_numbers a0 a1) a1))
+    (Z19694_negate_rational_number (Z20006_rational_modulo a0 (Z19694_negate_rational_number a1)))))
+
 ;; Z20020 sort rational numbers
 (define (Z20020_sort_rational_numbers a0)
   (Z27612_order_list_with_comparing_function a0 Z19753_less_than_rational_numbers))
+
+;; Z20032 floor of rational number
+(define (Z20032_floor_of_rational_number a0)
+  (Z13546_divide_natural_numbers
+    (Z19722_numerator_of_simplified_rational_number a0)
+    (Z19724_denominator_of_simplified_rational_number a0)))
+
+;; Z20053 ceiling of rational number
+(define (Z20053_ceiling_of_rational_number a0)
+  (Z17186_negate_integer (Z20032_floor_of_rational_number (Z19694_negate_rational_number a0))))
+
+;; Z20065 is unit fraction
+(define (Z20065_is_unit_fraction a0)
+  (and
+    (= (Z19722_numerator_of_simplified_rational_number a0) 1)
+    (Z16667_same_sign (Z19717_sign_of_rational_number a0) Z16660_positive)))
+
+;; Z20074 add resistances in parallel
+(define (Z20074_add_resistances_in_parallel a0)
+  (Z19711_multiplicative_inverse_of_rational_number
+    (Z20080_sum_the_elements_of_a_list_of_rational_numbers
+    (map Z19711_multiplicative_inverse_of_rational_number a0))))
 
 ;; Z20089 reduce (list only)
 (define (Z20089_reduce_list_only a0 a1 a2)
   (if (null? a1) a2 (Z12781_left_fold a1 a0)))
 
+;; Z20107 is error
+(define (Z20107_is_error a0)
+  (Z19352_object_has_this_type a0 Z5_error))
+
+;; Z20112 Rational number identity
+(define (Z20112_rational_number_identity a0)
+  (Z19826_multiply_rational_by_natural_number a0 1))
+
 ;; Z20116 Rational number object identity
 (define (Z20116_rational_number_object_identity a0)
   (identity a0))
 
+;; Z20118 English Rational Number
+(define (Z20118_english_rational_number a0)
+  (Z20132_english_rational_number_from_components
+    (Z19717_sign_of_rational_number a0)
+    (Z13587_english_cardinal (Z19733_numerator_of_unsimplified_rational_number a0))
+    (Z14526_english_ordinal (Z19862_denominator_of_unsimplified_rational_number a0))
+    (Z19733_numerator_of_unsimplified_rational_number a0)
+    (Z19862_denominator_of_unsimplified_rational_number a0)))
+
 ;; Z20166 same Gregorian year
 (define (Z20166_same_gregorian_year a0 a1)
-  (Z13052_object_equality a0 a1))
+  (Z18683_strict_object_equality a0 a1))
+
+;; Z20181 is Gregorian year leap year?
+(define (Z20181_is_gregorian_year_leap_year a0)
+  (Z17414_same_day_of_the_week
+    (Z20302_day_of_the_week_this_year_ends_with a0)
+    (Z17420_next_day_of_the_week (Z20290_starts_on a0))))
+
+;; Z20212 Does statement have predicate?
+(define (Z20212_does_statement_have_predicate a0 a1)
+  (Z19267_same_wikidata_property_reference a1 (Z19306_predicate_of_wikidata_statement a0)))
+
+;; Z20213 Wrapper for fetch lexeme
+(define (Z20213_wrapper_for_fetch_lexeme a0)
+  (Z6825_fetch_wikidata_lexeme a0))
+
+;; Z20219 difference between Gregorian years
+(define (Z20219_difference_between_gregorian_years a0 a1)
+  (Z17111_subtract_an_integer
+    (Z20257_gregorian_year_to_iso_8601_year_integer a1)
+    (Z20257_gregorian_year_to_iso_8601_year_integer a0)))
+
+;; Z20226 probability of union
+(define (Z20226_probability_of_union a0 a1 a2)
+  (Z19699_subtract_rational_numbers (Z19679_add_rational_numbers a0 a1) a2))
+
+;; Z20241 display Gregorian year
+(define (Z20241_display_gregorian_year a0 a1)
+  (Z13036_apply
+    (Z14310_select_a_function_based_on_language Z20240_config_for_displaying_gregorian_year a1)
+    a0))
+
+;; Z20266 is integer divisible
+(define (Z20266_is_integer_divisible a0 a1)
+  (Z13740_is_natural_number_divisible
+    (Z17144_absolute_value_of_integer_as_natural_number a0)
+    (Z17144_absolute_value_of_integer_as_natural_number a1)))
+
+;; Z20290 starts on
+(define (Z20290_starts_on a0)
+  (Z17420_next_day_of_the_week
+    (Z20302_day_of_the_week_this_year_ends_with (Z20314_previous_year a0))))
+
+;; Z20302 day of the week this year ends with
+(define (Z20302_day_of_the_week_this_year_ends_with a0)
+  (Z20305_unless_exception
+    (Z20290_starts_on a0)
+    (Z20181_is_gregorian_year_leap_year a0)
+    (Z17420_next_day_of_the_week (Z20290_starts_on a0))))
 
 ;; Z20305 unless exception
 (define (Z20305_unless_exception a0 a1 a2)
   (if a1 a2 a0))
 
+;; Z20323 Triangle of Power operation
+(define (Z20323_triangle_of_power_operation a0 a1 a2)
+  (Z19565_triple_if
+    (Z31547_is_natural_number_1 a2)
+    (Z19953_exponentiate_rational_number a1 (Z19711_multiplicative_inverse_of_rational_number a0))
+    (Z31554_is_natural_number_2 a2)
+    (Z21071_float_as_rational
+    (Z21037_logarithm_with_arbitrary_base_float64
+    (Z20854_rational_number_as_float a1)
+    (Z20854_rational_number_as_float a0)))
+    (Z19953_exponentiate_rational_number a0 a1)))
+
 ;; Z20348 same Day of Roman Year
 (define (Z20348_same_day_of_roman_year a0 a1)
   (Z13052_object_equality a0 a1))
 
+;; Z20357 Day of Roman Year to Day number in year
+(define (Z20357_day_of_roman_year_to_day_number_in_year a0 a1)
+  (+
+    (Z13397_get_the_nth_element_of_a_list
+    (list 0 31 59 90 120 151 181 212 243 273 304 334)
+    (Z16230_month_to_month_number (Z20343_month_from_day_of_the_roman_year a0)))
+    (if
+    (and
+    a1
+    (Z16648_is_later_month_in_the_year (Z20343_month_from_day_of_the_roman_year a0) Z16102_february))
+    (add1 (Z20388_day_of_month_from_date a0))
+    (Z20388_day_of_month_from_date a0))))
+
+;; Z20367 Move N dates
+(define (Z20367_move_n_dates a0 a1 a2)
+  (Z20362_day_number_in_year_to_day_of_roman_year
+    (Z16693_add_integers
+    (Z17101_natural_number_to_integer (Z20357_day_of_roman_year_to_day_number_in_year a0 a2))
+    a1)
+    a2))
+
+;; Z20391 integer to exact natural number or 0
+(define (Z20391_integer_to_exact_natural_number_or_0 a0)
+  (if (Z17215_is_negative_integer a0) 0 (Z17144_absolute_value_of_integer_as_natural_number a0)))
+
+;; Z20406 earlier in year
+(define (Z20406_earlier_in_year a0 a1)
+  (or
+    (Z16648_is_later_month_in_the_year
+    (Z20343_month_from_day_of_the_roman_year a1)
+    (Z20343_month_from_day_of_the_roman_year a0))
+    (and
+    (Z16137_same_month
+    (Z20343_month_from_day_of_the_roman_year a0)
+    (Z20343_month_from_day_of_the_roman_year a1))
+    (< (Z20388_day_of_month_from_date a0) (Z20388_day_of_month_from_date a1)))))
+
+;; Z20421 day of the week
+(define (Z20421_day_of_the_week a0)
+  (Z13163_get_day_of_week_from_date
+    (Z20160_gregorian_year_to_year_number (Z24948_year_from_calendar_date a0))
+    (Z20343_month_from_day_of_the_roman_year (Z24936_day_of_year_from_calendar_date a0))
+    (Z20388_day_of_month_from_date (Z24936_day_of_year_from_calendar_date a0))))
+
+;; Z20430 Same Gregorian calendar date
+(define (Z20430_same_gregorian_calendar_date a0 a1)
+  (and
+    (Z20166_same_gregorian_year
+    (Z24948_year_from_calendar_date a0)
+    (Z24948_year_from_calendar_date a1))
+    (Z20348_same_day_of_roman_year
+    (Z24936_day_of_year_from_calendar_date a0)
+    (Z24936_day_of_year_from_calendar_date a1))))
+
+;; Z20446 Remove invalid chars from Z13518K1
+(define (Z20446_remove_invalid_chars_from_z13518k1 a0)
+  (Z14494_remove_all_characters_except_arabic_numerals a0))
+
+;; Z20452 is earlier in its month?
+(define (Z20452_is_earlier_in_its_month a0 a1)
+  (< (Z20388_day_of_month_from_date a0) (Z20388_day_of_month_from_date a1)))
+
+;; Z20456 is earlier in the same month?
+(define (Z20456_is_earlier_in_the_same_month a0 a1)
+  (and
+    (Z16137_same_month
+    (Z20343_month_from_day_of_the_roman_year a0)
+    (Z20343_month_from_day_of_the_roman_year a1))
+    (Z20452_is_earlier_in_its_month a0 a1)))
+
 ;; Z20600 parenthesize
 (define (Z20600_parenthesize a0)
   (Z27385_enclose_string "(" a0 ")"))
+
+;; Z20616 grammatical genders from Wikidata lexeme
+(define (Z20616_grammatical_genders_from_wikidata_lexeme a0)
+  (map
+    Z19308_value_of_wikidata_statement
+    (filter Z20637_is_grammatical_gender_statement (Z19300_statements_from_lexeme a0))))
+
+;; Z20648 Numbers of days in a month
+(define (Z20648_numbers_of_days_in_a_month a0 a1)
+  (Z17101_natural_number_to_integer
+    (Z27068_if_true_pass_input_through_function
+    (Z16316_days_in_month_when_not_a_leap_year a0)
+    add1
+    (Z20181_is_gregorian_year_leap_year a1))))
+
+;; Z20653 Validate string to list of string options
+(define (Z20653_validate_string_to_list_of_string_options a0 a1 a2)
+  (if
+    a2
+    (Z13397_get_the_nth_element_of_a_list
+    a0
+    (Z28755_index_of_match_in_list
+    (Z19509_minimum_of_natural_number_list
+    (Z18475_return_typed_list
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    Z10393_levenshtein_distance
+    a0
+    a1)))
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    Z10393_levenshtein_distance
+    a0
+    a1)))
+    (Z28755_index_of_match_in_list
+    (Z19509_minimum_of_natural_number_list
+    (Z18475_return_typed_list
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    Z10393_levenshtein_distance
+    a0
+    a1)))
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    Z10393_levenshtein_distance
+    a0
+    a1))))
 
 ;; Z20659 get dot product (integer vectors)
 (define (Z20659_get_dot_product_integer_vectors a0 a1)
@@ -2452,6 +6420,148 @@
     Z17120_multiply_integers
     a0
     a1))))
+
+;; Z20679 Two Sum
+(define (Z20679_two_sum a0 a1)
+  (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    Z13708_index_of_first_listing_1_n_note_limitation
+    (Z13397_get_the_nth_element_of_a_list
+    (Z31379_enumerate_k_combinations_of_multiset a0 2)
+    (Z28755_index_of_match_in_list
+    a1
+    (map
+    Z22469_sum_the_elements_of_a_list_of_integers
+    (Z31379_enumerate_k_combinations_of_multiset a0 2))))
+    a0))
+
+;; Z20692 is valid pinyin
+(define (Z20692_is_valid_pinyin a0)
+  (Z34293_all_booleans_equal_to
+    (map
+    Z34797_is_valid_pinyin_for_single_character
+    (Z34212_standard_pinyin_to_list_of_single_character_pinyin a0))
+    #t))
+
+;; Z20733 how many days between two days in the year
+(define (Z20733_how_many_days_between_two_days_in_the_year a0 a1 a2)
+  (Z17144_absolute_value_of_integer_as_natural_number
+    (Z17315_subtract_natural_numbers_as_integer
+    (Z20357_day_of_roman_year_to_day_number_in_year a1 a2)
+    (Z20357_day_of_roman_year_to_day_number_in_year a0 a2))))
+
+;; Z20740 Is date palindrome
+(define (Z20740_is_date_palindrome a0)
+  (or
+    (Z10096_is_a_palindrome
+    (Z14494_remove_all_characters_except_arabic_numerals
+    (Z20780_display_date a0 Z1360_multiple_languages)))
+    (Z10096_is_a_palindrome
+    (Z14636_remove_first_n_characters_of_string
+    (Z14494_remove_all_characters_except_arabic_numerals
+    (Z20780_display_date a0 Z1360_multiple_languages))
+    2))))
+
+;; Z20744 days until
+(define (Z20744_days_until a0 a1)
+  (Z17111_subtract_an_integer
+    (Z22844_gregorian_date_to_julian_day_number a1)
+    (Z22844_gregorian_date_to_julian_day_number a0)))
+
+;; Z20780 display date
+(define (Z20780_display_date a0 a1)
+  (Z13036_apply (Z14310_select_a_function_based_on_language Z20779_config_for_date a1) a0))
+
+;; Z20785 French date
+(define (Z20785_french_date a0)
+  (Z20780_display_date a0 Z1004_french))
+
+;; Z20808 read Gregorian Calendar Date
+(define (Z20808_read_gregorian_calendar_date a0 a1)
+  (if
+    (Z23997_is_a_standard_date_format a0)
+    (Z24007_read_date_in_standard_format a0)
+    (Z13036_apply
+    (Z14310_select_a_function_based_on_language Z23981_config_for_reading_gregorian_date a1)
+    a0)))
+
+;; Z20822 days until Feinmas '24
+(define (Z20822_days_until_feinmas_24 a0)
+  (Z20744_days_until a0 Z20820_feinmas_24))
+
+;; Z20850 same float64
+(define (Z20850_same_float64 a0 a1)
+  (and
+    (Z21439_same_floating_point_special_value
+    (Z21145_special_value_of_floating_point a0)
+    (Z21145_special_value_of_floating_point a1))
+    (or
+    (not
+    (Z21439_same_floating_point_special_value
+    (Z21145_special_value_of_floating_point a0)
+    Z20837_no_special_value))
+    (Z11828_and_quaternary
+    (Z16667_same_sign
+    (Z21136_extract_sign_of_floating_point_number a0)
+    (Z21136_extract_sign_of_floating_point_number a1))
+    (Z16688_same_integer
+    (Z21139_exponent_of_floating_point_number a0)
+    (Z21139_exponent_of_floating_point_number a1))
+    (=
+    (Z21142_significand_of_floating_point_number a0)
+    (Z21142_significand_of_floating_point_number a1))
+    #t))))
+
+;; Z20863 volume of a rectangular prism (Rational numbers)
+(define (Z20863_volume_of_a_rectangular_prism_rational_numbers a0 a1 a2)
+  (Z19706_multiply_rational_numbers a2 (Z19706_multiply_rational_numbers a0 a1)))
+
+;; Z20877 area of a rectangle
+(define (Z20877_area_of_a_rectangle a0 a1)
+  (Z19706_multiply_rational_numbers a0 a1))
+
+;; Z20902 square root of rational to float64
+(define (Z20902_square_root_of_rational_to_float64 a0)
+  (Z22318_square_root_of_float64 (Z20854_rational_number_as_float a0)))
+
+;; Z20936 natural number to float64
+(define (Z20936_natural_number_to_float64 a0)
+  (Z20854_rational_number_as_float (Z21653_natural_number_as_rational_number a0)))
+
+;; Z20937 integer to float64
+(define (Z20937_integer_to_float64 a0)
+  (Z20854_rational_number_as_float (Z19744_integer_as_rational_number a0)))
+
+;; Z20940 less than (float64)
+(define (Z20940_less_than_float64 a0 a1)
+  (not (Z20944_greater_than_or_equal_to_float64 a0 a1)))
+
+;; Z20945 not equal to (float64)
+(define (Z20945_not_equal_to_float64 a0 a1)
+  (not (Z20924_float64_equality a0 a1)))
+
+;; Z20955 secant in radians
+(define (Z20955_secant_in_radians a0)
+  (Z22605_multiplicative_inverse_of_float64 (Z12473_cosine a0)))
+
+;; Z20959 arctangent
+(define (Z20959_arctangent a0)
+  (Z20960_arccotangent (Z22605_multiplicative_inverse_of_float64 a0)))
+
+;; Z20965 hyperbolic tangent
+(define (Z20965_hyperbolic_tangent a0)
+  (Z21033_divide_float64 (Z20963_hyperbolic_sine a0) (Z20964_hyperbolic_cosine a0)))
+
+;; Z20971 inverse hyperbolic tangent
+(define (Z20971_inverse_hyperbolic_tangent a0)
+  (Z20972_inverse_hyperbolic_cotangent (Z22605_multiplicative_inverse_of_float64 a0)))
+
+;; Z20974 inverse hyperbolic cosecant
+(define (Z20974_inverse_hyperbolic_cosecant a0)
+  (Z12509_inverse_hyperbolic_sine (Z22605_multiplicative_inverse_of_float64 a0)))
+
+;; Z21001 float64 exponentiation base e
+(define (Z21001_float64_exponentiation_base_e a0)
+  (Z21028_exponentiation_float64 Z20890_e_base_of_the_natural_logarithm_float64 a0))
 
 ;; Z21003 natural logarithm (float64)
 (define (Z21003_natural_logarithm_float64 a0)
@@ -2471,13 +6581,118 @@
     (Z21003_natural_logarithm_float64 a0)
     (Z21003_natural_logarithm_float64 a1)))
 
+;; Z21041 absolute value (float64)
+(define (Z21041_absolute_value_float64 a0)
+  (if (Z33615_is_negative_float64 a0) (Z21775_negate_float64 a0) a0))
+
+;; Z21105 is string 1
+(define (Z21105_is_string_1 a0)
+  (and
+    (Z24331_is_not_empty_string a0)
+    (Z25200_is_rational_number_1 (Z21930_rational_number_reader a0 Z1002_english))))
+
+;; Z21121 convert units
+(define (Z21121_convert_units a0 a1 a2 a3 a4 a5 a6)
+  (Z28614_display_quantity_and_parenthesised_conversion
+    (Z25785_read_wikidata_quantity (Z27182_join_two_strings_with_space a0 a1) a6)
+    (Z25792_qid_from_unit_symbol a2)
+    a6))
+
+;; Z21132 (!) vararg apply
+(define (Z21132_vararg_apply a0 a1)
+  (Z22074_apply_n_argument_function_to_list_of_arguments
+    (Z30531_reference_or_object_from_zid_string a0)
+    (Z13366_get_the_first_n_elements_of_an_untyped_list
+    a1
+    (Z28222_number_of_arguments_of_a_function (Z30531_reference_or_object_from_zid_string a0)))))
+
+;; Z21158 display float64 as binary string
+(define (Z21158_display_float64_as_binary_string a0)
+  (Z14770_pad_string_with_leading_characters_to_specified_length
+    (Z13779_natural_number_to_binary_string_without_prefix
+    (Z13799_hexadecimal_to_natural_number (Z21148_display_float64_as_hex_string a0)))
+    64
+    "0"))
+
+;; Z21163 convert biased exponent bits to integer exponent
+(define (Z21163_convert_biased_exponent_bits_to_integer_exponent a0)
+  (Z17315_subtract_natural_numbers_as_integer (Z13797_binary_string_to_natural_number a0) 1023))
+
+;; Z21172 types for arguments
+(define (Z21172_types_for_arguments a0)
+  (map Z21174_type_declared_for_argument (Z21177_get_list_of_argument_declarations a0)))
+
+;; Z21204 (!) Object label in language from reference
+(define (Z21204_object_label_in_language_from_reference a0 a1)
+  (Z16568_object_label (Z16575_make_quote a0) a1))
+
 ;; Z21212 list size is at least
 (define (Z21212_list_size_is_at_least a0 a1)
   (>= (length a0) a1))
 
+;; Z21219 duration of function-call evaluation
+(define (Z21219_duration_of_function_call_evaluation a0)
+  (Z14283_string_of_digits_as_natural_number
+    (Z11410_discard_from_start_of_first_substring
+    (Z24606_get_element_of_string_keyed_map
+    (snd (Z823_get_envelope_from_function_call a0))
+    "orchestrationDuration")
+    " ")))
+
+;; Z21230 convert a language lexeme in Russian to an adverb
+(define (Z21230_convert_a_language_lexeme_in_russian_to_an_adverb a0)
+  (Z18784_convert_a_language_name_in_russian_to_an_adverb
+    (Z14396_string_of_monolingual_text
+    (Z16273_monolingual_text_in_specified_language_from_multilingual_tex
+    (Z19293_lemmas_of_lexeme a0)
+    Z1005_russian))))
+
+;; Z21233 Tester for "Language code to language"
+(define (Z21233_tester_for_language_code_to_language a0)
+  (Z860_language_tag_to_language a0))
+
+;; Z21236 (!) Throw if not of lang, run otherwise
+(define (Z21236_throw_if_not_of_lang_run_otherwise a0 a1 a2)
+  (if
+    (Z14326_same_language (Z19295_language_of_lexeme a0) a1)
+    (Z851_throw_error Z500_unspecified_error (list "Lexeme not of correct language"))
+    a2))
+
+;; Z21249 Rational number as percentage
+(define (Z21249_rational_number_as_percentage a0)
+  (Z21000_float_as_percent (Z20854_rational_number_as_float a0)))
+
 ;; Z21260 Ranged type
 (define (Z21260_ranged_type a0)
   (identity ""))
+
+;; Z21282 area of a pentagon
+(define (Z21282_area_of_a_pentagon a0)
+  (Z21278_area_of_a_regular_polygon a0 5))
+
+;; Z21288 is lexeme lexical category in language?
+(define (Z21288_is_lexeme_lexical_category_in_language a0 a1 a2)
+  (and
+    (Z14326_same_language (Z19295_language_of_lexeme a0) a1)
+    (Z19316_same_wikidata_item_reference (Z19298_lexical_category_of_lexeme a0) a2)))
+
+;; Z21294 Bernoulli probability mass function
+(define (Z21294_bernoulli_probability_mass_function a0 a1)
+  (Z20094_binomial_probability_mass_function a0 1 a1))
+
+;; Z21312 Geometric probability mass function
+(define (Z21312_geometric_probability_mass_function a0 a1)
+  (Z19706_multiply_rational_numbers
+    (Z21320_power_of_rational_number
+    (Z19967_complementary_probability a1)
+    (Z17101_natural_number_to_integer a0))
+    a1))
+
+;; Z21329 linguonym for language in target language
+(define (Z21329_linguonym_for_language_in_target_language a0 a1)
+  (Z24102_label_of_item_reference_in_specific_general_lang
+    (Z29649_wikidata_reference_from_wikifunctions_language_obj a0)
+    a1))
 
 ;; Z21347 sort integer-keyed list ascending
 (define (Z21347_sort_integer_keyed_list_ascending a0)
@@ -2510,9 +6725,24 @@
 (define (Z21356_apply_function_and_forward_input a0 a1)
   (Z17534_make_untyped_pair (Z13036_apply a0 a1) a1))
 
+;; Z21366 Lowercase first word
+(define (Z21366_lowercase_first_word a0)
+  (string-append
+    (Z10047_to_lowercase
+    (Z11410_discard_from_start_of_first_substring a0 Z13128_space_char_as_string))
+    (Z11418_discard_until_start_of_first_substring a0 Z13128_space_char_as_string)))
+
 ;; Z21373 Freak pay or mouse pay
 (define (Z21373_freak_pay_or_mouse_pay a0)
   (if a0 "Mouse pay" "Freak pay"))
+
+;; Z21381 Typed list with length
+(define (Z21381_typed_list_with_length a0 a1)
+  (Z881_typed_list a0))
+
+;; Z21383 Create typed list of length
+(define (Z21383_create_typed_list_of_length a0 a1 a2)
+  (Z21381_typed_list_with_length a0 a1))
 
 ;; Z21389 replicate object n times
 (define (Z21389_replicate_object_n_times a0 a1)
@@ -2524,6 +6754,10 @@
 ;; Z21394 concatenate many strings
 (define (Z21394_concatenate_many_strings a0)
   (fold string-append a0 ""))
+
+;; Z21402 apply float64 function to rational number
+(define (Z21402_apply_float64_function_to_rational_number a0 a1)
+  (Z13036_apply a0 (Z20854_rational_number_as_float a1)))
 
 ;; Z21414 Article constructor
 (define (Z21414_article_constructor a0 a1)
@@ -2542,25 +6776,188 @@
 (define (Z21439_same_floating_point_special_value a0 a1)
   (Z13052_object_equality a0 a1))
 
+;; Z21534 truncate float64 to Integer
+(define (Z21534_truncate_float64_to_integer a0)
+  (Z19682_truncate_rational_number (Z21071_float_as_rational a0)))
+
+;; Z21593 Word frequency
+(define (Z21593_word_frequency a0 a1)
+  (Z25847_number_of_regular_expression_matches_with_flags
+    (Z10047_to_lowercase
+    (Z12316_regular_expression_substitute_with_flags "[^\\w\\s-]|_" Z11853_empty_string a0 "g"))
+    (Z15175_join_two_strings_with_separator "\\b" "\\b(?![-\\w])" (Z10047_to_lowercase a1))
+    "g"))
+
 ;; Z21613 Typed list has as its first item
 (define (Z21613_typed_list_has_as_its_first_item a0 a1)
-  (and (Z23120_is_non_empty_list a0) (Z13052_object_equality (car a0) a1)))
+  (Z31294_list_starts_with a0 (Z14046_element_to_list a1)))
+
+;; Z21642 read floating point number leniently
+(define (Z21642_read_floating_point_number_leniently a0)
+  (Z19565_triple_if
+    (Z21980_string_includes_or a0)
+    (Z20854_rational_number_as_float (Z19866_string_to_rational_number a0))
+    (Z21987_string_includes_na_or_nf a0)
+    (Z21750_read_special_value_floating_point_from_string (Z10047_to_lowercase a0))
+    (Z20915_string_to_float64_python_conventions
+    (Z21679_convert_decimal_string_from_comma_to_point (Z21682_unformat_decimal_string a0)))))
+
+;; Z21653 natural number as rational number
+(define (Z21653_natural_number_as_rational_number a0)
+  (Z23668_number_as_rational_number a0))
 
 ;; Z21679 convert decimal string from comma to point
 (define (Z21679_convert_decimal_string_from_comma_to_point a0)
   (Z10075_replace_all_substrings a0 "," "."))
 
+;; Z21692 absolute value of rational number
+(define (Z21692_absolute_value_of_rational_number a0)
+  (if (Z21714_is_negative_rational_number a0) (Z19694_negate_rational_number a0) a0))
+
+;; Z21714 is negative rational number
+(define (Z21714_is_negative_rational_number a0)
+  (Z16667_same_sign (Z19717_sign_of_rational_number a0) Z16662_negative))
+
+;; Z21721 is non-negative rational number
+(define (Z21721_is_non_negative_rational_number a0)
+  (not (Z21714_is_negative_rational_number a0)))
+
+;; Z21739 an or a? (English)
+(define (Z21739_an_or_a_english a0)
+  (if (Z32314_is_word_starting_with_vowel_sound_english a0) "an" "a"))
+
+;; Z21760 indef noun phrase with adjective
+(define (Z21760_indef_noun_phrase_with_adjective a0 a1)
+  (Z13318_apply_two_argument_function
+    (Z14310_select_a_function_based_on_language
+    Z21733_config_for_indefinite_noun_phrase_from_lexemes
+    (Z19295_language_of_lexeme a0))
+    a0
+    a1))
+
+;; Z21770 apply rational number function to float64
+(define (Z21770_apply_rational_number_function_to_float64 a0 a1)
+  (Z13036_apply a0 (Z21071_float_as_rational a1)))
+
+;; Z21787 decimal string from Rational number
+(define (Z21787_decimal_string_from_rational_number a0 a1)
+  (Z25445_rational_as_plain_decimal_to_decimal_places
+    (Z27765_round_to_decimal_simplified_with_sig_figs a0 a1)
+    (Z25647_decimal_places_to_preserve_the_significant_figures
+    (Z27803_round_to_decimal_unsimplified_with_sig_figs a0 a1))))
+
+;; Z21802 "[gender] is a [country] [professional]"
+(define (Z21802_gender_is_a_country_professional a0 a1 a2 a3)
+  (Z21216_apply_three_argument_function
+    (Z14310_select_a_function_based_on_language
+    Z21795_config_for_gender_is_a_country_professional
+    a3)
+    (Z22696_fetch_first_lexeme_from_item_ref_and_lang_p5137 a0 a3)
+    (Z22696_fetch_first_lexeme_from_item_ref_and_lang_p5137 a1 a3)
+    a2))
+
+;; Z21806 lemma string from lexeme and lang
+(define (Z21806_lemma_string_from_lexeme_and_lang a0 a1)
+  (Z14396_string_of_monolingual_text
+    (Z16273_monolingual_text_in_specified_language_from_multilingual_tex
+    (Z19293_lemmas_of_lexeme a0)
+    a1)))
+
 ;; Z21821 generate untyped list of length
 (define (Z21821_generate_untyped_list_of_length a0 a1)
   (map a0 (Z13831_natural_number_range 1 a1)))
+
+;; Z21851 mode of list (integer)
+(define (Z21851_mode_of_list_integer a0)
+  (Z34793_most_common_element_s_in_list a0 Z16688_same_integer))
+
+;; Z21856 mean arterial pressure
+(define (Z21856_mean_arterial_pressure a0 a1)
+  (Z20854_rational_number_as_float
+    (Z27232_rational_from_two_natural_numbers (+ (Z15107_double a0) a1) 3)))
+
+;; Z21868 is narcissistic number
+(define (Z21868_is_narcissistic_number a0)
+  (=
+    (Z14038_sum_the_elements_of_a_list_of_natural_numbers
+    (Z18475_return_typed_list
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    expt
+    (Z25520_list_of_decimal_digits_in_a_number a0)
+    (Z14344_number_of_digits_in_decimal_string_representation_of_a_natur a0))))
+    a0))
+
+;; Z21886 Add indefinite article to noun, Spanish
+(define (Z21886_add_indefinite_article_to_noun_spanish a0)
+  (string-append
+    (if (Z20643_is_feminine_grammatical_gender a0) "una " "un ")
+    (Z14396_string_of_monolingual_text (Z19252_singular_form_of_lexeme_as_monolingual_text a0))))
 
 ;; Z21893 acceleration (float64)
 (define (Z21893_acceleration_float64 a0 a1)
   (Z21033_divide_float64 a1 a0))
 
+;; Z21898 compound interest amount
+(define (Z21898_compound_interest_amount a0 a1 a2 a3)
+  (Z21047_round_to_decimal_places_float64
+    (Z21032_multiply_float64
+    a0
+    (Z21028_exponentiation_float64
+    (Z31111_increment_by_1_float64 (Z21033_divide_float64 a1 a2))
+    (Z21032_multiply_float64 a2 a3)))
+    2))
+
+;; Z21925 read float64
+(define (Z21925_read_float64 a0 a1)
+  (Z21642_read_floating_point_number_leniently
+    (Z14613_replace_character_set
+    a0
+    (Z22302_string_of_numeral_digits_in_order_from_language a1)
+    "0123456789")))
+
+;; Z21930 rational number reader
+(define (Z21930_rational_number_reader a0 a1)
+  (Z19866_string_to_rational_number a0))
+
+;; Z21949 float64 as string (multilingual default)
+(define (Z21949_float64_as_string_multilingual_default a0)
+  (Z21939_float_as_string_python_conventions a0))
+
 ;; Z21951 Clamp
 (define (Z21951_clamp a0 a1 a2)
   (if (< a1 a0) a0 (if (> a1 a2) a2 a1)))
+
+;; Z21956 display float64
+(define (Z21956_display_float64 a0 a1)
+  (Z21949_float64_as_string_multilingual_default a0))
+
+;; Z21971 display Rational number
+(define (Z21971_display_rational_number a0 a1)
+  (Z19827_rational_number_to_string a0))
+
+;; Z21980 string includes / or %
+(define (Z21980_string_includes_or a0)
+  (or (Z10070_has_substring a0 "/") (Z10070_has_substring a0 "%")))
+
+;; Z21987 string includes "na" or "nf"
+(define (Z21987_string_includes_na_or_nf a0)
+  (or
+    (Z10070_has_substring (Z10047_to_lowercase a0) "na")
+    (Z10070_has_substring (Z10047_to_lowercase a0) "nf")))
+
+;; Z22027 area of a circle (rational approximation)
+(define (Z22027_area_of_a_circle_rational_approximation a0)
+  (Z19706_multiply_rational_numbers
+    (Z21071_float_as_rational Z20862_pi_float64_approximation)
+    (Z19706_multiply_rational_numbers a0 a0)))
+
+;; Z22049 futures price
+(define (Z22049_futures_price a0 a1 a2 a3)
+  (Z21032_multiply_float64
+    a0
+    (Z21028_exponentiation_float64
+    a1
+    (Z21032_multiply_float64 a2 (Z20936_natural_number_to_float64 a3)))))
 
 ;; Z22120 Kleenean identity
 (define (Z22120_kleenean_identity a0 a1)
@@ -2573,6 +6970,10 @@
 ;; Z22131 is Kleenean True?
 (define (Z22131_is_kleenean_true a0)
   (Z22120_kleenean_identity Z22113_true a0))
+
+;; Z22138 English lemma string
+(define (Z22138_english_lemma_string a0)
+  (Z21806_lemma_string_from_lexeme_and_lang a0 Z1002_english))
 
 ;; Z22168 or (Kleenean)
 (define (Z22168_or_kleenean a0 a1)
@@ -2622,9 +7023,17 @@
 (define (Z22267_malayalam_numerals_to_arabic_numerals a0)
   (Z14613_replace_character_set a0 "൦൧൨൩൪൫൬൭൮൯" "0123456789"))
 
+;; Z22271 read Malayam natural numbers leniently
+(define (Z22271_read_malayam_natural_numbers_leniently a0)
+  (Z14304_read_natural_numbers_leniently (Z22267_malayalam_numerals_to_arabic_numerals a0)))
+
 ;; Z22279 Khmer numerals to Arabic numerals
 (define (Z22279_khmer_numerals_to_arabic_numerals a0)
   (Z14613_replace_character_set a0 "០១២៣៤៥៦៧៨៩" "0123456789"))
+
+;; Z22281 noun (LID) gender in French is female
+(define (Z22281_noun_lid_gender_in_french_is_female a0)
+  (Z37895_noun_lexeme_gender_in_french_is_female (Z6825_fetch_wikidata_lexeme a0)))
 
 ;; Z22285 Thai numerals to Arabic numerals
 (define (Z22285_thai_numerals_to_arabic_numerals a0)
@@ -2646,9 +7055,66 @@
 (define (Z22297_gujarati_numerals_to_arabic_numerals a0)
   (Z14613_replace_character_set a0 "૦૧૨૩૪૫૬૭૮૯" "0123456789"))
 
+;; Z22318 square root of float64
+(define (Z22318_square_root_of_float64 a0)
+  (Z22600_nth_root_of_float64 a0 2))
+
+;; Z22322 Population density
+(define (Z22322_population_density a0 a1)
+  (Z17144_absolute_value_of_integer_as_natural_number
+    (Z19841_rational_to_nearest_integer_even_integer_tiebreak
+    (Z19706_multiply_rational_numbers
+    (Z21653_natural_number_as_rational_number a0)
+    (Z19711_multiplicative_inverse_of_rational_number (Z21071_float_as_rational a1))))))
+
+;; Z22344 str left
+(define (Z22344_str_left a0 a1)
+  (if
+    (Z10008_is_empty_string (Z10079_trim_string a0))
+    Z11853_empty_string
+    (Z14592_first_n_characters_of_string
+    (if
+    (>= (string-length (Z10079_trim_string a0)) a1)
+    (Z10079_trim_string a0)
+    (Z12624_replicate_string_n_times
+    (Z10079_trim_string a0)
+    (Z20391_integer_to_exact_natural_number_or_0
+    (Z20053_ceiling_of_rational_number
+    (Z27232_rational_from_two_natural_numbers a1 (string-length (Z10079_trim_string a0)))))))
+    a1)))
+
+;; Z22425 multilingual text includes monolingual text(s)
+(define (Z22425_multilingual_text_includes_monolingual_text_s a0 a1)
+  (Z12846_contains_all_of_list (Z19279_multilingual_text_to_list_of_monolingual_texts a0) a1))
+
+;; Z22431 multilingual text contains element for language
+(define (Z22431_multilingual_text_contains_element_for_language a0 a1)
+  (not
+    (Z10008_is_empty_string
+    (Z14396_string_of_monolingual_text
+    (Z16277_first_monolingual_text_in_specified_language
+    (Z19279_multilingual_text_to_list_of_monolingual_texts a0)
+    a1)))))
+
+;; Z22448 byte as binary string
+(define (Z22448_byte_as_binary_string a0)
+  (Z14770_pad_string_with_leading_characters_to_specified_length
+    (Z13779_natural_number_to_binary_string_without_prefix (Z14567_byte_to_natural_number a0))
+    8
+    "0"))
+
 ;; Z22469 sum the elements of a list of integers
 (define (Z22469_sum_the_elements_of_a_list_of_integers a0)
   (Z12781_left_fold a0 Z16693_add_integers))
+
+;; Z22475 value by key (safer)
+(define (Z22475_value_by_key_safer a0 a1)
+  (Z803_value_by_key a0 a1))
+
+;; Z22478 string of first representation of lexeme form
+(define (Z22478_string_of_first_representation_of_lexeme_form a0)
+  (Z14396_string_of_monolingual_text
+    (car (Z22396_get_texts_of_representations_of_wd_lexeme_form a0))))
 
 ;; Z22504 join list of strings with spaces
 (define (Z22504_join_list_of_strings_with_spaces a0)
@@ -2658,25 +7124,101 @@
 (define (Z22507_replace_multiple_spaces_with_single_spaces a0)
   (Z10075_replace_all_substrings a0 "  " " "))
 
+;; Z22511 capitalise first letter and add full stop
+(define (Z22511_capitalise_first_letter_and_add_full_stop a0)
+  (string-append (Z10771_sentence_case a0) "."))
+
+;; Z22514 sentence from list of words (English conventions)
+(define (Z22514_sentence_from_list_of_words_english_conventions a0)
+  (Z22511_capitalise_first_letter_and_add_full_stop
+    (Z10084_remove_leading_spaces
+    (Z22507_replace_multiple_spaces_with_single_spaces (Z22504_join_list_of_strings_with_spaces a0)))))
+
 ;; Z22518 add word to list then join with spaces
 (define (Z22518_add_word_to_list_then_join_with_spaces a0 a1)
   (Z22504_join_list_of_strings_with_spaces (Z12961_append_element_to_typed_list a1 a0)))
+
+;; Z22529 bitwise not
+(define (Z22529_bitwise_not a0)
+  (Z22672_list_of_booleans_to_byte (map not (Z22654_byte_as_list_of_booleans a0))))
+
+;; Z22556 grammatical features inherited from lexeme
+(define (Z22556_grammatical_features_inherited_from_lexeme a0)
+  (Z22559_grammatical_features_of_lexeme
+    (Z6825_fetch_wikidata_lexeme (Z22483_lexeme_reference_of_lexeme_form a0))))
+
+;; Z22559 grammatical features of lexeme
+(define (Z22559_grammatical_features_of_lexeme a0)
+  (map
+    Z19308_value_of_wikidata_statement
+    (filter Z22568_is_grammatical_statement (Z19300_statements_from_lexeme a0))))
 
 ;; Z22579 sum a list of floating point numbers (float64)
 (define (Z22579_sum_a_list_of_floating_point_numbers_float64 a0)
   (Z12781_left_fold a0 Z20849_add_float64))
 
+;; Z22583 mean of a list of floating point numbers (float64)
+(define (Z22583_mean_of_a_list_of_floating_point_numbers_float64 a0)
+  (Z21033_divide_float64
+    (Z22579_sum_a_list_of_floating_point_numbers_float64 a0)
+    (Z20936_natural_number_to_float64 (length a0))))
+
 ;; Z22592 product of float64 list
 (define (Z22592_product_of_float64_list a0)
   (Z12781_left_fold a0 Z21032_multiply_float64))
+
+;; Z22596 geometric mean of float64 list
+(define (Z22596_geometric_mean_of_float64_list a0)
+  (Z22600_nth_root_of_float64 (Z22592_product_of_float64_list a0) (length a0)))
+
+;; Z22600 nth root of float64
+(define (Z22600_nth_root_of_float64 a0 a1)
+  (Z21028_exponentiation_float64
+    a0
+    (Z22605_multiplicative_inverse_of_float64 (Z20936_natural_number_to_float64 a1))))
+
+;; Z22605 multiplicative inverse of float64
+(define (Z22605_multiplicative_inverse_of_float64 a0)
+  (Z21001_float64_exponentiation_base_e
+    (Z21775_negate_float64 (Z21003_natural_logarithm_float64 a0))))
+
+;; Z22610 harmonic mean of float64 list
+(define (Z22610_harmonic_mean_of_float64_list a0)
+  (Z22605_multiplicative_inverse_of_float64
+    (Z22583_mean_of_a_list_of_floating_point_numbers_float64
+    (Z18475_return_typed_list (map Z22605_multiplicative_inverse_of_float64 a0)))))
 
 ;; Z22615 sort list ascending (float64)
 (define (Z22615_sort_list_ascending_float64 a0)
   (Z27612_order_list_with_comparing_function a0 Z20940_less_than_float64))
 
+;; Z22638 all grammatical features of lexeme form
+(define (Z22638_all_grammatical_features_of_lexeme_form a0)
+  (Z18755_concatenate_typed_lists
+    (Z22487_grammatical_features_of_lexeme_form a0)
+    (Z22556_grammatical_features_inherited_from_lexeme a0)))
+
 ;; Z22649 Arabic numerals to Devanagari numerals
 (define (Z22649_arabic_numerals_to_devanagari_numerals a0)
   (Z14613_replace_character_set a0 "0123456789" "०१२३४५६७८९"))
+
+;; Z22654 byte as list of Booleans
+(define (Z22654_byte_as_list_of_booleans a0)
+  (Z31716_natural_number_as_list_of_booleans (Z14567_byte_to_natural_number a0) 8))
+
+;; Z22664 indefinite noun phrase with adjective
+(define (Z22664_indefinite_noun_phrase_with_adjective a0 a1 a2)
+  (Z21760_indef_noun_phrase_with_adjective
+    (Z22696_fetch_first_lexeme_from_item_ref_and_lang_p5137 a0 a2)
+    (Z22696_fetch_first_lexeme_from_item_ref_and_lang_p5137 a1 a2)))
+
+;; Z22672 list of Booleans to Byte
+(define (Z22672_list_of_booleans_to_byte a0)
+  (Z22535_natural_number_to_byte
+    (Z13797_binary_string_to_natural_number
+    (Z12781_left_fold
+    (map Z13713_natural_number_to_digit_string (map Z17065_boolean_to_natural_number a0))
+    string-append))))
 
 ;; Z22725 to Scream Cipher
 (define (Z22725_to_scream_cipher a0)
@@ -2684,6 +7226,19 @@
     a0
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     "AȦA̧A̱ÁA̮A̋A̰ẢA̓ẠĂǍÂÅA̯A̤ȂÃĀÄÀȀAͯA̦Ⱥ"))
+
+;; Z22807 First item of lexeme list with lexical category
+(define (Z22807_first_item_of_lexeme_list_with_lexical_category a0 a1)
+  (Z13397_get_the_nth_element_of_a_list
+    a0
+    (Z28755_index_of_match_in_list a1 (map Z19298_lexical_category_of_lexeme a0))))
+
+;; Z22812 has substring (optional case-sensitivity)
+(define (Z22812_has_substring_optional_case_sensitivity a0 a1 a2)
+  (if
+    a2
+    (Z10070_has_substring a0 a1)
+    (Z10070_has_substring (Z10047_to_lowercase a0) (Z10047_to_lowercase a1))))
 
 ;; Z22820 compress list
 (define (Z22820_compress_list a0 a1)
@@ -2695,6 +7250,17 @@
     (cons (car a0) (Z22820_compress_list (cdr a0) (cdr a1)))
     (Z22820_compress_list (cdr a0) (cdr a1)))))
 
+;; Z22829 hex code point to string
+(define (Z22829_hex_code_point_to_string a0)
+  (Z15631_codepoint_to_string
+    (Z23022_natural_number_to_codepoint (Z13799_hexadecimal_to_natural_number a0))))
+
+;; Z22836 Is number a perfect square?
+(define (Z22836_is_number_a_perfect_square a0)
+  (and
+    (Z17229_is_non_negative_integer a0)
+    (Z15190_is_square_number (Z20391_integer_to_exact_natural_number_or_0 a0))))
+
 ;; Z22839 first Object or default
 (define (Z22839_first_object_or_default a0 a1)
   (Z20305_unless_exception (car a0) (null? a0) a1))
@@ -2705,9 +7271,104 @@
     a0
     (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an Z12696_contains a1 a0)))
 
+;; Z22866 read Byte
+(define (Z22866_read_byte a0 a1)
+  (Z22858_read_byte_from_string a0))
+
 ;; Z22874 list is duplicate-free?
 (define (Z22874_list_is_duplicate_free a0)
   (Z12864_lists_have_equal_length (Z19202_remove_duplicates_from_typed_list a0) a0))
+
+;; Z22883 Byte as prefixed hexadecimal string
+(define (Z22883_byte_as_prefixed_hexadecimal_string a0)
+  (string-append "0x" (Z10018_to_uppercase (Z15702_byte_as_hex_string a0))))
+
+;; Z22887 display Byte
+(define (Z22887_display_byte a0 a1)
+  (Z22883_byte_as_prefixed_hexadecimal_string a0))
+
+;; Z22910 read Gregorian year
+(define (Z22910_read_gregorian_year a0 a1)
+  (Z20198_string_as_gregorian_year a0))
+
+;; Z22920 Gregorian year to ISO 8601 year string
+(define (Z22920_gregorian_year_to_iso_8601_year_string a0)
+  (string-append
+    (if
+    (Z17215_is_negative_integer (Z20257_gregorian_year_to_iso_8601_year_integer a0))
+    "-"
+    Z11853_empty_string)
+    (Z14770_pad_string_with_leading_characters_to_specified_length
+    (Z13713_natural_number_to_digit_string
+    (Z17144_absolute_value_of_integer_as_natural_number
+    (Z20257_gregorian_year_to_iso_8601_year_integer a0)))
+    4
+    "0")))
+
+;; Z22941 display Day of Roman Year
+(define (Z22941_display_day_of_roman_year a0 a1)
+  (Z13036_apply
+    (Z14310_select_a_function_based_on_language Z22940_config_for_displaying_day_of_roman_year a1)
+    a0))
+
+;; Z22946 binary string as byte
+(define (Z22946_binary_string_as_byte a0)
+  (Z22535_natural_number_to_byte (Z13797_binary_string_to_natural_number a0)))
+
+;; Z22973 String for function signature search
+(define (Z22973_string_for_function_signature_search a0 a1)
+  (car
+    (Z22849_strings_for_function_searches
+    (Z22764_string_from_type a0)
+    (list )
+    (map Z22764_string_from_type a1)
+    (list )
+    ""
+    (list )
+    (list ))))
+
+;; Z23028 digit string to codepoint
+(define (Z23028_digit_string_to_codepoint a0)
+  (Z23022_natural_number_to_codepoint (Z14283_string_of_digits_as_natural_number a0)))
+
+;; Z23031 codepoint from string leniently
+(define (Z23031_codepoint_from_string_leniently a0)
+  (if
+    (Z13489_is_decimal_natural_number_string_of_arabic_numerals a0)
+    (Z23028_digit_string_to_codepoint a0)
+    (if
+    (or
+    (Z10615_string_starts_with (Z10047_to_lowercase a0) "u+")
+    (Z10615_string_starts_with (Z10047_to_lowercase a0) "\\u"))
+    (Z23022_natural_number_to_codepoint
+    (Z13799_hexadecimal_to_natural_number (Z14636_remove_first_n_characters_of_string a0 2)))
+    (car (Z22717_string_to_codepoint_list a0)))))
+
+;; Z23041 read code point
+(define (Z23041_read_code_point a0 a1)
+  (Z23031_codepoint_from_string_leniently a0))
+
+;; Z23061 codepoint to U+HHHH notation
+(define (Z23061_codepoint_to_u_hhhh_notation a0)
+  (string-append
+    "U+"
+    (Z14770_pad_string_with_leading_characters_to_specified_length
+    (Z10018_to_uppercase
+    (Z13781_natural_number_to_hexadecimal_lowercase_without_prefix
+    (Z23063_code_point_to_natural_number a0)))
+    4
+    "0")))
+
+;; Z23072 function searches from Type
+(define (Z23072_function_searches_from_type a0 a1)
+  (Z22849_strings_for_function_searches
+    (Z22764_string_from_type a0)
+    (list )
+    (list )
+    (list )
+    (if a1 (Z22764_string_from_type a0) "")
+    (list )
+    (list )))
 
 ;; Z23082 First plural Lexeme form for a Wikidata Item
 (define (Z23082_first_plural_lexeme_form_for_a_wikidata_item a0 a1)
@@ -2721,9 +7382,51 @@
 (define (Z23120_is_non_empty_list a0)
   (not (null? a0)))
 
+;; Z23130 equal lexeme sense references
+(define (Z23130_equal_lexeme_sense_references a0 a1)
+  (string=? (Z23127_lexeme_sense_reference_string a0) (Z23127_lexeme_sense_reference_string a1)))
+
+;; Z23136 unit symbol of item
+(define (Z23136_unit_symbol_of_item a0 a1)
+  (Z23159_string_of_first_listed_monolingual_text_with_lang
+    (map
+    Z19308_value_of_wikidata_statement
+    (filter Z23147_statement_has_predicate_unit_symbol (Z22220_statements_from_wikidata_item a0)))
+    a1))
+
+;; Z23139 statement has value type monolingual text?
+(define (Z23139_statement_has_value_type_monolingual_text a0)
+  (Z19084_same_type
+    (Z16829_type_of_object (Z19308_value_of_wikidata_statement a0))
+    Z11_monolingual_text))
+
 ;; Z23143 filter list of monolingual texts by language
 (define (Z23143_filter_list_of_monolingual_texts_by_language a0 a1)
   (Z28316_filter_with_second_common_element Z33175_language_of_monolingual_text_is_exactly a0 a1))
+
+;; Z23211 search for similar functions
+(define (Z23211_search_for_similar_functions a0)
+  (Z22973_string_for_function_signature_search
+    (Z10112_function_return_type a0)
+    (map Z21174_type_declared_for_argument (Z21177_get_list_of_argument_declarations a0))))
+
+;; Z23216 Calculate mass
+(define (Z23216_calculate_mass a0 a1)
+  (Z19706_multiply_rational_numbers a0 a1))
+
+;; Z23275 (?) validate Rational number
+(define (Z23275_validate_rational_number a0)
+  (if
+    (Z19583_is_this_rational_number_valid
+    (Z19717_sign_of_rational_number a0)
+    (Z19733_numerator_of_unsimplified_rational_number a0)
+    (Z19862_denominator_of_unsimplified_rational_number a0))
+    a0
+    (Z851_throw_error Z516_argument_value_error (list "Invalid Rational number"))))
+
+;; Z23293 Multiplication table
+(define (Z23293_multiplication_table a0 a1)
+  (Z27861_html_raw_content_to_html_fragment (Z28219_multiplication_table_code a0 a1)))
 
 ;; Z23330 equal Wikidata statement rank
 (define (Z23330_equal_wikidata_statement_rank a0 a1)
@@ -2736,6 +7439,13 @@
 ;; Z23341 same Argument reference
 (define (Z23341_same_argument_reference a0 a1)
   (Z13052_object_equality a0 a1))
+
+;; Z23344 Natural numbers in Devanagari script
+(define (Z23344_natural_numbers_in_devanagari_script a0)
+  (Z14613_replace_character_set
+    (Z23283_display_number_with_commas_indian_style a0)
+    "0123456789"
+    (Z22302_string_of_numeral_digits_in_order_from_language Z1820_hindi)))
 
 ;; Z23356 compare after applying a single unary function
 (define (Z23356_compare_after_applying_a_single_unary_function a0 a1 a2 a3)
@@ -2753,13 +7463,110 @@
 (define (Z23379_same_programming_language a0 a1)
   (Z13052_object_equality a0 a1))
 
+;; Z23403 Wikidata item reference to Gregorian month
+(define (Z23403_wikidata_item_reference_to_gregorian_month a0)
+  (Z30531_reference_or_object_from_zid_string
+    (Z31973_title_of_wikidata_sitelink (Z34914_wikifunctions_sitelink_for_wikidata_item a0))))
+
+;; Z23415 Wikidata reference to day of the week
+(define (Z23415_wikidata_reference_to_day_of_the_week a0)
+  (Z30531_reference_or_object_from_zid_string
+    (Z31973_title_of_wikidata_sitelink (Z34914_wikifunctions_sitelink_for_wikidata_item a0))))
+
+;; Z23439 values from object
+(define (Z23439_values_from_object a0)
+  (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    Z803_value_by_key
+    (map fst (cdr (Z805_reify a0)))
+    a0))
+
+;; Z23451 Wikidata statement with highest rank
+(define (Z23451_wikidata_statement_with_highest_rank a0 a1)
+  (car (Z29694_get_best_statements_for_wikidata_prop_from_item a0 a1)))
+
+;; Z23459 Wikidata statement value with higher rank
+(define (Z23459_wikidata_statement_value_with_higher_rank a0 a1)
+  (Z19308_value_of_wikidata_statement (Z23451_wikidata_statement_with_highest_rank a0 a1)))
+
+;; Z23486 count lexeme senses in lexeme
+(define (Z23486_count_lexeme_senses_in_lexeme a0)
+  (length (Z19282_list_of_lexeme_senses_from_lexeme a0)))
+
+;; Z23489 translation claims of lexeme sense
+(define (Z23489_translation_claims_of_lexeme_sense a0)
+  (filter Z23490_predicate_is_p5972 (Z23116_claims_of_lexeme_sense a0)))
+
 ;; Z23494 is Wikidata statement rank undeprecated?
 (define (Z23494_is_wikidata_statement_rank_undeprecated a0)
   (not (Z23330_equal_wikidata_statement_rank a0 Z6043_deprecated)))
 
+;; Z23499 does Wikidata statement have non-deprecated rank?
+(define (Z23499_does_wikidata_statement_have_non_deprecated_rank a0)
+  (Z23494_is_wikidata_statement_rank_undeprecated (Z20206_rank_of_wikidata_statement a0)))
+
 ;; Z23502 filter list of statements for undeprecated ones
 (define (Z23502_filter_list_of_statements_for_undeprecated_ones a0)
   (filter Z23499_does_wikidata_statement_have_non_deprecated_rank a0))
+
+;; Z23513 statement has value type string?
+(define (Z23513_statement_has_value_type_string a0)
+  (Z19084_same_type (Z16829_type_of_object (Z19308_value_of_wikidata_statement a0)) Z6_string))
+
+;; Z23516 value type of statement
+(define (Z23516_value_type_of_statement a0)
+  (Z16829_type_of_object (Z19308_value_of_wikidata_statement a0)))
+
+;; Z23523 is undulating number
+(define (Z23523_is_undulating_number a0)
+  (or
+    (<= a0 99)
+    (and
+    (not
+    (Z22683_code_point_equality
+    (Z32065_get_first_code_point_of_string (Z13713_natural_number_to_digit_string a0))
+    (Z24472_get_nth_code_point_of_string (Z13713_natural_number_to_digit_string a0) 2)))
+    (Z10615_string_starts_with
+    (Z22693_codepoint_list_to_string
+    (Z13247_faro_out_shuffle
+    (Z17895_untype_a_list
+    (Z12767_concatenate_two_untyped_lists
+    (Z21389_replicate_object_n_times
+    (Z32065_get_first_code_point_of_string (Z13713_natural_number_to_digit_string a0))
+    (Z15111_floor_n_2 (add1 (string-length (Z13713_natural_number_to_digit_string a0)))))
+    (Z21389_replicate_object_n_times
+    (Z24472_get_nth_code_point_of_string (Z13713_natural_number_to_digit_string a0) 2)
+    (Z15111_floor_n_2 (add1 (string-length (Z13713_natural_number_to_digit_string a0)))))))))
+    (Z13713_natural_number_to_digit_string a0)))))
+
+;; Z23528 statement has value type QID?
+(define (Z23528_statement_has_value_type_qid a0)
+  (Z19084_same_type
+    (Z16829_type_of_object (Z19308_value_of_wikidata_statement a0))
+    Z6091_wikidata_item_reference))
+
+;; Z23531 statement has value type Lexeme ID?
+(define (Z23531_statement_has_value_type_lexeme_id a0)
+  (Z19084_same_type
+    (Z16829_type_of_object (Z19308_value_of_wikidata_statement a0))
+    Z6095_wikidata_lexeme_reference))
+
+;; Z23534 statement has value type LFID?
+(define (Z23534_statement_has_value_type_lfid a0)
+  (Z19084_same_type
+    (Z16829_type_of_object (Z19308_value_of_wikidata_statement a0))
+    Z6094_wikidata_lexeme_form_reference))
+
+;; Z23537 statement has value type LSID?
+(define (Z23537_statement_has_value_type_lsid a0)
+  (Z19084_same_type
+    (Z16829_type_of_object (Z19308_value_of_wikidata_statement a0))
+    Z6096_wikidata_lexeme_sense_reference))
+
+;; Z23543 item is instance of these items (references)
+(define (Z23543_item_is_instance_of_these_items_references a0)
+  (map
+    Z19308_value_of_wikidata_statement
+    (filter Z23540_predicate_is_p31 (Z22220_statements_from_wikidata_item a0))))
 
 ;; Z23568 not in
 (define (Z23568_not_in a0 a1)
@@ -2785,6 +7592,22 @@
     (map Z19302_lexeme_forms_from_lexeme (Z23616_lexemes_from_wikidata_item_reference a0 a1))
     1))
 
+;; Z23616 Lexemes from Wikidata item reference
+(define (Z23616_lexemes_from_wikidata_item_reference a0 a1)
+  (Z18475_return_typed_list
+    (map Z6825_fetch_wikidata_lexeme (Z23471_lexeme_references_from_wikidata_item_reference a0 a1))))
+
+;; Z23630 (#) add two numbers
+(define (Z23630_add_two_numbers a0 a1)
+  (Z23660_rational_number_as_simplest_type
+    (Z19679_add_rational_numbers
+    (Z23668_number_as_rational_number a0)
+    (Z23668_number_as_rational_number a1))))
+
+;; Z23645 is Integer (type)?
+(define (Z23645_is_integer_type a0)
+  (Z19352_object_has_this_type a0 Z16683_integer))
+
 ;; Z23649 (#) Object to Natural Number
 (define (Z23649_object_to_natural_number a0)
   a0)
@@ -2793,9 +7616,47 @@
 (define (Z23652_object_to_integer a0)
   a0)
 
+;; Z23656 is float64 an integer?
+(define (Z23656_is_float64_an_integer a0)
+  (and
+    (Z34827_is_float64_finite a0)
+    (Z19806_is_rational_number_an_integer (Z21071_float_as_rational a0))))
+
+;; Z23660 Rational number as simplest type
+(define (Z23660_rational_number_as_simplest_type a0)
+  (if
+    (Z19806_is_rational_number_an_integer a0)
+    (if
+    (Z21714_is_negative_rational_number a0)
+    (Z19841_rational_to_nearest_integer_even_integer_tiebreak a0)
+    (Z19722_numerator_of_simplified_rational_number a0))
+    a0))
+
+;; Z23668 number as Rational number
+(define (Z23668_number_as_rational_number a0)
+  (if
+    (Z23672_is_float64 a0)
+    (Z21071_float_as_rational a0)
+    (if
+    (Z23645_is_integer_type a0)
+    (Z19744_integer_as_rational_number a0)
+    (if (Z15818_is_natural_number a0) (Z21653_natural_number_as_rational_number a0) a0))))
+
+;; Z23672 is float64?
+(define (Z23672_is_float64 a0)
+  (Z19352_object_has_this_type a0 Z20838_float64))
+
+;; Z23680 best ranked statement from list
+(define (Z23680_best_ranked_statement_from_list a0)
+  (car (Z29688_select_best_wikidata_statements a0)))
+
 ;; Z23683 is Wikidata statement rank preferred?
 (define (Z23683_is_wikidata_statement_rank_preferred a0)
   (Z23330_equal_wikidata_statement_rank a0 Z6041_preferred))
+
+;; Z23688 does Wikidata statement have preferred rank?
+(define (Z23688_does_wikidata_statement_have_preferred_rank a0)
+  (Z23683_is_wikidata_statement_rank_preferred (Z20206_rank_of_wikidata_statement a0)))
 
 ;; Z23694 prototype Wikidata entity reference picker
 (define (Z23694_prototype_wikidata_entity_reference_picker a0 a1 a2)
@@ -2815,9 +7676,24 @@
 (define (Z23742_object_as_wikidata_item_reference a0)
   a0)
 
+;; Z23762 selected labels and properties of Wikidata item
+(define (Z23762_selected_labels_and_properties_of_wikidata_item a0 a1 a2)
+  (Z30120_fetch_wikidata_item_or_parts a0 (list Z6033_labels Z6036_statements) a1 a2))
+
 ;; Z23772 Integer list from Natural number list
 (define (Z23772_integer_list_from_natural_number_list a0)
   (Z18475_return_typed_list (map Z17101_natural_number_to_integer a0)))
+
+;; Z23833 current date
+(define (Z23833_current_date)
+  (Z23808_gregorian_calendar_date_from_unix_timestamp (Z19637_current_time )))
+
+;; Z23843 Natural numbers in Telugu script
+(define (Z23843_natural_numbers_in_telugu_script a0)
+  (Z14613_replace_character_set
+    (Z23283_display_number_with_commas_indian_style a0)
+    "0123456789"
+    (Z22302_string_of_numeral_digits_in_order_from_language Z1429_telugu)))
 
 ;; Z23882 partial sum of series from k=1 (rational)
 (define (Z23882_partial_sum_of_series_from_k_1_rational a0 a1)
@@ -2829,13 +7705,55 @@
 (define (Z23883_is_zero_natural_number a0)
   (= a0 0))
 
+;; Z23888 1/n (rational from natural number)
+(define (Z23888_1_n_rational_from_natural_number a0)
+  (Z19711_multiplicative_inverse_of_rational_number (Z21653_natural_number_as_rational_number a0)))
+
+;; Z23896 Chudnovsky term
+(define (Z23896_chudnovsky_term a0)
+  (Z19854_simplified_rational_from_z_numerator_denominator
+    (Z33745_make_integer
+    (Z17053_boolean_to_sign (Z13555_natural_number_is_even a0))
+    (* (Z13667_factorial (* 6 a0)) (+ (* 545140134 a0) 13591409)))
+    (Z14694_multiply_three_natural_numbers
+    (Z13667_factorial (* 3 a0))
+    (Z13977_n_3 (Z13667_factorial a0))
+    (expt 640320 (* 3 a0)))))
+
+;; Z23899 partial sum of series from k=0 (rational)
+(define (Z23899_partial_sum_of_series_from_k_0_rational a0 a1)
+  (Z19679_add_rational_numbers
+    (Z23668_number_as_rational_number (Z13036_apply a0 0))
+    (Z23882_partial_sum_of_series_from_k_1_rational a0 a1)))
+
 ;; Z23902 pi approximation from Chudnovsky partial sum (f64)
 (define (Z23902_pi_approximation_from_chudnovsky_partial_sum_f64 a0)
   Z20862_pi_float64_approximation)
 
+;; Z23917 rational from truncated simple continued fraction
+(define (Z23917_rational_from_truncated_simple_continued_fraction a0 a1)
+  (Z21835_rational_from_finite_simple_continued_fraction
+    (Z23921_generate_list_from_function_index_0_n a0 a1)))
+
 ;; Z23921 generate list from function, index 0..=n
 (define (Z23921_generate_list_from_function_index_0_n a0 a1)
   (cons (Z13036_apply a0 0) (Z21821_generate_untyped_list_of_length a0 a1)))
+
+;; Z23934 non-integer part of rational
+(define (Z23934_non_integer_part_of_rational a0)
+  (Z19699_subtract_rational_numbers
+    a0
+    (Z19744_integer_as_rational_number (Z19682_truncate_rational_number a0))))
+
+;; Z23997 is a standard date format?
+(define (Z23997_is_a_standard_date_format a0)
+  (Z14200_is_valid_8601_date_or_time_string a0))
+
+;; Z24041 display day of the week
+(define (Z24041_display_day_of_the_week a0 a1)
+  (Z24102_label_of_item_reference_in_specific_general_lang
+    (Z23419_day_of_the_week_to_wikidata_reference a0)
+    a1))
 
 ;; Z24055 add vectors (rational)
 (define (Z24055_add_vectors_rational a0 a1)
@@ -2850,6 +7768,35 @@
     Z19706_multiply_rational_numbers
     a1
     a0))
+
+;; Z24073 Sandbox Composition
+(define (Z24073_sandbox_composition a0)
+  (Z23753_label_of_item_reference_in_language_or_to_mul
+    (Z24074_sandbox_javascript (car a0))
+    (Z16360_second_element_error_handling a0)))
+
+;; Z24086 display Gregorian calendar month
+(define (Z24086_display_gregorian_calendar_month a0 a1)
+  (Z23753_label_of_item_reference_in_language_or_to_mul
+    (Z22240_gregorian_calendar_month_to_wikidata_reference a0)
+    a1))
+
+;; Z24097 language from language variant
+(define (Z24097_language_from_language_variant a0)
+  (Z860_language_tag_to_language
+    (Z11410_discard_from_start_of_first_substring (Z14329_language_to_language_tag a0) "-")))
+
+;; Z24102 label of item reference in specific/general lang
+(define (Z24102_label_of_item_reference_in_specific_general_lang a0 a1)
+  (if
+    (Z10070_has_substring (Z14329_language_to_language_tag a1) "-")
+    (if
+    (Z10008_is_empty_string (Z23753_label_of_item_reference_in_language_or_to_mul a0 a1))
+    (Z23753_label_of_item_reference_in_language_or_to_mul
+    a0
+    (Z24097_language_from_language_variant a1))
+    (Z23753_label_of_item_reference_in_language_or_to_mul a0 a1))
+    (Z23753_label_of_item_reference_in_language_or_to_mul a0 a1)))
 
 ;; Z24107 Wikidata lexemes by item, property and language
 (define (Z24107_wikidata_lexemes_by_item_property_and_language a0 a1 a2)
@@ -2873,6 +7820,26 @@
 ;; Z24117 if true, returns tested argument
 (define (Z24117_if_true_returns_tested_argument a0 a1 a2)
   (if (Z13036_apply a1 a0) a0 a2))
+
+;; Z24126 is Gregorian calendar date?
+(define (Z24126_is_gregorian_calendar_date a0)
+  (Z19084_same_type (Z16829_type_of_object a0) Z20420_gregorian_calendar_date))
+
+;; Z24130 is Day of roman year
+(define (Z24130_is_day_of_roman_year a0)
+  (Z19084_same_type (Z16829_type_of_object a0) Z20342_day_of_roman_year))
+
+;; Z24139 item labels filtered by language list
+(define (Z24139_item_labels_filtered_by_language_list a0 a1)
+  (Z34902_select_monolingual_texts_in_any_of_several_langs
+    (Z35806_labels_of_wikidata_item_typed_list_monolingual a0)
+    a1))
+
+;; Z24144 fallback languages
+(define (Z24144_fallback_languages a0 a1 a2)
+  (map
+    Z860_language_tag_to_language
+    (Z24307_fallback_language_codes_strings (Z14329_language_to_language_tag a0) a1 a2)))
 
 ;; Z24150 append element to Typed list conditionally
 (define (Z24150_append_element_to_typed_list_conditionally a0 a1 a2)
@@ -2921,6 +7888,19 @@
 (define (Z24219_list_of_language_codes_to_languages a0)
   (Z18475_return_typed_list (map Z860_language_tag_to_language a0)))
 
+;; Z24236 left multiplication between vector and matrix
+(define (Z24236_left_multiplication_between_vector_and_matrix a0 a1)
+  (Z24191_right_product_of_matrix_with_vector (Z24176_transpose_rational_matrix a1) a0))
+
+;; Z24239 matrix multiplication
+(define (Z24239_matrix_multiplication a0 a1)
+  (if
+    (Z12755_is_single_element_list a0)
+    (Z24177_vector_in_row_matrix (Z24236_left_multiplication_between_vector_and_matrix (car a0) a1))
+    (cons
+    (Z24236_left_multiplication_between_vector_and_matrix (car a0) a1)
+    (Z24239_matrix_multiplication (cdr a0) a1))))
+
 ;; Z24240 select representations from forms by language
 (define (Z24240_select_representations_from_forms_by_language a0 a1 a2)
   (Z34902_select_monolingual_texts_in_any_of_several_langs
@@ -2929,6 +7909,35 @@
     Z22396_get_texts_of_representations_of_wd_lexeme_form
     (Z19243_select_lexeme_forms_from_lexeme a0 a1)))
     a2))
+
+;; Z24255 representations from lexeme form by language
+(define (Z24255_representations_from_lexeme_form_by_language a0 a1 a2)
+  (if
+    (or
+    (null? a1)
+    (Z12846_contains_all_of_list (Z22638_all_grammatical_features_of_lexeme_form a0) a1))
+    (Z34902_select_monolingual_texts_in_any_of_several_langs
+    (Z19279_multilingual_text_to_list_of_monolingual_texts
+    (Z22399_representations_of_lexeme_form a0))
+    a2)
+    (list )))
+
+;; Z24262 Newton's method next estimate (rational)
+(define (Z24262_newton_s_method_next_estimate_rational a0 a1 a2)
+  (Z19699_subtract_rational_numbers
+    a0
+    (Z19708_divide_rational_numbers (Z13036_apply a1 a0) (Z13036_apply a2 a0))))
+
+;; Z24271 Newton's method, n iterations (rational)
+(define (Z24271_newton_s_method_n_iterations_rational a0 a1 a2 a3)
+  (if
+    (Z23883_is_zero_natural_number a3)
+    a0
+    (Z24271_newton_s_method_n_iterations_rational
+    (Z24262_newton_s_method_next_estimate_rational a0 a1 a2)
+    a1
+    a2
+    (Z13582_decrement_natural_number_by_one a3))))
 
 ;; Z24280 select lexeme forms from lexeme by language
 (define (Z24280_select_lexeme_forms_from_lexeme_by_language a0 a1 a2)
@@ -2942,9 +7951,203 @@
 (define (Z24299_prepend_column_to_matrix a0 a1)
   (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l cons a0 a1))
 
+;; Z24307 fallback language codes (strings)
+(define (Z24307_fallback_language_codes_strings a0 a1 a2)
+  (if
+    a1
+    (if
+    a2
+    (if
+    (and
+    (Z12696_contains
+    (Z24606_get_element_of_string_keyed_map (Z899_unquote Z33395_language_codes_fallback_list) a0)
+    "en")
+    (Z12696_contains
+    (Z24606_get_element_of_string_keyed_map (Z899_unquote Z33395_language_codes_fallback_list) a0)
+    "mul"))
+    (if
+    (Z33359_is_key_present_in_typed_map
+    (Z899_unquote Z33395_language_codes_fallback_list)
+    (Z12964_last_element
+    (Z24606_get_element_of_string_keyed_map (Z899_unquote Z33395_language_codes_fallback_list) a0)))
+    (Z13078_remove_duplicates_from_untyped_list
+    (Z12767_concatenate_two_untyped_lists
+    (Z24606_get_element_of_string_keyed_map (Z899_unquote Z33395_language_codes_fallback_list) a0)
+    (Z24307_fallback_language_codes_strings
+    (Z12964_last_element
+    (Z24606_get_element_of_string_keyed_map (Z899_unquote Z33395_language_codes_fallback_list) a0))
+    #t
+    #t)))
+    (if
+    (Z10070_has_substring
+    (Z12964_last_element
+    (Z24606_get_element_of_string_keyed_map (Z899_unquote Z33395_language_codes_fallback_list) a0))
+    "-")
+    (Z18597_append_element_to_untyped_list
+    (Z11410_discard_from_start_of_first_substring
+    (Z12964_last_element
+    (Z24606_get_element_of_string_keyed_map (Z899_unquote Z33395_language_codes_fallback_list) a0))
+    "-")
+    (Z24606_get_element_of_string_keyed_map (Z899_unquote Z33395_language_codes_fallback_list) a0))
+    (Z24150_append_element_to_typed_list_conditionally
+    "en"
+    (Z24150_append_element_to_typed_list_conditionally
+    "mul"
+    (Z24606_get_element_of_string_keyed_map (Z899_unquote Z33395_language_codes_fallback_list) a0)
+    (and
+    (not
+    (Z12696_contains
+    (Z24606_get_element_of_string_keyed_map (Z899_unquote Z33395_language_codes_fallback_list) a0)
+    "mul"))
+    a1))
+    (and
+    (not
+    (Z12696_contains
+    (Z24606_get_element_of_string_keyed_map (Z899_unquote Z33395_language_codes_fallback_list) a0)
+    "en"))
+    (and a1 a2)))))
+    (Z24606_get_element_of_string_keyed_map (Z899_unquote Z33395_language_codes_fallback_list) a0))
+    (Z24203_discard_tail_of_typed_list_after_first_match
+    (identity
+    (if
+    (and
+    (Z12696_contains
+    (Z24606_get_element_of_string_keyed_map (Z899_unquote Z33395_language_codes_fallback_list) a0)
+    "en")
+    (Z12696_contains
+    (Z24606_get_element_of_string_keyed_map (Z899_unquote Z33395_language_codes_fallback_list) a0)
+    "mul"))
+    (if
+    (Z33359_is_key_present_in_typed_map
+    (Z899_unquote Z33395_language_codes_fallback_list)
+    (Z12964_last_element
+    (Z24606_get_element_of_string_keyed_map (Z899_unquote Z33395_language_codes_fallback_list) a0)))
+    (Z13078_remove_duplicates_from_untyped_list
+    (Z12767_concatenate_two_untyped_lists
+    (Z24606_get_element_of_string_keyed_map (Z899_unquote Z33395_language_codes_fallback_list) a0)
+    (Z24307_fallback_language_codes_strings
+    (Z12964_last_element
+    (Z24606_get_element_of_string_keyed_map (Z899_unquote Z33395_language_codes_fallback_list) a0))
+    #t
+    #t)))
+    (if
+    (Z10070_has_substring
+    (Z12964_last_element
+    (Z24606_get_element_of_string_keyed_map (Z899_unquote Z33395_language_codes_fallback_list) a0))
+    "-")
+    (Z18597_append_element_to_untyped_list
+    (Z11410_discard_from_start_of_first_substring
+    (Z12964_last_element
+    (Z24606_get_element_of_string_keyed_map (Z899_unquote Z33395_language_codes_fallback_list) a0))
+    "-")
+    (Z24606_get_element_of_string_keyed_map (Z899_unquote Z33395_language_codes_fallback_list) a0))
+    (Z24150_append_element_to_typed_list_conditionally
+    "en"
+    (Z24150_append_element_to_typed_list_conditionally
+    "mul"
+    (Z24606_get_element_of_string_keyed_map (Z899_unquote Z33395_language_codes_fallback_list) a0)
+    (and
+    (not
+    (Z12696_contains
+    (Z24606_get_element_of_string_keyed_map (Z899_unquote Z33395_language_codes_fallback_list) a0)
+    "mul"))
+    a1))
+    (and
+    (not
+    (Z12696_contains
+    (Z24606_get_element_of_string_keyed_map (Z899_unquote Z33395_language_codes_fallback_list) a0)
+    "en"))
+    (and a1 a2)))))
+    (Z24606_get_element_of_string_keyed_map (Z899_unquote Z33395_language_codes_fallback_list) a0)))
+    "mul"))
+    (Z12856_remove_first_matching_element_from_list
+    (identity
+    (if
+    (and
+    (Z12696_contains
+    (Z24606_get_element_of_string_keyed_map (Z899_unquote Z33395_language_codes_fallback_list) a0)
+    "en")
+    (Z12696_contains
+    (Z24606_get_element_of_string_keyed_map (Z899_unquote Z33395_language_codes_fallback_list) a0)
+    "mul"))
+    (if
+    (Z33359_is_key_present_in_typed_map
+    (Z899_unquote Z33395_language_codes_fallback_list)
+    (Z12964_last_element
+    (Z24606_get_element_of_string_keyed_map (Z899_unquote Z33395_language_codes_fallback_list) a0)))
+    (Z13078_remove_duplicates_from_untyped_list
+    (Z12767_concatenate_two_untyped_lists
+    (Z24606_get_element_of_string_keyed_map (Z899_unquote Z33395_language_codes_fallback_list) a0)
+    (Z24307_fallback_language_codes_strings
+    (Z12964_last_element
+    (Z24606_get_element_of_string_keyed_map (Z899_unquote Z33395_language_codes_fallback_list) a0))
+    #t
+    #t)))
+    (if
+    (Z10070_has_substring
+    (Z12964_last_element
+    (Z24606_get_element_of_string_keyed_map (Z899_unquote Z33395_language_codes_fallback_list) a0))
+    "-")
+    (Z18597_append_element_to_untyped_list
+    (Z11410_discard_from_start_of_first_substring
+    (Z12964_last_element
+    (Z24606_get_element_of_string_keyed_map (Z899_unquote Z33395_language_codes_fallback_list) a0))
+    "-")
+    (Z24606_get_element_of_string_keyed_map (Z899_unquote Z33395_language_codes_fallback_list) a0))
+    (Z24150_append_element_to_typed_list_conditionally
+    "en"
+    (Z24150_append_element_to_typed_list_conditionally
+    "mul"
+    (Z24606_get_element_of_string_keyed_map (Z899_unquote Z33395_language_codes_fallback_list) a0)
+    (and
+    (not
+    (Z12696_contains
+    (Z24606_get_element_of_string_keyed_map (Z899_unquote Z33395_language_codes_fallback_list) a0)
+    "mul"))
+    a1))
+    (and
+    (not
+    (Z12696_contains
+    (Z24606_get_element_of_string_keyed_map (Z899_unquote Z33395_language_codes_fallback_list) a0)
+    "en"))
+    (and a1 a2)))))
+    (Z24606_get_element_of_string_keyed_map (Z899_unquote Z33395_language_codes_fallback_list) a0)))
+    "mul")))
+
 ;; Z24331 is not empty string
 (define (Z24331_is_not_empty_string a0)
   (not (Z10008_is_empty_string a0)))
+
+;; Z24342 squared norm of a vector (rational)
+(define (Z24342_squared_norm_of_a_vector_rational a0)
+  (Z24185_dot_product_rational_vectors a0 a0))
+
+;; Z24346 norm of a vector
+(define (Z24346_norm_of_a_vector a0)
+  (Z24081_square_root_of_rational_as_rational (Z24342_squared_norm_of_a_vector_rational a0)))
+
+;; Z24350 Lorentz factor from velocity as vector
+(define (Z24350_lorentz_factor_from_velocity_as_vector a0)
+  (Z23352_lorentz_factor_from_velocity (Z24346_norm_of_a_vector a0)))
+
+;; Z24372 partial sum of power series
+(define (Z24372_partial_sum_of_power_series a0 a1 a2 a3)
+  (if
+    (Z23883_is_zero_natural_number a2)
+    (Z23668_number_as_rational_number (Z13036_apply a3 0))
+    (Z19679_add_rational_numbers
+    (Z24372_partial_sum_of_power_series a0 a1 (Z13582_decrement_natural_number_by_one a2) a3)
+    (Z19706_multiply_rational_numbers
+    (Z23668_number_as_rational_number (Z13036_apply a3 a2))
+    (Z21320_power_of_rational_number
+    (Z19699_subtract_rational_numbers a0 a1)
+    (Z17101_natural_number_to_integer a2))))))
+
+;; Z24374 partial sum of zero-centred power series
+(define (Z24374_partial_sum_of_zero_centred_power_series a0 a1 a2)
+  (Z24185_dot_product_rational_vectors
+    (map Z23668_number_as_rational_number (Z24387_generate_list_of_f_0_to_f_n a1 a2))
+    (Z24382_generate_list_of_powers_of_q_from_0_to_n a0 a1)))
 
 ;; Z24382 generate list of powers of q from 0 to n
 (define (Z24382_generate_list_of_powers_of_q_from_0_to_n a0 a1)
@@ -2958,6 +8161,31 @@
 (define (Z24387_generate_list_of_f_0_to_f_n a0 a1)
   (cons (Z13036_apply a1 0) (Z21821_generate_untyped_list_of_length a1 a0)))
 
+;; Z24395 partial sum of power series from a_n = 1/f(n)
+(define (Z24395_partial_sum_of_power_series_from_a_n_1_f_n a0 a1 a2 a3)
+  (if
+    (Z23883_is_zero_natural_number a2)
+    (Z19711_multiplicative_inverse_of_rational_number
+    (Z23668_number_as_rational_number (Z13036_apply a3 0)))
+    (Z19679_add_rational_numbers
+    (Z24395_partial_sum_of_power_series_from_a_n_1_f_n
+    a0
+    a1
+    (Z13582_decrement_natural_number_by_one a2)
+    a3)
+    (Z19706_multiply_rational_numbers
+    (Z19711_multiplicative_inverse_of_rational_number
+    (Z23668_number_as_rational_number (Z13036_apply a3 a2)))
+    (Z21320_power_of_rational_number
+    (Z19699_subtract_rational_numbers a0 a1)
+    (Z17101_natural_number_to_integer a2))))))
+
+;; Z24403 is rational in range (inclusive)
+(define (Z24403_is_rational_in_range_inclusive a0 a1 a2)
+  (and
+    (Z19754_less_than_or_equal_to_rational_numbers a1 a0)
+    (Z19754_less_than_or_equal_to_rational_numbers a0 a2)))
+
 ;; Z24436 multiply rational and matrix
 (define (Z24436_multiply_rational_and_matrix a0 a1)
   (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an
@@ -2965,13 +8193,94 @@
     a0
     a1))
 
+;; Z24453 String to grapheme list
+(define (Z24453_string_to_grapheme_list a0)
+  (if
+    (Z10008_is_empty_string a0)
+    (list )
+    (cons
+    (Z31145_first_grapheme_cluster_of_string a0)
+    (Z24453_string_to_grapheme_list
+    (Z14636_remove_first_n_characters_of_string
+    (Z10384_normalize_unicode a0)
+    (string-length (Z31145_first_grapheme_cluster_of_string a0)))))))
+
+;; Z24472 get Nth code point of String
+(define (Z24472_get_nth_code_point_of_string a0 a1)
+  (Z32065_get_first_code_point_of_string (Z14244_get_nth_character_of_a_string a0 a1)))
+
+;; Z24487 square of rational number
+(define (Z24487_square_of_rational_number a0)
+  (Z19706_multiply_rational_numbers a0 a0))
+
+;; Z24506 same rational within tolerance
+(define (Z24506_same_rational_within_tolerance a0 a1 a2)
+  (Z19754_less_than_or_equal_to_rational_numbers
+    (Z21692_absolute_value_of_rational_number (Z19699_subtract_rational_numbers a0 a1))
+    a2))
+
+;; Z24539 Newton's method estimate within tolerance
+(define (Z24539_newton_s_method_estimate_within_tolerance a0 a1 a2 a3)
+  (if
+    (Z24506_same_rational_within_tolerance
+    (Z24262_newton_s_method_next_estimate_rational a0 a1 a2)
+    a0
+    a3)
+    (Z24262_newton_s_method_next_estimate_rational a0 a1 a2)
+    (Z24539_newton_s_method_estimate_within_tolerance
+    (Z24262_newton_s_method_next_estimate_rational a0 a1 a2)
+    a1
+    a2
+    a3)))
+
 ;; Z24542 object metric meets criteria
 (define (Z24542_object_metric_meets_criteria a0 a1 a2)
   (Z13036_apply a2 (Z13036_apply a1 a0)))
 
+;; Z24546 square root of rational as decimal string
+(define (Z24546_square_root_of_rational_as_decimal_string a0 a1)
+  (Z21787_decimal_string_from_rational_number
+    (Z24505_square_root_of_rational_with_precision
+    a0
+    (Z24525_10_n_integer_to_rational (Z17267_negate_natural_number_to_integer a1)))
+    a1))
+
+;; Z24582 exactly identical float64 objects
+(define (Z24582_exactly_identical_float64_objects a0 a1)
+  (Z18683_strict_object_equality a0 a1))
+
 ;; Z24603 Typed map identity (string-keyed)
 (define (Z24603_typed_map_identity_string_keyed a0)
   (identity a0))
+
+;; Z24608 map function over keys of map
+(define (Z24608_map_function_over_keys_of_map a0 a1)
+  (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l
+    a0
+    (map fst (Z30245_typed_list_from_typed_map a1))
+    (map snd (Z30245_typed_list_from_typed_map a1))))
+
+;; Z24609 is string-keyed map empty
+(define (Z24609_is_string_keyed_map_empty a0)
+  (null? (Z30245_typed_list_from_typed_map a0)))
+
+;; Z24618 Serbian cardinal
+(define (Z24618_serbian_cardinal a0)
+  (Z22576_slavic_languages_cardinal
+    (list "нула" "један" "два" "три" "четири" "пет" "шест" "седам" "осам" "девет")
+    (list "једанаест" "дванаест" "тринаест" "четрнаест" "петнаест" "шеснаест" "седамнаест" "осамнаест" "деветнаест")
+    (list "десет" "двадесет" "тридесет" "четрдесет" "педесет" "шездесет" "седамдесет" "осамдесет" "деведесет")
+    (list "сто" "двеста" "триста" "четиристо" "петсто" "шестсто" "седамсто" "осамсто" "деветсто")
+    (list "једна" "две" "три" "четири" "пет" "шест" "седам" "осам" "девет")
+    (list "хиљада" "хиљаде" "хиљада")
+    (list "ми")
+    (list "лион" "лионе" "лиона")
+    (list "лијарда" "лијарде" "лијарди")
+    a0))
+
+;; Z24629 get keys of JSON object
+(define (Z24629_get_keys_of_json_object a0)
+  (Z33357_list_of_keys_from_a_typed_map (Z24602_parse_json_object_to_map a0)))
 
 ;; Z24655 *list with added element unless already present
 (define (Z24655_list_with_added_element_unless_already_present a0 a1)
@@ -2981,9 +8290,63 @@
 (define (Z24665_make_typed_pair_from_untyped_list a0)
   (Z30414_make_typed_pair (car a0) (Z16360_second_element_error_handling a0)))
 
+;; Z24687 three main forms of English verb by LID
+(define (Z24687_three_main_forms_of_english_verb_by_lid a0)
+  (Z24676_three_main_forms_of_english_verb
+    (Z6825_fetch_wikidata_lexeme (Z22249_wikidata_lexeme_reference_from_lid_string a0))))
+
+;; Z24716 bitwise NAND
+(define (Z24716_bitwise_nand a0 a1)
+  (Z22672_list_of_booleans_to_byte
+    (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l
+    Z10243_nand
+    (Z22654_byte_as_list_of_booleans a0)
+    (Z22654_byte_as_list_of_booleans a1))))
+
+;; Z24736 plane of code point
+(define (Z24736_plane_of_code_point a0)
+  (Z13546_divide_natural_numbers (Z23063_code_point_to_natural_number a0) 65536))
+
 ;; Z24749 nand (kleenean)
 (define (Z24749_nand_kleenean a0 a1)
   (Z22207_not_kleenean (Z22143_and_kleenean a0 a1)))
+
+;; Z24761 display Gregorian era
+(define (Z24761_display_gregorian_era a0 a1)
+  (car
+    (Z24114_label_strings_from_wikidata_item_for_language_list
+    (Z30120_fetch_wikidata_item_or_parts
+    (Z24757_gregorian_era_to_wikidata_reference a0)
+    (list Z6033_labels)
+    (Z24144_fallback_languages a1 #t #t)
+    (list ))
+    (Z24144_fallback_languages a1 #t #t))))
+
+;; Z24766 label text for item in given language or fallback
+(define (Z24766_label_text_for_item_in_given_language_or_fallback a0 a1)
+  (Z14396_string_of_monolingual_text
+    (car
+    (Z24139_item_labels_filtered_by_language_list
+    (Z30120_fetch_wikidata_item_or_parts
+    a0
+    (list Z6033_labels)
+    (Z24144_fallback_languages a1 #t #t)
+    (list ))
+    (Z24144_fallback_languages a1 #t #t)))))
+
+;; Z24809 number of bytes for code point in UTF-8
+(define (Z24809_number_of_bytes_for_code_point_in_utf_8 a0)
+  (if
+    (< (Z23063_code_point_to_natural_number a0) 128)
+    1
+    (if
+    (< (Z23063_code_point_to_natural_number a0) 2048)
+    2
+    (if (< (Z23063_code_point_to_natural_number a0) 65536) 3 4))))
+
+;; Z24823 display code point
+(define (Z24823_display_code_point a0 a1)
+  (Z23061_codepoint_to_u_hhhh_notation a0))
 
 ;; Z24846 map to natural number
 (define (Z24846_map_to_natural_number a0 a1)
@@ -3001,9 +8364,80 @@
 (define (Z24868_get_the_nth_wikidata_item_from_a_list a0 a1)
   (Z13397_get_the_nth_element_of_a_list a0 a1))
 
+;; Z24876 Gregorian date as string to Dagbani calendar date
+(define (Z24876_gregorian_date_as_string_to_dagbani_calendar_date a0)
+  (Z24880_display_gregorian_date_in_dagbani
+    (Z20808_read_gregorian_calendar_date a0 Z1015_dagbani)))
+
 ;; Z24884 Gregorian calendar date identity
 (define (Z24884_gregorian_calendar_date_identity a0)
   (identity a0))
+
+;; Z24901 time between two dates with unit in English
+(define (Z24901_time_between_two_dates_with_unit_in_english a0 a1)
+  (if
+    (> (Z24918_years_between a0 a1) 0)
+    (string-append
+    (Z13713_natural_number_to_digit_string (Z20756_age a0 a1))
+    (if (= (Z20756_age a0 a1) 1) " year" " years"))
+    (if
+    (> (Z27190_months_between a0 a1) 0)
+    (string-append
+    (Z13713_natural_number_to_digit_string (Z27190_months_between a0 a1))
+    (if (> (Z27190_months_between a0 a1) 1) " months" " month"))
+    (string-append
+    (Z13713_natural_number_to_digit_string
+    (Z17144_absolute_value_of_integer_as_natural_number (Z20744_days_until a0 a1)))
+    (if
+    (= (Z17144_absolute_value_of_integer_as_natural_number (Z20744_days_until a0 a1)) 1)
+    " day"
+    " days")))))
+
+;; Z24918 years between
+(define (Z24918_years_between a0 a1)
+  (if
+    (Z25276_later_date a0 a1)
+    (Z24918_years_between a1 a0)
+    (if
+    (Z20406_earlier_in_year
+    (Z24936_day_of_year_from_calendar_date a1)
+    (Z24936_day_of_year_from_calendar_date a0))
+    (Z13582_decrement_natural_number_by_one
+    (Z20391_integer_to_exact_natural_number_or_0
+    (Z20219_difference_between_gregorian_years
+    (Z24948_year_from_calendar_date a0)
+    (Z24948_year_from_calendar_date a1))))
+    (Z20391_integer_to_exact_natural_number_or_0
+    (Z20219_difference_between_gregorian_years
+    (Z24948_year_from_calendar_date a0)
+    (Z24948_year_from_calendar_date a1))))))
+
+;; Z24974 date as English "day Month" string
+(define (Z24974_date_as_english_day_month_string a0)
+  (if
+    (Z20348_same_day_of_roman_year a0 Z25535_unknown_day_of_roman_year)
+    "unknown"
+    (if
+    (Z26166_month_of_day_of_roman_year_unknown a0)
+    (string-append
+    (Z13713_natural_number_to_digit_string (Z20388_day_of_month_from_date a0))
+    ", unknown month")
+    (if
+    (= (Z20388_day_of_month_from_date a0) 0)
+    (Z20343_month_from_day_of_the_roman_year a0)
+    (Z15175_join_two_strings_with_separator
+    (Z13713_natural_number_to_digit_string (Z20388_day_of_month_from_date a0))
+    (Z13596_english_name_of_month (Z20343_month_from_day_of_the_roman_year a0))
+    " ")))))
+
+;; Z24990 read Day of Roman Year
+(define (Z24990_read_day_of_roman_year a0 a1)
+  (if
+    (Z23997_is_a_standard_date_format (Z10075_replace_all_substrings a0 "--" "2025-"))
+    (Z24936_day_of_year_from_calendar_date
+    (Z24007_read_date_in_standard_format (Z10075_replace_all_substrings a0 "--" "2025-")))
+    (Z24936_day_of_year_from_calendar_date
+    (Z20808_read_gregorian_calendar_date (string-append a0 " 2025") a1))))
 
 ;; Z25052 first language with language configuration
 (define (Z25052_first_language_with_language_configuration a0 a1)
@@ -3012,40 +8446,548 @@
     (Z28316_filter_with_second_common_element Z25054_is_language_configured a0 a1)
     (list Z1360_multiple_languages))))
 
+;; Z25054 is language configured?
+(define (Z25054_is_language_configured a0 a1)
+  (Z12698_is_any_true
+    (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an
+    Z25057_is_language_listed_for_function_option
+    a0
+    (Z14312_list_of_function_options_for_languages_from_configuration a1))))
+
+;; Z25057 is language listed for function option?
+(define (Z25057_is_language_listed_for_function_option a0 a1)
+  (Z12696_contains (Z14317_list_of_languages_from_function_option a1) a0))
+
+;; Z25060 Gregorian era is BC
+(define (Z25060_gregorian_era_is_bc a0)
+  (not (Z18084_gregorian_era_is_ad a0)))
+
+;; Z25065 select a function based on language with fallbacks
+(define (Z25065_select_a_function_based_on_language_with_fallbacks a0 a1)
+  (Z22839_first_object_or_default
+    (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an
+    Z14310_select_a_function_based_on_language
+    a0
+    (Z28316_filter_with_second_common_element
+    Z25054_is_language_configured
+    (Z24144_fallback_languages a1 #f #f)
+    a0))
+    (Z14313_default_function_from_configuration a0)))
+
+;; Z25073 integer to digit string (hyphen negative)
+(define (Z25073_integer_to_digit_string_hyphen_negative a0)
+  (Z11542_if_string_output
+    (Z17229_is_non_negative_integer a0)
+    (Z13713_natural_number_to_digit_string (Z20391_integer_to_exact_natural_number_or_0 a0))
+    (string-append
+    "-"
+    (Z13713_natural_number_to_digit_string (Z17144_absolute_value_of_integer_as_natural_number a0)))))
+
+;; Z25091 display Time of day
+(define (Z25091_display_time_of_day a0 a1)
+  (Z25094_time_of_day_as_hh_mm_ss_string a0))
+
 ;; Z25098 same times
 (define (Z25098_same_times a0 a1)
   (Z13052_object_equality a0 a1))
+
+;; Z25113 less than or equal (Time of day)
+(define (Z25113_less_than_or_equal_time_of_day a0 a1)
+  (<=
+    (Z25108_time_of_day_as_seconds_past_midnight a0)
+    (Z25108_time_of_day_as_seconds_past_midnight a1)))
+
+;; Z25118 read Time of day
+(define (Z25118_read_time_of_day a0 a1)
+  (if
+    (Z25128_is_a_standard_time_format a0)
+    (Z25158_read_time_in_standard_format a0)
+    (Z13036_apply
+    (Z14310_select_a_function_based_on_language Z25662_config_for_reading_time_of_day a1)
+    a0)))
+
+;; Z25187 fraction of regular day to time of day
+(define (Z25187_fraction_of_regular_day_to_time_of_day a0)
+  (Z25179_number_of_seconds_from_midnight_to_time_of_day
+    (if
+    (Z25200_is_rational_number_1 a0)
+    86400
+    (Z25196_integer_modulo_natural_number
+    (Z20032_floor_of_rational_number (Z19826_multiply_rational_by_natural_number a0 86400))
+    86400))))
+
+;; Z25191 number of seconds in day
+(define (Z25191_number_of_seconds_in_day a0)
+  (if (Z25152_has_leap_second a0) 86401 86400))
+
+;; Z25196 integer modulo natural number
+(define (Z25196_integer_modulo_natural_number a0 a1)
+  (Z17144_absolute_value_of_integer_as_natural_number
+    (Z17167_integer_modulo_another_integer a0 (Z17101_natural_number_to_integer a1))))
+
+;; Z25207 time as fraction of day
+(define (Z25207_time_as_fraction_of_day a0)
+  (Z19854_simplified_rational_from_z_numerator_denominator
+    (Z17101_natural_number_to_integer (Z25108_time_of_day_as_seconds_past_midnight a0))
+    86400))
+
+;; Z25219 difference between pitches in semitones
+(define (Z25219_difference_between_pitches_in_semitones a0 a1 a2 a3)
+  (Z16693_add_integers
+    (Z25227_semitones_between_octaves a1 a3)
+    (Z25224_semitones_between_pitches_within_an_octave a0 a2)))
+
+;; Z25224 semitones between pitches within an octave
+(define (Z25224_semitones_between_pitches_within_an_octave a0 a1)
+  (Z17111_subtract_an_integer
+    (Z25220_distance_from_c_in_semitones a1)
+    (Z25220_distance_from_c_in_semitones a0)))
+
+;; Z25248 era from calendar date
+(define (Z25248_era_from_calendar_date a0)
+  (Z20185_gregorian_era_of_gregorian_year (Z24948_year_from_calendar_date a0)))
+
+;; Z25266 is Catholic Easter
+(define (Z25266_is_catholic_easter a0)
+  (Z20348_same_day_of_roman_year
+    (Z24936_day_of_year_from_calendar_date a0)
+    (Z25262_catholic_easter_day (Z24948_year_from_calendar_date a0))))
+
+;; Z25276 later date
+(define (Z25276_later_date a0 a1)
+  (Z25271_date_before a1 a0))
 
 ;; Z25286 identical quantity (including bounds)
 (define (Z25286_identical_quantity_including_bounds a0 a1)
   (Z13052_object_equality a0 a1))
 
+;; Z25306 are bounds equal to value?
+(define (Z25306_are_bounds_equal_to_value a0)
+  (and
+    (Z19686_same_rational_number
+    (Z25294_amount_from_quantity a0)
+    (Z25297_lower_bound_from_quantity a0))
+    (Z19686_same_rational_number
+    (Z25294_amount_from_quantity a0)
+    (Z25300_upper_bound_from_quantity a0))))
+
+;; Z25310 are bounds symmetric?
+(define (Z25310_are_bounds_symmetric a0)
+  (Z19686_same_rational_number
+    (Z19833_average_of_two_rationals
+    (Z25297_lower_bound_from_quantity a0)
+    (Z25300_upper_bound_from_quantity a0))
+    (Z25294_amount_from_quantity a0)))
+
+;; Z25315 rational has terminating decimal form
+(define (Z25315_rational_has_terminating_decimal_form a0)
+  (Z25318_has_no_prime_factors_other_than_2_or_5
+    (Z19724_denominator_of_simplified_rational_number a0)))
+
+;; Z25318 has no prime factors other than 2 or 5
+(define (Z25318_has_no_prime_factors_other_than_2_or_5 a0)
+  (null?
+    (Z19198_remove_elements_common_to_second_list
+    (Z17895_untype_a_list (Z13730_unique_prime_divisors a0))
+    (list 2 5))))
+
+;; Z25346 sunset solar hour angle in radians (simple)
+(define (Z25346_sunset_solar_hour_angle_in_radians_simple a0 a1)
+  (Z12497_inverse_cosine
+    (Z21775_negate_float64
+    (Z21032_multiply_float64 (Z16475_tangent_float64 a0) (Z16475_tangent_float64 a1)))))
+
+;; Z25362 display rational as formatted decimal
+(define (Z25362_display_rational_as_formatted_decimal a0 a1 a2)
+  (string-append
+    (Z16700_display_integer (Z19682_truncate_rational_number a0) a2)
+    (if
+    (Z23883_is_zero_natural_number a1)
+    Z11853_empty_string
+    (Z14456_remove_first_character
+    (Z21956_display_float64
+    (Z21047_round_to_decimal_places_float64
+    (Z20854_rational_number_as_float
+    (Z21692_absolute_value_of_rational_number (Z25432_proper_fraction_part_of_rational a0)))
+    a1)
+    a2)))))
+
+;; Z25407 transpose pitch
+(define (Z25407_transpose_pitch a0 a1)
+  (Z25408_pitch_by_distance_from_c_in_semitones
+    (Z16693_add_integers (Z25220_distance_from_c_in_semitones a0) a1)))
+
+;; Z25408 pitch by distance from C in semitones
+(define (Z25408_pitch_by_distance_from_c_in_semitones a0)
+  (Z13397_get_the_nth_element_of_a_list
+    (list "C" "C♯" "D" "D♯" "E" "F" "F♯" "G" "G♯" "A" "A♯" "B")
+    (add1 (Z25196_integer_modulo_natural_number a0 12))))
+
+;; Z25426 get nth bit as Boolean
+(define (Z25426_get_nth_bit_as_boolean a0 a1)
+  (Z14416_unequal_natural_numbers
+    (Z13651_bitwise_and (Z14567_byte_to_natural_number a0) (Z13644_2_n a1))
+    0))
+
+;; Z25432 proper fraction part of rational
+(define (Z25432_proper_fraction_part_of_rational a0)
+  (Z19699_subtract_rational_numbers
+    a0
+    (Z19744_integer_as_rational_number (Z19682_truncate_rational_number a0))))
+
+;; Z25442 float64 as string (comma radix)
+(define (Z25442_float64_as_string_comma_radix a0)
+  (Z10075_replace_all_substrings (Z21949_float64_as_string_multilingual_default a0) "." ","))
+
+;; Z25445 rational as plain decimal to decimal places
+(define (Z25445_rational_as_plain_decimal_to_decimal_places a0 a1)
+  (string-append
+    (string-append
+    (if (Z21714_is_negative_rational_number a0) "-" Z11853_empty_string)
+    (Z25073_integer_to_digit_string_hyphen_negative
+    (Z17128_absolute_value_of_integer
+    (Z19682_truncate_rational_number
+    (Z19814_nearest_rational_with_specified_denominator a0 (Z24517_10_n_natural_number a1))))))
+    (Z11542_if_string_output
+    (Z23883_is_zero_natural_number a1)
+    Z11853_empty_string
+    (string-append
+    "."
+    (Z14770_pad_string_with_leading_characters_to_specified_length
+    (Z13713_natural_number_to_digit_string
+    (Z17144_absolute_value_of_integer_as_natural_number
+    (Z19841_rational_to_nearest_integer_even_integer_tiebreak
+    (Z19826_multiply_rational_by_natural_number
+    (Z19699_subtract_rational_numbers
+    (Z19814_nearest_rational_with_specified_denominator a0 (Z24517_10_n_natural_number a1))
+    (Z19744_integer_as_rational_number
+    (Z19682_truncate_rational_number
+    (Z19814_nearest_rational_with_specified_denominator a0 (Z24517_10_n_natural_number a1)))))
+    (Z24517_10_n_natural_number a1)))))
+    a1
+    "0")))))
+
+;; Z25462 set nth bit
+(define (Z25462_set_nth_bit a0 a1)
+  (Z22535_natural_number_to_byte
+    (Z13652_bitwise_or (Z14567_byte_to_natural_number a0) (Z13644_2_n a1))))
+
+;; Z25467 switch nth bit
+(define (Z25467_switch_nth_bit a0 a1)
+  (Z22535_natural_number_to_byte
+    (Z13653_bitwise_xor (Z14567_byte_to_natural_number a0) (Z13644_2_n a1))))
+
+;; Z25503 how many bits set
+(define (Z25503_how_many_bits_set a0)
+  (Z14038_sum_the_elements_of_a_list_of_natural_numbers
+    (Z24846_map_to_natural_number
+    Z17065_boolean_to_natural_number
+    (Z22654_byte_as_list_of_booleans a0))))
+
+;; Z25520 list of decimal digits in a number
+(define (Z25520_list_of_decimal_digits_in_a_number a0)
+  (Z31177_list_of_digits_in_base_n a0 10))
+
 ;; Z25526 Circular shift left
 (define (Z25526_circular_shift_left a0)
   (Z18597_append_element_to_untyped_list (car a0) (Z17895_untype_a_list (cdr a0))))
 
+;; Z25540 is highest bit set
+(define (Z25540_is_highest_bit_set a0)
+  (Z25426_get_nth_bit_as_boolean a0 7))
+
+;; Z25548 is lowest bit set
+(define (Z25548_is_lowest_bit_set a0)
+  (= (Z13551_remainder_of_natural_number_division (Z14567_byte_to_natural_number a0) 2) 1))
+
+;; Z25568 year is before (using integers)
+(define (Z25568_year_is_before_using_integers a0 a1)
+  (Z17140_less_than_integer a0 a1))
+
 ;; Z25578 string to list
 (define (Z25578_string_to_list a0)
-  (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an
-    Z14244_get_nth_character_of_a_string
+  (map Z15631_codepoint_to_string (Z22717_string_to_codepoint_list a0)))
+
+;; Z25585 reverse byte
+(define (Z25585_reverse_byte a0)
+  (Z22672_list_of_booleans_to_byte
+    (Z12668_reverse_untyped_list (Z22654_byte_as_list_of_booleans a0))))
+
+;; Z25592 is kebab case
+(define (Z25592_is_kebab_case a0)
+  (Z10196_is_regular_expression_match a0 "^[a-z]+(-[a-z]+)*$"))
+
+;; Z25608 F1 driver code
+(define (Z25608_f1_driver_code a0)
+  (Z10018_to_uppercase
+    (Z22344_str_left (Z12964_last_element (Z25614_split_string_to_list a0 " ")) 3)))
+
+;; Z25636 rational as formatted decimal (comma separators)
+(define (Z25636_rational_as_formatted_decimal_comma_separators a0 a1)
+  (Z25457_format_plain_decimal_string_with_group_3_separator
+    (Z25445_rational_as_plain_decimal_to_decimal_places a0 a1)
+    "−"
+    ","
+    "."))
+
+;; Z25639 rational as formatted decimal (nbsp separators)
+(define (Z25639_rational_as_formatted_decimal_nbsp_separators a0 a1)
+  (Z25457_format_plain_decimal_string_with_group_3_separator
+    (Z25445_rational_as_plain_decimal_to_decimal_places a0 a1)
+    "−"
+    " "
+    ","))
+
+;; Z25642 digits in denominator of unsimplified rational
+(define (Z25642_digits_in_denominator_of_unsimplified_rational a0)
+  (Z14344_number_of_digits_in_decimal_string_representation_of_a_natur
+    (Z19862_denominator_of_unsimplified_rational_number a0)))
+
+;; Z25647 decimal places to preserve the significant figures
+(define (Z25647_decimal_places_to_preserve_the_significant_figures a0)
+  (if
+    (=
+    (Z19862_denominator_of_unsimplified_rational_number a0)
+    (Z24517_10_n_natural_number
+    (Z13582_decrement_natural_number_by_one
+    (Z25642_digits_in_denominator_of_unsimplified_rational a0))))
+    (Z13582_decrement_natural_number_by_one
+    (Z25642_digits_in_denominator_of_unsimplified_rational a0))
+    (if
+    (>=
+    (*
+    (Z19733_numerator_of_unsimplified_rational_number a0)
+    (Z24517_10_n_natural_number (Z25642_digits_in_denominator_of_unsimplified_rational a0)))
+    (*
+    (Z19862_denominator_of_unsimplified_rational_number a0)
+    (Z24517_10_n_natural_number (Z28982_digits_in_numerator_of_unsimplified_rational a0))))
+    (Z13582_decrement_natural_number_by_one
+    (Z25642_digits_in_denominator_of_unsimplified_rational a0))
+    (Z25642_digits_in_denominator_of_unsimplified_rational a0))))
+
+;; Z25656 display rational as formatted decimal inferring sf
+(define (Z25656_display_rational_as_formatted_decimal_inferring_sf a0 a1)
+  (Z25362_display_rational_as_formatted_decimal
     a0
-    (Z13831_natural_number_range 1 (string-length a0))))
+    (Z25647_decimal_places_to_preserve_the_significant_figures a0)
+    a1))
+
+;; Z25705 time as 12-hour clock with am/pm
+(define (Z25705_time_as_12_hour_clock_with_am_pm a0)
+  (Z10047_to_lowercase (Z25102_time_as_12_hour_clock_with_am_pm a0)))
 
 ;; Z25714 if function in list apply 2 arguments, else 1
 (define (Z25714_if_function_in_list_apply_2_arguments_else_1 a0 a1 a2 a3)
   (if (Z12696_contains a1 a0) (Z13318_apply_two_argument_function a0 a2 a3) (Z13036_apply a0 a2)))
 
+;; Z25718 statement has value type Wikidata time?
+(define (Z25718_statement_has_value_type_wikidata_time a0)
+  (Z19084_same_type
+    (Z16829_type_of_object (Z19308_value_of_wikidata_statement a0))
+    Z6064_wikidata_time))
+
+;; Z25721 display Wikidata datetime
+(define (Z25721_display_wikidata_datetime a0 a1)
+  (Z25714_if_function_in_list_apply_2_arguments_else_1
+    (Z14310_select_a_function_based_on_language Z25737_config_for_displaying_wikidata_datetime a1)
+    (list Z25730_print_wikidata_datetime_from_component_displays)
+    a0
+    a1))
+
+;; Z25733 equal Wikidata time precision
+(define (Z25733_equal_wikidata_time_precision a0 a1)
+  (Z6894_same_wikidata_enum_instance a0 a1))
+
+;; Z25758 same Wikidata datetime
+(define (Z25758_same_wikidata_datetime a0 a1)
+  (and
+    (Z20430_same_gregorian_calendar_date
+    (Z25603_gregorian_calendar_date_from_wikidata_datetime a0)
+    (Z25603_gregorian_calendar_date_from_wikidata_datetime a1))
+    (Z25098_same_times
+    (Z25711_time_of_day_from_wikidata_datetime a0)
+    (Z25711_time_of_day_from_wikidata_datetime a1))))
+
+;; Z25775 days until the end of the year
+(define (Z25775_days_until_the_end_of_the_year a0)
+  (Z13569_subtract_natural_numbers_with_floor_of_0
+    (if (Z20181_is_gregorian_year_leap_year (Z24948_year_from_calendar_date a0)) 366 365)
+    (Z25768_day_of_the_year a0)))
+
+;; Z25800 unit string from quantity string
+(define (Z25800_unit_string_from_quantity_string a0)
+  (Z12316_regular_expression_substitute_with_flags "[\\[\\]\\-\\−\\d±≤≥\\.\\,;  ]*" "" a0 "i"))
+
+;; Z25806 QID of unit from quantity string
+(define (Z25806_qid_of_unit_from_quantity_string a0)
+  (Z25792_qid_from_unit_symbol (Z25800_unit_string_from_quantity_string a0)))
+
+;; Z25812 amount from string representing quantity
+(define (Z25812_amount_from_string_representing_quantity a0 a1)
+  (Z21930_rational_number_reader
+    (Z25833_first_regular_expression_match_with_flags
+    a0
+    "^[-−\\d\\,\\.]+|(?<=; |\\[)[-−\\d\\,\\.]+"
+    "g")
+    a1))
+
+;; Z25820 same calendar year
+(define (Z25820_same_calendar_year a0 a1)
+  (Z20166_same_gregorian_year
+    (Z24948_year_from_calendar_date a0)
+    (Z24948_year_from_calendar_date a1)))
+
+;; Z25867 set denominator
+(define (Z25867_set_denominator a0 a1)
+  (if
+    (Z27815_is_simplified_denominator_a_factor_of_multiple a0 a1)
+    (Z20584_rational_from_sign_and_natural_numbers
+    (Z19717_sign_of_rational_number a0)
+    (Z29023_absolute_numerator_when_scaled_to_denominator a0 a1)
+    a1)
+    a0))
+
+;; Z25871 within a year
+(define (Z25871_within_a_year a0 a1)
+  (= (Z24918_years_between a0 a1) 0))
+
+;; Z25907 n weeks later
+(define (Z25907_n_weeks_later a0 a1)
+  (Z20750_move_n_days a0 (Z17101_natural_number_to_integer (* 7 a1))))
+
+;; Z25912 n weeks earlier
+(define (Z25912_n_weeks_earlier a0 a1)
+  (Z20750_move_n_days a0 (Z17267_negate_natural_number_to_integer (* 7 a1))))
+
 ;; Z25932 same Wikidata geo-coordinate
 (define (Z25932_same_wikidata_geo_coordinate a0 a1)
   (Z13052_object_equality a0 a1))
+
+;; Z25959 βγ from speed
+(define (Z25959_from_speed a0)
+  (Z19706_multiply_rational_numbers a0 (Z23352_lorentz_factor_from_velocity a0)))
+
+;; Z25970 USD inflation calculator
+(define (Z25970_usd_inflation_calculator a0 a1 a2)
+  (Z19814_nearest_rational_with_specified_denominator
+    (Z19708_divide_rational_numbers
+    (Z19706_multiply_rational_numbers (Z25966_us_cpi_for_year a2) a0)
+    (Z25966_us_cpi_for_year a1))
+    100))
 
 ;; Z25974 dir attribute
 (define (Z25974_dir_attribute a0)
   (if (Z38395_is_language_written_from_right_to_left a0) "rtl" "ltr"))
 
+;; Z25985 multiply Wikidata quantity by rational number
+(define (Z25985_multiply_wikidata_quantity_by_rational_number a0 a1)
+  (Z25985_multiply_wikidata_quantity_by_rational_number (Z26959_valid_wikidata_quantity a0) a1))
+
+;; Z25999 convert Wikidata quantity to SI units
+(define (Z25999_convert_wikidata_quantity_to_si_units a0)
+  (if
+    (Z28341_is_a_temperature_unit (Z25303_unit_qid_from_quantity a0))
+    (Z26004_convert_temperature_to_kelvin_wikidata_quantity a0)
+    (Z27846_scale_wikidata_quantity_to_new_units
+    a0
+    (Z26544_conversion_to_si_units_of_an_item_reference (Z25303_unit_qid_from_quantity a0)))))
+
+;; Z26039 subject is instance of (string)
+(define (Z26039_subject_is_instance_of_string a0 a1 a2)
+  (if
+    (Z12696_contains (list Z1005_russian Z1332_ukrainian Z1622_belarusian) a2)
+    (Z27209_em_dash_instantiating_sentence a0 a1 a2)
+    (Z13318_apply_two_argument_function
+    (Z14310_select_a_function_based_on_language
+    Z26043_config_for_article_less_instantiating_sentences
+    a2)
+    a0
+    a1)))
+
+;; Z26088 English article-less instantiating sentence
+(define (Z26088_english_article_less_instantiating_sentence a0 a1)
+  (Z27854_html_fragment_as_string
+    (car
+    (Z36666_fragments_of_option
+    (car
+    (Z36650_options_of_table
+    (Z37120_instance_table_present_from_noun_phrase_and_noun
+    (Z37115_noun_phrase_from_named_item_reference a0 Z1002_english)
+    (Z37089_noun_from_item_reference a1 Z1002_english)
+    Z1002_english)))))))
+
+;; Z26095 subject is kind of (Monolingual text)
+(define (Z26095_subject_is_kind_of_monolingual_text a0 a1 a2)
+  (if
+    (Z12696_contains (list Z1005_russian Z1332_ukrainian Z1622_belarusian) a2)
+    (Z26107_monolingual_text_from_language_and_string
+    a2
+    (Z27209_em_dash_instantiating_sentence a0 a1 a2))
+    (Z13318_apply_two_argument_function
+    (Z14310_select_a_function_based_on_language
+    Z26096_config_for_article_ful_instantiating_sentences
+    a2)
+    a0
+    a1)))
+
+;; Z26098 German nom. indef article + noun from Lexeme Ref
+(define (Z26098_german_nom_indef_article_noun_from_lexeme_ref a0)
+  (Z26070_german_nominative_indef_article_noun_from_lexeme (Z6825_fetch_wikidata_lexeme a0)))
+
+;; Z26103 German nom indef article + noun from Item
+(define (Z26103_german_nom_indef_article_noun_from_item a0)
+  (Z26070_german_nominative_indef_article_noun_from_lexeme
+    (Z22696_fetch_first_lexeme_from_item_ref_and_lang_p5137
+    (Z23756_wikidata_item_reference_from_wikidata_item a0)
+    Z1430_german)))
+
 ;; Z26107 monolingual text from language and string
 (define (Z26107_monolingual_text_from_language_and_string a0 a1)
   (Z861_monolingual_text_from_string_and_natural_language a1 a0))
+
+;; Z26166 month of Day of Roman year unknown
+(define (Z26166_month_of_day_of_roman_year_unknown a0)
+  (Z17180_is_void (Z20343_month_from_day_of_the_roman_year a0)))
+
+;; Z26237 Day of Roman Year fully defined
+(define (Z26237_day_of_roman_year_fully_defined a0)
+  (Z10231_nor
+    (Z26166_month_of_day_of_roman_year_unknown a0)
+    (Z23883_is_zero_natural_number (Z20388_day_of_month_from_date a0))))
+
+;; Z26254 display date, Serbian (cyrillic)
+(define (Z26254_display_date_serbian_cyrillic a0)
+  (Z15175_join_two_strings_with_separator
+    (Z26243_display_day_of_roman_year_serbian_cyrillic (Z24936_day_of_year_from_calendar_date a0))
+    (Z26258_display_gregorian_year_in_serbian_cyrillic (Z24948_year_from_calendar_date a0))
+    " "))
+
+;; Z26258 display Gregorian year in Serbian (cyrillic)
+(define (Z26258_display_gregorian_year_in_serbian_cyrillic a0)
+  (string-append
+    (Z13713_natural_number_to_digit_string (Z20160_gregorian_year_to_year_number a0))
+    (if
+    (Z13052_object_equality (Z20185_gregorian_era_of_gregorian_year a0) Z17814_ad)
+    "."
+    ". п. н. е.")))
+
+;; Z26271 kleenean compare days of Roman year
+(define (Z26271_kleenean_compare_days_of_roman_year a0 a1)
+  (Z22143_and_kleenean
+    (Z26286_kleenean_compare_days_of_month
+    (Z20388_day_of_month_from_date a0)
+    (Z20388_day_of_month_from_date a1))
+    (Z26280_kleenean_compare_months
+    (Z20343_month_from_day_of_the_roman_year a0)
+    (Z20343_month_from_day_of_the_roman_year a1))))
+
+;; Z26280 kleenean compare months
+(define (Z26280_kleenean_compare_months a0 a1)
+  (Z31490_if_either
+    (Z17180_is_void a0)
+    (Z17180_is_void a1)
+    Z22114_maybe
+    (Z22126_boolean_as_kleenean (Z16137_same_month a0 a1))))
 
 ;; Z26286 kleenean compare days of month
 (define (Z26286_kleenean_compare_days_of_month a0 a1)
@@ -3055,12 +8997,45 @@
     Z22114_maybe
     (Z22126_boolean_as_kleenean (= a0 a1))))
 
+;; Z26304 round float64 (ties to even)
+(define (Z26304_round_float64_ties_to_even a0)
+  (Z20937_integer_to_float64 (Z21534_truncate_float64_to_integer a0)))
+
+;; Z26315 round float64 (ties to even, as Integer)
+(define (Z26315_round_float64_ties_to_even_as_integer a0)
+  (Z20841_floor_float64_to_integer (Z26304_round_float64_ties_to_even a0)))
+
+;; Z26344 read Wikidata geo-coordinate
+(define (Z26344_read_wikidata_geo_coordinate a0 a1)
+  (Z26410_replace_globe_in_wikidata_geo_coordinate
+    (Z25930_default_reader_of_wikidata_geo_coordinate a0 a1)
+    (Z26214_qid_from_globe_name
+    (Z26414_remove_first_and_last_character
+    (Z25833_first_regular_expression_match_with_flags a0 "(\\(.*\\))" ""))
+    a1)))
+
+;; Z26364 convert (m/f) grammatical genders to (m/f/n)
+(define (Z26364_convert_m_f_grammatical_genders_to_m_f_n a0)
+  (Z26853_change_type_of_instance_of_wikidata_enumeration a0 Z25501_grammatical_gender_m_f_n))
+
 ;; Z26394 converge iteratively to fixed point
 (define (Z26394_converge_iteratively_to_fixed_point a0 a1 a2)
   (if
     (Z23356_compare_after_applying_a_single_unary_function a0 a1 a0 a2)
     a0
     (Z26394_converge_iteratively_to_fixed_point (Z13036_apply a1 a0) a1 a2)))
+
+;; Z26414 remove first and last character
+(define (Z26414_remove_first_and_last_character a0)
+  (Z14456_remove_first_character (Z11879_remove_last_character a0)))
+
+;; Z26424 calculate inflation
+(define (Z26424_calculate_inflation a0 a1 a2 a3)
+  (Z19708_divide_rational_numbers
+    (Z19706_multiply_rational_numbers
+    (Z13036_apply (Z26437_get_function_for_country_s_cpi_by_year a0) a3)
+    a1)
+    (Z13036_apply (Z26437_get_function_for_country_s_cpi_by_year a0) a2)))
 
 ;; Z26437 get Function for country's CPI by year
 (define (Z26437_get_function_for_country_s_cpi_by_year a0)
@@ -3069,15 +9044,153 @@
     (list "US" "UK" "EU" "AR" "AT" "AU" "AU-road" "BD" "BE")
     (list Z25966_us_cpi_for_year Z26428_uk_cpi_per_year Z26444_eu_cpi_per_year Z26487_ar_cpi_per_year Z26491_at_cpi Z26495_au_cpi_per_year Z26499_au_road_cpi_per_year Z26756_bd_cpi_per_year Z26760_be_cpi_per_year)))
 
+;; Z26448 geohash string
+(define (Z26448_geohash_string a0 a1)
+  (Z15175_join_two_strings_with_separator
+    (Z20788_date_multilingual a0)
+    (Z25445_rational_as_plain_decimal_to_decimal_places a1 2)
+    "-"))
+
+;; Z26458 Wikidata geocoordinates compatible within error
+(define (Z26458_wikidata_geocoordinates_compatible_within_error a0 a1)
+  (and
+    (Z19316_same_wikidata_item_reference
+    (Z25889_globe_from_wikidata_geo_coordinate a0)
+    (Z25889_globe_from_wikidata_geo_coordinate a1))
+    (and
+    (Z19754_less_than_or_equal_to_rational_numbers
+    (Z26463_absolute_value_of_difference_of_rationals
+    (Z25883_longitude_from_wikidata_geo_coordinate a0)
+    (Z25883_longitude_from_wikidata_geo_coordinate a1))
+    (Z19679_add_rational_numbers
+    (Z25886_precision_from_wikidata_geo_coordinate a0)
+    (Z25886_precision_from_wikidata_geo_coordinate a1)))
+    (Z19754_less_than_or_equal_to_rational_numbers
+    (Z26463_absolute_value_of_difference_of_rationals
+    (Z25880_latitude_from_wikidata_geo_coordinate a0)
+    (Z25880_latitude_from_wikidata_geo_coordinate a1))
+    (Z19679_add_rational_numbers
+    (Z25886_precision_from_wikidata_geo_coordinate a0)
+    (Z25886_precision_from_wikidata_geo_coordinate a1))))))
+
+;; Z26463 absolute value of difference of rationals
+(define (Z26463_absolute_value_of_difference_of_rationals a0 a1)
+  (Z21692_absolute_value_of_rational_number (Z19699_subtract_rational_numbers a0 a1)))
+
+;; Z26474 is typed pair
+(define (Z26474_is_typed_pair a0)
+  (Z10615_string_starts_with (Z22764_string_from_type (Z16829_type_of_object a0)) "Z882 ("))
+
+;; Z26504 month from date
+(define (Z26504_month_from_date a0)
+  (Z20343_month_from_day_of_the_roman_year (Z24936_day_of_year_from_calendar_date a0)))
+
+;; Z26536 multiply quantity by rational and apply new unit
+(define (Z26536_multiply_quantity_by_rational_and_apply_new_unit a0 a1 a2)
+  (Z26533_replace_unit_in_wikidata_quantity
+    (Z25985_multiply_wikidata_quantity_by_rational_number a0 a1)
+    a2))
+
+;; Z26544 conversion to SI units of an item reference
+(define (Z26544_conversion_to_si_units_of_an_item_reference a0)
+  (car (Z26539_conversions_to_si_units_of_an_item_reference a0)))
+
 ;; Z26556 take sub-sequence of list
 (define (Z26556_take_sub_sequence_of_list a0 a1 a2)
   (Z13366_get_the_first_n_elements_of_an_untyped_list
     (Z13369_remove_first_n_elements_of_list a0 (Z13582_decrement_natural_number_by_one a1))
     (Z13569_subtract_natural_numbers_with_floor_of_0 a2 (Z13582_decrement_natural_number_by_one a1))))
 
+;; Z26570 state location using entity and class, monolingual
+(define (Z26570_state_location_using_entity_and_class_monolingual a0 a1 a2 a3)
+  (Z34039_apply_three_or_optionally_four_argument_function
+    (Z14310_select_a_function_based_on_language
+    Z29843_config_for_state_location_using_entity_and_class
+    a3)
+    a0
+    a1
+    a2
+    a3))
+
+;; Z26575 languages with the same Wikidata label text
+(define (Z26575_languages_with_the_same_wikidata_label_text a0 a1)
+  (Z22820_compress_list
+    (map
+    Z14404_language_of_monolingual_text
+    (Z19279_multilingual_text_to_list_of_monolingual_texts
+    (Z22853_labels_of_wikidata_item_multilingual_text a1)))
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    string=?
+    (map
+    Z14396_string_of_monolingual_text
+    (Z19279_multilingual_text_to_list_of_monolingual_texts
+    (Z22853_labels_of_wikidata_item_multilingual_text a1)))
+    a0)))
+
+;; Z26595 abbreviate "kaj" in Esperanto
+(define (Z26595_abbreviate_kaj_in_esperanto a0)
+  (Z12316_regular_expression_substitute_with_flags "\\bkaj\\b" "k" a0 "g"))
+
+;; Z26627 classifying a class of nouns
+(define (Z26627_classifying_a_class_of_nouns a0 a1 a2)
+  (Z13318_apply_two_argument_function
+    (Z14310_select_a_function_based_on_language Z27126_config_for_classifying_a_class_of_nouns a2)
+    a0
+    a1))
+
+;; Z26655 time as string in Bangla digits
+(define (Z26655_time_as_string_in_bangla_digits a0)
+  (Z26656_arabic_to_eastern_nagri_numerals_string
+    (Z25701_time_of_day_as_24_hour_hh_mm_ss_string a0)))
+
+;; Z26656 Arabic to Eastern Nagri numerals (string)
+(define (Z26656_arabic_to_eastern_nagri_numerals_string a0)
+  (Z14613_replace_character_set
+    a0
+    (Z22302_string_of_numeral_digits_in_order_from_language Z1002_english)
+    (Z22302_string_of_numeral_digits_in_order_from_language Z1011_bangla)))
+
+;; Z26665 is not void
+(define (Z26665_is_not_void a0)
+  (not (Z17180_is_void a0)))
+
+;; Z26674 rational as comma separator decimal (Bangla)
+(define (Z26674_rational_as_comma_separator_decimal_bangla a0 a1)
+  (Z26656_arabic_to_eastern_nagri_numerals_string
+    (Z25636_rational_as_formatted_decimal_comma_separators a0 a1)))
+
+;; Z26700 filter statements in Wikidata item by properties
+(define (Z26700_filter_statements_in_wikidata_item_by_properties a0 a1)
+  (Z28548_filter_statements_by_property_type (Z22220_statements_from_wikidata_item a0) a1))
+
+;; Z26733 apply if not empty, else return empty
+(define (Z26733_apply_if_not_empty_else_return_empty a0 a1)
+  (if (Z17180_is_void a0) Z24_void (Z13036_apply a1 a0)))
+
 ;; Z26750 first element if list not empty, else void
 (define (Z26750_first_element_if_list_not_empty_else_void a0)
   (if (null? a0) Z24_void (car a0)))
+
+;; Z26766 Hijri calendar month to month number
+(define (Z26766_hijri_calendar_month_to_month_number a0)
+  (Z26882_instance_of_wikidata_enum_to_number a0))
+
+;; Z26809 move Hijri month by N months
+(define (Z26809_move_hijri_month_by_n_months a0 a1)
+  (Z26774_month_number_to_hijri_month
+    (Z25196_integer_modulo_natural_number
+    (Z16693_add_integers
+    (Z17101_natural_number_to_integer (Z26766_hijri_calendar_month_to_month_number a0))
+    a1)
+    12)))
+
+;; Z26829 ordinal in chosen language
+(define (Z26829_ordinal_in_chosen_language a0 a1)
+  (Z25714_if_function_in_list_apply_2_arguments_else_1
+    (Z14310_select_a_function_based_on_language Z27129_config_for_ordinal a1)
+    (list Z14280_display_natural_number)
+    a0
+    a1))
 
 ;; Z26830 Get SSHWS category from sustained winds (English)
 (define (Z26830_get_sshws_category_from_sustained_winds_english a0)
@@ -3085,6 +9198,36 @@
     (list 33 63 82 95 112 136)
     (list "depression" "storm" "category 1" "category 2" "category 3" "category 4" "category 5")
     a0))
+
+;; Z26841 distance (km) between 2 QIDs (Haversine)
+(define (Z26841_distance_km_between_2_qids_haversine a0 a1)
+  (Z18362_distance_between_two_points_on_earth_in_kilometers_haversine
+    (Z20844_float_as_string_js_conventions
+    (Z20854_rational_number_as_float
+    (Z25880_latitude_from_wikidata_geo_coordinate
+    (Z26838_geo_coordinate_of_wikidata_item_location a0))))
+    (Z20844_float_as_string_js_conventions
+    (Z20854_rational_number_as_float
+    (Z25883_longitude_from_wikidata_geo_coordinate
+    (Z26838_geo_coordinate_of_wikidata_item_location a0))))
+    (Z20844_float_as_string_js_conventions
+    (Z20854_rational_number_as_float
+    (Z25880_latitude_from_wikidata_geo_coordinate
+    (Z26838_geo_coordinate_of_wikidata_item_location a1))))
+    (Z20844_float_as_string_js_conventions
+    (Z20854_rational_number_as_float
+    (Z25883_longitude_from_wikidata_geo_coordinate
+    (Z26838_geo_coordinate_of_wikidata_item_location a1))))))
+
+;; Z26853 change type of instance of Wikidata enumeration
+(define (Z26853_change_type_of_instance_of_wikidata_enumeration a0 a1)
+  (Z26779_wikidata_reference_in_enumeration_instance
+    a1
+    (Z6895_get_wikidata_reference_from_enum_instance a0)))
+
+;; Z26858 integer modulo natural, result between 1-M
+(define (Z26858_integer_modulo_natural_result_between_1_m a0 a1)
+  (add1 (Z25196_integer_modulo_natural_number (Z17160_decrement_integer a0) a1)))
 
 ;; Z26871 (!) element list of Wikidata enumeration
 (define (Z26871_element_list_of_wikidata_enumeration a0)
@@ -3094,9 +9237,16 @@
 
 ;; Z26879 list of all possible instances of Wikidata enum
 (define (Z26879_list_of_all_possible_instances_of_wikidata_enum a0)
-  (Z29476_enumeration_instance_list_from_wikidata_references
+  (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an
+    Z26779_wikidata_reference_in_enumeration_instance
     a0
-    (Z29493_enumeration_reference_values_from_type a0)))
+    (Z6896_get_values_from_wikidata_enum (Z22764_string_from_type a0))))
+
+;; Z26882 instance of Wikidata enum to number
+(define (Z26882_instance_of_wikidata_enum_to_number a0)
+  (Z13708_index_of_first_listing_1_n_note_limitation
+    a0
+    (Z26879_list_of_all_possible_instances_of_wikidata_enum (Z16829_type_of_object a0))))
 
 ;; Z26887 instance at position N of Wikidata enumeration
 (define (Z26887_instance_at_position_n_of_wikidata_enumeration a0 a1)
@@ -3108,12 +9258,159 @@
 (define (Z26891_number_of_possible_values_of_wikidata_enumeration a0)
   (length (Z26879_list_of_all_possible_instances_of_wikidata_enum a0)))
 
+;; Z26895 advance N from instance of Wikidata enumeration
+(define (Z26895_advance_n_from_instance_of_wikidata_enumeration a0 a1)
+  (Z26887_instance_at_position_n_of_wikidata_enumeration
+    (Z26858_integer_modulo_natural_result_between_1_m
+    (Z16693_add_integers
+    (Z17101_natural_number_to_integer (Z26882_instance_of_wikidata_enum_to_number a0))
+    a1)
+    (Z26891_number_of_possible_values_of_wikidata_enumeration (Z16829_type_of_object a0)))
+    (Z16829_type_of_object a0)))
+
+;; Z26904 advance N elements
+(define (Z26904_advance_n_elements a0 a1 a2)
+  (Z13397_get_the_nth_element_of_a_list
+    a2
+    (Z26858_integer_modulo_natural_result_between_1_m
+    (Z16693_add_integers
+    (Z17101_natural_number_to_integer (Z13708_index_of_first_listing_1_n_note_limitation a0 a2))
+    a1)
+    (length a2))))
+
 ;; Z26929 label texts for Wikidata item QIDs (one language)
 (define (Z26929_label_texts_for_wikidata_item_qids_one_language a0 a1)
   (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
     Z23753_label_of_item_reference_in_language_or_to_mul
     a0
     a1))
+
+;; Z26936 switch on Wikidata enumeration value
+(define (Z26936_switch_on_wikidata_enumeration_value a0 a1)
+  (Z13397_get_the_nth_element_of_a_list a1 (Z26882_instance_of_wikidata_enum_to_number a0)))
+
+;; Z26955 (DO NOT USE) SPO sentence (singulars in present)
+(define (Z26955_do_not_use_spo_sentence_singulars_in_present a0 a1 a2 a3)
+  (Z11542_if_string_output
+    (string=?
+    (Z11060_get_last_character_of_string (Z26039_subject_is_instance_of_string a1 a2 a3))
+    ".")
+    (Z11879_remove_last_character (Z26039_subject_is_instance_of_string a1 a2 a3))
+    (Z26039_subject_is_instance_of_string a1 a2 a3)))
+
+;; Z26966 quantities have identical lower bounds
+(define (Z26966_quantities_have_identical_lower_bounds a0 a1)
+  (if
+    (Z26950_is_lower_bound_void a0)
+    (Z26950_is_lower_bound_void a1)
+    (if
+    (Z26950_is_lower_bound_void a1)
+    #f
+    (Z19892_same_rational_number_object
+    (Z25297_lower_bound_from_quantity a0)
+    (Z25297_lower_bound_from_quantity a1)))))
+
+;; Z26971 quantities have identical upper bounds
+(define (Z26971_quantities_have_identical_upper_bounds a0 a1)
+  (if
+    (Z26946_is_upper_bound_void a0)
+    (Z26946_is_upper_bound_void a1)
+    (if
+    (Z26946_is_upper_bound_void a1)
+    #f
+    (Z19892_same_rational_number_object
+    (Z25300_upper_bound_from_quantity a0)
+    (Z25300_upper_bound_from_quantity a1)))))
+
+;; Z26978 multiply rationals maintaining the first precision
+(define (Z26978_multiply_rationals_maintaining_the_first_precision a0 a1)
+  (Z27699_round_rational_with_numerator_length
+    (Z19706_multiply_rational_numbers a0 a1)
+    (Z28982_digits_in_numerator_of_unsimplified_rational a0)))
+
+;; Z26982 equal rational with numerator length
+(define (Z26982_equal_rational_with_numerator_length a0 a1)
+  (if
+    (<
+    (Z14344_number_of_digits_in_decimal_string_representation_of_a_natur
+    (Z19733_numerator_of_unsimplified_rational_number
+    (Z26985_rational_with_power_of_10_denominator a0)))
+    a1)
+    (if
+    (Z26996_is_rational_a_decimal (Z26985_rational_with_power_of_10_denominator a0))
+    (Z25867_set_denominator
+    a0
+    (Z24517_10_n_natural_number
+    (Z13569_subtract_natural_numbers_with_floor_of_0
+    (+
+    a1
+    (Z13582_decrement_natural_number_by_one
+    (Z14344_number_of_digits_in_decimal_string_representation_of_a_natur
+    (Z19862_denominator_of_unsimplified_rational_number
+    (Z26985_rational_with_power_of_10_denominator a0)))))
+    (Z14344_number_of_digits_in_decimal_string_representation_of_a_natur
+    (Z19733_numerator_of_unsimplified_rational_number
+    (Z26985_rational_with_power_of_10_denominator a0))))))
+    (Z25867_set_denominator
+    a0
+    (*
+    (Z19724_denominator_of_simplified_rational_number a0)
+    (Z24517_10_n_natural_number
+    (Z13569_subtract_natural_numbers_with_floor_of_0
+    a1
+    (Z14344_number_of_digits_in_decimal_string_representation_of_a_natur
+    (Z19722_numerator_of_simplified_rational_number a0)))))))
+    (Z26985_rational_with_power_of_10_denominator a0)))
+
+;; Z26985 rational with power of 10 denominator
+(define (Z26985_rational_with_power_of_10_denominator a0)
+  (Z25867_set_denominator
+    a0
+    (Z24517_10_n_natural_number
+    (max
+    (Z26988_n_has_number_of_factors_of_specified_m
+    (Z19724_denominator_of_simplified_rational_number a0)
+    2)
+    (Z26988_n_has_number_of_factors_of_specified_m
+    (Z19724_denominator_of_simplified_rational_number a0)
+    5)))))
+
+;; Z26988 N has number of factors of specified M
+(define (Z26988_n_has_number_of_factors_of_specified_m a0 a1)
+  (if
+    (Z13740_is_natural_number_divisible a0 a1)
+    (add1 (Z26988_n_has_number_of_factors_of_specified_m (Z13546_divide_natural_numbers a0 a1) a1))
+    0))
+
+;; Z26996 is rational a decimal?
+(define (Z26996_is_rational_a_decimal a0)
+  (Z15741_is_power_of_k (Z19862_denominator_of_unsimplified_rational_number a0) 10))
+
+;; Z27006 apply two-argument function unless void argument
+(define (Z27006_apply_two_argument_function_unless_void_argument a0 a1 a2 a3)
+  (Z20305_unless_exception
+    (Z20305_unless_exception
+    (Z13318_apply_two_argument_function a0 a1 a2)
+    (Z17180_is_void a1)
+    (Z22839_first_object_or_default a3 Z24_void))
+    (Z17180_is_void a2)
+    (Z22839_first_object_or_default a3 Z24_void)))
+
+;; Z27043 opposite instance of Wikidata enumeration
+(define (Z27043_opposite_instance_of_wikidata_enumeration a0)
+  (Z26895_advance_n_from_instance_of_wikidata_enumeration
+    a0
+    (Z17101_natural_number_to_integer
+    (Z15111_floor_n_2
+    (Z26891_number_of_possible_values_of_wikidata_enumeration (Z16829_type_of_object a0))))))
+
+;; Z27047 specular instance of Wikidata enumeration
+(define (Z27047_specular_instance_of_wikidata_enumeration a0)
+  (Z26887_instance_at_position_n_of_wikidata_enumeration
+    (Z13576_absolute_difference_between_natural_numbers
+    (add1 (Z26891_number_of_possible_values_of_wikidata_enumeration (Z16829_type_of_object a0)))
+    (Z26882_instance_of_wikidata_enum_to_number a0))
+    (Z16829_type_of_object a0)))
 
 ;; Z27053 convert digits to lower indices (subscript)
 (define (Z27053_convert_digits_to_lower_indices_subscript a0)
@@ -3123,13 +9420,143 @@
 (define (Z27068_if_true_pass_input_through_function a0 a1 a2)
   (if a2 (Z13036_apply a1 a0) a0))
 
+;; Z27085 value string from quantity string
+(define (Z27085_value_string_from_quantity_string a0)
+  (Z25833_first_regular_expression_match_with_flags
+    a0
+    "[\\[\\]\\-\\−\\d±≤≥\\.\\,;  ]*[\\[\\]\\-\\−\\d±≤≥\\.\\,;]"
+    ""))
+
+;; Z27092 quantity string implies void lower bound
+(define (Z27092_quantity_string_implies_void_lower_bound a0)
+  (Z10962_not_boolean_implication (Z10070_has_substring a0 "≤") (Z10070_has_substring a0 "≥")))
+
+;; Z27097 quantity string implies void upper bound
+(define (Z27097_quantity_string_implies_void_upper_bound a0)
+  (Z10962_not_boolean_implication (Z10070_has_substring a0 "≥") (Z10070_has_substring a0 "≤")))
+
+;; Z27143 apply two-argument function if not echo
+(define (Z27143_apply_two_argument_function_if_not_echo a0 a1 a2 a3)
+  (if (Z14562_function_equality a0 identity) a3 (Z13318_apply_two_argument_function a0 a1 a2)))
+
+;; Z27148 o,a,i,e based on gender (m/f) and number (s/p)
+(define (Z27148_o_a_i_e_based_on_gender_m_f_and_number_s_p a0 a1)
+  (Z26522_switch_with_grammatical_gender_m_f
+    a0
+    (Z26936_switch_on_wikidata_enumeration_value a1 (list "o" "i"))
+    (Z26936_switch_on_wikidata_enumeration_value a1 (list "a" "e"))))
+
+;; Z27154 ordinal in Italian with gender and number
+(define (Z27154_ordinal_in_italian_with_gender_and_number a0 a1 a2)
+  (Z27159_replace_last_character
+    (Z27131_italian_ordinal a0)
+    (Z27148_o_a_i_e_based_on_gender_m_f_and_number_s_p a1 a2)))
+
+;; Z27159 replace last character
+(define (Z27159_replace_last_character a0 a1)
+  (string-append (Z11879_remove_last_character a0) a1))
+
+;; Z27173 describe the class of a class
+(define (Z27173_describe_the_class_of_a_class a0 a1 a2 a3)
+  (Z14396_string_of_monolingual_text
+    (Z21216_apply_three_argument_function
+    (Z14310_select_a_function_based_on_language Z29628_config_for_describing_class_of_class a3)
+    a0
+    a1
+    a2)))
+
 ;; Z27232 rational from two natural numbers
 (define (Z27232_rational_from_two_natural_numbers a0 a1)
   (Z20584_rational_from_sign_and_natural_numbers Z16660_positive a0 a1))
 
+;; Z27243 superlative definition (monolingual)
+(define (Z27243_superlative_definition_monolingual a0 a1 a2 a3 a4)
+  (Z34122_apply_four_or_optionally_five_argument_function
+    (Z14310_select_a_function_based_on_language Z29841_config_for_superlative_definition a4)
+    a0
+    a1
+    a2
+    a3
+    a4))
+
+;; Z27299 Wikidata item has claim?
+(define (Z27299_wikidata_item_has_claim a0 a1)
+  (Z23120_is_non_empty_list (Z22978_values_unqualified_from_wikidata_item_statements a0 a1)))
+
+;; Z27305 Breton indefinite article with mutation
+(define (Z27305_breton_indefinite_article_with_mutation a0)
+  (Z22693_codepoint_list_to_string
+    (Z23471_lexeme_references_from_wikidata_item_reference a0 Z1282_breton)))
+
+;; Z27308 add definite article to Breton lexeme
+(define (Z27308_add_definite_article_to_breton_lexeme a0)
+  (Z11700_breton_definite_article
+    (Z27569_breton_singular_or_singulative_form_as_string
+    a0
+    (Z27564_type_of_mutation_for_singular_breton_article a0))))
+
+;; Z27327 best lexeme for Wikidata item
+(define (Z27327_best_lexeme_for_wikidata_item a0 a1 a2)
+  (Z27332_best_lexeme_from_list_of_lexemes
+    (Z30172_list_of_values_from_a_typed_map
+    (Z6820_fetch_wikidata_entities
+    (Z17895_untype_a_list (Z6830_find_lexemes_for_a_wikidata_item a0 a1 a2))
+    (list )
+    (list )
+    (list )))
+    a0))
+
 ;; Z27385 enclose string
 (define (Z27385_enclose_string a0 a1 a2)
   (string-append (string-append a0 a1) a2))
+
+;; Z27410 better matching representation string from lexeme
+(define (Z27410_better_matching_representation_string_from_lexeme a0 a1)
+  (Z14396_string_of_monolingual_text
+    (Z19254_first_monolingual_text_from_multilingual_text
+    (Z34943_better_matching_multilingual_text_form_from_lexeme a0 a1))))
+
+;; Z27413 filter by Key reference
+(define (Z27413_filter_by_key_reference a0 a1 a2)
+  (if
+    (null? a0)
+    (list )
+    (if
+    (Z27430_object_has_particular_value_of_key (car a0) a1 (car a2))
+    (cons (car a0) (Z27413_filter_by_key_reference (cdr a0) a1 a2))
+    (Z27413_filter_by_key_reference (cdr a0) a1 a2))))
+
+;; Z27423 first lemma of lexeme
+(define (Z27423_first_lemma_of_lexeme a0)
+  (Z14396_string_of_monolingual_text
+    (Z19254_first_monolingual_text_from_multilingual_text (Z19293_lemmas_of_lexeme a0))))
+
+;; Z27430 object has particular value of key?
+(define (Z27430_object_has_particular_value_of_key a0 a1 a2)
+  (Z13052_object_equality (Z803_value_by_key a1 a0) a2))
+
+;; Z27469 declination of the sun (radians)
+(define (Z27469_declination_of_the_sun_radians a0 a1)
+  (Z12505_inverse_sine
+    (Z21032_multiply_float64
+    (Z16463_sine_float64_rad (Z21775_negate_float64 a1))
+    (Z16463_sine_float64_rad a0))))
+
+;; Z27475 solar longitude (radians) from date
+(define (Z27475_solar_longitude_radians_from_date a0)
+  (Z28100_approximate_solar_longitude_rad_from_day_of_year (Z25768_day_of_the_year a0)))
+
+;; Z27517 replace suffix "o" with "a"
+(define (Z27517_replace_suffix_o_with_a a0)
+  (Z27159_replace_last_character a0 "a"))
+
+;; Z27522 replace suffix "o" with "as"
+(define (Z27522_replace_suffix_o_with_as a0)
+  (Z27159_replace_last_character a0 "as"))
+
+;; Z27525 replace suffix "m" with "ns"
+(define (Z27525_replace_suffix_m_with_ns a0)
+  (Z27159_replace_last_character a0 "ns"))
 
 ;; Z27528 add suffix "as"
 (define (Z27528_add_suffix_as a0)
@@ -3138,6 +9565,33 @@
 ;; Z27529 add suffix "es"
 (define (Z27529_add_suffix_es a0)
   (string-append a0 "es"))
+
+;; Z27534 replace suffix "ão" with "ões"
+(define (Z27534_replace_suffix_o_with_es a0)
+  (Z11178_replace_at_end a0 "ão" "ões"))
+
+;; Z27535 replace suffix "ês" with "eses"
+(define (Z27535_replace_suffix_s_with_eses a0)
+  (Z11178_replace_at_end a0 "ês" "eses"))
+
+;; Z27536 replace suffix "ês" with "esa"
+(define (Z27536_replace_suffix_s_with_esa a0)
+  (Z11178_replace_at_end a0 "ês" "esa"))
+
+;; Z27537 replace suffix "ês" with "esas"
+(define (Z27537_replace_suffix_s_with_esas a0)
+  (Z11178_replace_at_end a0 "ês" "esas"))
+
+;; Z27546 replace suffix "l" with "is"
+(define (Z27546_replace_suffix_l_with_is a0)
+  (Z27159_replace_last_character a0 "is"))
+
+;; Z27579 add indefinite article to Breton lexeme
+(define (Z27579_add_indefinite_article_to_breton_lexeme a0)
+  (Z27574_breton_indefinite_article
+    (Z27569_breton_singular_or_singulative_form_as_string
+    a0
+    (Z27564_type_of_mutation_for_singular_breton_article a0))))
 
 ;; Z27612 (#) order list with comparing function
 (define (Z27612_order_list_with_comparing_function a0 a1)
@@ -3163,6 +9617,10 @@
 (define (Z27622_compare_after_applying_several_unary_functions a0 a1 a2 a3)
   (Z23360_object_comparison (Z13351_apply_list_of_functions a1 a0) a3 a2))
 
+;; Z27641 Luxembourgish name of month
+(define (Z27641_luxembourgish_name_of_month a0)
+  (Z24086_display_gregorian_calendar_month a0 Z1099_luxembourgish))
+
 ;; Z27665 concatenate many untyped lists
 (define (Z27665_concatenate_many_untyped_lists a0)
   (Z19565_triple_if
@@ -3171,6 +9629,189 @@
     (Z12755_is_single_element_list a0)
     (car a0)
     (Z12781_left_fold a0 Z12767_concatenate_two_untyped_lists)))
+
+;; Z27685 wrap in list unless list
+(define (Z27685_wrap_in_list_unless_list a0)
+  (if (Z19020_is_a_typed_list a0) a0 (Z14046_element_to_list a0)))
+
+;; Z27699 round rational with numerator length
+(define (Z27699_round_rational_with_numerator_length a0 a1)
+  (if
+    (=
+    (Z14344_number_of_digits_in_decimal_string_representation_of_a_natur
+    (Z19733_numerator_of_unsimplified_rational_number
+    (Z26982_equal_rational_with_numerator_length a0 a1)))
+    a1)
+    (Z26982_equal_rational_with_numerator_length a0 a1)
+    (Z27803_round_to_decimal_unsimplified_with_sig_figs a0 a1)))
+
+;; Z27719 round rational to fix decimal places, unsimplified
+(define (Z27719_round_rational_to_fix_decimal_places_unsimplified a0 a1)
+  (Z25867_set_denominator
+    (Z27705_round_rational_to_fixed_decimal_places_simplified a0 a1)
+    (Z24517_10_n_natural_number (Z20391_integer_to_exact_natural_number_or_0 a1))))
+
+;; Z27748 switch on gender (m/f) and number (s/p)
+(define (Z27748_switch_on_gender_m_f_and_number_s_p a0 a1 a2 a3 a4 a5)
+  (Z37767_switch_on_number_s_p
+    a1
+    (Z26522_switch_with_grammatical_gender_m_f a0 a2 a3)
+    (Z26522_switch_with_grammatical_gender_m_f a0 a4 a5)))
+
+;; Z27762 decimal exponent in rounded scientific notation
+(define (Z27762_decimal_exponent_in_rounded_scientific_notation a0 a1)
+  (Z27737_decimal_exponent_in_unrounded_scientific_notation
+    (Z27803_round_to_decimal_unsimplified_with_sig_figs a0 a1)))
+
+;; Z27765 round to decimal (simplified) with sig figs
+(define (Z27765_round_to_decimal_simplified_with_sig_figs a0 a1)
+  (Z27705_round_rational_to_fixed_decimal_places_simplified
+    a0
+    (Z27730_decimal_places_in_rational_significant_figures a0 a1)))
+
+;; Z27778 round natural to significant figures
+(define (Z27778_round_natural_to_significant_figures a0 a1)
+  (Z20391_integer_to_exact_natural_number_or_0
+    (Z35338_round_integer_to_nearest_n
+    (Z17101_natural_number_to_integer a0)
+    (Z24517_10_n_natural_number
+    (Z13569_subtract_natural_numbers_with_floor_of_0
+    (Z14344_number_of_digits_in_decimal_string_representation_of_a_natur a0)
+    a1)))))
+
+;; Z27803 round to decimal (unsimplified) with sig figs
+(define (Z27803_round_to_decimal_unsimplified_with_sig_figs a0 a1)
+  (Z27719_round_rational_to_fix_decimal_places_unsimplified
+    a0
+    (Z27730_decimal_places_in_rational_significant_figures a0 a1)))
+
+;; Z27820 signed numerator of simplified rational number
+(define (Z27820_signed_numerator_of_simplified_rational_number a0)
+  (Z33745_make_integer
+    (Z19717_sign_of_rational_number a0)
+    (Z19722_numerator_of_simplified_rational_number a0)))
+
+;; Z27836 unsimplified rational from Z, N
+(define (Z27836_unsimplified_rational_from_z_n a0 a1)
+  (Z20584_rational_from_sign_and_natural_numbers
+    (Z17105_sign_of_integer a0)
+    (Z17144_absolute_value_of_integer_as_natural_number a0)
+    a1))
+
+;; Z27846 scale Wikidata quantity to new units
+(define (Z27846_scale_wikidata_quantity_to_new_units a0 a1)
+  (Z26536_multiply_quantity_by_rational_and_apply_new_unit
+    a0
+    (Z25294_amount_from_quantity a1)
+    (Z25303_unit_qid_from_quantity a1)))
+
+;; Z27849 join two HTML fragments
+(define (Z27849_join_two_html_fragments a0 a1)
+  (Z27861_html_raw_content_to_html_fragment
+    (string-append (Z27854_html_fragment_as_string a0) (Z27854_html_fragment_as_string a1))))
+
+;; Z27873 wrap an HTML fragment in a tag
+(define (Z27873_wrap_an_html_fragment_in_a_tag a0 a1 a2 a3)
+  (Z27861_html_raw_content_to_html_fragment
+    (Z19405_wrap_with_html_tag_and_attributes a1 a2 a3 (Z27854_html_fragment_as_string a0))))
+
+;; Z27878 create wikitable with columns and rows headers
+(define (Z27878_create_wikitable_with_columns_and_rows_headers a0 a1 a2 a3)
+  (Z32731_create_wikitable_from_caption_and_cell_fragments
+    a0
+    (Z32734_table_cell_elements_from_contents_isheader_flags
+    (Z32806_transform_elements_of_list_of_lists
+    Z27868_string_to_html_fragment
+    (cons (cons Z11853_empty_string a1) (Z24299_prepend_column_to_matrix a2 a3)))
+    (cons
+    (cons #f (Z21389_replicate_object_n_times #t (length a1)))
+    (Z24299_prepend_column_to_matrix
+    (Z21389_replicate_object_n_times #t (length a3))
+    (Z21389_replicate_object_n_times
+    (Z21389_replicate_object_n_times #f (length (car a3)))
+    (length a3)))))))
+
+;; Z27885 name for table header
+(define (Z27885_name_for_table_header a0 a1)
+  (Z34096_conditional_sentence_case
+    (Z23753_label_of_item_reference_in_language_or_to_mul a0 a1)
+    a1))
+
+;; Z27893 choose the language and replace the parameters
+(define (Z27893_choose_the_language_and_replace_the_parameters a0 a1 a2)
+  (Z27908_replace_parameters_in_a_string
+    (Z27905_choose_string_in_first_available_language a0 (Z24144_fallback_languages a1 #t #t))
+    a2))
+
+;; Z27899 label of item in fallback language
+(define (Z27899_label_of_item_in_fallback_language a0 a1)
+  (car
+    (Z24114_label_strings_from_wikidata_item_for_language_list
+    a0
+    (Z24144_fallback_languages a1 #t #t))))
+
+;; Z27905 choose string in first available language
+(define (Z27905_choose_string_in_first_available_language a0 a1)
+  (Z14396_string_of_monolingual_text
+    (Z34947_best_monolingual_text_of_multilingual_per_lang a0 a1)))
+
+;; Z27919 Body Mass Index (metric, rational)
+(define (Z27919_body_mass_index_metric_rational a0 a1)
+  (Z19708_divide_rational_numbers a0 (Z24487_square_of_rational_number a1)))
+
+;; Z27932 transform HTML fragment with unary string function
+(define (Z27932_transform_html_fragment_with_unary_string_function a0 a1)
+  (Z27861_html_raw_content_to_html_fragment (Z13036_apply a1 (Z27854_html_fragment_as_string a0))))
+
+;; Z27938 weight of a configuration
+(define (Z27938_weight_of_a_configuration a0)
+  (Z13546_divide_natural_numbers
+    (Z13667_factorial (Z14038_sum_the_elements_of_a_list_of_natural_numbers a0))
+    (Z13558_product_of_list_natural_numbers (Z24846_map_to_natural_number Z13667_factorial a0))))
+
+;; Z27979 quantities have identical units
+(define (Z27979_quantities_have_identical_units a0 a1)
+  (Z19316_same_wikidata_item_reference
+    (Z25303_unit_qid_from_quantity a0)
+    (Z25303_unit_qid_from_quantity a1)))
+
+;; Z28005 UTC time of sunset for Wikidata location on date
+(define (Z28005_utc_time_of_sunset_for_wikidata_location_on_date a0 a1)
+  (Z27999_utc_time_of_sunset_for_coordinates_on_date
+    (Z26838_geo_coordinate_of_wikidata_item_location a0)
+    a1))
+
+;; Z28016 defining role sentence (monolingual)
+(define (Z28016_defining_role_sentence_monolingual a0 a1 a2 a3)
+  (Z34039_apply_three_or_optionally_four_argument_function
+    (Z14310_select_a_function_based_on_language Z28020_config_for_defining_role_sentence a3)
+    a0
+    a1
+    a2
+    a3))
+
+;; Z28037 are within a minute?
+(define (Z28037_are_within_a_minute a0 a1)
+  (or
+    (<=
+    (Z13576_absolute_difference_between_natural_numbers
+    (Z25108_time_of_day_as_seconds_past_midnight a0)
+    (Z25108_time_of_day_as_seconds_past_midnight a1))
+    60)
+    (>=
+    (Z13576_absolute_difference_between_natural_numbers
+    (Z25108_time_of_day_as_seconds_past_midnight a0)
+    (Z25108_time_of_day_as_seconds_past_midnight a1))
+    86340)))
+
+;; Z28046 sunset solar hour angle in radians (with altitude)
+(define (Z28046_sunset_solar_hour_angle_in_radians_with_altitude a0 a1 a2)
+  (Z12497_inverse_cosine
+    (Z21033_divide_float64
+    (Z21031_subtract_float64
+    (Z16463_sine_float64_rad a2)
+    (Z21032_multiply_float64 (Z16463_sine_float64_rad a0) (Z16463_sine_float64_rad a1)))
+    (Z21032_multiply_float64 (Z12473_cosine a0) (Z12473_cosine a1)))))
 
 ;; Z28066 weighted average (floating point values)
 (define (Z28066_weighted_average_floating_point_values a0 a1)
@@ -3183,9 +9824,66 @@
     Z20849_add_float64)
     (Z12781_left_fold a1 Z20849_add_float64)))
 
+;; Z28109 defining role sentence in English as string
+(define (Z28109_defining_role_sentence_in_english_as_string a0 a1 a2 a3)
+  (Z14396_string_of_monolingual_text (Z28026_defining_role_sentence_in_english a0 a1 a2 a3)))
+
 ;; Z28111 archive a web link with the Wikiwix Archive
 (define (Z28111_archive_a_web_link_with_the_wikiwix_archive a0)
   (string-append "https://archive.wikiwix.com/cache/?url=" a0))
+
+;; Z28124 best Gregorian date describing property of item
+(define (Z28124_best_gregorian_date_describing_property_of_item a0 a1)
+  (Z28128_gregorian_date_from_wikidata_statement
+    (Z23451_wikidata_statement_with_highest_rank a0 a1)))
+
+;; Z28128 Gregorian date from Wikidata statement
+(define (Z28128_gregorian_date_from_wikidata_statement a0)
+  (Z28133_valid_gregorian_date_from_wikidata_datetime
+    (Z25726_wikidata_datetime_from_wikidata_time (Z19308_value_of_wikidata_statement a0))))
+
+;; Z28137 return default if void
+(define (Z28137_return_default_if_void a0 a1)
+  (if (Z17180_is_void a0) a1 a0))
+
+;; Z28143 day of month from Gregorian calendar date
+(define (Z28143_day_of_month_from_gregorian_calendar_date a0)
+  (Z20388_day_of_month_from_date (Z24936_day_of_year_from_calendar_date a0)))
+
+;; Z28154 (!) throw error
+(define (Z28154_throw_error a0 a1)
+  (Z851_throw_error
+    (Z150_validate_error_type (identity (Z29102_reference_from_zid_string a0)))
+    a1))
+
+;; Z28159 first element, otherwise throw error
+(define (Z28159_first_element_otherwise_throw_error a0 a1 a2)
+  (if (null? a0) (Z28154_throw_error a1 a2) (car a0)))
+
+;; Z28182 contains square brackets
+(define (Z28182_contains_square_brackets a0)
+  (or (Z10070_has_substring a0 "[") (Z10070_has_substring a0 "]")))
+
+;; Z28188 chemical element from symbol
+(define (Z28188_chemical_element_from_symbol a0)
+  (Z28197_chemical_element_from_atomic_number
+    (if
+    (= (string-length a0) 3)
+    (Z14283_string_of_digits_as_natural_number
+    (Z14613_replace_character_set (Z10047_to_lowercase a0) "nubtqphsoe" "0123456789"))
+    (Z13708_index_of_first_listing_1_n_note_limitation
+    a0
+    (Z25614_split_string_to_list
+    "H~He~Li~Be~B~C~N~O~F~Ne~Na~Mg~Al~Si~P~S~Cl~Ar~K~Ca~Sc~Ti~V~Cr~Mn~Fe~Co~Ni~Cu~Zn~Ga~Ge~As~Se~Br~Kr~Rb~Sr~Y~Zr~Nb~Mo~Tc~Ru~Rh~Pd~Ag~Cd~In~Sn~Sb~Te~I~Xe~Cs~Ba~La~Ce~Pr~Nd~Pm~Sm~Eu~Gd~Tb~Dy~Ho~Er~Tm~Yb~Lu~Hf~Ta~W~Re~Os~Ir~Pt~Au~Hg~Tl~Pb~Bi~Po~At~Rn~Fr~Ra~Ac~Th~Pa~U~Np~Pu~Am~Cm~Bk~Cf~Es~Fm~Md~No~Lr~Rf~Db~Sg~Bh~Hs~Mt~Ds~Rg~Cn~Nh~Fl~Mc~Lv~Ts~Og"
+    "~")))))
+
+;; Z28201 chemical symbol from atomic number
+(define (Z28201_chemical_symbol_from_atomic_number a0)
+  (Z27962_chemical_element_symbol (Z28197_chemical_element_from_atomic_number a0)))
+
+;; Z28205 atomic number from chemical symbol
+(define (Z28205_atomic_number_from_chemical_symbol a0)
+  (Z27954_atomic_number_of_chemical_element (Z28188_chemical_element_from_symbol a0)))
 
 ;; Z28209 expand condensed electron configuration
 (define (Z28209_expand_condensed_electron_configuration a0)
@@ -3212,9 +9910,88 @@
     "[He]"
     "1s²"))
 
+;; Z28219 Multiplication table (code)
+(define (Z28219_multiplication_table_code a0 a1)
+  (Z27854_html_fragment_as_string (Z23293_multiplication_table a0 a1)))
+
+;; Z28222 number of arguments of a function
+(define (Z28222_number_of_arguments_of_a_function a0)
+  (length (Z21177_get_list_of_argument_declarations a0)))
+
+;; Z28227 type for a function’s first argument
+(define (Z28227_type_for_a_function_s_first_argument a0)
+  (Z21174_type_declared_for_argument (car (Z21177_get_list_of_argument_declarations a0))))
+
+;; Z28231 ZID of a function
+(define (Z28231_zid_of_a_function a0)
+  (snd (car (cdr (snd (car (cdr (cdr (cdr (cdr (cdr (Z805_reify a0))))))))))))
+
+;; Z28236 apply function with 1 or 2 arguments
+(define (Z28236_apply_function_with_1_or_2_arguments a0 a1 a2)
+  (if
+    (Z31554_is_natural_number_2 (Z28222_number_of_arguments_of_a_function a0))
+    (if
+    (Z19084_same_type (Z28227_type_for_a_function_s_first_argument a0) (Z16829_type_of_object a1))
+    (Z13318_apply_two_argument_function a0 a1 a2)
+    (if
+    (and
+    (Z19084_same_type (Z28227_type_for_a_function_s_first_argument a0) Z1_object)
+    (or
+    (Z19084_same_type (Z28243_type_for_a_function_s_second_argument a0) Z1_object)
+    (Z19084_same_type (Z28243_type_for_a_function_s_second_argument a0) (Z16829_type_of_object a2))))
+    (Z13318_apply_two_argument_function a0 a1 a2)
+    (Z13318_apply_two_argument_function a0 a2 a1)))
+    (if
+    (or
+    (Z19084_same_type (Z28227_type_for_a_function_s_first_argument a0) (Z16829_type_of_object a1))
+    (Z19084_same_type (Z28227_type_for_a_function_s_first_argument a0) Z1_object))
+    (Z13036_apply a0 a1)
+    (Z13036_apply a0 a2))))
+
+;; Z28243 type for a function’s second argument
+(define (Z28243_type_for_a_function_s_second_argument a0)
+  (Z21174_type_declared_for_argument
+    (Z29446_second_element_performance (Z21177_get_list_of_argument_declarations a0))))
+
+;; Z28249 apply unless Throw error
+(define (Z28249_apply_unless_throw_error a0 a1 a2 a3)
+  (if
+    (Z14562_function_equality a0 Z851_throw_error)
+    (Z851_throw_error a2 a3)
+    (Z13036_apply a0 a1)))
+
+;; Z28261 next chemical element
+(define (Z28261_next_chemical_element a0)
+  (Z28197_chemical_element_from_atomic_number
+    (add1 (Z27954_atomic_number_of_chemical_element a0))))
+
+;; Z28267 previous chemical element
+(define (Z28267_previous_chemical_element a0)
+  (Z28197_chemical_element_from_atomic_number
+    (Z13582_decrement_natural_number_by_one (Z27954_atomic_number_of_chemical_element a0))))
+
+;; Z28272 same chemical element
+(define (Z28272_same_chemical_element a0 a1)
+  (Z6894_same_wikidata_enum_instance a0 a1))
+
 ;; Z28282 list of languages to sequence of ISO codes
 (define (Z28282_list_of_languages_to_sequence_of_iso_codes a0)
   (Z12899_join_list_of_strings_with_delimiter (map Z14329_language_to_language_tag a0) ";"))
+
+;; Z28304 claim has value?
+(define (Z28304_claim_has_value a0)
+  (Z13052_object_equality (Z28300_claim_type_of_wikidata_property_claim a0) Z6021_value))
+
+;; Z28308 claim predicate matches?
+(define (Z28308_claim_predicate_matches a0 a1)
+  (Z19267_same_wikidata_property_reference (Z28294_predicate_of_wikidata_property_claim a0) a1))
+
+;; Z28312 qualifiers of Wikidata statement with predicate
+(define (Z28312_qualifiers_of_wikidata_statement_with_predicate a0 a1)
+  (Z28316_filter_with_second_common_element
+    Z28308_claim_predicate_matches
+    (Z28278_qualifiers_of_wikidata_statement a0)
+    a1))
 
 ;; Z28316 filter with second common element
 (define (Z28316_filter_with_second_common_element a0 a1 a2)
@@ -3226,9 +10003,120 @@
     (Z28316_filter_with_second_common_element a0 (Z12967_list_without_last_element a1) a2)
     (Z13318_apply_two_argument_function a0 (Z12964_last_element a1) a2))))
 
+;; Z28321 qualifier values of statement with predicate
+(define (Z28321_qualifier_values_of_statement_with_predicate a0 a1)
+  (map
+    Z28297_value_of_wikidata_property_claim
+    (Z28312_qualifiers_of_wikidata_statement_with_predicate a0 a1)))
+
 ;; Z28326 filter statements by claim type
 (define (Z28326_filter_statements_by_claim_type a0 a1)
   (Z28316_filter_with_second_common_element Z28327_statement_has_claim_type a0 a1))
+
+;; Z28327 statement has claim type
+(define (Z28327_statement_has_claim_type a0 a1)
+  (Z13052_object_equality (Z28328_claim_type_of_wikidata_statement a0) a1))
+
+;; Z28359 are bounds equal to value? assume explicit bounds
+(define (Z28359_are_bounds_equal_to_value_assume_explicit_bounds a0)
+  (Z25306_are_bounds_equal_to_value a0))
+
+;; Z28407 estimated vertical hiking time in hours
+(define (Z28407_estimated_vertical_hiking_time_in_hours a0 a1)
+  (Z19736_max_of_rational_numbers
+    (Z28399_estimated_ascent_hiking_time_in_hours a0)
+    (Z28403_estimated_descent_hiking_time_in_hours a1)))
+
+;; Z28425 float64 as string (Eastern Nagri)
+(define (Z28425_float64_as_string_eastern_nagri a0)
+  (Z26656_arabic_to_eastern_nagri_numerals_string
+    (Z21949_float64_as_string_multilingual_default a0)))
+
+;; Z28436 Year-specific sentence from statement
+(define (Z28436_year_specific_sentence_from_statement a0 a1 a2)
+  (Z35999_apply_function_with_2_or_3_arguments_in_order
+    (Z14310_select_a_function_based_on_language
+    Z28435_config_for_year_specific_sentence_from_statement
+    a2)
+    a0
+    a1
+    a2))
+
+;; Z28439 value of first key
+(define (Z28439_value_of_first_key a0)
+  (Z20165_value_by_key_index 1 a0))
+
+;; Z28442 value of second key
+(define (Z28442_value_of_second_key a0)
+  (Z20165_value_by_key_index 2 a0))
+
+;; Z28445 most recent year-specific sentence about item
+(define (Z28445_most_recent_year_specific_sentence_about_item a0 a1 a2)
+  (Z28436_year_specific_sentence_from_statement
+    a0
+    (Z28446_most_recent_qualified_statement_from_item_wip a0 a1)
+    a2))
+
+;; Z28451 Key references from object
+(define (Z28451_key_references_from_object a0)
+  (map fst (Z805_reify a0)))
+
+;; Z28495 days until next Easter
+(define (Z28495_days_until_next_easter a0)
+  (if
+    (Z25271_date_before
+    (Z24962_date_from_day_of_year_and_year
+    (Z25262_catholic_easter_day (Z24948_year_from_calendar_date a0))
+    (Z24948_year_from_calendar_date a0))
+    a0)
+    (Z17144_absolute_value_of_integer_as_natural_number
+    (Z20744_days_until
+    (Z24962_date_from_day_of_year_and_year
+    (Z25262_catholic_easter_day (Z20172_next_year (Z24948_year_from_calendar_date a0)))
+    (Z20172_next_year (Z24948_year_from_calendar_date a0)))
+    a0))
+    (Z17144_absolute_value_of_integer_as_natural_number
+    (Z20744_days_until
+    (Z24962_date_from_day_of_year_and_year
+    (Z25262_catholic_easter_day (Z24948_year_from_calendar_date a0))
+    (Z24948_year_from_calendar_date a0))
+    a0))))
+
+;; Z28498 days since last Easter
+(define (Z28498_days_since_last_easter a0)
+  (if
+    (Z17215_is_negative_integer
+    (Z20744_days_until
+    (Z24962_date_from_day_of_year_and_year
+    (Z25262_catholic_easter_day (Z24948_year_from_calendar_date a0))
+    (Z24948_year_from_calendar_date a0))
+    a0))
+    (Z20744_days_until
+    (Z24962_date_from_day_of_year_and_year
+    (Z25262_catholic_easter_day (Z20314_previous_year (Z24948_year_from_calendar_date a0)))
+    (Z20314_previous_year (Z24948_year_from_calendar_date a0)))
+    a0)
+    (Z20744_days_until
+    (Z24962_date_from_day_of_year_and_year
+    (Z25262_catholic_easter_day (Z24948_year_from_calendar_date a0))
+    (Z24948_year_from_calendar_date a0))
+    a0)))
+
+;; Z28509 convert Wikidata quantity to compatible unit
+(define (Z28509_convert_wikidata_quantity_to_compatible_unit a0 a1)
+  (if
+    (Z19316_same_wikidata_item_reference (Z25303_unit_qid_from_quantity a0) a1)
+    a0
+    (if
+    (Z28341_is_a_temperature_unit a1)
+    (Z26004_convert_temperature_to_kelvin_wikidata_quantity a0)
+    (Z26536_multiply_quantity_by_rational_and_apply_new_unit
+    a0
+    (Z19708_divide_rational_numbers
+    (Z25294_amount_from_quantity
+    (Z26544_conversion_to_si_units_of_an_item_reference (Z25303_unit_qid_from_quantity a0)))
+    (Z25294_amount_from_quantity (Z26544_conversion_to_si_units_of_an_item_reference a1)))
+    a1))))
 
 ;; Z28548 filter statements by property type
 (define (Z28548_filter_statements_by_property_type a0 a1)
@@ -3242,9 +10130,91 @@
     a1
     (map Z19306_predicate_of_wikidata_statement a0)))))
 
+;; Z28549 multiply quantity by rational without rounding
+(define (Z28549_multiply_quantity_by_rational_without_rounding a0 a1)
+  (if
+    (Z21714_is_negative_rational_number a1)
+    (Z35663_wikidata_quantity_from_components
+    (Z19706_multiply_rational_numbers (Z25294_amount_from_quantity a0) a1)
+    (if
+    (Z17180_is_void (Z25300_upper_bound_from_quantity a0))
+    Z24_void
+    (Z19706_multiply_rational_numbers (Z25300_upper_bound_from_quantity a0) a1))
+    (if
+    (Z17180_is_void (Z25297_lower_bound_from_quantity a0))
+    Z24_void
+    (Z19706_multiply_rational_numbers (Z25297_lower_bound_from_quantity a0) a1))
+    (Z25303_unit_qid_from_quantity a0))
+    (Z35663_wikidata_quantity_from_components
+    (Z19706_multiply_rational_numbers (Z25294_amount_from_quantity a0) a1)
+    (if
+    (Z17180_is_void (Z25297_lower_bound_from_quantity a0))
+    Z24_void
+    (Z19706_multiply_rational_numbers (Z25297_lower_bound_from_quantity a0) a1))
+    (if
+    (Z17180_is_void (Z25300_upper_bound_from_quantity a0))
+    Z24_void
+    (Z19706_multiply_rational_numbers (Z25300_upper_bound_from_quantity a0) a1))
+    (Z25303_unit_qid_from_quantity a0))))
+
+;; Z28570 Gregorian dates have same month
+(define (Z28570_gregorian_dates_have_same_month a0 a1)
+  (Z16137_same_month (Z26504_month_from_date a0) (Z26504_month_from_date a1)))
+
+;; Z28595 Gregorian dates are same day of month
+(define (Z28595_gregorian_dates_are_same_day_of_month a0 a1)
+  (=
+    (Z28143_day_of_month_from_gregorian_calendar_date a0)
+    (Z28143_day_of_month_from_gregorian_calendar_date a1)))
+
+;; Z28611 display two quantities, second bracketed
+(define (Z28611_display_two_quantities_second_bracketed a0 a1 a2)
+  (Z27182_join_two_strings_with_space
+    (Z25326_display_quantity_with_digits_and_unit a0 a2)
+    (Z20600_parenthesize (Z25326_display_quantity_with_digits_and_unit a1 a2))))
+
+;; Z28614 display quantity and parenthesised conversion
+(define (Z28614_display_quantity_and_parenthesised_conversion a0 a1 a2)
+  (Z28611_display_two_quantities_second_bracketed
+    a0
+    (Z28509_convert_wikidata_quantity_to_compatible_unit a0 a1)
+    a2))
+
+;; Z28624 read RGBA color
+(define (Z28624_read_rgba_color a0 a1)
+  (Z28628_default_rgba_color_reader
+    (Z14515_remove_all_characters_not_in_second_string a0 "0123456789abcdefABCDEF")))
+
+;; Z28630 substring by index (0-indexed)
+(define (Z28630_substring_by_index_0_indexed a0 a1 a2)
+  (Z14636_remove_first_n_characters_of_string (Z14592_first_n_characters_of_string a0 a2) a1))
+
+;; Z28645 fraction as hex (2 digit uppercase)
+(define (Z28645_fraction_as_hex_2_digit_uppercase a0)
+  (Z17845_pad_string_with_leading_0_until_it_is_two_characters_long
+    (Z10018_to_uppercase
+    (Z13781_natural_number_to_hexadecimal_lowercase_without_prefix
+    (Z20391_integer_to_exact_natural_number_or_0
+    (Z19682_truncate_rational_number (Z19826_multiply_rational_by_natural_number a0 255)))))))
+
+;; Z28650 display RGBA color
+(define (Z28650_display_rgba_color a0 a1)
+  (Z28639_format_rgba_color_as_rrggbbaa_hex a0))
+
+;; Z28676 throws error type?
+(define (Z28676_throws_error_type a0 a1)
+  (Z852_is_error_type (snd (Z853_get_error_thrown_by_function_call a0)) a1))
+
 ;; Z28681 false identity
 (define (Z28681_false_identity a0)
   (identity #f))
+
+;; Z28691 untype list if custom converters
+(define (Z28691_untype_list_if_custom_converters a0)
+  (if
+    (Z28688_type_has_custom_converters_from_code (Z18626_type_of_typed_list a0))
+    (Z17895_untype_a_list a0)
+    a0))
 
 ;; Z28711 nth element by recursion (helper)
 (define (Z28711_nth_element_by_recursion_helper a0 a1)
@@ -3264,7 +10234,103 @@
     (if
     (Z23883_is_zero_natural_number (Z28715_index_of_first_sub_list_start (cdr a0) a1))
     0
-    (Z13578_increment_natural_number (Z28715_index_of_first_sub_list_start (cdr a0) a1))))))
+    (add1 (Z28715_index_of_first_sub_list_start (cdr a0) a1))))))
+
+;; Z28729 age today
+(define (Z28729_age_today a0)
+  (Z20756_age a0 (Z23833_current_date )))
+
+;; Z28735 every nth item of list starting with nth
+(define (Z28735_every_nth_item_of_list_starting_with_nth a0 a1)
+  (Z29400_filter_list_through_list_of_indices
+    (Z17895_untype_a_list a0)
+    (Z18475_return_typed_list
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    *
+    (Z13831_natural_number_range 1 (Z13546_divide_natural_numbers (length a0) a1))
+    a1))))
+
+;; Z28767 year from Wikidata time
+(define (Z28767_year_from_wikidata_time a0 a1 a2)
+  (Z13713_natural_number_to_digit_string
+    (Z20160_gregorian_year_to_year_number
+    (Z24948_year_from_calendar_date
+    (Z28133_valid_gregorian_date_from_wikidata_datetime
+    (Z25726_wikidata_datetime_from_wikidata_time
+    (Z21449_first_value_of_property_from_wikidata_item a1 a0)))))))
+
+;; Z28773 Gregorian year from Wikidata time
+(define (Z28773_gregorian_year_from_wikidata_time a0)
+  (Z20305_unless_exception
+    (Z24948_year_from_calendar_date
+    (Z25603_gregorian_calendar_date_from_wikidata_datetime
+    (Z25726_wikidata_datetime_from_wikidata_time a0)))
+    #f
+    Z24_void))
+
+;; Z28803 short description for album
+(define (Z28803_short_description_for_album a0 a1)
+  (Z13318_apply_two_argument_function
+    (Z14310_select_a_function_based_on_language Z28806_config_for_short_description_for_album a1)
+    a0
+    a1))
+
+;; Z28818 display simplified Gregorian year
+(define (Z28818_display_simplified_gregorian_year a0 a1 a2)
+  (if
+    (Z17817_same_gregorian_era
+    (Z20185_gregorian_era_of_gregorian_year a0)
+    (Z20185_gregorian_era_of_gregorian_year a2))
+    (if
+    (> (Z20160_gregorian_year_to_year_number a0) (Z20160_gregorian_year_to_year_number a2))
+    (Z14280_display_natural_number (Z20160_gregorian_year_to_year_number a0) a1)
+    (Z20241_display_gregorian_year a0 a1))
+    (Z20241_display_gregorian_year a0 a1)))
+
+;; Z28833 is first year before second
+(define (Z28833_is_first_year_before_second a0 a1)
+  (Z17215_is_negative_integer (Z20219_difference_between_gregorian_years a1 a0)))
+
+;; Z28846 Later Wikidata time
+(define (Z28846_later_wikidata_time a0 a1)
+  (if
+    (Z25276_later_date
+    (Z25603_gregorian_calendar_date_from_wikidata_datetime
+    (Z25726_wikidata_datetime_from_wikidata_time a0))
+    (Z25603_gregorian_calendar_date_from_wikidata_datetime
+    (Z25726_wikidata_datetime_from_wikidata_time a1)))
+    #t
+    (and
+    (Z20430_same_gregorian_calendar_date
+    (Z25603_gregorian_calendar_date_from_wikidata_datetime
+    (Z25726_wikidata_datetime_from_wikidata_time a0))
+    (Z25603_gregorian_calendar_date_from_wikidata_datetime
+    (Z25726_wikidata_datetime_from_wikidata_time a1)))
+    (Z32126_later_than_time_of_day
+    (Z25711_time_of_day_from_wikidata_datetime (Z25726_wikidata_datetime_from_wikidata_time a0))
+    (Z25711_time_of_day_from_wikidata_datetime (Z25726_wikidata_datetime_from_wikidata_time a1))))))
+
+;; Z28855 is year BC
+(define (Z28855_is_year_bc a0)
+  (Z25060_gregorian_era_is_bc (Z20185_gregorian_era_of_gregorian_year a0)))
+
+;; Z28875 is year AD
+(define (Z28875_is_year_ad a0)
+  (Z18084_gregorian_era_is_ad (Z20185_gregorian_era_of_gregorian_year a0)))
+
+;; Z28902 extractInitials
+(define (Z28902_extractinitials a0 a1)
+  (Z28917_initials_from_full_name_of_person
+    (Z24766_label_text_for_item_in_given_language_or_fallback
+    (Z23756_wikidata_item_reference_from_wikidata_item a0)
+    a1)))
+
+;; Z28935 extractFamilyName
+(define (Z28935_extractfamilyname a0 a1)
+  (Z28940_family_name_from_full_name_of_person
+    (Z24766_label_text_for_item_in_given_language_or_fallback
+    (Z23756_wikidata_item_reference_from_wikidata_item a0)
+    a1)))
 
 ;; Z28973 is primitive pythagorean triple
 (define (Z28973_is_primitive_pythagorean_triple a0 a1 a2)
@@ -3274,6 +10340,72 @@
     (Z13701_are_coprime_natural_numbers a0 a1)
     (and (Z13701_are_coprime_natural_numbers a0 a2) (Z13701_are_coprime_natural_numbers a1 a2)))))
 
+;; Z28982 digits in numerator of unsimplified rational
+(define (Z28982_digits_in_numerator_of_unsimplified_rational a0)
+  (Z14344_number_of_digits_in_decimal_string_representation_of_a_natur
+    (Z19733_numerator_of_unsimplified_rational_number a0)))
+
+;; Z28986 dp from unsimplified numerator and denominator
+(define (Z28986_dp_from_unsimplified_numerator_and_denominator a0 a1)
+  (if
+    (Z31547_is_natural_number_1
+    (Z19724_denominator_of_simplified_rational_number
+    (Z27232_rational_from_two_natural_numbers a0 a1)))
+    0
+    (Z14344_number_of_digits_in_decimal_string_representation_of_a_natur
+    (Z13582_decrement_natural_number_by_one
+    (Z19724_denominator_of_simplified_rational_number
+    (Z25432_proper_fraction_part_of_rational (Z27232_rational_from_two_natural_numbers a0 a1)))))))
+
+;; Z29023 absolute numerator when scaled to denominator
+(define (Z29023_absolute_numerator_when_scaled_to_denominator a0 a1)
+  (*
+    (Z19722_numerator_of_simplified_rational_number a0)
+    (Z13546_divide_natural_numbers a1 (Z19724_denominator_of_simplified_rational_number a0))))
+
+;; Z29028 integer numerator when scaled to denominator
+(define (Z29028_integer_numerator_when_scaled_to_denominator a0 a1)
+  (Z35847_signed_numerator_of_unsimplified_rational_number (Z25867_set_denominator a0 a1)))
+
+;; Z29045 HTML fragment contains string
+(define (Z29045_html_fragment_contains_string a0 a1)
+  (Z10070_has_substring (Z27854_html_fragment_as_string a0) a1))
+
+;; Z29055 German noun declination table floating right
+(define (Z29055_german_noun_declination_table_floating_right a0 a1)
+  (Z29052_right_float (Z28602_german_noun_declension_table a0 a1)))
+
+;; Z29059 string of first listed Wikidata item statement
+(define (Z29059_string_of_first_listed_wikidata_item_statement a0 a1 a2)
+  (Z23159_string_of_first_listed_monolingual_text_with_lang
+    (Z22978_values_unqualified_from_wikidata_item_statements a0 a1)
+    a2))
+
+;; Z29088 Croatian Genitive of a male name
+(define (Z29088_croatian_genitive_of_a_male_name a0)
+  (Z12899_join_list_of_strings_with_delimiter
+    (map Z11340_regular_croatian_masculine_genitive_singular (Z13407_tokenize_on_white_space a0))
+    " "))
+
+;; Z29094 Zip Strings
+(define (Z29094_zip_strings a0 a1)
+  (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l
+    Z30414_make_typed_pair
+    (Z24453_string_to_grapheme_list a0)
+    (Z24453_string_to_grapheme_list a1)))
+
+;; Z29116 rational as formatted decimal (dot separators)
+(define (Z29116_rational_as_formatted_decimal_dot_separators a0 a1)
+  (Z25457_format_plain_decimal_string_with_group_3_separator
+    (Z25445_rational_as_plain_decimal_to_decimal_places a0 a1)
+    "−"
+    "."
+    ","))
+
+;; Z29120 Persistent object from ZID string
+(define (Z29120_persistent_object_from_zid_string a0)
+  (Z828_fetch_persistent_object (Z29113_quoted_reference_from_zid_string a0)))
+
 ;; Z29128 list of quoted references
 (define (Z29128_list_of_quoted_references a0)
   (Z18475_return_typed_list
@@ -3282,6 +10414,61 @@
 ;; Z29130 formatAPAName for list
 (define (Z29130_formatapaname_for_list a0 a1)
   (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z28896_formatapaname a0 a1))
+
+;; Z29150 change SignWriting lane
+(define (Z29150_change_signwriting_lane a0 a1)
+  (Z10193_replace_all_regex_case_sensitive a0 "[MLR]" a1))
+
+;; Z29166 same Quote
+(define (Z29166_same_quote a0 a1)
+  (Z13052_object_equality (Z899_unquote a0) (Z899_unquote a1)))
+
+;; Z29248 is SignWriting?
+(define (Z29248_is_signwriting a0)
+  (Z10196_is_regular_expression_match
+    a0
+    ".*[MLR](2[5-9][0-9]|[3-6][0-9]{2}|7[0-4][0-9])x(2[5-9][0-9]|[3-6][0-9]{2}|7[0-4][0-9])(S[123][0-9a-f]{2}[0-5][0-9a-f](2[5-9][0-9]|[3-6][0-9]{2}|7[0-4][0-9])x(2[5-9][0-9]|[3-6][0-9]{2}|7[0-4][0-9]))+"))
+
+;; Z29270 punctuation mark in SignWriting
+(define (Z29270_punctuation_mark_in_signwriting a0)
+  (Z10075_replace_all_substrings
+    (Z10075_replace_all_substrings
+    (Z10193_replace_all_regex_case_sensitive
+    (Z10075_replace_all_substrings
+    (Z10075_replace_all_substrings
+    (Z10075_replace_all_substrings
+    (Z10075_replace_all_substrings
+    (Z10075_replace_all_substrings
+    (Z10075_replace_all_substrings
+    (Z10075_replace_all_substrings
+    (Z10075_replace_all_substrings
+    (Z10075_replace_all_substrings a0 ".t" "M537x505S38830463x496")
+    ".s"
+    "M537x505S38820463x495")
+    ".f"
+    "M537x506S38810463x495")
+    ",t"
+    "M537x505S38730463x496")
+    ",s"
+    "M537x505S38720463x495")
+    ",f"
+    "M537x506S38710463x495")
+    ")"
+    "M530x508S38b04470x493")
+    "("
+    "M530x508S38b00470x493")
+    ":"
+    "M536x511S38a00464x490")
+    "[;\\?]"
+    "M536x507S38900464x493")
+    "."
+    "M536x504S38800464x496")
+    ","
+    "M508x501S38700492x500"))
+
+;; Z29283 extract SignWriting symbol
+(define (Z29283_extract_signwriting_symbol a0)
+  (Z25829_regular_expression_match_with_flags a0 "S[123][0-9a-f]{2}[0-5][0-9a-f]" "g"))
 
 ;; Z29290 flatten a list completely
 (define (Z29290_flatten_a_list_completely a0)
@@ -3298,9 +10485,79 @@
 (define (Z29308_outer_product_u_v_rational_vectors a0 a1)
   (Z29286_table_from_function_of_row_and_column_elements Z19706_multiply_rational_numbers a0 a1))
 
+;; Z29315 form for table header
+(define (Z29315_form_for_table_header a0 a1)
+  (Z13036_apply
+    (Z14310_select_a_function_based_on_language
+    Z29317_config_for_selectors_of_form_for_table_header
+    a1)
+    a0))
+
+;; Z29316 form for table header, default
+(define (Z29316_form_for_table_header_default a0)
+  (Z27423_first_lemma_of_lexeme a0))
+
+;; Z29334 conjugate Italian adjective (feature list)
+(define (Z29334_conjugate_italian_adjective_feature_list a0 a1)
+  (Z22997_conjugate_italian_adjective
+    a0
+    (Z26779_wikidata_reference_in_enumeration_instance
+    Z25340_grammatical_gender_m_f
+    (car
+    (Z28316_filter_with_second_common_element
+    Z29341_qid_is_valid_value_of_enum_type
+    (map Z29335_wikidata_item_reference_from_object a1)
+    Z25340_grammatical_gender_m_f)))
+    (Z26779_wikidata_reference_in_enumeration_instance
+    Z26934_grammatical_number_singular_plural
+    (car
+    (Z28316_filter_with_second_common_element
+    Z29341_qid_is_valid_value_of_enum_type
+    (map Z29335_wikidata_item_reference_from_object a1)
+    Z26934_grammatical_number_singular_plural)))))
+
+;; Z29335 Wikidata item reference from object
+(define (Z29335_wikidata_item_reference_from_object a0)
+  (if
+    (Z19352_object_has_this_type a0 Z6091_wikidata_item_reference)
+    a0
+    (Z6895_get_wikidata_reference_from_enum_instance a0)))
+
+;; Z29341 QID is valid value of Enum Type
+(define (Z29341_qid_is_valid_value_of_enum_type a0 a1)
+  (Z12696_contains (Z6896_get_values_from_wikidata_enum (Z22764_string_from_type a1)) a0))
+
 ;; Z29350 Function identity
 (define (Z29350_function_identity a0)
   (identity a0))
+
+;; Z29368 table from function of arg, row [arg], col [arg]
+(define (Z29368_table_from_function_of_arg_row_arg_col_arg a0 a1 a2 a3)
+  (if
+    (null? a2)
+    (list )
+    (cons
+    (Z29370_apply3_to_a_common_1st_and_2nd_arg_and_list_of_3rd a0 a1 (car a2) a3)
+    (Z29368_table_from_function_of_arg_row_arg_col_arg a0 a1 (cdr a2) a3))))
+
+;; Z29370 apply3 to a common 1st and 2nd arg and list of 3rd
+(define (Z29370_apply3_to_a_common_1st_and_2nd_arg_and_list_of_3rd a0 a1 a2 a3)
+  (if
+    (null? a3)
+    (list )
+    (cons
+    (Z21216_apply_three_argument_function a0 a1 a2 (car a3))
+    (Z29370_apply3_to_a_common_1st_and_2nd_arg_and_list_of_3rd a0 a1 a2 (cdr a3)))))
+
+;; Z29390 apply the needed arguments
+(define (Z29390_apply_the_needed_arguments a0 a1)
+  (Z22074_apply_n_argument_function_to_list_of_arguments
+    a0
+    (Z29400_filter_list_through_list_of_indices
+    a1
+    (Z29396_indices_of_required_arguments
+    (Z21172_types_for_arguments a0)
+    (map Z16829_type_of_object a1)))))
 
 ;; Z29396 indices of required arguments
 (define (Z29396_indices_of_required_arguments a0 a1)
@@ -3346,6 +10603,15 @@
     a0
     a1))
 
+;; Z29409 most common element on list
+(define (Z29409_most_common_element_on_list a0)
+  (Z13397_get_the_nth_element_of_a_list
+    (Z19205_remove_duplicates_preserving_typing_untyping a0)
+    (Z29426_index_1_n_of_first_list_maximum
+    (Z29438_count_occurrences_of_list_1_elements_in_list_2
+    (Z19205_remove_duplicates_preserving_typing_untyping a0)
+    a0))))
+
 ;; Z29413 count occurrences of element on list
 (define (Z29413_count_occurrences_of_element_on_list a0 a1)
   (Z13569_subtract_natural_numbers_with_floor_of_0
@@ -3360,7 +10626,7 @@
 
 ;; Z29429 maximum value on list (natural numbers)
 (define (Z29429_maximum_value_on_list_natural_numbers a0)
-  (Z12781_left_fold a0 Z13630_greater_of_two_natural_numbers))
+  (Z12781_left_fold a0 max))
 
 ;; Z29438 count occurrences of list 1 elements in list 2
 (define (Z29438_count_occurrences_of_list_1_elements_in_list_2 a0 a1)
@@ -3375,6 +10641,32 @@
 (define (Z29446_second_element_performance a0)
   (car (cdr a0)))
 
+;; Z29462 create wikitable from function and features
+(define (Z29462_create_wikitable_from_function_and_features a0 a1 a2 a3 a4 a5 a6)
+  (Z27878_create_wikitable_with_columns_and_rows_headers
+    a0
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    Z27885_name_for_table_header
+    (cons a1 a3)
+    a6)
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    Z27885_name_for_table_header
+    a2
+    a6)
+    (Z29368_table_from_function_of_arg_row_arg_col_arg
+    a4
+    a5
+    (Z29476_enumeration_instance_list_from_wikidata_references
+    (Z28243_type_for_a_function_s_second_argument a4)
+    a2)
+    (Z29476_enumeration_instance_list_from_wikidata_references
+    (Z29484_type_for_a_function_s_third_argument a4)
+    a3))))
+
+;; Z29466 Wikidata item reference as enumeration instance
+(define (Z29466_wikidata_item_reference_as_enumeration_instance a0 a1)
+  (Z26779_wikidata_reference_in_enumeration_instance a0 a1))
+
 ;; Z29476 enumeration instance list from Wikidata references
 (define (Z29476_enumeration_instance_list_from_wikidata_references a0 a1)
   (Z18475_return_typed_list
@@ -3383,12 +10675,22 @@
     a0
     a1)))
 
+;; Z29484 type for a function's third argument
+(define (Z29484_type_for_a_function_s_third_argument a0)
+  (Z21174_type_declared_for_argument
+    (Z29446_second_element_performance (cdr (Z21177_get_list_of_argument_declarations a0)))))
+
 ;; Z29493 enumeration reference values from type
 (define (Z29493_enumeration_reference_values_from_type a0)
-  (Z18475_return_typed_list
-    (map
-    Z6895_get_wikidata_reference_from_enum_instance
-    (Z26879_list_of_all_possible_instances_of_wikidata_enum a0))))
+  (Z6896_get_values_from_wikidata_enum (Z22764_string_from_type a0)))
+
+;; Z29506 replace Nth character with substitution
+(define (Z29506_replace_nth_character_with_substitution a0 a1 a2)
+  (Z22693_codepoint_list_to_string
+    (Z31369_set_i_th_element_on_list_1_n
+    (Z22717_string_to_codepoint_list a0)
+    a1
+    (Z24472_get_nth_code_point_of_string a2 1))))
 
 ;; Z29515 lexeme sense ID for solfège syllable
 (define (Z29515_lexeme_sense_id_for_solf_ge_syllable a0)
@@ -3397,9 +10699,141 @@
     (list "do" "re" "mi" "fa" "so" "sol" "la" "ti")
     (list "L319652-S2" "L326409-S2" "L323887-S2" "L320419-S2" "L328069-S2" "L328094-S2" "L323013-S2" "L329319-S2")))
 
+;; Z29532 
+(define (Z29532 a0)
+  (Z12316_regular_expression_substitute_with_flags
+    "([\\x{00B7}\\x{2027}])"
+    "‧"
+    (Z12316_regular_expression_substitute_with_flags
+    "‧([\\s]|$)"
+    " "
+    (Z12316_regular_expression_substitute_with_flags
+    "‧([a-z])‧* "
+    (Z12316_regular_expression_substitute_with_flags
+    "([aâáeêéiíoôóuúAÂÁEÊÉIÍOÔÓUÚ])‧([lmrsz])(-|\\s)"
+    "$1$2$3"
+    (Z12316_regular_expression_substitute_with_flags
+    "‧(r|s){2}"
+    "$1‧$1"
+    (Z12316_regular_expression_substitute_with_flags
+    "([qQgG][uU])‧([aâáeêéiíoôóuúAÂÁEÊÉIÍOÔÓUÚ])"
+    "$1$2"
+    (Z12316_regular_expression_substitute_with_flags
+    "([aâáeêéiíoôóuúAÂÁEÊÉIÍOÔÓUÚ])‧([bBcCdDfFgGlLmMnNrRsSxX])([bBcCçÇdDfFgGjJmMnNpPqQtTvVxXzZ])"
+    "$1$2‧$3"
+    (Z12316_regular_expression_substitute_with_flags
+    "([aâáeêéiíoôóuúAÂÁEÊÉIÍOÔÓUÚ])"
+    "$1‧"
+    (Z10812_remove_punctuation a0)
+    "g")
+    "g")
+    "g")
+    "g")
+    "g")
+    ""
+    "g")
+    "g")
+    "gu"))
+
+;; Z29539 persistent object value by key
+(define (Z29539_persistent_object_value_by_key a0 a1)
+  (Z803_value_by_key a0 (Z29542_complete_persistent_object a1)))
+
+;; Z29572 HTML fragment contains second fragment
+(define (Z29572_html_fragment_contains_second_fragment a0 a1)
+  (Z10070_has_substring (Z27854_html_fragment_as_string a0) (Z27854_html_fragment_as_string a1)))
+
+;; Z29576 HTML fragment contains fragment, case insensitive
+(define (Z29576_html_fragment_contains_fragment_case_insensitive a0 a1)
+  (Z10070_has_substring
+    (Z10047_to_lowercase (Z27854_html_fragment_as_string a0))
+    (Z10047_to_lowercase (Z27854_html_fragment_as_string a1))))
+
+;; Z29580 add caption to table without one
+(define (Z29580_add_caption_to_table_without_one a0 a1)
+  (Z29582_inject_html_fragment_inside_1st_bracket_of_another
+    (Z27873_wrap_an_html_fragment_in_a_tag a0 "caption" (list ) (list ))
+    a1))
+
+;; Z29588 link Wikidata label to Wikipedia article
+(define (Z29588_link_wikidata_label_to_wikipedia_article a0 a1)
+  (Z31870_link_to_item_article_with_display_text
+    (Z23753_label_of_item_reference_in_language_or_to_mul a1 a0)
+    a1
+    a0))
+
+;; Z29600 display function label
+(define (Z29600_display_function_label a0 a1)
+  (Z16568_object_label (Z29113_quoted_reference_from_zid_string a0) a1))
+
+;; Z29607 instances from Wikidata lexeme
+(define (Z29607_instances_from_wikidata_lexeme a0)
+  (map
+    Z19308_value_of_wikidata_statement
+    (filter Z23540_predicate_is_p31 (Z19300_statements_from_lexeme a0))))
+
 ;; Z29661 is Kleenean not False?
 (define (Z29661_is_kleenean_not_false a0)
   (not (Z22120_kleenean_identity Z22115_false a0)))
+
+;; Z29684 standard deviation of list of float64s
+(define (Z29684_standard_deviation_of_list_of_float64s a0)
+  (Z22318_square_root_of_float64
+    (Z21033_divide_float64
+    (Z22579_sum_a_list_of_floating_point_numbers_float64
+    (Z18475_return_typed_list
+    (map
+    Z31135_square_of_float64
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    Z21031_subtract_float64
+    a0
+    (Z22583_mean_of_a_list_of_floating_point_numbers_float64 a0)))))
+    (Z20936_natural_number_to_float64 (Z13582_decrement_natural_number_by_one (length a0))))))
+
+;; Z29688 select best Wikidata statements
+(define (Z29688_select_best_wikidata_statements a0)
+  (Z22839_first_object_or_default
+    (filter
+    Z23120_is_non_empty_list
+    (Z12967_list_without_last_element (Z29685_partition_wikidata_statements_by_rank a0)))
+    (list )))
+
+;; Z29694 get best statements for Wikidata prop from item
+(define (Z29694_get_best_statements_for_wikidata_prop_from_item a0 a1)
+  (Z29688_select_best_wikidata_statements
+    (Z29691_get_statements_for_wikidata_property_from_item a0 a1)))
+
+;; Z29717 ArticlePlaceholder render main Wikidata statement
+(define (Z29717_articleplaceholder_render_main_wikidata_statement a0 a1)
+  (Z27873_wrap_an_html_fragment_in_a_tag
+    (Z29718_select_per_wikidata_claim_subtype
+    (Z28328_claim_type_of_wikidata_statement a1)
+    (Z29749_monolingual_text_as_html_with_visible_language_tag
+    (Z35121_label_of_wikidata_claim_subtype Z6022_no_value a0)
+    a0)
+    (Z29749_monolingual_text_as_html_with_visible_language_tag
+    (Z35121_label_of_wikidata_claim_subtype Z6023_some_value a0)
+    a0)
+    (Z30097_format_main_wikidata_statement_by_prop_data_type a0 a1))
+    "span"
+    (list )
+    (list )))
+
+;; Z29718 select per Wikidata claim subtype
+(define (Z29718_select_per_wikidata_claim_subtype a0 a1 a2 a3)
+  (Z19565_triple_if
+    (Z16372_identity_identity_identity Z6022_no_value a0)
+    a1
+    (Z16372_identity_identity_identity Z6023_some_value a0)
+    a2
+    a3))
+
+;; Z29724 non-external-ID properties of Wikidata item
+(define (Z29724_non_external_id_properties_of_wikidata_item a0)
+  (Z19198_remove_elements_common_to_second_list
+    (Z13078_remove_duplicates_from_untyped_list
+    (map Z19306_predicate_of_wikidata_statement (Z22220_statements_from_wikidata_item a0)))
+    Z30960_d_mediawiki_wikibase_sortedproperties_extids))
 
 ;; Z29725 sort according to other list
 (define (Z29725_sort_according_to_other_list a0 a1)
@@ -3414,6 +10848,20 @@
     (Z12767_concatenate_two_untyped_lists
     Z30959_d_mediawiki_wikibase_sortedproperties_non_extids
     Z30960_d_mediawiki_wikibase_sortedproperties_extids)))
+
+;; Z29750 language is acceptable substitute?
+(define (Z29750_language_is_acceptable_substitute a0 a1)
+  (Z12696_contains (Z24144_fallback_languages a1 #f #f) a0))
+
+;; Z29787 apply with common 1st arg and N 2nd and 3rd args
+(define (Z29787_apply_with_common_1st_arg_and_n_2nd_and_3rd_args a0 a1 a2 a3)
+  (Z31490_if_either
+    (null? a2)
+    (null? a3)
+    (list )
+    (cons
+    (Z21216_apply_three_argument_function a0 a1 (car a2) (car a3))
+    (Z29787_apply_with_common_1st_arg_and_n_2nd_and_3rd_args a0 a1 (cdr a2) (cdr a3)))))
 
 ;; Z29791 zip multiple lists
 (define (Z29791_zip_multiple_lists a0)
@@ -3442,6 +10890,126 @@
     (Z17895_untype_a_list (Z13369_remove_first_n_elements_of_list (Z17895_untype_a_list a0) a1))
     a1))))
 
+;; Z29825 label of property in language or fallbacks
+(define (Z29825_label_of_property_in_language_or_fallbacks a0 a1)
+  (Z34953_monolingual_text_from_multilingual_with_fallback
+    (Z23223_property_labels
+    (Z35036_fetch_wikidata_property_or_parts a1 (list Z6033_labels) (list ) (list )))
+    a0))
+
+;; Z29868 Wikidata statement has exact qualifier?
+(define (Z29868_wikidata_statement_has_exact_qualifier a0 a1)
+  (Z12698_is_any_true
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    Z6807_same_wikidata_claim
+    (Z28278_qualifiers_of_wikidata_statement a0)
+    a1)))
+
+;; Z29883 display Time of day without seconds (rounded)
+(define (Z29883_display_time_of_day_without_seconds_rounded a0 a1)
+  (Z29890_replace_nth_regex_match
+    (Z25091_display_time_of_day (Z29884_round_time_of_day_to_the_nearest_minute a0) a1)
+    ":.."
+    ""
+    2))
+
+;; Z29884 round Time of day to the nearest minute
+(define (Z29884_round_time_of_day_to_the_nearest_minute a0)
+  (if
+    (<= (Z25088_second_from_time_of_day a0) 29)
+    (Z35911_time_of_day_from_components
+    (Z25082_hour_of_day a0)
+    (Z25085_minute_from_time_of_day a0)
+    0)
+    (if
+    (= (Z25085_minute_from_time_of_day a0) 59)
+    (Z35911_time_of_day_from_components
+    (if (= (Z25082_hour_of_day a0) 23) 0 (add1 (Z25082_hour_of_day a0)))
+    0
+    0)
+    (Z35911_time_of_day_from_components
+    (Z25082_hour_of_day a0)
+    (add1 (Z25085_minute_from_time_of_day a0))
+    0))))
+
+;; Z29911 Gregorian calendar date not fully defined
+(define (Z29911_gregorian_calendar_date_not_fully_defined a0)
+  (not (Z26237_day_of_roman_year_fully_defined (Z24936_day_of_year_from_calendar_date a0))))
+
+;; Z29919 location in daylight savings time on date
+(define (Z29919_location_in_daylight_savings_time_on_date a0 a1)
+  (if
+    (or
+    (not (Z29961_country_qid_has_daylight_savings (Z29921_country_qid_of_location_item a0)))
+    (Z29894_country_qid_has_regional_daylight_savings_dates
+    (Z29921_country_qid_of_location_item a0)))
+    #f
+    (Z29924_date_in_start_end_period_of_same_year_complex
+    a1
+    (Z29899_country_wide_daylight_savings_start_date_in_year
+    (Z29921_country_qid_of_location_item a0)
+    (Z24948_year_from_calendar_date a1))
+    (Z29916_country_wide_daylight_savings_end_date_in_year
+    (Z29921_country_qid_of_location_item a0)
+    (Z24948_year_from_calendar_date a1)))))
+
+;; Z29924 date in start/end period of same year (complex)
+(define (Z29924_date_in_start_end_period_of_same_year_complex a0 a1 a2)
+  (if
+    (Z25271_date_before a1 a2)
+    (and (Z25271_date_before (Z24968_previous_calendar_day a1) a0) (Z25271_date_before a0 a2))
+    (or (Z25271_date_before a0 a2) (Z25271_date_before (Z24968_previous_calendar_day a1) a0))))
+
+;; Z29975 add hours (rational) to Time
+(define (Z29975_add_hours_rational_to_time a0 a1)
+  (Z25167_add_to_time_of_day
+    a0
+    0
+    0
+    (Z17144_absolute_value_of_integer_as_natural_number
+    (Z19841_rational_to_nearest_integer_even_integer_tiebreak
+    (Z19826_multiply_rational_by_natural_number a1 3600)))))
+
+;; Z29979 (#) best time zone for location and date
+(define (Z29979_best_time_zone_for_location_and_date a0 a1)
+  (Z19308_value_of_wikidata_statement
+    (car (Z30126_located_in_timezone_statements_from_qid_or_admin a0))))
+
+;; Z30000 Sunset sentence for location on date
+(define (Z30000_sunset_sentence_for_location_on_date a0 a1 a2 a3)
+  (Z29968_sunset_sentence_in_english_variants a0 a1 a2 a3))
+
+;; Z30009 apply String transformation to Monolingual text
+(define (Z30009_apply_string_transformation_to_monolingual_text a0 a1)
+  (Z861_monolingual_text_from_string_and_natural_language
+    (Z13036_apply a1 (Z14396_string_of_monolingual_text a0))
+    (Z14404_language_of_monolingual_text a0)))
+
+;; Z30016 generate HTML anchor tag (hyperlink)
+(define (Z30016_generate_html_anchor_tag_hyperlink a0 a1)
+  (Z27861_html_raw_content_to_html_fragment
+    (Z10638_generate_html_source_for_anchor_tag_hyperlink a0 a1)))
+
+;; Z30025 get properties' IDs from Wikidata item reference
+(define (Z30025_get_properties_ids_from_wikidata_item_reference a0)
+  (map
+    Z19306_predicate_of_wikidata_statement
+    (Z22220_statements_from_wikidata_item (Z6821_fetch_wikidata_item a0))))
+
+;; Z30035 prepend String to Monolingual text
+(define (Z30035_prepend_string_to_monolingual_text a0 a1)
+  (Z861_monolingual_text_from_string_and_natural_language
+    (string-append a0 (Z14396_string_of_monolingual_text a1))
+    (Z14404_language_of_monolingual_text a1)))
+
+;; Z30043 name of language in language
+(define (Z30043_name_of_language_in_language a0 a1)
+  (Z27885_name_for_table_header (Z29649_wikidata_reference_from_wikifunctions_language_obj a0) a1))
+
+;; Z30058 wrap in div HTML fragment with classes
+(define (Z30058_wrap_in_div_html_fragment_with_classes a0 a1)
+  (Z27873_wrap_an_html_fragment_in_a_tag a1 "div" (list "class") a0))
+
 ;; Z30075 return list if non-empty else backup
 (define (Z30075_return_list_if_non_empty_else_backup a0 a1)
   (if (null? a0) a1 a0))
@@ -3449,6 +11017,71 @@
 ;; Z30092 HTML class attribute string
 (define (Z30092_html_class_attribute_string a0)
   (Z30145_html_key_value_string "class" (Z12899_join_list_of_strings_with_delimiter a0 " ")))
+
+;; Z30098 format main Wikidata statement by value's datatype
+(define (Z30098_format_main_wikidata_statement_by_value_s_datatype a0 a1)
+  (Z13318_apply_two_argument_function
+    (Z38482_switch_on_type_of_object
+    a1
+    (list Z11_monolingual_text Z6064_wikidata_time Z6011_wikidata_geo_coordinate Z6010_wikidata_quantity Z6091_wikidata_item_reference Z6092_wikidata_property_reference Z6094_wikidata_lexeme_form_reference Z6095_wikidata_lexeme_reference Z6096_wikidata_lexeme_sense_reference)
+    (list Z30105_articleplaceholder_format_monolingual_text Z30848_articleplaceholder_format_wikidata_time Z30151_articleplaceholder_format_wikidata_geo_coordinate Z30847_articleplaceholder_format_wikidata_quantity Z30107_articleplaceholder_format_wd_item_prop_reference Z30107_articleplaceholder_format_wd_item_prop_reference Z30107_articleplaceholder_format_wd_item_prop_reference Z30107_articleplaceholder_format_wd_item_prop_reference Z30107_articleplaceholder_format_wd_item_prop_reference Z30106_articleplaceholder_format_string))
+    a0
+    a1))
+
+;; Z30100 ArticlePlaceholder format URL statement
+(define (Z30100_articleplaceholder_format_url_statement a0 a1)
+  (Z30016_generate_html_anchor_tag_hyperlink a1 ""))
+
+;; Z30105 ArticlePlaceholder format Monolingual text
+(define (Z30105_articleplaceholder_format_monolingual_text a0 a1)
+  (Z29749_monolingual_text_as_html_with_visible_language_tag a1 a0))
+
+;; Z30106 ArticlePlaceholder format String
+(define (Z30106_articleplaceholder_format_string a0 a1)
+  (Z27868_string_to_html_fragment a1))
+
+;; Z30107 ArticlePlaceholder format WD Item/Prop reference
+(define (Z30107_articleplaceholder_format_wd_item_prop_reference a0 a1)
+  (if
+    (not
+    (fst
+    (Z853_get_error_thrown_by_function_call (Z29588_link_wikidata_label_to_wikipedia_article a0 a1))))
+    (Z29588_link_wikidata_label_to_wikipedia_article a0 a1)
+    (if
+    (Z22431_multilingual_text_contains_element_for_language
+    (Z22853_labels_of_wikidata_item_multilingual_text (Z6821_fetch_wikidata_item a1))
+    a0)
+    (Z27868_string_to_html_fragment
+    (Z14396_string_of_monolingual_text
+    (Z16273_monolingual_text_in_specified_language_from_multilingual_tex
+    (Z22853_labels_of_wikidata_item_multilingual_text (Z6821_fetch_wikidata_item a1))
+    a0)))
+    (Z27868_string_to_html_fragment (Z20041_wikidata_item_reference_id_string a1)))))
+
+;; Z30148 hatnote
+(define (Z30148_hatnote a0)
+  (Z30058_wrap_in_div_html_fragment_with_classes
+    (list "hatnote")
+    (Z27861_html_raw_content_to_html_fragment a0)))
+
+;; Z30151 ArticlePlaceholder format Wikidata geo-coordinate
+(define (Z30151_articleplaceholder_format_wikidata_geo_coordinate a0 a1)
+  (Z30106_articleplaceholder_format_string
+    a0
+    (Z25629_default_display_of_wikidata_geo_coordinate a1 a0)))
+
+;; Z30157 group by selector func and apply func w/ key, vals
+(define (Z30157_group_by_selector_func_and_apply_func_w_key_vals a0 a1 a2)
+  (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l
+    a2
+    (Z19205_remove_duplicates_preserving_typing_untyping (map a1 a0))
+    (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an
+    Z22820_compress_list
+    a0
+    (Z29794_cartesian_product_of_2_lists_with_pairing_function
+    Z13052_object_equality
+    (Z19205_remove_duplicates_preserving_typing_untyping (map a1 a0))
+    (map a1 a0)))))
 
 ;; Z30159 list of names for table header
 (define (Z30159_list_of_names_for_table_header a0 a1)
@@ -3460,6 +11093,85 @@
 ;; Z30164 list has length
 (define (Z30164_list_has_length a0 a1)
   (= (length a0) a1))
+
+;; Z30172 list of values from a Typed map
+(define (Z30172_list_of_values_from_a_typed_map a0)
+  (map snd (Z27915_typed_key_value_pairs_from_typed_map a0)))
+
+;; Z30175 group Wikidata property claims by predicate
+(define (Z30175_group_wikidata_property_claims_by_predicate a0)
+  (Z24646_make_string_keyed_map
+    (Z30157_group_by_selector_func_and_apply_func_w_key_vals
+    a0
+    Z28294_predicate_of_wikidata_property_claim
+    Z30414_make_typed_pair)))
+
+;; Z30192 make a link
+(define (Z30192_make_a_link a0 a1)
+  (Z30016_generate_html_anchor_tag_hyperlink a0 a1))
+
+;; Z30217 sort statements by Wikidata property type
+(define (Z30217_sort_statements_by_wikidata_property_type a0 a1)
+  (Z27665_concatenate_many_untyped_lists
+    (map
+    snd
+    (Z21347_sort_integer_keyed_list_ascending
+    (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l
+    Z30414_make_typed_pair
+    (map
+    Z17101_natural_number_to_integer
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    Z13708_index_of_first_listing_1_n_note_limitation
+    (map
+    fst
+    (Z30157_group_by_selector_func_and_apply_func_w_key_vals
+    a1
+    Z19306_predicate_of_wikidata_statement
+    Z30414_make_typed_pair))
+    (Z29725_sort_according_to_other_list
+    (map
+    fst
+    (Z30157_group_by_selector_func_and_apply_func_w_key_vals
+    a1
+    Z19306_predicate_of_wikidata_statement
+    Z30414_make_typed_pair))
+    a0)))
+    (map
+    snd
+    (Z30157_group_by_selector_func_and_apply_func_w_key_vals
+    a1
+    Z19306_predicate_of_wikidata_statement
+    Z30414_make_typed_pair)))))))
+
+;; Z30232 regular Wikitable of conjugation for Wiktionary
+(define (Z30232_regular_wikitable_of_conjugation_for_wiktionary a0 a1 a2 a3 a4 a5 a6)
+  (Z30463_helper_for_regular_wikitable_in_wiktionary
+    a0
+    a1
+    a2
+    a3
+    a4
+    a5
+    a6
+    (Z30043_name_of_language_in_language a4 a3)
+    (Z30267_map_of_names_for_table_header
+    (Z28316_filter_with_second_common_element
+    Z19352_object_has_this_type
+    (Z12676_flatten_untyped_list (Z17895_untype_a_list a0) 1000)
+    Z6091_wikidata_item_reference)
+    a3)))
+
+;; Z30239 same Typed map
+(define (Z30239_same_typed_map a0 a1)
+  (Z29294_object_equivalence a0 a1))
+
+;; Z30248 fetch Wikidata items
+(define (Z30248_fetch_wikidata_items a0 a1 a2 a3)
+  (Z6820_fetch_wikidata_entities a0 a1 a2 a3))
+
+;; Z30260 fetch Wikidata lexemes
+(define (Z30260_fetch_wikidata_lexemes a0 a1 a2 a3)
+  (Z6820_fetch_wikidata_entities a0 a1 a2 a3))
 
 ;; Z30267 map of names for table header
 (define (Z30267_map_of_names_for_table_header a0 a1)
@@ -3483,9 +11195,128 @@
 (define (Z30289_typed_pair_identity a0)
   (identity a0))
 
+;; Z30290 clamped subtract bytes
+(define (Z30290_clamped_subtract_bytes a0 a1)
+  (Z22535_natural_number_to_byte
+    (Z13569_subtract_natural_numbers_with_floor_of_0
+    (Z14567_byte_to_natural_number a0)
+    (Z14567_byte_to_natural_number a1))))
+
+;; Z30299 first Typed pair from Typed map
+(define (Z30299_first_typed_pair_from_typed_map a0)
+  (car (Z30245_typed_list_from_typed_map a0)))
+
+;; Z30316 first value from Typed map
+(define (Z30316_first_value_from_typed_map a0)
+  (snd (Z30299_first_typed_pair_from_typed_map a0)))
+
+;; Z30342 sort selected labels from Wikidata item
+(define (Z30342_sort_selected_labels_from_wikidata_item a0 a1)
+  (Z24139_item_labels_filtered_by_language_list
+    (Z30120_fetch_wikidata_item_or_parts a0 (list Z6033_labels) a1 (list ))
+    a1))
+
+;; Z30349 correct Swedish indefinite article
+(define (Z30349_correct_swedish_indefinite_article a0)
+  (Z11542_if_string_output (Z30353_is_common_gender_lexeme a0) "en" "ett"))
+
+;; Z30380 best Swedish plural rep. via P5137
+(define (Z30380_best_swedish_plural_rep_via_p5137 a0)
+  (Z30377_best_plural_rep_via_p5137 a0 Z1592_swedish))
+
+;; Z30383 best English plural rep. via P5137
+(define (Z30383_best_english_plural_rep_via_p5137 a0)
+  (Z30377_best_plural_rep_via_p5137 a0 Z1002_english))
+
+;; Z30404 Armenian capitalise first letter and add full stop
+(define (Z30404_armenian_capitalise_first_letter_and_add_full_stop a0)
+  (string-append (Z10771_sentence_case a0) "։"))
+
+;; Z30414 make Typed pair
+(define (Z30414_make_typed_pair a0 a1)
+  (Z17534_make_untyped_pair (Z16575_make_quote a0) (Z16575_make_quote a1)))
+
+;; Z30433 object has key
+(define (Z30433_object_has_key a0 a1)
+  (Z12696_contains (map fst (Z805_reify a0)) a1))
+
 ;; Z30471 highest element by 'less than' function
 (define (Z30471_highest_element_by_less_than_function a0 a1)
   (Z12964_last_element (Z27612_order_list_with_comparing_function a0 a1)))
+
+;; Z30479 Armenian regular noun, locative case
+(define (Z30479_armenian_regular_noun_locative_case a0)
+  (string-append (Z30473_armenian_add_if_string_ends_with_or a0) "ում"))
+
+;; Z30484 state location using entity and class, German
+(define (Z30484_state_location_using_entity_and_class_german a0 a1 a2)
+  (Z26107_monolingual_text_from_language_and_string
+    Z1430_german
+    (Z22511_capitalise_first_letter_and_add_full_stop
+    (Z22504_join_list_of_strings_with_spaces (list )))))
+
+;; Z30489 (#) local time of sunset for location and date
+(define (Z30489_local_time_of_sunset_for_location_and_date a0 a1)
+  (Z29975_add_hours_rational_to_time
+    (Z28005_utc_time_of_sunset_for_wikidata_location_on_date a0 a1)
+    (Z29765_utc_offset_hours_of_timezone_qid_in_standard_time
+    (Z29979_best_time_zone_for_location_and_date a0 a1))))
+
+;; Z30503 degrees to radians (rational to float64)
+(define (Z30503_degrees_to_radians_rational_to_float64 a0)
+  (Z21013_degrees_to_radians_float64 (Z20854_rational_number_as_float a0)))
+
+;; Z30509 latitude from Wikidata geo-coordinate (radians)
+(define (Z30509_latitude_from_wikidata_geo_coordinate_radians a0)
+  (Z30503_degrees_to_radians_rational_to_float64
+    (Z25880_latitude_from_wikidata_geo_coordinate a0)))
+
+;; Z30519 longitude from Wikidata geo-coordinate (radians)
+(define (Z30519_longitude_from_wikidata_geo_coordinate_radians a0)
+  (Z30503_degrees_to_radians_rational_to_float64
+    (Z25883_longitude_from_wikidata_geo_coordinate a0)))
+
+;; Z30524 equation of time (hour angle in radians)
+(define (Z30524_equation_of_time_hour_angle_in_radians a0)
+  (Z30496_minutes_to_hour_angle_radians (Z27450_equation_of_time_minutes a0)))
+
+;; Z30531 Reference (or Object) from ZID string
+(define (Z30531_reference_or_object_from_zid_string a0)
+  (Z899_unquote (Z29113_quoted_reference_from_zid_string a0)))
+
+;; Z30555 Wikidata item for solfege syllable
+(define (Z30555_wikidata_item_for_solfege_syllable a0)
+  (Z30556_wikidata_item_from_sense_reference
+    (Z30558_wikidata_lexeme_sense_reference_from_lid_string
+    (Z29515_lexeme_sense_id_for_solf_ge_syllable a0))))
+
+;; Z30556 Wikidata item from sense reference
+(define (Z30556_wikidata_item_from_sense_reference a0)
+  (Z6821_fetch_wikidata_item
+    (Z21577_item_reference_from_sense (Z6826_fetch_wikidata_lexeme_sense a0))))
+
+;; Z30569 height of inscribed equilateral triangle float
+(define (Z30569_height_of_inscribed_equilateral_triangle_float a0)
+  (Z20854_rational_number_as_float
+    (Z30561_height_of_inscribed_equilateral_triangle (Z21071_float_as_rational a0))))
+
+;; Z30590 Lexeme reference from Lexeme Sense reference
+(define (Z30590_lexeme_reference_from_lexeme_sense_reference a0)
+  (Z23433_lexeme_reference_of_lexeme_sense (Z6826_fetch_wikidata_lexeme_sense a0)))
+
+;; Z30591 Lexeme reference from Lexeme Form reference
+(define (Z30591_lexeme_reference_from_lexeme_form_reference a0)
+  (Z22483_lexeme_reference_of_lexeme_form (Z6824_fetch_wikidata_lexeme_form a0)))
+
+;; Z30603 Malay ordinal
+(define (Z30603_malay_ordinal a0)
+  (Z18679_malay_cardinal_to_ordinal (Z33165_malay_cardinal_prefix_se_place_value_tens a0)))
+
+;; Z30676 is pangram (Danish alphabet)
+(define (Z30676_is_pangram_danish_alphabet a0)
+  (Z13119_is_pangram_of_alphabet
+    (Z10047_to_lowercase a0)
+    Z30675_lowercase_danish_alphabet_letters))
 
 ;; Z30692 are multisets equivalent?
 (define (Z30692_are_multisets_equivalent a0 a1)
@@ -3493,9 +11324,30 @@
     (null? (fold Z12856_remove_first_matching_element_from_list a1 a0))
     (null? (fold Z12856_remove_first_matching_element_from_list a0 a1))))
 
+;; Z30704 Frequency of simple harmonic oscillator
+(define (Z30704_frequency_of_simple_harmonic_oscillator a0 a1)
+  (Z22318_square_root_of_float64 (Z21033_divide_float64 a0 a1)))
+
+;; Z30705 
+(define (Z30705 a0 a1)
+  (Z22318_square_root_of_float64 (Z21033_divide_float64 a0 a1)))
+
 ;; Z30715 prefix +
 (define (Z30715_prefix a0)
   (string-append "+" a0))
+
+;; Z30721 GNU line/byte count option snippet
+(define (Z30721_gnu_line_byte_count_option_snippet a0 a1 a2 a3)
+  (Z27182_join_two_strings_with_space
+    (Z11542_if_string_output a0 "-n" "-c")
+    (Z11542_if_string_output
+    a1
+    (Z30715_prefix (Z13713_natural_number_to_digit_string a2))
+    (Z13713_natural_number_to_digit_string a2))))
+
+;; Z30731 prefix + to number
+(define (Z30731_prefix_to_number a0)
+  (Z30715_prefix (Z13713_natural_number_to_digit_string a0)))
 
 ;; Z30742 is valid GNU coreutils binary unit?
 (define (Z30742_is_valid_gnu_coreutils_binary_unit a0)
@@ -3515,6 +11367,19 @@
 (define (Z30755_is_byte_mode_and_valid_size_unit a0 a1)
   (and (not a0) (Z30751_is_valid_gnu_coreutils_size_unit a1)))
 
+;; Z30759 (quiet or verbose) or empty string
+(define (Z30759_quiet_or_verbose_or_empty_string a0 a1)
+  (Z11542_if_string_output
+    (and a0 a1)
+    (Z851_throw_error Z30762_invalid_combination_of_coreutils_arguments (list ))
+    (Z11542_if_string_output
+    (Z10231_nor a0 a1)
+    Z11853_empty_string
+    (Z11542_if_string_output
+    a0
+    Z30735_gnu_coreutils_quiet_option_short
+    Z30736_gnu_coreutils_verbose_level_1_option_short))))
+
 ;; Z30777 Baoulé male names from day of birth
 (define (Z30777_baoul_male_names_from_day_of_birth a0)
   (Z22193_switch
@@ -3522,33 +11387,123 @@
     (list Z17403_monday Z17404_tuesday Z17405_wednesday Z17406_thursday Z17407_friday Z17408_saturday Z17409_sunday)
     (list "Kouassi" "Kouadio" "Konan" "Kouakou" "Yao" "Koffi" "Kouamé")))
 
+;; Z30785 capitalise first letter of Monolingual text
+(define (Z30785_capitalise_first_letter_of_monolingual_text a0)
+  (Z30009_apply_string_transformation_to_monolingual_text a0 Z10771_sentence_case))
+
+;; Z30795 append String to Monolingual text
+(define (Z30795_append_string_to_monolingual_text a0 a1)
+  (Z861_monolingual_text_from_string_and_natural_language
+    (string-append (Z14396_string_of_monolingual_text a1) a0)
+    (Z14404_language_of_monolingual_text a1)))
+
 ;; Z30805 note
 (define (Z30805_note a0 a1)
   (identity a1))
+
+;; Z30811 value after Type
+(define (Z30811_value_after_type a0)
+  (Z850_try_catch_function
+    (snd
+    (Z29446_second_element_performance (snd (Z29446_second_element_performance (Z805_reify a0)))))
+    Z516_argument_value_error
+    (Z850_try_catch_function
+    (snd (Z29446_second_element_performance (Z805_reify a0)))
+    Z507_error_in_evaluation
+    (Z30805_note "may be a void object (not a reference)" "uncaught error in Z30817"))))
+
+;; Z30824 get result or Error of quoted Function call
+(define (Z30824_get_result_or_error_of_quoted_function_call a0)
+  (Z30414_make_typed_pair
+    (not (fst (Z853_get_error_thrown_by_function_call a0)))
+    (snd (Z853_get_error_thrown_by_function_call a0))))
+
+;; Z30840 arithmetic mean of Natural numbers as Rational
+(define (Z30840_arithmetic_mean_of_natural_numbers_as_rational a0)
+  (Z33933_arithmetic_mean_of_rational_numbers
+    (Z18475_return_typed_list (map Z21653_natural_number_as_rational_number a0))))
+
+;; Z30847 ArticlePlaceholder format Wikidata quantity
+(define (Z30847_articleplaceholder_format_wikidata_quantity a0 a1)
+  (Z19384_wrap_with_html_tag (Z25326_display_quantity_with_digits_and_unit a1 a0) "span"))
+
+;; Z30848 ArticlePlaceholder format Wikidata time
+(define (Z30848_articleplaceholder_format_wikidata_time a0 a1)
+  (Z19384_wrap_with_html_tag (Z35327_display_wikidata_time a1 a0) "span"))
 
 ;; Z30865 run-length encoding (object equality)
 (define (Z30865_run_length_encoding_object_equality a0)
   (Z34790_run_length_encoding a0 Z13052_object_equality))
 
+;; Z30871 left-associative running reduce
+(define (Z30871_left_associative_running_reduce a0 a1)
+  (Z30870_left_associative_running_fold a0 (cdr a1) (car a1)))
+
 ;; Z30875 list of key-id Strings for Key-list
 (define (Z30875_list_of_key_id_strings_for_key_list a0)
   (map Z23320_key_id_of_key a0))
 
+;; Z30887 value by Persistent object key
+(define (Z30887_value_by_persistent_object_key a0 a1)
+  (Z803_value_by_key a0 (Z828_fetch_persistent_object a1)))
+
+;; Z30928 throws error if unquoted
+(define (Z30928_throws_error_if_unquoted a0)
+  (fst (Z853_get_error_thrown_by_function_call a0)))
+
+;; Z30943 find Lexeme Senses related to Wikidata Item
+(define (Z30943_find_lexeme_senses_related_to_wikidata_item a0 a1 a2)
+  (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    Z27292_lexeme_sense_referring_to_item
+    (map
+    Z6825_fetch_wikidata_lexeme
+    (Z27665_concatenate_many_untyped_lists
+    (Z29370_apply3_to_a_common_1st_and_2nd_arg_and_list_of_3rd
+    Z6830_find_lexemes_for_a_wikidata_item
+    a0
+    a1
+    a2)))
+    a0))
+
+;; Z30972 multilingual text includes string
+(define (Z30972_multilingual_text_includes_string a0 a1)
+  (Z12696_contains
+    (map
+    Z14396_string_of_monolingual_text
+    (Z19279_multilingual_text_to_list_of_monolingual_texts a0))
+    a1))
+
 ;; Z30975 common prefix of many lists
 (define (Z30975_common_prefix_of_many_lists a0)
-  (if
-    (or
-    (null? a0)
-    (or
-    (Z12738_any_meet_criteria a0 null?)
-    (not
-    (Z12684_are_all_true
+  (Z13366_get_the_first_n_elements_of_an_untyped_list
+    (car a0)
+    (Z30977_length_of_common_prefix_of_many_lists a0)))
+
+;; Z30976 common suffix of many lists
+(define (Z30976_common_suffix_of_many_lists a0)
+  (Z13362_get_the_last_n_elements_of_a_list
+    (car a0)
+    (Z30978_length_of_common_suffix_of_many_lists a0)))
+
+;; Z31002 strip common prefix of many lists
+(define (Z31002_strip_common_prefix_of_many_lists a0)
+  (Z18475_return_typed_list
+    (map
+    Z17895_untype_a_list
     (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
-    Z13052_object_equality
-    (map car (cdr a0))
-    (car (car a0)))))))
-    (list )
-    (cons (car (car a0)) (Z30975_common_prefix_of_many_lists (map cdr a0)))))
+    Z13369_remove_first_n_elements_of_list
+    a0
+    (Z30977_length_of_common_prefix_of_many_lists a0)))))
+
+;; Z31003 strip common suffix of many lists
+(define (Z31003_strip_common_suffix_of_many_lists a0)
+  (Z18475_return_typed_list
+    (map
+    Z17895_untype_a_list
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    Z13373_remove_last_n_elements_of_a_list
+    a0
+    (Z30978_length_of_common_suffix_of_many_lists a0)))))
 
 ;; Z31010 set (i,j)th element on list of lists
 (define (Z31010_set_i_j_th_element_on_list_of_lists a0 a1 a2 a3)
@@ -3573,18 +11528,148 @@
     (Z13708_index_of_first_listing_1_n_note_limitation
     #f
     (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments a2 a0 a1)))
-    (Z13578_increment_natural_number (length a0))
+    (add1 (length a0))
     (Z13708_index_of_first_listing_1_n_note_limitation
     #f
     (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments a2 a0 a1))))
+
+;; Z31041 display object label text
+(define (Z31041_display_object_label_text a0 a1)
+  (Z16568_object_label (Z29113_quoted_reference_from_zid_string a0) a1))
+
+;; Z31047 arithmetical average of numbers
+(define (Z31047_arithmetical_average_of_numbers a0)
+  (Z22583_mean_of_a_list_of_floating_point_numbers_float64 a0))
+
+;; Z31051 generate real (float64) list from a function
+(define (Z31051_generate_real_float64_list_from_a_function a0 a1 a2 a3)
+  (map a0 (Z31079_real_float64_number_range a2 a3 a1)))
+
+;; Z31078 enclose string from object
+(define (Z31078_enclose_string_from_object a0 a1 a2 a3)
+  (Z27385_enclose_string
+    a2
+    (Z31065_pass_object_if_predicate_is_true
+    (Z31120_string_from_object a0)
+    Z15777_is_string
+    Z506_argument_type_mismatch
+    "Z31078K1")
+    a3))
+
+;; Z31079 real (float64) number range
+(define (Z31079_real_float64_number_range a0 a1 a2)
+  (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    Z20849_add_float64
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    Z21032_multiply_float64
+    (map
+    Z20936_natural_number_to_float64
+    (Z13831_natural_number_range
+    0
+    (Z20391_integer_to_exact_natural_number_or_0
+    (Z20841_floor_float64_to_integer (Z21033_divide_float64 (Z21031_subtract_float64 a1 a0) a2)))))
+    a2)
+    a0))
+
+;; Z31090 same float64 within tolerance
+(define (Z31090_same_float64_within_tolerance a0 a1 a2)
+  (Z20941_less_than_or_equal_to_float64
+    (Z21041_absolute_value_float64 (Z21031_subtract_float64 a0 a1))
+    a2))
+
+;; Z31093 same list of float64s within tolerance
+(define (Z31093_same_list_of_float64s_within_tolerance a0 a1 a2)
+  (Z12684_are_all_true
+    (Z31095_apply_with_n_1st_and_2nd_args_and_common_3rd_arg
+    Z31090_same_float64_within_tolerance
+    a0
+    a1
+    a2)))
+
+;; Z31095 apply with N 1st and 2nd args and common 3rd arg
+(define (Z31095_apply_with_n_1st_and_2nd_args_and_common_3rd_arg a0 a1 a2 a3)
+  (Z31490_if_either
+    (null? a1)
+    (null? a2)
+    (list )
+    (cons
+    (Z21216_apply_three_argument_function a0 (car a1) (car a2) a3)
+    (Z31095_apply_with_n_1st_and_2nd_args_and_common_3rd_arg a0 (cdr a1) (cdr a2) a3))))
+
+;; Z31098 apply three-parameter function pairwise to 3 lists
+(define (Z31098_apply_three_parameter_function_pairwise_to_3_lists a0 a1 a2 a3)
+  (if
+    (or (null? a1) (or (null? a2) (null? a3)))
+    (list )
+    (cons
+    (Z21216_apply_three_argument_function a0 (car a1) (car a2) (car a3))
+    (Z31098_apply_three_parameter_function_pairwise_to_3_lists a0 (cdr a1) (cdr a2) (cdr a3)))))
+
+;; Z31109 fail with context
+(define (Z31109_fail_with_context a0 a1 a2 a3)
+  (Z851_throw_error
+    a1
+    (Z12961_append_element_to_typed_list
+    (Z27385_enclose_string
+    (Z27385_enclose_string "K" (Z13713_natural_number_to_digit_string (+ (length a2) 2)) ": ")
+    "Z31109: Z31110"
+    ": Z851")
+    (Z12961_append_element_to_typed_list
+    (Z27385_enclose_string
+    (Z27385_enclose_string "K" (Z13713_natural_number_to_digit_string (+ (length a2) 1)) ": ")
+    (Z31078_enclose_string_from_object a0 a3 "context object: " " ")
+    a3)
+    a2))))
+
+;; Z31120 string from object
+(define (Z31120_string_from_object a0)
+  (Z850_try_catch_function
+    (Z28231_zid_of_a_function a0)
+    Z506_argument_type_mismatch
+    (Z31065_pass_object_if_predicate_is_true
+    Z15777_is_string
+    a0
+    Z533_z6k1_must_be_a_string
+    "Z31120K1")))
 
 ;; Z31135 square of float64
 (define (Z31135_square_of_float64 a0)
   (Z21032_multiply_float64 a0 a0))
 
+;; Z31145 first grapheme cluster of String
+(define (Z31145_first_grapheme_cluster_of_string a0)
+  (car (Z24453_string_to_grapheme_list a0)))
+
 ;; Z31173 Euler characteristic of polyhedron
 (define (Z31173_euler_characteristic_of_polyhedron a0 a1 a2)
-  (Z17315_subtract_natural_numbers_as_integer (Z13521_add_two_natural_numbers a0 a2) a1))
+  (Z17315_subtract_natural_numbers_as_integer (+ a0 a2) a1))
+
+;; Z31177 List of digits in base n
+(define (Z31177_list_of_digits_in_base_n a0 a1)
+  (if
+    (Z23883_is_zero_natural_number a0)
+    (list 0)
+    (Z18475_return_typed_list
+    (Z29370_apply3_to_a_common_1st_and_2nd_arg_and_list_of_3rd
+    Z31859_value_of_k_th_place_digit_in_base_b_digit_string
+    a1
+    a0
+    (Z18759_reverse_list_preserving_list_typing_untyping
+    (Z13831_natural_number_range
+    0
+    (Z20391_integer_to_exact_natural_number_or_0
+    (Z20841_floor_float64_to_integer
+    (Z21037_logarithm_with_arbitrary_base_float64
+    (Z20936_natural_number_to_float64 a0)
+    (Z20936_natural_number_to_float64 a1))))))))))
+
+;; Z31205 Template:0 (multi-wiki)
+(define (Z31205_template_0_multi_wiki a0)
+  (Z27873_wrap_an_html_fragment_in_a_tag
+    (Z27868_string_to_html_fragment a0)
+    "span"
+    (list "aria-hidden" "style")
+    (list "true" "visibility:hidden;color:transparent;")))
 
 ;; Z31211 error argument list as ordered strings
 (define (Z31211_error_argument_list_as_ordered_strings a0 a1)
@@ -3593,42 +11678,83 @@
     a1
     (map Z31078_enclose_string_from_object a1)))
 
+;; Z31217 Dutch name of month
+(define (Z31217_dutch_name_of_month a0)
+  (Z24086_display_gregorian_calendar_month a0 Z1157_dutch))
+
+;; Z31231 Dutch name of the day of the week
+(define (Z31231_dutch_name_of_the_day_of_the_week a0)
+  (Z24041_display_day_of_the_week a0 Z1157_dutch))
+
+;; Z31246 age from Wikidata item
+(define (Z31246_age_from_wikidata_item a0)
+  (Z24918_years_between
+    (Z25601_date_of_birth_from_wikidata_item a0)
+    (Z28620_date_of_death_from_wikidata_item a0)))
+
+;; Z31262 apply with common 1st and 3rd args and N 2nd args
+(define (Z31262_apply_with_common_1st_and_3rd_args_and_n_2nd_args a0 a1 a2 a3)
+  (if
+    (null? a2)
+    (list )
+    (cons
+    (Z21216_apply_three_argument_function a0 a1 (car a2) a3)
+    (Z31262_apply_with_common_1st_and_3rd_args_and_n_2nd_args a0 a1 (cdr a2) a3))))
+
+;; Z31268 first index (1..=N) of character in String
+(define (Z31268_first_index_1_n_of_character_in_string a0 a1)
+  (Z13708_index_of_first_listing_1_n_note_limitation a0 (Z22717_string_to_codepoint_list a1)))
+
 ;; Z31294 list starts with
 (define (Z31294_list_starts_with a0 a1)
   (Z31547_is_natural_number_1 (Z28715_index_of_first_sub_list_start a0 a1)))
 
+;; Z31331 HTML unordered list
+(define (Z31331_html_unordered_list a0)
+  (Z27873_wrap_an_html_fragment_in_a_tag
+    (Z27926_join_multiple_html_fragments a0)
+    "ul"
+    (list )
+    (list )))
+
 ;; Z31345 insert element into list at index (1..=N+1)
 (define (Z31345_insert_element_into_list_at_index_1_n_1 a0 a1 a2)
-  (Z12767_concatenate_two_untyped_lists
-    (Z17895_untype_a_list
-    (Z13366_get_the_first_n_elements_of_an_untyped_list
-    (Z17895_untype_a_list a0)
-    (Z13582_decrement_natural_number_by_one a1)))
-    (Z17895_untype_a_list
-    (cons
-    a2
-    (Z13369_remove_first_n_elements_of_list
-    (Z17895_untype_a_list a0)
-    (Z13582_decrement_natural_number_by_one a1))))))
+  (Z31340_splice_elements_into_list_at_index_1_n_1 a0 a1 (Z14046_element_to_list a2)))
+
+;; Z31355 circular shift list n places left
+(define (Z31355_circular_shift_list_n_places_left a0 a1)
+  (Z19565_triple_if
+    (Z17215_is_negative_integer a1)
+    (Z17958_run_unary_endofunction_n_times
+    Z22179_circular_shift_right
+    a0
+    (Z17144_absolute_value_of_integer_as_natural_number a1))
+    (Z17239_is_zero_integer a1)
+    a0
+    (Z17958_run_unary_endofunction_n_times
+    Z25526_circular_shift_left
+    a0
+    (Z17144_absolute_value_of_integer_as_natural_number a1))))
 
 ;; Z31364 remove element at index (1..=N) on list
 (define (Z31364_remove_element_at_index_1_n_on_list a0 a1)
-  (Z12767_concatenate_two_untyped_lists
-    (Z17895_untype_a_list
-    (Z13366_get_the_first_n_elements_of_an_untyped_list
-    (Z17895_untype_a_list a0)
-    (Z13582_decrement_natural_number_by_one a1)))
-    (Z17895_untype_a_list (Z13369_remove_first_n_elements_of_list (Z17895_untype_a_list a0) a1))))
+  (Z31355_circular_shift_list_n_places_left
+    (cdr
+    (Z31355_circular_shift_list_n_places_left
+    a0
+    (Z17101_natural_number_to_integer (Z13582_decrement_natural_number_by_one a1))))
+    (Z17267_negate_natural_number_to_integer (Z13582_decrement_natural_number_by_one a1))))
 
 ;; Z31369 set i-th element on list (1..=N)
 (define (Z31369_set_i_th_element_on_list_1_n a0 a1 a2)
-  (Z12767_concatenate_two_untyped_lists
-    (Z17895_untype_a_list
-    (Z13366_get_the_first_n_elements_of_an_untyped_list
-    (Z17895_untype_a_list a0)
-    (Z13582_decrement_natural_number_by_one a1)))
-    (Z17895_untype_a_list
-    (cons a2 (Z13369_remove_first_n_elements_of_list (Z17895_untype_a_list a0) a1)))))
+  (Z31355_circular_shift_list_n_places_left
+    (cons
+    a2
+    (cdr
+    (Z31355_circular_shift_list_n_places_left
+    a0
+    (Z17101_natural_number_to_integer (Z13582_decrement_natural_number_by_one a1)))))
+    (Z17267_negate_natural_number_to_integer (Z13582_decrement_natural_number_by_one a1))))
 
 ;; Z31379 enumerate k-combinations of multiset
 (define (Z31379_enumerate_k_combinations_of_multiset a0 a1)
@@ -3637,6 +11763,110 @@
     (Z18194_powerset (Z17895_untype_a_list a0))
     a1))
 
+;; Z31405 Sentence that something begins
+(define (Z31405_sentence_that_something_begins a0 a1)
+  (Z13318_apply_two_argument_function
+    (Z14310_select_a_function_based_on_language Z31407_config_for_start_fragment a1)
+    a0
+    a1))
+
+;; Z31406 default cross-lingual fragment that sth started
+(define (Z31406_default_cross_lingual_fragment_that_sth_started a0 a1)
+  (Z26107_monolingual_text_from_language_and_string
+    a1
+    (Z27182_join_two_strings_with_space
+    "🚀"
+    (Z23753_label_of_item_reference_in_language_or_to_mul a0 a1))))
+
+;; Z31415 Start fragment in Swedish
+(define (Z31415_start_fragment_in_swedish a0 a1)
+  (Z26107_monolingual_text_from_language_and_string
+    Z1592_swedish
+    (Z27182_join_two_strings_with_space
+    (Z23753_label_of_item_reference_in_language_or_to_mul a0 a1)
+    "grundas")))
+
+;; Z31416 Start fragment in Spanish
+(define (Z31416_start_fragment_in_spanish a0 a1)
+  (Z26107_monolingual_text_from_language_and_string
+    Z1003_spanish
+    (Z27182_join_two_strings_with_space
+    "Comienzo de"
+    (Z23753_label_of_item_reference_in_language_or_to_mul a0 a1))))
+
+;; Z31417 Start fragment in English
+(define (Z31417_start_fragment_in_english a0 a1)
+  (Z26107_monolingual_text_from_language_and_string
+    Z1002_english
+    (Z15175_join_two_strings_with_separator
+    (Z23753_label_of_item_reference_in_language_or_to_mul a0 Z1002_english)
+    "started"
+    " ")))
+
+;; Z31421 Start fragment in German
+(define (Z31421_start_fragment_in_german a0 a1)
+  (Z26107_monolingual_text_from_language_and_string
+    Z1430_german
+    (Z27182_join_two_strings_with_space
+    (Z23753_label_of_item_reference_in_language_or_to_mul a0 a1)
+    (Z27182_join_two_strings_with_space
+    "hat"
+    (if
+    (Z20643_is_feminine_grammatical_gender
+    (Z22696_fetch_first_lexeme_from_item_ref_and_lang_p5137 a0 a1))
+    "ihren Anfang"
+    "seinen Anfang")))))
+
+;; Z31424 Start fragment in Italian
+(define (Z31424_start_fragment_in_italian a0 a1)
+  (Z861_monolingual_text_from_string_and_natural_language
+    (Z15175_join_two_strings_with_separator
+    (Z23468_text_from_wikidata_item_label_for_given_language
+    (Z30120_fetch_wikidata_item_or_parts a0 (list Z6033_labels) (list Z1787_italian) (list ))
+    Z1787_italian)
+    "è stata lanciata"
+    " ")
+    Z1787_italian))
+
+;; Z31451 Start fragment in Dutch
+(define (Z31451_start_fragment_in_dutch a0 a1)
+  (Z26107_monolingual_text_from_language_and_string
+    Z1157_dutch
+    (Z15175_join_two_strings_with_separator
+    (Z23753_label_of_item_reference_in_language_or_to_mul a0 Z1157_dutch)
+    "is begonnen"
+    " ")))
+
+;; Z31465 section title (H2)
+(define (Z31465_section_title_h2 a0)
+  (Z19384_wrap_with_html_tag (Z31471_escape_html a0) "h2"))
+
+;; Z31471 escape HTML
+(define (Z31471_escape_html a0)
+  (Z27854_html_fragment_as_string (Z27868_string_to_html_fragment a0)))
+
+;; Z31476 list before first matching sequence
+(define (Z31476_list_before_first_matching_sequence a0 a1)
+  (cdr
+    (fst
+    (Z31398_split_list_around_match_string_sentinel_indexes
+    (Z28691_untype_list_if_custom_converters a0)
+    (Z28691_untype_list_if_custom_converters a1)))))
+
+;; Z31480 list with first matching sequence removed
+(define (Z31480_list_with_first_matching_sequence_removed a0 a1)
+  (Z12767_concatenate_two_untyped_lists
+    (cdr
+    (fst
+    (Z31398_split_list_around_match_string_sentinel_indexes
+    (Z28691_untype_list_if_custom_converters a0)
+    (Z28691_untype_list_if_custom_converters a1))))
+    (cdr
+    (snd
+    (Z31398_split_list_around_match_string_sentinel_indexes
+    (Z28691_untype_list_if_custom_converters a0)
+    (Z28691_untype_list_if_custom_converters a1))))))
+
 ;; Z31490 if either
 (define (Z31490_if_either a0 a1 a2 a3)
   (if (or a0 a1) a2 a3))
@@ -3644,6 +11874,10 @@
 ;; Z31500 is three element list
 (define (Z31500_is_three_element_list a0)
   (if (null? a0) #f (Z12759_is_two_element_list (cdr a0))))
+
+;; Z31512 (floor of) base-2 logarithm of Natural number
+(define (Z31512_floor_of_base_2_logarithm_of_natural_number a0)
+  (Z13582_decrement_natural_number_by_one (Z13928_length_of_binary_representation a0)))
 
 ;; Z31522 lowest of list of Rational numbers
 (define (Z31522_lowest_of_list_of_rational_numbers a0)
@@ -3661,14 +11895,148 @@
 (define (Z31554_is_natural_number_2 a0)
   (= a0 2))
 
+;; Z31563 start fragment in Korean
+(define (Z31563_start_fragment_in_korean a0 a1)
+  (Z26107_monolingual_text_from_language_and_string
+    a1
+    (Z27182_join_two_strings_with_space
+    (Z12787_korean_add_eun_to_the_end_of_a_noun
+    (Z23753_label_of_item_reference_in_language_or_to_mul a0 a1))
+    "시작했다")))
+
+;; Z31566 start fragment in Esperanto
+(define (Z31566_start_fragment_in_esperanto a0 a1)
+  (Z26107_monolingual_text_from_language_and_string
+    a1
+    (Z27182_join_two_strings_with_space
+    (Z24102_label_of_item_reference_in_specific_general_lang a0 a1)
+    "komenciĝas")))
+
+;; Z31583 length and offsets of longest common sublist
+(define (Z31583_length_and_offsets_of_longest_common_sublist a0 a1 a2)
+  (Z30414_make_typed_pair
+    (Z29429_maximum_value_on_list_natural_numbers
+    (Z27665_concatenate_many_untyped_lists
+    (map
+    fst
+    (map
+    Z30865_run_length_encoding_object_equality
+    (Z31585_all_k_diagonals_of_matrix
+    (Z29794_cartesian_product_of_2_lists_with_pairing_function
+    a2
+    (Z17895_untype_a_list a0)
+    (Z17895_untype_a_list a1)))))))
+    (Z30414_make_typed_pair 0 0)))
+
+;; Z31585 all k-diagonals of matrix
+(define (Z31585_all_k_diagonals_of_matrix a0)
+  (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an
+    Z31587_get_k_diagonal_of_list_of_lists
+    a0
+    (Z31619_generate_range_of_integers
+    (Z17267_negate_natural_number_to_integer
+    (Z13582_decrement_natural_number_by_one (fst (Z31612_size_of_matrix a0))))
+    (Z17101_natural_number_to_integer
+    (Z13582_decrement_natural_number_by_one (snd (Z31612_size_of_matrix a0)))))))
+
+;; Z31587 get k-diagonal of list of lists
+(define (Z31587_get_k_diagonal_of_list_of_lists a0 a1)
+  (Z29787_apply_with_common_1st_arg_and_n_2nd_and_3rd_args
+    Z30282_get_i_j_th_element_from_list_of_lists
+    a0
+    (if
+    (Z17215_is_negative_integer a1)
+    (Z13831_natural_number_range
+    (add1 (Z17144_absolute_value_of_integer_as_natural_number a1))
+    (fst (Z31612_size_of_matrix a0)))
+    (Z13831_natural_number_range
+    1
+    (Z13569_subtract_natural_numbers_with_floor_of_0
+    (if
+    (Z17239_is_zero_integer a1)
+    (min (fst (Z31612_size_of_matrix a0)) (snd (Z31612_size_of_matrix a0)))
+    (snd (Z31612_size_of_matrix a0)))
+    (Z17144_absolute_value_of_integer_as_natural_number a1))))
+    (if
+    (Z17215_is_negative_integer a1)
+    (Z13831_natural_number_range
+    1
+    (Z13569_subtract_natural_numbers_with_floor_of_0
+    (fst (Z31612_size_of_matrix a0))
+    (Z17144_absolute_value_of_integer_as_natural_number a1)))
+    (Z13831_natural_number_range
+    (add1 (Z17144_absolute_value_of_integer_as_natural_number a1))
+    (if
+    (Z17239_is_zero_integer a1)
+    (min (fst (Z31612_size_of_matrix a0)) (snd (Z31612_size_of_matrix a0)))
+    (snd (Z31612_size_of_matrix a0)))))))
+
+;; Z31592 depth of list of lists up to jaggedness
+(define (Z31592_depth_of_list_of_lists_up_to_jaggedness a0)
+  (if
+    (Z19020_is_a_typed_list a0)
+    (if
+    (and
+    (Z23120_is_non_empty_list a0)
+    (and
+    (Z12684_are_all_true (map Z19020_is_a_typed_list a0))
+    (Z31600_are_all_elements_equal (map length a0) =)))
+    (add1
+    (Z19509_minimum_of_natural_number_list
+    (Z18475_return_typed_list (map Z31592_depth_of_list_of_lists_up_to_jaggedness a0))))
+    1)
+    0))
+
 ;; Z31600 are all elements equal?
 (define (Z31600_are_all_elements_equal a0 a1)
   (Z12684_are_all_true
     (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an a1 (car a0) (cdr a0))))
 
+;; Z31605 dimensions of list of lists
+(define (Z31605_dimensions_of_list_of_lists a0)
+  (map
+    length
+    (Z29370_apply3_to_a_common_1st_and_2nd_arg_and_list_of_3rd
+    Z17958_run_unary_endofunction_n_times
+    car
+    a0
+    (Z13831_natural_number_range
+    0
+    (Z13582_decrement_natural_number_by_one (Z31592_depth_of_list_of_lists_up_to_jaggedness a0))))))
+
 ;; Z31612 size of matrix
 (define (Z31612_size_of_matrix a0)
-  (Z30414_make_typed_pair (length a0) (length (car a0))))
+  (Z24665_make_typed_pair_from_untyped_list (Z31605_dimensions_of_list_of_lists a0)))
+
+;; Z31619 generate range of Integers
+(define (Z31619_generate_range_of_integers a0 a1)
+  (Z12767_concatenate_two_untyped_lists
+    (map
+    Z17267_negate_natural_number_to_integer
+    (Z18759_reverse_list_preserving_list_typing_untyping
+    (Z13831_natural_number_range
+    1
+    (Z20391_integer_to_exact_natural_number_or_0 (Z17186_negate_integer a0)))))
+    (if
+    (Z17215_is_negative_integer a1)
+    (list )
+    (map
+    Z17101_natural_number_to_integer
+    (Z13831_natural_number_range
+    (Z20391_integer_to_exact_natural_number_or_0 a0)
+    (Z20391_integer_to_exact_natural_number_or_0 a1))))))
+
+;; Z31676 label for item (QID) in given language or fallback
+(define (Z31676_label_for_item_qid_in_given_language_or_fallback a0 a1)
+  (car (Z30342_sort_selected_labels_from_wikidata_item a0 (Z24144_fallback_languages a1 #t #t))))
+
+;; Z31716 Natural number as list of Booleans
+(define (Z31716_natural_number_as_list_of_booleans a0 a1)
+  (Z31721_pad_start_of_list
+    #f
+    a1
+    (Z14773_binary_string_to_list_of_booleans
+    (Z13779_natural_number_to_binary_string_without_prefix a0))))
 
 ;; Z31721 pad start of list
 (define (Z31721_pad_start_of_list a0 a1 a2)
@@ -3681,18 +12049,47 @@
     (Z13569_subtract_natural_numbers_with_floor_of_0 a1 (length a2)))
     a2)))
 
+;; Z31747 is matrix idempotent
+(define (Z31747_is_matrix_idempotent a0)
+  (if (Z18683_strict_object_equality (Z31749_square_matrix a0) a0) #t #f))
+
+;; Z31749 square matrix
+(define (Z31749_square_matrix a0)
+  (Z24239_matrix_multiplication a0 a0))
+
+;; Z31752 is matrix involutory
+(define (Z31752_is_matrix_involutory a0)
+  (if
+    (Z18683_strict_object_equality
+    (Z31749_square_matrix a0)
+    (Z24290_identity_matrix (fst (Z31612_size_of_matrix a0))))
+    #t
+    #f))
+
 ;; Z31758 Typed list has as its last item
 (define (Z31758_typed_list_has_as_its_last_item a0 a1)
-  (and (Z23120_is_non_empty_list a0) (Z13052_object_equality (Z12964_last_element a0) a1)))
+  (Z31763_list_ends_with_other a0 (Z14046_element_to_list a1)))
 
 ;; Z31763 list ends with other
 (define (Z31763_list_ends_with_other a0 a1)
-  (and
-    (not (Z12851_is_longer_list a1 a0))
-    (Z889_list_equality
-    (Z13362_get_the_last_n_elements_of_a_list (Z17895_untype_a_list a0) (length a1))
-    a1
-    Z13052_object_equality)))
+  (not (Z23883_is_zero_natural_number (Z28715_index_of_first_sub_list_start a0 a1))))
+
+;; Z31809 every nth item of list starting with first
+(define (Z31809_every_nth_item_of_list_starting_with_first a0 a1)
+  (if
+    (null? a0)
+    a0
+    (Z29400_filter_list_through_list_of_indices
+    (Z17895_untype_a_list a0)
+    (Z18475_return_typed_list
+    (map
+    add1
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    *
+    (Z13831_natural_number_range
+    0
+    (Z13546_divide_natural_numbers (Z13582_decrement_natural_number_by_one (length a0)) a1))
+    a1))))))
 
 ;; Z31818 add rational to all elements of a list
 (define (Z31818_add_rational_to_all_elements_of_a_list a0 a1)
@@ -3705,15 +12102,78 @@
 (define (Z31819_multiply_array_elements_by_rational a0 a1)
   (Z24060_rational_times_vector a1 a0))
 
+;; Z31826 position (1..=N) of first matching substring
+(define (Z31826_position_1_n_of_first_matching_substring a0 a1)
+  (Z28715_index_of_first_sub_list_start
+    (Z22717_string_to_codepoint_list a0)
+    (Z22717_string_to_codepoint_list a1)))
+
+;; Z31845 get last Code point of String
+(define (Z31845_get_last_code_point_of_string a0)
+  (Z12964_last_element (Z22717_string_to_codepoint_list a0)))
+
+;; Z31859 value of k-th place digit in base-b digit string
+(define (Z31859_value_of_k_th_place_digit_in_base_b_digit_string a0 a1 a2)
+  (Z22839_first_object_or_default
+    (Z13369_remove_first_n_elements_of_list
+    (Z17895_untype_a_list
+    (Z18759_reverse_list_preserving_list_typing_untyping (Z31177_list_of_digits_in_base_n a1 a0)))
+    a2)
+    0))
+
 ;; Z31874 trim element from start of list
 (define (Z31874_trim_element_from_start_of_list a0 a1 a2)
   (Z13369_remove_first_n_elements_of_list
     (Z17895_untype_a_list a0)
     (Z13582_decrement_natural_number_by_one (Z31032_index_of_first_mismatching_element a0 a1 a2))))
 
+;; Z31880 trim Code point from start of String
+(define (Z31880_trim_code_point_from_start_of_string a0 a1)
+  (Z22693_codepoint_list_to_string
+    (Z31874_trim_element_from_start_of_list
+    (Z22717_string_to_codepoint_list a0)
+    a1
+    Z22683_code_point_equality)))
+
+;; Z31906 reference marker HTML from string
+(define (Z31906_reference_marker_html_from_string a0)
+  (Z27861_html_raw_content_to_html_fragment
+    (Z19405_wrap_with_html_tag_and_attributes
+    "sup"
+    (list "class")
+    (list "ext-wikilambda-reference")
+    a0)))
+
+;; Z31917 create Reference with HTML
+(define (Z31917_create_reference_with_html a0)
+  (Z27873_wrap_an_html_fragment_in_a_tag
+    a0
+    "sup"
+    (list "class")
+    (list "ext-wikilambda-reference")))
+
+;; Z31921 statement with reference
+(define (Z31921_statement_with_reference a0 a1)
+  (Z27873_wrap_an_html_fragment_in_a_tag
+    (Z27849_join_two_html_fragments a0 (Z31917_create_reference_with_html a1))
+    "span"
+    (list "class")
+    (list "referencedtext")))
+
+;; Z31955 String without prefix
+(define (Z31955_string_without_prefix a0 a1)
+  (if
+    (Z10615_string_starts_with a0 a1)
+    (Z14636_remove_first_n_characters_of_string a0 (string-length a1))
+    a0))
+
 ;; Z31971 Typed list of Typed pairs to pair of lists
 (define (Z31971_typed_list_of_typed_pairs_to_pair_of_lists a0)
   (Z30414_make_typed_pair (map fst a0) (map snd a0)))
+
+;; Z31988 same Wikidata sitelink
+(define (Z31988_same_wikidata_sitelink a0 a1)
+  (Z29294_object_equivalence a0 a1))
 
 ;; Z31994 lean true (Kleenean)
 (define (Z31994_lean_true_kleenean a0)
@@ -3727,13 +12187,55 @@
 (define (Z32004_is_maybe_y a0)
   (if (Z22120_kleenean_identity a0 Z22114_maybe) #t #f))
 
+;; Z32027 Mediant of two rational numbers
+(define (Z32027_mediant_of_two_rational_numbers a0 a1)
+  (Z19854_simplified_rational_from_z_numerator_denominator
+    (Z16693_add_integers
+    (Z27820_signed_numerator_of_simplified_rational_number a0)
+    (Z27820_signed_numerator_of_simplified_rational_number a1))
+    (+
+    (Z19724_denominator_of_simplified_rational_number a0)
+    (Z19724_denominator_of_simplified_rational_number a1))))
+
 ;; Z32063 monolingual text list contains monolingual text
 (define (Z32063_monolingual_text_list_contains_monolingual_text a0 a1)
-  (Z12698_is_any_true
-    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
-    Z14392_monolingual_text_equality
+  (if
+    (null? a0)
+    #f
+    (if
+    (Z14392_monolingual_text_equality a1 (car a0))
+    #t
+    (Z32063_monolingual_text_list_contains_monolingual_text (cdr a0) a1))))
+
+;; Z32065 get first Code point of String
+(define (Z32065_get_first_code_point_of_string a0)
+  (car (Z22717_string_to_codepoint_list a0)))
+
+;; Z32085 enumerate adjacent-key typos for digit string
+(define (Z32085_enumerate_adjacent_key_typos_for_digit_string a0)
+  (if
+    (string=? (Z14494_remove_all_characters_except_arabic_numerals a0) a0)
+    (if
+    (Z10008_is_empty_string a0)
     a0
-    a1)))
+    (Z18475_return_typed_list
+    (Z12767_concatenate_two_untyped_lists
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    string-append
+    (map
+    Z15631_codepoint_to_string
+    (Z13397_get_the_nth_element_of_a_list
+    (identity Z31868_adjacent_key_typo_lookup_for_digits_0_9_on_qwerty)
+    (add1
+    (Z31907_value_of_numeric_type_digit_or_decimal_code_point
+    (Z32065_get_first_code_point_of_string a0)))))
+    (Z14456_remove_first_character a0))
+    (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an
+    string-append
+    (Z10901_get_first_character_of_string a0)
+    (Z32085_enumerate_adjacent_key_typos_for_digit_string (Z14456_remove_first_character a0))))))
+    (Z32085_enumerate_adjacent_key_typos_for_digit_string
+    (Z14494_remove_all_characters_except_arabic_numerals a0))))
 
 ;; Z32097 filter WD claims by exact predicate
 (define (Z32097_filter_wd_claims_by_exact_predicate a0 a1)
@@ -3746,9 +12248,80 @@
     (Z17873_sort_list_ascending_natural_numbers
     (Z18475_return_typed_list (map Z23063_code_point_to_natural_number a0)))))
 
+;; Z32117 length of hypotenuse of a right triangle
+(define (Z32117_length_of_hypotenuse_of_a_right_triangle a0 a1)
+  (Z22318_square_root_of_float64
+    (Z20849_add_float64 (Z31135_square_of_float64 a0) (Z31135_square_of_float64 a1))))
+
+;; Z32123 paragraph
+(define (Z32123_paragraph a0)
+  (Z27873_wrap_an_html_fragment_in_a_tag a0 "p" (list ) (list )))
+
+;; Z32126 later than (Time of Day)
+(define (Z32126_later_than_time_of_day a0 a1)
+  (not (Z25113_less_than_or_equal_time_of_day a0 a1)))
+
+;; Z32145 section title from Wikidata item reference
+(define (Z32145_section_title_from_wikidata_item_reference a0 a1)
+  (Z31465_section_title_h2
+    (Z34096_conditional_sentence_case
+    (Z36270_label_text_for_item_in_lang_or_ltd_fallback_or_qid a0 a1)
+    a1)))
+
+;; Z32163 paragraph from list of sentences, space separated
+(define (Z32163_paragraph_from_list_of_sentences_space_separated a0)
+  (Z32149_paragraph_from_list_of_fragments_with_separator a0 Z13128_space_char_as_string))
+
+;; Z32169 label of item with definite article, French
+(define (Z32169_label_of_item_with_definite_article_french a0 a1)
+  (Z11542_if_string_output
+    #f
+    (string-append "les " (Z23753_label_of_item_reference_in_language_or_to_mul a0 a1))
+    (Z11542_if_string_output
+    (Z32201_elide_french_article_before_this_word
+    (Z23753_label_of_item_reference_in_language_or_to_mul a0 a1))
+    (string-append "l'" (Z23753_label_of_item_reference_in_language_or_to_mul a0 a1))
+    (Z11542_if_string_output
+    (Z22281_noun_lid_gender_in_french_is_female
+    (Z37847_first_lexeme_ref_from_item_ref_and_language a0 a1))
+    (string-append "la " (Z23753_label_of_item_reference_in_language_or_to_mul a0 a1))
+    (string-append "le " (Z23753_label_of_item_reference_in_language_or_to_mul a0 a1))))))
+
+;; Z32179 unordered list with item tagging
+(define (Z32179_unordered_list_with_item_tagging a0)
+  (Z31331_html_unordered_list (map Z32180_wrap_an_html_fragment_as_a_list_item a0)))
+
+;; Z32180 wrap an HTML fragment as a list item
+(define (Z32180_wrap_an_html_fragment_as_a_list_item a0)
+  (Z27873_wrap_an_html_fragment_in_a_tag a0 "li" (list ) (list )))
+
 ;; Z32185 Malay first superlative form (teR-)
 (define (Z32185_malay_first_superlative_form_ter a0)
   (if (Z10615_string_starts_with a0 "r") (string-append "te" a0) (string-append "ter" a0)))
+
+;; Z32201 elide French article before this word?
+(define (Z32201_elide_french_article_before_this_word a0)
+  (if
+    (Z38046_string_starts_with_any_of_aeiouyaeiouy a0)
+    #t
+    (if
+    (Z10615_string_starts_with (Z10047_to_lowercase a0) "h")
+    (not (Z38042_string_beginning_with_h_is_aspirant_in_french a0))
+    #f)))
+
+;; Z32208 Sentence that something shown in
+(define (Z32208_sentence_that_something_shown_in a0 a1 a2)
+  (Z21216_apply_three_argument_function
+    (Z14310_select_a_function_based_on_language Z32207_config_for_shown_in a0)
+    a0
+    a1
+    a2))
+
+;; Z32261 are Integers congruent modulo other Integer?
+(define (Z32261_are_integers_congruent_modulo_other_integer a0 a1 a2)
+  (Z16688_same_integer
+    (Z17167_integer_modulo_another_integer a0 a2)
+    (Z17167_integer_modulo_another_integer a1 a2)))
 
 ;; Z32277 default word separator ", "
 (define (Z32277_default_word_separator a0)
@@ -3758,6 +12331,31 @@
 (define (Z32281_returning_wd_sep_in_s_t_han_script_sinitic_langs a0)
   "、")
 
+;; Z32283 join list of strings in given language
+(define (Z32283_join_list_of_strings_in_given_language a0 a1)
+  (Z12899_join_list_of_strings_with_delimiter
+    a0
+    (Z32276_separator_space_punctuation_for_list_items_in_lang a1)))
+
+;; Z32290 best values from Wikidata item statements
+(define (Z32290_best_values_from_wikidata_item_statements a0 a1)
+  (Z18475_return_typed_list
+    (map
+    Z19308_value_of_wikidata_statement
+    (Z29694_get_best_statements_for_wikidata_prop_from_item a0 a1))))
+
+;; Z32293 labels of best values from Wikidata item statement
+(define (Z32293_labels_of_best_values_from_wikidata_item_statement a0 a1 a2)
+  (Z26929_label_texts_for_wikidata_item_qids_one_language
+    (Z32290_best_values_from_wikidata_item_statements a0 a1)
+    a2))
+
+;; Z32295 labels of best values (concatenated)
+(define (Z32295_labels_of_best_values_concatenated a0 a1 a2)
+  (Z32283_join_list_of_strings_in_given_language
+    (Z32293_labels_of_best_values_from_wikidata_item_statement a0 a1 a2)
+    a2))
+
 ;; Z32299 final word separator in English lists: " and "
 (define (Z32299_final_word_separator_in_english_lists_and a0)
   " and ")
@@ -3765,6 +12363,25 @@
 ;; Z32302 list has at most one element
 (define (Z32302_list_has_at_most_one_element a0)
   (or (null? a0) (Z12755_is_single_element_list a0)))
+
+;; Z32311 labels of best values (concatenated, proper)
+(define (Z32311_labels_of_best_values_concatenated_proper a0 a1 a2)
+  (Z32308_join_list_of_strings_in_given_language_proper
+    (Z32293_labels_of_best_values_from_wikidata_item_statement a0 a1 a2)
+    a2))
+
+;; Z32319 add indefinite article in English
+(define (Z32319_add_indefinite_article_in_english a0)
+  (string-append (if (Z32314_is_word_starting_with_vowel_sound_english a0) "an " "a ") a0))
+
+;; Z32326 collective role sentence
+(define (Z32326_collective_role_sentence a0 a1 a2 a3)
+  (Z30438_apply_four_argument_function
+    (Z14310_select_a_function_based_on_language Z32255_config_for_collective_role_sentence a3)
+    a0
+    a1
+    a2
+    a3))
 
 ;; Z32373 lexeme object list from lexeme references
 (define (Z32373_lexeme_object_list_from_lexeme_references a0)
@@ -3781,9 +12398,119 @@
     (Z19243_select_lexeme_forms_from_lexeme a0 a1)
     (Z32421_select_lexeme_form_best_matching_features a0 (Z12967_list_without_last_element a1))))
 
+;; Z32428 abstract wikilink
+(define (Z32428_abstract_wikilink a0 a1)
+  (Z36489_abstract_link_with_text_string_specified_if_qid
+    a0
+    (Z36270_label_text_for_item_in_lang_or_ltd_fallback_or_qid a0 a1)))
+
 ;; Z32453 flatten map function
 (define (Z32453_flatten_map_function a0 a1)
   (Z27665_concatenate_many_untyped_lists (map a0 a1)))
+
+;; Z32465 Get value chain of property from item
+(define (Z32465_get_value_chain_of_property_from_item a0 a1)
+  (cons
+    a0
+    (Z27665_concatenate_many_untyped_lists
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    Z32465_get_value_chain_of_property_from_item
+    (Z32462_load_and_find_one_best_wikidata_statement_value a0 a1)
+    a1))))
+
+;; Z32471 short description for painting
+(define (Z32471_short_description_for_painting a0 a1)
+  (Z13036_apply
+    (Z14310_select_a_function_based_on_language Z32467_config_for_short_description_for_painting a1)
+    a0))
+
+;; Z32496 X has Y, semantic + optional grammar, English
+(define (Z32496_x_has_y_semantic_optional_grammar_english a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11)
+  (Z32410_x_has_y_fully_specified_english
+    (Z32501_best_string_from_item_reference_language_grammar a0 a11 a6)
+    (Z32501_best_string_from_item_reference_language_grammar a1 a11 a7)
+    (Z22202_if_kleenean (Z32550_grammatical_features_indicate_indefinite_article a6) #t #f #f)
+    (Z22202_if_kleenean (Z32550_grammatical_features_indicate_indefinite_article a7) #t #f #f)
+    a2
+    a3
+    a4
+    a5
+    (Z32506_grammatical_features_indicate_plural_broadly a6)
+    (Z32506_grammatical_features_indicate_plural_broadly a7)
+    (or
+    (Z32516_grammatical_features_indicate_definite_article_en a6)
+    (Z22131_is_kleenean_true
+    (Z32645_item_indicates_definite_article_english (Z6821_fetch_wikidata_item a0))))
+    (or
+    (Z32516_grammatical_features_indicate_definite_article_en a7)
+    (Z22131_is_kleenean_true
+    (Z32645_item_indicates_definite_article_english (Z6821_fetch_wikidata_item a5))))))
+
+;; Z32531 (DEPRECATED) simple present collective sentence
+(define (Z32531_deprecated_simple_present_collective_sentence a0 a1 a2 a3)
+  (Z30438_apply_four_argument_function
+    (Z14310_select_a_function_based_on_language
+    Z32530_config_for_simple_present_collective_sentence
+    a3)
+    a0
+    a1
+    a2
+    a3))
+
+;; Z32541 [cs] prefix with v/ve
+(define (Z32541_cs_prefix_with_v_ve a0)
+  (Z11542_if_string_output
+    (Z10196_is_regular_expression_match
+    a0
+    "^([vfVF]|[^aeiouyáéíóúýAEIOUYÁÉÍÓÚÝ][^aeiouyrláéíóúýAEIOUYRLÁÉÍÓÚÝ])")
+    (string-append "ve " a0)
+    (string-append "v " a0)))
+
+;; Z32556 fallback string if error, empty or not a string
+(define (Z32556_fallback_string_if_error_empty_or_not_a_string a0 a1)
+  (if (and (Z15777_is_string a0) (Z24331_is_not_empty_string a0)) a0 a1))
+
+;; Z32565 Append best value to list based on given property
+(define (Z32565_append_best_value_to_list_based_on_given_property a0 a1)
+  (if
+    (Z17180_is_void (Z12964_last_element a0))
+    a0
+    (Z12961_append_element_to_typed_list
+    (Z32557_load_and_find_one_best_wikidata_statement_value_2 (Z12964_last_element a0) a1)
+    a0)))
+
+;; Z32581 creative work – entity, class, creator (Monolingu)
+(define (Z32581_creative_work_entity_class_creator_monolingu a0 a1 a2 a3)
+  (Z34039_apply_three_or_optionally_four_argument_function
+    (Z14310_select_a_function_based_on_language
+    Z32534_config_for_creative_work_entity_class_creator
+    a3)
+    a0
+    a1
+    a2
+    a3))
+
+;; Z32585 group Typed pairs by first element
+(define (Z32585_group_typed_pairs_by_first_element a0)
+  (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l
+    Z30414_make_typed_pair
+    (Z19205_remove_duplicates_preserving_typing_untyping (map fst a0))
+    (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an
+    Z22820_compress_list
+    (map snd a0)
+    (Z29794_cartesian_product_of_2_lists_with_pairing_function
+    Z13052_object_equality
+    (Z19205_remove_duplicates_preserving_typing_untyping (map fst a0))
+    (map fst a0)))))
+
+;; Z32599 Find lexemes for a Wikidata item in language group
+(define (Z32599_find_lexemes_for_a_wikidata_item_in_language_group a0 a1 a2)
+  (Z30075_return_list_if_non_empty_else_backup
+    (Z6830_find_lexemes_for_a_wikidata_item a0 a1 a2)
+    (if
+    (Z10070_has_substring (Z14329_language_to_language_tag a2) "-")
+    (Z6830_find_lexemes_for_a_wikidata_item a0 a1 (Z24097_language_from_language_variant a2))
+    (list ))))
 
 ;; Z32626 join list of places (default format)
 (define (Z32626_join_list_of_places_default_format a0 a1)
@@ -3793,21 +12520,245 @@
 (define (Z32631_join_list_of_places_sinitic_langs_hns_hnt_script a0 a1)
   (Z21394_concatenate_many_strings (Z18479_reverse_typed_list a0)))
 
+;; Z32633 join list of places from items
+(define (Z32633_join_list_of_places_from_items a0 a1)
+  (Z32625_full_placename_from_hierarchical_list
+    (Z26929_label_texts_for_wikidata_item_qids_one_language a0 a1)
+    a1))
+
+;; Z32635 join labels from items (language-aware)
+(define (Z32635_join_labels_from_items_language_aware a0 a1)
+  (Z32283_join_list_of_strings_in_given_language
+    (Z26929_label_texts_for_wikidata_item_qids_one_language a0 a1)
+    a1))
+
+;; Z32637 join labels from items (language-aware, proper)
+(define (Z32637_join_labels_from_items_language_aware_proper a0 a1)
+  (Z32308_join_list_of_strings_in_given_language_proper
+    (Z26929_label_texts_for_wikidata_item_qids_one_language a0 a1)
+    a1))
+
+;; Z32643 subject is instance of multiple objects
+(define (Z32643_subject_is_instance_of_multiple_objects a0 a1 a2)
+  (if
+    (Z23883_is_zero_natural_number (length a1))
+    Z24_void
+    (Z21216_apply_three_argument_function
+    (Z14310_select_a_function_based_on_language
+    Z32660_config_for_article_less_multi_instantiating
+    a2)
+    a0
+    a1
+    a2)))
+
+;; Z32645 item indicates definite article, English
+(define (Z32645_item_indicates_definite_article_english a0)
+  (Z22126_boolean_as_kleenean (Z32749_english_item_label_has_equivalent_alias_with_the a0)))
+
+;; Z32652 Fallback article-less multi instantiating sentence
+(define (Z32652_fallback_article_less_multi_instantiating_sentence a0 a1 a2)
+  (Z22504_join_list_of_strings_with_spaces
+    (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an
+    (Z14310_select_a_function_based_on_language
+    Z26043_config_for_article_less_instantiating_sentences
+    a2)
+    a0
+    a1)))
+
 ;; Z32673 is Kleenean not True?
 (define (Z32673_is_kleenean_not_true a0)
   (not (Z22131_is_kleenean_true a0)))
+
+;; Z32695 apply a 3-param fn to a list of firsts, same 2&3
+(define (Z32695_apply_a_3_param_fn_to_a_list_of_firsts_same_2_3 a0 a1 a2 a3)
+  (if
+    (null? a1)
+    (list )
+    (cons
+    (Z21216_apply_three_argument_function a0 (car a1) a2 a3)
+    (Z32695_apply_a_3_param_fn_to_a_list_of_firsts_same_2_3 a0 (cdr a1) a2 a3))))
+
+;; Z32731 create wikitable from caption and cell fragments
+(define (Z32731_create_wikitable_from_caption_and_cell_fragments a0 a1)
+  (Z27873_wrap_an_html_fragment_in_a_tag
+    (Z27849_join_two_html_fragments
+    (if
+    (Z877_html_fragment_equality a0 Z32729_empty_html_fragment)
+    Z32729_empty_html_fragment
+    (Z27873_wrap_an_html_fragment_in_a_tag a0 "caption" (list ) (list )))
+    (Z27926_join_multiple_html_fragments
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    Z35049_wrap_an_html_fragment_in_a_simple_tag
+    (map Z27926_join_multiple_html_fragments a1)
+    "tr")))
+    "table"
+    (list "class")
+    (list "wikitable")))
+
+;; Z32749 English item label has equivalent alias with "the"
+(define (Z32749_english_item_label_has_equivalent_alias_with_the a0)
+  (Z12696_contains
+    (map
+    Z10047_to_lowercase
+    (Z32772_list_of_strings_from_multilingual_stringset_lang
+    (Z23080_aliases_of_wikidata_item a0)
+    Z1002_english))
+    (Z10047_to_lowercase
+    (string-append
+    "the "
+    (Z14396_string_of_monolingual_text
+    (Z16273_monolingual_text_in_specified_language_from_multilingual_tex
+    (Z22853_labels_of_wikidata_item_multilingual_text a0)
+    Z1002_english))))))
+
+;; Z32756 monolingual stringset from multilingual & language
+(define (Z32756_monolingual_stringset_from_multilingual_language a0 a1)
+  (Z32757_first_monolingual_stringset_in_language_from_list
+    (Z23236_monolingual_stringsets_from_multilingual_stringset a0)
+    a1))
 
 ;; Z32758 identical monolingual stringset
 (define (Z32758_identical_monolingual_stringset a0 a1)
   (Z13052_object_equality a0 a1))
 
+;; Z32772 list of strings from multilingual stringset & lang
+(define (Z32772_list_of_strings_from_multilingual_stringset_lang a0 a1)
+  (Z32753_list_of_strings_from_monolingual_stringset
+    (Z32756_monolingual_stringset_from_multilingual_language a0 a1)))
+
 ;; Z32806 transform elements of list of lists
 (define (Z32806_transform_elements_of_list_of_lists a0 a1)
-  (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an map a0 a1))
+  (Z32807_transform_elements_of_list_of_lists_at_depth 2 a0 a1))
+
+;; Z32807 transform elements of list of lists at depth
+(define (Z32807_transform_elements_of_list_of_lists_at_depth a0 a1 a2)
+  (if
+    (Z23883_is_zero_natural_number a0)
+    (Z13036_apply a1 a2)
+    (Z18475_return_typed_list
+    (Z29370_apply3_to_a_common_1st_and_2nd_arg_and_list_of_3rd
+    Z32807_transform_elements_of_list_of_lists_at_depth
+    (Z13582_decrement_natural_number_by_one a0)
+    a1
+    a2))))
+
+;; Z32819 person lead sentence with occupations, monolingual
+(define (Z32819_person_lead_sentence_with_occupations_monolingual a0 a1 a2 a3 a4)
+  (Z34122_apply_four_or_optionally_five_argument_function
+    (Z14310_select_a_function_based_on_language Z32826_config_for_person_description a4)
+    a0
+    a1
+    a2
+    a3
+    a4))
+
+;; Z32822 Demonym for Wikidata item
+(define (Z32822_demonym_for_wikidata_item a0 a1 a2 a3 a4)
+  (Z13036_apply (Z14310_select_a_function_based_on_language Z32823_config_for_demonym a1) a0))
+
+;; Z32839 plural section title (from single QID)
+(define (Z32839_plural_section_title_from_single_qid a0 a1)
+  (Z31465_section_title_h2
+    (Z10771_sentence_case
+    (Z32556_fallback_string_if_error_empty_or_not_a_string
+    (Z32556_fallback_string_if_error_empty_or_not_a_string
+    (Z14396_string_of_monolingual_text
+    (Z19260_plural_form_of_lexeme_as_monolingual_text
+    (Z22696_fetch_first_lexeme_from_item_ref_and_lang_p5137 a0 a1)))
+    (Z14396_string_of_monolingual_text
+    (Z14391_plural_in_language_of_monolingual_text
+    (Z31676_label_for_item_qid_in_given_language_or_fallback a0 a1))))
+    (Z36270_label_text_for_item_in_lang_or_ltd_fallback_or_qid a0 a1)))))
+
+;; Z32843 verb describing noun sentence
+(define (Z32843_verb_describing_noun_sentence a0 a1 a2)
+  (Z21216_apply_three_argument_function
+    (Z14310_select_a_function_based_on_language Z32842_config_for_verb_describing_noun_sentence a2)
+    a0
+    a1
+    a2))
+
+;; Z32864 are Functions' input and output types identical?
+(define (Z32864_are_functions_input_and_output_types_identical a0 a1)
+  (and
+    (Z19084_same_type (Z10112_function_return_type a0) (Z10112_function_return_type a1))
+    (Z889_list_equality
+    (Z21172_types_for_arguments a0)
+    (Z21172_types_for_arguments a1)
+    Z19084_same_type)))
+
+;; Z32869 all Functions (incl. default) from per-lang config
+(define (Z32869_all_functions_incl_default_from_per_lang_config a0)
+  (cons
+    (Z14313_default_function_from_configuration a0)
+    (map
+    Z14319_function_from_function_option
+    (Z14312_list_of_function_options_for_languages_from_configuration a0))))
+
+;; Z32871 filter mismatching Functions of per-lang config
+(define (Z32871_filter_mismatching_functions_of_per_lang_config a0 a1)
+  (Z22820_compress_list
+    (Z32869_all_functions_incl_default_from_per_lang_config a0)
+    (map
+    not
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    Z32864_are_functions_input_and_output_types_identical
+    (Z32869_all_functions_incl_default_from_per_lang_config a0)
+    a1))))
+
+;; Z32891 reference marker HTML from HTML
+(define (Z32891_reference_marker_html_from_html a0)
+  (Z27861_html_raw_content_to_html_fragment
+    (Z19405_wrap_with_html_tag_and_attributes
+    "sup"
+    (list "class")
+    (list "ext-wikilambda-reference")
+    (Z27854_html_fragment_as_string a0))))
+
+;; Z32919 Australian population sentence
+(define (Z32919_australian_population_sentence a0 a1)
+  (Z13318_apply_two_argument_function
+    (Z14310_select_a_function_based_on_language Z32896_config_for_australian_place_population a1)
+    a0
+    a1))
+
+;; Z32925 italicise (HTML)
+(define (Z32925_italicise_html a0)
+  (Z19384_wrap_with_html_tag a0 "i"))
+
+;; Z32935 item indicates zero article, English
+(define (Z32935_item_indicates_zero_article_english a0)
+  (Z22126_boolean_as_kleenean
+    (not
+    (or
+    (Z33006_item_is_a_subclass_of_something a0)
+    (Z22131_is_kleenean_true (Z32645_item_indicates_definite_article_english a0))))))
 
 ;; Z32971 Returning word separator (last) in Bangla
 (define (Z32971_returning_word_separator_last_in_bangla a0)
   " এবং ")
+
+;; Z32982 non-defining role sentence (Monolingual text)
+(define (Z32982_non_defining_role_sentence_monolingual_text a0 a1 a2 a3)
+  (Z30438_apply_four_argument_function
+    (Z14310_select_a_function_based_on_language Z32981_config_for_non_defining_role_sentence a3)
+    a0
+    a1
+    a2
+    a3))
+
+;; Z32992 Cite Wikidata
+(define (Z32992_cite_wikidata a0 a1)
+  (Z27873_wrap_an_html_fragment_in_a_tag
+    (Z32878_wikidata_link_for_item a0 a1)
+    "sup"
+    (list "class")
+    (list "ext-wikilambda-reference")))
+
+;; Z33019 join labels from items with Oxford punctuation
+(define (Z33019_join_labels_from_items_with_oxford_punctuation a0 a1)
+  (Z18779_join_using_oxford_punctuation
+    (Z26929_label_texts_for_wikidata_item_qids_one_language a0 a1)))
 
 ;; Z33024 label texts for Wikidata items
 (define (Z33024_label_texts_for_wikidata_items a0 a1)
@@ -3816,17 +12767,156 @@
     a0
     a1))
 
+;; Z33036 Traditional Han Chinese "是" sentence
+(define (Z33036_traditional_han_chinese_sentence a0 a1)
+  (Z33038_zh_sentence_expressing_entity_is_instance_of_class
+    Z1672_chinese_traditional_han_script
+    a0
+    a1))
+
+;; Z33057 unordered list of links to AW articles
+(define (Z33057_unordered_list_of_links_to_aw_articles a0 a1)
+  (Z27873_wrap_an_html_fragment_in_a_tag
+    (Z27926_join_multiple_html_fragments
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    Z33190_list_item_from_qid
+    a0
+    a1))
+    "ul"
+    (list )
+    (list )))
+
+;; Z33059 English simple present singular sentence, indef
+(define (Z33059_english_simple_present_singular_sentence_indef a0 a1 a2 a3)
+  (Z32702_x_present_verb_y_multilingual a0 a1 a2 #f #f Z1002_english))
+
+;; Z33071 best lexeme with category from Wikidata item
+(define (Z33071_best_lexeme_with_category_from_wikidata_item a0 a1 a2 a3)
+  (Z27332_best_lexeme_from_list_of_lexemes
+    (Z33073_filter_lexeme_list_by_lexical_category
+    (map Z6825_fetch_wikidata_lexeme (Z6830_find_lexemes_for_a_wikidata_item a1 a2 a3))
+    a0)
+    a1))
+
+;; Z33103 Wikidata statement value is reference to item?
+(define (Z33103_wikidata_statement_value_is_reference_to_item a0 a1)
+  (Z850_try_catch_function
+    (Z19316_same_wikidata_item_reference
+    a1
+    (Z850_try_catch_function
+    (Z19308_value_of_wikidata_statement a0)
+    Z511_key_not_found
+    (Z10206_nullary_false )))
+    Z511_key_not_found
+    (Z10206_nullary_false )))
+
 ;; Z33105 filter elements of Typed list by exact Type
 (define (Z33105_filter_elements_of_typed_list_by_exact_type a0 a1)
   (if
     (null? a0)
+    a0
+    (if
+    (Z19352_object_has_this_type (car a0) a1)
+    (Z18475_return_typed_list
+    (cons (car a0) (Z33105_filter_elements_of_typed_list_by_exact_type (cdr a0) a1)))
+    (Z33105_filter_elements_of_typed_list_by_exact_type (cdr a0) a1))))
+
+;; Z33128  filter statements in Wikidata lexeme by prop
+(define (Z33128_filter_statements_in_wikidata_lexeme_by_prop a0 a1)
+  (Z28548_filter_statements_by_property_type (Z19300_statements_from_lexeme a0) a1))
+
+;; Z33172 Bangla label of Wikidata item
+(define (Z33172_bangla_label_of_wikidata_item a0)
+  (Z23468_text_from_wikidata_item_label_for_given_language a0 Z1011_bangla))
+
+;; Z33175 language of Monolingual text is exactly
+(define (Z33175_language_of_monolingual_text_is_exactly a0 a1)
+  (Z862_natural_language_equality (Z14404_language_of_monolingual_text a0) a1))
+
+;; Z33185 (DEPRECATED) simple present sing. sentence, indef
+(define (Z33185_deprecated_simple_present_sing_sentence_indef a0 a1 a2 a3)
+  (Z34039_apply_three_or_optionally_four_argument_function
+    (Z14310_select_a_function_based_on_language
+    Z33184_config_for_simple_present_singular_sentence
+    a3)
+    a0
+    a1
+    a2
+    a3))
+
+;; Z33190 list item from qid
+(define (Z33190_list_item_from_qid a0 a1)
+  (Z27873_wrap_an_html_fragment_in_a_tag (Z32428_abstract_wikilink a0 a1) "li" (list ) (list )))
+
+;; Z33201 add complex128s
+(define (Z33201_add_complex128s a0 a1)
+  (Z33227_complex128_from_real_and_imaginary_parts
+    (Z20849_add_float64 (Z33214_real_part a0) (Z33214_real_part a1))
+    (Z20849_add_float64 (Z33221_imaginary_part a0) (Z33221_imaginary_part a1))))
+
+;; Z33284 validate city name in English
+(define (Z33284_validate_city_name_in_english a0)
+  (Z10196_is_regular_expression_match a0 Z18551_city_name))
+
+;; Z33289 create HTML span fragment
+(define (Z33289_create_html_span_fragment a0)
+  (Z19384_wrap_with_html_tag a0 "span"))
+
+;; Z33292 HTML li fragment from text
+(define (Z33292_html_li_fragment_from_text a0)
+  (Z19384_wrap_with_html_tag a0 "li"))
+
+;; Z33295 create HTML ul fragment
+(define (Z33295_create_html_ul_fragment a0)
+  (Z27873_wrap_an_html_fragment_in_a_tag
+    (Z27926_join_multiple_html_fragments a0)
+    "ul"
     (list )
-    (Z22820_compress_list
-    a0
-    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
-    Z19352_object_has_this_type
-    a0
-    a1))))
+    (list )))
+
+;; Z33304 complex128 from magnitude and angle
+(define (Z33304_complex128_from_magnitude_and_angle a0 a1)
+  (Z33227_complex128_from_real_and_imaginary_parts
+    (Z21032_multiply_float64 a0 (Z12473_cosine a1))
+    (Z21032_multiply_float64 a0 (Z16463_sine_float64_rad a1))))
+
+;; Z33315 create HTML td fragment
+(define (Z33315_create_html_td_fragment a0)
+  (Z19384_wrap_with_html_tag a0 "td"))
+
+;; Z33319 create HTML tr fragment
+(define (Z33319_create_html_tr_fragment a0)
+  (Z27873_wrap_an_html_fragment_in_a_tag
+    (Z27926_join_multiple_html_fragments a0)
+    "tr"
+    (list )
+    (list )))
+
+;; Z33322 create HTML th fragment
+(define (Z33322_create_html_th_fragment a0)
+  (Z19384_wrap_with_html_tag a0 "th"))
+
+;; Z33325 create HTML caption fragment
+(define (Z33325_create_html_caption_fragment a0)
+  (Z19384_wrap_with_html_tag a0 "caption"))
+
+;; Z33333 has initial phoneme triggering Eifel rule (lb)
+(define (Z33333_has_initial_phoneme_triggering_eifel_rule_lb a0)
+  (if
+    (Z23120_is_non_empty_list (Z29957_get_ipa_transcriptions_of_lexeme_form a0))
+    (Z31832_ipa_symbol_triggers_eifel_rule_in_luxembourgish
+    (if
+    (string=?
+    (Z10901_get_first_character_of_string
+    (Z14396_string_of_monolingual_text (car (Z29957_get_ipa_transcriptions_of_lexeme_form a0))))
+    "ˈ")
+    (Z10901_get_first_character_of_string
+    (Z14456_remove_first_character
+    (Z14396_string_of_monolingual_text (car (Z29957_get_ipa_transcriptions_of_lexeme_form a0)))))
+    (Z10901_get_first_character_of_string
+    (Z14396_string_of_monolingual_text (car (Z29957_get_ipa_transcriptions_of_lexeme_form a0))))))
+    (Z33340_begins_with_letters_triggering_eifel_rule_lb
+    (Z22478_string_of_first_representation_of_lexeme_form a0))))
 
 ;; Z33335 zh-* string from language and str in zh-Hant/Hans
 (define (Z33335_zh_string_from_language_and_str_in_zh_hant_hans a0 a1 a2)
@@ -3840,6 +12930,26 @@
     a1
     a0)))
 
+;; Z33357 list of keys from a Typed map
+(define (Z33357_list_of_keys_from_a_typed_map a0)
+  (map fst (Z30245_typed_list_from_typed_map a0)))
+
+;; Z33359 is key present in Typed map?
+(define (Z33359_is_key_present_in_typed_map a0 a1)
+  (Z12696_contains (Z33357_list_of_keys_from_a_typed_map a0) a1))
+
+;; Z33366 subtract complex128
+(define (Z33366_subtract_complex128 a0 a1)
+  (Z33227_complex128_from_real_and_imaginary_parts
+    (Z21031_subtract_float64 (Z33214_real_part a0) (Z33214_real_part a1))
+    (Z21031_subtract_float64 (Z33221_imaginary_part a0) (Z33221_imaginary_part a1))))
+
+;; Z33372 negate complex128
+(define (Z33372_negate_complex128 a0)
+  (Z33227_complex128_from_real_and_imaginary_parts
+    (Z21775_negate_float64 (Z33214_real_part a0))
+    (Z21775_negate_float64 (Z33221_imaginary_part a0))))
+
 ;; Z33391 monolingual text from lang and str in zh-Hant/Hans
 (define (Z33391_monolingual_text_from_lang_and_str_in_zh_hant_hans a0 a1 a2)
   (if
@@ -3852,22 +12962,142 @@
     (Z26107_monolingual_text_from_language_and_string a2 a1)
     (Z26107_monolingual_text_from_language_and_string a2 a0))))
 
+;; Z33396 Error to descriptive string
+(define (Z33396_error_to_descriptive_string a0)
+  (Z31120_string_from_object a0))
+
+;; Z33405 
+(define (Z33405 a0 a1 a2 a3)
+  (string-append (Z23291_compose_italian_preposition a0 a1 a2 a3) a3))
+
 ;; Z33453 Filter but fallback if empty
 (define (Z33453_filter_but_fallback_if_empty a0 a1)
   (Z30075_return_list_if_non_empty_else_backup (filter a0 a1) a1))
 
+;; Z33470 wrap text as HTML element
+(define (Z33470_wrap_text_as_html_element a0 a1 a2)
+  (Z27873_wrap_an_html_fragment_in_a_tag
+    (Z27868_string_to_html_fragment a0)
+    a1
+    (Z33357_list_of_keys_from_a_typed_map a2)
+    (Z30172_list_of_values_from_a_typed_map a2)))
+
+;; Z33499 magnitude of complex128
+(define (Z33499_magnitude_of_complex128 a0)
+  (Z22318_square_root_of_float64
+    (Z20849_add_float64
+    (Z31135_square_of_float64 (Z33214_real_part a0))
+    (Z31135_square_of_float64 (Z33221_imaginary_part a0)))))
+
+;; Z33506 same complex128 within tolerance
+(define (Z33506_same_complex128_within_tolerance a0 a1 a2)
+  (Z20941_less_than_or_equal_to_float64
+    (Z33499_magnitude_of_complex128 (Z33366_subtract_complex128 a0 a1))
+    a2))
+
+;; Z33573 qualifier value of item property claim
+(define (Z33573_qualifier_value_of_item_property_claim a0 a1 a2)
+  (Z28297_value_of_wikidata_property_claim
+    (car
+    (Z28312_qualifiers_of_wikidata_statement_with_predicate
+    (Z23451_wikidata_statement_with_highest_rank a0 a1)
+    a2))))
+
+;; Z33579 qualifier value of Wikidata statement
+(define (Z33579_qualifier_value_of_wikidata_statement a0 a1)
+  (Z28297_value_of_wikidata_property_claim
+    (car (Z28312_qualifiers_of_wikidata_statement_with_predicate a0 a1))))
+
+;; Z33588 first statement with qualifier item's claims
+(define (Z33588_first_statement_with_qualifier_item_s_claims a0 a1 a2)
+  (car
+    (Z28513_filter_statements_by_qualifiers
+    (Z29691_get_statements_for_wikidata_property_from_item a0 a1)
+    (Z14046_element_to_list a2))))
+
+;; Z33592 integer from object
+(define (Z33592_integer_from_object a0)
+  (Z17101_natural_number_to_integer
+    (Z14283_string_of_digits_as_natural_number (Z31120_string_from_object a0))))
+
+;; Z33593 exponent minus log
+(define (Z33593_exponent_minus_log a0 a1)
+  (Z21031_subtract_float64
+    (Z21001_float64_exponentiation_base_e a0)
+    (Z21003_natural_logarithm_float64 a1)))
+
+;; Z33603 reference frequency of pitch standard
+(define (Z33603_reference_frequency_of_pitch_standard a0)
+  (Z20854_rational_number_as_float
+    (Z25294_amount_from_quantity (Z25218_a4_frequency_of_pitch_standard a0))))
+
+;; Z33605 frequency of pitch in 12-TET standard
+(define (Z33605_frequency_of_pitch_in_12_tet_standard a0 a1 a2)
+  (Z21032_multiply_float64
+    (Z33603_reference_frequency_of_pitch_standard a2)
+    (Z25232_frequency_ratio_of_semitone_distance_in_12tet
+    (Z17111_subtract_an_integer
+    (Z33600_midi_number_of_pitch a0 a1)
+    (Z33606_midi_number_of_reference_note a2)))))
+
+;; Z33610 argument of Complex number
+(define (Z33610_argument_of_complex_number a0)
+  (if
+    (Z33615_is_negative_float64 (Z33221_imaginary_part a0))
+    (Z21775_negate_float64
+    (Z12497_inverse_cosine
+    (Z21033_divide_float64 (Z33214_real_part a0) (Z33499_magnitude_of_complex128 a0))))
+    (Z12497_inverse_cosine
+    (Z21033_divide_float64 (Z33214_real_part a0) (Z33499_magnitude_of_complex128 a0)))))
+
+;; Z33615 is negative (float64)
+(define (Z33615_is_negative_float64 a0)
+  (Z16667_same_sign (Z21136_extract_sign_of_floating_point_number a0) Z16662_negative))
+
+;; Z33633 weighted average (natural values natural weights)
+(define (Z33633_weighted_average_natural_values_natural_weights a0 a1)
+  (Z13546_divide_natural_numbers
+    (Z12781_left_fold
+    (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l * a0 a1)
+    +)
+    (Z12781_left_fold a1 +)))
+
 ;; Z33637 weighted sum (natural values natural weights)
 (define (Z33637_weighted_sum_natural_values_natural_weights a0 a1)
   (Z12781_left_fold
-    (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l
-    Z13539_multiply_two_natural_numbers
-    a0
-    a1)
-    Z13521_add_two_natural_numbers))
+    (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l * a0 a1)
+    +))
 
 ;; Z33640 enwikt Module:ja rm_spaces_hyphens
 (define (Z33640_enwikt_module_ja_rm_spaces_hyphens a0)
   (Z14520_remove_all_characters_in_second_string a0 " '%-.^"))
+
+;; Z33672 float as plain decimal to decimal places
+(define (Z33672_float_as_plain_decimal_to_decimal_places a0 a1)
+  (Z25445_rational_as_plain_decimal_to_decimal_places (Z21071_float_as_rational a0) a1))
+
+;; Z33682 frequency of MIDI note number
+(define (Z33682_frequency_of_midi_note_number a0 a1)
+  (Z21032_multiply_float64
+    (Z33603_reference_frequency_of_pitch_standard a1)
+    (Z25232_frequency_ratio_of_semitone_distance_in_12tet
+    (Z17111_subtract_an_integer a0 (Z33606_midi_number_of_reference_note a1)))))
+
+;; Z33687 subject is instance of, complex
+(define (Z33687_subject_is_instance_of_complex a0 a1 a2 a3 a4 a5 a6)
+  (Z27868_string_to_html_fragment (Z26039_subject_is_instance_of_string a0 a1 a2)))
+
+;; Z33690 subsection title from Wikidata item reference
+(define (Z33690_subsection_title_from_wikidata_item_reference a0 a1)
+  (Z33691_subsection_title_h3
+    (Z34096_conditional_sentence_case
+    (Z36270_label_text_for_item_in_lang_or_ltd_fallback_or_qid a0 a1)
+    a1)))
+
+;; Z33713 square magnitude of Complex number (float64)
+(define (Z33713_square_magnitude_of_complex_number_float64 a0)
+  (Z33214_real_part
+    (Z33700_multiply_complex_numbers_float64 a0 (Z33679_complex_conjugate_complex128s a0))))
 
 ;; Z33720 pad end of list
 (define (Z33720_pad_end_of_list a0 a1 a2)
@@ -3880,13 +13110,161 @@
     a0
     (Z13569_subtract_natural_numbers_with_floor_of_0 a1 (length a2))))))
 
+;; Z33738 Word order (SOV, SVO...) of Natural language
+(define (Z33738_word_order_sov_svo_of_natural_language a0)
+  (Z33731_word_order_sov_svo_of_wd_language_item
+    (Z29649_wikidata_reference_from_wikifunctions_language_obj a0)))
+
 ;; Z33768 
 (define (Z33768 a0)
   " e ")
 
+;; Z33834 Mandelbrot set function, complex128
+(define (Z33834_mandelbrot_set_function_complex128 a0 a1)
+  (Z33201_add_complex128s (Z33700_multiply_complex_numbers_float64 a0 a0) a1))
+
+;; Z33842 main articles, complex
+(define (Z33842_main_articles_complex a0 a1 a2 a3)
+  (Z27873_wrap_an_html_fragment_in_a_tag
+    (Z30438_apply_four_argument_function
+    (Z14310_select_a_function_based_on_language Z33855_config_for_main_articles_functions a3)
+    a0
+    a1
+    a2
+    a3)
+    "div"
+    (list "role" "class")
+    (list "note" "hatnote navigation-not-searchable")))
+
+;; Z33848 abstract wikilink (sentence case)
+(define (Z33848_abstract_wikilink_sentence_case a0 a1)
+  (Z30016_generate_html_anchor_tag_hyperlink
+    (string-append
+    "https://abstract.wikipedia.org/wiki/"
+    (Z20041_wikidata_item_reference_id_string a0))
+    (Z14396_string_of_monolingual_text
+    (Z30784_transform_monolingual_text_to_sentence_case
+    (Z31676_label_for_item_qid_in_given_language_or_fallback a0 a1)))))
+
 ;; Z33859 Returning word separator (last) in Tagalog
 (define (Z33859_returning_word_separator_last_in_tagalog a0)
   " at ")
+
+;; Z33862 same Error
+(define (Z33862_same_error a0 a1)
+  (Z29294_object_equivalence (Z33876_error_identity a0) a1))
+
+;; Z33890 emphasize string into HTML fragment
+(define (Z33890_emphasize_string_into_html_fragment a0)
+  (Z19384_wrap_with_html_tag a0 "em"))
+
+;; Z33894 Spanish article-ful instantiating
+(define (Z33894_spanish_article_ful_instantiating a0 a1)
+  (Z15175_join_two_strings_with_separator
+    (Z33880_spanish_article_for a0)
+    (Z26337_spanish_article_less_instantiating_sentence a0 a1)
+    " "))
+
+;; Z33902 Spanish article for (pl)
+(define (Z33902_spanish_article_for_pl a0)
+  (if (Z20643_is_feminine_grammatical_gender (Z6825_fetch_wikidata_lexeme a0)) "las" "los"))
+
+;; Z33933 arithmetic mean of Rational numbers
+(define (Z33933_arithmetic_mean_of_rational_numbers a0)
+  (if
+    (null? a0)
+    (Z851_throw_error Z28170_the_list_is_empty (list "Z33833K1"))
+    (Z19708_divide_rational_numbers
+    (Z20080_sum_the_elements_of_a_list_of_rational_numbers a0)
+    (Z21653_natural_number_as_rational_number (length a0)))))
+
+;; Z33951 single char pinyin with tone marks to tone numbers
+(define (Z33951_single_char_pinyin_with_tone_marks_to_tone_numbers a0)
+  (string-append
+    (Z33509_remove_tones_from_pinyin a0)
+    (Z13713_natural_number_to_digit_string (Z33955_get_tone_from_pinyin_single_syllable a0))))
+
+;; Z33975 state origin using entity and class
+(define (Z33975_state_origin_using_entity_and_class a0 a1 a2 a3)
+  (Z34039_apply_three_or_optionally_four_argument_function
+    (Z14310_select_a_function_based_on_language
+    Z33981_config_for_state_origin_using_entity_and_class
+    a3)
+    a0
+    a1
+    a2
+    a3))
+
+;; Z34008 single character pinyin to bopomofo (zhuyin)
+(define (Z34008_single_character_pinyin_to_bopomofo_zhuyin a0)
+  (Z34009_single_char_numbered_pinyin_to_bopomofo_zhuyin
+    (Z33951_single_char_pinyin_with_tone_marks_to_tone_numbers a0)))
+
+;; Z34039 apply three or optionally four argument function
+(define (Z34039_apply_three_or_optionally_four_argument_function a0 a1 a2 a3 a4)
+  (if
+    (= (Z28222_number_of_arguments_of_a_function a0) 3)
+    (Z21216_apply_three_argument_function a0 a1 a2 a3)
+    (Z30438_apply_four_argument_function a0 a1 a2 a3 a4)))
+
+;; Z34122 apply four or optionally five-argument function
+(define (Z34122_apply_four_or_optionally_five_argument_function a0 a1 a2 a3 a4 a5)
+  (if
+    (= (Z28222_number_of_arguments_of_a_function a0) 4)
+    (Z30438_apply_four_argument_function a0 a1 a2 a3 a4)
+    (Z34120_apply_five_argument_function a0 a1 a2 a3 a4 a5)))
+
+;; Z34124 inject abstract wikilink into string as string
+(define (Z34124_inject_abstract_wikilink_into_string_as_string a0 a1 a2 a3 a4 a5 a6)
+  (Z19565_triple_if
+    a3
+    (if
+    a4
+    (Z12316_regular_expression_substitute_with_flags
+    a1
+    (Z34127_abstract_wikilink_string_w_display_text_fallback
+    a2
+    (Z11082_fallback_if_string_is_empty a6 a1)
+    a5)
+    a0
+    "g")
+    (Z12316_regular_expression_substitute_with_flags
+    a1
+    (Z34127_abstract_wikilink_string_w_display_text_fallback
+    a2
+    (Z11082_fallback_if_string_is_empty a6 a1)
+    a5)
+    a0
+    "gi"))
+    a4
+    (Z12316_regular_expression_substitute_with_flags
+    a1
+    (Z34127_abstract_wikilink_string_w_display_text_fallback
+    a2
+    (Z11082_fallback_if_string_is_empty a6 a1)
+    a5)
+    a0
+    "i")
+    (Z12316_regular_expression_substitute_with_flags
+    a1
+    (Z34127_abstract_wikilink_string_w_display_text_fallback
+    a2
+    (Z11082_fallback_if_string_is_empty a6 a1)
+    a5)
+    a0
+    "")))
+
+;; Z34132 latest software version sentence
+(define (Z34132_latest_software_version_sentence a0 a1)
+  (Z13036_apply
+    (Z14310_select_a_function_based_on_language
+    Z34134_config_for_latest_software_version_sentence
+    a1)
+    a0))
+
+;; Z34178 Natural number from list of Booleans
+(define (Z34178_natural_number_from_list_of_booleans a0)
+  (Z13797_binary_string_to_natural_number (Z14775_list_of_booleans_to_binary_string a0)))
 
 ;; Z34190 multiset union
 (define (Z34190_multiset_union a0 a1)
@@ -3896,13 +13274,30 @@
     (Z12767_concatenate_two_untyped_lists
     (Z21389_replicate_object_n_times
     (car a0)
-    (Z13630_greater_of_two_natural_numbers
+    (max
     (Z29413_count_occurrences_of_element_on_list (car a0) a0)
     (Z29413_count_occurrences_of_element_on_list (car a0) a1)))
     (Z17895_untype_a_list
     (Z34190_multiset_union
     (Z17895_untype_a_list (Z13081_remove_all_matching_elements_from_list a0 (car a0)))
     (Z17895_untype_a_list (Z13081_remove_all_matching_elements_from_list a1 (car a0))))))))
+
+;; Z34218 pinyin to zhuyin
+(define (Z34218_pinyin_to_zhuyin a0)
+  (Z22504_join_list_of_strings_with_spaces
+    (map
+    Z34008_single_character_pinyin_to_bopomofo_zhuyin
+    (Z34212_standard_pinyin_to_list_of_single_character_pinyin a0))))
+
+;; Z34224 subject was instance of
+(define (Z34224_subject_was_instance_of a0 a1 a2)
+  (Z35999_apply_function_with_2_or_3_arguments_in_order
+    (Z14310_select_a_function_based_on_language
+    Z34225_conf_for_past_article_less_instantiating_sentences
+    a2)
+    a0
+    a1
+    a2))
 
 ;; Z34263 Successor of von Neumann ordinal
 (define (Z34263_successor_of_von_neumann_ordinal a0)
@@ -3921,6 +13316,15 @@
 ;; Z34273 Equality of hereditary sets
 (define (Z34273_equality_of_hereditary_sets a0 a1)
   (if (Z34380_is_subset_of_a_set a0 a1) (if (Z34380_is_subset_of_a_set a1 a0) #t #f) #f))
+
+;; Z34282 auto-classifying sentence – entity (monolingual)
+(define (Z34282_auto_classifying_sentence_entity_monolingual a0 a1)
+  (Z26107_monolingual_text_from_language_and_string
+    a1
+    (Z31684_apply_two_argument_function_validated_arguments
+    (Z14310_select_a_function_based_on_language Z34281_config_for_classifying_sentence a1)
+    a0
+    a1)))
 
 ;; Z34293 All booleans equal to
 (define (Z34293_all_booleans_equal_to a0 a1)
@@ -3968,9 +13372,23 @@
     (list )
     (Z13078_remove_duplicates_from_untyped_list (map Z34409_predecessor_of_von_neumann_ordinal a0))))
 
+;; Z34419 read Natural number leniently, place-value decimal
+(define (Z34419_read_natural_number_leniently_place_value_decimal a0 a1)
+  (Z14304_read_natural_numbers_leniently
+    (Z14613_replace_character_set
+    a0
+    (Z22302_string_of_numeral_digits_in_order_from_language a1)
+    "0123456789")))
+
 ;; Z34484 returning word separator (last) in Czech
 (define (Z34484_returning_word_separator_last_in_czech a0)
   " a ")
+
+;; Z34487 subject is kind of (Monolingual text), Czech
+(define (Z34487_subject_is_kind_of_monolingual_text_czech a0 a1)
+  (Z26107_monolingual_text_from_language_and_string
+    Z1062_czech
+    (Z34427_czech_subject_is_instance_of_string a0 a1)))
 
 ;; Z34519 Append element to hereditary set
 (define (Z34519_append_element_to_hereditary_set a0 a1)
@@ -4022,6 +13440,25 @@
     a1
     (Z34409_predecessor_of_von_neumann_ordinal a2))))))
 
+;; Z34637 entity is part of value from WD, sentence
+(define (Z34637_entity_is_part_of_value_from_wd_sentence a0 a1)
+  (Z31684_apply_two_argument_function_validated_arguments
+    (Z14310_select_a_function_based_on_language Z34682_config_for_part_of_sentence a1)
+    a0
+    a1))
+
+;; Z34669 join list of Monolingual texts with delimiter
+(define (Z34669_join_list_of_monolingual_texts_with_delimiter a0 a1)
+  (Z861_monolingual_text_from_string_and_natural_language
+    (Z12899_join_list_of_strings_with_delimiter
+    (map Z14396_string_of_monolingual_text a0)
+    (Z14396_string_of_monolingual_text a1))
+    (Z14404_language_of_monolingual_text a1)))
+
+;; Z34780 signum (float64)
+(define (Z34780_signum_float64 a0)
+  (Z20937_integer_to_float64 (Z17151_sign_to_unit_integer (Z35303_signum_of_float64_as_sign a0))))
+
 ;; Z34790 run-length encoding
 (define (Z34790_run_length_encoding a0 a1)
   (if
@@ -4036,6 +13473,96 @@
     (Z17895_untype_a_list a0)
     (Z31032_index_of_first_mismatching_element (cdr a0) (car a0) a1))
     a1))))
+
+;; Z34793 most common element(s) in list
+(define (Z34793_most_common_element_s_in_list a0 a1)
+  (Z19205_remove_duplicates_preserving_typing_untyping
+    (Z22820_compress_list
+    a0
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    =
+    (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an
+    Z29413_count_occurrences_of_element_on_list
+    #t
+    (Z29794_cartesian_product_of_2_lists_with_pairing_function
+    a1
+    (Z17895_untype_a_list a0)
+    (Z17895_untype_a_list a0)))
+    (Z29429_maximum_value_on_list_natural_numbers
+    (Z18475_return_typed_list
+    (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an
+    Z29413_count_occurrences_of_element_on_list
+    #t
+    (Z29794_cartesian_product_of_2_lists_with_pairing_function
+    a1
+    (Z17895_untype_a_list a0)
+    (Z17895_untype_a_list a0)))))))))
+
+;; Z34800 Argument reference key with short Type label
+(define (Z34800_argument_reference_key_with_short_type_label a0 a1)
+  (if
+    (Z29661_is_kleenean_not_false (Z29654_does_language_use_nadj_order a0))
+    (Z30035_prepend_string_to_monolingual_text
+    (string-append
+    a1
+    (if
+    (Z12696_contains Z33984_languages_without_spaces_between_sentences a0)
+    Z11853_empty_string
+    Z13128_space_char_as_string))
+    (Z34802_short_form_of_label_for_type
+    a0
+    (Z21174_type_declared_for_argument
+    (Z13397_get_the_nth_element_of_a_list
+    (Z21177_get_list_of_argument_declarations
+    (Z30531_reference_or_object_from_zid_string
+    (Z11410_discard_from_start_of_first_substring a1 "K")))
+    (Z14283_string_of_digits_as_natural_number (Z11420_discard_until_end_of_first_substring a1 "K"))))))
+    (Z30795_append_string_to_monolingual_text
+    (string-append
+    (if
+    (Z12696_contains Z33984_languages_without_spaces_between_sentences a0)
+    Z11853_empty_string
+    Z13128_space_char_as_string)
+    a1)
+    (Z34802_short_form_of_label_for_type
+    a0
+    (Z21174_type_declared_for_argument
+    (Z13397_get_the_nth_element_of_a_list
+    (Z21177_get_list_of_argument_declarations
+    (Z30531_reference_or_object_from_zid_string
+    (Z11410_discard_from_start_of_first_substring a1 "K")))
+    (Z14283_string_of_digits_as_natural_number (Z11420_discard_until_end_of_first_substring a1 "K"))))))))
+
+;; Z34802 short form of label for Type
+(define (Z34802_short_form_of_label_for_type a0 a1)
+  (Z13318_apply_two_argument_function
+    (Z14310_select_a_function_based_on_language Z34818_config_for_short_form_of_label_for_type a0)
+    a0
+    a1))
+
+;; Z34810 label of persistent Type in language or fallback
+(define (Z34810_label_of_persistent_type_in_language_or_fallback a0 a1)
+  (Z31168_best_of_monolingual_texts_according_to_fallbacks
+    a0
+    (Z16556_object_labels
+    (Z29113_quoted_reference_from_zid_string (Z16365_zid_string_from_identity_object a1)))))
+
+;; Z34811 monolingual label of item reference in language
+(define (Z34811_monolingual_label_of_item_reference_in_language a0 a1)
+  (Z26107_monolingual_text_from_language_and_string
+    a1
+    (Z23753_label_of_item_reference_in_language_or_to_mul a0 a1)))
+
+;; Z34825 
+(define (Z34825 a0 a1)
+  (Z30460_find_lexeme_refs_for_a_wikidata_item_via_p5137 a0 Z1430_german))
+
+;; Z34827 is float64 finite?
+(define (Z34827_is_float64_finite a0)
+  (Z10603_number_is_between_float64
+    a0
+    (Z21775_negate_float64 Z26368_highest_finite_float64_value)
+    Z26368_highest_finite_float64_value))
 
 ;; Z34899 select Forms with given features from Lexeme
 (define (Z34899_select_forms_with_given_features_from_lexeme a0 a1)
@@ -4053,9 +13580,466 @@
     a1
     (map Z14404_language_of_monolingual_text a0)))))
 
+;; Z34943 better matching multilingual text form from lexeme
+(define (Z34943_better_matching_multilingual_text_form_from_lexeme a0 a1)
+  (Z22399_representations_of_lexeme_form (Z38338_better_matching_lexeme_form_from_lexeme a0 a1)))
+
+;; Z34947 best monolingual text of multilingual per [lang]
+(define (Z34947_best_monolingual_text_of_multilingual_per_lang a0 a1)
+  (Z35809_monolingual_text_from_list_w_highest_listed_lang
+    (Z19279_multilingual_text_to_list_of_monolingual_texts a0)
+    a1))
+
+;; Z34953 monolingual text from multilingual with fallback
+(define (Z34953_monolingual_text_from_multilingual_with_fallback a0 a1)
+  (Z34947_best_monolingual_text_of_multilingual_per_lang a0 (Z24144_fallback_languages a1 #t #t)))
+
+;; Z35017 wrap HTML fragment in cell (td/th) element
+(define (Z35017_wrap_html_fragment_in_cell_td_th_element a0 a1 a2 a3 a4)
+  (Z27873_wrap_an_html_fragment_in_a_tag
+    a0
+    (if a1 "th" "td")
+    (Z12767_concatenate_two_untyped_lists
+    (Z24150_append_element_to_typed_list_conditionally
+    "rowspan"
+    (Z24150_append_element_to_typed_list_conditionally "colspan" (list ) (>= a2 2))
+    (>= a3 2))
+    (Z33357_list_of_keys_from_a_typed_map a4))
+    (Z12767_concatenate_two_untyped_lists
+    (Z24150_append_element_to_typed_list_conditionally
+    (Z13713_natural_number_to_digit_string a3)
+    (Z24150_append_element_to_typed_list_conditionally
+    (Z13713_natural_number_to_digit_string a2)
+    (list )
+    (>= a2 2))
+    (>= a3 2))
+    (Z30172_list_of_values_from_a_typed_map a4))))
+
+;; Z35022 inception sentence
+(define (Z35022_inception_sentence a0 a1 a2)
+  (Z13318_apply_two_argument_function
+    (Z14310_select_a_function_based_on_language Z35026_config_for_inception_sentence a2)
+    a0
+    a1))
+
+;; Z35049 wrap an HTML fragment in a simple tag
+(define (Z35049_wrap_an_html_fragment_in_a_simple_tag a0 a1)
+  (Z27873_wrap_an_html_fragment_in_a_tag a0 a1 (list ) (list )))
+
+;; Z35072 multiply complex128 by float64
+(define (Z35072_multiply_complex128_by_float64 a0 a1)
+  (Z33227_complex128_from_real_and_imaginary_parts
+    (Z21032_multiply_float64 (Z33214_real_part a0) a1)
+    (Z21032_multiply_float64 (Z33221_imaginary_part a0) a1)))
+
+;; Z35073 divide complex128 by float64
+(define (Z35073_divide_complex128_by_float64 a0 a1)
+  (Z33227_complex128_from_real_and_imaginary_parts
+    (Z21033_divide_float64 (Z33214_real_part a0) a1)
+    (Z21033_divide_float64 (Z33221_imaginary_part a0) a1)))
+
+;; Z35085 reference HTML marker from reference
+(define (Z35085_reference_html_marker_from_reference a0 a1)
+  (Z27873_wrap_an_html_fragment_in_a_tag
+    (Z35087_reference_html_marker_content_from_reference a0 a1)
+    "sup"
+    (list "class")
+    (list "ext-wikilambda-reference")))
+
+;; Z35094 emphasize HTML fragment
+(define (Z35094_emphasize_html_fragment a0)
+  (Z27873_wrap_an_html_fragment_in_a_tag a0 "em" (list ) (list )))
+
+;; Z35105 label or fallback from Wikidata item (monolingual)
+(define (Z35105_label_or_fallback_from_wikidata_item_monolingual a0 a1)
+  (car (Z24139_item_labels_filtered_by_language_list a0 (Z24144_fallback_languages a1 #t #t))))
+
+;; Z35126 does Wikidata property have data type external-ID?
+(define (Z35126_does_wikidata_property_have_data_type_external_id a0)
+  (or
+    (Z12696_contains
+    (Z25614_split_string_to_list
+    "P503~P297~P298~P299~P300~P773~P1278~P791~P946~P3035~P218~P219~P220~P6519~P1798~P221~P506~P2620~P3097~P356~P3212~P212~P957~P1208~P236~P7363~P1827~P1243~P1160~P5209~P2766~P498~P2627~P2263~P627~P646~P685~P815~P846~P2426~P2892~P3088~P3151~P3444~P3606~P4342~P5055~P5257~P6025~P6105~P8072~P8707~P9157~P10585~P12218~P13591"
+    "~")
+    (Z20046_wikidata_property_id_string a0))
+    (Z12696_contains Z30960_d_mediawiki_wikibase_sortedproperties_extids a0)))
+
+;; Z35167 infobox for person as item
+(define (Z35167_infobox_for_person_as_item a0 a1)
+  (Z35175_infobox_template
+    (Z35176_name_native_name_as_html_fragment a0 a1)
+    (identity
+    (Z31262_apply_with_common_1st_and_3rd_args_and_n_2nd_args
+    Z35374_infobox_row_from_wikidata_property
+    a0
+    Z35371_required_properties_for_person_infobox
+    a1))))
+
+;; Z35192 display Wikidata date from statement
+(define (Z35192_display_wikidata_date_from_statement a0 a1)
+  (Z20780_display_date (Z28128_gregorian_date_from_wikidata_statement a0) a1))
+
+;; Z35199 abstract wikilink from statement
+(define (Z35199_abstract_wikilink_from_statement a0 a1)
+  (Z32428_abstract_wikilink (Z19308_value_of_wikidata_statement a0) a1))
+
+;; Z35215 HTML bullet list of lightweight enum members
+(define (Z35215_html_bullet_list_of_lightweight_enum_members a0 a1)
+  (Z32179_unordered_list_with_item_tagging
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    Z32878_wikidata_link_for_item
+    (Z29493_enumeration_reference_values_from_type (Z30531_reference_or_object_from_zid_string a1))
+    a0)))
+
+;; Z35219 density
+(define (Z35219_density a0 a1)
+  (Z19708_divide_rational_numbers a0 a1))
+
+;; Z35221 average speed
+(define (Z35221_average_speed a0 a1)
+  (Z19708_divide_rational_numbers a0 a1))
+
+;; Z35222 lateral surface area of a prism
+(define (Z35222_lateral_surface_area_of_a_prism a0 a1)
+  (Z19706_multiply_rational_numbers a0 a1))
+
+;; Z35223 surface area of a prism
+(define (Z35223_surface_area_of_a_prism a0 a1)
+  (Z19679_add_rational_numbers (Z24266_double_rational a0) a1))
+
+;; Z35224 average flow rate
+(define (Z35224_average_flow_rate a0 a1)
+  (Z19708_divide_rational_numbers a0 a1))
+
+;; Z35241 SCBA cylinder autonomy
+(define (Z35241_scba_cylinder_autonomy a0 a1 a2)
+  (Z21033_divide_float64
+    (Z21032_multiply_float64 (Z20937_integer_to_float64 a0) a1)
+    (Z20937_integer_to_float64 a2)))
+
+;; Z35248 generate Discogs link from artist ID
+(define (Z35248_generate_discogs_link_from_artist_id a0 a1)
+  (Z27861_html_raw_content_to_html_fragment
+    (Z10638_generate_html_source_for_anchor_tag_hyperlink
+    (string-append "https://www.discogs.com/artist/" (Z13713_natural_number_to_digit_string a0))
+    a1)))
+
+;; Z35269 display ratio
+(define (Z35269_display_ratio a0 a1)
+  (Z10075_replace_all_substrings
+    (Z19827_rational_number_to_string (Z27232_rational_from_two_natural_numbers a0 a1))
+    "/"
+    ":"))
+
+;; Z35273 coordinates from an OpenStreetMap URL
+(define (Z35273_coordinates_from_an_openstreetmap_url a0)
+  (Z12899_join_list_of_strings_with_delimiter
+    (Z13362_get_the_last_n_elements_of_a_list (Z25614_split_string_to_list a0 "/") 2)
+    ", "))
+
+;; Z35278 Shannon entropy from string
+(define (Z35278_shannon_entropy_from_string a0)
+  (Z21775_negate_float64
+    (Z22579_sum_a_list_of_floating_point_numbers_float64
+    (Z18475_return_typed_list
+    (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l
+    Z21032_multiply_float64
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    Z21033_divide_float64
+    (map
+    Z20936_natural_number_to_float64
+    (map
+    fst
+    (Z34790_run_length_encoding
+    (Z22717_string_to_codepoint_list (Z11289_sort_letters_of_a_string a0))
+    Z22683_code_point_equality)))
+    (Z20936_natural_number_to_float64 (string-length a0)))
+    (map
+    Z21004_float64_logarithm_base_2
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    Z21033_divide_float64
+    (map
+    Z20936_natural_number_to_float64
+    (map
+    fst
+    (Z34790_run_length_encoding
+    (Z22717_string_to_codepoint_list (Z11289_sort_letters_of_a_string a0))
+    Z22683_code_point_equality)))
+    (Z20936_natural_number_to_float64 (string-length a0)))))))))
+
+;; Z35288 Bangla classifier for noun
+(define (Z35288_bangla_classifier_for_noun a0)
+  (Z11542_if_string_output
+    (Z26602_is_instance_of_human_qid a0)
+    "একজন"
+    (Z11542_if_string_output (Z26611_is_wikidata_item_generic a0) "একধরনের" "একটি")))
+
+;; Z35292 signum of complex128 as Sign
+(define (Z35292_signum_of_complex128_as_sign a0)
+  (if
+    (Z16667_same_sign (Z35303_signum_of_float64_as_sign (Z33214_real_part a0)) Z16661_neutral)
+    (Z35303_signum_of_float64_as_sign (Z33221_imaginary_part a0))
+    (Z35303_signum_of_float64_as_sign (Z33214_real_part a0))))
+
+;; Z35303 signum of float64 as Sign
+(define (Z35303_signum_of_float64_as_sign a0)
+  (Z31490_if_either
+    (Z20850_same_float64 a0 (Z21925_read_float64 "qNaN" Z1002_english))
+    (Z22636_is_zero_float64 a0)
+    Z16661_neutral
+    (Z21136_extract_sign_of_floating_point_number a0)))
+
+;; Z35314 base-e exponentiation (complex128)
+(define (Z35314_base_e_exponentiation_complex128 a0)
+  (Z33304_complex128_from_magnitude_and_angle
+    (Z21001_float64_exponentiation_base_e (Z33214_real_part a0))
+    (Z33221_imaginary_part a0)))
+
+;; Z35321 complex128s are close
+(define (Z35321_complex128s_are_close a0 a1 a2 a3)
+  (and
+    (Z33785_is_close_float64 (Z33214_real_part a0) (Z33214_real_part a1) a2 a3)
+    (Z33785_is_close_float64 (Z33221_imaginary_part a0) (Z33221_imaginary_part a1) a2 a3)))
+
+;; Z35327 display Wikidata time
+(define (Z35327_display_wikidata_time a0 a1)
+  (Z29036_print_wikidata_datetime_limited_by_precision
+    (Z25726_wikidata_datetime_from_wikidata_time a0)
+    (Z35328_precision_of_wikidata_time a0)
+    a1))
+
+;; Z35331 print Gregorian year limited by precision
+(define (Z35331_print_gregorian_year_limited_by_precision a0 a1 a2)
+  (Z21216_apply_three_argument_function
+    (Z25065_select_a_function_based_on_language_with_fallbacks
+    Z35336_config_for_print_gregorian_year_to_precision
+    a2)
+    a0
+    a1
+    a2))
+
+;; Z35338 round Integer to nearest n
+(define (Z35338_round_integer_to_nearest_n a0 a1)
+  (Z17120_multiply_integers
+    (Z19841_rational_to_nearest_integer_even_integer_tiebreak
+    (Z19854_simplified_rational_from_z_numerator_denominator a0 a1))
+    (Z17101_natural_number_to_integer a1)))
+
+;; Z35352 get basic English phrase category
+(define (Z35352_get_basic_english_phrase_category a0)
+  (if
+    (Z10008_is_empty_string a0)
+    Z11853_empty_string
+    (if
+    (Z10196_is_regular_expression_match a0 Z18979_english_adverb_phrase)
+    Z18979_english_adverb_phrase
+    (if
+    (Z10196_is_regular_expression_match a0 Z18929_english_verb_phrase)
+    Z18929_english_verb_phrase
+    (if
+    (Z10196_is_regular_expression_match a0 Z18928_english_noun_phrase)
+    Z18928_english_noun_phrase
+    Z18927_phrase)))))
+
+;; Z35374 infobox row from Wikidata property
+(define (Z35374_infobox_row_from_wikidata_property a0 a1 a2)
+  (if
+    (Z27299_wikidata_item_has_claim a0 a1)
+    (Z35190_apply_fn_to_2nd_element_of_pair_optional_language
+    (Z35188_wikidata_statement_pair a0 a1 a2)
+    Z35376_post_process_second_element_of_wikidata_claim_pair
+    a2)
+    Z24_void))
+
+;; Z35376 post-process second element of Wikidata claim pair
+(define (Z35376_post_process_second_element_of_wikidata_claim_pair a0 a1)
+  (if
+    (Z19084_same_type (Z16829_type_of_object a0) Z6003_wikidata_statement)
+    (if
+    (Z19084_same_type
+    (Z16829_type_of_object (Z19308_value_of_wikidata_statement a0))
+    Z6064_wikidata_time)
+    (Z35192_display_wikidata_date_from_statement a0 a1)
+    (if
+    (Z19084_same_type
+    (Z16829_type_of_object (Z19308_value_of_wikidata_statement a0))
+    Z6091_wikidata_item_reference)
+    (Z35199_abstract_wikilink_from_statement a0 a1)
+    Z24_void))
+    Z24_void))
+
 ;; Z35388 quine
 (define (Z35388_quine)
   Z35952_quine_composition)
+
+;; Z35399 Formal SignWriting to SignWriting in Unicode
+(define (Z35399_formal_signwriting_to_signwriting_in_unicode a0)
+  (if
+    (and (Z24331_is_not_empty_string a0) (Z29248_is_signwriting a0))
+    (Z13351_apply_list_of_functions
+    (list Z35425_convert_spatials_in_fsw_string_to_swu Z35417_convert_signbox_in_fsw_string_to_swu Z35411_convert_prefix_in_fsw_string_to_swu)
+    a0)
+    ""))
+
+;; Z35400 return FSW structures from FSW string
+(define (Z35400_return_fsw_structures_from_fsw_string a0 a1)
+  (Z25829_regular_expression_match_with_flags
+    a0
+    (Z35397_return_formal_signwriting_regex_from_string a1)
+    "g"))
+
+;; Z35402 split string into list by repeated index
+(define (Z35402_split_string_into_list_by_repeated_index a0 a1)
+  (Z18475_return_typed_list
+    (map
+    Z22693_codepoint_list_to_string
+    (map
+    Z18475_return_typed_list
+    (Z29795_chunk_list_into_lists_of_length_n
+    (Z17895_untype_a_list (Z22717_string_to_codepoint_list a0))
+    a1)))))
+
+;; Z35411 convert prefix in FSW string to SWU
+(define (Z35411_convert_prefix_in_fsw_string_to_swu a0)
+  (Z850_try_catch_function
+    (Z21394_concatenate_many_strings
+    (Z18475_return_typed_list
+    (Z35421_apply3_common_2nd_list_1st_and_3rd
+    Z10193_replace_all_regex_case_sensitive
+    (Z35400_return_fsw_structures_from_fsw_string a0 "all")
+    (Z35397_return_formal_signwriting_regex_from_string "prefix")
+    (map Z35405_convert_fsw_prefixes_to_swu (Z35400_return_fsw_structures_from_fsw_string a0 "all")))))
+    Z500_unspecified_error
+    a0))
+
+;; Z35415 convert FSW spatials to SWU
+(define (Z35415_convert_fsw_spatials_to_swu a0)
+  (Z850_try_catch_function
+    (string-append
+    (Z35395_fsw_symbol_key_to_swu_symbol_character (Z14592_first_n_characters_of_string a0 6))
+    (Z35407_integer_list_of_coordinates_to_swu_characters
+    (Z35392_fsw_coordinate_string_to_integer_list (Z28630_substring_by_index_0_indexed a0 6 13))))
+    Z500_unspecified_error
+    a0))
+
+;; Z35417 convert signbox in FSW string to SWU
+(define (Z35417_convert_signbox_in_fsw_string_to_swu a0)
+  (Z21394_concatenate_many_strings
+    (Z18475_return_typed_list
+    (Z35421_apply3_common_2nd_list_1st_and_3rd
+    Z10193_replace_all_regex_case_sensitive
+    (Z35400_return_fsw_structures_from_fsw_string a0 "all")
+    (Z35397_return_formal_signwriting_regex_from_string "signbox")
+    (map
+    Z35413_convert_fsw_signboxes_to_swu
+    (Z35400_return_fsw_structures_from_fsw_string a0 "all"))))))
+
+;; Z35421 apply3: common 2nd, list 1st and 3rd
+(define (Z35421_apply3_common_2nd_list_1st_and_3rd a0 a1 a2 a3)
+  (Z31490_if_either
+    (null? a1)
+    (null? a3)
+    (list )
+    (cons
+    (Z21216_apply_three_argument_function a0 (car a1) a2 (car a3))
+    (Z35421_apply3_common_2nd_list_1st_and_3rd a0 (cdr a1) a2 (cdr a3)))))
+
+;; Z35425 convert spatials in FSW string to SWU
+(define (Z35425_convert_spatials_in_fsw_string_to_swu a0)
+  (Z21394_concatenate_many_strings
+    (Z18475_return_typed_list
+    (Z35421_apply3_common_2nd_list_1st_and_3rd
+    Z10193_replace_all_regex_case_sensitive
+    (Z35400_return_fsw_structures_from_fsw_string a0 "all")
+    (Z35397_return_formal_signwriting_regex_from_string "spatial")
+    (map Z35415_convert_fsw_spatials_to_swu (Z35400_return_fsw_structures_from_fsw_string a0 "all"))))))
+
+;; Z35428 value by key or else
+(define (Z35428_value_by_key_or_else a0 a1 a2)
+  (if (Z30433_object_has_key a1 a0) (Z803_value_by_key a0 a1) a2))
+
+;; Z35437 convert X11 color name to RGBA color
+(define (Z35437_convert_x11_color_name_to_rgba_color a0)
+  (Z28628_default_rgba_color_reader
+    (Z14456_remove_first_character (Z17713_convert_x11_color_to_hex a0))))
+
+;; Z35449 Sign of difference of Integers
+(define (Z35449_sign_of_difference_of_integers a0 a1)
+  (Z17105_sign_of_integer (Z17111_subtract_an_integer a0 a1)))
+
+;; Z35464 (#) best Wikidata statement value for language
+(define (Z35464_best_wikidata_statement_value_for_language a0 a1 a2)
+  (Z35468_best_wikidata_statement_value_for_language_list
+    a0
+    a1
+    (Z24144_fallback_languages a2 #t #t)))
+
+;; Z35472 inject abstract wikilink into monolingual text
+(define (Z35472_inject_abstract_wikilink_into_monolingual_text a0 a1 a2 a3 a4 a5)
+  (Z27861_html_raw_content_to_html_fragment
+    (Z34124_inject_abstract_wikilink_into_string_as_string
+    (Z27854_html_fragment_as_string (Z33457_monolingual_text_as_html_with_language_span a0))
+    (Z36270_label_text_for_item_in_lang_or_ltd_fallback_or_qid a1 a4)
+    a1
+    a2
+    a3
+    a4
+    (if
+    (Z14326_same_language
+    (Z14404_language_of_monolingual_text a0)
+    (Z14404_language_of_monolingual_text a5))
+    (Z14396_string_of_monolingual_text a5)
+    (Z27854_html_fragment_as_string (Z33457_monolingual_text_as_html_with_language_span a5))))))
+
+;; Z35475 are Integers different?
+(define (Z35475_are_integers_different a0 a1)
+  (not (Z16688_same_integer a0 a1)))
+
+;; Z35482 Sign of difference of Bytes
+(define (Z35482_sign_of_difference_of_bytes a0 a1)
+  (Z16731_sign_of_difference
+    (Z14567_byte_to_natural_number a0)
+    (Z14567_byte_to_natural_number a1)))
+
+;; Z35524 first letter uppercase for Turkish
+(define (Z35524_first_letter_uppercase_for_turkish a0)
+  (Z861_monolingual_text_from_string_and_natural_language
+    (if
+    (Z10615_string_starts_with (Z14396_string_of_monolingual_text a0) "i")
+    (string-append "İ" (Z14456_remove_first_character (Z14396_string_of_monolingual_text a0)))
+    (Z10771_sentence_case (Z14396_string_of_monolingual_text a0)))
+    (Z14404_language_of_monolingual_text a0)))
+
+;; Z35544 Sign of difference of Gregorian calendar dates
+(define (Z35544_sign_of_difference_of_gregorian_calendar_dates a0 a1)
+  (Z19565_triple_if
+    (Z25271_date_before a0 a1)
+    Z16662_negative
+    (Z20430_same_gregorian_calendar_date a0 a1)
+    Z16661_neutral
+    Z16660_positive))
+
+;; Z35580 is Wikidata quantity less than other?
+(define (Z35580_is_wikidata_quantity_less_than_other a0 a1)
+  (if
+    (Z35550_are_wikidata_quantities_commensurable a0 a1)
+    (Z22126_boolean_as_kleenean
+    (Z19753_less_than_rational_numbers
+    (Z25294_amount_from_quantity
+    (Z28509_convert_wikidata_quantity_to_compatible_unit
+    a0
+    (Z35557_select_shared_target_unit_for_unit_conversion
+    (Z25303_unit_qid_from_quantity a0)
+    (Z25303_unit_qid_from_quantity a1)
+    #f)))
+    (Z25294_amount_from_quantity
+    (Z28509_convert_wikidata_quantity_to_compatible_unit
+    a1
+    (Z35557_select_shared_target_unit_for_unit_conversion
+    (Z25303_unit_qid_from_quantity a0)
+    (Z25303_unit_qid_from_quantity a1)
+    #f)))))
+    Z22114_maybe))
 
 ;; Z35587 is a square matrix?
 (define (Z35587_is_a_square_matrix a0)
@@ -4067,6 +14051,57 @@
     Z13429_remove_the_nth_element_from_a_list
     a0
     a1))
+
+;; Z35641 Season a month falls in (Northern Hemisphere)
+(define (Z35641_season_a_month_falls_in_northern_hemisphere a0)
+  (Z26887_instance_at_position_n_of_wikidata_enumeration
+    (add1
+    (Z13546_divide_natural_numbers
+    (Z13551_remainder_of_natural_number_division (Z16230_month_to_month_number a0) 12)
+    3))
+    Z33827_season))
+
+;; Z35646 Season a Month falls in (Southern Hemisphere)
+(define (Z35646_season_a_month_falls_in_southern_hemisphere a0)
+  (Z27043_opposite_instance_of_wikidata_enumeration
+    (Z35641_season_a_month_falls_in_northern_hemisphere a0)))
+
+;; Z35652 Key reference for nth Key in Type
+(define (Z35652_key_reference_for_nth_key_in_type a0 a1)
+  (Z22549_key_reference_from_string
+    (Z23320_key_id_of_key
+    (Z13397_get_the_nth_element_of_a_list (Z30833_list_of_keys_defined_for_type a0) a1))))
+
+;; Z35656 quoted Reference to Type from Key reference
+(define (Z35656_quoted_reference_to_type_from_key_reference a0)
+  (Z29113_quoted_reference_from_zid_string
+    (Z11410_discard_from_start_of_first_substring
+    (Z23443_reference_string_from_key_reference a0)
+    "K")))
+
+;; Z35666 round Wikidata quantity to fixed decimal places
+(define (Z35666_round_wikidata_quantity_to_fixed_decimal_places a0 a1)
+  (Z35663_wikidata_quantity_from_components
+    (Z27719_round_rational_to_fix_decimal_places_unsimplified (Z25294_amount_from_quantity a0) a1)
+    (if
+    (Z26950_is_lower_bound_void a0)
+    Z24_void
+    (Z27719_round_rational_to_fix_decimal_places_unsimplified
+    (Z25297_lower_bound_from_quantity a0)
+    a1))
+    (if
+    (Z26946_is_upper_bound_void a0)
+    Z24_void
+    (Z27719_round_rational_to_fix_decimal_places_unsimplified
+    (Z25300_upper_bound_from_quantity a0)
+    a1))
+    (Z25303_unit_qid_from_quantity a0)))
+
+;; Z35672 sentence separator
+(define (Z35672_sentence_separator a0)
+  (Z27868_string_to_html_fragment
+    (Z35683_apply0
+    (Z14310_select_a_function_based_on_language Z35676_config_of_sentence_separators_string a0))))
 
 ;; Z35677 single space
 (define (Z35677_single_space)
@@ -4080,11 +14115,61 @@
 (define (Z35693_is_natural_number_not_zero a0)
   (Z14416_unequal_natural_numbers a0 0))
 
+;; Z35702 is Integer not zero?
+(define (Z35702_is_integer_not_zero a0)
+  (Z35693_is_natural_number_not_zero (Z17144_absolute_value_of_integer_as_natural_number a0)))
+
+;; Z35709 is Integer non-positive?
+(define (Z35709_is_integer_non_positive a0)
+  (Z16768_sign_is_non_positive (Z17105_sign_of_integer a0)))
+
+;; Z35714 is Rational number non-positive?
+(define (Z35714_is_rational_number_non_positive a0)
+  (Z16768_sign_is_non_positive (Z19717_sign_of_rational_number a0)))
+
+;; Z35721 Sign of difference of Rational numbers
+(define (Z35721_sign_of_difference_of_rational_numbers a0 a1)
+  (Z19717_sign_of_rational_number (Z19699_subtract_rational_numbers a0 a1)))
+
+;; Z35727 are Rational numbers different?
+(define (Z35727_are_rational_numbers_different a0 a1)
+  (not (Z19686_same_rational_number a0 a1)))
+
+;; Z35732 are HTML fragments different?
+(define (Z35732_are_html_fragments_different a0 a1)
+  (not (Z877_html_fragment_equality a0 a1)))
+
+;; Z35737 is HTML fragment empty?
+(define (Z35737_is_html_fragment_empty a0)
+  (Z877_html_fragment_equality a0 Z32729_empty_html_fragment))
+
+;; Z35740 is HTML fragment not empty?
+(define (Z35740_is_html_fragment_not_empty a0)
+  (Z35732_are_html_fragments_different a0 Z32729_empty_html_fragment))
+
 ;; Z35766 join multiple HTML fragments with a separator
 (define (Z35766_join_multiple_html_fragments_with_a_separator a0 a1)
   (Z27926_join_multiple_html_fragments
     (Z12967_list_without_last_element
     (Z19550_interlace_typed_lists a0 (Z21389_replicate_object_n_times a1 (length a0))))))
+
+;; Z35786 Gregorian date is on or before other date
+(define (Z35786_gregorian_date_is_on_or_before_other_date a0 a1)
+  (Z16768_sign_is_non_positive (Z35544_sign_of_difference_of_gregorian_calendar_dates a0 a1)))
+
+;; Z35788 Gregorian date is on or after other date
+(define (Z35788_gregorian_date_is_on_or_after_other_date a0 a1)
+  (Z16756_sign_non_negative (Z35544_sign_of_difference_of_gregorian_calendar_dates a0 a1)))
+
+;; Z35790 different Gregorian calendar dates
+(define (Z35790_different_gregorian_calendar_dates a0 a1)
+  (not (Z20430_same_gregorian_calendar_date a0 a1)))
+
+;; Z35792 Sign of difference of Gregorian years
+(define (Z35792_sign_of_difference_of_gregorian_years a0 a1)
+  (Z35449_sign_of_difference_of_integers
+    (Z20257_gregorian_year_to_iso_8601_year_integer a0)
+    (Z20257_gregorian_year_to_iso_8601_year_integer a1)))
 
 ;; Z35797 Get EF rating from estimated max winds (English)
 (define (Z35797_get_ef_rating_from_estimated_max_winds_english a0)
@@ -4093,13 +14178,82 @@
     (list "EFU" "EF0" "EF1" "EF2" "EF3" "EF4" "EF5")
     a0))
 
+;; Z35806 labels of Wikidata item (Typed List [monolingual])
+(define (Z35806_labels_of_wikidata_item_typed_list_monolingual a0)
+  (Z19279_multilingual_text_to_list_of_monolingual_texts
+    (Z22853_labels_of_wikidata_item_multilingual_text a0)))
+
+;; Z35809 monolingual text from list w highest listed lang
+(define (Z35809_monolingual_text_from_list_w_highest_listed_lang a0 a1)
+  (Z34947_best_monolingual_text_of_multilingual_per_lang
+    (Z35828_multilingual_text_from_list_of_monolingual_texts a0)
+    a1))
+
+;; Z35811 is monolingual text blank?
+(define (Z35811_is_monolingual_text_blank a0)
+  (Z10083_is_string_blank (Z14396_string_of_monolingual_text a0)))
+
+;; Z35815 does monolingual text have content?
+(define (Z35815_does_monolingual_text_have_content a0)
+  (not (Z35811_is_monolingual_text_blank a0)))
+
 ;; Z35828 multilingual text from list of monolingual texts
 (define (Z35828_multilingual_text_from_list_of_monolingual_texts a0)
   a0)
 
+;; Z35847 signed numerator of unsimplified Rational number
+(define (Z35847_signed_numerator_of_unsimplified_rational_number a0)
+  (Z33745_make_integer
+    (Z19717_sign_of_rational_number a0)
+    (Z19733_numerator_of_unsimplified_rational_number a0)))
+
+;; Z35860 prime divisors of Natural with their exponents
+(define (Z35860_prime_divisors_of_natural_with_their_exponents a0)
+  (map
+    Z35864_swap_items_in_typed_pair
+    (Z34790_run_length_encoding
+    (Z17873_sort_list_ascending_natural_numbers (Z13728_prime_divisors a0))
+    =)))
+
 ;; Z35864 swap items in Typed pair
 (define (Z35864_swap_items_in_typed_pair a0)
   (Z30414_make_typed_pair (snd a0) (fst a0)))
+
+;; Z35874 preferred implementation of function as ZID
+(define (Z35874_preferred_implementation_of_function_as_zid a0)
+  (snd (car (cdr (snd (car (cdr (snd (car (cdr (cdr (cdr (cdr (Z805_reify a0))))))))))))))
+
+;; Z35883 replace all (regex, case-sensitive, Unicode-aware)
+(define (Z35883_replace_all_regex_case_sensitive_unicode_aware a0 a1 a2)
+  (Z12316_regular_expression_substitute_with_flags a1 a2 a0 "gmu"))
+
+;; Z35899 return SWU structures from SWU string
+(define (Z35899_return_swu_structures_from_swu_string a0 a1)
+  (Z25829_regular_expression_match_with_flags
+    a0
+    (Z35879_return_signwriting_in_unicode_regex_from_string a1)
+    "gmu"))
+
+;; Z35901 convert SWU symbols to FSW
+(define (Z35901_convert_swu_symbols_to_fsw a0)
+  (if
+    (Z35903_is_signwriting_in_unicode_symbol a0)
+    (Z35888_swu_symbol_character_to_fsw_symbol_key a0)
+    a0))
+
+;; Z35903 is SignWriting in Unicode symbol?
+(define (Z35903_is_signwriting_in_unicode_symbol a0)
+  (if
+    (and
+    (>
+    (Z25847_number_of_regular_expression_matches_with_flags
+    a0
+    (Z35879_return_signwriting_in_unicode_regex_from_string "nullorsymbol")
+    "gmu")
+    0)
+    (Z35936_string_length_equals_number a0 1))
+    #t
+    #f))
 
 ;; Z35904 convert symbols in SWU string to FSW
 (define (Z35904_convert_symbols_in_swu_string_to_fsw a0)
@@ -4111,11 +14265,38 @@
 
 ;; Z35941 iterate function over string to string
 (define (Z35941_iterate_function_over_string_to_string a0 a1)
-  (Z21394_concatenate_many_strings (Z18475_return_typed_list (map a0 (Z25578_string_to_list a1)))))
+  (if
+    (Z10008_is_empty_string a1)
+    ""
+    (string-append
+    (Z13036_apply a0 (Z10901_get_first_character_of_string a1))
+    (Z35941_iterate_function_over_string_to_string a0 (Z14456_remove_first_character a1)))))
 
 ;; Z35966 Hello World
 (define (Z35966_hello_world)
   "hello world!")
+
+;; Z35984 create HTML td fragment from HTML fragment
+(define (Z35984_create_html_td_fragment_from_html_fragment a0)
+  (Z27868_string_to_html_fragment
+    (Z19405_wrap_with_html_tag_and_attributes
+    "td"
+    (list )
+    (list )
+    (Z27854_html_fragment_as_string a0))))
+
+;; Z35999 apply function with 2 or 3 arguments in order
+(define (Z35999_apply_function_with_2_or_3_arguments_in_order a0 a1 a2 a3)
+  (if
+    (= (Z28222_number_of_arguments_of_a_function a0) 2)
+    (Z13318_apply_two_argument_function a0 a1 a2)
+    (Z21216_apply_three_argument_function a0 a1 a2 a3)))
+
+;; Z36004 format Gregorian date in Swedish
+(define (Z36004_format_gregorian_date_in_swedish a0)
+  (Z27182_join_two_strings_with_space
+    (Z22941_display_day_of_roman_year (Z24936_day_of_year_from_calendar_date a0) Z1592_swedish)
+    (Z20241_display_gregorian_year (Z24948_year_from_calendar_date a0) Z1592_swedish)))
 
 ;; Z36007 select Wikidata item with matching label
 (define (Z36007_select_wikidata_item_with_matching_label a0 a1 a2 a3)
@@ -4137,6 +14318,24 @@
     (Z27068_if_true_pass_input_through_function a0 Z10018_to_uppercase (not a3))))
     a2))
 
+;; Z36011 list of Strings from Multilingual text
+(define (Z36011_list_of_strings_from_multilingual_text a0)
+  (map
+    Z14396_string_of_monolingual_text
+    (Z19279_multilingual_text_to_list_of_monolingual_texts a0)))
+
+;; Z36018 generate finite arithmetic progression of Integers
+(define (Z36018_generate_finite_arithmetic_progression_of_integers a0 a1 a2 a3)
+  (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an
+    Z16693_add_integers
+    a2
+    (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an
+    Z17120_multiply_integers
+    a3
+    (Z31619_generate_range_of_integers
+    (Z17101_natural_number_to_integer a0)
+    (Z17101_natural_number_to_integer a1)))))
+
 ;; Z36033 generate finite geometric progression of Integers
 (define (Z36033_generate_finite_geometric_progression_of_integers a0 a1 a2 a3)
   (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an
@@ -4147,6 +14346,28 @@
     a3
     (Z13831_natural_number_range a0 a1))))
 
+;; Z36049 thumbnail image
+(define (Z36049_thumbnail_image a0 a1 a2)
+  (Z36038_image_thumbnail_with_alt_text
+    a0
+    (Z14396_string_of_monolingual_text
+    (Z16273_monolingual_text_in_specified_language_from_multilingual_tex a1 a2))))
+
+;; Z36053 (# DO NOT USE) image from Wikidata item
+(define (Z36053_do_not_use_image_from_wikidata_item a0)
+  (Z36038_image_thumbnail_with_alt_text
+    (Z36043_get_image_for_wikidata_item a0)
+    Z11853_empty_string))
+
+;; Z36054 self-closing HTML tag w/ attributes
+(define (Z36054_self_closing_html_tag_w_attributes a0 a1 a2)
+  (Z27861_html_raw_content_to_html_fragment
+    (Z11178_replace_at_end
+    (Z27854_html_fragment_as_string
+    (Z27873_wrap_an_html_fragment_in_a_tag Z32729_empty_html_fragment a0 a1 a2))
+    (Z27385_enclose_string "></" a0 ">")
+    "/>")))
+
 ;; Z36069 All steps in Collatz conjecture sequence
 (define (Z36069_all_steps_in_collatz_conjecture_sequence a0)
   (if
@@ -4156,9 +14377,55 @@
     a0
     (Z36069_all_steps_in_collatz_conjecture_sequence (Z13561_collatz_conjecture_function a0)))))
 
+;; Z36083 main articles
+(define (Z36083_main_articles a0 a1)
+  (Z33842_main_articles_complex a0 (list ) #f a1))
+
+;; Z36101 are Commons image references equal?
+(define (Z36101_are_commons_image_references_equal a0 a1)
+  (string=?
+    (Z36104_mid_string_from_commons_image_reference a0)
+    (Z36104_mid_string_from_commons_image_reference a1)))
+
+;; Z36122 repeat HTML fragment
+(define (Z36122_repeat_html_fragment a0 a1)
+  (Z27861_html_raw_content_to_html_fragment
+    (Z12624_replicate_string_n_times (Z27854_html_fragment_as_string a0) a1)))
+
 ;; Z36132 invert all of Typed list of Booleans
 (define (Z36132_invert_all_of_typed_list_of_booleans a0)
   (map not a0))
+
+;; Z36141 Creative work - entity, action, inception
+(define (Z36141_creative_work_entity_action_inception a0 a1 a2 a3)
+  (Z34039_apply_three_or_optionally_four_argument_function
+    (Z14310_select_a_function_based_on_language
+    Z36148_config_for_creative_work_entity_action_incept
+    a3)
+    a0
+    a1
+    a2
+    a3))
+
+;; Z36151 Creative work - entity, action, period
+(define (Z36151_creative_work_entity_action_period a0 a1 a2 a3 a4)
+  (Z34039_apply_three_or_optionally_four_argument_function
+    (Z14310_select_a_function_based_on_language
+    Z36155_config_for_creative_work_entity_action_period
+    a4)
+    a0
+    a1
+    a2
+    a3))
+
+;; Z36175 same list of complex128s within tolerance
+(define (Z36175_same_list_of_complex128s_within_tolerance a0 a1 a2)
+  (Z12684_are_all_true
+    (Z31095_apply_with_n_1st_and_2nd_args_and_common_3rd_arg
+    Z33506_same_complex128_within_tolerance
+    a0
+    a1
+    a2)))
 
 ;; Z36225 multiplication table (Natural numbers)
 (define (Z36225_multiplication_table_natural_numbers a0 a1 a2)
@@ -4168,19 +14435,45 @@
     (if
     a2
     (Z29794_cartesian_product_of_2_lists_with_pairing_function
-    Z13539_multiply_two_natural_numbers
+    *
     (Z17895_untype_a_list
     (Z13831_natural_number_range 0 (Z13582_decrement_natural_number_by_one a0)))
     (Z17895_untype_a_list
     (Z13831_natural_number_range 0 (Z13582_decrement_natural_number_by_one a1))))
     (Z29794_cartesian_product_of_2_lists_with_pairing_function
-    Z13539_multiply_two_natural_numbers
+    *
     (Z17895_untype_a_list (Z13831_natural_number_range 1 a0))
     (Z17895_untype_a_list (Z13831_natural_number_range 1 a1)))))))
+
+;; Z36270 label text for item in lang or ltd fallback or QID
+(define (Z36270_label_text_for_item_in_lang_or_ltd_fallback_or_qid a0 a1)
+  (Z22839_first_object_or_default
+    (Z24114_label_strings_from_wikidata_item_for_language_list
+    (Z30120_fetch_wikidata_item_or_parts a0 (list Z6033_labels) (list ) (list ))
+    (Z24144_fallback_languages a1 #t #f))
+    (Z20041_wikidata_item_reference_id_string a0)))
 
 ;; Z36299 unquote listed quotes
 (define (Z36299_unquote_listed_quotes a0)
   (map Z899_unquote a0))
+
+;; Z36303 convert string, monolingual, or HTML to HTML
+(define (Z36303_convert_string_monolingual_or_html_to_html a0)
+  (if
+    (Z19352_object_has_this_type a0 Z89_html_fragment)
+    a0
+    (if
+    (Z19352_object_has_this_type a0 Z6_string)
+    (Z27868_string_to_html_fragment a0)
+    (Z33457_monolingual_text_as_html_with_language_span a0))))
+
+;; Z36348 has head symbol in Formal SignWriting
+(define (Z36348_has_head_symbol_in_formal_signwriting a0)
+  (Z10196_is_regular_expression_match a0 "S(2ff|3[0-5][0-9a-f]|36[0-9a-c])"))
+
+;; Z36357 create HTML td fragment with html fragment
+(define (Z36357_create_html_td_fragment_with_html_fragment a0)
+  (Z27873_wrap_an_html_fragment_in_a_tag a0 "td" (list ) (list )))
 
 ;; Z36365 Reference before full stop
 (define (Z36365_reference_before_full_stop a0)
@@ -4195,6 +14488,13 @@
 (define (Z36371_nullary_n)
   "\n")
 
+;; Z36395 apply 2 arguments if not throw error
+(define (Z36395_apply_2_arguments_if_not_throw_error a0 a1 a2 a3 a4)
+  (if
+    (Z14562_function_equality a0 Z851_throw_error)
+    (Z851_throw_error a3 a4)
+    (Z13318_apply_two_argument_function a0 a1 a2)))
+
 ;; Z36425 Baoulé female names from day of birth
 (define (Z36425_baoul_female_names_from_day_of_birth a0)
   (Z22193_switch
@@ -4202,9 +14502,28 @@
     (list Z17403_monday Z17404_tuesday Z17405_wednesday Z17406_thursday Z17407_friday Z17408_saturday Z17409_sunday)
     (list "Akissi" "Adjoua" "Amenan" "Ahou" "Aya" "Affoué" "Amoin")))
 
+;; Z36447 
+(define (Z36447 a0 a1 a2)
+  (Z27159_replace_last_character
+    a0
+    (Z27748_switch_on_gender_m_f_and_number_s_p a1 a2 "issimo" "issima" "issimi" "issime")))
+
 ;; Z36450 lexeme has forms with given grammatical features?
 (define (Z36450_lexeme_has_forms_with_given_grammatical_features a0 a1)
   (Z23120_is_non_empty_list (Z34899_select_forms_with_given_features_from_lexeme a0 a1)))
+
+;; Z36517 linked label text or fallback with edit ✏️ if QID
+(define (Z36517_linked_label_text_or_fallback_with_edit_if_qid a0 a1)
+  (Z36489_abstract_link_with_text_string_specified_if_qid
+    a0
+    (Z36270_label_text_for_item_in_lang_or_ltd_fallback_or_qid a0 a1)))
+
+;; Z36530 French verb conjugation
+(define (Z36530_french_verb_conjugation a0 a1)
+  (if
+    (Z20231_is_verb_lexeme a0)
+    (Z27410_better_matching_representation_string_from_lexeme a0 a1)
+    (Z851_throw_error Z525_invalid_key (list "not a verb lexeme"))))
 
 ;; Z36554 filter and order texts by listed languages
 (define (Z36554_filter_and_order_texts_by_listed_languages a0 a1)
@@ -4228,6 +14547,13 @@
     (car a1))))
     (cdr a1)))))
 
+;; Z36556 Item represents a fixed construction
+(define (Z36556_item_represents_a_fixed_construction a0)
+  (Z36572_item_is_instance_of_any_item_in_list_or_superclass
+    a0
+    Z36577_q811430_and_select_subclasses
+    2))
+
 ;; Z36562 highest of list of Kleenean
 (define (Z36562_highest_of_list_of_kleenean a0)
   (Z19565_triple_if
@@ -4237,12 +14563,206 @@
     Z22114_maybe
     Z22115_false))
 
+;; Z36605 grammatical genders from Wikidata lexeme reference
+(define (Z36605_grammatical_genders_from_wikidata_lexeme_reference a0)
+  (Z20616_grammatical_genders_from_wikidata_lexeme (Z6825_fetch_wikidata_lexeme a0)))
+
+;; Z36616 table is in given language
+(define (Z36616_table_is_in_given_language a0 a1)
+  (Z14326_same_language a0 (Z36613_language_of_table a1)))
+
+;; Z36631 logo image from Wikidata
+(define (Z36631_logo_image_from_wikidata a0 a1)
+  (Z31684_apply_two_argument_function_validated_arguments
+    (Z14310_select_a_function_based_on_language Z36633_config_for_logo_image_from_wikidata a1)
+    a0
+    a1))
+
+;; Z36639 table is given part of speech
+(define (Z36639_table_is_given_part_of_speech a0 a1)
+  (Z19316_same_wikidata_item_reference a0 (Z36636_part_of_speech_of_table a1)))
+
+;; Z36652 number of options
+(define (Z36652_number_of_options a0)
+  (length (Z36650_options_of_table a0)))
+
+;; Z36670 Syntactic option equality
+(define (Z36670_syntactic_option_equality a0 a1)
+  (if
+    (Z889_list_equality
+    (Z36666_fragments_of_option a0)
+    (Z36666_fragments_of_option a1)
+    Z877_html_fragment_equality)
+    (Z34270_equality_of_sets (Z36662_features_of_option a0) (Z36662_features_of_option a1))
+    #f))
+
+;; Z36693 apply 2-ary Function over matrix and scalar
+(define (Z36693_apply_2_ary_function_over_matrix_and_scalar a0 a1 a2)
+  (Z31262_apply_with_common_1st_and_3rd_args_and_n_2nd_args
+    Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    a0
+    a1
+    a2))
+
+;; Z36700 apply 2-ary Function over scalar and matrix
+(define (Z36700_apply_2_ary_function_over_scalar_and_matrix a0 a1 a2)
+  (Z29370_apply3_to_a_common_1st_and_2nd_arg_and_list_of_3rd
+    Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an
+    a0
+    a1
+    a2))
+
+;; Z36717 Syntactic table equality
+(define (Z36717_syntactic_table_equality a0 a1)
+  (if
+    (Z19316_same_wikidata_item_reference
+    (Z36636_part_of_speech_of_table a0)
+    (Z36636_part_of_speech_of_table a1))
+    (if
+    (Z14326_same_language (Z36613_language_of_table a0) (Z36613_language_of_table a1))
+    (if
+    (Z34270_equality_of_sets
+    (Z36644_inherent_features_of_table a0)
+    (Z36644_inherent_features_of_table a1))
+    (Z34270_equality_of_sets (Z36650_options_of_table a0) (Z36650_options_of_table a1))
+    #f)
+    #f)
+    #f))
+
+;; Z36723 has inherent feature
+(define (Z36723_has_inherent_feature a0 a1)
+  (Z12696_contains (Z36644_inherent_features_of_table a1) a0))
+
+;; Z36727 which of these features is inherent
+(define (Z36727_which_of_these_features_is_inherent a0 a1)
+  (Z22865_keep_elements_common_with_other_list (Z36644_inherent_features_of_table a1) a0))
+
+;; Z36733 single option
+(define (Z36733_single_option a0)
+  (Z31547_is_natural_number_1 (Z36652_number_of_options a0)))
+
+;; Z36737 several options
+(define (Z36737_several_options a0)
+  (> (Z36652_number_of_options a0) 1))
+
+;; Z36743 first option
+(define (Z36743_first_option a0)
+  (car (Z36650_options_of_table a0)))
+
+;; Z36747 first fragment
+(define (Z36747_first_fragment a0)
+  (car (Z36666_fragments_of_option (Z36743_first_option a0))))
+
+;; Z36754 English noun from Lexeme reference
+(define (Z36754_english_noun_from_lexeme_reference a0)
+  (Z36607_english_noun_from_lexeme (Z6825_fetch_wikidata_lexeme a0)))
+
+;; Z36762 English noun from string
+(define (Z36762_english_noun_from_string a0 a1)
+  (Z36759_english_noun_from_singular_and_plural a0 (Z11089_english_plural a0) a1))
+
+;; Z36766 English noun from item reference
+(define (Z36766_english_noun_from_item_reference a0 a1)
+  (Z36607_english_noun_from_lexeme
+    (Z22696_fetch_first_lexeme_from_item_ref_and_lang_p5137 a0 Z1002_english)))
+
 ;; Z36804 join two strings with space unless empty
 (define (Z36804_join_two_strings_with_space_unless_empty a0 a1)
   (if
     (Z10008_is_empty_string a0)
     (if (Z10008_is_empty_string a1) "" a1)
     (if (Z10008_is_empty_string a1) a0 (Z27182_join_two_strings_with_space a0 a1))))
+
+;; Z36816 first fragment of Option
+(define (Z36816_first_fragment_of_option a0)
+  (car (Z36666_fragments_of_option a0)))
+
+;; Z36820 option by features
+(define (Z36820_option_by_features a0 a1)
+  (Z36823_option_by_features_from_list_of_options (Z36650_options_of_table a0) a1))
+
+;; Z36823 option by features from list of options
+(define (Z36823_option_by_features_from_list_of_options a0 a1)
+  (if
+    (Z34270_equality_of_sets (Z36662_features_of_option (car a0)) a1)
+    (car a0)
+    (Z36823_option_by_features_from_list_of_options (cdr a0) a1)))
+
+;; Z36827 fragments from Table by features
+(define (Z36827_fragments_from_table_by_features a0 a1)
+  (Z36666_fragments_of_option (Z36820_option_by_features a0 a1)))
+
+;; Z36831 remove all Abstract Wikipedia links to these QIDs
+(define (Z36831_remove_all_abstract_wikipedia_links_to_these_qids a0 a1)
+  (if
+    (null? a1)
+    a0
+    (Z36831_remove_all_abstract_wikipedia_links_to_these_qids
+    (Z36835_remove_abstract_wikipedia_link_s_to_this_qid a0 (car a1) #t)
+    (cdr a1))))
+
+;; Z36853 remove duplicate Abstract Wikipedia links to QIDs
+(define (Z36853_remove_duplicate_abstract_wikipedia_links_to_qids a0 a1)
+  (if
+    (null? a1)
+    a0
+    (Z36831_remove_all_abstract_wikipedia_links_to_these_qids
+    (Z36835_remove_abstract_wikipedia_link_s_to_this_qid a0 (car a1) #f)
+    (cdr a1))))
+
+;; Z36865 subsection title (from html)
+(define (Z36865_subsection_title_from_html a0)
+  (Z35049_wrap_an_html_fragment_in_a_simple_tag a0 "h3"))
+
+;; Z36869 section title (from html)
+(define (Z36869_section_title_from_html a0)
+  (Z35049_wrap_an_html_fragment_in_a_simple_tag a0 "h2"))
+
+;; Z36883 extract digital object identifier name from String
+(define (Z36883_extract_digital_object_identifier_name_from_string a0)
+  (Z27068_if_true_pass_input_through_function
+    (Z36903_first_group_of_first_regex_match
+    a0
+    "^(?:doi:|https?://(?:doi\\.org|dx\\.doi\\.org|hdl\\.handle\\.net)/)?(?:urn:doi:)?([^/:\\p{C}]+/[^\\p{C}]+)$"
+    "u")
+    Z10774_uri_percent_decode
+    (not
+    (Z11690_strings_equal_length
+    (Z36903_first_group_of_first_regex_match
+    a0
+    "^(?:doi:|https?://(?:doi\\.org|dx\\.doi\\.org|hdl\\.handle\\.net)/)?(?:urn:doi:)?([^/:\\p{C}]+/[^\\p{C}]+)$"
+    "u")
+    a0))))
+
+;; Z36903 first group of first RegEx match
+(define (Z36903_first_group_of_first_regex_match a0 a1 a2)
+  (Z22839_first_object_or_default
+    (snd (Z36900_first_regex_match_and_groups a0 a1 a2))
+    Z11853_empty_string))
+
+;; Z36961 strong HTML
+(define (Z36961_strong_html a0)
+  (Z35049_wrap_an_html_fragment_in_a_simple_tag a0 "strong"))
+
+;; Z36975 English adjective from positive
+(define (Z36975_english_adjective_from_positive a0 a1)
+  (Z36972_english_adjective_from_three_strings
+    a0
+    (Z11795_english_comparative_adjective a0)
+    (Z12203_english_regular_superlative_form a0)
+    a1))
+
+;; Z37005 entity has part-of sentence
+(define (Z37005_entity_has_part_of_sentence a0 a1)
+  (Z31684_apply_two_argument_function_validated_arguments
+    (Z14310_select_a_function_based_on_language Z37017_config_for_entity_has_part_of_sentence a1)
+    a0
+    a1))
+
+;; Z37011 defining role sentence (HTML)
+(define (Z37011_defining_role_sentence_html a0 a1 a2 a3)
+  (Z27861_html_raw_content_to_html_fragment
+    (Z14396_string_of_monolingual_text (Z28016_defining_role_sentence_monolingual a0 a1 a2 a3))))
 
 ;; Z37036 set j-th column on matrix (1..=N)
 (define (Z37036_set_j_th_column_on_matrix_1_n a0 a1 a2)
@@ -4253,6 +14773,109 @@
 (define (Z37048_first_elements_of_each_of_list_of_lists a0)
   (map car (filter Z23120_is_non_empty_list a0)))
 
+;; Z37054 parse hexadecimal Unicode scalar or range as pair
+(define (Z37054_parse_hexadecimal_unicode_scalar_or_range_as_pair a0)
+  (Z30414_make_typed_pair
+    (Z23022_natural_number_to_codepoint
+    (Z13799_hexadecimal_to_natural_number (Z11410_discard_from_start_of_first_substring a0 "..")))
+    (Z23022_natural_number_to_codepoint
+    (Z13799_hexadecimal_to_natural_number (Z11424_discard_until_end_of_last_substring a0 "..")))))
+
+;; Z37058 is Unicode code point contained in range (pair)?
+(define (Z37058_is_unicode_code_point_contained_in_range_pair a0 a1)
+  (and
+    (<= (Z23063_code_point_to_natural_number (fst a1)) (Z23063_code_point_to_natural_number a0))
+    (<= (Z23063_code_point_to_natural_number a0) (Z23063_code_point_to_natural_number (snd a1)))))
+
+;; Z37068 describing entity with adjective/class
+(define (Z37068_describing_entity_with_adjective_class a0 a1 a2 a3)
+  (Z29749_monolingual_text_as_html_with_visible_language_tag
+    (Z29591_describing_entity_w_adjective_class_monolingual a0 a1 a2 a3)
+    a3))
+
+;; Z37071 ordinal class location fragment
+(define (Z37071_ordinal_class_location_fragment a0 a1 a2 a3 a4 a5)
+  (Z29749_monolingual_text_as_html_with_visible_language_tag
+    (Z27627_ordinal_class_location_fragment_monolingual_text a0 a1 a2 a3 a4 a5)
+    a5))
+
+;; Z37080 English linked noun as table from item
+(define (Z37080_english_linked_noun_as_table_from_item a0 a1)
+  (Z37029_link_table (Z36766_english_noun_from_item_reference a0 a1) a0 a1))
+
+;; Z37083 English instantiate present a noun phrase as noun
+(define (Z37083_english_instantiate_present_a_noun_phrase_as_noun a0 a1 a2)
+  (Z36939_english_instantiate_present_from_2_noun_phrases
+    a0
+    (Z36798_english_noun_phrase_from_determiner_and_noun
+    Z36781_english_indefinite_singular_determiner
+    a1
+    a2)
+    a2))
+
+;; Z37086 English instantiate past a noun phrase as noun 
+(define (Z37086_english_instantiate_past_a_noun_phrase_as_noun a0 a1 a2)
+  (Z36953_english_instantiate_past_from_2_noun_phrases
+    a0
+    (Z36798_english_noun_phrase_from_determiner_and_noun
+    Z36781_english_indefinite_singular_determiner
+    a1
+    a2)
+    a2))
+
+;; Z37115 noun phrase from named item reference
+(define (Z37115_noun_phrase_from_named_item_reference a0 a1)
+  (Z13318_apply_two_argument_function
+    (Z14310_select_a_function_based_on_language
+    Z37118_configuration_for_noun_phrase_from_named_item
+    a1)
+    a0
+    a1))
+
+;; Z37120 instance table present from noun phrase and noun
+(define (Z37120_instance_table_present_from_noun_phrase_and_noun a0 a1 a2)
+  (Z21216_apply_three_argument_function
+    (Z14310_select_a_function_based_on_language
+    Z37122_configuration_for_instance_table_from_np_and_noun
+    a2)
+    a0
+    a1
+    a2))
+
+;; Z37126 "noun phrase" is a "noun"
+(define (Z37126_noun_phrase_is_a_noun a0 a1 a2)
+  (Z36747_first_fragment (Z37120_instance_table_present_from_noun_phrase_and_noun a0 a1 a2)))
+
+;; Z37140 instance table present from two item references
+(define (Z37140_instance_table_present_from_two_item_references a0 a1 a2)
+  (Z37120_instance_table_present_from_noun_phrase_and_noun
+    (Z37115_noun_phrase_from_named_item_reference a0 a2)
+    (Z37089_noun_from_item_reference a1 a2)
+    a2))
+
+;; Z37143 "item" is an "item"
+(define (Z37143_item_is_an_item a0 a1 a2)
+  (Z36747_first_fragment (Z37140_instance_table_present_from_two_item_references a0 a1 a2)))
+
+;; Z37146 adjective from item reference
+(define (Z37146_adjective_from_item_reference a0 a1)
+  (Z13318_apply_two_argument_function
+    (Z14310_select_a_function_based_on_language Z37148_configuration_for_adjective_from_item a1)
+    a0
+    a1))
+
+;; Z37150 add adjective to noun
+(define (Z37150_add_adjective_to_noun a0 a1 a2)
+  (Z21216_apply_three_argument_function
+    (Z14310_select_a_function_based_on_language Z37152_config_for_adjective_noun a2)
+    a0
+    a1
+    a2))
+
+;; Z37160 German noun from Lexeme reference
+(define (Z37160_german_noun_from_lexeme_reference a0)
+  (Z37157_german_noun_from_lexeme (Z6825_fetch_wikidata_lexeme a0)))
+
 ;; Z37174 binary search (index, Natural numbers)
 (define (Z37174_binary_search_index_natural_numbers a0 a1)
   (Z37259_binary_search_index_generic < a0 a1))
@@ -4261,7 +14884,26 @@
 (define (Z37201_binary_search_mapped_value_natural_numbers a0 a1 a2)
   (Z13397_get_the_nth_element_of_a_list
     a1
-    (Z13578_increment_natural_number (Z37174_binary_search_index_natural_numbers a0 a2))))
+    (add1 (Z37174_binary_search_index_natural_numbers a0 a2))))
+
+;; Z37245 gregorian year as string (Swedish)
+(define (Z37245_gregorian_year_as_string_swedish a0)
+  (string-append
+    (Z13713_natural_number_to_digit_string (Z20160_gregorian_year_to_year_number a0))
+    (if
+    (Z17817_same_gregorian_era (Z20185_gregorian_era_of_gregorian_year a0) Z17815_bc)
+    " f.Kr."
+    (if (< (Z20160_gregorian_year_to_year_number a0) 500) " e.Kr." ""))))
+
+;; Z37246 German instantiate present a noun phrase as noun
+(define (Z37246_german_instantiate_present_a_noun_phrase_as_noun a0 a1 a2)
+  (Z37241_german_instantiate_present_from_2_noun_phrases
+    a0
+    (Z37209_german_noun_phrase_from_determiner_and_noun
+    Z37198_german_indefinite_singular_determiner
+    a1
+    Z1430_german)
+    Z1430_german))
 
 ;; Z37259 binary search (index, generic)
 (define (Z37259_binary_search_index_generic a0 a1 a2)
@@ -4269,9 +14911,7 @@
 
 ;; Z37263 binary search (mapped value, generic)
 (define (Z37263_binary_search_mapped_value_generic a0 a1 a2 a3)
-  (Z13397_get_the_nth_element_of_a_list
-    a2
-    (Z13578_increment_natural_number (Z37259_binary_search_index_generic a0 a1 a3))))
+  (Z13397_get_the_nth_element_of_a_list a2 (add1 (Z37259_binary_search_index_generic a0 a1 a3))))
 
 ;; Z37297 filter Lexeme forms by lack of features
 (define (Z37297_filter_lexeme_forms_by_lack_of_features a0 a1)
@@ -4282,6 +14922,26 @@
     Z13752_is_there_a_common_element_on_these_lists
     (map Z22487_grammatical_features_of_lexeme_form a0)
     a1))))
+
+;; Z37299 number of languages in configuration
+(define (Z37299_number_of_languages_in_configuration a0)
+  (Z14038_sum_the_elements_of_a_list_of_natural_numbers
+    (Z24855_type_untyped_list_as_natural_number
+    (map
+    Z37302_number_of_languages_from_function_option
+    (Z14312_list_of_function_options_for_languages_from_configuration a0)))))
+
+;; Z37302 number of languages from function option
+(define (Z37302_number_of_languages_from_function_option a0)
+  (length (Z14317_list_of_languages_from_function_option a0)))
+
+;; Z37309 noun from Lexeme (auto language)
+(define (Z37309_noun_from_lexeme_auto_language a0)
+  (Z13036_apply
+    (Z14310_select_a_function_based_on_language
+    Z37308_configuration_for_noun_from_lexeme
+    (Z19295_language_of_lexeme a0))
+    a0))
 
 ;; Z37323 filter Monolingual text-valued Statements by langs
 (define (Z37323_filter_monolingual_text_valued_statements_by_langs a0 a1)
@@ -4322,6 +14982,34 @@
     Z11_monolingual_text))
     a1))))
 
+;; Z37338 matching representation string from lexeme for lan
+(define (Z37338_matching_representation_string_from_lexeme_for_lan a0 a1 a2)
+  (Z14396_string_of_monolingual_text
+    (car (Z24240_select_representations_from_forms_by_language a0 a1 a2))))
+
+;; Z37354 filter Wikidata statements by value
+(define (Z37354_filter_wikidata_statements_by_value a0 a1)
+  (if
+    (Z13220_are_all_elements_of_the_list_the_same_type (map Z19308_value_of_wikidata_statement a0))
+    (Z22820_compress_list
+    a0
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    (Z35433_best_equality_function_for_type (Z16829_type_of_object a1))
+    (map Z19308_value_of_wikidata_statement a0)
+    a1))
+    (Z37354_filter_wikidata_statements_by_value
+    (Z22820_compress_list
+    a0
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    Z19352_object_has_this_type
+    (map Z19308_value_of_wikidata_statement a0)
+    (Z16829_type_of_object a1)))
+    a1)))
+
+;; Z37367 object or default if error
+(define (Z37367_object_or_default_if_error a0 a1)
+  (if (fst (Z853_get_error_thrown_by_function_call (Z899_unquote a0))) a1 (Z899_unquote a0)))
+
 ;; Z37415 filter Z11-val. Statements by grammatical features
 (define (Z37415_filter_z11_val_statements_by_grammatical_features a0 a1)
   (if
@@ -4347,6 +15035,14 @@
     (car a1)))))
     (cdr a1))))
 
+;; Z37436 HTML fragment does not contain string
+(define (Z37436_html_fragment_does_not_contain_string a0 a1)
+  (not (Z29045_html_fragment_contains_string a0 a1)))
+
+;; Z37459 monolingual text as HTML with lang & default color
+(define (Z37459_monolingual_text_as_html_with_lang_default_color a0 a1)
+  (Z37454_monolingual_text_as_html_with_lang_colour_span a0 Z37458_magenta a1))
+
 ;; Z37481 does Wikidata property have data type URL?
 (define (Z37481_does_wikidata_property_have_data_type_url a0)
   (Z12696_contains Z37486_d_special_listproperties_url a0))
@@ -4354,6 +15050,40 @@
 ;; Z37510 options with feature
 (define (Z37510_options_with_feature a0 a1)
   (Z28316_filter_with_second_common_element Z37512_option_has_feature a0 a1))
+
+;; Z37512 option has feature
+(define (Z37512_option_has_feature a0 a1)
+  (Z12696_contains (Z36662_features_of_option a0) a1))
+
+;; Z37541 Unicode code point of Bangla character
+(define (Z37541_unicode_code_point_of_bangla_character a0)
+  (Z17101_natural_number_to_integer (Z11515_unicode_of_first_character a0)))
+
+;; Z37551 Flesch Reading-Ease score
+(define (Z37551_flesch_reading_ease_score a0 a1 a2)
+  (Z21031_subtract_float64
+    (Z20915_string_to_float64_python_conventions "206.835")
+    (Z20849_add_float64
+    (Z21032_multiply_float64
+    (Z20915_string_to_float64_python_conventions "1.015")
+    (Z21033_divide_float64 (Z20937_integer_to_float64 a0) (Z20937_integer_to_float64 a1)))
+    (Z21032_multiply_float64
+    (Z20915_string_to_float64_python_conventions "84.6")
+    (Z21033_divide_float64 (Z20937_integer_to_float64 a2) (Z20937_integer_to_float64 a0))))))
+
+;; Z37609 Flesch Reading-Ease of text
+(define (Z37609_flesch_reading_ease_of_text a0)
+  (Z37551_flesch_reading_ease_score
+    (Z17101_natural_number_to_integer (length (Z13402_words_from_string a0)))
+    (Z17101_natural_number_to_integer (length (Z18522_segment_sentences a0)))
+    (Z17101_natural_number_to_integer
+    (Z20089_reduce_list_only
+    +
+    (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an
+    Z13036_apply
+    Z29940_syllable_count_of_english_word_string
+    (Z13402_words_from_string a0))
+    0))))
 
 ;; Z37640 if (HTML output)
 (define (Z37640_if_html_output a0 a1 a2)
@@ -4366,6 +15096,117 @@
     (list "test" "city")
     (list "--infobox-accent-hue:90deg;" "--infobox-accent-hue:264deg;" "--infobox-accent-hue:264deg;")))
 
+;; Z37657 inject abstract wikilink into HTML (complex)
+(define (Z37657_inject_abstract_wikilink_into_html_complex a0 a1 a2 a3 a4 a5)
+  (Z27861_html_raw_content_to_html_fragment
+    (Z34124_inject_abstract_wikilink_into_string_as_string
+    (Z27854_html_fragment_as_string a0)
+    (Z36270_label_text_for_item_in_lang_or_ltd_fallback_or_qid a1 a4)
+    a1
+    a2
+    a3
+    a4
+    Z11853_empty_string)))
+
+;; Z37665 inject list of abstract wikilinks into HTML
+(define (Z37665_inject_list_of_abstract_wikilinks_into_html a0 a1 a2)
+  (if
+    (null? a1)
+    a0
+    (Z37665_inject_list_of_abstract_wikilinks_into_html
+    (Z37661_inject_abstract_wikilink_into_html_simple a0 (car a1) a2)
+    (cdr a1)
+    a2)))
+
+;; Z37674 inject ✏️ wikidata link if missing label in HTML
+(define (Z37674_inject_wikidata_link_if_missing_label_in_html a0 a1 a2)
+  (Z27861_html_raw_content_to_html_fragment
+    (Z37677_inject_wikidata_link_if_missing_label_string
+    (Z27854_html_fragment_as_string a0)
+    (Z20041_wikidata_item_reference_id_string a1))))
+
+;; Z37682 inject ✏️ wikidata links to HTML QIDs
+(define (Z37682_inject_wikidata_links_to_html_qids a0 a1 a2)
+  (if
+    (null? a1)
+    a0
+    (Z37682_inject_wikidata_links_to_html_qids
+    (Z37674_inject_wikidata_link_if_missing_label_in_html a0 (car a1) a2)
+    (cdr a1)
+    a2)))
+
+;; Z37683 birth sentence from Wikidata
+(define (Z37683_birth_sentence_from_wikidata a0 a1)
+  (Z13318_apply_two_argument_function
+    (Z14310_select_a_function_based_on_language Z37684_config_for_birth_sentence_from_wikidata a1)
+    a0
+    a1))
+
+;; Z37694 display day of year in Swedish
+(define (Z37694_display_day_of_year_in_swedish a0)
+  (Z27182_join_two_strings_with_space
+    (Z13713_natural_number_to_digit_string (Z20388_day_of_month_from_date a0))
+    (Z24086_display_gregorian_calendar_month
+    (Z20343_month_from_day_of_the_roman_year a0)
+    Z1592_swedish)))
+
+;; Z37749 Swedish cardinal, neuter
+(define (Z37749_swedish_cardinal_neuter a0)
+  (if
+    (Z10618_string_ends_with (Z16008_swedish_cardinal_common_gender a0) "en")
+    (Z11178_replace_at_end (Z16008_swedish_cardinal_common_gender a0) "n" "tt")
+    (Z16008_swedish_cardinal_common_gender a0)))
+
+;; Z37761 entity depicts-sentence
+(define (Z37761_entity_depicts_sentence a0 a1)
+  (Z31684_apply_two_argument_function_validated_arguments
+    (Z14310_select_a_function_based_on_language Z37760_config_for_depicts_sentence a1)
+    a0
+    a1))
+
+;; Z37777 entity influenced by-sentence
+(define (Z37777_entity_influenced_by_sentence a0 a1)
+  (Z31684_apply_two_argument_function_validated_arguments
+    (Z14310_select_a_function_based_on_language Z37776_config_for_influenced_by_sentence a1)
+    a0
+    a1))
+
+;; Z37840 list of Abstract Wikilinks
+(define (Z37840_list_of_abstract_wikilinks a0 a1)
+  (Z32179_unordered_list_with_item_tagging
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    Z32428_abstract_wikilink
+    a0
+    a1)))
+
+;; Z37843 Fetch labels of Wikidata QID
+(define (Z37843_fetch_labels_of_wikidata_qid a0)
+  (Z30120_fetch_wikidata_item_or_parts a0 (list Z6033_labels) (list ) (list )))
+
+;; Z37870  join WD item property values 
+(define (Z37870_join_wd_item_property_values a0 a1 a2)
+  (Z21216_apply_three_argument_function
+    (Z14310_select_a_function_based_on_language
+    Z37869_config_for_joining_wd_item_property_values
+    a2)
+    a0
+    a1
+    a2))
+
+;; Z37873 entity programmed in-sentence 
+(define (Z37873_entity_programmed_in_sentence a0 a1)
+  (Z31684_apply_two_argument_function_validated_arguments
+    (Z14310_select_a_function_based_on_language Z37874_config_for_programmed_in_sentence a1)
+    a0
+    a1))
+
+;; Z37890 entity made from-sentence
+(define (Z37890_entity_made_from_sentence a0 a1)
+  (Z31684_apply_two_argument_function_validated_arguments
+    (Z14310_select_a_function_based_on_language Z37889_config_for_made_from_materials_sentence a1)
+    a0
+    a1))
+
 ;; Z37906 all forms of lexeme are plural?
 (define (Z37906_all_forms_of_lexeme_are_plural a0)
   (if
@@ -4374,9 +15215,124 @@
     (Z12684_are_all_true
     (map Z37940_is_individual_lexeme_form_marked_as_plural (Z19302_lexeme_forms_from_lexeme a0)))))
 
+;; Z37912 definite article with feminine sing noun, French
+(define (Z37912_definite_article_with_feminine_sing_noun_french a0)
+  (string-append
+    (Z11542_if_string_output (Z32201_elide_french_article_before_this_word a0) "l'" "la ")
+    a0))
+
+;; Z37916 definite article with masculine sing noun, French
+(define (Z37916_definite_article_with_masculine_sing_noun_french a0)
+  (string-append
+    (Z11542_if_string_output (Z32201_elide_french_article_before_this_word a0) "l'" "le ")
+    a0))
+
+;; Z37921 intro for species with automatic hypernym at order
+(define (Z37921_intro_for_species_with_automatic_hypernym_at_order a0 a1)
+  (Z13318_apply_two_argument_function
+    (Z14310_select_a_function_based_on_language Z37975_config_for_intro_for_species a1)
+    a0
+    a1))
+
+;; Z37922 intro for species with hypernym
+(define (Z37922_intro_for_species_with_hypernym a0 a1 a2)
+  (Z21216_apply_three_argument_function
+    (Z14310_select_a_function_based_on_language
+    Z37923_config_for_intro_for_species_with_hypernym
+    a2)
+    a0
+    a1
+    a2))
+
+;; Z37925 object is string and not empty
+(define (Z37925_object_is_string_and_not_empty a0)
+  (if (and (Z15777_is_string a0) (Z24331_is_not_empty_string a0)) #t #f))
+
+;; Z37927 Wikilinked taxon author list in given language
+(define (Z37927_wikilinked_taxon_author_list_in_given_language a0 a1)
+  (Z27861_html_raw_content_to_html_fragment
+    (Z32308_join_list_of_strings_in_given_language_proper
+    (map
+    Z27854_html_fragment_as_string
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    Z32428_abstract_wikilink
+    (Z29446_second_element_performance (Z37808_year_and_describing_authority_of_taxon a0 a1))
+    a1))
+    a1)))
+
 ;; Z37936 final word separator in Swedish lists: " och "
 (define (Z37936_final_word_separator_in_swedish_lists_och a0)
   " och ")
+
+;; Z37939 Taxonomic lineage of QID
+(define (Z37939_taxonomic_lineage_of_qid a0)
+  (Z37941_taxonomic_lineage_of_qid_helper a0 (list )))
+
+;; Z37951 entity developed by-sentence
+(define (Z37951_entity_developed_by_sentence a0 a1 a2)
+  (Z21216_apply_three_argument_function
+    (Z14310_select_a_function_based_on_language Z37950_config_for_developed_by_sentence a2)
+    a0
+    a1
+    a2))
+
+;; Z37956 linked label of item with definite article, French
+(define (Z37956_linked_label_of_item_with_definite_article_french a0 a1)
+  (Z37661_inject_abstract_wikilink_into_html_simple
+    (Z27868_string_to_html_fragment (Z32169_label_of_item_with_definite_article_french a0 a1))
+    a0
+    a1))
+
+;; Z37963 entity created by-sentence
+(define (Z37963_entity_created_by_sentence a0 a1 a2 a3)
+  (Z30438_apply_four_argument_function
+    (Z14310_select_a_function_based_on_language Z37962_config_for_created_by_sentence a3)
+    a0
+    a1
+    a2
+    a3))
+
+;; Z37970 replace "de les":"des" and "de le":"du" for French
+(define (Z37970_replace_de_les_des_and_de_le_du_for_french a0)
+  (Z27861_html_raw_content_to_html_fragment
+    (Z10075_replace_all_substrings
+    (Z10075_replace_all_substrings (Z27854_html_fragment_as_string a0) "de les" "des")
+    "de le"
+    "du")))
+
+;; Z37999 French definite article (string) indicated by item
+(define (Z37999_french_definite_article_string_indicated_by_item a0)
+  (if
+    (Z13752_is_there_a_common_element_on_these_lists
+    (Z18755_concatenate_typed_lists
+    (Z23543_item_is_instance_of_these_items_references a0)
+    (Z38025_item_object_is_subclass_of_these_items_qids a0))
+    Z38002_classes_often_indicate_french_masculine_def)
+    "le"
+    (if
+    (Z13752_is_there_a_common_element_on_these_lists
+    (Z18755_concatenate_typed_lists
+    (Z23543_item_is_instance_of_these_items_references a0)
+    (Z38025_item_object_is_subclass_of_these_items_qids a0))
+    Z38003_classes_often_indicate_french_feminine_def)
+    "la"
+    Z11853_empty_string)))
+
+;; Z38031 arithmetic mean of Natural numbers as Natural
+(define (Z38031_arithmetic_mean_of_natural_numbers_as_natural a0)
+  (Z20391_integer_to_exact_natural_number_or_0
+    (Z19841_rational_to_nearest_integer_even_integer_tiebreak
+    (Z30840_arithmetic_mean_of_natural_numbers_as_rational a0))))
+
+;; Z38046 string starts with any of [aeiouyAEIOUY]?
+(define (Z38046_string_starts_with_any_of_aeiouyaeiouy a0)
+  (Z10196_is_regular_expression_match a0 "^[aeiouyAEIOUY]"))
+
+;; Z38053 image thumbnail with alt text set by QID
+(define (Z38053_image_thumbnail_with_alt_text_set_by_qid a0 a1 a2)
+  (Z36038_image_thumbnail_with_alt_text
+    a0
+    (Z36270_label_text_for_item_in_lang_or_ltd_fallback_or_qid a1 a2)))
 
 ;; Z38095 Calculate A.C.E. over list of windspeeds
 (define (Z38095_calculate_a_c_e_over_list_of_windspeeds a0)
@@ -4398,9 +15354,111 @@
 (define (Z38114_replace_de_les_des_and_de_le_du_string a0)
   (Z10075_replace_all_substrings (Z10075_replace_all_substrings a0 "de les" "des") "de le" "du"))
 
+;; Z38119 round Natural number to nearest n
+(define (Z38119_round_natural_number_to_nearest_n a0 a1)
+  (Z20391_integer_to_exact_natural_number_or_0
+    (Z35338_round_integer_to_nearest_n (Z17101_natural_number_to_integer a0) a1)))
+
+;; Z38168 is infinite (float64)
+(define (Z38168_is_infinite_float64 a0)
+  (or (Z38150_is_inf_float64 a0) (Z38159_is_inf_float64 a0)))
+
+;; Z38178 Swedish article-ful instant sentence (monolingual)
+(define (Z38178_swedish_article_ful_instant_sentence_monolingual a0 a1)
+  (Z26107_monolingual_text_from_language_and_string
+    Z1592_swedish
+    (Z30420_swedish_article_ful_instantiating_sentence a0 a1)))
+
+;; Z38181 specific property of subject NOT from Wikidata
+(define (Z38181_specific_property_of_subject_not_from_wikidata a0 a1 a2 a3)
+  (Z30438_apply_four_argument_function
+    (Z14310_select_a_function_based_on_language
+    Z36219_config_for_specific_property_of_subject_is_value
+    a3)
+    a0
+    a1
+    a2
+    a3))
+
+;; Z38197 best lexeme with reference string
+(define (Z38197_best_lexeme_with_reference_string a0 a1 a2 a3 a4 a5)
+  (Z38198
+    (Z6820_fetch_wikidata_entities
+    (Z17895_untype_a_list (Z32599_find_lexemes_for_a_wikidata_item_in_language_group a0 a1 a2))
+    (list )
+    (list )
+    (list ))
+    (Z24144_fallback_languages a2 #t #t)
+    (Z850_try_catch_function
+    (map
+    Z29649_wikidata_reference_from_wikifunctions_language_obj
+    (Z24144_fallback_languages a2 #f #t))
+    Z36589_hardcoded_list_doesn_t_contain_this_element
+    (list ))
+    a3
+    a4
+    a5
+    a0))
+
+;; Z38213 regular Serbian feminine genitive singular
+(define (Z38213_regular_serbian_feminine_genitive_singular a0)
+  (if (Z10618_string_ends_with a0 "а") (Z11178_replace_at_end a0 "а" "е") (string-append a0 "и")))
+
+;; Z38226 language count of Multilingual text
+(define (Z38226_language_count_of_multilingual_text a0)
+  (length (Z19279_multilingual_text_to_list_of_monolingual_texts a0)))
+
+;; Z38229 count languages a Persistent ZObject has labels in
+(define (Z38229_count_languages_a_persistent_zobject_has_labels_in a0)
+  (Z38226_language_count_of_multilingual_text (Z20607_get_labels_of_object_from_zid_string a0)))
+
 ;; Z38285 final word separator in list, Dutch
 (define (Z38285_final_word_separator_in_list_dutch a0)
   " en ")
+
+;; Z38306 Languages supported by function
+(define (Z38306_languages_supported_by_function a0)
+  (Z27665_concatenate_many_untyped_lists
+    (map
+    Z14317_list_of_languages_from_function_option
+    (Z14312_list_of_function_options_for_languages_from_configuration a0))))
+
+;; Z38308 Languages supported by config, given lang
+(define (Z38308_languages_supported_by_config_given_lang a0 a1)
+  (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    Z30043_name_of_language_in_language
+    (Z19202_remove_duplicates_from_typed_list
+    (map Z24097_language_from_language_variant (Z38306_languages_supported_by_function a0)))
+    a1))
+
+;; Z38334 Unordered list of languages supported by function
+(define (Z38334_unordered_list_of_languages_supported_by_function a0 a1)
+  (Z31331_html_unordered_list (Z38308_languages_supported_by_config_given_lang a0 a1)))
+
+;; Z38345 if value in list, throw error
+(define (Z38345_if_value_in_list_throw_error a0 a1 a2 a3)
+  (if (Z12696_contains a1 a0) (Z851_throw_error a2 a3) a0))
+
+;; Z38382 replace except last
+(define (Z38382_replace_except_last a0 a1 a2)
+  (if
+    (Z10070_has_substring a0 a1)
+    (string-append
+    (Z10075_replace_all_substrings a0 a1 a2)
+    (Z11422_discard_until_start_of_last_substring a0 a1))
+    a0))
+
+;; Z38383 string before last occurrence
+(define (Z38383_string_before_last_occurrence a0 a1)
+  (Z11170_string_without_suffix (Z11416_discard_from_end_of_last_substring a0 a1) a1))
+
+;; Z38388 entity supports paradigms-sentence 
+(define (Z38388_entity_supports_paradigms_sentence a0 a1 a2)
+  (Z21216_apply_three_argument_function
+    (Z14310_select_a_function_based_on_language Z38392_config_for_paradigms_sentence a2)
+    a0
+    a1
+    a2))
 
 ;; Z38395 is language written from right to left?
 (define (Z38395_is_language_written_from_right_to_left a0)
@@ -4408,16 +15466,251 @@
     a0
     (list Z1341_algerian_arabic Z1320_chadian_arabic Z1114_egyptian_arabic Z1976_hadhrami_arabic Z1884_levantine_arabic Z1889_mesopotamian_arabic Z1045_moroccan_arabic Z1853_najdi_arabic Z1894_ta_izzi_adeni_arabic Z1633_tunisian_arabic_arabic_script Z1619_judeo_arabic Z1825_ottoman_turkish Z1496_chagatai Z1728_persian Z1641_pashto Z1717_urdu Z1288_central_kurdish Z1426_kurdish_arabic_script Z1279_uyghur_arabic_script Z1699_kazakh_arabic_script Z1098_kashmiri_arabic_script Z1083_punjabi_shahmukhi Z1069_saraiki_arabic_script Z1959_gojri_arabic_script Z1938_haryanvi_arabic_script Z1979_rohingya_arabic_script Z1978_rohingya_hanifi_script Z1507_shawiya_arabic_script Z1522_western_cham_arabic_script Z1539_eastern_cham_arabic_script Z2041_komering_arabic_script Z1434_malay_jawi_script Z1186_hebrew Z1667_biblical_hebrew Z1812_yiddish Z1399_eastern_yiddish Z2042_ladino_hebrew_script Z1277_judeo_persian Z2039_judeo_tat Z1551_aramaic Z1154_samaritan_aramaic Z1526_mandaic Z1076_syriac Z1500_classical_syriac Z1930_suret Z1168_turoyo Z1065_pahlavi Z1189_divehi Z1670_phoenician_phoenician_script)))
 
+;; Z38425 shares border with-sentence
+(define (Z38425_shares_border_with_sentence a0 a1 a2 a3)
+  (Z30438_apply_four_argument_function
+    (Z14310_select_a_function_based_on_language Z38424_config_for_shares_border_with_sentence a3)
+    a0
+    a1
+    a2
+    a3))
+
+;; Z38428 symbolizes-sentence
+(define (Z38428_symbolizes_sentence a0 a1 a2 a3)
+  (Z30438_apply_four_argument_function
+    (Z14310_select_a_function_based_on_language Z38423_config_for_symbolizes_sentence a3)
+    a0
+    a1
+    a2
+    a3))
+
+;; Z38435 depends on software-sentence
+(define (Z38435_depends_on_software_sentence a0 a1 a2 a3)
+  (Z30438_apply_four_argument_function
+    (Z14310_select_a_function_based_on_language Z38422_config_for_depends_on_software_sentence a3)
+    a0
+    a1
+    a2
+    a3))
+
+;; Z38440 characteristic of-sentence
+(define (Z38440_characteristic_of_sentence a0 a1 a2 a3)
+  (Z30438_apply_four_argument_function
+    (Z14310_select_a_function_based_on_language Z38421_config_for_characteristic_of_sentence a3)
+    a0
+    a1
+    a2
+    a3))
+
+;; Z38443 named after-sentence
+(define (Z38443_named_after_sentence a0 a1 a2 a3)
+  (Z30438_apply_four_argument_function
+    (Z14310_select_a_function_based_on_language Z38414_config_for_named_after_sentence a3)
+    a0
+    a1
+    a2
+    a3))
+
+;; Z38448 platform-sentence
+(define (Z38448_platform_sentence a0 a1 a2 a3)
+  (Z30438_apply_four_argument_function
+    (Z14310_select_a_function_based_on_language Z38420_config_for_platform_sentence a3)
+    a0
+    a1
+    a2
+    a3))
+
+;; Z38453 uses-sentence
+(define (Z38453_uses_sentence a0 a1 a2 a3)
+  (Z30438_apply_four_argument_function
+    (Z14310_select_a_function_based_on_language Z38417_config_for_uses_sentence a3)
+    a0
+    a1
+    a2
+    a3))
+
+;; Z38458 depicted by-sentence
+(define (Z38458_depicted_by_sentence a0 a1 a2 a3)
+  (Z30438_apply_four_argument_function
+    (Z14310_select_a_function_based_on_language Z38415_config_for_depicted_by_sentence a3)
+    a0
+    a1
+    a2
+    a3))
+
 ;; Z38472 switch on String
 (define (Z38472_switch_on_string a0 a1 a2)
   (Z22193_switch a0 (Z17895_untype_a_list a1) (Z17895_untype_a_list a2)))
 
 ;; Z38477 switch on Type
 (define (Z38477_switch_on_type a0 a1 a2)
+  (Z38472_switch_on_string (Z22764_string_from_type a0) (map Z22764_string_from_type a1) a2))
+
+;; Z38482 switch on Type of Object
+(define (Z38482_switch_on_type_of_object a0 a1 a2)
+  (Z38477_switch_on_type (Z16829_type_of_object a0) a1 a2))
+
+;; Z38488 has use-sentence
+(define (Z38488_has_use_sentence a0 a1 a2 a3)
+  (Z30438_apply_four_argument_function
+    (Z14310_select_a_function_based_on_language Z38418_config_for_has_use_sentence a3)
+    a0
+    a1
+    a2
+    a3))
+
+;; Z38503 color-sentence
+(define (Z38503_color_sentence a0 a1 a2 a3)
+  (Z30438_apply_four_argument_function
+    (Z14310_select_a_function_based_on_language Z38505_config_for_color_sentence a3)
+    a0
+    a1
+    a2
+    a3))
+
+;; Z38508 has characteristic-sentence
+(define (Z38508_has_characteristic_sentence a0 a1 a2 a3)
+  (Z30438_apply_four_argument_function
+    (Z14310_select_a_function_based_on_language Z38419_config_for_has_characteristic_sentence a3)
+    a0
+    a1
+    a2
+    a3))
+
+;; Z38515 main subject-sentence
+(define (Z38515_main_subject_sentence a0 a1 a2 a3)
+  (Z30438_apply_four_argument_function
+    (Z14310_select_a_function_based_on_language Z38416_config_for_main_subject_sentence a3)
+    a0
+    a1
+    a2
+    a3))
+
+;; Z38520 auto-classifying sentence – entity subclass
+(define (Z38520_auto_classifying_sentence_entity_subclass a0 a1 a2 a3)
+  (Z30438_apply_four_argument_function
+    (Z14310_select_a_function_based_on_language
+    Z38523_config_for_auto_classifying_sentence_subclass
+    a3)
+    a0
+    a1
+    a2
+    a3))
+
+;; Z38542 simple cite from URL, QIDs and date
+(define (Z38542_simple_cite_from_url_qids_and_date a0 a1 a2 a3 a4)
+  (Z32053_simple_cite_web
+    a0
+    (Z36270_label_text_for_item_in_lang_or_ltd_fallback_or_qid a1 a4)
+    (Z36270_label_text_for_item_in_lang_or_ltd_fallback_or_qid a2 a4)
+    a3
+    a4))
+
+;; Z38581 number of arguments
+(define (Z38581_number_of_arguments a0)
+  (length (Z38552_arguments_of_an_anonymous_function a0)))
+
+;; Z38586 all arguments bound
+(define (Z38586_all_arguments_bound a0)
+  (null? (Z38552_arguments_of_an_anonymous_function a0)))
+
+;; Z38590 evaluate list or element in s-expression
+(define (Z38590_evaluate_list_or_element_in_s_expression a0)
   (if
-    (null? a1)
-    (car a2)
-    (if (Z19084_same_type a0 (car a1)) (car a2) (Z38477_switch_on_type a0 (cdr a1) (cdr a2)))))
+    (Z19020_is_a_typed_list a0)
+    (Z22074_apply_n_argument_function_to_list_of_arguments
+    (car a0)
+    (map Z38590_evaluate_list_or_element_in_s_expression (cdr a0)))
+    a0))
+
+;; Z38595 evaluate anonymous function
+(define (Z38595_evaluate_anonymous_function a0)
+  (Z38590_evaluate_list_or_element_in_s_expression
+    (Z38561_body_of_an_anonymous_function_as_list a0)))
+
+;; Z38600 argument declaration has key
+(define (Z38600_argument_declaration_has_key a0 a1)
+  (string=? (Z38563_id_of_argument_declaration_as_string a0) a1))
+
+;; Z38604 argument declaration has not key
+(define (Z38604_argument_declaration_has_not_key a0 a1)
+  (not (Z38600_argument_declaration_has_key a0 a1)))
+
+;; Z38610 argument reference has key
+(define (Z38610_argument_reference_has_key a0 a1)
+  (string=? (Z38577_id_of_argument_reference a0) a1))
+
+;; Z38614 argument reference has not key
+(define (Z38614_argument_reference_has_not_key a0 a1)
+  (not (Z38610_argument_reference_has_key a0 a1)))
+
+;; Z38619 substitute reference in s-expression
+(define (Z38619_substitute_reference_in_s_expression a0 a1 a2)
+  (if
+    (Z38625_is_argument_reference_for_anonymous_function a0)
+    (if (Z38610_argument_reference_has_key a0 a1) a2 a0)
+    (if
+    (Z19020_is_a_typed_list a0)
+    (Z32695_apply_a_3_param_fn_to_a_list_of_firsts_same_2_3
+    Z38619_substitute_reference_in_s_expression
+    a0
+    a1
+    a2)
+    a0)))
+
+;; Z38620 is argument declaration for anonymous function
+(define (Z38620_is_argument_declaration_for_anonymous_function a0)
+  (Z19352_object_has_this_type a0 Z38545_experimental_argument_decl_for_anon_function))
+
+;; Z38625 is argument reference for anonymous function
+(define (Z38625_is_argument_reference_for_anonymous_function a0)
+  (Z19352_object_has_this_type a0 Z38548_experimental_argument_ref_for_anon_function))
+
+;; Z38644 argument declaration by position
+(define (Z38644_argument_declaration_by_position a0 a1)
+  (Z13397_get_the_nth_element_of_a_list (Z38552_arguments_of_an_anonymous_function a0) a1))
+
+;; Z38652 equivalent argument declaration for anon function
+(define (Z38652_equivalent_argument_declaration_for_anon_function a0 a1)
+  (and
+    (Z19084_same_type
+    (Z38569_argument_type_of_declaration_for_anonymous_functio a0)
+    (Z38569_argument_type_of_declaration_for_anonymous_functio a1))
+    (Z19316_same_wikidata_item_reference
+    (Z38573_meaning_of_argument a0)
+    (Z38573_meaning_of_argument a1))))
+
+;; Z38657 argument declaration by id
+(define (Z38657_argument_declaration_by_id a0 a1)
+  (car
+    (Z28316_filter_with_second_common_element
+    Z38600_argument_declaration_has_key
+    (Z38552_arguments_of_an_anonymous_function a0)
+    a1)))
+
+;; Z38660 argument declaration has meaning
+(define (Z38660_argument_declaration_has_meaning a0 a1)
+  (Z19316_same_wikidata_item_reference (Z38573_meaning_of_argument a0) a1))
+
+;; Z38664 argument declaration by meaning
+(define (Z38664_argument_declaration_by_meaning a0 a1)
+  (car
+    (Z28316_filter_with_second_common_element
+    Z38660_argument_declaration_has_meaning
+    (Z38552_arguments_of_an_anonymous_function a0)
+    a1)))
+
+;; Z38668 id of argument declaration by position
+(define (Z38668_id_of_argument_declaration_by_position a0 a1)
+  (Z38563_id_of_argument_declaration_as_string (Z38644_argument_declaration_by_position a0 a1)))
+
+;; Z38672 id of argument declaration by meaning
+(define (Z38672_id_of_argument_declaration_by_meaning a0 a1)
+  (Z38563_id_of_argument_declaration_as_string (Z38664_argument_declaration_by_meaning a0 a1)))
+
+;; Z38676 bind value by position
+(define (Z38676_bind_value_by_position a0 a1 a2)
+  (Z38598_bind_value_by_identifier a0 (Z38668_id_of_argument_declaration_by_position a0 a1) a2))
 
 ;; Z38684 filter out possibly circular Wikidata references
 (define (Z38684_filter_out_possibly_circular_wikidata_references a0)
@@ -4425,3 +15718,116 @@
     a0
     (Z36132_invert_all_of_typed_list_of_booleans
     (map Z38680_is_wikidata_reference_sourced_from_wikimedia_proj a0))))
+
+;; Z38691 reference HTML markers from Wikidata statement
+(define (Z38691_reference_html_markers_from_wikidata_statement a0 a1)
+  (if
+    (Z35737_is_html_fragment_empty
+    (Z27926_join_multiple_html_fragments
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    Z35085_reference_html_marker_from_reference
+    (Z38684_filter_out_possibly_circular_wikidata_references
+    (Z31984_references_of_wikidata_statement a0))
+    a1)))
+    (Z32891_reference_marker_html_from_html
+    (Z36240_wikidata_link_for_item_property
+    (Z19304_subject_of_wikidata_statement a0)
+    (Z19306_predicate_of_wikidata_statement a0)
+    a1))
+    (Z27926_join_multiple_html_fragments
+    (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
+    Z35085_reference_html_marker_from_reference
+    (Z38684_filter_out_possibly_circular_wikidata_references
+    (Z31984_references_of_wikidata_statement a0))
+    a1))))
+
+;; Z38710 lexeme for profession
+(define (Z38710_lexeme_for_profession a0 a1 a2)
+  (car (Z38700_find_lexeme_for_id_grammatical_gender_lang a0 a1 a2)))
+
+;; Z38714 join lemmas from lexemes, French
+(define (Z38714_join_lemmas_from_lexemes_french a0)
+  (Z37859_join_list_of_monolingual_texts_with_comma_french
+    (map
+    Z19254_first_monolingual_text_from_multilingual_text
+    (map Z19293_lemmas_of_lexeme (map Z6825_fetch_wikidata_lexeme a0)))
+    Z1004_french))
+
+;; Z38720 join occupation list of person, French
+(define (Z38720_join_occupation_list_of_person_french a0)
+  (Z38714_join_lemmas_from_lexemes_french (Z38734_lexemes_for_occupation_of_person_french a0)))
+
+;; Z38729 lexemes for occupation of person
+(define (Z38729_lexemes_for_occupation_of_person a0 a1)
+  (Z31684_apply_two_argument_function_validated_arguments
+    (Z14310_select_a_function_based_on_language
+    Z38786_config_for_lexemes_for_occupation_of_person
+    a1)
+    a0
+    a1))
+
+;; Z38745 birth-(death) date monolingual text for person
+(define (Z38745_birth_death_date_monolingual_text_for_person a0 a1)
+  (Z13318_apply_two_argument_function
+    (Z14310_select_a_function_based_on_language Z38755_config_for_birth_death_date a1)
+    a0
+    a1))
+
+;; Z38765 Bengali digits to English digits
+(define (Z38765_bengali_digits_to_english_digits a0)
+  (Z14613_replace_character_set
+    a0
+    (Z22302_string_of_numeral_digits_in_order_from_language Z1011_bangla)
+    Z13501_arabic_numerals))
+
+;; Z38771 lexemes for occupation of person, English
+(define (Z38771_lexemes_for_occupation_of_person_english a0)
+  (map Z38788_lexeme_for_qid_english (Z38723_occupation_list_of_person a0)))
+
+;; Z38775 lemma or fallback QID label, English
+(define (Z38775_lemma_or_fallback_qid_label_english a0)
+  (Z38772_lemma_or_fallback_qid_label a0 Z1002_english))
+
+;; Z38778 join occupation list of person, English
+(define (Z38778_join_occupation_list_of_person_english a0)
+  (Z34644_join_list_of_monolingual_texts_with_oxford_comma
+    (map Z38775_lemma_or_fallback_qid_label_english (Z38723_occupation_list_of_person a0))
+    Z1002_english))
+
+;; Z38782  join occupation list of person
+(define (Z38782_join_occupation_list_of_person a0 a1)
+  (Z31684_apply_two_argument_function_validated_arguments
+    (Z14310_select_a_function_based_on_language Z38781_config_for_join_occupation_list_of_person a1)
+    a0
+    a1))
+
+;; Z38804 notable works-sentence
+(define (Z38804_notable_works_sentence a0 a1 a2 a3)
+  (Z30438_apply_four_argument_function
+    (Z14310_select_a_function_based_on_language Z38803_config_for_notable_works_sentence a3)
+    a0
+    a1
+    a2
+    a3))
+
+;; Z38814 prefix with indefinite article, English
+(define (Z38814_prefix_with_indefinite_article_english a0)
+  (Z15175_join_two_strings_with_separator (Z21739_an_or_a_english a0) a0 " "))
+
+;; Z38833 professions sentence
+(define (Z38833_professions_sentence a0 a1 a2 a3)
+  (Z30438_apply_four_argument_function
+    (Z14310_select_a_function_based_on_language Z38832_config_for_professions_sentence a3)
+    a0
+    a1
+    a2
+    a3))
+
+;; Z38857 apply a 5-param fn to a list of firsts, same 2-5
+(define (Z38857_apply_a_5_param_fn_to_a_list_of_firsts_same_2_5 a0 a1 a2 a3 a4 a5)
+  (if
+    (null? a1)
+    (list )
+    (cons
+    (Z34120_apply_five_argument_function a0 (car a1) a2 a3 a4 a5)
+    (Z38857_apply_a_5_param_fn_to_a_list_of_firsts_same_2_5 a0 (cdr a1) a2 a3 a4 a5))))

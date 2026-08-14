@@ -12,10 +12,10 @@
         <p class="eyebrow">wikifn-fstar</p>
         <h1>Wikifunctions compositions, checked by F*</h1>
         <p>
-          745 real Wikifunctions compositions, mechanically translated into F*,
-          checked by F*, extracted to OCaml, compiled to JavaScript, and runnable
-          in a browser. 172 of them pass every Wikifunctions tester this project
-          can read.
+          2,430 real Wikifunctions compositions, mechanically translated into
+          F*, checked by F*, extracted to OCaml, compiled to JavaScript, and
+          runnable in a browser. 207 of them pass every Wikifunctions tester this
+          project can read.
         </p>
         <p><a href="./demo-engine.html"><strong>Try the engine in your browser</strong></a></p>
       </header>
@@ -25,11 +25,12 @@
         <table class="demo-table">
           <tbody>
             <tr><th>Functions in the corpus</th><td>4,970</td></tr>
-            <tr><th>Closing over the current primitives</th><td>890 (388 without recursion, 502 with)</td></tr>
-            <tr><th>Translated into F* and verified</th><td><strong>745</strong></td></tr>
-            <tr><th>Passing every readable Wikifunctions tester</th><td><strong>172</strong></td></tr>
-            <tr><th>Passing at least one tester</th><td>206</td></tr>
-            <tr><th>Rendered back to canonical Wikifunctions compositions</th><td>745 of 745, identical on round trip</td></tr>
+            <tr><th>Closing over the current primitives</th><td>1,116 (417 without recursion, 699 with)</td></tr>
+            <tr><th>Translated into F* and verified</th><td><strong>2,430</strong></td></tr>
+            <tr><th>Runnable today</th><td>431</td></tr>
+            <tr><th>Passing every readable Wikifunctions tester</th><td><strong>207</strong></td></tr>
+            <tr><th>Passing at least one tester</th><td>261</td></tr>
+            <tr><th>Rendered back to canonical Wikifunctions compositions</th><td>all, identical on round trip</td></tr>
           </tbody>
         </table>
         <ul>
@@ -37,7 +38,8 @@
           <li>A ZObject model, identifier parsing, and canonical-form normalisation, all as checked F* definitions rather than assumptions.</li>
           <li>A generator that translates pinned <code>Z14K2</code> compositions into F*, recording revision and digest for each.</li>
           <li>A fixpoint closure analysis over the whole corpus in under a second.</li>
-          <li>Every generated body also printed as an s-expression, and rendered back to canonical Wikifunctions composition data.</li>
+          <li>Every generated body also printed as an s-expression by a checked F* module, and rendered back to canonical Wikifunctions composition data.</li>
+          <li>Any function exportable as a self-contained Scheme program that runs in an off-the-shelf Scheme.</li>
           <li>A vendored 20260801 dump, local SQLite composition graph index, and digest-pinned object cache.</li>
         </ul>
       </section>
@@ -65,13 +67,13 @@
           composition graph browsing.
         </p>
         <ul>
-          <li><a href="./demo-engine.html">Engine browser: search, read, and run all 745 functions</a></li>
+          <li><a href="./demo-engine.html">Engine browser: search, read, and run the whole engine</a></li>
           <li><a href="./engine.md">How the engine works, and what is generated versus authored</a></li>
           <li><a href="./demo-z22294.html">Focused demo: Z22294 through extracted F*</a></li>
           <li><a href="./demos.html">Demos menu</a></li>
           <li><a href="./extraction.md">Extraction notes and CLI commands</a></li>
-          <li><a href="./generated/wikifn.scm">All 745 compositions as s-expressions</a></li>
-          <li><a href="./generated/wikifn-compositions.json">All 745 rendered back as canonical Wikifunctions data</a></li>
+          <li><a href="./generated/wikifn.scm">All compositions as s-expressions</a></li>
+          <li><a href="./generated/wikifn-compositions.json">All rendered back as canonical Wikifunctions data</a></li>
           <li><a href="./generated/functions.json">Function catalogue with provenance</a></li>
         </ul>
       </section>

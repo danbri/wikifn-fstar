@@ -35,11 +35,12 @@ mkdir -p "$ocaml_out" "$(dirname "$bytecode")" "$(dirname "$js_out")"
 
 fstar \
   --codegen OCaml \
-  --extract 'Wikifn.Primitive.Kernel Wikifn.Zid Wikifn.Eval Wikifn.Generated.Eval' \
+  --extract 'Wikifn.Primitive.Kernel Wikifn.Zid Wikifn.Eval Wikifn.Print Wikifn.Generated.Eval' \
   --odir "$ocaml_out" \
   "$root/src/fstar/Wikifn.Primitive.Kernel.fst" \
   "$root/src/fstar/Wikifn.Zid.fst" \
   "$root/src/fstar/Wikifn.Eval.fst" \
+  "$root/src/fstar/Wikifn.Print.fst" \
   "$root/src/fstar/Wikifn.Generated.Eval.fst"
 
 ocaml_root="$(fstar --locate_ocaml)"
@@ -65,6 +66,7 @@ ocamlfind_run ocamlc \
   "$ocaml_out/Wikifn_Primitive_Kernel.ml" \
   "$ocaml_out/Wikifn_Zid.ml" \
   "$ocaml_out/Wikifn_Eval.ml" \
+  "$ocaml_out/Wikifn_Print.ml" \
   "$ocaml_out/Wikifn_Generated_Eval.ml" \
   "$root/src/ocaml/wikifn_engine.ml" \
   "$root/src/ocaml/wikifn_engine_browser.ml" \

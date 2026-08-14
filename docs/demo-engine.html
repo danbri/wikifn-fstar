@@ -29,10 +29,16 @@
         <p class="eyebrow">wikifn-fstar</p>
         <h1>Wikifn Engine Browser</h1>
         <p>
-          745 real Wikifunctions compositions, mechanically translated into F*,
-          checked by F*, extracted to OCaml, compiled to JavaScript, and running
-          in this page. Search for a function, read its source as an
+          2,430 real Wikifunctions compositions, mechanically translated into
+          F*, checked by F*, extracted to OCaml, compiled to JavaScript, and
+          running in this page. Search for a function, read its source as an
           s-expression, and run it.
+        </p>
+        <p>
+          Not all of them can run yet. A function is <strong>runnable</strong>
+          when every function it reaches is implemented; the rest are carried
+          because calls are by reference, so they start working as soon as the
+          gap is filled.
         </p>
         <p><a href="./demos.html">Demos menu</a> &middot; <a href="./engine.md">How it works</a></p>
       </header>
@@ -40,8 +46,8 @@
       <section>
         <h2>Load the engine</h2>
         <p>
-          The artifact is about 236&nbsp;KB and the catalogue about 380&nbsp;KB.
-          Nothing is fetched or run until you press the button.
+          The artifact and catalogue are a few hundred kilobytes, served
+          compressed. Nothing is fetched or run until you press the button.
         </p>
         <button id="engine-load" class="demo-action" type="button">Load engine</button>
         <div id="engine-status" class="demo-status">Not loaded.</div>
@@ -54,6 +60,10 @@
             <label>
               <span>Search</span>
               <input id="engine-search" type="search" placeholder="rot13, numerals, Z22294" autocomplete="off">
+            </label>
+            <label>
+              <input id="engine-runnable-only" type="checkbox" checked>
+              <span>runnable only</span>
             </label>
             <p class="count" id="engine-count"></p>
             <div class="function-list" id="engine-list"></div>
@@ -76,7 +86,9 @@
 
             <h4>Source</h4>
             <p class="count">
-              The composition, printed as an s-expression. Names are the ZID
+              The composition, printed as an s-expression by
+              <code>Wikifn.Print</code> — the same checked F* module the
+              evaluator uses, so the two cannot drift. Names are the ZID
               followed by the English label, so the text reads as language while
               still mapping back to identifiers. Primitives that LISP already
               named keep the classical name.
@@ -100,8 +112,9 @@
             Wikifunctions' own testers rather than proved.
           </li>
           <li>
-            172 of these functions pass every tester this project can read, and
-            206 pass at least one. The rest are unverified.
+            A function marked runnable has every function it reaches
+            implemented. Being runnable is not the same as being verified: only
+            the tester results in the engine notes support correctness claims.
           </li>
           <li>
             Arguments are literal values. There is no object store, so a
@@ -115,8 +128,8 @@
         <p>
           Downloads:
           <a href="./generated/functions.json">catalogue</a>,
-          <a href="./generated/wikifn.scm">all 745 as s-expressions</a>,
-          <a href="./generated/wikifn-compositions.json">all 745 back as canonical Wikifunctions compositions</a>.
+          <a href="./generated/wikifn.scm">all as s-expressions</a>,
+          <a href="./generated/wikifn-compositions.json">all back as canonical Wikifunctions compositions</a>.
         </p>
       </section>
     </main>
@@ -137,7 +150,9 @@
         const sexprEl = document.querySelector("#engine-sexpr code");
 
         let functions = [];
+        let nameTable = "{}";
         let selected = null;
+        const runnableOnly = document.getElementById("engine-runnable-only");
 
         document.getElementById("engine-load").addEventListener("click", async function () {
           this.disabled = true;
@@ -145,6 +160,7 @@
           try {
             const catalogue = await fetch("./generated/functions.json").then((r) => r.json());
             functions = catalogue.functions;
+            nameTable = JSON.stringify(catalogue.names || {});
             await new Promise((resolve, reject) => {
               const script = document.createElement("script");
               script.src = "./generated/wikifn_engine.js";
@@ -155,7 +171,9 @@
             if (typeof globalThis.wikifnEngineCall !== "function") {
               throw new Error("the artifact did not export wikifnEngineCall");
             }
-            status.textContent = functions.length + " functions ready.";
+            const runnable = functions.filter((f) => f.runnable).length;
+            status.textContent =
+              functions.length + " functions loaded, " + runnable + " of them runnable.";
             panel.hidden = false;
             render("");
           } catch (error) {
@@ -166,13 +184,14 @@
 
         function render(query) {
           const needle = query.trim().toLowerCase();
+          const pool = runnableOnly.checked ? functions.filter((f) => f.runnable) : functions;
           const matches = needle
-            ? functions.filter((f) =>
+            ? pool.filter((f) =>
                 f.zid.toLowerCase().includes(needle) ||
                 f.name.toLowerCase().includes(needle) ||
                 (f.label || "").toLowerCase().includes(needle))
-            : functions;
-          countEl.textContent = matches.length + " of " + functions.length + " functions";
+            : pool;
+          countEl.textContent = matches.length + " of " + pool.length + " functions";
           listEl.replaceChildren();
           for (const entry of matches.slice(0, 300)) {
             const button = document.createElement("button");
@@ -182,6 +201,12 @@
             zid.className = "zid";
             zid.textContent = entry.zid + " ";
             button.append(zid, document.createTextNode(entry.label || entry.name));
+            if (!entry.runnable) {
+              const gap = document.createElement("span");
+              gap.className = "zid";
+              gap.textContent = "  (reaches a gap)";
+              button.append(gap);
+            }
             button.addEventListener("click", () => select(entry, query));
             listEl.append(button);
           }
@@ -198,10 +223,19 @@
           titleEl.textContent = entry.zid + " " + (entry.label || entry.name);
           provenanceEl.innerHTML =
             "generated name <code>" + entry.name + "</code> &middot; arity " + entry.arity +
+            " &middot; " + (entry.runnable ? "runnable" : "reaches an unimplemented function") +
             " &middot; from implementation <code>" + entry.implementation +
             "</code> revision " + entry.revision +
             "<br>digest <code>" + entry.digest + "</code>";
-          sexprEl.textContent = entry.sexpr || "";
+          // Rendered by Wikifn.Print, the same checked module the evaluator
+          // uses, rather than by this page.
+          try {
+            const rendered = JSON.parse(
+              globalThis.wikifnEngineSource(entry.zid, String(entry.arity), nameTable));
+            sexprEl.textContent = rendered.ok ? rendered.source : (rendered.message || "");
+          } catch (error) {
+            sexprEl.textContent = "";
+          }
           outputEl.textContent = "";
 
           argsEl.replaceChildren();
@@ -254,6 +288,7 @@
         });
 
         searchEl.addEventListener("input", () => render(searchEl.value));
+        runnableOnly.addEventListener("change", () => render(searchEl.value));
       })();
     </script>
   </body>

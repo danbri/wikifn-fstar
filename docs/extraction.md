@@ -94,7 +94,25 @@ globalThis.wikifnFstarEvalZObject(jsonText)
 
 Those functions are exported from OCaml code linked against the F*-extracted modules; the page-side JavaScript only reads form inputs and displays returned JSON.
 
-The project homepage and `docs/demos.html` menu are static and do not load the generated browser artifact. The best current focused browser demo is `docs/demo-z22294.html`: it runs selected pinned `Z22294` composition code through F* -> OCaml -> JavaScript. Broader controls live on `docs/demo-playground.html`, and graph browsing lives on `docs/demo-trees.html`.
+The project homepage and `docs/demos.html` menu are static and do not load the generated browser artifact. The best current browser demo is `docs/demo-engine.html`, which carries the whole generated engine. `docs/demo-z22294.html` traces one composition in detail, `docs/demo-playground.html` is the earlier nine-function artifact kept for its three distinct compilation paths, and graph browsing lives on `docs/demo-trees.html`.
+
+## The Engine
+
+Everything below this point describes the earlier, smaller extraction path. The
+current one is documented in [engine.md](./engine.md): `Wikifn.Eval` plus
+generated bodies in `Wikifn.Generated.Eval`, built by:
+
+```sh
+make closure                 # how far the current primitive set reaches
+make fstar-generate-eval     # regenerate composition bodies from the pinned cache
+make fstar-engine            # extract to OCaml and compile to JavaScript
+make engine-testers          # check against Wikifunctions testers
+```
+
+The engine exposes a single entry point, `globalThis.wikifnEngineCall(zid, fuel, argsJson)`,
+from `docs/generated/wikifn_engine.js` (browser) and `wikifn_engine.cjs` (Node).
+The nine-function artifacts described below still build and still work; they are
+no longer the main path.
 
 `Wikifn.Generated.Compositions` is the selected-pinned-composition interpreter path: local cache objects become generated F* IR, then the extracted F* interpreter evaluates the IR. `Wikifn.Compiled.Compositions` is the generated direct-function path: selected pinned compositions are lowered directly into F* functions over the checked primitive kernel. `Wikifn.Specialized.Compositions` is the hand-maintained direct-function reference path for the same selected examples. The generated direct compiler recognizes the selected private-use marker idiom used by `Z36070`; that is an optimization, not a full equivalence proof for arbitrary compositions.
 
