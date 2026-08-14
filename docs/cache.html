@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Wikifunctions Cache</title>
+    <link rel="stylesheet" href="./styles.css">
+    <style>
+      main table { border-collapse: collapse; margin: 1rem 0; font-size: 0.95em; }
+      main th, main td { border: 1px solid rgba(128,128,128,0.35); padding: 0.3rem 0.6rem; text-align: left; }
+      main th { background: rgba(128,128,128,0.12); }
+      main pre { overflow-x: auto; padding: 0.7rem 0.9rem; border-radius: 0.3rem;
+        background: rgba(128,128,128,0.12); }
+      main blockquote { margin: 1rem 0; padding-left: 0.9rem;
+        border-left: 3px solid rgba(128,128,128,0.4); opacity: 0.9; }
+      main li { margin-bottom: 0.3rem; }
+      .source { font-size: 0.85em; opacity: 0.7; margin-top: 3rem; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="eyebrow"><a href="./index.html">wikifn-fstar</a> &middot; <a href="./demos.html">Demos</a></p>
+<h1 id="wikifunctions-cache">Wikifunctions Cache</h1>
+<p>The local cache is meant to make analysis repeatable and polite.</p>
+<p>Default location:</p>
+<pre><code class="language-text">cache/wikifunctions/</code></pre>
+<p>Layout:</p>
+<pre><code class="language-text">manifest.json
+objects/Z22294/214920.json
+objects/Z22295/164133.json</code></pre>
+<p>Each object file contains:</p>
+<ul><li>ZID</li><li>MediaWiki revision</li><li>timestamp and user from revision metadata</li><li>SHA-256 digest of the canonical JSON payload</li><li>canonical JSON</li></ul>
+<h2 id="commands">Commands</h2>
+<pre><code class="language-sh">make download-dump
+make import-vendored-dump
+node ./bin/wikifn.js cache stats
+node ./bin/wikifn.js cache fetch --follow-calls --max-objects 500 --max-network-objects 100 Z22294
+node ./bin/wikifn.js analyze --follow-calls --max-objects 500 Z22294
+node ./bin/wikifn.js cache import /path/to/zobjectcache --limit 1000
+node ./bin/wikifn.js cache import-xml cache/dumps/wikifunctionswiki/20260801/wikifunctionswiki-20260801-pages-meta-current.xml.bz2
+node ./bin/wikifn.js cache import-xml third_party/wikifunctions-dumps/20260801/wikifunctionswiki-20260801-pages-meta-current.xml.bz2
+node ./bin/wikifn.js cache import-xml third_party/wikifunctions-dumps/20260801/wikifunctionswiki-20260801-pages-meta-current.xml.bz2 --limit 10 --cache-dir tmp/smoke-cache
+node ./bin/wikifn.js db build
+node ./bin/wikifn.js db build --analyze
+node ./bin/wikifn.js db stats
+node ./bin/wikifn.js db query --format table "select body_kind, count(*) from implementations group by body_kind"</code></pre>
+<h2 id="modes">Modes</h2>
+<ul><li>default for <code>analyze</code>: local cache only</li><li><code>--live</code>: trust cached latest revisions and fetch only missing ZIDs</li><li><code>--refresh-cache</code>: check live revision IDs before fetching</li><li><code>--offline</code>: fail on cache misses</li><li><code>--no-cache</code>: bypass the cache</li></ul>
+<h2 id="bulk-material">Bulk Material</h2>
+<p>For larger local corpora, prefer bulk sources over crawling. Useful upstream paths:</p>
+<ul><li>Wikifunctions public API <code>wikilambda_fetch</code>, including revision-pinned requests.</li><li>Wikimedia content exports from <code>dumps.wikimedia.org</code>.</li><li>Wikimedia's <code>wikifunctions-content-download</code> workflow, which produces a <code>Z0.json</code> revision index and versioned <code>ZID.revision.json</code> object files.</li></ul>
+<p>The current repo cache layout is close to the <code>wikifunctions-content-download</code> versioned-file model. <code>node ./bin/wikifn.js cache import</code> supports the common <code>Z0.json</code> plus <code>ZID.revision.json</code>/<code>ZID.revision.done.json</code> layout.</p>
+<p>The Wikimedia <code>pages-meta-current.xml.bz2</code> dump stores current ZObject page text as escaped JSON in <code>&lt;text&gt;</code> for pages whose revision <code>&lt;model&gt;</code> is <code>zobject</code>. <code>node ./bin/wikifn.js cache import-xml</code> streams that dump and imports main-namespace <code>Z...</code> pages into the local cache.</p>
+<p>The repo vendors one dated current-pages snapshot at <code>third_party/wikifunctions-dumps/20260801/wikifunctionswiki-20260801-pages-meta-current.xml.bz2</code>. <code>make import-vendored-dump</code> verifies its MD5 and imports it into <code>cache/wikifunctions/</code>.</p>
+<p>To inspect the dump without replacing the <code>.bz2</code> file:</p>
+<pre><code class="language-sh">bunzip2 -c third_party/wikifunctions-dumps/20260801/wikifunctionswiki-20260801-pages-meta-current.xml.bz2 | more</code></pre>
+<p>Plain <code>bunzip2 file.bz2</code> expands the dump in place and removes the compressed file. Expanded XML dump files under <code>third_party/wikifunctions-dumps/</code> are ignored because they are too large for normal GitHub storage.</p>
+<p><code>make download-dump</code> downloads the latest Wikifunctions <code>pages-meta-current.xml.bz2</code> dump into <code>cache/dumps/wikifunctionswiki/&lt;date&gt;/</code> and verifies the file against Wikimedia's MD5 checksum list. Use it only when intentionally refreshing the local snapshot.</p>
+<h2 id="sqlite-index">SQLite Index</h2>
+<p>The SQLite index is derived data. The source of truth remains the cache JSON files and the vendored dump.</p>
+<p>Default path:</p>
+<pre><code class="language-text">cache/wikifunctions.sqlite</code></pre>
+<p>Build it with:</p>
+<pre><code class="language-sh">node ./bin/wikifn.js db build</code></pre>
+<p>Useful local queries:</p>
+<pre><code class="language-sh">node ./bin/wikifn.js db query --format table "select body_kind, count(*) from implementations group by body_kind"
+node ./bin/wikifn.js db query --format table "select from_impl_zid, to_function_zid, path from composition_calls where from_impl_zid = 'Z22295'"
+node ./bin/wikifn.js db query --format table "select zid, text from labels where lang_zid = 'Z1002' and text like '%Sainte%'"</code></pre>
+<p>The schema includes <code>objects</code>, <code>functions</code>, <code>function_implementations</code>, <code>function_testers</code>, <code>implementations</code>, <code>composition_calls</code>, <code>dynamic_calls</code>, <code>reference_edges</code>, <code>labels</code>, <code>descriptions</code>, <code>primitives</code>, <code>analysis</code>, <code>analysis_frontier</code>, <code>metadata</code>, and <code>index_errors</code>.</p>
+<p><code>db build</code> is graph-only by default. <code>db build --analyze</code> also tries to materialize whole-corpus composition-closure status; this is useful, but slower, and needs a more memoized implementation before it should be the default on the full dump.</p>
+<p>Keep recursive SQL bounded and seed-specific. An unconstrained recursive CTE over all 24k composition-call edges is too heavy for casual use; use SQLite for local inspection and small traversals, or implement memoized graph analysis in JavaScript for whole-corpus closure/depth ranking.</p>
+      <p class="source">
+        Rendered from <a href="./cache.md"><code>cache.md</code></a> by
+        <code>make docs</code>. That file is the source; this page is generated.
+      </p>
+    </main>
+  </body>
+</html>

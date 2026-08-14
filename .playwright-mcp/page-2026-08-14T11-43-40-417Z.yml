@@ -1,0 +1,452 @@
+- main [ref=f11e2]:
+  - paragraph [ref=f11e3]:
+    - link "wikifn-fstar" [ref=f11e4] [cursor=pointer]:
+      - /url: ./index.html
+    - text: ·
+    - link "Demos" [ref=f11e5] [cursor=pointer]:
+      - /url: ./demos.html
+  - heading "The Wikifn Engine" [level=1] [ref=f11e6]
+  - paragraph [ref=f11e7]: An extracted F* interpreter carrying 3,676 real Wikifunctions compositions.
+  - heading "What is generated and what is authored" [level=2] [ref=f11e8]
+  - paragraph [ref=f11e9]: This distinction matters more than any other claim on this page, so it comes first.
+  - paragraph [ref=f11e10]:
+    - strong [ref=f11e11]: Mechanically generated from the pinned corpus
+    - text: "— no judgement involved, reproducible by re-running the generator, and stamped with the revision and digest of the source object:"
+  - table [ref=f11e12]:
+    - rowgroup [ref=f11e13]:
+      - row [ref=f11e14]:
+        - columnheader "file" [ref=f11e15]
+        - columnheader "contents" [ref=f11e16]
+    - rowgroup [ref=f11e17]:
+      - row [ref=f11e18]:
+        - cell [ref=f11e19]:
+          - code [ref=f11e20]: src/fstar/Wikifn.Generated.Eval.PartNN.fst
+        - cell [ref=f11e21]:
+          - text: the composition bodies, each a translation of a pinned
+          - code [ref=f11e22]: Z14K2
+          - text: tree
+      - row [ref=f11e23]:
+        - cell [ref=f11e24]:
+          - code [ref=f11e25]: src/fstar/Wikifn.Generated.Eval.fst
+        - cell "dispatch only; it holds no bodies" [ref=f11e26]
+      - row [ref=f11e27]:
+        - cell [ref=f11e28]:
+          - code [ref=f11e29]: build/fstar/fn/Wikifn.Fn.ZNNNN.fst
+        - cell "the same bodies again, one module per function, for verification" [ref=f11e30]
+      - row [ref=f11e31]:
+        - cell [ref=f11e32]:
+          - code [ref=f11e33]: docs/generated/functions.json
+        - 'cell "the catalogue: ZID, generated name, label, arity, declared types, provenance" [ref=f11e34]'
+      - row [ref=f11e35]:
+        - cell [ref=f11e36]:
+          - code [ref=f11e37]: docs/generated/wikifn.scm
+        - cell "the same bodies as s-expressions" [ref=f11e38]
+  - paragraph [ref=f11e39]:
+    - strong [ref=f11e40]: Authored
+    - text: "— written deliberately, checked by F*, and not derived from anything in the corpus:"
+  - table [ref=f11e41]:
+    - rowgroup [ref=f11e42]:
+      - row [ref=f11e43]:
+        - columnheader "file" [ref=f11e44]
+        - columnheader "contents" [ref=f11e45]
+    - rowgroup [ref=f11e46]:
+      - row [ref=f11e47]:
+        - cell [ref=f11e48]:
+          - code [ref=f11e49]: src/fstar/Wikifn.Primitive.Kernel.fst
+        - cell [ref=f11e50]:
+          - text: what the primitive functions
+          - emphasis [ref=f11e51]: mean
+          - text: over codepoint-list text
+      - row [ref=f11e52]:
+        - cell [ref=f11e53]:
+          - code [ref=f11e54]: src/fstar/Wikifn.Eval.fst
+        - cell "the evaluator, value type, and primitive dispatch" [ref=f11e55]
+      - row [ref=f11e56]:
+        - cell [ref=f11e57]:
+          - code [ref=f11e58]: src/fstar/Wikifn.Zid.fst
+        - cell "identifiers as numbers, with parsing and rendering" [ref=f11e59]
+      - row [ref=f11e60]:
+        - cell [ref=f11e61]:
+          - code [ref=f11e62]: src/fstar/Wikifn.Model.fst
+        - cell "the ZObject term model and its validity predicates" [ref=f11e63]
+      - row [ref=f11e64]:
+        - cell [ref=f11e65]:
+          - code [ref=f11e66]: src/fstar/Wikifn.Canonical.fst
+        - cell "canonical JSON to ZObject term" [ref=f11e67]
+      - row [ref=f11e68]:
+        - cell [ref=f11e69]:
+          - code [ref=f11e70]: src/fstar/Wikifn.Print.fst
+        - cell "rendering an expression as an s-expression" [ref=f11e71]
+  - paragraph [ref=f11e72]:
+    - text: The authored layer is the trust boundary. Nothing in the corpus says what
+    - code [ref=f11e73]: Z10075
+    - text: means; those definitions are a claim about Wikifunctions that F* cannot check. What F* checks is that the definitions are total, terminate, and typecheck. What checks the claim is the tester sweep below.
+  - paragraph [ref=f11e74]: Both layers were produced with LLM assistance. That is not the useful distinction. The useful distinction is that the generated layer can be regenerated from pinned data and will change when the data changes, while the authored layer cannot and will not.
+  - heading "How it is checked, and why it is split up" [level=2] [ref=f11e75]
+  - paragraph [ref=f11e76]:
+    - text: The bodies are not one F* module, and that is not a tidiness choice. A single module holding all of them reaches a
+    - strong [ref=f11e77]: 66 GB peak memory footprint
+    - text: and is killed; four hundred of the same bodies verify in
+    - strong [ref=f11e78]: 4.9 seconds using 300 MB
+    - text: . Verification cost is sharply superlinear in module size, so the generator emits parts and the checker runs one module per process, because F* does not release much between modules within one invocation.
+  - paragraph [ref=f11e79]:
+    - text: The same bodies are emitted a second time, one module per function, under
+    - code [ref=f11e80]: build/fstar/fn/
+    - text: ". Not a copy to keep in step: both layouts are rendered from the same tree by the same renderer in the same pass. They exist for different jobs."
+  - table [ref=f11e81]:
+    - rowgroup [ref=f11e82]:
+      - row [ref=f11e83]:
+        - columnheader [ref=f11e84]
+        - columnheader [ref=f11e85]:
+          - text: parts, in
+          - code [ref=f11e86]: src/fstar/
+        - columnheader [ref=f11e87]:
+          - text: per function, in
+          - code [ref=f11e88]: build/fstar/fn/
+    - rowgroup [ref=f11e89]:
+      - row [ref=f11e90]:
+        - cell "what it is for" [ref=f11e91]
+        - cell "extracting to OCaml" [ref=f11e92]
+        - cell "verifying" [ref=f11e93]
+      - row [ref=f11e94]:
+        - cell "why" [ref=f11e95]
+        - cell "linking ten OCaml modules is far faster than linking 3,676" [ref=f11e96]
+        - cell "a body F* cannot check fails on its own instead of taking four hundred with it" [ref=f11e97]
+      - row [ref=f11e98]:
+        - cell "incrementality" [ref=f11e99]
+        - cell "a part re-checks when any body in it changes" [ref=f11e100]
+        - cell "a function re-checks when its own body changes" [ref=f11e101]
+      - row [ref=f11e102]:
+        - cell "parallelism" [ref=f11e103]
+        - cell "ten" [ref=f11e104]
+        - cell "as many as there are functions" [ref=f11e105]
+  - paragraph [ref=f11e106]:
+    - text: "Per-function verification is parallel because there is nothing to order: a call in a body is a ZID"
+    - emphasis [ref=f11e107]: number
+    - text: the evaluator resolves at run time, not a module reference. Every function module depends on
+    - code [ref=f11e108]: Wikifn.Eval
+    - text: and on nothing else, so they can be checked in any order and on any number of machines.
+  - code [ref=f11e110]: "make fstar-check # the parts, in dependency order, one process each make fstar-verify-functions # every function on its own, in parallel, with a per-function report"
+  - paragraph [ref=f11e111]: "Measured on a six-core machine, from cold:"
+  - table [ref=f11e112]:
+    - rowgroup [ref=f11e113]:
+      - row [ref=f11e114]:
+        - columnheader [ref=f11e115]
+        - columnheader "time" [ref=f11e116]
+    - rowgroup [ref=f11e117]:
+      - row [ref=f11e118]:
+        - cell [ref=f11e119]:
+          - code [ref=f11e120]: make fstar-check
+          - text: ", 24 modules"
+        - cell "57 s" [ref=f11e121]
+      - row [ref=f11e122]:
+        - cell [ref=f11e123]:
+          - code [ref=f11e124]: make fstar-verify-functions
+          - text: ", 3,676 functions"
+        - cell "183 s wall, 18.3 min CPU, median 0.28 s each" [ref=f11e125]
+  - paragraph [ref=f11e126]:
+    - text: "The per-function pass costs about twenty times the CPU and finishes in three times the wall clock, because it is six ways parallel and would be more on a bigger machine. That trade is the point: it is the pass that scales out and the pass that tells you"
+    - emphasis [ref=f11e127]: which
+    - text: function is the problem.
+    - code [ref=f11e128]: make fstar-check
+    - text: remains the one that gates extraction.
+  - paragraph [ref=f11e129]:
+    - text: This is also how a body that cannot be checked at all gets found rather than guessed at.
+    - code [ref=f11e130]: Z24460 is Extended_Pictographic codepoint
+    - text: carries the whole Unicode Extended_Pictographic table inline as a codepoint list — 164 KB in a single term. On its own, in its own module, it reaches 7.95 GB and is killed, while a 32 KB body of the same shape verifies in 2.5 seconds. The limit is the size of one term, not the size of the module, so no amount of splitting helps. The generator skips a body over 64 KB and records the reason.
+  - heading "Reach" [level=2] [ref=f11e131]
+  - paragraph [ref=f11e132]:
+    - text: Measured with
+    - code [ref=f11e133]: make closure
+    - text: "(a fixpoint over the call graph, not a per-seed walk):"
+  - table [ref=f11e134]:
+    - rowgroup [ref=f11e135]:
+      - row [ref=f11e136]:
+        - columnheader [ref=f11e137]
+        - columnheader "count" [ref=f11e138]
+    - rowgroup [ref=f11e139]:
+      - row [ref=f11e140]:
+        - cell "functions in the corpus" [ref=f11e141]
+        - cell "4,970" [ref=f11e142]
+      - row [ref=f11e143]:
+        - cell "closing over the engine's primitives, no recursion needed" [ref=f11e144]
+        - cell "937" [ref=f11e145]
+      - row [ref=f11e146]:
+        - cell "closing over the engine's primitives, needing recursion" [ref=f11e147]
+        - cell "1,167" [ref=f11e148]
+      - row [ref=f11e149]:
+        - cell "translated into F* and verified" [ref=f11e150]
+        - cell [ref=f11e151]:
+          - strong [ref=f11e152]: 3,676
+      - row [ref=f11e153]:
+        - cell "of those, runnable today" [ref=f11e154]
+        - cell [ref=f11e155]:
+          - strong [ref=f11e156]: 1,316
+      - row [ref=f11e157]:
+        - cell "skipped by the translator, with reasons recorded" [ref=f11e158]
+        - cell "222" [ref=f11e159]
+  - paragraph [ref=f11e160]: "A function is emitted whether or not everything it calls is implemented. Calls are by reference: the evaluator looks a body up when the call happens, so a function that reaches a gap still evaluates until it gets there, reports a missing implementation, and starts working the moment the gap is filled. Only the runnable count claims anything today."
+  - paragraph [ref=f11e161]:
+    - text: "Recursion is not a barrier for the interpreter: fuel bounds it uniformly, so the 699 recursive functions come along with the rest. Recursion"
+    - emphasis [ref=f11e162]: is
+    - text: a barrier for compiling a composition into a standalone F* function, because that needs a termination measure per function. This is why the interpreter path scales and the direct-compilation path does not.
+  - heading "Evidence it is right" [level=2] [ref=f11e163]
+  - paragraph [ref=f11e164]:
+    - code [ref=f11e165]: make engine-testers
+    - text: runs every Wikifunctions tester (
+    - code [ref=f11e166]: Z20
+    - text: ") whose call and expected value this harness can read:"
+  - table [ref=f11e167]:
+    - rowgroup [ref=f11e168]:
+      - row [ref=f11e169]:
+        - columnheader [ref=f11e170]
+        - columnheader "count" [ref=f11e171]
+    - rowgroup [ref=f11e172]:
+      - row [ref=f11e173]:
+        - cell "testers considered" [ref=f11e174]
+        - cell "9,872" [ref=f11e175]
+      - row [ref=f11e176]:
+        - cell "pass" [ref=f11e177]
+        - cell "833" [ref=f11e178]
+      - row [ref=f11e179]:
+        - cell "fail" [ref=f11e180]
+        - cell "60" [ref=f11e181]
+      - row [ref=f11e182]:
+        - cell "error" [ref=f11e183]
+        - cell "2,065" [ref=f11e184]
+      - row [ref=f11e185]:
+        - cell "skipped, with reasons" [ref=f11e186]
+        - cell "6,914" [ref=f11e187]
+  - table [ref=f11e188]:
+    - rowgroup [ref=f11e189]:
+      - row [ref=f11e190]:
+        - columnheader [ref=f11e191]
+        - columnheader "count" [ref=f11e192]
+    - rowgroup [ref=f11e193]:
+      - row [ref=f11e194]:
+        - cell "functions with at least one passing tester" [ref=f11e195]
+        - cell "374" [ref=f11e196]
+      - row [ref=f11e197]:
+        - cell "functions passing every tester that could be read" [ref=f11e198]
+        - cell [ref=f11e199]:
+          - strong [ref=f11e200]: "315"
+  - paragraph [ref=f11e201]: A tester is only counted as passing when both its call and its expected value were readable. Everything else is skipped with a stated reason, never counted as a pass.
+  - paragraph [ref=f11e202]: "The largest remaining buckets are honest limits, not silence:"
+  - list [ref=f11e203]:
+    - listitem [ref=f11e204]: 2,926 testers pass an argument this harness cannot convert to a literal
+    - listitem [ref=f11e205]: 3,122 have a validator this engine cannot run
+    - listitem [ref=f11e206]: 880 report a depth limit, from compositions defined through each other with no base case
+    - listitem [ref=f11e207]:
+      - text: 519 use
+      - code [ref=f11e208]: Z889
+      - text: list equality with both arguments supplied, so the expected value cannot be inferred
+    - listitem [ref=f11e209]: 60 disagree and are worth individual investigation
+  - paragraph [ref=f11e210]:
+    - text: Not every disagreement is this engine's fault, and saying which is which matters.
+    - code [ref=f11e211]: Z15391 nth Fibonacci number of order k
+    - text: returns 24 where its tester wants 81, because the pinned composition it was translated from writes the literal 3 where
+    - emphasis [ref=f11e212]: k
+    - text: belongs. The translation is faithful; the implementation is wrong. See the note on implementation choice below.
+  - heading "Names" [level=2] [ref=f11e213]
+  - paragraph [ref=f11e214]: "Generated names put the identifier first and the English label after it:"
+  - code [ref=f11e216]: (define (Z22294_devanagari_numerals_to_arabic_numerals a0) (Z14613_replace_character_set a0 "०१२३४५६७८९" "0123456789"))
+  - paragraph [ref=f11e217]: The first token maps back to plain Wikifunctions identifiers mechanically, so the text is readable without becoming unfaithful. Labels come from the pinned snapshot and are therefore stable. English is used here; the dump carries other languages and the scheme works unchanged for any of them.
+  - heading "Evaluation order" [level=2] [ref=f11e218]
+  - paragraph [ref=f11e219]: Fuel is a budget for total work, not a limit on nesting depth. Passing the same fuel down every branch bounds how deep evaluation goes but says nothing about how wide it goes, so a naive Fibonacci with a depth of thirty can make millions of calls and never run out. The remaining budget is threaded through every result, so the total number of steps is bounded by what the caller supplied.
+  - paragraph [ref=f11e220]: Primitives are bounded too. Exponentiation and Unicode ranges would otherwise be a way to spend arbitrary time inside one call without spending any fuel.
+  - paragraph [ref=f11e221]:
+    - text: Arguments are evaluated once, bound into an environment, and referred to by index. The earlier evaluator substituted argument
+    - emphasis [ref=f11e222]: expressions
+    - text: into composition bodies, so a body mentioning an argument twice evaluated it twice, costing 2^depth when such calls nest — measured at 9.8 seconds for 26 nested
+    - code [ref=f11e223]: Z11082
+    - text: calls.
+  - paragraph [ref=f11e224]:
+    - code [ref=f11e225]: Z802
+    - text: "remains lazy in its branches. This is not a preference: 230 of the 288 directly self-recursive compositions in the corpus guard their recursive branch with"
+    - code [ref=f11e226]: Z802
+    - text: ", so a strict"
+    - code [ref=f11e227]: Z802
+    - text: would make all of them diverge.
+  - paragraph [ref=f11e228]: Evaluating arguments eagerly can spend fuel a lazy evaluator would not. That shows up as fuel exhaustion, which is loud, rather than as a wrong answer, which is not.
+  - heading "Commands" [level=2] [ref=f11e229]
+  - code [ref=f11e231]: "make closure # how far the current primitive set reaches node scripts/find-expansion-cycles.js # groups that must be grounded, not expanded node scripts/export-scheme.js Z38114 --call '\"de les chats\"' # self-contained Scheme make fstar-generate-eval # regenerate the composition bodies from the pinned cache make fstar-check # verify every F* module, one process each make fstar-verify-functions # verify every function on its own, in parallel make fstar-engine # extract to OCaml, compile to JavaScript make engine-testers # check against Wikifunctions' own testers node --test # includes engine and tester regression tests"
+  - heading "Names, and hints inside them" [level=2] [ref=f11e232]
+  - paragraph [ref=f11e233]:
+    - text: A generated name is the ZID followed by the English label. Only the ZID is the identity; the rest is a hint for whoever is reading, and it changes when someone relabels the function on the wiki. So the Scheme listing binds each definition twice — under its full name and under its bare ZID — and
+    - code [ref=f11e234]: wikifn-hints.scm
+    - text: supplies a
+    - code [ref=f11e235]: wikifn
+    - text: macro that rewrites any
+    - code [ref=f11e236]: Znnnn_...
+    - text: name in its body down to
+    - code [ref=f11e237]: Znnnn
+    - text: "before compiling, so you can write a hint nobody generated:"
+  - code [ref=f11e239]: (load "wikifn-hints.scm") (load "wikifn-bundle.scm") (Z10627_rot13_latin_alphabet "Hello") ; the generated name (Z10627 "Hello") ; the identity alone (wikifn (Z10627_shift_each_letter_by_13 "Hello")) ; a hint of your own
+  - paragraph [ref=f11e240]:
+    - text: "The rewrite happens at expansion time, so a hint costs nothing at run time. Outside Scheme it is one substitution:"
+    - code [ref=f11e241]: s/\(Z[0-9][0-9]*\)_[A-Za-z0-9_]*/\1/g
+    - text: .
+  - heading "Calling it from JavaScript" [level=2] [ref=f11e242]
+  - paragraph [ref=f11e243]:
+    - code [ref=f11e244]: make fstar-engine
+    - text: extracts the F* to OCaml, compiles that, and runs
+    - code [ref=f11e245]: js_of_ocaml
+    - text: "twice:"
+    - code [ref=f11e246]: docs/generated/wikifn_engine.cjs
+    - text: for Node and
+    - code [ref=f11e247]: wikifn_engine.js
+    - text: for the browser. Both export the same two functions, and that is the whole interface. They take and return strings because that is what crosses the
+    - code [ref=f11e248]: js_of_ocaml
+    - text: boundary cleanly.
+  - code [ref=f11e250]: "require(\"./docs/generated/wikifn_engine.cjs\"); // wikifnEngineCall(zid, fuel, jsonArgs) -> JSON string const out = globalThis.wikifnEngineCall(\"Z22294\", \"5000\", JSON.stringify([\"१२३\"])); // {\"ok\":true,\"zid\":\"Z22294\",\"fuel\":5000,\"result\":{\"type\":\"Z6\",\"text\":\"123\"}} // wikifnEngineSource(zid, arity, nameTable) -> JSON string // Rendered by Wikifn.Print, the same checked module the evaluator uses."
+  - paragraph [ref=f11e251]:
+    - code [ref=f11e252]: examples/node-engine.js
+    - text: "wraps that for the command line: it prints the declared signature, the composition as an s-expression, and then the answer."
+  - code [ref=f11e254]: "node examples/node-engine.js Z10627 \"Hello, Wikifunctions!\" node examples/node-engine.js Z22294 \"१२३४५\" node examples/node-engine.js Z12668 '[1,2,3]' # a kernel primitive node examples/node-engine.js --fuel 500 Z10627 hi # running out is reported node examples/node-engine.js --find reverse"
+  - code [ref=f11e256]: "Z10627 ROT13 (Latin alphabet) Z10627K1: String -> String (declared, not checked) from implementation Z13471 revision 133906 (define (Z10627_rot13_latin_alphabet a0) (Z12812_caesar_cipher_latin_alphabet a0 13)) call Z10627(\"Hello, Wikifunctions!\") fuel 100000 {\"type\":\"Z6\",\"text\":\"Uryyb, Jvxvshapgvbaf!\"}"
+  - paragraph [ref=f11e257]:
+    - text: Composing two of them is ordinary JavaScript, because once the envelope is unwrapped a Wikifunctions function is an ordinary call. The classic palindrome is only a palindrome once the spaces are gone, so it is
+    - code [ref=f11e258]: Z10096
+    - text: after
+    - code [ref=f11e259]: Z10052
+    - text: ":"
+  - code [ref=f11e261]: node examples/compose.js
+  - code [ref=f11e263]: "\"a man a plan a canal panama\" literally false spaces removed \"amanaplanacanalpanama\" then true \"amanaplanacanalpanama\" literally true spaces removed \"amanaplanacanalpanama\" then true"
+  - paragraph [ref=f11e264]:
+    - code [ref=f11e265]: Z10096
+    - text: "compares codepoints, so it is case-sensitive:"
+    - code [ref=f11e266]: neveroddoreven
+    - text: is a palindrome and
+    - code [ref=f11e267]: Neveroddoreven
+    - text: is not. That is what the corpus function does, not a limitation of this engine. Case folding would be one more composition,
+    - code [ref=f11e268]: Z10047
+    - text: to lowercase, which is not implemented yet.
+  - paragraph [ref=f11e269]:
+    - text: The browser build of the same artifact drives
+    - code [ref=f11e270]: docs/demo-engine.html
+    - text: ", which is the searchable catalogue with a run form."
+  - heading "Known limits" [level=2] [ref=f11e271]
+  - list [ref=f11e272]:
+    - listitem [ref=f11e273]: No references. Arguments are literal values; the engine has no object store, and a ZID-shaped string is refused rather than read as text.
+    - listitem [ref=f11e274]:
+      - text: No errors (
+      - code [ref=f11e275]: Z5
+      - text: ) as values, and no quoting. Records exist now; these do not.
+    - listitem [ref=f11e276]:
+      - text: "Implementation choice is made without any notion of correctness. A function can have several composition implementations and they are not interchangeable for a tool that follows them transitively: ROT13 has one written as thirteen nested rot1 calls that does not evaluate here, and"
+      - code [ref=f11e277]: Z844
+      - text: boolean equality has one defined as not(inequality) while
+      - code [ref=f11e278]: Z10237
+      - text: inequality is defined as not(equality). The generator translates every candidate and prefers one that runs and stays out of a mutual-recursion cycle — but not one that gets the right answer.
+      - code [ref=f11e279]: Z15391 nth Fibonacci number of order k
+      - text: is a faithful translation of an implementation that hardcodes 3 where
+      - emphasis [ref=f11e280]: k
+      - text: belongs, so it computes tribonacci whatever
+      - emphasis [ref=f11e281]: k
+      - text: you pass, and its own testers say so.
+    - listitem [ref=f11e282]:
+      - text: "Some cycles cannot be escaped by choosing differently, and are grounded in the kernel instead: arithmetic, and reversing and appending a list. That is what the wiki's own evaluator does when it prefers a code implementation, so it restores what Wikifunctions computes rather than changing it. Each one is named in"
+      - code [ref=f11e283]: Wikifn.Eval
+      - text: with the reason.
+    - listitem [ref=f11e284]: Deep recursion exhausts fuel before it produces an answer. The evaluator is not tail-recursive after extraction.
+    - listitem [ref=f11e285]: One body cannot be checked at all. See the section on splitting above.
+    - listitem [ref=f11e286]:
+      - text: The s-expression printer recurses over the body, so a deep enough body exhausts the
+      - emphasis [ref=f11e287]: JavaScript
+      - text: stack before F* notices anything.
+      - code [ref=f11e288]: Z33163
+      - text: does; it is counted and named rather than allowed to end the export.
+    - listitem [ref=f11e289]:
+      - code [ref=f11e290]: Wikifn.Model.has_type
+      - text: is still assumed. The catalogue and the listing now carry each function's declared argument and return types, read from the pinned
+      - code [ref=f11e291]: Z8
+      - text: — but nothing checks them, so they are documentation. A wrong one is a wrong comment, not a wrong answer.
+  - heading "What to do next, in order" [level=2] [ref=f11e292]
+  - paragraph [ref=f11e293]:
+    - text: "Ranked by what the measurements say, not by what is interesting. The two counts are different questions:"
+    - emphasis [ref=f11e294]: testers
+    - text: is how much evidence a change buys,
+    - emphasis [ref=f11e295]: closure
+    - text: is how many functions it makes reachable at all.
+  - list [ref=f11e296]:
+    - listitem [ref=f11e297]:
+      - strong [ref=f11e298]: Errors as values, and the functions around them
+      - text: —
+      - code [ref=f11e299]: Z5
+      - text: ","
+      - code [ref=f11e300]: Z851
+      - text: throw,
+      - code [ref=f11e301]: Z850
+      - text: try-catch,
+      - code [ref=f11e302]: Z853
+      - text: "get-error. Closure: 1,456 / 1,383 / 1,293 functions blocked. This is also most of what a tester's"
+      - emphasis [ref=f11e303]: validator
+      - text: needs, and 3,122 tester cases are currently skipped because their validator cannot run. Largest single structural unlock.
+  - list [ref=f11e304]:
+    - listitem [ref=f11e305]:
+      - strong [ref=f11e306]: Quoting
+      - text: —
+      - code [ref=f11e307]: Z99
+      - text: quote,
+      - code [ref=f11e308]: Z805
+      - text: reify,
+      - code [ref=f11e309]: Z899
+      - text: unquote,
+      - code [ref=f11e310]: Z29267
+      - text: "quoted reference. Closure: 1,450 / 1,320 / 1,454. Needed before any function that manipulates function values as data can run."
+  - list [ref=f11e311]:
+    - listitem [ref=f11e312]:
+      - strong [ref=f11e313]: Teach the tester harness more argument forms
+      - text: — records, pairs, monolingual text. 2,926 tester cases are skipped for "argument is not a readable literal" and a further 519 because
+      - code [ref=f11e314]: Z889
+      - text: list equality is given both arguments so no expected value can be inferred. This is the single largest bucket and it is a limit of the
+      - emphasis [ref=f11e315]: harness
+      - text: ", not of the engine: it buys evidence about code that already works, with no new semantics to get wrong."
+  - list [ref=f11e316]:
+    - listitem [ref=f11e317]:
+      - strong [ref=f11e318]: Choose implementations by tester agreement.
+      - text: The corpus already contains the evidence — every function's testers — and the generator does not use it. Translating every candidate is already done; scoring them against their testers and keeping the best is the missing step, and it is what would have caught
+      - code [ref=f11e319]: Z15391
+      - text: .
+  - list [ref=f11e320]:
+    - listitem [ref=f11e321]:
+      - strong [ref=f11e322]: Case mapping
+      - text: —
+      - code [ref=f11e323]: Z10047
+      - text: to lowercase,
+      - code [ref=f11e324]: Z10018
+      - text: to uppercase. 146 tester cases, 1,301 functions blocked. Needs a real Unicode case table; an ASCII-only version would be wrong for exactly the inputs the testers use, so it should not be shipped as if it were general.
+  - list [ref=f11e325]:
+    - listitem [ref=f11e326]:
+      - strong [ref=f11e327]: Regular expressions
+      - text: —
+      - code [ref=f11e328]: Z12316
+      - text: ","
+      - code [ref=f11e329]: Z10196
+      - text: ","
+      - code [ref=f11e330]: Z36900
+      - text: ","
+      - code [ref=f11e331]: Z11461
+      - text: . Around 240 tester cases. Large and self-contained; worth doing as its own module.
+  - list [ref=f11e332]:
+    - listitem [ref=f11e333]:
+      - strong [ref=f11e334]: A representation for very large literals.
+      - code [ref=f11e335]: Z24460
+      - text: is unverifiable because its body is one 164 KB codepoint list. An F* string literal decoded at load time would fix it, at the cost of a change to the value model.
+  - list [ref=f11e336]:
+    - listitem [ref=f11e337]:
+      - strong [ref=f11e338]: Tail recursion after extraction
+      - text: ", so deep recursion returns an answer instead of exhausting fuel."
+  - list [ref=f11e339]:
+    - listitem [ref=f11e340]:
+      - strong [ref=f11e341]: Write the typing rules.
+      - code [ref=f11e342]: has_type
+      - text: is assumed and the declared types are now carried but unchecked. Checking them would turn the demo's "declared, not checked" caveat into a guarantee.
+  - paragraph [ref=f11e343]:
+    - text: Rendered from
+    - link [ref=f11e344] [cursor=pointer]:
+      - /url: ./engine.md
+      - code [ref=f11e345]: engine.md
+    - text: by
+    - code [ref=f11e346]: make docs
+    - text: . That file is the source; this page is generated.

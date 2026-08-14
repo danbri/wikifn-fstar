@@ -261,6 +261,24 @@ call  Z10627("Hello, Wikifunctions!")  fuel 100000
   {"type":"Z6","text":"Uryyb, Jvxvshapgvbaf!"}
 ```
 
+Composing two of them is ordinary JavaScript, because once the envelope is unwrapped a
+Wikifunctions function is an ordinary call. The classic palindrome is only a palindrome
+once the spaces are gone, so it is `Z10096` after `Z10052`:
+
+```sh
+node examples/compose.js
+```
+
+```text
+"a man a plan a canal panama"  literally false  spaces removed "amanaplanacanalpanama"  then true
+"amanaplanacanalpanama"        literally true   spaces removed "amanaplanacanalpanama"  then true
+```
+
+`Z10096` compares codepoints, so it is case-sensitive: `neveroddoreven` is a palindrome
+and `Neveroddoreven` is not. That is what the corpus function does, not a limitation of
+this engine. Case folding would be one more composition, `Z10047` to lowercase, which is
+not implemented yet.
+
 The browser build of the same artifact drives `docs/demo-engine.html`, which is the
 searchable catalogue with a run form.
 

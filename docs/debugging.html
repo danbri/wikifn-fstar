@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Debugging And Observability</title>
+    <link rel="stylesheet" href="./styles.css">
+    <style>
+      main table { border-collapse: collapse; margin: 1rem 0; font-size: 0.95em; }
+      main th, main td { border: 1px solid rgba(128,128,128,0.35); padding: 0.3rem 0.6rem; text-align: left; }
+      main th { background: rgba(128,128,128,0.12); }
+      main pre { overflow-x: auto; padding: 0.7rem 0.9rem; border-radius: 0.3rem;
+        background: rgba(128,128,128,0.12); }
+      main blockquote { margin: 1rem 0; padding-left: 0.9rem;
+        border-left: 3px solid rgba(128,128,128,0.4); opacity: 0.9; }
+      main li { margin-bottom: 0.3rem; }
+      .source { font-size: 0.85em; opacity: 0.7; margin-top: 3rem; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="eyebrow"><a href="./index.html">wikifn-fstar</a> &middot; <a href="./demos.html">Demos</a></p>
+<h1 id="debugging-and-observability">Debugging And Observability</h1>
+<p>The JavaScript evaluator in <code>src/junk-proof-of-concept-evaluator.js</code> is a throwaway prototype for the Wikifunctions composition subset. It is useful for debugging the intended semantics before those semantics are made authoritative in F*.</p>
+<p>The first F*-grounded primitive specs live in <code>src/fstar/Wikifn.Primitives.fst</code>. They cover only the toy natural-number operations used by <code>eval-example</code>: zero test, successor, and predecessor with underflow. The broader initial kernel lives in <code>src/fstar/Wikifn.Primitive.Kernel.fst</code> and adds natural equality plus a strings-as-codepoint-lists model for the direct string frontier under <code>Z36070</code>.</p>
+<h2 id="evaluation-trace">Evaluation Trace</h2>
+<pre><code class="language-sh">node ./bin/wikifn.js eval-example --trace</code></pre>
+<p>The trace records:</p>
+<ul><li>function calls</li><li>selected <code>Z14K2</code> composition implementations</li><li>builtin primitive calls</li><li>evaluated arguments</li><li>lazy <code>Z802</code> branch choices</li><li>resolved pinned references</li></ul>
+<h2 id="profile">Profile</h2>
+<pre><code class="language-sh">node ./bin/wikifn.js eval-example --profile</code></pre>
+<p>The profile records elapsed wall-clock time, fuel used, maximum call depth, event counts, and memory deltas.</p>
+<h2 id="analysis-reports">Analysis Reports</h2>
+<pre><code class="language-sh">node ./bin/wikifn.js analyze Z22294
+node ./bin/wikifn.js analyze --json Z22294</code></pre>
+<p>The text report is for humans. The JSON report is for tooling.</p>
+<p>Status meanings:</p>
+<ul><li><code>compositionally closed</code>: every reached function is either a selected <code>Z14K2</code> composition, recursive back-edge, or explicitly trusted primitive.</li><li><code>open frontier</code>: analysis reached something that is not yet inside that closed set.</li><li><code>primitive</code>: the function is trusted by the selected primitive policy.</li></ul>
+<p>Closure is always relative to a fetched corpus and primitive policy.</p>
+      <p class="source">
+        Rendered from <a href="./debugging.md"><code>debugging.md</code></a> by
+        <code>make docs</code>. That file is the source; this page is generated.
+      </p>
+    </main>
+  </body>
+</html>

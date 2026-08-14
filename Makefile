@@ -1,4 +1,4 @@
-.PHONY: test example fstar-generate-eval fstar-engine engine-testers tester-report closure fstar-check fstar-verify-functions fstar-ocaml fstar-generate-compositions fstar-js-demo fstar-call-js fstar-call-browser fstar-browser-demo setup-fstar doctor verify import-vendored-dump download-dump
+.PHONY: test example fstar-generate-eval fstar-engine engine-testers tester-report docs closure fstar-check fstar-verify-functions fstar-ocaml fstar-generate-compositions fstar-js-demo fstar-call-js fstar-call-browser fstar-browser-demo setup-fstar doctor verify import-vendored-dump download-dump
 
 test:
 	node --test
@@ -35,6 +35,11 @@ engine-testers:
 # rather than by message, as a page and as JSON.
 tester-report:
 	node scripts/report-testers.js
+
+# GitHub Pages serves .md as text/plain, so every documentation link from a demo
+# page dropped the reader into raw Markdown. These are the rendered pages.
+docs:
+	node scripts/render-docs.js
 
 closure:
 	node scripts/analyze-closure.js --set engine

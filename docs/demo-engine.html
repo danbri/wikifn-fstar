@@ -76,7 +76,15 @@
         </p>
         <p><a href="./tester-report.html">What still fails</a> — every Wikifunctions
           tester run against this engine, grouped by cause.</p>
-        <p><a href="./demos.html">Demos menu</a> &middot; <a href="./engine.md">How it works</a></p>
+        <p>
+          The same engine runs outside the browser. From a clone:
+          <code>node examples/node-engine.js Z10627 "Hello, Wikifunctions!"</code>
+          calls one function and prints its signature, its source and its answer;
+          <code>node examples/compose.js</code> feeds one function into another.
+          <a href="./engine.html#calling-it-from-javascript">Calling it from JavaScript</a>
+          has the full instructions.
+        </p>
+        <p><a href="./demos.html">Demos menu</a> &middot; <a href="./engine.html">How it works</a></p>
       </header>
 
       <section>

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Local Setup</title>
+    <link rel="stylesheet" href="./styles.css">
+    <style>
+      main table { border-collapse: collapse; margin: 1rem 0; font-size: 0.95em; }
+      main th, main td { border: 1px solid rgba(128,128,128,0.35); padding: 0.3rem 0.6rem; text-align: left; }
+      main th { background: rgba(128,128,128,0.12); }
+      main pre { overflow-x: auto; padding: 0.7rem 0.9rem; border-radius: 0.3rem;
+        background: rgba(128,128,128,0.12); }
+      main blockquote { margin: 1rem 0; padding-left: 0.9rem;
+        border-left: 3px solid rgba(128,128,128,0.4); opacity: 0.9; }
+      main li { margin-bottom: 0.3rem; }
+      .source { font-size: 0.85em; opacity: 0.7; margin-top: 3rem; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="eyebrow"><a href="./index.html">wikifn-fstar</a> &middot; <a href="./demos.html">Demos</a></p>
+<h1 id="local-setup">Local Setup</h1>
+<p>This repo does not require Codex, Claude Code, or an agent runtime.</p>
+<h2 id="requirements">Requirements</h2>
+<ul><li>Node.js 20 or newer</li><li>opam</li><li>Z3</li><li>F* installed through opam or exposed with <code>FSTAR=/path/to/fstar.exe</code></li></ul>
+<h2 id="commands">Commands</h2>
+<pre><code class="language-sh">git clone https://github.com/danbri/wikifn-fstar.git
+cd wikifn-fstar
+make setup-fstar
+make doctor
+make import-vendored-dump
+node ./bin/wikifn.js db build</code></pre>
+<p><code>make setup-fstar</code> uses an opam switch named <code>fstar</code> by default. Override it with:</p>
+<pre><code class="language-sh">OPAM_SWITCH=my-switch make setup-fstar</code></pre>
+<h2 id="checks">Checks</h2>
+<pre><code class="language-sh">npm test
+node ./bin/wikifn.js eval-example --trace --profile
+node ./bin/wikifn.js analyze Z22294
+node ./bin/wikifn.js cache stats
+node ./bin/wikifn.js db stats
+make fstar-check
+make fstar-js-demo</code></pre>
+<p><code>analyze</code> uses the local cache by default. Pass <code>--live</code> or <code>--refresh-cache</code> only when you intentionally want public API access. It reads only seed functions and their listed implementations unless <code>--follow-calls</code> is passed. Keep <code>--max-objects</code> bounded when following calls.</p>
+<h2 id="cache">Cache</h2>
+<p>The default cache is <code>cache/wikifunctions/</code>.</p>
+<pre><code class="language-sh">node ./bin/wikifn.js cache stats
+make import-vendored-dump
+make download-dump
+node ./bin/wikifn.js cache import-xml cache/dumps/wikifunctionswiki/20260801/wikifunctionswiki-20260801-pages-meta-current.xml.bz2
+node ./bin/wikifn.js cache fetch --follow-calls --max-objects 500 --max-network-objects 100 Z22294
+node ./bin/wikifn.js analyze --follow-calls --max-objects 500 Z22294</code></pre>
+<p><code>make import-vendored-dump</code> uses the snapshot in <code>third_party/wikifunctions-dumps/</code> and does not contact Wikimedia. <code>make download-dump</code> is for intentional refreshes.</p>
+<p>Cache modes:</p>
+<ul><li>default for <code>analyze</code>: local cache only</li><li><code>--live</code>: trust cached latest revisions and fetch only misses</li><li><code>--refresh-cache</code>: check current revision IDs and fetch changed objects</li><li><code>--offline</code>: use only the cache</li><li><code>--no-cache</code>: bypass cache</li></ul>
+<p><code>--max-objects</code> caps the analysis corpus. <code>--max-network-objects</code> caps new full-object network fetches; cache hits do not count against it.</p>
+      <p class="source">
+        Rendered from <a href="./setup.md"><code>setup.md</code></a> by
+        <code>make docs</code>. That file is the source; this page is generated.
+      </p>
+    </main>
+  </body>
+</html>

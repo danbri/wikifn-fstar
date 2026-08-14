@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Extraction Strategy</title>
+    <link rel="stylesheet" href="./styles.css">
+    <style>
+      main table { border-collapse: collapse; margin: 1rem 0; font-size: 0.95em; }
+      main th, main td { border: 1px solid rgba(128,128,128,0.35); padding: 0.3rem 0.6rem; text-align: left; }
+      main th { background: rgba(128,128,128,0.12); }
+      main pre { overflow-x: auto; padding: 0.7rem 0.9rem; border-radius: 0.3rem;
+        background: rgba(128,128,128,0.12); }
+      main blockquote { margin: 1rem 0; padding-left: 0.9rem;
+        border-left: 3px solid rgba(128,128,128,0.4); opacity: 0.9; }
+      main li { margin-bottom: 0.3rem; }
+      .source { font-size: 0.85em; opacity: 0.7; margin-top: 3rem; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="eyebrow"><a href="./index.html">wikifn-fstar</a> &middot; <a href="./demos.html">Demos</a></p>
+<h1 id="extraction-strategy">Extraction Strategy</h1>
+<p>Current status: this repo is not yet in a Low* regime.</p>
+<p>The present F* files are high-level specification/model code:</p>
+<ul><li>inductive ZObject terms</li><li>strings and lists</li><li>abstract validity/type predicates</li><li>lemma-oriented primitive specs</li></ul>
+<p>That shape is appropriate for the trusted model and proof work. It is not the restricted Low* subset intended for direct C extraction through KaRaMeL.</p>
+<h2 id="practical-path">Practical Path</h2>
+<ol><li>Use ordinary F* for the object model, typing rules, and proof statements.</li><li>Extract a pure executable core to OCaml where feasible.</li><li>Compile OCaml to JavaScript or Wasm using the OCaml ecosystem where that is useful.</li><li>Separately design a Low* kernel only for small, performance-sensitive pieces that really need C extraction.</li></ol>
+<p>Do not promise C/Wasm extraction for the whole Wikifunctions object model until the relevant modules are deliberately written in Low* style.</p>
+<h2 id="tooling-status">Tooling Status</h2>
+<p><code>make fstar-check</code> works with F* 2025.03.25 and pinned Z3 binaries from F*'s <code>get_fstar_z3.sh</code> helper.</p>
+<p>KaRaMeL is not installed in the main <code>fstar</code> opam switch because the opam <code>karamel</code> package currently depends on F* 2022.01.15 and an older OCaml stack. C extraction should use a separate extraction switch or container rather than weakening the verification switch.</p>
+<h2 id="local-extraction-status">Local Extraction Status</h2>
+<p>Checked locally on 2026-08-13 in the <code>fstar</code> opam switch:</p>
+<ul><li><code>fstar.exe</code> is available: F* 2025.03.25~dev, OCaml 4.14.1.</li><li><code>ocamlopt</code> is available: OCaml 4.14.1.</li><li><code>js_of_ocaml</code> is available: 6.3.2.</li><li><code>wasm_of_ocaml</code> is available: 6.3.2.</li><li><code>krml</code> is not available in this switch.</li></ul>
+<p>What works in this repo today:</p>
+<ul><li>The F* model and primitive kernel are checked by <code>make fstar-check</code>.</li><li>F* extracts <code>Wikifn.Primitive.Kernel</code>, <code>Wikifn.Primitives</code>, <code>Wikifn.Composition</code>, <code>Wikifn.Generated.Compositions</code>, <code>Wikifn.Compiled.Compositions</code>, and <code>Wikifn.Specialized.Compositions</code> to OCaml with <code>--codegen OCaml</code>.</li><li>The extracted JS runner evaluates primitive cases, selected F* IR composition cases, generated direct F* functions, and direct specialized F* functions for selected string/control functions including <code>Z10052</code>, <code>Z10627</code>, <code>Z11082</code>, <code>Z19612</code>, <code>Z21679</code>, <code>Z22294</code>, <code>Z22649</code>, <code>Z27053</code>, and <code>Z38114</code>.</li></ul>
+<p>What now works as a repo command:</p>
+<pre><code class="language-sh">make fstar-generate-compositions
+make fstar-js-demo
+node ./bin/wikifn.js fstar-demo
+node docs/generated/wikifn_primitives_demo.cjs
+make fstar-call-js
+node ./bin/wikifn.js fstar-call --mode generated Z10627 hello
+node ./bin/wikifn.js fstar-call --mode compiled Z22294 १२३
+node ./bin/wikifn.js fstar-eval-json '{"call":"Z22294","args":["१२३"]}'
+node ./bin/wikifn.js fstar-eval-json '{"call":"Z13676","args":[{"nat":99},{"nat":42}]}'
+node ./bin/wikifn.js fstar-eval-zobject '{"Z1K1":"Z7","Z7K1":"Z22294","Z22294K1":"१२३"}'
+make fstar-call-browser
+make fstar-browser-demo</code></pre>
+<p><code>make fstar-generate-compositions</code> regenerates <code>src/fstar/Wikifn.Generated.Compositions.fst</code> and <code>src/fstar/Wikifn.Compiled.Compositions.fst</code> from selected pinned objects in the local cache. The generated F* modules record the ZID revisions and canonical digests used for the selected paths.</p>
+<p><code>make fstar-js-demo</code> verifies/extracts <code>Wikifn.Primitive.Kernel</code>, <code>Wikifn.Primitives</code>, <code>Wikifn.Composition</code>, <code>Wikifn.Generated.Compositions</code>, <code>Wikifn.Compiled.Compositions</code>, and <code>Wikifn.Specialized.Compositions</code>, links the extracted OCaml against F*'s <code>Prims.cmo</code>, includes <code>zarith_stubs_js</code> when invoking <code>js_of_ocaml</code>, and emits <code>docs/generated/wikifn_primitives_demo.cjs</code>. <code>wikifn fstar-demo</code> only runs that generated artifact; it does not use the junk proof-of-concept evaluator.</p>
+<p><code>make fstar-call-js</code> builds <code>docs/generated/wikifn_call.cjs</code>, a callable Node artifact over the same extracted F* modules. The CLI wrapper is:</p>
+<pre><code class="language-sh">node ./bin/wikifn.js fstar-call [--mode generated|compiled|specialized] [--fuel N] &lt;ZID&gt; &lt;text-arg&gt;...</code></pre>
+<p>The callable artifact currently supports <code>Z10052</code>, <code>Z10627</code>, <code>Z11082</code>, <code>Z19612</code>, <code>Z21679</code>, <code>Z22294</code>, <code>Z22649</code>, <code>Z27053</code>, and <code>Z38114</code>. It decodes UTF-8 text arguments to the F* text representation and returns JSON containing the path used, input codepoints, and result.</p>
+<p>The runtime JSON IR path uses the same extracted F* interpreter and selected generated policy without going through the fixed ZID/argument wrapper:</p>
+<pre><code class="language-sh">node ./bin/wikifn.js fstar-eval-json '{"fuel":500,"expr":{"call":"Z27053","args":["H2O"]}}'</code></pre>
+<p>Supported expression forms are JSON strings for text, <code>{ "codepoints": [...] }</code>, <code>{ "bool": true }</code>, <code>{ "nat": 123 }</code>, <code>{ "arg": 0 }</code>, and <code>{ "call": "ZID", "args": [...] }</code>. This is a runtime adapter for the small F* expression calculus, not yet a canonical ZObject decoder.</p>
+<p>The grounded scalar IDs currently accepted by the JSON IR path include <code>Z802</code>, <code>Z866</code>, <code>Z10000</code>, <code>Z10008</code>, <code>Z10075</code>, <code>Z10615</code>, <code>Z10901</code>, <code>Z11040</code>, <code>Z14124</code>, <code>Z14456</code>, <code>Z14520</code>, <code>Z10174</code>, <code>Z10184</code>, <code>Z10216</code>, <code>Z13522</code>, <code>Z13569</code>, <code>Z13582</code>, <code>Z13676</code>, <code>Z13682</code>, <code>Z13689</code>, <code>Z13695</code>, plus the selected generated composition IDs.</p>
+<p><code>fstar-eval-zobject</code> accepts a supported canonical-style <code>Z7</code> call object and selected value forms (<code>Z6</code>, <code>Z10</code>, <code>Z13518</code>, <code>Z40</code>). Its purpose is to begin the real ZObject adapter path while keeping the boundary explicit: unsupported objects fail before evaluation.</p>
+<p><code>make fstar-call-browser</code> builds a standalone browser-targeted callable artifact, <code>docs/generated/wikifn_call_browser.js</code>. <code>make fstar-browser-demo</code> also exports the same API from the combined page artifact, <code>docs/generated/wikifn_primitives_browser.js</code>. The page uses the combined artifact so it does not load two independent <code>js_of_ocaml</code> runtimes. Both expose:</p>
+<pre><code class="language-js">globalThis.wikifnFstarCall(mode, zid, fuel, arg0, arg1)
+globalThis.wikifnFstarSupported()
+globalThis.wikifnFstarEvalJson(jsonText)
+globalThis.wikifnFstarEvalZObject(jsonText)</code></pre>
+<p>Those functions are exported from OCaml code linked against the F*-extracted modules; the page-side JavaScript only reads form inputs and displays returned JSON.</p>
+<p>The project homepage and <code>docs/demos.html</code> menu are static and do not load the generated browser artifact. The best current browser demo is <code>docs/demo-engine.html</code>, which carries the whole generated engine. <code>docs/demo-z22294.html</code> traces one composition in detail, <code>docs/demo-playground.html</code> is the earlier nine-function artifact kept for its three distinct compilation paths, and graph browsing lives on <code>docs/demo-trees.html</code>.</p>
+<h2 id="the-engine">The Engine</h2>
+<p>Everything below this point describes the earlier, smaller extraction path. The current one is documented in <a href="./engine.html">engine.md</a>: <code>Wikifn.Eval</code> plus generated bodies in <code>Wikifn.Generated.Eval</code>, built by:</p>
+<pre><code class="language-sh">make closure                 # how far the current primitive set reaches
+make fstar-generate-eval     # regenerate composition bodies from the pinned cache
+make fstar-engine            # extract to OCaml and compile to JavaScript
+make engine-testers          # check against Wikifunctions testers</code></pre>
+<p>The engine exposes a single entry point, <code>globalThis.wikifnEngineCall(zid, fuel, argsJson)</code>, from <code>docs/generated/wikifn_engine.js</code> (browser) and <code>wikifn_engine.cjs</code> (Node). The nine-function artifacts described below still build and still work; they are no longer the main path.</p>
+<p><code>Wikifn.Generated.Compositions</code> is the selected-pinned-composition interpreter path: local cache objects become generated F* IR, then the extracted F* interpreter evaluates the IR. <code>Wikifn.Compiled.Compositions</code> is the generated direct-function path: selected pinned compositions are lowered directly into F* functions over the checked primitive kernel. <code>Wikifn.Specialized.Compositions</code> is the hand-maintained direct-function reference path for the same selected examples. The generated direct compiler recognizes the selected private-use marker idiom used by <code>Z36070</code>; that is an optimization, not a full equivalence proof for arbitrary compositions.</p>
+<p>The interpreter now has a checked <code>Z14613</code> fast path in <code>Wikifn.Composition</code>, so generated IR for ROT13, superscript, script conversion, and subscript examples can run in the browser demo. The fast path is a direct F* implementation of the selected <code>Z14613</code> string-transform semantics; a full equivalence proof against every expansion of recursive <code>Z36070</code> is still future work.</p>
+<p><code>make fstar-browser-demo</code> uses the same extracted F* primitive module with a different OCaml runner and a tiny JavaScript output stub. The stub only appends JSON lines to the page; the primitive computation is still from extracted F*. The OCaml bytecode link uses <code>-no-check-prims</code> because <code>wikifn_publish</code> is supplied as a <code>js_of_ocaml</code> runtime primitive.</p>
+<p>The browser artifact was checked under Node with a minimal DOM shim (<code>document.getElementById("fstar-extraction-output")</code>, <code>TextDecoder</code>, and <code>TextEncoder</code>). It appended the same JSON result lines to the target element.</p>
+<p>The generated JavaScript currently prints 31 JSON lines. Representative lines:</p>
+<pre><code class="language-json">{"case":"Z782 is_zero(0)","result":{"ok":true,"value":{"type":"Z40","value":true}}}
+{"case":"ROT13 Latin alphabet (Z10627) on \"hello\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[117,114,121,121,98],"text":"uryyb","ascii":"uryyb"}}}
+{"case":"Turn to superscript (Z19612) on \"x2+y3\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[739,178,8314,696,179],"text":"ˣ²⁺ʸ³","ascii":""}}}
+{"case":"Compiled F* ROT13 Latin alphabet (Z10627) on \"hello\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[117,114,121,121,98],"text":"uryyb","ascii":"uryyb"}}}
+{"case":"Compiled F* turn to superscript (Z19612) on \"x2+y3\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[739,178,8314,696,179],"text":"ˣ²⁺ʸ³","ascii":""}}}
+{"case":"Arabic numerals to Devanagari numerals (Z22649) on \"123\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[2407,2408,2409],"text":"१२३","ascii":""}}}
+{"case":"Specialized F* ROT13 Latin alphabet (Z10627) on \"hello\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[117,114,121,121,98],"text":"uryyb","ascii":"uryyb"}}}
+{"case":"Specialized F* turn to superscript (Z19612) on \"x2+y3\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[739,178,8314,696,179],"text":"ˣ²⁺ʸ³","ascii":""}}}
+{"case":"Specialized F* digits to subscript (Z27053) on \"H2O\"","result":{"ok":true,"value":{"type":"Z6","codepoints":[72,8322,79],"text":"H₂O","ascii":"HO"}}}</code></pre>
+<p>Learning from the first failed path: <code>fstar.exe --ocamlc</code> made a bytecode executable, but the generated JS failed on <code>caml_thread_initialize not implemented</code>. The working path links only the small required F* <code>Prims.cmo</code> and passes <code>+zarith_stubs_js/biginteger.js +zarith_stubs_js/runtime.js</code> to <code>js_of_ocaml</code>.</p>
+<p>What is not wired yet:</p>
+<ul><li>Adapters from canonical Wikifunctions ZObjects to the extracted F* IR.</li><li>A general implementation-selection policy over arbitrary pinned worlds.</li><li>Low*/KaRaMeL extraction to C.</li></ul>
+<p>Commands used for the local smoke test:</p>
+<pre><code class="language-sh">mkdir -p tmp/fstar-ocaml-extract
+
+PATH=third_party/fstar-z3/bin:$PATH opam exec --switch=fstar -- \
+  fstar.exe --codegen OCaml --extract 'Wikifn' \
+  --odir tmp/fstar-ocaml-extract \
+  src/fstar/Wikifn.Model.fst \
+  src/fstar/Wikifn.Primitive.Kernel.fst \
+  src/fstar/Wikifn.Primitives.fst \
+  src/fstar/Wikifn.Semantics.fst
+
+opam exec --switch=fstar -- fstar.exe --ocamlc \
+  -I tmp/fstar-ocaml-extract \
+  tmp/fstar-ocaml-extract/Wikifn_Primitives.ml \
+  tmp/fstar-ocaml-extract/primitive_runner.ml \
+  -o tmp/fstar-ocaml-extract/primitive_runner.byte
+
+opam exec --switch=fstar -- tmp/fstar-ocaml-extract/primitive_runner.byte</code></pre>
+<p>The final command printed:</p>
+<pre><code class="language-text">3</code></pre>
+<p><code>wasm_of_ocaml</code> is installed but not wired into a passing repo command yet.</p>
+      <p class="source">
+        Rendered from <a href="./extraction.md"><code>extraction.md</code></a> by
+        <code>make docs</code>. That file is the source; this page is generated.
+      </p>
+    </main>
+  </body>
+</html>
