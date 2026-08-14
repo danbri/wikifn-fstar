@@ -11,7 +11,7 @@ open Wikifn.Eval
 
   part:      2 of 10
   functions: 400
-  ZID range: Z12936 to Z15969
+  ZID range: Z12936 to Z15965
 *)
 
 (* Z12936 Esperanto conditional verb | Z12936@130320 -> Z12937@130321 digest a7beff5bdba5232c09dcf927b9c110853f88619581d4d343b9fd332d7337a2c3 *)
@@ -129,6 +129,10 @@ let body_Z13262_english_er_form : expr =
 (* Z13280 English -ion base form | Z13280@268406 -> Z34056@268401 digest fb3c3a7c3ff3017f27ba90c34016b4f17ee4dd0f91356dfccc7a1a21e531d988 *)
 let body_Z13280_english_ion_base_form : expr =
   ECall 19601 [ECall 810 [ECall 10618 [EArg 0; EValue (VText [116; 101])]; ECall 810 [ECall 10618 [EArg 0; EValue (VText [100; 101])]; ECall 810 [ECall 10618 [EArg 0; EValue (VText [115; 101])]; ECall 810 [ECall 10618 [EArg 0; EValue (VText [108; 118; 101])]; EValue (VList [])]]]]; ECall 810 [ECall 10000 [ECall 11170 [EArg 0; EValue (VText [116; 101])]; EValue (VText [116; 105; 111; 110])]; ECall 810 [ECall 10000 [ECall 11170 [EArg 0; EValue (VText [100; 101])]; EValue (VText [115; 105; 111; 110])]; ECall 810 [ECall 10000 [ECall 11170 [EArg 0; EValue (VText [101])]; EValue (VText [105; 116; 105; 111; 110])]; ECall 810 [ECall 10000 [ECall 11170 [EArg 0; EValue (VText [118; 101])]; EValue (VText [117; 116; 105; 111; 110])]; ECall 810 [ECall 10000 [EArg 0; EValue (VText [105; 111; 110])]; EValue (VList [])]]]]]]
+
+(* Z13306 advance n days to get a later date (D/M/YYYY) | Z13306@284065 -> Z34063@268447 digest ec16ea70fa0a35a4706046440eb9c77b80297e2df9fe779a2fe04ab730e0e8bc *)
+let body_Z13306_advance_n_days_to_get_a_later_date_d_m_yyyy : expr =
+  ECall 34060 [ECall 20750 [ERecord 20420 [({ key_owner = Some 20420; key_index = 1 }, ERecord 20159 [({ key_owner = Some 20159; key_index = 1 }, EValue (VFunc 17814)); ({ key_owner = Some 20159; key_index = 2 }, EArg 1)]); ({ key_owner = Some 20420; key_index = 2 }, ERecord 20342 [({ key_owner = Some 20342; key_index = 1 }, EArg 2); ({ key_owner = Some 20342; key_index = 2 }, EArg 3)])]; ECall 17101 [EArg 0]]]
 
 (* Z13310 lists have unequal length | Z13310@184884 -> Z13311@159095 digest 67472bc0ce911ca2d504ef80063376b1c6b1b65b1de1cbaff8934acb5758f368 *)
 let body_Z13310_lists_have_unequal_length : expr =
@@ -1610,10 +1614,6 @@ let body_Z15953_ukrainian_cardinal : expr =
 let body_Z15965_polish_cardinal : expr =
   ECall 22576 [EValue (VList [VText [122; 101; 114; 111]; VText [106; 101; 100; 101; 110]; VText [100; 119; 97]; VText [116; 114; 122; 121]; VText [99; 122; 116; 101; 114; 121]; VText [112; 105; 281; 263]; VText [115; 122; 101; 347; 263]; VText [115; 105; 101; 100; 101; 109]; VText [111; 115; 105; 101; 109]; VText [100; 122; 105; 101; 119; 105; 281; 263]]); EValue (VList [VText [106; 101; 100; 101; 110; 97; 347; 99; 105; 101]; VText [100; 119; 97; 110; 97; 347; 99; 105; 101]; VText [116; 114; 122; 121; 110; 97; 347; 99; 105; 101]; VText [99; 122; 116; 101; 114; 110; 97; 347; 99; 105; 101]; VText [112; 105; 281; 116; 110; 97; 347; 99; 105; 101]; VText [115; 122; 101; 115; 110; 97; 347; 99; 105; 101]; VText [115; 105; 101; 100; 101; 109; 110; 97; 347; 99; 105; 101]; VText [111; 115; 105; 101; 109; 110; 97; 347; 99; 105; 101]; VText [100; 122; 105; 101; 119; 105; 281; 116; 110; 97; 347; 99; 105; 101]]); EValue (VList [VText [100; 122; 105; 101; 115; 105; 281; 263]; VText [100; 119; 97; 100; 122; 105; 101; 347; 99; 105; 97]; VText [116; 114; 122; 121; 100; 122; 105; 101; 347; 99; 105]; VText [99; 122; 116; 101; 114; 100; 122; 105; 101; 347; 99; 105]; VText [112; 105; 281; 263; 100; 122; 105; 101; 115; 105; 261; 116]; VText [115; 122; 101; 347; 263; 100; 122; 105; 101; 115; 105; 261; 116]; VText [115; 105; 101; 100; 101; 109; 100; 122; 105; 101; 115; 105; 261; 116]; VText [111; 115; 105; 101; 109; 100; 122; 105; 101; 115; 105; 261; 116]; VText [100; 122; 105; 101; 119; 105; 281; 263; 100; 122; 105; 101; 115; 105; 261; 116]]); EValue (VList [VText [115; 116; 111]; VText [100; 119; 105; 101; 347; 99; 105; 101]; VText [116; 114; 122; 121; 115; 116; 97]; VText [99; 122; 116; 101; 114; 121; 115; 116; 97]; VText [112; 105; 281; 263; 115; 101; 116]; VText [115; 122; 101; 347; 263; 115; 101; 116]; VText [115; 105; 101; 100; 101; 109; 115; 101; 116]; VText [111; 115; 105; 101; 109; 115; 101; 116]; VText [100; 122; 105; 101; 119; 105; 281; 263; 115; 101; 116]]); EValue (VList []); EValue (VList [VText [116; 121; 115; 105; 261; 99]; VText [116; 121; 115; 105; 261; 99; 101]; VText [116; 121; 115; 105; 281; 99; 121]]); EValue (VList [VText [109; 105]; VText [98; 105]; VText [116; 114; 121]; VText [107; 119; 97; 100; 114; 121]; VText [107; 119; 105; 110; 116; 121]; VText [115; 101; 107; 115; 116; 121]; VText [115; 101; 112; 116; 121]; VText [111; 107; 116; 121]; VText [110; 111; 110; 121]; VText [100; 101; 99; 121]]); EValue (VList [VText [108; 105; 111; 110]; VText [108; 105; 111; 110; 121]; VText [108; 105; 111; 110; 243; 119]]); EValue (VList [VText [108; 105; 97; 114; 100]; VText [108; 105; 97; 114; 100; 121]; VText [108; 105; 97; 114; 100; 243; 119]]); EArg 0]
 
-(* Z15969 reified Z1K1 (object for Key reference) | Z15969@202800 -> Z15970@290216 digest f54f4a88a07d0af438594c8fb250cf45e56d3a3084992e4359db26967a596805 *)
-let body_Z15969_reified_z1k1_object_for_key_reference : expr =
-  ECall 822 [ECall 811 [ECall 805 [EArg 0]]]
-
 let part_policy (fid:zid) : Tot (option expr) =
   match fid with
   | 12936 -> Some body_Z12936_esperanto_conditional_verb
@@ -1645,6 +1645,7 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 13247 -> Some body_Z13247_faro_out_shuffle
   | 13262 -> Some body_Z13262_english_er_form
   | 13280 -> Some body_Z13280_english_ion_base_form
+  | 13306 -> Some body_Z13306_advance_n_days_to_get_a_later_date_d_m_yyyy
   | 13310 -> Some body_Z13310_lists_have_unequal_length
   | 13322 -> Some body_Z13322_is_sorted
   | 13324 -> Some body_Z13324_is_longer_or_equal_length_string
@@ -2015,5 +2016,4 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 15946 -> Some body_Z15946_are_two_numeric_strings_in_descending_order
   | 15953 -> Some body_Z15953_ukrainian_cardinal
   | 15965 -> Some body_Z15965_polish_cardinal
-  | 15969 -> Some body_Z15969_reified_z1k1_object_for_key_reference
   | _ -> None

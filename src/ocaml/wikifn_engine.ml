@@ -308,3 +308,34 @@ let call zid_text fuel arguments_json =
               Printf.sprintf
                 "{\"ok\":false,\"error\":\"eval\",\"zid\":%s,\"message\":%s}"
                 (quote zid_text) (quote (describe_error e))))
+
+
+(* Calling a composition that was compiled into an F* function of its own,
+   rather than interpreted from its tree.
+
+   The answer must be the same either way - that is what makes the compiled path
+   trustworthy and it is what test/compiled.test.js checks - so the two entry
+   points are deliberately identical in shape. What differs is that this one
+   selects a function and calls it, while the other walks an expression. A ZID
+   with no compiled function says so, rather than quietly falling back to the
+   interpreter and hiding the gap. *)
+let compiled zid_text arguments_json =
+  match parse_zid zid_text with
+  | None -> error "zid" (zid_text ^ " is not a ZID")
+  | Some zid -> (
+      match parse_arguments arguments_json with
+      | exception Bad_argument message -> error "arguments" message
+      | args -> (
+          let wrapped = List.map (fun v -> Wikifn_Eval.EOk v) args in
+          match Wikifn_Compiled_Direct.compiled_by_zid zid wrapped with
+          | FStar_Pervasives_Native.None ->
+              error "compiled"
+                (zid_text ^ " has no compiled function of that arity")
+          | FStar_Pervasives_Native.Some (Wikifn_Eval.EOk value) ->
+              Printf.sprintf
+                "{\"ok\":true,\"zid\":%s,\"compiled\":true,\"result\":%s}"
+                (quote zid_text) (encode_value value)
+          | FStar_Pervasives_Native.Some (Wikifn_Eval.EErr e) ->
+              Printf.sprintf
+                "{\"ok\":false,\"error\":\"eval\",\"zid\":%s,\"compiled\":true,\"message\":%s}"
+                (quote zid_text) (quote (describe_error e))))

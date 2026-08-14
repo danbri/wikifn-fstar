@@ -38,20 +38,22 @@
           anywhere.
         </p>
         <p>
-          The Wikifunctions side is <strong>8 KB</strong>, not the 1.2 MB
-          engine: <a href="./generated/js/Z10096-Z10052-Z10627.js"><code>Z10096-Z10052-Z10627.js</code></a>
-          is just these three functions and their transitive closure &mdash;
-          fifteen translated definitions and the primitives they reach. It is a
-          plain ES module, so this page <code>import</code>s it and nothing else.
+          The Wikifunctions side is the F*-extracted engine: translated from the
+          pinned corpus into F*, checked by F*, extracted to OCaml, compiled to
+          JavaScript. Every function it can run is available here, addressed by
+          ZID.
         </p>
         <p>
-          Those bodies are mechanical translations of the same s-expressions the
-          checked F* printer produces, and every one is checked against the
-          F*-extracted engine on its own Wikifunctions testers before shipping
-          (<code>node scripts/export-js.js Z10096 --check</code>). The primitives
-          underneath are written in JavaScript rather than extracted &mdash; the
-          same second-implementation trade the Scheme export already makes, and
-          the reason the check exists.
+          It is 1.2 MB, which is more than this page needs, and the reason is
+          worth stating rather than working around. The engine is an
+          <em>interpreter</em> plus 3,823 composition bodies carried as data. The
+          right fix is not a smaller interpreter but no interpreter: compiling
+          each composition into its own F* function and extracting that, so a
+          SPARQL extension function is a directly-called extracted function
+          rather than a tree walk. That path exists
+          (<code>Wikifn.Compiled.Compositions</code>) and currently holds ten
+          functions; widening it to the corpus is the work in progress, and this
+          page is what it is for.
         </p>
         <p>
           <a href="./demo-engine.html">Engine browser</a> &middot;
@@ -101,19 +103,17 @@
           <code>undefined</code>. That is the whole integration, and it is why
           every ZID works rather than a chosen few.
         </p>
-        <pre><code>import * as wikifn from "./generated/js/Z10096-Z10052-Z10627.js";
-
-const engine = new Comunica.QueryEngine();
+        <pre><code>const engine = new Comunica.QueryEngine();
 
 await engine.queryBindings(query, {
   sources: [{ type: "serialized", value: turtle, mediaType: "text/turtle" }],
 
-  // Any &lt;.../fn#Znnnn&gt; the module exports becomes callable from SPARQL.
+  // Any &lt;.../fn#Znnnn&gt; becomes a call into the extracted engine.
   extensionFunctionCreator: (iri) =&gt; {
     const zid = /#(Z[1-9][0-9]*)$/.exec(iri.value)?.[1];
-    const fn = zid &amp;&amp; wikifn[zid];
-    if (!fn) return undefined;
-    return (args) =&gt; toTerm(fn(...args.map(fromTerm)));
+    if (!zid) return undefined;
+    return (args) =&gt; toTerm(JSON.parse(globalThis.wikifnEngineCall(
+      zid, "100000", JSON.stringify(args.map(fromTerm)))));
   }
 });</code></pre>
         <p>
@@ -269,10 +269,7 @@ ORDER BY ?opened`
 
         let engine = null;
 
-        // The whole Wikifunctions side: three functions and their closure.
-        const wikifn = await import("./generated/js/Z10096-Z10052-Z10627.js");
-
-        // SPARQL passes RDF terms; the exported module takes plain values.
+        // SPARQL passes RDF terms; the engine takes JSON literals.
         // Only the three types that have an obvious counterpart cross over.
         const XSD = "http://www.w3.org/2001/XMLSchema#";
         function termToArgument(term) {
@@ -287,16 +284,18 @@ ORDER BY ?opened`
           return term.value;
         }
 
-        function resultToTerm(value, zid) {
-          if (typeof value === "string") return DF.literal(value, DF.namedNode(XSD + "string"));
-          if (typeof value === "boolean") {
-            return DF.literal(String(value), DF.namedNode(XSD + "boolean"));
+        function resultToTerm(response, zid) {
+          if (!response.ok) throw new Error(`${zid}: ${response.message}`);
+          const result = response.result;
+          if (result.type === "Z6") return DF.literal(result.text, DF.namedNode(XSD + "string"));
+          if (result.type === "Z40") {
+            return DF.literal(String(result.value), DF.namedNode(XSD + "boolean"));
           }
-          if (typeof value === "number" && Number.isInteger(value)) {
-            return DF.literal(String(value), DF.namedNode(XSD + "integer"));
+          if (result.type === "Z13518") {
+            return DF.literal(String(result.value), DF.namedNode(XSD + "integer"));
           }
           // A list or a record has no obvious RDF term. Refused, not guessed at.
-          throw new Error(`${zid} returned ${typeof value}, which has no RDF term`);
+          throw new Error(`${zid} returned ${result.type}, which has no RDF term`);
         }
 
         function load(url) {
@@ -311,6 +310,12 @@ ORDER BY ?opened`
 
         async function boot() {
           try {
+            status.textContent = "Fetching the Wikifunctions engine…";
+            await load("./generated/wikifn_engine.js");
+            if (typeof globalThis.wikifnEngineCall !== "function") {
+              throw new Error("the artifact did not export wikifnEngineCall");
+            }
+
             status.textContent = "Fetching Comunica from the CDN…";
             await load("https://rdf.js.org/comunica-browser/versions/latest/engines/query-sparql/comunica-browser.js");
             if (typeof globalThis.Comunica === "undefined") {
@@ -318,10 +323,7 @@ ORDER BY ?opened`
             }
             engine = new globalThis.Comunica.QueryEngine();
 
-            const exported = Object.keys(wikifn).filter((k) => /^Z[1-9][0-9]*$/.test(k));
-            status.textContent =
-              `Ready. Comunica plus ${exported.length} Wikifunctions (${exported.join(", ")}), ` +
-              "both running in this page.";
+            status.textContent = "Ready. Both engines are running in this page.";
             runButton.disabled = false;
             run();
           } catch (error) {

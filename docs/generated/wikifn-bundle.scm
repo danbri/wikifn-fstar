@@ -2364,6 +2364,11 @@
 (define (Z13280_english_ion_base_form a0) (Z19601_n_ifs (cons (Z10618_string_ends_with a0 "te") (cons (Z10618_string_ends_with a0 "de") (cons (Z10618_string_ends_with a0 "se") (cons (Z10618_string_ends_with a0 "lve") (list))))) (cons (Z10000_join_two_strings (Z11170_string_without_suffix a0 "te") "tion") (cons (Z10000_join_two_strings (Z11170_string_without_suffix a0 "de") "sion") (cons (Z10000_join_two_strings (Z11170_string_without_suffix a0 "e") "ition") (cons (Z10000_join_two_strings (Z11170_string_without_suffix a0 "ve") "ution") (cons (Z10000_join_two_strings a0 "ion") (list))))))))
 (define Z13280 Z13280_english_ion_base_form)
 
+;; Z13306 advance n days to get a later date (D/M/YYYY)  [reaches an unimplemented function]
+;;   Z13306K1: Natural number, Z13306K2: Natural number, Z13306K3: Gregorian calendar month, Z13306K4: Natural number -> String   [declared, not checked]
+(define (Z13306_advance_n_days_to_get_a_later_date_d_m_yyyy a0 a1 a2 a3) (Z34060_display_gregorian_date_unpadded_d_m_yyyy (Z20750 (record Z20420 (Z20420K1 (record Z20159 (Z20159K1 Z17814) (Z20159K2 a1))) (Z20420K2 (record Z20342 (Z20342K1 a2) (Z20342K2 a3)))) (Z17101_natural_number_to_integer a0))))
+(define Z13306 Z13306_advance_n_days_to_get_a_later_date_d_m_yyyy)
+
 ;; Z13310 lists have unequal length
 ;;   Z13310K1: Typed list(Object), Z13310K2: Typed list(Object) -> Boolean   [declared, not checked]
 (define (Z13310_lists_have_unequal_length a0 a1) (not (Z12864_lists_have_equal_length a0 a1)))
@@ -5478,6 +5483,11 @@
 ;;   Z18391K1: String -> String   [declared, not checked]
 (define (Z18391_carbon_dioxide_emissions_of_mk1_diesel_car_journey a0) (Z10862_multiply_two_numeric_strings_full_stop_input_output_format a0 "2.36"))
 (define Z18391 Z18391_carbon_dioxide_emissions_of_mk1_diesel_car_journey)
+
+;; Z18403 (!) Korean add (-eul) to the end of a noun  [reaches an unimplemented function]
+;;   Z18403K1: String -> String   [declared, not checked]
+(define (Z18403_korean_add_eul_to_the_end_of_a_noun a0) (Z886_deprecated_z22693 (cons (record Z86 (Z86K1 a0)) (cons (record Z86 (Z86K1 (if (Z12778_has_korean_jongseong (Z11060_get_last_character_of_string a0)) "을" "를"))) (list)))))
+(define Z18403 Z18403_korean_add_eul_to_the_end_of_a_noun)
 
 ;; Z18406 (!) carbon dioxide emissions of ethanol E85 car journey  [reaches an unimplemented function]
 ;;   Z18406K1: String -> String   [declared, not checked]
@@ -9751,7 +9761,7 @@
 
 ;; Z26070 German nominative indef article + noun from Lexeme  [reaches an unimplemented function]
 ;;   Z26070K1: Wikidata lexeme -> String   [declared, not checked]
-(define (Z26070_german_nominative_indef_article_noun_from_lexeme a0) (Z27854_html_fragment_as_string (Z36816_first_fragment_of_option (Z36820_option_by_features (Z37209 Z37198 (Z37157 a0) Z1430) (list (record Z6091 (Z6091K1 "Q131105")))))))
+(define (Z26070_german_nominative_indef_article_noun_from_lexeme a0) (Z27854_html_fragment_as_string (Z36816_first_fragment_of_option (Z36820_option_by_features (Z37209_german_noun_phrase_from_determiner_and_noun Z37198 (Z37157_german_noun_from_lexeme a0) Z1430) (list (record Z6091 (Z6091K1 "Q131105")))))))
 (define Z26070 Z26070_german_nominative_indef_article_noun_from_lexeme)
 
 ;; Z26088 English article-less instantiating sentence  [reaches an unimplemented function]
@@ -13398,6 +13408,11 @@
 ;;   Z31294K1: Typed list(Object), Z31294K2: Typed list(Object) -> Boolean   [declared, not checked]
 (define (Z31294_list_starts_with a0 a1) (bool-and (not (Z12851_is_longer_list a1 a0)) (Z889_list_equality (Z13366_get_the_first_n_elements_of_an_untyped_list (Z17895_untype_a_list a0) (length a1)) a1 Z13052_object_equality)))
 (define Z31294 Z31294_list_starts_with)
+
+;; Z31309 Year-specific statement w/ natural number value  [reaches an unimplemented function]
+;;   Z31309K1: Wikidata item reference, Z31309K2: Wikidata item reference, Z31309K3: Natural number, Z31309K4: Natural language, Z31309K5: Wikidata time -> String   [declared, not checked]
+(define (Z31309_year_specific_statement_w_natural_number_value a0 a1 a2 a3 a4) (Z28436_year_specific_sentence_from_statement a0 (record Z6003 (Z6003K1 a0) (Z6003K2 a1) (Z6003K3 a2) (Z6003K4 Z6042) (Z6003K5 (cons (record Z6007 (Z6007K1 (record Z6092 (Z6092K1 "P585"))) (Z6007K2 a4) (Z6007K3 Z6021)) (list))) (Z6003K6 (list)) (Z6003K7 Z6021)) a3))
+(define Z31309 Z31309_year_specific_statement_w_natural_number_value)
 
 ;; Z31317 Dutch article-less instantiating sentence  [reaches an unimplemented function]
 ;;   Z31317K1: Wikidata item reference, Z31317K2: Wikidata item reference -> String   [declared, not checked]
@@ -17184,6 +17199,16 @@
 (define (Z36540_x_exists_in_n_ys_esperanto a0 a1 a2) (Z21394_concatenate_many_strings (cons (Z10771_sentence_case (Z23468_text_from_wikidata_item_label_for_given_language (Z30120_fetch_wikidata_item_or_parts a0 (list Z6033) (list Z1576) (list)) Z1576)) (cons " ekzistas en " (cons (Z14280_display_natural_number a1 Z1576) (cons " " (cons (if (= a1 1) (Z23468_text_from_wikidata_item_label_for_given_language (Z30120_fetch_wikidata_item_or_parts a2 (list Z6033) (list Z1576) (list)) Z1576) (Z14396_string_of_monolingual_text (car (Z22396_get_texts_of_representations_of_wd_lexeme_form (Z23082_first_plural_lexeme_form_for_a_wikidata_item a2 Z1576))))) (cons "." (list)))))))))
 (define Z36540 Z36540_x_exists_in_n_ys_esperanto)
 
+;; Z36542 is PID in use?  [reaches an unimplemented function]
+;;   Z36542K1: String -> Boolean   [declared, not checked]
+(define (Z36542_is_pid_in_use a0) (bool-and (Z10615_string_starts_with a0 "P") (Z850 (Z20305_unless_exception #t (null? (Z803_value_by_key (record Z39 (Z39K1 "K1")) (Z6820 (cons (record Z6092 (Z6092K1 a0)) (list)) (list Z6031) (list Z1360) (list)))) #f) Z549 (Z10206_nullary_false))))
+(define Z36542 Z36542_is_pid_in_use)
+
+;; Z36548 is LID in use?  [reaches an unimplemented function]
+;;   Z36548K1: String -> Boolean   [declared, not checked]
+(define (Z36548_is_lid_in_use a0) (bool-and (Z10615_string_starts_with a0 "L") (Z850 (Z20305_unless_exception #t (null? (Z803_value_by_key (record Z39 (Z39K1 "K1")) (Z6820 (cons (record Z6095 (Z6095K1 a0)) (list)) (list Z6031) (list Z1360) (list)))) #f) Z549 (Z10206_nullary_false))))
+(define Z36548 Z36548_is_lid_in_use)
+
 ;; Z36554 filter and order texts by listed languages  [reaches an unimplemented function]
 ;;   Z36554K1: Typed list(Monolingual text), Z36554K2: Typed list(Natural language) -> Typed list(Monolingual text)   [declared, not checked]
 (define (Z36554_filter_and_order_texts_by_listed_languages a0 a1) (if (null? a1) (list) (Z12767_concatenate_two_untyped_lists (Z22820_compress_list a0 (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z33175_language_of_monolingual_text_is_exactly a0 (car a1))) (Z36554_filter_and_order_texts_by_listed_languages (Z22820_compress_list a0 (Z36132_invert_all_of_typed_list_of_booleans (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z33175_language_of_monolingual_text_is_exactly a0 (car a1)))) (cdr a1)))))
@@ -17223,6 +17248,11 @@
 ;;   Z36605K1: Wikidata lexeme reference -> Typed list(Wikidata item reference)   [declared, not checked]
 (define (Z36605_grammatical_genders_from_wikidata_lexeme_reference a0) (Z20616_grammatical_genders_from_wikidata_lexeme (Z6825 a0)))
 (define Z36605 Z36605_grammatical_genders_from_wikidata_lexeme_reference)
+
+;; Z36607 English noun from Lexeme  [reaches an unimplemented function]
+;;   Z36607K1: Wikidata lexeme -> (experimental) Syntactic table   [declared, not checked]
+(define (Z36607_english_noun_from_lexeme a0) (record Z36462 (Z36462K1 (Z19295_language_of_lexeme a0)) (Z36462K2 (record Z6091 (Z6091K1 "Q1084"))) (Z36462K3 (list)) (Z36462K4 (cons (record Z36463 (Z36463K1 (list (record Z6091 (Z6091K1 "Q110786")))) (Z36463K2 (cons (Z27868 (Z14396_string_of_monolingual_text (Z19252_singular_form_of_lexeme_as_monolingual_text a0))) (list)))) (cons (record Z36463 (Z36463K1 (list (record Z6091 (Z6091K1 "Q146786")))) (Z36463K2 (cons (if (Z36450_lexeme_has_forms_with_given_grammatical_features a0 (list (record Z6091 (Z6091K1 "Q146786")))) (Z27868 (Z14396_string_of_monolingual_text (Z19260_plural_form_of_lexeme_as_monolingual_text a0))) (Z27868 (Z11089_english_plural (Z14396_string_of_monolingual_text (Z19252_singular_form_of_lexeme_as_monolingual_text a0))))) (list)))) (list))))))
+(define Z36607 Z36607_english_noun_from_lexeme)
 
 ;; Z36608 Create Syntactic table
 ;;   Z36608K1: Natural language, Z36608K2: Wikidata item reference, Z36608K3: Typed list(Wikidata item reference), Z36608K4: Typed list((experimental) Syntactic option) -> (experimental) Syntactic table   [declared, not checked]
@@ -17396,17 +17426,22 @@
 
 ;; Z36754 English noun from Lexeme reference  [reaches an unimplemented function]
 ;;   Z36754K1: Wikidata lexeme reference -> (experimental) Syntactic table   [declared, not checked]
-(define (Z36754_english_noun_from_lexeme_reference a0) (Z36607 (Z6825 a0)))
+(define (Z36754_english_noun_from_lexeme_reference a0) (Z36607_english_noun_from_lexeme (Z6825 a0)))
 (define Z36754 Z36754_english_noun_from_lexeme_reference)
+
+;; Z36759 English noun from singular and plural  [reaches an unimplemented function]
+;;   Z36759K1: String, Z36759K2: String, Z36759K3: Natural language -> (experimental) Syntactic table   [declared, not checked]
+(define (Z36759_english_noun_from_singular_and_plural a0 a1 a2) (record Z36462 (Z36462K1 a2) (Z36462K2 (record Z6091 (Z6091K1 "Q1084"))) (Z36462K3 (list)) (Z36462K4 (cons (record Z36463 (Z36463K1 (list (record Z6091 (Z6091K1 "Q110786")))) (Z36463K2 (cons (Z27868 a0) (list)))) (cons (record Z36463 (Z36463K1 (list (record Z6091 (Z6091K1 "Q146786")))) (Z36463K2 (cons (Z27868 a1) (list)))) (list))))))
+(define Z36759 Z36759_english_noun_from_singular_and_plural)
 
 ;; Z36762 English noun from string  [reaches an unimplemented function]
 ;;   Z36762K1: String, Z36762K2: Natural language -> (experimental) Syntactic table   [declared, not checked]
-(define (Z36762_english_noun_from_string a0 a1) (Z36759 a0 (Z11089_english_plural a0) a1))
+(define (Z36762_english_noun_from_string a0 a1) (Z36759_english_noun_from_singular_and_plural a0 (Z11089_english_plural a0) a1))
 (define Z36762 Z36762_english_noun_from_string)
 
 ;; Z36766 English noun from item reference  [reaches an unimplemented function]
 ;;   Z36766K1: Wikidata item reference, Z36766K2: Natural language -> (experimental) Syntactic table   [declared, not checked]
-(define (Z36766_english_noun_from_item_reference a0 a1) (Z36607 (Z22696_fetch_first_lexeme_from_item_ref_and_lang_p5137 a0 Z1002)))
+(define (Z36766_english_noun_from_item_reference a0 a1) (Z36607_english_noun_from_lexeme (Z22696_fetch_first_lexeme_from_item_ref_and_lang_p5137 a0 Z1002)))
 (define Z36766 Z36766_english_noun_from_item_reference)
 
 ;; Z36770 is valid English noun table  [reaches an unimplemented function]
@@ -17423,6 +17458,16 @@
 ;;   Z36785K1: Grammatical definiteness, Z36785K2: Grammatical number (singular / plural) -> (experimental) Syntactic table   [declared, not checked]
 (define (Z36785_english_grammatic_determiner a0 a1) (if (Z6894_same_wikidata_enum_instance a0 (record Z28516 (Z28516K1 (record Z6091 (Z6091K1 "Q53997851"))))) (if (Z6894_same_wikidata_enum_instance a1 (record Z26934 (Z26934K1 (record Z6091 (Z6091K1 "Q110786"))))) Z36783 Z36784) (if (Z6894_same_wikidata_enum_instance a1 (record Z26934 (Z26934K1 (record Z6091 (Z6091K1 "Q110786"))))) Z36781 Z36782)))
 (define Z36785 Z36785_english_grammatic_determiner)
+
+;; Z36792 English determiner from number  [reaches an unimplemented function]
+;;   Z36792K1: Natural number -> (experimental) Syntactic table   [declared, not checked]
+(define (Z36792_english_determiner_from_number a0) (record Z36462 (Z36462K1 Z1002) (Z36462K2 (record Z6091 (Z6091K1 "Q576271"))) (Z36462K3 (cons (if (Z31547_is_natural_number_1 a0) (record Z6091 (Z6091K1 "Q110786")) (record Z6091 (Z6091K1 "Q146786"))) (list))) (Z36462K4 (cons (record Z36463 (Z36463K1 (list)) (Z36463K2 (cons (Z27868 (Z13587 a0)) (list)))) (list)))))
+(define Z36792 Z36792_english_determiner_from_number)
+
+;; Z36798 English noun phrase from determiner and noun  [reaches an unimplemented function]
+;;   Z36798K1: (experimental) Syntactic table, Z36798K2: (experimental) Syntactic table, Z36798K3: Natural language -> (experimental) Syntactic table   [declared, not checked]
+(define (Z36798_english_noun_phrase_from_determiner_and_noun a0 a1 a2) (if (bool-and (Z36717_syntactic_table_equality a0 Z36781) (Z32314 (Z36839 (car (Z36827_fragments_from_table_by_features a1 (list (record Z6091 (Z6091K1 "Q110786")))))))) (record Z36462 (Z36462K1 a2) (Z36462K2 (record Z6091 (Z6091K1 "Q1401131"))) (Z36462K3 (list (record Z6091 (Z6091K1 "Q110786")))) (Z36462K4 (cons (record Z36463 (Z36463K1 (list)) (Z36463K2 (cons (Z27849_join_two_html_fragments (record Z89 (Z89K1 "an ")) (car (Z36827_fragments_from_table_by_features a1 (list (record Z6091 (Z6091K1 "Q110786")))))) (list)))) (list)))) (record Z36462 (Z36462K1 a2) (Z36462K2 (record Z6091 (Z6091K1 "Q1401131"))) (Z36462K3 (Z36644_inherent_features_of_table a0)) (Z36462K4 (cons (record Z36463 (Z36463K1 (list)) (Z36463K2 (cons (Z36810_join_two_html_fragments_with_space_unless_empty (Z36747_first_fragment a0) (car (Z36827_fragments_from_table_by_features a1 (Z36644_inherent_features_of_table a0)))) (list)))) (list))))))
+(define Z36798 Z36798_english_noun_phrase_from_determiner_and_noun)
 
 ;; Z36804 join two strings with space unless empty
 ;;   Z36804K1: String, Z36804K2: String -> String   [declared, not checked]
@@ -17534,6 +17579,26 @@
 (define (Z36916_infobox_for_holiday a0 a1) (Z33328_create_html_table_fragment (record Z89 (Z89K1 "")) (record Z89 (Z89K1 "")) (cons (Z37644_infobox_section a0 "default" a1) (cons (Z37623_infobox_row a0 (record Z6092 (Z6092K1 "P547")) a1) (cons (Z33319_create_html_tr_fragment (cons (Z33315_create_html_td_fragment (Z10771_sentence_case (Z24766_label_text_for_item_in_given_language_or_fallback (record Z6091 (Z6091K1 "Q205892")) a1))) (cons (Z33315_create_html_td_fragment (Z10771_sentence_case (Z24766_label_text_for_item_in_given_language_or_fallback (Z21449_first_value_of_property_from_wikidata_item (record Z6092 (Z6092K1 "P837")) (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list Z1360) (list (record Z6092 (Z6092K1 "P547")) (record Z6092 (Z6092K1 "P837"))))) a1))) (list)))) (list))))))
 (define Z36916 Z36916_infobox_for_holiday)
 
+;; Z36925 English noun phrase from named item reference  [reaches an unimplemented function]
+;;   Z36925K1: Wikidata item reference, Z36925K2: Natural language -> (experimental) Syntactic table   [declared, not checked]
+(define (Z36925_english_noun_phrase_from_named_item_reference a0 a1) (if (Z22131_is_kleenean_true (Z32935_item_indicates_zero_article_english (Z6821_fetch_wikidata_item a0))) (record Z36462 (Z36462K1 a1) (Z36462K2 (record Z6091 (Z6091K1 "Q1401131"))) (Z36462K3 (list (record Z6091 (Z6091K1 "Q110786")))) (Z36462K4 (cons (record Z36463 (Z36463K1 (list)) (Z36463K2 (Z36827_fragments_from_table_by_features (Z36766_english_noun_from_item_reference a0 a1) (list (record Z6091 (Z6091K1 "Q110786")))))) (list)))) (Z36798_english_noun_phrase_from_determiner_and_noun Z36783 (Z37089_noun_from_item_reference a0 a1) a1)))
+(define Z36925 Z36925_english_noun_phrase_from_named_item_reference)
+
+;; Z36935 English noun phrase from noun  [reaches an unimplemented function]
+;;   Z36935K1: (experimental) Syntactic table, Z36935K2: Grammatical number (singular / plural), Z36935K3: Natural language -> (experimental) Syntactic table   [declared, not checked]
+(define (Z36935_english_noun_phrase_from_noun a0 a1 a2) (record Z36462 (Z36462K1 a2) (Z36462K2 (record Z6091 (Z6091K1 "Q1401131"))) (Z36462K3 (cons (Z6895 a1) (list))) (Z36462K4 (cons (record Z36463 (Z36463K1 (list)) (Z36463K2 (Z36827_fragments_from_table_by_features a0 (cons (Z6895 a1) (list))))) (list)))))
+(define Z36935 Z36935_english_noun_phrase_from_noun)
+
+;; Z36939 English instantiate present from 2 noun phrases  [reaches an unimplemented function]
+;;   Z36939K1: (experimental) Syntactic table, Z36939K2: (experimental) Syntactic table, Z36939K3: Natural language -> (experimental) Syntactic table   [declared, not checked]
+(define (Z36939_english_instantiate_present_from_2_noun_phrases a0 a1 a2) (record Z36462 (Z36462K1 a2) (Z36462K2 (record Z6091 (Z6091K1 "Q41796"))) (Z36462K3 (list)) (Z36462K4 (cons (record Z36463 (Z36463K1 (list)) (Z36463K2 (cons (Z35766_join_multiple_html_fragments_with_a_separator (cons (Z36944 (Z36747_first_fragment a0)) (cons (if (Z36723_has_inherent_feature (record Z6091 (Z6091K1 "Q110786")) a0) (record Z89 (Z89K1 "is")) (record Z89 (Z89K1 "are"))) (cons (Z27849_join_two_html_fragments (Z36747_first_fragment a1) (record Z89 (Z89K1 "."))) (list)))) (record Z89 (Z89K1 " "))) (list)))) (list)))))
+(define Z36939 Z36939_english_instantiate_present_from_2_noun_phrases)
+
+;; Z36953 English instantiate past from 2 noun phrases  [reaches an unimplemented function]
+;;   Z36953K1: (experimental) Syntactic table, Z36953K2: (experimental) Syntactic table, Z36953K3: Natural language -> (experimental) Syntactic table   [declared, not checked]
+(define (Z36953_english_instantiate_past_from_2_noun_phrases a0 a1 a2) (record Z36462 (Z36462K1 a2) (Z36462K2 (record Z6091 (Z6091K1 "Q41796"))) (Z36462K3 (list)) (Z36462K4 (cons (record Z36463 (Z36463K1 (list)) (Z36463K2 (cons (Z35766_join_multiple_html_fragments_with_a_separator (cons (Z36944 (Z36747_first_fragment a0)) (cons (if (Z36723_has_inherent_feature (record Z6091 (Z6091K1 "Q110786")) a0) (record Z89 (Z89K1 "was")) (record Z89 (Z89K1 "were"))) (cons (Z27849_join_two_html_fragments (Z36747_first_fragment a1) (record Z89 (Z89K1 "."))) (list)))) (record Z89 (Z89K1 " "))) (list)))) (list)))))
+(define Z36953 Z36953_english_instantiate_past_from_2_noun_phrases)
+
 ;; Z36957 strong table  [reaches an unimplemented function]
 ;;   Z36957K1: (experimental) Syntactic table -> (experimental) Syntactic table   [declared, not checked]
 (define (Z36957_strong_table a0) (record Z36462 (Z36462K1 (Z36613_language_of_table a0)) (Z36462K2 (Z36636_part_of_speech_of_table a0)) (Z36462K3 (Z36644_inherent_features_of_table a0)) (Z36462K4 (map Z36959_strong_option (Z36650_options_of_table a0)))))
@@ -17549,14 +17614,24 @@
 (define (Z36961_strong_html a0) (Z35049_wrap_an_html_fragment_in_a_simple_tag a0 "strong"))
 (define Z36961 Z36961_strong_html)
 
+;; Z36969 English noun from positive adjective and noun  [reaches an unimplemented function]
+;;   Z36969K1: (experimental) Syntactic table, Z36969K2: (experimental) Syntactic table, Z36969K3: Natural language -> (experimental) Syntactic table   [declared, not checked]
+(define (Z36969_english_noun_from_positive_adjective_and_noun a0 a1 a2) (record Z36462 (Z36462K1 a2) (Z36462K2 (record Z6091 (Z6091K1 "Q1084"))) (Z36462K3 (list)) (Z36462K4 (cons (record Z36463 (Z36463K1 (list (record Z6091 (Z6091K1 "Q110786")))) (Z36463K2 (cons (Z36810_join_two_html_fragments_with_space_unless_empty (car (Z36827_fragments_from_table_by_features a0 (list (record Z6091 (Z6091K1 "Q3482678"))))) (car (Z36827_fragments_from_table_by_features a1 (list (record Z6091 (Z6091K1 "Q110786")))))) (list)))) (cons (record Z36463 (Z36463K1 (list (record Z6091 (Z6091K1 "Q146786")))) (Z36463K2 (cons (Z36810_join_two_html_fragments_with_space_unless_empty (car (Z36827_fragments_from_table_by_features a0 (list (record Z6091 (Z6091K1 "Q3482678"))))) (car (Z36827_fragments_from_table_by_features a1 (list (record Z6091 (Z6091K1 "Q146786")))))) (list)))) (list))))))
+(define Z36969 Z36969_english_noun_from_positive_adjective_and_noun)
+
+;; Z36972 English adjective from three strings  [reaches an unimplemented function]
+;;   Z36972K1: String, Z36972K2: String, Z36972K3: String, Z36972K4: Natural language -> (experimental) Syntactic table   [declared, not checked]
+(define (Z36972_english_adjective_from_three_strings a0 a1 a2 a3) (record Z36462 (Z36462K1 a3) (Z36462K2 (record Z6091 (Z6091K1 "Q34698"))) (Z36462K3 (list)) (Z36462K4 (cons (record Z36463 (Z36463K1 (list (record Z6091 (Z6091K1 "Q3482678")))) (Z36463K2 (cons (Z27868 a0) (list)))) (cons (record Z36463 (Z36463K1 (list (record Z6091 (Z6091K1 "Q14169499")))) (Z36463K2 (cons (Z27868 a1) (list)))) (cons (record Z36463 (Z36463K1 (list (record Z6091 (Z6091K1 "Q1817208")))) (Z36463K2 (cons (Z27868 a2) (list)))) (list)))))))
+(define Z36972 Z36972_english_adjective_from_three_strings)
+
 ;; Z36975 English adjective from positive  [reaches an unimplemented function]
 ;;   Z36975K1: String, Z36975K2: Natural language -> (experimental) Syntactic table   [declared, not checked]
-(define (Z36975_english_adjective_from_positive a0 a1) (Z36972 a0 (Z11795_english_comparative_adjective a0) (Z12203_english_regular_superlative_form a0) a1))
+(define (Z36975_english_adjective_from_positive a0 a1) (Z36972_english_adjective_from_three_strings a0 (Z11795_english_comparative_adjective a0) (Z12203_english_regular_superlative_form a0) a1))
 (define Z36975 Z36975_english_adjective_from_positive)
 
 ;; Z36978 English adjective from Lexeme  [reaches an unimplemented function]
 ;;   Z36978K1: Wikidata lexeme -> (experimental) Syntactic table   [declared, not checked]
-(define (Z36978_english_adjective_from_lexeme a0) (Z36972 (Z19241_first_matching_representation_string_from_lexeme a0 (list (record Z6091 (Z6091K1 "Q3482678")))) (if (Z36450_lexeme_has_forms_with_given_grammatical_features a0 (list (record Z6091 (Z6091K1 "Q14169499")))) (Z19241_first_matching_representation_string_from_lexeme a0 (list (record Z6091 (Z6091K1 "Q14169499")))) (Z11795_english_comparative_adjective (Z19241_first_matching_representation_string_from_lexeme a0 (list (record Z6091 (Z6091K1 "Q3482678")))))) (if (Z36450_lexeme_has_forms_with_given_grammatical_features a0 (list (record Z6091 (Z6091K1 "Q1817208")))) (Z19241_first_matching_representation_string_from_lexeme a0 (list (record Z6091 (Z6091K1 "Q1817208")))) (Z12203_english_regular_superlative_form (Z19241_first_matching_representation_string_from_lexeme a0 (list (record Z6091 (Z6091K1 "Q3482678")))))) (Z19295_language_of_lexeme a0)))
+(define (Z36978_english_adjective_from_lexeme a0) (Z36972_english_adjective_from_three_strings (Z19241_first_matching_representation_string_from_lexeme a0 (list (record Z6091 (Z6091K1 "Q3482678")))) (if (Z36450_lexeme_has_forms_with_given_grammatical_features a0 (list (record Z6091 (Z6091K1 "Q14169499")))) (Z19241_first_matching_representation_string_from_lexeme a0 (list (record Z6091 (Z6091K1 "Q14169499")))) (Z11795_english_comparative_adjective (Z19241_first_matching_representation_string_from_lexeme a0 (list (record Z6091 (Z6091K1 "Q3482678")))))) (if (Z36450_lexeme_has_forms_with_given_grammatical_features a0 (list (record Z6091 (Z6091K1 "Q1817208")))) (Z19241_first_matching_representation_string_from_lexeme a0 (list (record Z6091 (Z6091K1 "Q1817208")))) (Z12203_english_regular_superlative_form (Z19241_first_matching_representation_string_from_lexeme a0 (list (record Z6091 (Z6091K1 "Q3482678")))))) (Z19295_language_of_lexeme a0)))
 (define Z36978 Z36978_english_adjective_from_lexeme)
 
 ;; Z36983 state location using entity and class  [reaches an unimplemented function]
@@ -17691,12 +17766,12 @@
 
 ;; Z37083 English instantiate present a noun phrase as noun  [reaches an unimplemented function]
 ;;   Z37083K1: (experimental) Syntactic table, Z37083K2: (experimental) Syntactic table, Z37083K3: Natural language -> (experimental) Syntactic table   [declared, not checked]
-(define (Z37083_english_instantiate_present_a_noun_phrase_as_noun a0 a1 a2) (Z36939 a0 (Z36798 Z36781 a1 a2) a2))
+(define (Z37083_english_instantiate_present_a_noun_phrase_as_noun a0 a1 a2) (Z36939_english_instantiate_present_from_2_noun_phrases a0 (Z36798_english_noun_phrase_from_determiner_and_noun Z36781 a1 a2) a2))
 (define Z37083 Z37083_english_instantiate_present_a_noun_phrase_as_noun)
 
 ;; Z37086 English instantiate past a noun phrase as noun   [reaches an unimplemented function]
 ;;   Z37086K1: (experimental) Syntactic table, Z37086K2: (experimental) Syntactic table, Z37086K3: Natural language -> (experimental) Syntactic table   [declared, not checked]
-(define (Z37086_english_instantiate_past_a_noun_phrase_as_noun a0 a1 a2) (Z36953 a0 (Z36798 Z36781 a1 a2) a2))
+(define (Z37086_english_instantiate_past_a_noun_phrase_as_noun a0 a1 a2) (Z36953_english_instantiate_past_from_2_noun_phrases a0 (Z36798_english_noun_phrase_from_determiner_and_noun Z36781 a1 a2) a2))
 (define Z37086 Z37086_english_instantiate_past_a_noun_phrase_as_noun)
 
 ;; Z37089 noun from item reference  [reaches an unimplemented function]
@@ -17759,14 +17834,24 @@
 (define (Z37150_add_adjective_to_noun a0 a1 a2) (Z21216_apply_three_argument_function (Z14310_select_a_function_based_on_language Z37152 a2) a0 a1 a2))
 (define Z37150 Z37150_add_adjective_to_noun)
 
+;; Z37154 German noun from eight strings  [reaches an unimplemented function]
+;;   Z37154K1: Grammatical gender (m/f/n), Z37154K2: String, Z37154K3: String, Z37154K4: String, Z37154K5: String, Z37154K6: String, Z37154K7: String, Z37154K8: String, Z37154K9: String, Z37154K10: Natural language -> (experimental) Syntactic table   [declared, not checked]
+(define (Z37154_german_noun_from_eight_strings a0 a1 a2 a3 a4 a5 a6 a7 a8 a9) (record Z36462 (Z36462K1 a9) (Z36462K2 (record Z6091 (Z6091K1 "Q1084"))) (Z36462K3 (cons (Z6895 a0) (list))) (Z36462K4 (cons (record Z36463 (Z36463K1 (list (record Z6091 (Z6091K1 "Q110786")) (record Z6091 (Z6091K1 "Q131105")))) (Z36463K2 (cons (Z27868 a1) (list)))) (cons (record Z36463 (Z36463K1 (list (record Z6091 (Z6091K1 "Q110786")) (record Z6091 (Z6091K1 "Q146233")))) (Z36463K2 (cons (Z27868 a2) (list)))) (cons (record Z36463 (Z36463K1 (list (record Z6091 (Z6091K1 "Q110786")) (record Z6091 (Z6091K1 "Q145599")))) (Z36463K2 (cons (Z27868 a3) (list)))) (cons (record Z36463 (Z36463K1 (list (record Z6091 (Z6091K1 "Q110786")) (record Z6091 (Z6091K1 "Q146078")))) (Z36463K2 (cons (Z27868 a4) (list)))) (cons (record Z36463 (Z36463K1 (list (record Z6091 (Z6091K1 "Q146786")) (record Z6091 (Z6091K1 "Q131105")))) (Z36463K2 (cons (Z27868 a5) (list)))) (cons (record Z36463 (Z36463K1 (list (record Z6091 (Z6091K1 "Q146786")) (record Z6091 (Z6091K1 "Q146233")))) (Z36463K2 (cons (Z27868 a6) (list)))) (cons (record Z36463 (Z36463K1 (list (record Z6091 (Z6091K1 "Q146786")) (record Z6091 (Z6091K1 "Q145599")))) (Z36463K2 (cons (Z27868 a7) (list)))) (cons (record Z36463 (Z36463K1 (list (record Z6091 (Z6091K1 "Q146786")) (record Z6091 (Z6091K1 "Q146078")))) (Z36463K2 (cons (Z27868 a8) (list)))) (list))))))))))))
+(define Z37154 Z37154_german_noun_from_eight_strings)
+
+;; Z37157 German noun from Lexeme  [reaches an unimplemented function]
+;;   Z37157K1: Wikidata lexeme -> (experimental) Syntactic table   [declared, not checked]
+(define (Z37157_german_noun_from_lexeme a0) (record Z36462 (Z36462K1 (Z19295_language_of_lexeme a0)) (Z36462K2 (record Z6091 (Z6091K1 "Q1084"))) (Z36462K3 (cons (car (Z20616_grammatical_genders_from_wikidata_lexeme a0)) (list))) (Z36462K4 (cons (record Z36463 (Z36463K1 (list (record Z6091 (Z6091K1 "Q110786")) (record Z6091 (Z6091K1 "Q131105")))) (Z36463K2 (cons (Z27868 (Z19241_first_matching_representation_string_from_lexeme a0 (list (record Z6091 (Z6091K1 "Q110786")) (record Z6091 (Z6091K1 "Q131105"))))) (list)))) (cons (record Z36463 (Z36463K1 (list (record Z6091 (Z6091K1 "Q110786")) (record Z6091 (Z6091K1 "Q146233")))) (Z36463K2 (cons (Z27868 (Z19241_first_matching_representation_string_from_lexeme a0 (list (record Z6091 (Z6091K1 "Q110786")) (record Z6091 (Z6091K1 "Q146233"))))) (list)))) (cons (record Z36463 (Z36463K1 (list (record Z6091 (Z6091K1 "Q110786")) (record Z6091 (Z6091K1 "Q145599")))) (Z36463K2 (cons (Z27868 (Z19241_first_matching_representation_string_from_lexeme a0 (list (record Z6091 (Z6091K1 "Q110786")) (record Z6091 (Z6091K1 "Q145599"))))) (list)))) (cons (record Z36463 (Z36463K1 (list (record Z6091 (Z6091K1 "Q110786")) (record Z6091 (Z6091K1 "Q146078")))) (Z36463K2 (cons (Z27868 (Z19241_first_matching_representation_string_from_lexeme a0 (list (record Z6091 (Z6091K1 "Q110786")) (record Z6091 (Z6091K1 "Q146078"))))) (list)))) (cons (record Z36463 (Z36463K1 (list (record Z6091 (Z6091K1 "Q146786")) (record Z6091 (Z6091K1 "Q131105")))) (Z36463K2 (cons (Z27868 (Z19241_first_matching_representation_string_from_lexeme a0 (list (record Z6091 (Z6091K1 "Q146786")) (record Z6091 (Z6091K1 "Q131105"))))) (list)))) (cons (record Z36463 (Z36463K1 (list (record Z6091 (Z6091K1 "Q146786")) (record Z6091 (Z6091K1 "Q146233")))) (Z36463K2 (cons (Z27868 (Z19241_first_matching_representation_string_from_lexeme a0 (list (record Z6091 (Z6091K1 "Q146786")) (record Z6091 (Z6091K1 "Q146233"))))) (list)))) (cons (record Z36463 (Z36463K1 (list (record Z6091 (Z6091K1 "Q146786")) (record Z6091 (Z6091K1 "Q145599")))) (Z36463K2 (cons (Z27868 (Z19241_first_matching_representation_string_from_lexeme a0 (list (record Z6091 (Z6091K1 "Q146786")) (record Z6091 (Z6091K1 "Q145599"))))) (list)))) (cons (record Z36463 (Z36463K1 (list (record Z6091 (Z6091K1 "Q146786")) (record Z6091 (Z6091K1 "Q146078")))) (Z36463K2 (cons (Z27868 (Z19241_first_matching_representation_string_from_lexeme a0 (list (record Z6091 (Z6091K1 "Q146786")) (record Z6091 (Z6091K1 "Q146078"))))) (list)))) (list))))))))))))
+(define Z37157 Z37157_german_noun_from_lexeme)
+
 ;; Z37160 German noun from Lexeme reference  [reaches an unimplemented function]
 ;;   Z37160K1: Wikidata lexeme reference -> (experimental) Syntactic table   [declared, not checked]
-(define (Z37160_german_noun_from_lexeme_reference a0) (Z37157 (Z6825 a0)))
+(define (Z37160_german_noun_from_lexeme_reference a0) (Z37157_german_noun_from_lexeme (Z6825 a0)))
 (define Z37160 Z37160_german_noun_from_lexeme_reference)
 
 ;; Z37163 German noun from item reference  [reaches an unimplemented function]
 ;;   Z37163K1: Wikidata item reference, Z37163K2: Natural language -> (experimental) Syntactic table   [declared, not checked]
-(define (Z37163_german_noun_from_item_reference a0 a1) (if (null? (Z6830 a0 (record Z6092 (Z6092K1 "P5137")) a1)) (Z37175_german_noun_from_single_string (Z37170_wip_guess_german_grammatical_gender_of_item a0) (Z24766_label_text_for_item_in_given_language_or_fallback a0 a1) a1) (Z37157 (Z27327_best_lexeme_for_wikidata_item a0 (record Z6092 (Z6092K1 "P5137")) a1))))
+(define (Z37163_german_noun_from_item_reference a0 a1) (if (null? (Z6830 a0 (record Z6092 (Z6092K1 "P5137")) a1)) (Z37175_german_noun_from_single_string (Z37170_wip_guess_german_grammatical_gender_of_item a0) (Z24766_label_text_for_item_in_given_language_or_fallback a0 a1) a1) (Z37157_german_noun_from_lexeme (Z27327_best_lexeme_for_wikidata_item a0 (record Z6092 (Z6092K1 "P5137")) a1))))
 (define Z37163 Z37163_german_noun_from_item_reference)
 
 ;; Z37170 (wip) guess German grammatical gender of item
@@ -17781,7 +17866,7 @@
 
 ;; Z37175 German noun from single string  [reaches an unimplemented function]
 ;;   Z37175K1: Grammatical gender (m/f/n), Z37175K2: String, Z37175K3: Natural language -> (experimental) Syntactic table   [declared, not checked]
-(define (Z37175_german_noun_from_single_string a0 a1 a2) (Z37154 (record Z25501 (Z25501K1 (record Z6091 (Z6091K1 "Q1775461")))) a1 (Z11729_german_noun_s_declension a1) a1 a1 (Z11729_german_noun_s_declension a1) (Z11729_german_noun_s_declension a1) (Z11729_german_noun_s_declension a1) (Z11729_german_noun_s_declension a1) a2))
+(define (Z37175_german_noun_from_single_string a0 a1 a2) (Z37154_german_noun_from_eight_strings (record Z25501 (Z25501K1 (record Z6091 (Z6091K1 "Q1775461")))) a1 (Z11729_german_noun_s_declension a1) a1 a1 (Z11729_german_noun_s_declension a1) (Z11729_german_noun_s_declension a1) (Z11729_german_noun_s_declension a1) (Z11729_german_noun_s_declension a1) a2))
 (define Z37175 Z37175_german_noun_from_single_string)
 
 ;; Z37188 Malayalam noun declension table  [reaches an unimplemented function]
@@ -17804,6 +17889,11 @@
 (define (Z37201_binary_search_mapped_value_natural_numbers a0 a1 a2) (Z37263_binary_search_mapped_value_generic < a0 a1 a2))
 (define Z37201 Z37201_binary_search_mapped_value_natural_numbers)
 
+;; Z37209 German noun phrase from determiner and noun  [reaches an unimplemented function]
+;;   Z37209K1: (experimental) Syntactic table, Z37209K2: (experimental) Syntactic table, Z37209K3: Natural language -> (experimental) Syntactic table   [declared, not checked]
+(define (Z37209_german_noun_phrase_from_determiner_and_noun a0 a1 a2) (record Z36462 (Z36462K1 a2) (Z36462K2 (record Z6091 (Z6091K1 "Q1401131"))) (Z36462K3 (cons (car (Z36644_inherent_features_of_table a1)) (cons (car (Z36644_inherent_features_of_table a0)) (list)))) (Z36462K4 (cons (record Z36463 (Z36463K1 (list (record Z6091 (Z6091K1 "Q131105")))) (Z36463K2 (cons (Z36810_join_two_html_fragments_with_space_unless_empty (car (Z36827_fragments_from_table_by_features a0 (cons (record Z6091 (Z6091K1 "Q131105")) (cons (car (Z36644_inherent_features_of_table a1)) (list))))) (car (Z36827_fragments_from_table_by_features a1 (cons (record Z6091 (Z6091K1 "Q131105")) (cons (car (Z36644_inherent_features_of_table a0)) (list)))))) (list)))) (cons (record Z36463 (Z36463K1 (list (record Z6091 (Z6091K1 "Q146233")))) (Z36463K2 (cons (Z36810_join_two_html_fragments_with_space_unless_empty (car (Z36827_fragments_from_table_by_features a0 (cons (record Z6091 (Z6091K1 "Q146233")) (cons (car (Z36644_inherent_features_of_table a1)) (list))))) (car (Z36827_fragments_from_table_by_features a1 (cons (record Z6091 (Z6091K1 "Q146233")) (cons (car (Z36644_inherent_features_of_table a0)) (list)))))) (list)))) (cons (record Z36463 (Z36463K1 (list (record Z6091 (Z6091K1 "Q145599")))) (Z36463K2 (cons (Z36810_join_two_html_fragments_with_space_unless_empty (car (Z36827_fragments_from_table_by_features a0 (cons (record Z6091 (Z6091K1 "Q145599")) (cons (car (Z36644_inherent_features_of_table a1)) (list))))) (car (Z36827_fragments_from_table_by_features a1 (cons (record Z6091 (Z6091K1 "Q145599")) (cons (car (Z36644_inherent_features_of_table a0)) (list)))))) (list)))) (cons (record Z36463 (Z36463K1 (list (record Z6091 (Z6091K1 "Q146078")))) (Z36463K2 (cons (Z36810_join_two_html_fragments_with_space_unless_empty (car (Z36827_fragments_from_table_by_features a0 (cons (record Z6091 (Z6091K1 "Q146078")) (cons (car (Z36644_inherent_features_of_table a1)) (list))))) (car (Z36827_fragments_from_table_by_features a1 (cons (record Z6091 (Z6091K1 "Q146078")) (cons (car (Z36644_inherent_features_of_table a0)) (list)))))) (list)))) (list))))))))
+(define Z37209 Z37209_german_noun_phrase_from_determiner_and_noun)
+
 ;; Z37217 Malayalam lexeme inflection table  [reaches an unimplemented function]
 ;;   Z37217K1: Wikidata lexeme, Z37217K2: Natural language -> HTML fragment   [declared, not checked]
 (define (Z37217_malayalam_lexeme_inflection_table a0 a1) (if (Z19316_same_wikidata_item_reference (Z19298_lexical_category_of_lexeme a0) (record Z6091 (Z6091K1 "Q1084"))) (Z37188_malayalam_noun_declension_table a0 a1) (Z851 Z36391 (cons (Z20041_wikidata_item_reference_id_string (Z19298_lexical_category_of_lexeme a0)) (cons "ml" (cons (Z19310_wikidata_lexeme_reference_to_string (Z19285_lexeme_reference_of_lexeme a0)) (list)))))))
@@ -17816,7 +17906,7 @@
 
 ;; Z37220 German noun phrase for named item  [reaches an unimplemented function]
 ;;   Z37220K1: Wikidata item reference, Z37220K2: Natural language -> (experimental) Syntactic table   [declared, not checked]
-(define (Z37220_german_noun_phrase_for_named_item a0 a1) (if (Z37235_does_named_item_need_an_article_in_german a0) (Z37209 Z37200 (Z37163_german_noun_from_item_reference a0 a1) a1) (Z37232 (Z37163_german_noun_from_item_reference a0 a1) (record Z26934 (Z26934K1 (record Z6091 (Z6091K1 "Q110786")))) a1)))
+(define (Z37220_german_noun_phrase_for_named_item a0 a1) (if (Z37235_does_named_item_need_an_article_in_german a0) (Z37209_german_noun_phrase_from_determiner_and_noun Z37200 (Z37163_german_noun_from_item_reference a0 a1) a1) (Z37232_german_noun_phrase_from_noun_w_o_article (Z37163_german_noun_from_item_reference a0 a1) (record Z26934 (Z26934K1 (record Z6091 (Z6091K1 "Q110786")))) a1)))
 (define Z37220 Z37220_german_noun_phrase_for_named_item)
 
 ;; Z37225 specific property of subject is value, Japanese  [reaches an unimplemented function]
@@ -17824,10 +17914,20 @@
 (define (Z37225_specific_property_of_subject_is_value_japanese a0 a1 a2 a3) (Z32234_join_text_like_objects_into_html_fragment (cons (if (Z22131_is_kleenean_true (Z32645_item_indicates_definite_article_english (Z30120_fetch_wikidata_item_or_parts a0 (list Z6033 Z6035 Z6036) Z33034 (list (record Z6092 (Z6092K1 "P31")) (record Z6092 (Z6092K1 "P279")))))) "the " "") (cons (Z24766_label_text_for_item_in_given_language_or_fallback a0 a3) (cons "の" (cons (Z32556_fallback_string_if_error_empty_or_not_a_string (Z24766_label_text_for_item_in_given_language_or_fallback (Z35364_wikidata_item_of_property (Z35036_fetch_wikidata_property_or_parts a1 (list Z6036) (list) (list (record Z6092 (Z6092K1 "P1629"))))) a3) (Z14396_string_of_monolingual_text (Z29825_label_of_property_in_language_or_fallbacks a3 a1))) (cons "は" (cons (if (Z19352_object_has_this_type a2 Z6091) (if (Z22131_is_kleenean_true (Z32645_item_indicates_definite_article_english (Z30120_fetch_wikidata_item_or_parts a0 (list Z6033 Z6035 Z6036) Z33034 (list (record Z6092 (Z6092K1 "P31")) (record Z6092 (Z6092K1 "P279")))))) "the " "") "") (cons (Z36209_display_any_value_from_wd_triple a2 a3) (cons "である。" (list)))))))))))
 (define Z37225 Z37225_specific_property_of_subject_is_value_japanese)
 
+;; Z37232 German noun phrase from noun w/o article  [reaches an unimplemented function]
+;;   Z37232K1: (experimental) Syntactic table, Z37232K2: Grammatical number (singular / plural), Z37232K3: Natural language -> (experimental) Syntactic table   [declared, not checked]
+(define (Z37232_german_noun_phrase_from_noun_w_o_article a0 a1 a2) (record Z36462 (Z36462K1 a2) (Z36462K2 (record Z6091 (Z6091K1 "Q1401131"))) (Z36462K3 (cons (car (Z36644_inherent_features_of_table a0)) (cons (Z6895 a1) (list)))) (Z36462K4 (cons (record Z36463 (Z36463K1 (list (record Z6091 (Z6091K1 "Q131105")))) (Z36463K2 (Z36827_fragments_from_table_by_features a0 (cons (Z6895 a1) (cons (record Z6091 (Z6091K1 "Q131105")) (list)))))) (cons (record Z36463 (Z36463K1 (list (record Z6091 (Z6091K1 "Q146233")))) (Z36463K2 (Z36827_fragments_from_table_by_features a0 (cons (Z6895 a1) (cons (record Z6091 (Z6091K1 "Q146233")) (list)))))) (cons (record Z36463 (Z36463K1 (list (record Z6091 (Z6091K1 "Q145599")))) (Z36463K2 (Z36827_fragments_from_table_by_features a0 (cons (Z6895 a1) (cons (record Z6091 (Z6091K1 "Q145599")) (list)))))) (cons (record Z36463 (Z36463K1 (list (record Z6091 (Z6091K1 "Q146078")))) (Z36463K2 (Z36827_fragments_from_table_by_features a0 (cons (Z6895 a1) (cons (record Z6091 (Z6091K1 "Q146078")) (list)))))) (list))))))))
+(define Z37232 Z37232_german_noun_phrase_from_noun_w_o_article)
+
 ;; Z37235 does named item need an article in German?  [reaches an unimplemented function]
 ;;   Z37235K1: Wikidata item reference -> Boolean   [declared, not checked]
 (define (Z37235_does_named_item_need_an_article_in_german a0) (Z13752_is_there_a_common_element_on_these_lists (Z23543_item_is_instance_of_these_items_references (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list Z1360) (list (record Z6092 (Z6092K1 "P31"))))) (list (record Z6091 (Z6091K1 "Q8502")) (record Z6091 (Z6091K1 "Q47018901")) (record Z6091 (Z6091K1 "Q4022")) (record Z6091 (Z6091K1 "Q46831")) (record Z6091 (Z6091K1 "Q4989906")) (record Z6091 (Z6091K1 "Q9430")) (record Z6091 (Z6091K1 "Q23397")))))
 (define Z37235 Z37235_does_named_item_need_an_article_in_german)
+
+;; Z37241 German instantiate present from 2 noun phrases  [reaches an unimplemented function]
+;;   Z37241K1: (experimental) Syntactic table, Z37241K2: (experimental) Syntactic table, Z37241K3: Natural language -> (experimental) Syntactic table   [declared, not checked]
+(define (Z37241_german_instantiate_present_from_2_noun_phrases a0 a1 a2) (record Z36462 (Z36462K1 a2) (Z36462K2 (record Z6091 (Z6091K1 "Q41796"))) (Z36462K3 (list)) (Z36462K4 (cons (record Z36463 (Z36463K1 (list)) (Z36463K2 (cons (Z35766_join_multiple_html_fragments_with_a_separator (cons (Z36944 (Z36816_first_fragment_of_option (Z36820_option_by_features a0 (list (record Z6091 (Z6091K1 "Q131105")))))) (cons (if (Z36723_has_inherent_feature (record Z6091 (Z6091K1 "Q110786")) a0) (record Z89 (Z89K1 "ist")) (record Z89 (Z89K1 "sind"))) (cons (Z27849_join_two_html_fragments (Z36816_first_fragment_of_option (Z36820_option_by_features a1 (list (record Z6091 (Z6091K1 "Q131105"))))) (record Z89 (Z89K1 "."))) (list)))) (record Z89 (Z89K1 " "))) (list)))) (list)))))
+(define Z37241 Z37241_german_instantiate_present_from_2_noun_phrases)
 
 ;; Z37245 gregorian year as string (Swedish)  [reaches an unimplemented function]
 ;;   Z37245K1: Gregorian year -> String   [declared, not checked]
@@ -17836,7 +17936,7 @@
 
 ;; Z37246 German instantiate present a noun phrase as noun  [reaches an unimplemented function]
 ;;   Z37246K1: (experimental) Syntactic table, Z37246K2: (experimental) Syntactic table, Z37246K3: Natural language -> (experimental) Syntactic table   [declared, not checked]
-(define (Z37246_german_instantiate_present_a_noun_phrase_as_noun a0 a1 a2) (Z37241 a0 (Z37209 Z37198 a1 Z1430) Z1430))
+(define (Z37246_german_instantiate_present_a_noun_phrase_as_noun a0 a1 a2) (Z37241_german_instantiate_present_from_2_noun_phrases a0 (Z37209_german_noun_phrase_from_determiner_and_noun Z37198 a1 Z1430) Z1430))
 (define Z37246 Z37246_german_instantiate_present_a_noun_phrase_as_noun)
 
 ;; Z37259 binary search (index, generic)
@@ -17878,6 +17978,16 @@
 ;;   Z37289K1: Typed list(Monolingual text), Z37289K2: Natural language -> Monolingual text   [declared, not checked]
 (define (Z37289_join_list_of_monolingual_texts_without_oxford_comm a0 a1) (if (= (length a0) 0) (record Z11 (Z11K1 a1) (Z11K2 "")) (if (= (length a0) 1) (car a0) (if (= (length a0) 2) (Z34669_join_list_of_monolingual_texts_with_delimiter a0 (Z861_monolingual_text_from_string_and_natural_language (Z37311_and_indicating_last_entry_of_list_simple a1) a1)) (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (Z34669_join_list_of_monolingual_texts_with_delimiter (Z12967_list_without_last_element a0) (record Z11 (Z11K1 a1) (Z11K2 ", "))) (cons (Z12964_last_element a0) (list))) (Z26107_monolingual_text_from_language_and_string a1 (Z37311_and_indicating_last_entry_of_list_simple a1)))))))
 (define Z37289 Z37289_join_list_of_monolingual_texts_without_oxford_comm)
+
+;; Z37293 Japanese noun from Lexeme  [reaches an unimplemented function]
+;;   Z37293K1: Wikidata lexeme -> (experimental) Syntactic table   [declared, not checked]
+(define (Z37293_japanese_noun_from_lexeme a0) (record Z36462 (Z36462K1 (Z19295_language_of_lexeme a0)) (Z36462K2 (record Z6091 (Z6091K1 "Q1084"))) (Z36462K3 (list)) (Z36462K4 (cons (record Z36463 (Z36463K1 (list)) (Z36463K2 (cons (Z27868 (Z22478_string_of_first_representation_of_lexeme_form (car (Z19302_lexeme_forms_from_lexeme a0)))) (list)))) (list)))))
+(define Z37293 Z37293_japanese_noun_from_lexeme)
+
+;; Z37296 Japanese counter from Lexeme  [reaches an unimplemented function]
+;;   Z37296K1: Wikidata lexeme -> (experimental) Syntactic table   [declared, not checked]
+(define (Z37296_japanese_counter_from_lexeme a0) (record Z36462 (Z36462K1 Z1830) (Z36462K2 (record Z6091 (Z6091K1 "Q2116774"))) (Z36462K3 (list)) (Z36462K4 (cons (record Z36463 (Z36463K1 (list)) (Z36463K2 (cons (Z27868 (Z22478_string_of_first_representation_of_lexeme_form (car (Z37297_filter_lexeme_forms_by_lack_of_features (Z19302_lexeme_forms_from_lexeme a0) (list (record Z6091 (Z6091K1 "Q4923918"))))))) (list)))) (list)))))
+(define Z37296 Z37296_japanese_counter_from_lexeme)
 
 ;; Z37297 filter Lexeme forms by lack of features
 ;;   Z37297K1: Typed list(Wikidata lexeme form), Z37297K2: Typed list(Wikidata item reference) -> Typed list(Wikidata lexeme form)   [declared, not checked]
@@ -17959,9 +18069,14 @@
 (define (Z37354_filter_wikidata_statements_by_value a0 a1) (if (Z13220_are_all_elements_of_the_list_the_same_type (map Z19308_value_of_wikidata_statement a0)) (Z22820_compress_list a0 (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments (Z35433_best_equality_function_for_type (Z16829_type_of_object a1)) (map Z19308_value_of_wikidata_statement a0) a1)) (Z37354_filter_wikidata_statements_by_value (Z22820_compress_list a0 (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z19352_object_has_this_type (map Z19308_value_of_wikidata_statement a0) (Z16829_type_of_object a1))) a1)))
 (define Z37354 Z37354_filter_wikidata_statements_by_value)
 
+;; Z37357 emulate Wikidata time from Gregorian calendar date  [reaches an unimplemented function]
+;;   Z37357K1: Gregorian calendar date -> Wikidata time   [declared, not checked]
+(define (Z37357_emulate_wikidata_time_from_gregorian_calendar_date a0) (record Z6064 (Z6064K1 (record Z6061 (Z6061K1 a0) (Z6061K2 (record Z6060 (Z6060K1 0) (Z6060K2 0) (Z6060K3 0))))) (Z6064K2 (record Z6062 (Z6062K1 (record Z6091 (Z6091K1 "Q573"))))) (Z6064K3 0) (Z6064K4 0) (Z6064K5 (record Z16683 (Z16683K1 Z16661) (Z16683K2 0))) (Z6064K6 (record Z6063 (Z6063K1 (record Z6091 (Z6091K1 "Q1985727")))))))
+(define Z37357 Z37357_emulate_wikidata_time_from_gregorian_calendar_date)
+
 ;; Z37361 did person hold office on date?  [reaches an unimplemented function]
 ;;   Z37361K1: Wikidata item, Z37361K2: Wikidata item reference, Z37361K3: Gregorian calendar date -> Kleenean   [declared, not checked]
-(define (Z37361_did_person_hold_office_on_date a0 a1 a2) (if (null? (Z37354_filter_wikidata_statements_by_value (Z29691_get_statements_for_wikidata_property_from_item a0 (record Z6092 (Z6092K1 "P39"))) a1)) Z22114 (Z37353_is_statement_contemporary_with_wikidata_time (car (Z37354_filter_wikidata_statements_by_value (Z29691_get_statements_for_wikidata_property_from_item a0 (record Z6092 (Z6092K1 "P39"))) a1)) (Z37357 a2))))
+(define (Z37361_did_person_hold_office_on_date a0 a1 a2) (if (null? (Z37354_filter_wikidata_statements_by_value (Z29691_get_statements_for_wikidata_property_from_item a0 (record Z6092 (Z6092K1 "P39"))) a1)) Z22114 (Z37353_is_statement_contemporary_with_wikidata_time (car (Z37354_filter_wikidata_statements_by_value (Z29691_get_statements_for_wikidata_property_from_item a0 (record Z6092 (Z6092K1 "P39"))) a1)) (Z37357_emulate_wikidata_time_from_gregorian_calendar_date a2))))
 (define Z37361 Z37361_did_person_hold_office_on_date)
 
 ;; Z37367 object or default if error  [reaches an unimplemented function]

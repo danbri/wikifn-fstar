@@ -20,6 +20,8 @@ files=(
   "$root/src/fstar/Wikifn.Print.fst"
   "${generated_parts[@]}"
   "$root/src/fstar/Wikifn.Generated.Eval.fst"
+  "$root/src/fstar/Wikifn.Direct.fst"
+  "$root/src/fstar/Wikifn.Compiled.Direct.fst"
   "$root/src/fstar/Wikifn.Primitive.Frontier.fst"
   "$root/src/fstar/Wikifn.Primitives.fst"
   "$root/src/fstar/Wikifn.Composition.fst"

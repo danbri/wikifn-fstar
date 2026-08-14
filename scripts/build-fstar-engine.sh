@@ -48,7 +48,7 @@ fi
 
 fstar \
   --codegen OCaml \
-  --extract 'Wikifn.Primitive.Kernel Wikifn.Zid Wikifn.Eval Wikifn.Print Wikifn.Generated.Eval Wikifn.Generated.Eval.*' \
+  --extract 'Wikifn.Primitive.Kernel Wikifn.Zid Wikifn.Eval Wikifn.Print Wikifn.Generated.Eval Wikifn.Generated.Eval.* Wikifn.Direct Wikifn.Compiled.Direct' \
   --include "$root/src/fstar" \
   --odir "$ocaml_out" \
   "$root/src/fstar/Wikifn.Primitive.Kernel.fst" \
@@ -56,7 +56,9 @@ fstar \
   "$root/src/fstar/Wikifn.Eval.fst" \
   "$root/src/fstar/Wikifn.Print.fst" \
   "${generated_parts[@]}" \
-  "$root/src/fstar/Wikifn.Generated.Eval.fst"
+  "$root/src/fstar/Wikifn.Generated.Eval.fst" \
+  "$root/src/fstar/Wikifn.Direct.fst" \
+  "$root/src/fstar/Wikifn.Compiled.Direct.fst"
 
 generated_part_ml=()
 for part in "${generated_parts[@]}"; do
@@ -90,6 +92,8 @@ ocamlfind_run ocamlc \
   "$ocaml_out/Wikifn_Print.ml" \
   "${generated_part_ml[@]}" \
   "$ocaml_out/Wikifn_Generated_Eval.ml" \
+  "$ocaml_out/Wikifn_Direct.ml" \
+  "$ocaml_out/Wikifn_Compiled_Direct.ml" \
   "$root/src/ocaml/wikifn_engine.ml" \
   "$root/src/ocaml/wikifn_engine_browser.ml" \
   -o "$bytecode"

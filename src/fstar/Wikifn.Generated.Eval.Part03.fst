@@ -11,8 +11,16 @@ open Wikifn.Eval
 
   part:      4 of 10
   functions: 400
-  ZID range: Z19858 to Z23407
+  ZID range: Z19848 to Z23397
 *)
+
+(* Z19848 rational from integer numerator and denominator | Z19848@271976 -> Z34729@271975 digest b6331c1d69c3bbe56ea8493b4ded8846f0252a3e6c1c52aa64e95182f8536bb1 *)
+let body_Z19848_rational_from_integer_numerator_and_denominator : expr =
+  ERecord 19677 [({ key_owner = Some 19677; key_index = 1 }, ECall 16728 [ECall 17105 [EArg 0]; ECall 17105 [EArg 1]]); ({ key_owner = Some 19677; key_index = 2 }, ECall 17144 [EArg 0]); ({ key_owner = Some 19677; key_index = 3 }, ECall 17144 [EArg 1])]
+
+(* Z19854 simplified rational from Z numerator, denominator | Z19854@271978 -> Z34730@271977 digest 2385e9c17976448ea02cc1a1bc7ca49f940d2cff19e8d693d618097a51e0f49a *)
+let body_Z19854_simplified_rational_from_z_numerator_denominator : expr =
+  ECall 20112 [ERecord 19677 [({ key_owner = Some 19677; key_index = 1 }, ECall 17105 [EArg 0]); ({ key_owner = Some 19677; key_index = 2 }, ECall 17144 [EArg 0]); ({ key_owner = Some 19677; key_index = 3 }, EArg 1)]]
 
 (* Z19858 format [sign, numerator, denominator] as string | Z19858@271980 -> Z34731@271979 digest 1fda1c1d9e3a84ee53c77bae339fc703f1272c40b8dfbfde720e6618dc6ca39b *)
 let body_Z19858_format_sign_numerator_denominator_as_string : expr =
@@ -1606,16 +1614,10 @@ let body_Z23393_test_cases_of_function : expr =
 let body_Z23397_implementations_of_function : expr =
   ECall 803 [EValue (VRecord 39 [({ key_owner = Some 39; key_index = 1 }, VText [90; 56; 75; 52])]); EArg 0]
 
-(* Z23403 Wikidata item reference to Gregorian month | Z23403@272845 -> Z34918@272844 digest 2a045421f1fc1487092a99a8cb12b7d084d731b81722a99d7ff1eb33b71e8130 *)
-let body_Z23403_wikidata_item_reference_to_gregorian_month : expr =
-  ECall 30531 [ECall 31973 [ECall 34914 [EArg 0]]]
-
-(* Z23407 Wikidata item reference to Roman day | Z23407@272850 -> Z34919@288627 digest 8bd12c81e3dda005ba5e7c1833bef87c302f8ed1a916674c827e9e8e878ef109 *)
-let body_Z23407_wikidata_item_reference_to_roman_day : expr =
-  ERecord 20342 [({ key_owner = Some 20342; key_index = 1 }, ECall 23403 [ECall 19308 [ECall 23451 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList [VFunc 1360]); EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 51; 54; 49])]])]; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 51; 54; 49])])]]]); ({ key_owner = Some 20342; key_index = 2 }, ECall 14283 [ECall 33579 [ECall 23451 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList [VFunc 1360]); EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 51; 54; 49])]])]; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 51; 54; 49])])]; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 53; 52; 53])])]])]
-
 let part_policy (fid:zid) : Tot (option expr) =
   match fid with
+  | 19848 -> Some body_Z19848_rational_from_integer_numerator_and_denominator
+  | 19854 -> Some body_Z19854_simplified_rational_from_z_numerator_denominator
   | 19858 -> Some body_Z19858_format_sign_numerator_denominator_as_string
   | 19862 -> Some body_Z19862_denominator_of_unsimplified_rational_number
   | 19866 -> Some body_Z19866_string_to_rational_number
@@ -2014,6 +2016,4 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 23379 -> Some body_Z23379_same_programming_language
   | 23393 -> Some body_Z23393_test_cases_of_function
   | 23397 -> Some body_Z23397_implementations_of_function
-  | 23403 -> Some body_Z23403_wikidata_item_reference_to_gregorian_month
-  | 23407 -> Some body_Z23407_wikidata_item_reference_to_roman_day
   | _ -> None

@@ -1,6 +1,8 @@
 # The Wikifn Engine
 
-An extracted F* interpreter carrying 3,676 real Wikifunctions compositions.
+1,313 real Wikifunctions compositions compiled into F* functions, checked by F*, and
+extracted to OCaml and then JavaScript — plus an interpreter over 3,846 of them, which is
+how the rest are reached and how the compiled ones are checked against something.
 
 ## What is generated and what is authored
 
@@ -12,7 +14,8 @@ object:
 
 | file | contents |
 |---|---|
-| `src/fstar/Wikifn.Generated.Eval.PartNN.fst` | the composition bodies, each a translation of a pinned `Z14K2` tree |
+| `src/fstar/Wikifn.Compiled.Direct.fst` | **1,313 compositions as F\* functions**, each a translation of a pinned `Z14K2` tree |
+| `src/fstar/Wikifn.Generated.Eval.PartNN.fst` | the same compositions as data, for the interpreter |
 | `src/fstar/Wikifn.Generated.Eval.fst` | dispatch only; it holds no bodies |
 | `build/fstar/fn/Wikifn.Fn.ZNNNN.fst` | the same bodies again, one module per function, for verification |
 | `docs/generated/functions.json` | the catalogue: ZID, generated name, label, arity, declared types, provenance |
@@ -95,23 +98,32 @@ Measured with `make closure` (a fixpoint over the call graph, not a per-seed wal
 | | count |
 |---|---|
 | functions in the corpus | 4,970 |
-| closing over the engine's primitives, no recursion needed | 937 |
-| closing over the engine's primitives, needing recursion | 1,167 |
-| translated into F* and verified | **3,676** |
-| of those, runnable today | **1,316** |
-| skipped by the translator, with reasons recorded | 222 |
+| **translated into F\* functions, checked by F\*** | **1,313** |
+| carried as data for the interpreter | 3,846 |
+| skipped by the translator, with reasons recorded | 51 |
 
-A function is emitted whether or not everything it calls is implemented. Calls
-are by reference: the evaluator looks a body up when the call happens, so a
-function that reaches a gap still evaluates until it gets there, reports a
-missing implementation, and starts working the moment the gap is filled. Only
-the runnable count claims anything today.
+The first two rows are different things and the difference is the point. A
+*function* is `compiled_Z10012_reverse_string`, an F\* definition that F\* checks
+and that extracts to an OCaml function and then a JavaScript one; calling it is
+a function call. Data is `body_Z10012_reverse_string : expr`, a syntax tree that
+the interpreter walks. Both are generated from the same pinned composition in
+the same pass, so they cannot disagree about what the corpus says — and
+`test/compiled.test.js` requires them to give the same answer on every argument
+the corpus's own testers supply.
 
-Recursion is not a barrier for the interpreter: fuel bounds it uniformly, so the 699
-recursive functions come along with the rest. Recursion *is* a barrier for compiling a
-composition into a standalone F* function, because that needs a termination measure per
-function. This is why the interpreter path scales and the direct-compilation path does
-not.
+The 2,533 that are data and not functions are not a limit of the compiler: they
+reach a function nobody has implemented, so there is nothing to compile them
+into. They are carried because calls are by reference and they start working the
+moment the gap is filled.
+
+Recursion was long assumed to be what kept compositions from being compiled into
+standalone F* functions, since each recursive one needs a termination measure. Measured
+against the implementations actually selected, that assumption was wrong by an order of
+magnitude: **217 of 3,846 bodies are recursive at all**, 5.7%, and they take the same fuel
+parameter the interpreter already uses. The other 94.3% are plain non-recursive
+definitions. What had actually blocked the old direct compiler was that it typed every
+parameter and return as `text`, gated recursion on the literal string `"Z14613"`, and
+refused lists, records and function values.
 
 ## Evidence it is right
 

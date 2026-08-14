@@ -11,8 +11,16 @@ open Wikifn.Eval
 
   part:      5 of 10
   functions: 400
-  ZID range: Z23410 to Z26853
+  ZID range: Z23403 to Z26838
 *)
+
+(* Z23403 Wikidata item reference to Gregorian month | Z23403@272845 -> Z34918@272844 digest 2a045421f1fc1487092a99a8cb12b7d084d731b81722a99d7ff1eb33b71e8130 *)
+let body_Z23403_wikidata_item_reference_to_gregorian_month : expr =
+  ECall 30531 [ECall 31973 [ECall 34914 [EArg 0]]]
+
+(* Z23407 Wikidata item reference to Roman day | Z23407@272850 -> Z34919@288627 digest 8bd12c81e3dda005ba5e7c1833bef87c302f8ed1a916674c827e9e8e878ef109 *)
+let body_Z23407_wikidata_item_reference_to_roman_day : expr =
+  ERecord 20342 [({ key_owner = Some 20342; key_index = 1 }, ECall 23403 [ECall 19308 [ECall 23451 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList [VFunc 1360]); EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 51; 54; 49])]])]; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 51; 54; 49])])]]]); ({ key_owner = Some 20342; key_index = 2 }, ECall 14283 [ECall 33579 [ECall 23451 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList [VFunc 1360]); EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 51; 54; 49])]])]; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 51; 54; 49])])]; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 53; 52; 53])])]])]
 
 (* Z23410 subject is a kind of, English sentence | Z23410@294247 -> Z35631@287015 digest 62753d71b59ada4f6ce9998945e8d81d2c2ede4615e315e7d61be9cdf0bfb9ef *)
 let body_Z23410_subject_is_a_kind_of_english_sentence : expr =
@@ -1606,16 +1614,10 @@ let body_Z26830_get_sshws_category_from_sustained_winds_english : expr =
 let body_Z26838_geo_coordinate_of_wikidata_item_location : expr =
   ECall 19308 [ECall 811 [ECall 29688 [ECall 22220 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList []); EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 54; 50; 53])]])]]]]]
 
-(* Z26841 distance (km) between 2 QIDs (Haversine) | Z26841@228663 -> Z26843@206991 digest 4c68aa8e851c4ff07959fe64aa773b79a568e526173fac35ead064d5c79e0e09 *)
-let body_Z26841_distance_km_between_2_qids_haversine : expr =
-  ECall 18362 [ECall 20844 [ECall 20854 [ECall 25880 [ECall 26838 [EArg 0]]]]; ECall 20844 [ECall 20854 [ECall 25883 [ECall 26838 [EArg 0]]]]; ECall 20844 [ECall 20854 [ECall 25880 [ECall 26838 [EArg 1]]]]; ECall 20844 [ECall 20854 [ECall 25883 [ECall 26838 [EArg 1]]]]]
-
-(* Z26853 change type of instance of Wikidata enumeration | Z26853@219253 -> Z26856@207054 digest d361a5015b5d75276efc5737401b2d60bfc58756644fe0d3919d342b989c2773 *)
-let body_Z26853_change_type_of_instance_of_wikidata_enumeration : expr =
-  ECall 26779 [EArg 1; ECall 6895 [EArg 0]]
-
 let part_policy (fid:zid) : Tot (option expr) =
   match fid with
+  | 23403 -> Some body_Z23403_wikidata_item_reference_to_gregorian_month
+  | 23407 -> Some body_Z23407_wikidata_item_reference_to_roman_day
   | 23410 -> Some body_Z23410_subject_is_a_kind_of_english_sentence
   | 23415 -> Some body_Z23415_wikidata_reference_to_day_of_the_week
   | 23419 -> Some body_Z23419_day_of_the_week_to_wikidata_reference
@@ -2014,6 +2016,4 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 26829 -> Some body_Z26829_ordinal_in_chosen_language
   | 26830 -> Some body_Z26830_get_sshws_category_from_sustained_winds_english
   | 26838 -> Some body_Z26838_geo_coordinate_of_wikidata_item_location
-  | 26841 -> Some body_Z26841_distance_km_between_2_qids_haversine
-  | 26853 -> Some body_Z26853_change_type_of_instance_of_wikidata_enumeration
   | _ -> None

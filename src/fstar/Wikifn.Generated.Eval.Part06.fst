@@ -11,8 +11,16 @@ open Wikifn.Eval
 
   part:      7 of 10
   functions: 400
-  ZID range: Z29750 to Z32431
+  ZID range: Z29748 to Z32421
 *)
+
+(* Z29748 ArticlePlaceholder render misc. Wikidata statement | Z29748@294893 -> Z29783@294805 digest b6d472c2286fd128192c929d7354dc242feb693190061ee1aa748634b097f300 *)
+let body_Z29748_articleplaceholder_render_misc_wikidata_statement : expr =
+  ECall 27873 [ECall 27849 [ECall 29717 [EArg 0; EArg 1]; ECall 802 [ECall 30433 [EArg 1; EValue (VRecord 39 [({ key_owner = Some 39; key_index = 1 }, VText [90; 54; 48; 48; 51; 75; 53])])]; ECall 27926 [ECall 29787 [EValue (VFunc 30170); EArg 0; ECall 33357 [ECall 30175 [ECall 28278 [EArg 1]]]; ECall 30172 [ECall 30175 [ECall 28278 [EArg 1]]]]]; EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])])]]; EValue (VText [100; 105; 118]); EValue (VList [VText [99; 108; 97; 115; 115]]); EValue (VList [VText [97; 114; 116; 105; 99; 108; 101; 112; 108; 97; 99; 101; 104; 111; 108; 100; 101; 114; 45; 115; 116; 97; 116; 101; 109; 101; 110; 116]])]
+
+(* Z29749 monolingual text as HTML with visible language tag | Z29749@293531 -> Z29757@231095 digest 2e7b341178ec8e4008aab458266b48855b1628ac9485f272755326c81c3f7dd8 *)
+let body_Z29749_monolingual_text_as_html_with_visible_language_tag : expr =
+  ECall 27868 [ECall 802 [ECall 29750 [ECall 14404 [EArg 0]; EArg 1]; ECall 14396 [EArg 0]; ECall 21394 [ECall 810 [EValue (VText [40]); ECall 810 [ECall 14329 [ECall 14404 [EArg 0]]; ECall 810 [EValue (VText [41; 32]); ECall 810 [ECall 14396 [EArg 0]; EValue (VList [])]]]]]]]
 
 (* Z29750 language is acceptable substitute? | Z29750@231106 -> Z29760@231104 digest f0b94020697adadd76da13fb364dea50710ef02b7c97a16e74c2daabfef6170f *)
 let body_Z29750_language_is_acceptable_substitute : expr =
@@ -958,6 +966,10 @@ let body_Z31286 : expr =
 let body_Z31294_list_starts_with : expr =
   ECall 10174 [ECall 10216 [ECall 12851 [EArg 1; EArg 0]]; ECall 889 [ECall 13366 [ECall 17895 [EArg 0]; ECall 12681 [EArg 1]]; EArg 1; EValue (VFunc 13052)]]
 
+(* Z31309 Year-specific statement w/ natural number value | Z31309@247206 -> Z31310@247205 digest 65c26203dcdf8b1c988d13986361805d141ae374ad7c58371ce9d96900e34b52 *)
+let body_Z31309_year_specific_statement_w_natural_number_value : expr =
+  ECall 28436 [EArg 0; ERecord 6003 [({ key_owner = Some 6003; key_index = 1 }, EArg 0); ({ key_owner = Some 6003; key_index = 2 }, EArg 1); ({ key_owner = Some 6003; key_index = 3 }, EArg 2); ({ key_owner = Some 6003; key_index = 4 }, EValue (VFunc 6042)); ({ key_owner = Some 6003; key_index = 5 }, ECall 810 [ERecord 6007 [({ key_owner = Some 6007; key_index = 1 }, EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 53; 56; 53])])); ({ key_owner = Some 6007; key_index = 2 }, EArg 4); ({ key_owner = Some 6007; key_index = 3 }, EValue (VFunc 6021))]; EValue (VList [])]); ({ key_owner = Some 6003; key_index = 6 }, EValue (VList [])); ({ key_owner = Some 6003; key_index = 7 }, EValue (VFunc 6021))]; EArg 3]
+
 (* Z31317 Dutch article-less instantiating sentence | Z31317@281934 -> Z31319@283636 digest 57530e6ff006dea13022a3d2d9ece28e93c1756f358588821efcc660100b78a0 *)
 let body_Z31317_dutch_article_less_instantiating_sentence : expr =
   ECall 22511 [ECall 21394 [ECall 810 [ECall 36270 [EArg 0; EValue (VFunc 1157)]; ECall 810 [EValue (VText [32; 105; 115; 32; 101; 101; 110; 32]); ECall 810 [ECall 36270 [EArg 1; EValue (VFunc 1157)]; EValue (VList [])]]]]]
@@ -1602,20 +1614,10 @@ let body_Z32410_x_has_y_fully_specified_english : expr =
 let body_Z32421_select_lexeme_form_best_matching_features : expr =
   ECall 802 [ECall 23120 [ECall 19243 [EArg 0; EArg 1]]; ECall 19243 [EArg 0; EArg 1]; ECall 32421 [EArg 0; ECall 12967 [EArg 1]]]
 
-(* Z32425 English simple present collective sentence | Z32425@259731 -> Z32434@272650 digest 37c306219a93863410f644aa8270743c47e7fa17142da0af7c7b40a4cfe8e1d2 *)
-let body_Z32425_english_simple_present_collective_sentence : expr =
-  ECall 26107 [EArg 3; ECall 22511 [ECall 21394 [ECall 810 [ECall 11089 [ECall 24766 [EArg 0; EArg 3]]; ECall 810 [EValue (VText [32]); ECall 810 [ECall 27410 [ECall 27327 [EArg 2; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 57; 57; 55; 48])]); EArg 3]; EValue (VList [VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 51; 57; 49; 48; 57; 51; 54])]])]; ECall 810 [EValue (VText [32]); ECall 810 [ECall 11089 [ECall 24766 [EArg 1; EArg 3]]; EValue (VList [])]]]]]]]]
-
-(* Z32428 abstract wikilink | Z32428@286759 -> Z36493@284181 digest 9b346bb969debe45312418b0b631460c941ff2734ba2907f1a4bca5676ad8a18 *)
-let body_Z32428_abstract_wikilink : expr =
-  ECall 36489 [EArg 0; ECall 36270 [EArg 0; EArg 1]]
-
-(* Z32431 item (QID) has statement with value for property | Z32431@289004 -> Z32433@259386 digest ba9c223e739f72b03e0d285505ef973435553773c6b78311cc1b030099a5df5f *)
-let body_Z32431_item_qid_has_statement_with_value_for_property : expr =
-  ECall 802 [ECall 813 [ECall 22220 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList []); ECall 810 [EArg 1; EValue (VList [])]]]]; EValue (VBool false); ECall 12696 [ECall 22978 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList []); ECall 810 [EArg 1; EValue (VList [])]]; EArg 1]; EArg 2]]
-
 let part_policy (fid:zid) : Tot (option expr) =
   match fid with
+  | 29748 -> Some body_Z29748_articleplaceholder_render_misc_wikidata_statement
+  | 29749 -> Some body_Z29749_monolingual_text_as_html_with_visible_language_tag
   | 29750 -> Some body_Z29750_language_is_acceptable_substitute
   | 29765 -> Some body_Z29765_utc_offset_hours_of_timezone_qid_in_standard_time
   | 29773 -> Some body_Z29773_description_of_class_with_adj_superclass_english
@@ -1852,6 +1854,7 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 31268 -> Some body_Z31268_first_index_1_n_of_character_in_string
   | 31286 -> Some body_Z31286
   | 31294 -> Some body_Z31294_list_starts_with
+  | 31309 -> Some body_Z31309_year_specific_statement_w_natural_number_value
   | 31317 -> Some body_Z31317_dutch_article_less_instantiating_sentence
   | 31331 -> Some body_Z31331_html_unordered_list
   | 31335 -> Some body_Z31335_create_birthday_list_item_entry_for_year_lists
@@ -2013,7 +2016,4 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 32406 -> Some body_Z32406_malay_second_superlative_form_paling
   | 32410 -> Some body_Z32410_x_has_y_fully_specified_english
   | 32421 -> Some body_Z32421_select_lexeme_form_best_matching_features
-  | 32425 -> Some body_Z32425_english_simple_present_collective_sentence
-  | 32428 -> Some body_Z32428_abstract_wikilink
-  | 32431 -> Some body_Z32431_item_qid_has_statement_with_value_for_property
   | _ -> None

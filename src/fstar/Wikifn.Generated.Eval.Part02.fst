@@ -11,8 +11,12 @@ open Wikifn.Eval
 
   part:      3 of 10
   functions: 400
-  ZID range: Z15977 to Z19854
+  ZID range: Z15969 to Z19841
 *)
+
+(* Z15969 reified Z1K1 (object for Key reference) | Z15969@202800 -> Z15970@290216 digest f54f4a88a07d0af438594c8fb250cf45e56d3a3084992e4359db26967a596805 *)
+let body_Z15969_reified_z1k1_object_for_key_reference : expr =
+  ECall 822 [ECall 811 [ECall 805 [EArg 0]]]
 
 (* Z15977 (!) return grammatical number for an integer and language | Z15977@262959 -> Z15987@203139 digest cafd3611a333053a0518f01b0629a39dcf11c806a8e1e893a3c9567b36dff12b *)
 let body_Z15977_return_grammatical_number_for_an_integer_and_language : expr =
@@ -1022,6 +1026,10 @@ let body_Z18364_carbon_dioxide_emissions_of_mk1_petrol_car_journey : expr =
 let body_Z18391_carbon_dioxide_emissions_of_mk1_diesel_car_journey : expr =
   ECall 10862 [EArg 0; EValue (VText [50; 46; 51; 54])]
 
+(* Z18403 (!) Korean add (-eul) to the end of a noun | Z18403@284031 -> Z18404@260713 digest a67320292ea6ab273150a923c63e9972fc06351a9fdc92b95211c99274b0503f *)
+let body_Z18403_korean_add_eul_to_the_end_of_a_noun : expr =
+  ECall 886 [ECall 810 [ERecord 86 [({ key_owner = Some 86; key_index = 1 }, EArg 0)]; ECall 810 [ERecord 86 [({ key_owner = Some 86; key_index = 1 }, ECall 802 [ECall 12778 [ECall 11060 [EArg 0]]; EValue (VText [51012]); EValue (VText [47484])])]; EValue (VList [])]]]
+
 (* Z18406 (!) carbon dioxide emissions of ethanol E85 car journey | Z18406@260714 -> Z18408@260716 digest 388e56adf432b86ccf4101782373f8949dd5c27afd329d600ab9e45d3b748a41 *)
 let body_Z18406_carbon_dioxide_emissions_of_ethanol_e85_car_journey : expr =
   ECall 10862 [EArg 0; EValue (VText [49; 46; 49; 53])]
@@ -1606,16 +1614,9 @@ let body_Z19833_average_of_two_rationals : expr =
 let body_Z19841_rational_to_nearest_integer_even_integer_tiebreak : expr =
   ECall 19682 [ECall 27705 [EArg 0; EValue (VRecord 16683 [({ key_owner = Some 16683; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16661)]); ({ key_owner = Some 16683; key_index = 2 }, VNat 0)])]]
 
-(* Z19848 rational from integer numerator and denominator | Z19848@271976 -> Z34729@271975 digest b6331c1d69c3bbe56ea8493b4ded8846f0252a3e6c1c52aa64e95182f8536bb1 *)
-let body_Z19848_rational_from_integer_numerator_and_denominator : expr =
-  ERecord 19677 [({ key_owner = Some 19677; key_index = 1 }, ECall 16728 [ECall 17105 [EArg 0]; ECall 17105 [EArg 1]]); ({ key_owner = Some 19677; key_index = 2 }, ECall 17144 [EArg 0]); ({ key_owner = Some 19677; key_index = 3 }, ECall 17144 [EArg 1])]
-
-(* Z19854 simplified rational from Z numerator, denominator | Z19854@271978 -> Z34730@271977 digest 2385e9c17976448ea02cc1a1bc7ca49f940d2cff19e8d693d618097a51e0f49a *)
-let body_Z19854_simplified_rational_from_z_numerator_denominator : expr =
-  ECall 20112 [ERecord 19677 [({ key_owner = Some 19677; key_index = 1 }, ECall 17105 [EArg 0]); ({ key_owner = Some 19677; key_index = 2 }, ECall 17144 [EArg 0]); ({ key_owner = Some 19677; key_index = 3 }, EArg 1)]]
-
 let part_policy (fid:zid) : Tot (option expr) =
   match fid with
+  | 15969 -> Some body_Z15969_reified_z1k1_object_for_key_reference
   | 15977 -> Some body_Z15977_return_grammatical_number_for_an_integer_and_language
   | 15982 -> Some body_Z15982_grammatical_number_for_languages_with_only_singular_and_plur
   | 15991 -> Some body_Z15991_code_point_prefix
@@ -1868,6 +1869,7 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 18363 -> Some body_Z18363_distance_between_two_places_in_meters
   | 18364 -> Some body_Z18364_carbon_dioxide_emissions_of_mk1_petrol_car_journey
   | 18391 -> Some body_Z18391_carbon_dioxide_emissions_of_mk1_diesel_car_journey
+  | 18403 -> Some body_Z18403_korean_add_eul_to_the_end_of_a_noun
   | 18406 -> Some body_Z18406_carbon_dioxide_emissions_of_ethanol_e85_car_journey
   | 18409 -> Some body_Z18409_carbon_dioxide_emissions_of_biogas_cng_car_journey
   | 18412 -> Some body_Z18412_carbon_dioxide_emissions_of_electric_car_journey_sweden
@@ -2014,6 +2016,4 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 19827 -> Some body_Z19827_rational_number_to_string
   | 19833 -> Some body_Z19833_average_of_two_rationals
   | 19841 -> Some body_Z19841_rational_to_nearest_integer_even_integer_tiebreak
-  | 19848 -> Some body_Z19848_rational_from_integer_numerator_and_denominator
-  | 19854 -> Some body_Z19854_simplified_rational_from_z_numerator_denominator
   | _ -> None

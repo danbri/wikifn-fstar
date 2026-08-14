@@ -1,5 +1,15 @@
 # Primitive Grounding
 
+> **Status, re-measured.** The engine grounds 53 primitives. Records, value by
+> key (`Z803`), type of object (`Z16829`), object equality (`Z13052`), the
+> codepoint conversions (`Z22693`, `Z22717`), reverse and append (`Z12668`,
+> `Z12961`) and natural division (`Z13546`) are done. What still gates the most
+> functions is errors as values (`Z5`, `Z851`, `Z850`, `Z853`), quoting
+> (`Z805`, `Z899`, `Z29267`), `Z22764` String from Type and `Z828` fetch
+> persistent object. Closure over the current primitives: 936 functions without
+> recursion, 1,168 with. Sections below this line predate that and are kept for
+> the reasoning, not for the counts.
+
 > **Status note.** Lists, pairs and the higher-order list functions described
 > below as future work are now implemented in `Wikifn.Eval`: `Z810` cons,
 > `Z811` car, `Z812` cdr, `Z813` null?, `Z12681` length, `Z821`/`Z822` pair

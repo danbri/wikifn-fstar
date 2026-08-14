@@ -6,7 +6,12 @@
   --border: #d6d7d2;
   --panel: #ffffff;
   --accent: #235c7a;
+  /* --code is the background of a code block and --code-text its foreground.
+     Naming only the first of those is how dark mode ended up with near-white
+     text on a near-white block: the variable was set to a light colour on the
+     assumption it was the ink. */
   --code: #1f2933;
+  --code-text: #f8fafc;
   /* A background for things drawn on top of the page: example chips, inline
      controls. Named so components do not have to invent one each. */
   --surface: rgba(0, 0, 0, 0.04);
@@ -27,7 +32,8 @@
     --border: #3a3c40;
     --panel: #1e2023;
     --accent: #7fb4cd;
-    --code: #d7dde3;
+    --code: #0e1116;
+    --code-text: #e6edf3;
     --surface: rgba(255, 255, 255, 0.07);
     --warn-bg: #5c2438;
     --warn-text: #ffdde6;
@@ -99,7 +105,7 @@ li + li {
 pre {
   overflow-x: auto;
   background: var(--code);
-  color: #f8fafc;
+  color: var(--code-text);
   border-radius: 6px;
   padding: 14px 16px;
   margin: 12px 0;

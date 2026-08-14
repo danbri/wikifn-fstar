@@ -82,9 +82,11 @@
       <section>
         <h2>Next grounding frontier</h2>
         <p>
-          Lists and higher-order list functions are now implemented. The closure
-          analysis says these four are what gate the most remaining functions,
-          counted as how many functions each one blocks.
+          Records, value-by-key, object equality, the codepoint conversions and
+          the higher-order list functions are now grounded, so the four that
+          used to head this list are down to two. Re-measured with
+          <code>make closure</code>, a fixpoint over the call graph; the count
+          is how many of the 4,970 corpus functions each one still gates.
         </p>
         <table class="demo-table">
           <thead>
@@ -92,37 +94,65 @@
               <th>Priority</th>
               <th>Plain name</th>
               <th>Wikifunctions ID</th>
+              <th>Blocks</th>
               <th>Why it matters</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>1</td>
-              <td>Value by key</td>
-              <td><code>Z803</code></td>
-              <td>Blocks about 2,700 functions. Needs records as values.</td>
+              <td>Errors as values, and the functions around them</td>
+              <td><code>Z5</code>, <code>Z851</code>, <code>Z850</code>, <code>Z853</code></td>
+              <td>1,449 / 1,353 / 1,446</td>
+              <td>
+                Throwing, catching and reading an error. Also what most testers
+                need: 3,122 tester cases are skipped today because their
+                validator cannot run.
+              </td>
             </tr>
             <tr>
               <td>2</td>
-              <td>Throw Error</td>
-              <td><code>Z851</code></td>
-              <td>Blocks about 2,300. Needs errors (<code>Z5</code>) as values.</td>
+              <td>Quoting and reflection</td>
+              <td><code>Z805</code>, <code>Z899</code>, <code>Z29267</code></td>
+              <td>1,449 / 1,320 / 1,446</td>
+              <td>
+                Reify, unquote, and a quoted reference. Needed before any
+                function that treats another function as data can run.
+              </td>
             </tr>
             <tr>
               <td>3</td>
-              <td>Reify and Unquote</td>
-              <td><code>Z805</code>, <code>Z899</code></td>
-              <td>Blocks about 2,200 each. Reflection over the object graph.</td>
+              <td>String from Type</td>
+              <td><code>Z22764</code></td>
+              <td>1,455</td>
+              <td>
+                The single largest blocker by count. Rendering a type as text,
+                which needs types to be values.
+              </td>
             </tr>
             <tr>
               <td>4</td>
-              <td>Codepoint list conversions</td>
-              <td><code>Z22693</code>, <code>Z22717</code></td>
-              <td>Blocks about 2,200. Bridges text and typed lists.</td>
+              <td>Fetch persistent object</td>
+              <td><code>Z828</code></td>
+              <td>1,446</td>
+              <td>
+                Reading a ZObject by reference. There is no object store here,
+                so a reference is refused rather than resolved.
+              </td>
             </tr>
           </tbody>
         </table>
-        <p><a href="./primitives.html">Detailed primitive agenda</a></p>
+        <p>
+          Done since this list was last written:
+          <code>Z803</code> value by key,
+          <code>Z16829</code> type of object,
+          <code>Z13052</code> object equality,
+          <code>Z22693</code> and <code>Z22717</code> codepoint conversions,
+          <code>Z12668</code> and <code>Z12961</code> reverse and append,
+          <code>Z13546</code> natural division, and records as values.
+          Closure over the engine's 53 primitives is now 936 functions without
+          recursion and 1,168 with.
+        </p>
       </section>
 
       <section>

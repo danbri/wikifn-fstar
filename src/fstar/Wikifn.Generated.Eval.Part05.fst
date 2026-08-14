@@ -11,8 +11,16 @@ open Wikifn.Eval
 
   part:      6 of 10
   functions: 400
-  ZID range: Z26858 to Z29749
+  ZID range: Z26841 to Z29728
 *)
+
+(* Z26841 distance (km) between 2 QIDs (Haversine) | Z26841@228663 -> Z26843@206991 digest 4c68aa8e851c4ff07959fe64aa773b79a568e526173fac35ead064d5c79e0e09 *)
+let body_Z26841_distance_km_between_2_qids_haversine : expr =
+  ECall 18362 [ECall 20844 [ECall 20854 [ECall 25880 [ECall 26838 [EArg 0]]]]; ECall 20844 [ECall 20854 [ECall 25883 [ECall 26838 [EArg 0]]]]; ECall 20844 [ECall 20854 [ECall 25880 [ECall 26838 [EArg 1]]]]; ECall 20844 [ECall 20854 [ECall 25883 [ECall 26838 [EArg 1]]]]]
+
+(* Z26853 change type of instance of Wikidata enumeration | Z26853@219253 -> Z26856@207054 digest d361a5015b5d75276efc5737401b2d60bfc58756644fe0d3919d342b989c2773 *)
+let body_Z26853_change_type_of_instance_of_wikidata_enumeration : expr =
+  ECall 26779 [EArg 1; ECall 6895 [EArg 0]]
 
 (* Z26858 integer modulo natural, result between 1-M | Z26858@219990 -> Z26868@212865 digest db856fcdae1973bf77ad157516a1b1417542d68f73d952da7c8d4a15d859d9d1 *)
 let body_Z26858_integer_modulo_natural_result_between_1_m : expr =
@@ -1606,16 +1614,10 @@ let body_Z29727_wikidata_property_reference_from_pid_string : expr =
 let body_Z29728_sort_wikidata_property_refs_in_typical_order : expr =
   ECall 29725 [EArg 0; ECall 12767 [EValue (VFunc 30959); EValue (VFunc 30960)]]
 
-(* Z29748 ArticlePlaceholder render misc. Wikidata statement | Z29748@294893 -> Z29783@294805 digest b6d472c2286fd128192c929d7354dc242feb693190061ee1aa748634b097f300 *)
-let body_Z29748_articleplaceholder_render_misc_wikidata_statement : expr =
-  ECall 27873 [ECall 27849 [ECall 29717 [EArg 0; EArg 1]; ECall 802 [ECall 30433 [EArg 1; EValue (VRecord 39 [({ key_owner = Some 39; key_index = 1 }, VText [90; 54; 48; 48; 51; 75; 53])])]; ECall 27926 [ECall 29787 [EValue (VFunc 30170); EArg 0; ECall 33357 [ECall 30175 [ECall 28278 [EArg 1]]]; ECall 30172 [ECall 30175 [ECall 28278 [EArg 1]]]]]; EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])])]]; EValue (VText [100; 105; 118]); EValue (VList [VText [99; 108; 97; 115; 115]]); EValue (VList [VText [97; 114; 116; 105; 99; 108; 101; 112; 108; 97; 99; 101; 104; 111; 108; 100; 101; 114; 45; 115; 116; 97; 116; 101; 109; 101; 110; 116]])]
-
-(* Z29749 monolingual text as HTML with visible language tag | Z29749@293531 -> Z29757@231095 digest 2e7b341178ec8e4008aab458266b48855b1628ac9485f272755326c81c3f7dd8 *)
-let body_Z29749_monolingual_text_as_html_with_visible_language_tag : expr =
-  ECall 27868 [ECall 802 [ECall 29750 [ECall 14404 [EArg 0]; EArg 1]; ECall 14396 [EArg 0]; ECall 21394 [ECall 810 [EValue (VText [40]); ECall 810 [ECall 14329 [ECall 14404 [EArg 0]]; ECall 810 [EValue (VText [41; 32]); ECall 810 [ECall 14396 [EArg 0]; EValue (VList [])]]]]]]]
-
 let part_policy (fid:zid) : Tot (option expr) =
   match fid with
+  | 26841 -> Some body_Z26841_distance_km_between_2_qids_haversine
+  | 26853 -> Some body_Z26853_change_type_of_instance_of_wikidata_enumeration
   | 26858 -> Some body_Z26858_integer_modulo_natural_result_between_1_m
   | 26871 -> Some body_Z26871_element_list_of_wikidata_enumeration
   | 26879 -> Some body_Z26879_list_of_all_possible_instances_of_wikidata_enum
@@ -2014,6 +2016,4 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 29725 -> Some body_Z29725_sort_according_to_other_list
   | 29727 -> Some body_Z29727_wikidata_property_reference_from_pid_string
   | 29728 -> Some body_Z29728_sort_wikidata_property_refs_in_typical_order
-  | 29748 -> Some body_Z29748_articleplaceholder_render_misc_wikidata_statement
-  | 29749 -> Some body_Z29749_monolingual_text_as_html_with_visible_language_tag
   | _ -> None

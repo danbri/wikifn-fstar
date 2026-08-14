@@ -11,8 +11,20 @@ open Wikifn.Eval
 
   part:      8 of 10
   functions: 400
-  ZID range: Z32442 to Z35402
+  ZID range: Z32425 to Z35388
 *)
+
+(* Z32425 English simple present collective sentence | Z32425@259731 -> Z32434@272650 digest 37c306219a93863410f644aa8270743c47e7fa17142da0af7c7b40a4cfe8e1d2 *)
+let body_Z32425_english_simple_present_collective_sentence : expr =
+  ECall 26107 [EArg 3; ECall 22511 [ECall 21394 [ECall 810 [ECall 11089 [ECall 24766 [EArg 0; EArg 3]]; ECall 810 [EValue (VText [32]); ECall 810 [ECall 27410 [ECall 27327 [EArg 2; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 57; 57; 55; 48])]); EArg 3]; EValue (VList [VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 51; 57; 49; 48; 57; 51; 54])]])]; ECall 810 [EValue (VText [32]); ECall 810 [ECall 11089 [ECall 24766 [EArg 1; EArg 3]]; EValue (VList [])]]]]]]]]
+
+(* Z32428 abstract wikilink | Z32428@286759 -> Z36493@284181 digest 9b346bb969debe45312418b0b631460c941ff2734ba2907f1a4bca5676ad8a18 *)
+let body_Z32428_abstract_wikilink : expr =
+  ECall 36489 [EArg 0; ECall 36270 [EArg 0; EArg 1]]
+
+(* Z32431 item (QID) has statement with value for property | Z32431@289004 -> Z32433@259386 digest ba9c223e739f72b03e0d285505ef973435553773c6b78311cc1b030099a5df5f *)
+let body_Z32431_item_qid_has_statement_with_value_for_property : expr =
+  ECall 802 [ECall 813 [ECall 22220 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList []); ECall 810 [EArg 1; EValue (VList [])]]]]; EValue (VBool false); ECall 12696 [ECall 22978 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList []); ECall 810 [EArg 1; EValue (VList [])]]; EArg 1]; EArg 2]]
 
 (* Z32442 State location using entity and class, Japanese | Z32442@260451 -> Z32448@288851 digest 602109891af8a98274a7bf55df57c767db52fe2d19da92f2b838393768bf1dc8 *)
 let body_Z32442_state_location_using_entity_and_class_japanese : expr =
@@ -1602,20 +1614,11 @@ let body_Z35376_post_process_second_element_of_wikidata_claim_pair : expr =
 let body_Z35388_quine : expr =
   EValue (VFunc 35952)
 
-(* Z35399 Formal SignWriting to SignWriting in Unicode | Z35399@285213 -> Z35427@276431 digest 14a1510ea89a470dc26dd07364e085a89748b813a76f6a3a4d2976d677b0c427 *)
-let body_Z35399_formal_signwriting_to_signwriting_in_unicode : expr =
-  ECall 802 [ECall 10174 [ECall 24331 [EArg 0]; ECall 29248 [EArg 0]]; ECall 13351 [EValue (VList [VFunc 35425; VFunc 35417; VFunc 35411]); EArg 0]; EValue (VText [])]
-
-(* Z35400 return FSW structures from FSW string | Z35400@276395 -> Z35401@276327 digest 29a2ce372bf160a4b25c1df9ad2f86ccee913090a9591c0b403afbaba06beb3b *)
-let body_Z35400_return_fsw_structures_from_fsw_string : expr =
-  ECall 25829 [EArg 0; ECall 35397 [EArg 1]; EValue (VText [103])]
-
-(* Z35402 split string into list by repeated index | Z35402@279873 -> Z35951@279871 digest 1b99204a5b12f52c8d44b1b2703e6f6776985582488bcf516cdfcf7f8e162bdc *)
-let body_Z35402_split_string_into_list_by_repeated_index : expr =
-  ECall 18475 [ECall 873 [EValue (VFunc 22693); ECall 873 [EValue (VFunc 18475); ECall 29795 [ECall 17895 [ECall 22717 [EArg 0]]; EArg 1]]]]
-
 let part_policy (fid:zid) : Tot (option expr) =
   match fid with
+  | 32425 -> Some body_Z32425_english_simple_present_collective_sentence
+  | 32428 -> Some body_Z32428_abstract_wikilink
+  | 32431 -> Some body_Z32431_item_qid_has_statement_with_value_for_property
   | 32442 -> Some body_Z32442_state_location_using_entity_and_class_japanese
   | 32453 -> Some body_Z32453_flatten_map_function
   | 32462 -> Some body_Z32462_load_and_find_one_best_wikidata_statement_value
@@ -2013,7 +2016,4 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 35374 -> Some body_Z35374_infobox_row_from_wikidata_property
   | 35376 -> Some body_Z35376_post_process_second_element_of_wikidata_claim_pair
   | 35388 -> Some body_Z35388_quine
-  | 35399 -> Some body_Z35399_formal_signwriting_to_signwriting_in_unicode
-  | 35400 -> Some body_Z35400_return_fsw_structures_from_fsw_string
-  | 35402 -> Some body_Z35402_split_string_into_list_by_repeated_index
   | _ -> None

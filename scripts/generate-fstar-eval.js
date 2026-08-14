@@ -378,8 +378,19 @@ async function translate(term, context) {
   return { kind: "call", zid: functionZid, args, calleeKeys: keys };
 }
 
-const isLiteral = (node) =>
-  ["text", "nat", "bool", "func", "list", "record"].includes(node.kind);
+// Literal all the way down. Calling a list a literal because it is a list was
+// the mistake: a list whose elements are calls or arguments is a construction,
+// and treating it as a value meant refusing the whole body rather than building
+// the list at evaluation time. Same for a record's fields.
+const isLiteral = (node) => {
+  if (!node || typeof node !== "object") return false;
+  switch (node.kind) {
+    case "text": case "nat": case "bool": case "func": return true;
+    case "list": return node.items.every(isLiteral);
+    case "record": return node.fields.every(([, v]) => isLiteral(v));
+    default: return false;
+  }
+};
 
 // --- renderers -------------------------------------------------------------
 
@@ -397,6 +408,7 @@ function renderFstarValue(node) {
     case "bool": return `VBool ${node.value}`;
     case "func": return `VFunc ${node.zid.slice(1)}`;
     case "list": return `VList [${node.items.map(renderFstarValue).join("; ")}]`;
+    case "computed-list": throw new Unsupported("a computed list is not a value");
     case "record":
       return `VRecord ${node.type.slice(1)} [${node.fields
         .map(([key, v]) => `(${schemeKey(key)}, ${renderFstarValue(v)})`).join("; ")}]`;
@@ -404,8 +416,22 @@ function renderFstarValue(node) {
   }
 }
 
+// A list literal whose elements are computed. Wikifunctions writes it as a
+// list, but if any element is a call or an argument the whole thing has to be
+// built at evaluation time. Z810 is cons, so the list is exactly a chain of
+// them ending in the empty list - which means no new expression form is needed
+// and the interpreter, the printer and the compiler all already handle it.
+const isComputedList = (node) =>
+  node.kind === "list" && !node.items.every((item) => isLiteral(item));
+const asConsChain = (node) =>
+  node.items.reduceRight(
+    (rest, item) => ({ kind: "call", zid: "Z810", args: [item, rest] }),
+    { kind: "list", items: [] }
+  );
+
 function renderFstar(node) {
   if (node.kind === "arg") return `EArg ${node.index}`;
+  if (isComputedList(node)) return renderFstar(asConsChain(node));
   if (node.kind === "call") {
     return `ECall ${node.zid.slice(1)} [${node.args.map(renderFstar).join("; ")}]`;
   }
@@ -866,6 +892,402 @@ async function main() {
     await writeFile(partPath(index), lines.join("\n"), "utf8");
   }
 
+  // Every composition that can be, as a real F* function.
+  //
+  // This is the other half of the story from the parts above. There, a body is
+  // an `expr` value and the interpreter walks it. Here, the same body becomes a
+  // function definition that F* checks and that extracts to an OCaml function
+  // and then a JavaScript function - so calling a Wikifunction is calling a
+  // function, and a compiler downstream can see through it.
+  //
+  // Every compiled function has the shape
+  //     eval_result value -> ... -> eval_result value
+  // rather than a type derived from its Z8 signature. That is what reaches the
+  // whole data model: an argument can be a string, a natural, a boolean, a
+  // typed list, a pair, a record or a function, and `value` is that set. It
+  // also means errors propagate with no generated plumbing, and the result of
+  // one call is directly the argument of the next.
+  const HIGHER_ORDER = new Map([
+    ["Z873", "map_direct"], ["Z872", "filter_direct"],
+    ["Z876", "fold_direct"], ["Z14779", "zip_direct"]
+  ]);
+  const CONDITIONALS = new Set(["Z802", "Z13846"]);
+
+  const compiledName = (zid) => `compiled_${emittedIndex.get(zid).name}`;
+
+  // Compilable is a greatest fixpoint: assume every emitted function compiles,
+  // then drop any that calls something that does not. A cycle is kept - it
+  // compiles to a recursive group and reports fuel exhaustion - because the
+  // alternative is dropping everything above it too.
+  const compilable = new Set(emittedIndex.keys());
+  let dropping = true;
+  while (dropping) {
+    dropping = false;
+    for (const zid of [...compilable]) {
+      const entry = emittedIndex.get(zid);
+      const reachesGap = entry.calls.some((callee) =>
+        !isPrimitive(callee) && !compilable.has(callee));
+      if (reachesGap) { compilable.delete(zid); dropping = true; }
+    }
+  }
+
+  // A higher-order call is only compilable when the function it applies is
+  // known here and now: a literal function value naming something compiled or
+  // primitive. A computed function reference has no F* function to name.
+  const higherOrderTarget = (node) => {
+    if (!node || node.kind !== "call" || !HIGHER_ORDER.has(node.zid)) return undefined;
+    const first = node.args[0];
+    if (!first || first.kind !== "func") return undefined;
+    return first.zid;
+  };
+
+  // Which compiled functions take a fuel parameter, and which group each is in.
+  // Filled in before rendering, because a call has to know whether its callee
+  // is recursive before it can be written.
+  let recursiveSet = new Set();
+  let groupOfZid = new Map();
+  const targetFuel = (zid, context) =>
+    !context.recursive.has(zid) ? ""
+      : (context.group.has(zid) ? "next_fuel " : "default_fuel ");
+
+  // Anything above this, in a position that is evaluated anyway, gets a name.
+  //
+  // A match over a two-constructor type is complete by inspection, but the
+  // obligation F* discharges carries the whole surrounding term, and on bodies
+  // this size the solver gives up and reports incomplete patterns for something
+  // that plainly is not. Naming the big pieces keeps every query small - the
+  // same idea as caching a module and building on its type rather than its body,
+  // applied inside one definition.
+  //
+  // Only strict positions are hoisted. A conditional's branches are never
+  // touched: hoisting those would evaluate both, and 230 of the 288 directly
+  // self-recursive compositions guard their recursive branch with Z802.
+  const HOIST_OVER = 300;
+  // Shared across the module: the same hundred-string alphabet appears in many
+  // bodies, and there is no reason to check it more than once.
+  const sharedLiterals = new Map();
+  const hoist = (code, context) => {
+    if (code.length <= HOIST_OVER) return code;
+    context.bound += 1;
+    const name = `part_${context.bound}`;
+    context.bindings.push(`let ${name} = ${code} in`);
+    return name;
+  };
+
+  const directRefusals = new Map();
+  const refuse = (zid, reason) => {
+    if (!directRefusals.has(zid)) directRefusals.set(zid, reason);
+    throw new Unsupported(reason);
+  };
+
+  function renderDirect(node, context) {
+    switch (node.kind) {
+      case "arg":
+        return `a${node.index}`;
+      case "record":
+        return `(make_record ${node.type.slice(1)} [${node.fields
+          .map(([key, v]) => `(${schemeKey(key)}, ${hoist(renderDirect(v, context), context)})`)
+          .join("; ")}])`;
+      case "call": {
+        // A conditional becomes an F* if, so only the taken branch is
+        // evaluated. Everything recursive in the corpus depends on that.
+        if (CONDITIONALS.has(node.zid) && node.args.length === 3) {
+          const [condition, consequent, alternative] = node.args;
+          // The condition is bound to a name before it is matched on.
+          //
+          // Matching directly on the expression puts the whole nested term into
+          // the completeness query, and on a large body the solver gives up -
+          // reporting incomplete patterns for a match over a two-constructor
+          // type that plainly is not. Binding it first leaves the query the size
+          // of one variable. Same reason F* caches a module rather than a file:
+          // check the small thing once and build on its type, not its body.
+          context.conditions += 1;
+          const name = `cond_${context.conditions}`;
+          // A branch keeps its own bindings. Letting them escape to the top of
+          // the function would evaluate both branches, which is the one thing
+          // that must not happen: nearly every recursive composition in the
+          // corpus guards its recursive branch with this conditional.
+          const branch = (child) => {
+            const outer = context.bindings;
+            context.bindings = [];
+            const code = renderDirect(child, context);
+            const local = context.bindings;
+            context.bindings = outer;
+            return local.length ? `(${local.join(" ")} ${code})` : code;
+          };
+          const scrutinee = `condition_of ${node.zid.slice(1)} ${renderDirect(condition, context)}`;
+          const consequentCode = branch(consequent);
+          const alternativeCode = branch(alternative);
+          // Annotated, not inferred. Without the type F* has to work out what
+          // the binding is before it can decide the match covers it, and it
+          // reports incomplete patterns for a two-constructor type rather than
+          // saying that is what it is stuck on.
+          return `(let ${name} : eval_result bool = ${scrutinee} in\n` +
+            `   match ${name} with\n` +
+            `   | EErr e -> EErr e\n` +
+            `   | EOk b -> if b then ${consequentCode}\n` +
+            `              else ${alternativeCode})`;
+        }
+        const target = higherOrderTarget(node);
+        if (HIGHER_ORDER.has(node.zid)) {
+          if (!target) refuse(context.zid, `higher-order ${node.zid} over a computed function`);
+          const apply = HIGHER_ORDER.get(node.zid);
+          const arity = node.zid === "Z876" || node.zid === "Z14779" ? 2 : 1;
+          const call = arity === 2
+            ? (isPrimitive(target)
+                ? `(fun x y -> call_primitive ${target.slice(1)} [EOk x; EOk y])`
+                : `(fun x y -> ${compiledName(target)} ${targetFuel(target, context)}(EOk x) (EOk y))`)
+            : (isPrimitive(target)
+                ? `(fun x -> call_primitive ${target.slice(1)} [EOk x])`
+                : `(fun x -> ${compiledName(target)} ${targetFuel(target, context)}(EOk x))`);
+          if (node.zid === "Z876") {
+            // (function, iterable, initial object)
+            return `(with_items ${node.zid.slice(1)} ${renderDirect(node.args[1], context)} (fun items ->\n` +
+              `     match ${renderDirect(node.args[2], context)} with\n` +
+              `     | EErr e -> EErr e\n` +
+              `     | EOk seed -> fold_direct ${call} items seed))`;
+          }
+          if (node.zid === "Z14779") {
+            return `(with_items ${node.zid.slice(1)} ${renderDirect(node.args[1], context)} (fun left ->\n` +
+              `     with_items ${node.zid.slice(1)} ${renderDirect(node.args[2], context)} (fun right ->\n` +
+              `       zip_direct ${call} left right)))`;
+          }
+          return `(with_items ${node.zid.slice(1)} ${renderDirect(node.args[1], context)} (fun items ->\n` +
+            `     ${apply} ${call} items))`;
+        }
+        const args = node.args.map((a) => renderDirect(a, context)).map((a) => hoist(a, context));
+        if (compilable.has(node.zid)) {
+          // Every call to a recursive function supplies fuel. Inside its own
+          // group that is the caller's fuel, less one, so the group cannot loop
+          // for ever. From outside, the budget has to start somewhere.
+          const fuel = context.recursive.has(node.zid)
+            ? (context.group.has(node.zid) ? "next_fuel " : "default_fuel ")
+            : "";
+          return `(${compiledName(node.zid)} ${fuel}${args.join(" ")})`;
+        }
+        if (!isPrimitive(node.zid)) refuse(context.zid, `calls ${node.zid}, which does not compile`);
+        return `(call_primitive ${node.zid.slice(1)} [${args.join("; ")}])`;
+      }
+      default: {
+        // Everything else is a literal value. A big one gets a name at the top
+        // of the function, wherever it appeared - unlike a call, a literal
+        // cannot diverge, error or observe anything, so lifting it out of a
+        // conditional branch changes nothing except the size of the term the
+        // solver has to carry. Several of these are lists of a hundred strings.
+        const code = `(EOk (${renderFstarValue(node)}))`;
+        if (code.length <= HOIST_OVER) return code;
+        // Module level, not a let inside the function. A let is substituted
+        // into the body, so the whole literal still lands in every query the
+        // body generates - and some of these are lists of a hundred strings. As
+        // its own definition it is checked once and everything after it carries
+        // only its type. That is the same reason a module is cached rather than
+        // re-proved.
+        const existing = sharedLiterals.get(code);
+        if (existing) return existing;
+        const name = `literal_${sharedLiterals.size + 1}`;
+        sharedLiterals.set(code, name);
+        return name;
+      }
+    }
+  }
+
+  // Groups first: a mutually recursive set becomes one `let rec ... and ...`.
+  // Tarjan emits a component only once everything it reaches is done, so the
+  // order it returns is already dependency-first, which is what F* needs.
+  //
+  // The whole pass repeats until nothing new fails. A group that cannot be
+  // rendered is removed from the compilable set, and anything that called it
+  // has to go too - so one pass is not enough, and emitting anyway would put a
+  // name in the file that nothing defines.
+  let directLines = [];
+  let compiledCount = 0;
+  for (let attempt = 0; attempt < 12; attempt += 1) {
+    const directGroups = stronglyConnected(
+      [...compilable],
+      (zid) => (emittedIndex.get(zid)?.calls ?? []).filter((c) => compilable.has(c))
+    );
+    directLines = [];
+    compiledCount = 0;
+    const dropped = [];
+
+    recursiveSet = new Set();
+    groupOfZid = new Map();
+    for (const rawGroup of directGroups) {
+      const isRecursive = rawGroup.length > 1 ||
+        emittedIndex.get(rawGroup[0]).calls.includes(rawGroup[0]);
+      for (const zid of rawGroup) {
+        groupOfZid.set(zid, rawGroup);
+        if (isRecursive) recursiveSet.add(zid);
+      }
+    }
+
+    for (const rawGroup of directGroups) {
+      const group = rawGroup.slice().sort((a, b) => Number(a.slice(1)) - Number(b.slice(1)));
+      const members = new Set(group);
+      // Fuel where a function can reach itself: a group of more than one, or a
+      // call to itself.
+      const recursive = group.length > 1 ||
+        emittedIndex.get(group[0]).calls.includes(group[0]);
+      const rendered = [];
+      let failed = false;
+      for (const zid of group) {
+        const entry = emittedIndex.get(zid);
+        const context = { zid, group: recursive ? members : new Set(), recursive: recursiveSet, conditions: 0, bound: 0, bindings: [], literals: [] };
+        let body;
+        try {
+          body = renderDirect(entry.tree, context);
+        } catch (error) {
+          failed = true;
+          break;
+        }
+        const params = entry.argNames.map((name) => `(${name}:eval_result value)`).join(" ");
+        const signature = recursive ? `(fuel:nat) ${params}`.trim() : (params || "()");
+        const decreases = recursive ? " (decreases fuel)" : "";
+        // Bound once, and named, because `fuel - 1` written inside a lambda
+        // loses the proof that fuel is not zero and F* then sees an int where
+        // it wants a nat.
+        // Bindings first, in the order they were made, then the body.
+        // Literals first: they are lifted from anywhere, including from inside
+        // a branch, so they must be in scope before anything that mentions them.
+        const preludeLines = [...context.literals, ...context.bindings];
+        const prelude = preludeLines.length
+          ? preludeLines.map((line) => `  ${line}`).join("\n") + "\n"
+          : "";
+        const guarded = recursive
+          ? `\n  if fuel = 0 then EErr EFuelExhausted else\n` +
+            `  let next_fuel : nat = fuel - 1 in\n${prelude}  ${body}`
+          : `\n${prelude}  ${body}`;
+        rendered.push({
+          zid, entry, recursive,
+          text: `${compiledName(zid)} ${signature} : Tot (eval_result value)${decreases} =${guarded}`
+        });
+      }
+      if (failed) { dropped.push(...group); continue; }
+      rendered.forEach((item, position) => {
+        directLines.push(
+          `(* ${item.zid} ${item.entry.label} | ${item.zid}@${item.entry.functionRevision}` +
+          ` -> ${item.entry.implementation.zid}@${item.entry.implementation.revision} *)`
+        );
+        const keyword = position === 0 ? (item.recursive ? "let rec" : "let") : "and";
+        directLines.push(`${keyword} ${item.text}`);
+        directLines.push("");
+        compiledCount += 1;
+      });
+    }
+
+    if (dropped.length === 0) break;
+    for (const zid of dropped) compilable.delete(zid);
+    // Anything that called a dropped function cannot compile either.
+    let shrinking = true;
+    while (shrinking) {
+      shrinking = false;
+      for (const zid of [...compilable]) {
+        if (emittedIndex.get(zid).calls.some((c) => !isPrimitive(c) && !compilable.has(c))) {
+          compilable.delete(zid);
+          shrinking = true;
+        }
+      }
+    }
+  }
+
+  const directHeader = [
+    "module Wikifn.Compiled.Direct",
+    "",
+    "open Wikifn.Primitive.Kernel",
+    "open Wikifn.Zid",
+    "open Wikifn.Eval",
+    "open Wikifn.Direct",
+    "",
+    "(*",
+    "  Generated by scripts/generate-fstar-eval.js. Do not edit.",
+    "",
+    "  Every composition here is an F* function, not a tree for an interpreter to",
+    "  walk. Each is checked by F*, extracts to an OCaml function and then to a",
+    "  JavaScript function, so calling a Wikifunction is a function call.",
+    "",
+    "  The shape is eval_result value -> ... -> eval_result value for all of them,",
+    "  which is what reaches the whole data model rather than the text-typed",
+    "  subset: a value is a string, a natural, a boolean, a typed list, a pair, a",
+    "  record or a function.",
+    "",
+    `  compiled: ${compiledCount}`,
+    `  emitted for the interpreter: ${emitted.length}`,
+    "*)",
+    "",
+    "(* These are first-order functions over a finite datatype: there is nothing",
+    "   here for the solver to discover, only pattern completeness to confirm on",
+    "   very large terms. Unrolling recursive definitions cannot help with that",
+    "   and makes the query bigger, so fuel is off and only the inductive fuel",
+    "   needed to see through eval_result and value is left. The rlimit is raised",
+    "   because some bodies are genuinely enormous, not because anything here is",
+    "   hard. *)",
+    "#set-options \"--fuel 0 --ifuel 2 --z3rlimit 200\"",
+    ""
+  ];
+  // One entry point, so a caller with a ZID can reach the compiled function
+  // for it. Selecting is a match on a number; what it selects is a direct
+  // function, which is the whole difference from the interpreter.
+  const dispatchLines = [
+    "(* Reaching a compiled function by ZID. The match is a selection, not an",
+    "   interpretation: what it returns has already been compiled. Arities are",
+    "   fixed per function, so a call with the wrong number of arguments is",
+    "   refused rather than padded. *)",
+    "let compiled_by_zid (fid:zid) (args:list (eval_result value))",
+    "  : Tot (option (eval_result value))",
+    "=",
+    "  match fid, args with"
+  ];
+  const compiledOrder = [...compilable]
+    .filter((zid) => emittedIndex.has(zid))
+    .sort((a, b) => Number(a.slice(1)) - Number(b.slice(1)));
+  const dispatched = [];
+  for (const zid of compiledOrder) {
+    const entry = emittedIndex.get(zid);
+    if (!directLines.some((line) => line.includes(`${compiledName(zid)} `))) continue;
+    const params = entry.argNames.map((_n, index) => `a${index}`);
+    const fuel = recursiveSet.has(zid) ? "default_fuel " : "";
+    // A function of no arguments is written to take unit, so it has to be
+    // called with unit; passing nothing leaves the function itself as the
+    // result rather than what it computes.
+    const applied = params.length ? params.join(" ") : "()";
+    dispatchLines.push(
+      `  | ${entry.number}, [${params.join("; ")}] -> Some (${compiledName(zid)} ${fuel}${applied})`
+    );
+    dispatched.push(zid);
+  }
+  dispatchLines.push("  | _, _ -> None");
+  dispatchLines.push("");
+
+  const compiledSet = new Set(dispatched);
+
+  const literalLines = [];
+  if (sharedLiterals.size) {
+    literalLines.push(
+      "(* Literals large enough to be worth naming, checked once here so that",
+      "   every body below carries their type rather than their contents. *)",
+      ""
+    );
+    for (const [code, name] of sharedLiterals) {
+      literalLines.push(`let ${name} : eval_result value = ${code}`);
+      literalLines.push("");
+    }
+  }
+  await writeFile(
+    path.join(root, "src", "fstar", "Wikifn.Compiled.Direct.fst"),
+    directHeader.concat(literalLines).concat(directLines).concat(dispatchLines).join("\n"),
+    "utf8"
+  );
+  console.log(`\ncompiled ${compiledCount} of ${emitted.length} compositions into F* functions`);
+  console.log(`  ${dispatched.length} reachable by ZID through compiled_by_zid`);
+  const refusalTally = new Map();
+  for (const reason of directRefusals.values()) {
+    const key = reason.replace(/Z\d+/g, "Z#");
+    refusalTally.set(key, (refusalTally.get(key) ?? 0) + 1);
+  }
+  for (const [reason, count] of [...refusalTally.entries()].sort((a, b) => b[1] - a[1]).slice(0, 8)) {
+    console.log(`  ${String(count).padStart(4)}  ${reason}`);
+  }
+
   // The same bodies again, one module per function, under build/.
   //
   // These are not a second copy to keep in step: both layouts are rendered from
@@ -1077,6 +1499,12 @@ async function main() {
           // same as reaching a function nobody has written yet.
           reachesCycle: entry.reachesCycle,
           cycle: entry.cycle,
+          // Whether this composition became an F* function of its own, rather
+          // than only a tree for the interpreter. Recorded here so that asking
+          // does not mean running it: the obvious test - call it and see if the
+          // dispatcher knows it - executes a thousand functions with full fuel
+          // and does not finish.
+          compiled: compiledSet.has(entry.zid),
           mutuallyRecursive: entry.mutuallyRecursive,
           argumentKeys: entry.argKeys,
           // Declared, not checked. The engine has no type checker; these come
