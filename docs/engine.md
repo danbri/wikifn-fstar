@@ -1,7 +1,7 @@
 # The Wikifn Engine
 
-1,313 real Wikifunctions compositions compiled into F* functions, checked by F*, and
-extracted to OCaml and then JavaScript — plus an interpreter over 3,846 of them, which is
+1,369 real Wikifunctions compositions compiled into F* functions, checked by F*, and
+extracted to OCaml and then JavaScript — plus an interpreter over 3,890 of them, which is
 how the rest are reached and how the compiled ones are checked against something.
 
 ## What is generated and what is authored
@@ -14,7 +14,7 @@ object:
 
 | file | contents |
 |---|---|
-| `src/fstar/Wikifn.Compiled.Direct.fst` | **1,313 compositions as F\* functions**, each a translation of a pinned `Z14K2` tree |
+| `src/fstar/Wikifn.Compiled.Direct.fst` | **1,369 compositions as F\* functions**, each a translation of a pinned `Z14K2` tree |
 | `src/fstar/Wikifn.Generated.Eval.PartNN.fst` | the same compositions as data, for the interpreter |
 | `src/fstar/Wikifn.Generated.Eval.fst` | dispatch only; it holds no bodies |
 | `build/fstar/fn/Wikifn.Fn.ZNNNN.fst` | the same bodies again, one module per function, for verification |
@@ -98,9 +98,9 @@ Measured with `make closure` (a fixpoint over the call graph, not a per-seed wal
 | | count |
 |---|---|
 | functions in the corpus | 4,970 |
-| **translated into F\* functions, checked by F\*** | **1,313** |
-| carried as data for the interpreter | 3,846 |
-| skipped by the translator, with reasons recorded | 51 |
+| **compiled into F\* functions, checked by F\*** | **1,369** |
+| carried as data for the interpreter | 3,890 |
+| skipped by the translator, with reasons recorded | 7 |
 
 The first two rows are different things and the difference is the point. A
 *function* is `compiled_Z10012_reverse_string`, an F\* definition that F\* checks
@@ -111,7 +111,7 @@ the same pass, so they cannot disagree about what the corpus says — and
 `test/compiled.test.js` requires them to give the same answer on every argument
 the corpus's own testers supply.
 
-The 2,533 that are data and not functions are not a limit of the compiler: they
+The 2,521 that are data and not functions are not a limit of the compiler: they
 reach a function nobody has implemented, so there is nothing to compile them
 into. They are carried because calls are by reference and they start working the
 moment the gap is filled.
@@ -119,7 +119,7 @@ moment the gap is filled.
 Recursion was long assumed to be what kept compositions from being compiled into
 standalone F* functions, since each recursive one needs a termination measure. Measured
 against the implementations actually selected, that assumption was wrong by an order of
-magnitude: **217 of 3,846 bodies are recursive at all**, 5.7%, and they take the same fuel
+magnitude: **217 of 3,890 bodies are recursive at all**, 5.7%, and they take the same fuel
 parameter the interpreter already uses. The other 94.3% are plain non-recursive
 definitions. What had actually blocked the old direct compiler was that it typed every
 parameter and return as `text`, gated recursion on the literal string `"Z14613"`, and
@@ -132,28 +132,30 @@ value this harness can read:
 
 | | count |
 |---|---|
-| testers considered | 9,872 |
-| pass | 833 |
-| fail | 60 |
-| error | 2,065 |
-| skipped, with reasons | 6,914 |
+| testers considered | 10,281 |
+| pass | **1,247** |
+| fail | 102 |
+| error | 1,637 |
+| skipped, with reasons | 7,295 |
 
 | | count |
 |---|---|
-| functions with at least one passing tester | 374 |
-| functions passing every tester that could be read | **315** |
+| functions with at least one passing tester | 544 |
+| functions passing every tester that could be read | **450** |
 
 A tester is only counted as passing when both its call and its expected value were
 readable. Everything else is skipped with a stated reason, never counted as a pass.
 
 The largest remaining buckets are honest limits, not silence:
 
-- 2,926 testers pass an argument this harness cannot convert to a literal
-- 3,122 have a validator this engine cannot run
-- 880 report a depth limit, from compositions defined through each other with no base case
-- 519 use `Z889` list equality with both arguments supplied, so the expected value cannot
-  be inferred
-- 60 disagree and are worth individual investigation
+- an argument this harness cannot convert to a literal is still the largest bucket
+- a validator this engine cannot run is the second: errors as values would move most of it
+- 264 report a depth limit, from compositions defined through each other with no base case
+- `Z889` list equality with both arguments supplied leaves no expected value to infer
+- 102 disagree and are worth individual investigation
+
+`make tester-report` groups all of it by cause rather than by message, as
+[what still fails](./tester-report.html): 561 failing functions resolve to 101 causes.
 
 Not every disagreement is this engine's fault, and saying which is which matters.
 `Z15391 nth Fibonacci number of order k` returns 24 where its tester wants 81, because the
@@ -293,6 +295,33 @@ not implemented yet.
 
 The browser build of the same artifact drives `docs/demo-engine.html`, which is the
 searchable catalogue with a run form.
+
+## What "round trip" does and does not mean
+
+Every emitted body is reported as round-tripping "identical", and that is true of what it
+checks: render the tree back to a canonical composition, read it again, and compare. That
+is *self-consistency* — it shows this repo's writer and reader agree, and both are this
+repo's.
+
+Compared against the pinned composition each body was translated from, **2,816 of 3,890
+match and 1,074 differ**. `test/fidelity.test.js` holds that second number and it may only
+be lowered. Most of what differs is spelling rather than meaning, because canonical
+Wikifunctions has more than one way to write the same thing — but the description "all
+back as canonical Wikifunctions compositions" implied the stronger claim, and nothing was
+checking it.
+
+## Refusals, as budgets
+
+`test/coverage.test.js` turns every refusal into a named class with a budget rather than a
+line in a log. A class that is ours has a budget of zero; a defect in a pinned object is
+named separately, because no work here fixes it; and a refusal belonging to no class is
+itself a failure.
+
+Skipped translations went from 51 to 7, of which 5 are corpus defects. The four classes
+that were ours were the same mistake in different clothes — reading only the literal case
+of something that can also be computed: a `Z13518` whose value is a call, a record whose
+type is `Z882(Z6, Z6)`, a call whose function is an argument, and a list whose elements
+are not constants.
 
 ## Known limits
 

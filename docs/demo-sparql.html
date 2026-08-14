@@ -44,16 +44,13 @@
           ZID.
         </p>
         <p>
-          It is 1.2 MB, which is more than this page needs, and the reason is
-          worth stating rather than working around. The engine is an
-          <em>interpreter</em> plus 3,823 composition bodies carried as data. The
-          right fix is not a smaller interpreter but no interpreter: compiling
-          each composition into its own F* function and extracting that, so a
-          SPARQL extension function is a directly-called extracted function
-          rather than a tree walk. That path exists
-          (<code>Wikifn.Compiled.Compositions</code>) and currently holds ten
-          functions; widening it to the corpus is the work in progress, and this
-          page is what it is for.
+          A SPARQL extension function here is a <strong>compiled F* function</strong>,
+          not a tree walk. Each of 1,369 compositions is an F* definition that F*
+          checks and that extracts to an OCaml function and then a JavaScript
+          one, so <code>fn:Z10096(...)</code> in a query below is a function
+          call. Where a ZID has no compiled function the page falls back to the
+          interpreter and says so in the result, rather than quietly answering
+          from a different path.
         </p>
         <p>
           <a href="./demo-engine.html">Engine browser</a> &middot;
@@ -108,12 +105,12 @@
 await engine.queryBindings(query, {
   sources: [{ type: "serialized", value: turtle, mediaType: "text/turtle" }],
 
-  // Any &lt;.../fn#Znnnn&gt; becomes a call into the extracted engine.
+  // Any &lt;.../fn#Znnnn&gt; becomes a call to the compiled F* function for it.
   extensionFunctionCreator: (iri) =&gt; {
     const zid = /#(Z[1-9][0-9]*)$/.exec(iri.value)?.[1];
     if (!zid) return undefined;
-    return (args) =&gt; toTerm(JSON.parse(globalThis.wikifnEngineCall(
-      zid, "100000", JSON.stringify(args.map(fromTerm)))));
+    return (args) =&gt; toTerm(JSON.parse(globalThis.wikifnCompiledCall(
+      zid, JSON.stringify(args.map(fromTerm)))));
   }
 });</code></pre>
         <p>
@@ -134,6 +131,11 @@ await engine.queryBindings(query, {
             The Wikifunctions side is the same artifact the engine browser runs,
             checked by F* and measured against Wikifunctions' own testers. The
             SPARQL side is stock Comunica; nothing about it is modified.
+          </li>
+          <li>
+            Compiled and interpreted must give the same answer, and a test
+            requires it on every argument the corpus's own testers supply. The
+            compiled path is not a faster approximation of the other one.
           </li>
           <li>
             A function that is not runnable, or that reaches a group of
@@ -271,6 +273,10 @@ ORDER BY ?opened`
 
         // SPARQL passes RDF terms; the engine takes JSON literals.
         // Only the three types that have an obvious counterpart cross over.
+        // Which path answered, per query, so the page can say rather than imply.
+        const compiled = new Set();
+        const interpreted = new Set();
+
         const XSD = "http://www.w3.org/2001/XMLSchema#";
         function termToArgument(term) {
           if (term.termType !== "Literal") {
@@ -337,27 +343,42 @@ ORDER BY ?opened`
           resultsEl.replaceChildren();
           timingEl.textContent = "";
           const started = performance.now();
+          compiled.clear();
+          interpreted.clear();
           try {
             const bindings = await engine.queryBindings(queryEl.value, {
               sources: [{ type: "serialized", value: turtle, mediaType: "text/turtle",
                           baseIRI: "https://example.org/" }],
-              // Any <...fn#Znnnn> resolves to a call into the extracted engine.
-              // No allow-list: the catalogue is the allow-list.
-              // Whatever the module exports, SPARQL can call. A ZID it does
-              // not export returns undefined, and Comunica reports an unknown
-              // function rather than this page inventing an answer.
+              // Compiled first. wikifnCompiledCall selects an extracted F*
+              // function by ZID and calls it; the interpreter is the fallback
+              // for a composition that has no compiled form, and which path
+              // answered is recorded rather than hidden. No allow-list: the
+              // catalogue is the allow-list.
               extensionFunctionCreator: (iri) => {
                 const zid = /#(Z[1-9][0-9]*)$/.exec(iri.value)?.[1];
-                const fn = zid && wikifn[zid];
-                if (!fn) return undefined;
-                return (args) => resultToTerm(fn(...args.map(termToArgument)), zid);
+                if (!zid) return undefined;
+                return (args) => {
+                  const payload = JSON.stringify(args.map(termToArgument));
+                  let response = JSON.parse(globalThis.wikifnCompiledCall(zid, payload));
+                  if (!response.ok && /has no compiled function/.test(response.message ?? "")) {
+                    interpreted.add(zid);
+                    response = JSON.parse(globalThis.wikifnEngineCall(zid, "100000", payload));
+                  } else {
+                    compiled.add(zid);
+                  }
+                  return resultToTerm(response, zid);
+                };
               }
             });
 
             const rows = await bindings.toArray();
+            const paths = [];
+            if (compiled.size) paths.push(`${[...compiled].join(", ")} compiled`);
+            if (interpreted.size) paths.push(`${[...interpreted].join(", ")} interpreted`);
             timingEl.textContent =
               `${rows.length} row${rows.length === 1 ? "" : "s"} in ` +
-              `${Math.round(performance.now() - started)} ms`;
+              `${Math.round(performance.now() - started)} ms` +
+              (paths.length ? ` — ${paths.join("; ")}` : "");
             render(rows);
           } catch (error) {
             const message = document.createElement("p");

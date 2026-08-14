@@ -1,7 +1,7 @@
 {
   "generated": "scripts/check-engine-testers.js --examples",
   "note": "Arguments taken from Wikifunctions' own Z20 testers. status says what this engine did with them, so 'error' means the example is real and the engine cannot yet run it.",
-  "functions": 1002,
+  "functions": 1011,
   "examples": {
     "Z10012": [
       {
@@ -1910,15 +1910,17 @@
         "args": [
           "File:George H. Sharpe.jpg"
         ],
+        "expected": "jpg",
         "tester": "Z10747",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "File:Ivory Coast.png"
         ],
+        "expected": "png",
         "tester": "Z28561",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z10753": [
@@ -2121,8 +2123,9 @@
         "args": [
           "abcdef123"
         ],
+        "expected": "abcdef123",
         "tester": "Z10778",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -2486,19 +2489,19 @@
     "Z10869": [
       {
         "args": [
+          "Sveits"
+        ],
+        "expected": "Sveits’",
+        "tester": "Z10872",
+        "status": "pass"
+      },
+      {
+        "args": [
           "TV 2"
         ],
         "expected": "TV 2s",
         "tester": "Z10873",
         "status": "pass"
-      },
-      {
-        "args": [
-          "Sveits"
-        ],
-        "expected": "Sveits’",
-        "tester": "Z10872",
-        "status": "fail"
       }
     ],
     "Z10878": [
@@ -5537,15 +5540,17 @@
         "args": [
           65
         ],
+        "expected": "A",
         "tester": "Z11535",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           128512
         ],
+        "expected": "😀",
         "tester": "Z11537",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z11538": [
@@ -7396,8 +7401,9 @@
         "args": [
           "ہونا"
         ],
+        "expected": "ہو",
         "tester": "Z12227",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z12281": [
@@ -12593,6 +12599,29 @@
         "status": "error"
       }
     ],
+    "Z14283": [
+      {
+        "args": [
+          "0"
+        ],
+        "tester": "Z14284",
+        "status": "error"
+      },
+      {
+        "args": [
+          "12345"
+        ],
+        "tester": "Z14285",
+        "status": "error"
+      },
+      {
+        "args": [
+          "184467440737095516152"
+        ],
+        "tester": "Z14286",
+        "status": "error"
+      }
+    ],
     "Z14295": [
       {
         "args": [
@@ -13666,8 +13695,9 @@
             false
           ]
         ],
+        "expected": "1100",
         "tester": "Z14776",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z14783": [
@@ -17268,6 +17298,15 @@
         "status": "pass"
       }
     ],
+    "Z16313": [
+      {
+        "args": [
+          42
+        ],
+        "tester": "Z16315",
+        "status": "error"
+      }
+    ],
     "Z16348": [
       {
         "args": [
@@ -19326,29 +19365,33 @@
         "args": [
           "١٢٣"
         ],
+        "expected": "123",
         "tester": "Z18506",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "-١٢٣"
         ],
+        "expected": "-123",
         "tester": "Z18507",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "٣٫١٤"
         ],
+        "expected": "3.14",
         "tester": "Z18508",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "٩٩٫٩٪"
         ],
+        "expected": "99.9%",
         "tester": "Z18509",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z18531": [
@@ -20555,6 +20598,16 @@
           true
         ],
         "tester": "Z20655",
+        "status": "error"
+      }
+    ],
+    "Z20687": [
+      {
+        "args": [
+          "abcdefg",
+          "bcdffg"
+        ],
+        "tester": "Z20689",
         "status": "error"
       }
     ],
@@ -21885,6 +21938,22 @@
         "status": "pass"
       }
     ],
+    "Z24517": [
+      {
+        "args": [
+          0
+        ],
+        "tester": "Z24518",
+        "status": "error"
+      },
+      {
+        "args": [
+          6
+        ],
+        "tester": "Z24519",
+        "status": "error"
+      }
+    ],
     "Z24618": [
       {
         "args": [
@@ -22071,6 +22140,78 @@
           "3 m"
         ],
         "tester": "Z36689",
+        "status": "error"
+      }
+    ],
+    "Z26121": [
+      {
+        "args": [
+          0
+        ],
+        "tester": "Z26122",
+        "status": "error"
+      },
+      {
+        "args": [
+          6
+        ],
+        "tester": "Z26123",
+        "status": "error"
+      },
+      {
+        "args": [
+          12
+        ],
+        "tester": "Z26124",
+        "status": "error"
+      },
+      {
+        "args": [
+          23
+        ],
+        "tester": "Z26125",
+        "status": "error"
+      },
+      {
+        "args": [
+          170
+        ],
+        "tester": "Z26126",
+        "status": "error"
+      },
+      {
+        "args": [
+          1200
+        ],
+        "tester": "Z26127",
+        "status": "error"
+      },
+      {
+        "args": [
+          1000
+        ],
+        "tester": "Z26128",
+        "status": "error"
+      },
+      {
+        "args": [
+          1000003
+        ],
+        "tester": "Z26129",
+        "status": "error"
+      },
+      {
+        "args": [
+          2000
+        ],
+        "tester": "Z26229",
+        "status": "error"
+      },
+      {
+        "args": [
+          1000000
+        ],
+        "tester": "Z26231",
         "status": "error"
       }
     ],
@@ -22961,6 +23102,15 @@
         "status": "error"
       }
     ],
+    "Z29102": [
+      {
+        "args": [
+          "Z42"
+        ],
+        "tester": "Z29104",
+        "status": "error"
+      }
+    ],
     "Z29150": [
       {
         "args": [
@@ -23230,7 +23380,7 @@
         ],
         "expected": "foo?",
         "tester": "Z29641",
-        "status": "fail"
+        "status": "pass"
       },
       {
         "args": [
@@ -23238,7 +23388,7 @@
         ],
         "expected": "foo!",
         "tester": "Z29642",
-        "status": "fail"
+        "status": "pass"
       },
       {
         "args": [
@@ -23246,7 +23396,7 @@
         ],
         "expected": "foo.",
         "tester": "Z29643",
-        "status": "fail"
+        "status": "pass"
       }
     ],
     "Z30092": [
@@ -23613,6 +23763,18 @@
           false
         ],
         "tester": "Z30764",
+        "status": "error"
+      }
+    ],
+    "Z30768": [
+      {
+        "args": [
+          false,
+          true,
+          true,
+          ""
+        ],
+        "tester": "Z30770",
         "status": "error"
       }
     ],
@@ -25499,6 +25661,52 @@
           "M519x544S33b00482x483S17e10496x520S22104481x520S22900489x534"
         ],
         "tester": "Z36350",
+        "status": "error"
+      }
+    ],
+    "Z36542": [
+      {
+        "args": [
+          "P31"
+        ],
+        "tester": "Z36543",
+        "status": "error"
+      },
+      {
+        "args": [
+          "P13"
+        ],
+        "tester": "Z36544",
+        "status": "error"
+      },
+      {
+        "args": [
+          "Q31"
+        ],
+        "tester": "Z36545",
+        "status": "error"
+      }
+    ],
+    "Z36548": [
+      {
+        "args": [
+          "L825"
+        ],
+        "tester": "Z36549",
+        "status": "error"
+      },
+      {
+        "args": [
+          "L528"
+        ],
+        "tester": "Z36550",
+        "status": "error"
+      },
+      {
+        "args": [
+          "Q528"
+        ],
+        "tester": "Z36551",
         "status": "error"
       }
     ],
