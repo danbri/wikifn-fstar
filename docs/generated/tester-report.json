@@ -5,13 +5,13 @@
     "functionsInEngine": 3890,
     "testersConsidered": 10281,
     "counts": {
-      "pass": 1290,
+      "pass": 1291,
       "fail": 105,
-      "error": 1721,
+      "error": 1720,
       "skipped": 7165
     },
-    "functionsWithAtLeastOnePass": 565,
-    "functionsFullyPassing": 459,
+    "functionsWithAtLeastOnePass": 566,
+    "functionsFullyPassing": 460,
     "topReasons": [
       {
         "reason": "argument is not a readable literal",
@@ -628,8 +628,8 @@
     ]
   },
   "functionsWithTesters": 3551,
-  "functionsFullyPassing": 459,
-  "functionsFailing": 601,
+  "functionsFullyPassing": 460,
+  "functionsFailing": 600,
   "unproductiveGroups": 26,
   "functionsInsideAGroup": 68,
   "causes": [
@@ -6122,23 +6122,6 @@
           "pass": 0,
           "fail": 0,
           "error": 9,
-          "disagreements": []
-        }
-      ]
-    },
-    {
-      "kind": "other",
-      "title": "Z24171 argument Z24171K2 is not readable",
-      "members": [],
-      "functions": 1,
-      "cases": 1,
-      "examples": [
-        {
-          "zid": "Z24291",
-          "label": "given object within list within list",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
           "disagreements": []
         }
       ]

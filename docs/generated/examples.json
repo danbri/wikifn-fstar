@@ -22556,8 +22556,9 @@
         "args": [
           "a"
         ],
+        "expected": "Z29294 to hold",
         "tester": "Z29313",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z24307": [

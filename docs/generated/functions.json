@@ -3936,6 +3936,7 @@
     "Z868": "Z868_deprecated_z22717",
     "Z886": "Z886_deprecated_z22693",
     "Z13052": "Z13052_object_equality",
+    "Z29294": "Z29294_object_equivalence",
     "Z22693": "Z22693_codepoint_list_to_string",
     "Z22717": "Z22717_string_to_codepoint_list",
     "Z13318": "Z13318_apply_two_argument_function",
@@ -28566,9 +28567,9 @@
         "Typed pair(Object, Object)"
       ],
       "returnType": "Boolean",
-      "implementation": "Z24643",
-      "revision": 186662,
-      "digest": "e93800640f0657bc983a93ce53cd2679afb6b409042d9bfe546e609869bdc64a"
+      "implementation": "Z30457",
+      "revision": 234755,
+      "digest": "78ca558bd3653b6aee82722a70c39ba3608c3a1384d572ef50f2d452f0cbf7a0"
     },
     {
       "zid": "Z19601",
@@ -53568,9 +53569,9 @@
       "name": "Z29166_same_quote",
       "label": "same Quote",
       "arity": 2,
-      "runnable": false,
+      "runnable": true,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z29166K1",
@@ -57160,9 +57161,9 @@
       "name": "Z30239_same_typed_map",
       "label": "same Typed map",
       "arity": 2,
-      "runnable": false,
+      "runnable": true,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z30239K1",
@@ -62609,9 +62610,9 @@
         "Wikidata sitelink"
       ],
       "returnType": "Boolean",
-      "implementation": "Z31990",
-      "revision": 256903,
-      "digest": "d9cc12efddb0c9a9aa69e57cd8a29e9e756b00e84bffc7c452a8efc5bd4b923a"
+      "implementation": "Z31992",
+      "revision": 274022,
+      "digest": "ef583c27dc3a4d307d56746232ba1b2f50d7de7a64da5c257c433440fd1ea7b2"
     },
     {
       "zid": "Z31994",
@@ -69806,9 +69807,9 @@
       "name": "Z33862_same_error",
       "label": "same Error",
       "arity": 2,
-      "runnable": false,
+      "runnable": true,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z33862K1",

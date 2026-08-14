@@ -97,6 +97,38 @@ test("an error is a value: asking whether a call threw is an answer", skip, () =
   );
 });
 
+// Equality over the whole value model, which is what makes a comparison
+// meaningful for anything but strings and numbers. Both Wikifunctions functions
+// that mean this - Z13052 object equality and Z29294 object equivalence - are
+// grounded on the same structural comparison, and both have only code
+// implementations upstream, so following their compositions reaches nothing.
+const EQUALITY = ["Z13052", "Z29294"];
+
+for (const zid of EQUALITY) {
+  test(`${zid} compares every shape a value can take`, skip, () => {
+    const { call } = engine();
+    const holds = (args, want, what) => {
+      const response = call(zid, args);
+      assert.ok(response.ok, `${zid}${JSON.stringify(args)} did not evaluate: ${response.message}`);
+      assert.equal(
+        response.result.value, want,
+        `${zid} said ${response.result.value} comparing ${what}`
+      );
+    };
+    holds(["abc", "abc"], true, "equal strings");
+    holds(["abc", "abd"], false, "different strings");
+    holds([1, 1], true, "equal numbers");
+    holds([1, 2], false, "different numbers");
+    holds([true, true], true, "equal booleans");
+    holds([[1, 2, 3], [1, 2, 3]], true, "equal lists");
+    holds([[1, 2, 3], [1, 2]], false, "lists of different length");
+    holds([[1, 2], [2, 1]], false, "lists in a different order");
+    // Across shapes: a number and the string of that number are not equal.
+    holds([1, "1"], false, "a number and a string");
+    holds([[], ""], false, "an empty list and an empty string");
+  });
+}
+
 // What is not represented, as counts rather than prose. Lower these by adding
 // the shape; never raise one without saying why.
 const NOT_REPRESENTED = [

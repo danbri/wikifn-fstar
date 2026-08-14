@@ -76,6 +76,8 @@
 
 (define (Z13052_object_equality a b) (equal? a b))
 
+(define (Z29294_object_equivalence a b) (equal? a b))
+
 (define (fst p) (car p))
 
 (define (snd p) (cdr p))
@@ -212,6 +214,7 @@
 (define Z11040 Z11040_string_length)
 (define Z10000 Z10000_join_two_strings)
 (define Z13052 Z13052_object_equality)
+(define Z29294 Z29294_object_equivalence)
 (define Z13569 Z13569_subtract_natural_numbers_with_floor_of_0)
 (define Z13582 Z13582_decrement_natural_number_by_one)
 (define Z12668 Z12668_reverse_untyped_list)
@@ -10854,11 +10857,7 @@
 
 ;; Z19586 equal Typed pairs
 ;;   Z19586K1: Typed pair(Object, Object), Z19586K2: Typed pair(Object, Object) -> Boolean   [declared, not checked]
-(define
-  (Z19586_equal_typed_pairs a0 a1)
-  (bool-and
-    (Z13052_object_equality (fst a0) (fst a1))
-    (Z13052_object_equality (snd a0) (snd a1))))
+(define (Z19586_equal_typed_pairs a0 a1) (Z29294_object_equivalence a0 a1))
 (define Z19586 Z19586_equal_typed_pairs)
 
 ;; Z19601 N-ifs
@@ -24174,9 +24173,9 @@
           a1)))))
 (define Z29156 Z29156_indonesia_short_description_for_album)
 
-;; Z29166 same Quote  [reaches an unimplemented function]
+;; Z29166 same Quote
 ;;   Z29166K1: Quote, Z29166K2: Quote -> Boolean   [declared, not checked]
-(define (Z29166_same_quote a0 a1) (Z29294 a0 a1))
+(define (Z29166_same_quote a0 a1) (Z29294_object_equivalence a0 a1))
 (define Z29166 Z29166_same_quote)
 
 ;; Z29186 English present tense conjugation (string)  [reaches an unimplemented function]
@@ -26774,9 +26773,9 @@
       a3)))
 (define Z30232 Z30232_regular_wikitable_of_conjugation_for_wiktionary)
 
-;; Z30239 same Typed map  [reaches an unimplemented function]
+;; Z30239 same Typed map
 ;;   Z30239K1: Typed map(String, Object), Z30239K2: Typed map(String, Object) -> Boolean   [declared, not checked]
-(define (Z30239_same_typed_map a0 a1) (Z29294 a0 a1))
+(define (Z30239_same_typed_map a0 a1) (Z29294_object_equivalence a0 a1))
 (define Z30239 Z30239_same_typed_map)
 
 ;; Z30245 Typed list from Typed map
@@ -29895,26 +29894,7 @@
 
 ;; Z31988 same Wikidata sitelink
 ;;   Z31988K1: Wikidata sitelink, Z31988K2: Wikidata sitelink -> Boolean   [declared, not checked]
-(define
-  (Z31988_same_wikidata_sitelink a0 a1)
-  (Z12684_are_all_true
-    (list
-      (string=?
-        (Z31931_site_of_wikidata_sitelink a0)
-        (Z803_value_by_key (record Z39 (Z39K1 "Z6039K1")) a1))
-      (Z14326_same_language
-        (Z31934_language_of_wikidata_sitelink a0)
-        (Z803_value_by_key (record Z39 (Z39K1 "Z6039K2")) a1))
-      (string=?
-        (Z31976_project_of_wikidata_sitelink a0)
-        (Z803_value_by_key (record Z39 (Z39K1 "Z6039K3")) a1))
-      (string=?
-        (Z31973_title_of_wikidata_sitelink a0)
-        (Z803_value_by_key (record Z39 (Z39K1 "Z6039K4")) a1))
-      (string=?
-        (Z31703_url_string_of_wikidata_sitelink a0)
-        (Z803_value_by_key (record Z39 (Z39K1 "Z6039K5")) a1))
-      (Z15801_object_type_equality a0 a1))))
+(define (Z31988_same_wikidata_sitelink a0 a1) (Z29294_object_equivalence a0 a1))
 (define Z31988 Z31988_same_wikidata_sitelink)
 
 ;; Z31994 lean true (Kleenean)  [reaches an unimplemented function]
@@ -34921,9 +34901,9 @@
 (define (Z33859_returning_word_separator_last_in_tagalog a0) " at ")
 (define Z33859 Z33859_returning_word_separator_last_in_tagalog)
 
-;; Z33862 same Error  [reaches an unimplemented function]
+;; Z33862 same Error
 ;;   Z33862K1: Error, Z33862K2: Error -> Boolean   [declared, not checked]
-(define (Z33862_same_error a0 a1) (Z29294 (Z33876_error_identity a0) a1))
+(define (Z33862_same_error a0 a1) (Z29294_object_equivalence (Z33876_error_identity a0) a1))
 (define Z33862 Z33862_same_error)
 
 ;; Z33873 Toki Pona noun classification sentence  [reaches an unimplemented function]

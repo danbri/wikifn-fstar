@@ -113,6 +113,11 @@ let fid_map : zid = 873             // Z873 map function
 let fid_fold : zid = 876            // Z876 Reduce Function
 let fid_string_eq : zid = 866       // Z866 string equality, string=? in Scheme
 let fid_object_eq : zid = 13052     // Z13052 object equality, over any two values
+// Z29294 object equivalence. Three code implementations on the wiki and no
+// composition, so following it was never going to reach anything; its Python is
+// an identity check, a type check and then a structural comparison, which is
+// what value_eq is. Grounded for the same reason Z13052 is.
+let fid_object_equiv : zid = 29294  // Z29294 object equivalence
 let fid_string_append : zid = 10000 // Z10000 join two strings
 let fid_not : zid = 10216           // Z10216 not
 let fid_and : zid = 10174           // Z10174 and
@@ -526,7 +531,7 @@ let apply_primitive (fid:zid) (args:list value) : Tot (option (eval_result value
                 end
               | EErr e, _ -> EErr e
               | _, EErr e -> EErr e)
-      else if fid = fid_object_eq then
+      else if fid = fid_object_eq || fid = fid_object_equiv then
         Some (EOk (VBool (value_eq a b)))
       else if fid = fid_nat_divide then
         Some (match as_nat fid a, as_nat fid b with

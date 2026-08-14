@@ -68,6 +68,9 @@ export const PRELUDE = new Map([
   // Structural equality over any two values, grounded for the same reason:
   // Z13052 is written as apply(self, a, b) and never bottoms out.
   ["Z13052", (n) => `(define (${n} a b) (equal? a b))`],
+  // Z29294 object equivalence: three code implementations on the wiki and no
+  // composition, and its Python is a structural comparison.
+  ["Z29294", (n) => `(define (${n} a b) (equal? a b))`],
   // A Z882 pair prints as (cons left right), so its accessors are car and cdr.
   // These were used by the listing and defined nowhere, which made every body
   // mentioning a pair fail to run.

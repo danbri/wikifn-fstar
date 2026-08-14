@@ -1394,9 +1394,9 @@ let body_Z31981_extract_equality_function_from_type : expr =
 let body_Z31984_references_of_wikidata_statement : expr =
   ECall 22475 [EValue (VRecord 39 [({ key_owner = Some 39; key_index = 1 }, VText [90; 54; 48; 48; 51; 75; 54])]); EArg 0]
 
-(* Z31988 same Wikidata sitelink | Z31988@263212 -> Z31990@256903 digest d9cc12efddb0c9a9aa69e57cd8a29e9e756b00e84bffc7c452a8efc5bd4b923a *)
+(* Z31988 same Wikidata sitelink | Z31988@263212 -> Z31992@274022 digest ef583c27dc3a4d307d56746232ba1b2f50d7de7a64da5c257c433440fd1ea7b2 *)
 let body_Z31988_same_wikidata_sitelink : expr =
-  ECall 12684 [ECall 810 [ECall 866 [ECall 31931 [EArg 0]; ECall 803 [EValue (VRecord 39 [({ key_owner = Some 39; key_index = 1 }, VText [90; 54; 48; 51; 57; 75; 49])]); EArg 1]]; ECall 810 [ECall 14326 [ECall 31934 [EArg 0]; ECall 803 [EValue (VRecord 39 [({ key_owner = Some 39; key_index = 1 }, VText [90; 54; 48; 51; 57; 75; 50])]); EArg 1]]; ECall 810 [ECall 866 [ECall 31976 [EArg 0]; ECall 803 [EValue (VRecord 39 [({ key_owner = Some 39; key_index = 1 }, VText [90; 54; 48; 51; 57; 75; 51])]); EArg 1]]; ECall 810 [ECall 866 [ECall 31973 [EArg 0]; ECall 803 [EValue (VRecord 39 [({ key_owner = Some 39; key_index = 1 }, VText [90; 54; 48; 51; 57; 75; 52])]); EArg 1]]; ECall 810 [ECall 866 [ECall 31703 [EArg 0]; ECall 803 [EValue (VRecord 39 [({ key_owner = Some 39; key_index = 1 }, VText [90; 54; 48; 51; 57; 75; 53])]); EArg 1]]; ECall 810 [ECall 15801 [EArg 0; EArg 1]; EValue (VList [])]]]]]]]
+  ECall 29294 [EArg 0; EArg 1]
 
 (* Z31994 lean true (Kleenean) | Z31994@256971 -> Z31995@256964 digest 547e7a24f3265dc85ad14812c7f3bc5d692aa1539bc6ff8dbd8a84eaff6f56ab *)
 let body_Z31994_lean_true_kleenean : expr =

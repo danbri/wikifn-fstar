@@ -133,15 +133,15 @@ value this harness can read:
 | | count |
 |---|---|
 | testers considered | 10,281 |
-| pass | **1,247** |
-| fail | 102 |
-| error | 1,637 |
-| skipped, with reasons | 7,295 |
+| pass | **1,291** |
+| fail | 105 |
+| error | 1,720 |
+| skipped, with reasons | 7,165 |
 
 | | count |
 |---|---|
-| functions with at least one passing tester | 544 |
-| functions passing every tester that could be read | **450** |
+| functions with at least one passing tester | 565 |
+| functions passing every tester that could be read | **460** |
 
 A tester is only counted as passing when both its call and its expected value were
 readable. Everything else is skipped with a stated reason, never counted as a pass.
@@ -340,8 +340,13 @@ representation rather than a convenience: a compiled function threads `eval_resu
 argument that raised is already an `EErr` in hand — which is exactly what try-catch wants
 to look at.
 
-Closure over the primitives went from 936 functions without recursion to **959**, and from
-1,168 with recursion to **1,208**.
+`Z29294` object equivalence is grounded on the same structural comparison as `Z13052`
+object equality: it has three code implementations on the wiki and no composition, so
+following it was never going to reach anything, and its Python is an identity check, a
+type check and then a structural comparison.
+
+Closure over the primitives went from 936 functions without recursion to **961**, and from
+1,168 with recursion to **1,208**. Compiled F* functions: **1,381**.
 
 ## The tester harness was measuring itself
 
@@ -352,8 +357,8 @@ literal, and compared; every other validator was reported unsupported. That coun
 cases as skipped for a reason about the harness rather than about the engine.
 
 The validator is now *run*, because it is an ordinary function and the engine can call it.
-Passing testers went from 1,249 to **1,290**, functions passing every readable tester from
-450 to **459**, and functions with at least one pass from 544 to **565**.
+Passing testers went from 1,249 to **1,291**, functions passing every readable tester from
+450 to **460**, and functions with at least one pass from 544 to **565**.
 
 ## Known limits
 

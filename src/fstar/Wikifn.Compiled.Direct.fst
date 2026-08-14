@@ -17,7 +17,7 @@ open Wikifn.Direct
   subset: a value is a string, a natural, a boolean, a typed list, a pair, a
   record or a function.
 
-  compiled: 1378
+  compiled: 1381
   emitted for the interpreter: 3890
 *)
 
@@ -4071,9 +4071,9 @@ let rec compiled_Z19549_mass_replace_given_2_lists (fuel:nat) (a0:eval_result va
   let next_fuel : nat = fuel - 1 in
   (compiled_Z31490_if_either (call_primitive 813 [a0]) (call_primitive 813 [a1]) a2 (compiled_Z19549_mass_replace_given_2_lists next_fuel (call_primitive 812 [a0]) (call_primitive 812 [a1]) (call_primitive 10075 [a2; (call_primitive 811 [a0]); (call_primitive 811 [a1])])))
 
-(* Z19586 equal Typed pairs | Z19586@285296 -> Z24643@186662 *)
+(* Z19586 equal Typed pairs | Z19586@285296 -> Z30457@234755 *)
 let compiled_Z19586_equal_typed_pairs (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
-  (call_primitive 10174 [(call_primitive 13052 [(call_primitive 821 [a0]); (call_primitive 821 [a1])]); (call_primitive 13052 [(call_primitive 822 [a0]); (call_primitive 822 [a1])])])
+  (call_primitive 29294 [a0; a1])
 
 (* Z19602 First true | Z19602@241075 -> Z21336@161365 *)
 let compiled_Z19602_first_true (a0:eval_result value) : Tot (eval_result value) =
@@ -5657,6 +5657,10 @@ let compiled_Z29045_html_fragment_contains_string (a0:eval_result value) (a1:eva
 let compiled_Z29059_string_of_first_listed_wikidata_item_statement (a0:eval_result value) (a1:eval_result value) (a2:eval_result value) : Tot (eval_result value) =
   (compiled_Z23159_string_of_first_listed_monolingual_text_with_lang (compiled_Z22978_values_unqualified_from_wikidata_item_statements a0 a1) a2)
 
+(* Z29166 same Quote | Z29166@227842 -> Z29299@227841 *)
+let compiled_Z29166_same_quote (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
+  (call_primitive 29294 [a0; a1])
+
 (* Z29286 table from function of row and column elements | Z29286@227835 -> Z29288@227796 *)
 let rec compiled_Z29286_table_from_function_of_row_and_column_elements (fuel:nat) (a0:eval_result value) (a1:eval_result value) (a2:eval_result value) : Tot (eval_result value) (decreases fuel) =
   if fuel = 0 then EErr EFuelExhausted else
@@ -5807,6 +5811,10 @@ let compiled_Z30164_list_has_length (a0:eval_result value) (a1:eval_result value
 let compiled_Z30172_list_of_values_from_a_typed_map (a0:eval_result value) : Tot (eval_result value) =
   (with_items 873 (compiled_Z27915_typed_key_value_pairs_from_typed_map a0) (fun items ->
      map_direct (fun x -> call_primitive 822 [EOk x]) items))
+
+(* Z30239 same Typed map | Z30239@239443 -> Z30266@233681 *)
+let compiled_Z30239_same_typed_map (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
+  (call_primitive 29294 [a0; a1])
 
 (* Z30250 concatenate lemmas with spaces | Z30250@233709 -> Z30252@233707 *)
 let compiled_Z30250_concatenate_lemmas_with_spaces (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
@@ -6098,12 +6106,9 @@ let compiled_Z31981_extract_equality_function_from_type (a0:eval_result value) :
 let compiled_Z31984_references_of_wikidata_statement (a0:eval_result value) : Tot (eval_result value) =
   (compiled_Z22475_value_by_key_safer (make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 54; 48; 48; 51; 75; 54])))]) a0)
 
-(* Z31988 same Wikidata sitelink | Z31988@263212 -> Z31990@256903 *)
+(* Z31988 same Wikidata sitelink | Z31988@263212 -> Z31992@274022 *)
 let compiled_Z31988_same_wikidata_sitelink (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
-  let part_1 = (call_primitive 810 [(call_primitive 866 [(compiled_Z31703_url_string_of_wikidata_sitelink a0); (call_primitive 803 [(make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 54; 48; 51; 57; 75; 53])))]); a1])]); (call_primitive 810 [(compiled_Z15801_object_type_equality a0 a1); (EOk (VList []))])]) in
-  let part_2 = (call_primitive 810 [(call_primitive 866 [(compiled_Z31976_project_of_wikidata_sitelink a0); (call_primitive 803 [(make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 54; 48; 51; 57; 75; 51])))]); a1])]); (call_primitive 810 [(call_primitive 866 [(compiled_Z31973_title_of_wikidata_sitelink a0); (call_primitive 803 [(make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 54; 48; 51; 57; 75; 52])))]); a1])]); part_1])]) in
-  let part_3 = (call_primitive 810 [(call_primitive 866 [(compiled_Z31931_site_of_wikidata_sitelink a0); (call_primitive 803 [(make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 54; 48; 51; 57; 75; 49])))]); a1])]); (call_primitive 810 [(compiled_Z14326_same_language (compiled_Z31934_language_of_wikidata_sitelink a0) (call_primitive 803 [(make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 54; 48; 51; 57; 75; 50])))]); a1])); part_2])]) in
-  (compiled_Z12684_are_all_true part_3)
+  (call_primitive 29294 [a0; a1])
 
 (* Z32063 monolingual text list contains monolingual text | Z32063@258231 -> Z32073@257505 *)
 let rec compiled_Z32063_monolingual_text_list_contains_monolingual_text (fuel:nat) (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) (decreases fuel) =
@@ -6343,6 +6348,10 @@ let compiled_Z33859_returning_word_separator_last_in_tagalog (a0:eval_result val
 (* Z33876 Error identity | Z33876@267562 -> Z33877@267461 *)
 let compiled_Z33876_error_identity (a0:eval_result value) : Tot (eval_result value) =
   (make_record 5 [({ key_owner = Some 5; key_index = 1 }, (call_primitive 803 [(make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 53; 75; 49])))]); a0])); ({ key_owner = Some 5; key_index = 2 }, (call_primitive 803 [(make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 53; 75; 50])))]); a0]))])
+
+(* Z33862 same Error | Z33862@267568 -> Z33864@267566 *)
+let compiled_Z33862_same_error (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
+  (call_primitive 29294 [(compiled_Z33876_error_identity a0); a1])
 
 (* Z34039 apply three or optionally four argument function | Z34039@268221 -> Z34042@268218 *)
 let compiled_Z34039_apply_three_or_optionally_four_argument_function (a0:eval_result value) (a1:eval_result value) (a2:eval_result value) (a3:eval_result value) (a4:eval_result value) : Tot (eval_result value) =
@@ -8166,6 +8175,7 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 29023, [a0; a1] -> Some (compiled_Z29023_absolute_numerator_when_scaled_to_denominator a0 a1)
   | 29045, [a0; a1] -> Some (compiled_Z29045_html_fragment_contains_string a0 a1)
   | 29059, [a0; a1; a2] -> Some (compiled_Z29059_string_of_first_listed_wikidata_item_statement a0 a1 a2)
+  | 29166, [a0; a1] -> Some (compiled_Z29166_same_quote a0 a1)
   | 29286, [a0; a1; a2] -> Some (compiled_Z29286_table_from_function_of_row_and_column_elements default_fuel a0 a1 a2)
   | 29301, [a0] -> Some (compiled_Z29301_list_to_singleton_list a0)
   | 29316, [a0] -> Some (compiled_Z29316_form_for_table_header_default a0)
@@ -8201,6 +8211,7 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 30145, [a0; a1] -> Some (compiled_Z30145_html_key_value_string a0 a1)
   | 30164, [a0; a1] -> Some (compiled_Z30164_list_has_length a0 a1)
   | 30172, [a0] -> Some (compiled_Z30172_list_of_values_from_a_typed_map a0)
+  | 30239, [a0; a1] -> Some (compiled_Z30239_same_typed_map a0 a1)
   | 30245, [a0] -> Some (compiled_Z30245_typed_list_from_typed_map a0)
   | 30250, [a0; a1] -> Some (compiled_Z30250_concatenate_lemmas_with_spaces a0 a1)
   | 30271, [a0; a1] -> Some (compiled_Z30271_typed_map_from_two_lists a0 a1)
@@ -8329,6 +8340,7 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 33745, [a0; a1] -> Some (compiled_Z33745_make_integer a0 a1)
   | 33768, [a0] -> Some (compiled_Z33768 a0)
   | 33859, [a0] -> Some (compiled_Z33859_returning_word_separator_last_in_tagalog a0)
+  | 33862, [a0; a1] -> Some (compiled_Z33862_same_error a0 a1)
   | 33876, [a0] -> Some (compiled_Z33876_error_identity a0)
   | 34039, [a0; a1; a2; a3; a4] -> Some (compiled_Z34039_apply_three_or_optionally_four_argument_function a0 a1 a2 a3 a4)
   | 34120, [a0; a1; a2; a3; a4; a5] -> Some (compiled_Z34120_apply_five_argument_function a0 a1 a2 a3 a4 a5)
