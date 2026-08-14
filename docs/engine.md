@@ -133,15 +133,15 @@ value this harness can read:
 | | count |
 |---|---|
 | testers considered | 10,281 |
-| pass | **1,291** |
-| fail | 105 |
-| error | 1,720 |
+| pass | **1,391** |
+| fail | 111 |
+| error | 1,617 |
 | skipped, with reasons | 7,165 |
 
 | | count |
 |---|---|
-| functions with at least one passing tester | 565 |
-| functions passing every tester that could be read | **460** |
+| functions with at least one passing tester | 589 |
+| functions passing every tester that could be read | **481** |
 
 A tester is only counted as passing when both its call and its expected value were
 readable. Everything else is skipped with a stated reason, never counted as a pass.
@@ -360,6 +360,30 @@ The validator is now *run*, because it is an ordinary function and the engine ca
 Passing testers went from 1,249 to **1,291**, functions passing every readable tester from
 450 to **460**, and functions with at least one pass from 544 to **565**.
 
+## Counting what a missing primitive blocks
+
+For a long time this page ranked the remaining primitives by how many functions each one
+"blocks", taken from `rankBlockers` in the closure analysis. That number counts a function
+once for **every** leaf blocking it, and the leaf sets overlap almost entirely — so four
+different primitives each appeared to block about 1,400 of the same functions, and the
+ranking was noise.
+
+The honest measure is the *marginal* one: add the primitive, re-run the fixpoint, take the
+difference. It is roughly thirty times smaller and it reorders the list.
+
+| | marginal unlock | used to claim |
+|---|---|---|
+| `Z22764` String from Type | **+49** | blocks 1,455 |
+| `Z10047`/`Z10018` case conversion | **+41**, done | blocks 1,301 |
+| quoting — `Z99`, `Z805`, `Z899`, `Z29267` | **+39** | blocks 1,392 |
+| `Z828` fetch persistent object | +8 | blocks 1,446 |
+| `Z881` typed list | +2 | blocks 1,368 |
+| `Z10249` K combinator | **0** | blocks 1,263 |
+
+The last row is the one to keep in mind. `Z10249` looked like the seventh most valuable
+thing to ground and grounding it would change nothing at all, because everything it gates
+is gated by something else too.
+
 ## Known limits
 
 - No references. Arguments are literal values; the engine has no object store, and a
@@ -416,10 +440,11 @@ functions it makes reachable at all.
    every candidate is already done; scoring them against their testers and keeping the
    best is the missing step, and it is what would have caught `Z15391`.
 
-5. **Case mapping** — `Z10047` to lowercase, `Z10018` to uppercase. 146 tester cases,
-   1,301 functions blocked. Needs a real Unicode case table; an ASCII-only version would
-   be wrong for exactly the inputs the testers use, so it should not be shipped as if it
-   were general.
+5. ~~**Case mapping**~~ — done. `Z10047` and `Z10018` are the root-locale Unicode
+   algorithm in `Wikifn.Unicode.Case`, stored as 205 and 193 runs rather than as
+   three thousand pairs, which keeps every term an eighth of the size F* can check.
+   Measured unlock: **+41 functions**, not the 1,301 this line used to claim — that
+   figure counted a function once per blocking leaf and the leaf sets overlap.
 
 6. **Regular expressions** — `Z12316`, `Z10196`, `Z36900`, `Z11461`. Around 240 tester
    cases. Large and self-contained; worth doing as its own module.

@@ -11,8 +11,12 @@ open Wikifn.Eval
 
   part:      7 of 10
   functions: 400
-  ZID range: Z29654 to Z32277
+  ZID range: Z29649 to Z32276
 *)
+
+(* Z29649 Wikidata reference from Wikifunctions language obj | Z29649@267629 -> Z33921@284775 digest e6830b5231b8d8fc5299ae6f85da3575b4d6b1875ba8df15eb3f844b906dbb49 *)
+let body_Z29649_wikidata_reference_from_wikifunctions_language_obj : expr =
+  ECall 850 [ECall 24606 [ECall 24646 [EValue (VFunc 33920)]; ECall 14329 [EArg 0]]; EValue (VFunc 36590); ECall 851 [EValue (VFunc 36589); ECall 810 [ECall 14329 [EArg 0]; ECall 810 [EValue (VText [90; 51; 51; 57; 50; 48]); EValue (VList [])]]]]
 
 (* Z29654 does language use NAdj order? | Z29654@230625 -> Z29655@288520 digest b94f83fa9f601022bd4cebfb04a54f634232ce55a60d01dcc9e9fae065f6566c *)
 let body_Z29654_does_language_use_nadj_order : expr =
@@ -1610,12 +1614,9 @@ let body_Z32272_location_phrase_in_russian : expr =
 let body_Z32276_separator_space_punctuation_for_list_items_in_lang : expr =
   ECall 1000000002 [ECall 14310 [EValue (VFunc 32279); EArg 0]; EArg 0]
 
-(* Z32277 default word separator ", " | Z32277@288306 -> Z32278@288302 digest 10506450a61ee68fa4f4ae681e794a94a99b12b44a386b779cce8e58ddb6d5f8 *)
-let body_Z32277_default_word_separator : expr =
-  EValue (VText [44; 32])
-
 let part_policy (fid:zid) : Tot (option expr) =
   match fid with
+  | 29649 -> Some body_Z29649_wikidata_reference_from_wikifunctions_language_obj
   | 29654 -> Some body_Z29654_does_language_use_nadj_order
   | 29660 -> Some body_Z29660_fallback_for_indefinite_noun_phrase_with_adjective
   | 29661 -> Some body_Z29661_is_kleenean_not_false
@@ -2015,5 +2016,4 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 32261 -> Some body_Z32261_are_integers_congruent_modulo_other_integer
   | 32272 -> Some body_Z32272_location_phrase_in_russian
   | 32276 -> Some body_Z32276_separator_space_punctuation_for_list_items_in_lang
-  | 32277 -> Some body_Z32277_default_word_separator
   | _ -> None

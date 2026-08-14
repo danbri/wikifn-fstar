@@ -3504,7 +3504,7 @@
           (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16661))) (Z16683K2 0)))))))
 (define Z12975 Z12975_ones_complement_binary_subtraction)
 
-;; Z12982 Binary to decimal  [reaches an unimplemented function]
+;; Z12982 Binary to decimal
 ;;   Z12982K1: String -> String   [declared, not checked]
 (define
   (Z12982_binary_to_decimal a0)
@@ -4685,22 +4685,48 @@
     (Z13781_natural_number_to_hexadecimal_lowercase_without_prefix a0)))
 (define Z13784 Z13784_natural_number_to_hexadecimal_lowercase_with_prefix)
 
-;; Z13797 binary string to natural number  [reaches an unimplemented function]
+;; Z13797 binary string to natural number
 ;;   Z13797K1: String -> Natural number   [declared, not checked]
-(define (Z13797_binary_string_to_natural_number a0) (Z13806 a0 2))
+(define (Z13797_binary_string_to_natural_number a0) (Z13806_base_n_to_natural_number a0 2))
 (define Z13797 Z13797_binary_string_to_natural_number)
 
-;; Z13798 octal to natural number  [reaches an unimplemented function]
+;; Z13798 octal to natural number
 ;;   Z13798K1: String -> Natural number   [declared, not checked]
-(define (Z13798_octal_to_natural_number a0) (Z13806 a0 8))
+(define (Z13798_octal_to_natural_number a0) (Z13806_base_n_to_natural_number a0 8))
 (define Z13798 Z13798_octal_to_natural_number)
 
-;; Z13799 hexadecimal to natural number  [reaches an unimplemented function]
+;; Z13799 hexadecimal to natural number
 ;;   Z13799K1: String -> Natural number   [declared, not checked]
 (define
   (Z13799_hexadecimal_to_natural_number a0)
-  (Z13806 (Z31955_string_without_prefix a0 "0x") 16))
+  (Z13806_base_n_to_natural_number (Z31955_string_without_prefix a0 "0x") 16))
 (define Z13799 Z13799_hexadecimal_to_natural_number)
+
+;; Z13806 base n to natural number
+;;   Z13806K1: String, Z13806K2: Natural number -> Natural number   [declared, not checked]
+(define
+  (Z13806_base_n_to_natural_number a0 a1)
+  (if
+    (null? (Z22717_string_to_codepoint_list a0))
+    0
+    (+
+      (*
+        (if
+          (>= (car (Z22717_string_to_codepoint_list a0)) 97)
+          (Z13569_subtract_natural_numbers_with_floor_of_0
+            (car (Z22717_string_to_codepoint_list a0))
+            87)
+          (if
+            (>= (car (Z22717_string_to_codepoint_list a0)) 65)
+            (Z13569_subtract_natural_numbers_with_floor_of_0
+              (car (Z22717_string_to_codepoint_list a0))
+              55)
+            (Z13569_subtract_natural_numbers_with_floor_of_0
+              (car (Z22717_string_to_codepoint_list a0))
+              48)))
+        (expt a1 (Z13569_subtract_natural_numbers_with_floor_of_0 (Z11040_string_length a0) 1)))
+      (Z13806_base_n_to_natural_number (Z14456_remove_first_character a0) a1))))
+(define Z13806 Z13806_base_n_to_natural_number)
 
 ;; Z13809 n^n
 ;;   Z13809K1: Natural number -> Natural number   [declared, not checked]
@@ -9549,7 +9575,9 @@
 
 ;; Z18321 base n to base m  [reaches an unimplemented function]
 ;;   Z18321K1: String, Z18321K2: Natural number, Z18321K3: Natural number -> String   [declared, not checked]
-(define (Z18321_base_n_to_base_m a0 a1 a2) (Z15671_natural_number_to_base_n (Z13806 a0 a1) a2))
+(define
+  (Z18321_base_n_to_base_m a0 a1 a2)
+  (Z15671_natural_number_to_base_n (Z13806_base_n_to_natural_number a0 a1) a2))
 (define Z18321 Z18321_base_n_to_base_m)
 
 ;; Z18353 metres to kilometres (float)  [reaches an unimplemented function]
@@ -14298,7 +14326,7 @@
     (Z22696_fetch_first_lexeme_from_item_ref_and_lang_p5137 a1 a2)))
 (define Z22664 Z22664_indefinite_noun_phrase_with_adjective)
 
-;; Z22672 list of Booleans to Byte  [reaches an unimplemented function]
+;; Z22672 list of Booleans to Byte
 ;;   Z22672K1: Typed list(Boolean) -> Byte   [declared, not checked]
 (define
   (Z22672_list_of_booleans_to_byte a0)
@@ -14399,7 +14427,7 @@
       "la ")))
 (define Z22785 Z22785_italian_singular_definite_article)
 
-;; Z22800 hex string as Byte  [reaches an unimplemented function]
+;; Z22800 hex string as Byte
 ;;   Z22800K1: String -> Byte   [declared, not checked]
 (define
   (Z22800_hex_string_as_byte a0)
@@ -14435,7 +14463,7 @@
       (Z22820_compress_list (cdr a0) (cdr a1)))))
 (define Z22820 Z22820_compress_list)
 
-;; Z22829 hex code point to string  [reaches an unimplemented function]
+;; Z22829 hex code point to string
 ;;   Z22829K1: String -> String   [declared, not checked]
 (define
   (Z22829_hex_code_point_to_string a0)
@@ -14464,7 +14492,7 @@
   (Z803_value_by_key (record Z39 (Z39K1 "Z6001K2")) a0))
 (define Z22853 Z22853_labels_of_wikidata_item_multilingual_text)
 
-;; Z22858 read Byte from string  [reaches an unimplemented function]
+;; Z22858 read Byte from string
 ;;   Z22858K1: String -> Byte   [declared, not checked]
 (define
   (Z22858_read_byte_from_string a0)
@@ -14493,7 +14521,7 @@
     (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an Z12696_contains a1 a0)))
 (define Z22865 Z22865_keep_elements_common_with_other_list)
 
-;; Z22866 read Byte  [reaches an unimplemented function]
+;; Z22866 read Byte
 ;;   Z22866K1: String, Z22866K2: Natural language -> Byte   [declared, not checked]
 (define (Z22866_read_byte a0 a1) (Z22858_read_byte_from_string a0))
 (define Z22866 Z22866_read_byte)
@@ -14576,7 +14604,7 @@
   (Z13036_apply (Z14310_select_a_function_based_on_language Z22940 a1) a0))
 (define Z22941 Z22941_display_day_of_roman_year)
 
-;; Z22946 binary string as byte  [reaches an unimplemented function]
+;; Z22946 binary string as byte
 ;;   Z22946K1: String -> Byte   [declared, not checked]
 (define
   (Z22946_binary_string_as_byte a0)
@@ -35290,7 +35318,7 @@
         " "))))
 (define Z34165 Z34165_bulgarian_article_ful_instantiating_sentence)
 
-;; Z34178 Natural number from list of Booleans  [reaches an unimplemented function]
+;; Z34178 Natural number from list of Booleans
 ;;   Z34178K1: Typed list(Boolean) -> Natural number   [declared, not checked]
 (define
   (Z34178_natural_number_from_list_of_booleans a0)

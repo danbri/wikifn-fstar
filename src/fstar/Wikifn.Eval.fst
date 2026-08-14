@@ -2,6 +2,7 @@ module Wikifn.Eval
 
 open FStar.Mul
 open Wikifn.Primitive.Kernel
+open Wikifn.Unicode.Case
 open Wikifn.Zid
 
 (*
@@ -202,6 +203,10 @@ let fid_z13695_less_equal : zid = 13695
 let fid_z14124_unicode_range : zid = 14124
 let fid_z14456_remove_first_character : zid = 14456
 let fid_z14520_remove_characters : zid = 14520
+// Case conversion, root locale, from Wikifn.Unicode.Case. Not ASCII: nine of
+// the fifteen testers for these two functions falsify an ASCII-only version.
+let fid_z10047_to_lowercase : zid = 10047
+let fid_z10018_to_uppercase : zid = 10018
 
 (* An internal helper the generator emits for the private-use marker idiom.
    Numbered outside the Wikifunctions range so it cannot collide. *)
@@ -415,6 +420,14 @@ let apply_primitive (fid:zid) (args:list value) : Tot (option (eval_result value
         Some (match a with
               | VRecord t _ -> EOk (VFunc t)
               | _ -> EErr (ETypeMismatch fid))
+      else if fid = fid_z10047_to_lowercase then
+        Some (match as_text fid a with
+              | EOk t -> EOk (VText (z10047_to_lowercase t))
+              | EErr e -> EErr e)
+      else if fid = fid_z10018_to_uppercase then
+        Some (match as_text fid a with
+              | EOk t -> EOk (VText (z10018_to_uppercase t))
+              | EErr e -> EErr e)
       else if fid = fid_string_to_codepoints || fid = fid_z868_string_to_codepoints then
         Some (match as_text fid a with
               | EOk t -> EOk (VList (codepoints_as_values t))

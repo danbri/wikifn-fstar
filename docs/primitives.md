@@ -1,5 +1,14 @@
 # Primitive Grounding
 
+> **The ranked frontier below counts wrong.** It reports how many functions each
+> missing primitive "blocks", which counts a function once per blocking leaf.
+> Those leaf sets overlap almost completely, so several entries each appear to
+> block about 1,400 of the same functions. What matters is the *marginal* unlock:
+> add the primitive, re-run `make closure`, take the difference. Measured:
+> `Z22764` +49, case conversion +41, quoting +39, `Z828` +8, `Z881` +2,
+> `Z10249` **+0**. Read every "blocks N" figure below as an upper bound on a
+> shared total, not as a count of what grounding that one thing would buy.
+>
 > **Status, re-measured.** The engine grounds 53 primitives. Records, value by
 > key (`Z803`), type of object (`Z16829`), object equality (`Z13052`), the
 > codepoint conversions (`Z22693`, `Z22717`), reverse and append (`Z12668`,

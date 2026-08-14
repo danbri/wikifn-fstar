@@ -13,6 +13,7 @@ done < <(find "$root/src/fstar" -name 'Wikifn.Generated.Eval.Part*.fst' | sort)
 
 files=(
   "$root/src/fstar/Wikifn.Primitive.Kernel.fst"
+  "$root/src/fstar/Wikifn.Unicode.Case.fst"
   "$root/src/fstar/Wikifn.Zid.fst"
   "$root/src/fstar/Wikifn.Model.fst"
   "$root/src/fstar/Wikifn.Canonical.fst"
@@ -20,6 +21,8 @@ files=(
   "$root/src/fstar/Wikifn.Print.fst"
   "${generated_parts[@]}"
   "$root/src/fstar/Wikifn.Generated.Eval.fst"
+  "$root/src/fstar/Wikifn.Fuel.fst"
+  "$root/src/fstar/Wikifn.Fuel.fst"
   "$root/src/fstar/Wikifn.Direct.fst"
   "$root/src/fstar/Wikifn.Compiled.Direct.fst"
   "$root/src/fstar/Wikifn.Primitive.Frontier.fst"

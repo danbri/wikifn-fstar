@@ -11,8 +11,12 @@ open Wikifn.Eval
 
   part:      9 of 10
   functions: 400
-  ZID range: Z35219 to Z37328
+  ZID range: Z35215 to Z37323
 *)
+
+(* Z35215 HTML bullet list of lightweight enum members | Z35215@275380 -> Z35216@275369 digest 6656fa4002d5746958d8dccbcaeac2f274d242967aa323f40898a4eea624f8f2 *)
+let body_Z35215_html_bullet_list_of_lightweight_enum_members : expr =
+  ECall 32179 [ECall 13464 [EValue (VFunc 32878); ECall 29493 [ECall 30531 [EArg 1]]; EArg 0]]
 
 (* Z35219 density | Z35219@279172 -> Z35499@277162 digest fe440bad39de9c4841c32b13d29f63d493989515a1aff001510d82d00e568489 *)
 let body_Z35219_density : expr =
@@ -1610,12 +1614,9 @@ let body_Z37321_consists_of_simple : expr =
 let body_Z37323_filter_monolingual_text_valued_statements_by_langs : expr =
   ECall 802 [ECall 813 [EArg 1]; EValue (VList []); ECall 802 [ECall 12864 [ECall 22820 [EArg 0; ECall 13464 [EValue (VFunc 19352); ECall 873 [EValue (VFunc 19308); EArg 0]; EValue (VFunc 11)]]; EArg 0]; ECall 12767 [ECall 22820 [EArg 0; ECall 13464 [EValue (VFunc 33175); ECall 873 [EValue (VFunc 19308); EArg 0]; ECall 811 [EArg 1]]]; ECall 37323 [ECall 22820 [EArg 0; ECall 36132 [ECall 13464 [EValue (VFunc 33175); ECall 873 [EValue (VFunc 19308); EArg 0]; ECall 811 [EArg 1]]]]; ECall 812 [EArg 1]]]; ECall 37323 [ECall 22820 [EArg 0; ECall 13464 [EValue (VFunc 19352); ECall 873 [EValue (VFunc 19308); EArg 0]; EValue (VFunc 11)]]; EArg 1]]]
 
-(* Z37328 has parts-sentence (Simple) | Z37328@288882 -> Z37331@288931 digest b50604956ead32389fd178ca56a4ecda86352b171f4d72f505984cb27fabdf18 *)
-let body_Z37328_has_parts_sentence_simple : expr =
-  ECall 34669 [ECall 810 [ECall 34669 [ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 1); ({ key_owner = Some 11; key_index = 2 }, ECall 10771 [ECall 24766 [EArg 0; EArg 1]])]; ECall 810 [ECall 26107 [EArg 1; ECall 37321 [EArg 1]]; ECall 810 [ECall 37289 [ECall 33024 [ECall 37008 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList [VFunc 1360]); EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 53; 50; 55])]])]]; EArg 1]; EArg 1]; EValue (VList [])]]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 1); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [32]))]]; ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 1); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [46]))]; EValue (VList [])]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 1); ({ key_owner = Some 11; key_index = 2 }, EValue (VText []))]]
-
 let part_policy (fid:zid) : Tot (option expr) =
   match fid with
+  | 35215 -> Some body_Z35215_html_bullet_list_of_lightweight_enum_members
   | 35219 -> Some body_Z35219_density
   | 35221 -> Some body_Z35221_average_speed
   | 35222 -> Some body_Z35222_lateral_surface_area_of_a_prism
@@ -2015,5 +2016,4 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 37315 -> Some body_Z37315_intro_for_year_in_swedish
   | 37321 -> Some body_Z37321_consists_of_simple
   | 37323 -> Some body_Z37323_filter_monolingual_text_valued_statements_by_langs
-  | 37328 -> Some body_Z37328_has_parts_sentence_simple
   | _ -> None

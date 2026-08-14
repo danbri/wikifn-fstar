@@ -17,8 +17,8 @@ open Wikifn.Direct
   subset: a value is a string, a natural, a boolean, a typed list, a pair, a
   record or a function.
 
-  compiled: 1381
-  emitted for the interpreter: 3890
+  compiled: 1429
+  emitted for the interpreter: 3891
 *)
 
 (* These are first-order functions over a finite datatype: there is nothing
@@ -332,6 +332,10 @@ let compiled_Z10265_boolean_left (a0:eval_result value) (a1:eval_result value) :
 let compiled_Z10272_boolean_not_left (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
   (call_primitive 10216 [(compiled_Z10265_boolean_left a0 a1)])
 
+(* Z10281 to snake_case | Z10281@217049 -> Z10284@72235 *)
+let compiled_Z10281_to_snake_case (a0:eval_result value) : Tot (eval_result value) =
+  (call_primitive 10075 [(call_primitive 10047 [a0]); (EOk (VText [32])); (EOk (VText [95]))])
+
 (* Z10287 binary true | Z10287@216897 -> Z10296@128307 *)
 let compiled_Z10287_binary_true (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
   (EOk (VBool true))
@@ -344,13 +348,37 @@ let compiled_Z10298_boolean_right (a0:eval_result value) (a1:eval_result value) 
 let compiled_Z10306_boolean_not_right (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
   (call_primitive 10216 [(compiled_Z10298_boolean_right a0 a1)])
 
+(* Z10324 is snake case | Z10324@220312 -> Z10330@197085 *)
+let compiled_Z10324_is_snake_case (a0:eval_result value) : Tot (eval_result value) =
+  (call_primitive 866 [a0; (compiled_Z10281_to_snake_case a0)])
+
 (* Z10329 Boolean implication | Z10329@279041 -> Z10345@128226 *)
 let compiled_Z10329_boolean_implication (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
   (call_primitive 10184 [(call_primitive 10216 [a0]); a1])
 
+(* Z10336 is uppercase | Z10336@296012 -> Z10344@74413 *)
+let compiled_Z10336_is_uppercase (a0:eval_result value) : Tot (eval_result value) =
+  (call_primitive 866 [a0; (call_primitive 10018 [a0])])
+
+(* Z10346 is lowercase | Z10346@281964 -> Z23402@174377 *)
+let compiled_Z10346_is_lowercase (a0:eval_result value) : Tot (eval_result value) =
+  (call_primitive 10216 [(compiled_Z10336_is_uppercase a0)])
+
 (* Z10348 backwards Boolean implication | Z10348@251510 -> Z10352@128225 *)
 let compiled_Z10348_backwards_boolean_implication (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
   (compiled_Z10329_boolean_implication a1 a0)
+
+(* Z10366 string to hex (UTF-8) | Z10366@280512 -> Z36063@280511 *)
+let rec compiled_Z10366_string_to_hex_utf_8 (fuel:nat) (a0:eval_result value) : Tot (eval_result value) (decreases fuel) =
+  if fuel = 0 then EErr EFuelExhausted else
+  let next_fuel : nat = fuel - 1 in
+  (call_primitive 10047 [(compiled_Z11003_base16_encode next_fuel a0)])
+
+(* Z11003 Base16 Encode | Z11003@280513 -> Z36061@280504 *)
+and compiled_Z11003_base16_encode (fuel:nat) (a0:eval_result value) : Tot (eval_result value) (decreases fuel) =
+  if fuel = 0 then EErr EFuelExhausted else
+  let next_fuel : nat = fuel - 1 in
+  (call_primitive 10018 [(compiled_Z10366_string_to_hex_utf_8 next_fuel a0)])
 
 (* Z10379 string inequality | Z10379@236965 -> Z10381@156869 *)
 let compiled_Z10379_string_inequality (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
@@ -462,6 +490,10 @@ let compiled_Z12741_is_permutation (a0:eval_result value) (a1:eval_result value)
 let compiled_Z10423_are_strings_anagrams (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
   (compiled_Z12741_is_permutation (call_primitive 22717 [a0]) (call_primitive 22717 [a1]))
 
+(* Z10539 case-insensitive string equality | Z10539@247342 -> Z10541@112948 *)
+let compiled_Z10539_case_insensitive_string_equality (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
+  (call_primitive 866 [(call_primitive 10047 [a0]); (call_primitive 10047 [a1])])
+
 (* Z14636 remove first N characters of string | Z14636@282100 -> Z21379@270273 *)
 let compiled_Z14636_remove_first_n_characters_of_string (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
   (call_primitive 22693 [(compiled_Z13369_remove_first_n_elements_of_list default_fuel (compiled_Z17895_untype_a_list (call_primitive 22717 [a0])) a1)])
@@ -570,6 +602,18 @@ let compiled_Z10753_duplicate_string (a0:eval_result value) : Tot (eval_result v
 let compiled_Z10770_duplication_with_space (a0:eval_result value) : Tot (eval_result value) =
   (call_primitive 10000 [a0; (call_primitive 10000 [(EOk (VText [32])); a0])])
 
+(* Z10771 sentence case | Z10771@292618 -> Z15863@206017 *)
+let compiled_Z10771_sentence_case (a0:eval_result value) : Tot (eval_result value) =
+  (call_primitive 10000 [(let cond_1 : eval_result bool = condition_of 802 (call_primitive 13676 [(call_primitive 11040 [a0]); (EOk (VNat 0))]) in
+   match cond_1 with
+   | EErr e -> EErr e
+   | EOk b -> if b then (call_primitive 10018 [(call_primitive 10901 [a0])])
+              else (EOk (VText []))); (let cond_2 : eval_result bool = condition_of 802 (call_primitive 13676 [(call_primitive 11040 [a0]); (EOk (VNat 1))]) in
+   match cond_2 with
+   | EErr e -> EErr e
+   | EOk b -> if b then (compiled_Z14636_remove_first_n_characters_of_string a0 (EOk (VNat 1)))
+              else (EOk (VText [])))])
+
 (* Z15175 join two strings with separator | Z15175@240079 -> Z15180@181776 *)
 let compiled_Z15175_join_two_strings_with_separator (a0:eval_result value) (a1:eval_result value) (a2:eval_result value) : Tot (eval_result value) =
   let part_1 = (let cond_1 : eval_result bool = condition_of 802 (call_primitive 10008 [a2]) in
@@ -634,6 +678,10 @@ let compiled_Z10888_to_final_form_hebrew (a0:eval_result value) : Tot (eval_resu
 (* Z10891 final to normal form (Hebrew) | Z10891@143546 -> Z10892@94920 *)
 let compiled_Z10891_final_to_normal_form_hebrew (a0:eval_result value) : Tot (eval_result value) =
   (compiled_Z14613_replace_character_set default_fuel a0 (EOk (VText [1498; 1501; 1503; 1507; 1509])) (EOk (VText [1499; 1502; 1504; 1508; 1510])))
+
+(* Z10897 is camel case | Z10897@281960 -> Z10898@112891 *)
+let compiled_Z10897_is_camel_case (a0:eval_result value) : Tot (eval_result value) =
+  (call_primitive 10174 [(compiled_Z10346_is_lowercase (call_primitive 10901 [a0])); (call_primitive 10216 [(compiled_Z10070_has_substring a0 (EOk (VText [32])))])])
 
 (* Z21389 replicate object n times | Z21389@288741 -> Z21391@244810 *)
 let rec compiled_Z21389_replicate_object_n_times (fuel:nat) (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) (decreases fuel) =
@@ -1048,6 +1096,10 @@ let compiled_Z11340_regular_croatian_masculine_genitive_singular (a0:eval_result
 let compiled_Z11342_is_dna_nucleic_acid_notation (a0:eval_result value) : Tot (eval_result value) =
   (compiled_Z11693_string_only_has_characters_from_alphabet a0 (EOk (VText [32; 65; 67; 71; 84])))
 
+(* Z11349 has and is uppercase | Z11349@114775 -> Z11382@106049 *)
+let compiled_Z11349_has_and_is_uppercase (a0:eval_result value) : Tot (eval_result value) =
+  (compiled_Z10962_not_boolean_implication (compiled_Z10336_is_uppercase a0) (compiled_Z10346_is_lowercase a0))
+
 (* Z11361 regular Croatian masculine dative singular | Z11361@101502 -> Z11365@101506 *)
 let compiled_Z11361_regular_croatian_masculine_dative_singular (a0:eval_result value) : Tot (eval_result value) =
   (compiled_Z11355_croatian_masculine_noun_declension a0 (EOk (VText [117])))
@@ -1059,6 +1111,10 @@ let compiled_Z11366_regular_croatian_masculine_accusative_singular (a0:eval_resu
 (* Z11370 regular Croatian masculine locative singular | Z11370@203358 -> Z11374@101656 *)
 let compiled_Z11370_regular_croatian_masculine_locative_singular (a0:eval_result value) : Tot (eval_result value) =
   (compiled_Z11355_croatian_masculine_noun_declension a0 (EOk (VText [117])))
+
+(* Z11383 has and is lowercase | Z11383@174971 -> Z11386@106052 *)
+let compiled_Z11383_has_and_is_lowercase (a0:eval_result value) : Tot (eval_result value) =
+  (compiled_Z10962_not_boolean_implication (compiled_Z10346_is_lowercase a0) (compiled_Z10336_is_uppercase a0))
 
 (* Z11412 discard from end of first substring | Z11412@257964 -> Z11432@112228 *)
 let compiled_Z11412_discard_from_end_of_first_substring (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
@@ -1673,6 +1729,14 @@ let compiled_Z12593_insert_between_two_strings (a0:eval_result value) (a1:eval_r
 let compiled_Z12599_classical_chinese_arrange_and_negate_verb_direct_object (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
   (call_primitive 10000 [(call_primitive 10000 [(EOk (VText [19981])); a1]); a0])
 
+(* Z13119 is pangram of alphabet | Z13119@260860 -> Z13120@184061 *)
+let compiled_Z13119_is_pangram_of_alphabet (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
+  (compiled_Z12846_contains_all_of_list default_fuel (call_primitive 868 [(call_primitive 10047 [a0])]) (call_primitive 868 [a1]))
+
+(* Z12626 is pangram (Latin alphabet) | Z12626@293032 -> Z13122@131271 *)
+let compiled_Z12626_is_pangram_latin_alphabet (a0:eval_result value) : Tot (eval_result value) =
+  (compiled_Z13119_is_pangram_of_alphabet a0 (EOk (VText [97; 98; 99; 100; 101; 102; 103; 104; 105; 106; 107; 108; 109; 110; 111; 112; 113; 114; 115; 116; 117; 118; 119; 120; 121; 122])))
+
 (* Z12630 Esperanto accusative | Z12630@260819 -> Z32725@260818 *)
 let compiled_Z12630_esperanto_accusative (a0:eval_result value) : Tot (eval_result value) =
   (let cond_1 : eval_result bool = condition_of 802 (compiled_Z12696_contains default_fuel (EOk (VList [VText [97]; VText [101]; VText [106]; VText [111]])) (compiled_Z11060_get_last_character_of_string a0)) in
@@ -1733,6 +1797,36 @@ let compiled_Z14483_common_codepoints_in_strings (a0:eval_result value) (a1:eval
 (* Z12892 Is or has Bengali character | Z12892@263312 -> Z14489@165067 *)
 let compiled_Z12892_is_or_has_bengali_character (a0:eval_result value) : Tot (eval_result value) =
   (compiled_Z14483_common_codepoints_in_strings a0 literal_4)
+
+(* Z13713 natural number to digit string | Z13713@202263 -> Z14279@159763 *)
+let compiled_Z13713_natural_number_to_digit_string (a0:eval_result value) : Tot (eval_result value) =
+  (call_primitive 803 [(make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 49; 51; 53; 49; 56; 75; 49])))]); a0])
+
+(* Z13806 base n to natural number | Z13806@265914 -> Z13806-authored@0 *)
+let rec compiled_Z13806_base_n_to_natural_number (fuel:nat) (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) (decreases fuel) =
+  if fuel = 0 then EErr EFuelExhausted else
+  let next_fuel : nat = fuel - 1 in
+  (let cond_1 : eval_result bool = condition_of 802 (call_primitive 813 [(call_primitive 22717 [a0])]) in
+   match cond_1 with
+   | EErr e -> EErr e
+   | EOk b -> if b then (EOk (VNat 0))
+              else (let part_1 = (let cond_2 : eval_result bool = condition_of 802 (call_primitive 13682 [(call_primitive 811 [(call_primitive 22717 [a0])]); (EOk (VNat 97))]) in
+   match cond_2 with
+   | EErr e -> EErr e
+   | EOk b -> if b then (call_primitive 13569 [(call_primitive 811 [(call_primitive 22717 [a0])]); (EOk (VNat 87))])
+              else (let cond_3 : eval_result bool = condition_of 802 (call_primitive 13682 [(call_primitive 811 [(call_primitive 22717 [a0])]); (EOk (VNat 65))]) in
+   match cond_3 with
+   | EErr e -> EErr e
+   | EOk b -> if b then (call_primitive 13569 [(call_primitive 811 [(call_primitive 22717 [a0])]); (EOk (VNat 55))])
+              else (call_primitive 13569 [(call_primitive 811 [(call_primitive 22717 [a0])]); (EOk (VNat 48))]))) in (call_primitive 13521 [(call_primitive 13539 [part_1; (call_primitive 13647 [a1; (call_primitive 13569 [(call_primitive 11040 [a0]); (EOk (VNat 1))])])]); (compiled_Z13806_base_n_to_natural_number next_fuel (call_primitive 14456 [a0]) a1)])))
+
+(* Z13797 binary string to natural number | Z13797@221255 -> Z19635@254041 *)
+let compiled_Z13797_binary_string_to_natural_number (a0:eval_result value) : Tot (eval_result value) =
+  (compiled_Z13806_base_n_to_natural_number default_fuel a0 (EOk (VNat 2)))
+
+(* Z12982 Binary to decimal | Z12982@267869 -> Z33971@267868 *)
+let compiled_Z12982_binary_to_decimal (a0:eval_result value) : Tot (eval_result value) =
+  (compiled_Z13713_natural_number_to_digit_string (compiled_Z13797_binary_string_to_natural_number a0))
 
 (* Z13013 Thai nominalization of adjective | Z13013@267879 -> Z13014@130601 *)
 let compiled_Z13013_thai_nominalization_of_adjective (a0:eval_result value) : Tot (eval_result value) =
@@ -1932,10 +2026,6 @@ let rec compiled_Z13667_factorial (fuel:nat) (a0:eval_result value) : Tot (eval_
 let compiled_Z13701_are_coprime_natural_numbers (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
   (call_primitive 13522 [(compiled_Z13612_greatest_common_divisor default_fuel a0 a1); (EOk (VNat 1))])
 
-(* Z13713 natural number to digit string | Z13713@202263 -> Z14279@159763 *)
-let compiled_Z13713_natural_number_to_digit_string (a0:eval_result value) : Tot (eval_result value) =
-  (call_primitive 803 [(make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 49; 51; 53; 49; 56; 75; 49])))]); a0])
-
 (* Z13717 replace elements of list according to key-value lookup lists | Z13717@139263 -> Z13720@139266 *)
 let rec compiled_Z13717_replace_elements_of_list_according_to_key_value_lookup_lists (fuel:nat) (a0:eval_result value) (a1:eval_result value) (a2:eval_result value) : Tot (eval_result value) (decreases fuel) =
   if fuel = 0 then EErr EFuelExhausted else
@@ -1984,6 +2074,14 @@ let compiled_Z13773_sum_of_prime_divisors (a0:eval_result value) : Tot (eval_res
 (* Z13776 sum of unique prime divisors | Z13776@249364 -> Z31389@249361 *)
 let compiled_Z13776_sum_of_unique_prime_divisors (a0:eval_result value) : Tot (eval_result value) =
   (compiled_Z14038_sum_the_elements_of_a_list_of_natural_numbers (compiled_Z13730_unique_prime_divisors a0))
+
+(* Z13798 octal to natural number | Z13798@269362 -> Z15670@192292 *)
+let compiled_Z13798_octal_to_natural_number (a0:eval_result value) : Tot (eval_result value) =
+  (compiled_Z13806_base_n_to_natural_number default_fuel a0 (EOk (VNat 8)))
+
+(* Z13799 hexadecimal to natural number | Z13799@269754 -> Z19636@269753 *)
+let compiled_Z13799_hexadecimal_to_natural_number (a0:eval_result value) : Tot (eval_result value) =
+  (compiled_Z13806_base_n_to_natural_number default_fuel (compiled_Z31955_string_without_prefix a0 (EOk (VText [48; 120]))) (EOk (VNat 16)))
 
 (* Z13809 n^n | Z13809@219507 -> Z14036@150742 *)
 let compiled_Z13809_n_n (a0:eval_result value) : Tot (eval_result value) =
@@ -2070,6 +2168,18 @@ let compiled_Z13916_is_light_vowel_damfe_in_igbo (a0:eval_result value) : Tot (e
 (* Z13922 Is heavy vowel (udaarọ) | Z13922@269664 -> Z34292@269663 *)
 let compiled_Z13922_is_heavy_vowel_udaar (a0:eval_result value) : Tot (eval_result value) =
   (compiled_Z14483_common_codepoints_in_strings a0 (EOk (VText [101; 105; 111; 117; 69; 73; 79; 85])))
+
+(* Z13927 Igbo infinitive form of verb | Z13927@247345 -> Z13941@148193 *)
+let compiled_Z13927_igbo_infinitive_form_of_verb (a0:eval_result value) : Tot (eval_result value) =
+  (let cond_1 : eval_result bool = condition_of 802 (compiled_Z13916_is_light_vowel_damfe_in_igbo a0) in
+   match cond_1 with
+   | EErr e -> EErr e
+   | EOk b -> if b then (call_primitive 10000 [(EOk (VText [7883])); (call_primitive 10047 [a0])])
+              else (let cond_2 : eval_result bool = condition_of 802 (compiled_Z13922_is_heavy_vowel_udaar a0) in
+   match cond_2 with
+   | EErr e -> EErr e
+   | EOk b -> if b then (call_primitive 10000 [(EOk (VText [105])); (call_primitive 10047 [a0])])
+              else (EOk (VText []))))
 
 (* Z15111 floor(n/2) | Z15111@270958 -> Z17680@241642 *)
 let compiled_Z15111_floor_n_2 (a0:eval_result value) : Tot (eval_result value) =
@@ -3308,6 +3418,18 @@ let compiled_Z16493_is_leap_year_revised_julian_calendar (a0:eval_result value) 
 let compiled_Z16502_count_decimal_places (a0:eval_result value) : Tot (eval_result value) =
   (call_primitive 13569 [(call_primitive 11040 [a0]); (call_primitive 11040 [(compiled_Z11416_discard_from_end_of_last_substring default_fuel a0 (EOk (VText [46])))])])
 
+(* Z16524 Suffix a verb to get it negative imperative form (Igbo) | Z16524@218835 -> Z16525@218836 *)
+let compiled_Z16524_suffix_a_verb_to_get_it_negative_imperative_form_igbo (a0:eval_result value) : Tot (eval_result value) =
+  (let cond_1 : eval_result bool = condition_of 802 (compiled_Z13916_is_light_vowel_damfe_in_igbo a0) in
+   match cond_1 with
+   | EErr e -> EErr e
+   | EOk b -> if b then (compiled_Z15991_code_point_prefix (EOk (VText [97])) (call_primitive 10047 [(call_primitive 10000 [a0; (EOk (VText [108; 97]))])]))
+              else (let cond_2 : eval_result bool = condition_of 802 (compiled_Z13922_is_heavy_vowel_udaar a0) in
+   match cond_2 with
+   | EErr e -> EErr e
+   | EOk b -> if b then (compiled_Z15991_code_point_prefix (EOk (VText [101])) (call_primitive 10047 [(call_primitive 10000 [a0; (EOk (VText [108; 97]))])]))
+              else (EOk (VText []))))
+
 (* Z16560 string for a language | Z16560@219429 -> Z16570@219438 *)
 let compiled_Z16560_string_for_a_language (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
   (compiled_Z14396_string_of_monolingual_text (compiled_Z16277_first_monolingual_text_in_specified_language default_fuel a0 a1))
@@ -3399,6 +3521,14 @@ let compiled_Z16688_same_integer (a0:eval_result value) (a1:eval_result value) :
 let compiled_Z16711_subsequence_exists (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
   (call_primitive 10216 [(compiled_Z23883_is_zero_natural_number (compiled_Z28715_index_of_first_sub_list_start default_fuel a0 a1))])
 
+(* Z16714 DNA sequence complement | Z16714@271282 -> Z34616@271281 *)
+let compiled_Z16714_dna_sequence_complement (a0:eval_result value) : Tot (eval_result value) =
+  (let cond_1 : eval_result bool = condition_of 802 (compiled_Z11693_string_only_has_characters_from_alphabet a0 (EOk (VText [65; 67; 71; 84; 97; 99; 103; 116]))) in
+   match cond_1 with
+   | EErr e -> EErr e
+   | EOk b -> if b then (compiled_Z14613_replace_character_set default_fuel (call_primitive 10018 [a0]) (EOk (VText [65; 67; 71; 84])) (EOk (VText [84; 71; 67; 65])))
+              else (EOk (VText [105; 110; 118; 97; 108; 105; 100; 32; 68; 78; 65; 32; 115; 101; 113; 117; 101; 110; 99; 101])))
+
 (* Z16750 different sign | Z16750@198725 -> Z16751@223183 *)
 let compiled_Z16750_different_sign (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
   (call_primitive 10216 [(compiled_Z16667_same_sign a0 a1)])
@@ -3444,6 +3574,10 @@ let compiled_Z19108_same_key_value (a0:eval_result value) (a1:eval_result value)
 (* Z16945 same Igbo month | Z16945@189902 -> Z18608@265664 *)
 let compiled_Z16945_same_igbo_month (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
   (compiled_Z19108_same_key_value a0 (make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 49; 54; 57; 50; 55; 75; 49])))]) a1)
+
+(* Z17036 string length in UTF-8 code units | Z17036@228309 -> Z34625@271334 *)
+let compiled_Z17036_string_length_in_utf_8_code_units (a0:eval_result value) : Tot (eval_result value) =
+  (compiled_Z15111_floor_n_2 (call_primitive 11040 [(compiled_Z10366_string_to_hex_utf_8 default_fuel a0)]))
 
 (* Z17065 Boolean to natural number | Z17065@228629 -> Z17069@228633 *)
 let compiled_Z17065_boolean_to_natural_number (a0:eval_result value) : Tot (eval_result value) =
@@ -3843,6 +3977,22 @@ let compiled_Z18683_strict_object_equality (a0:eval_result value) (a1:eval_resul
    | EErr e -> EErr e
    | EOk b -> if b then (compiled_Z15801_object_type_equality a0 a1)
               else (EOk (VBool false)))
+
+(* Z18845 English declarative sentence - subject verb | Z18845@274213 -> Z18846@274214 *)
+let compiled_Z18845_english_declarative_sentence_subject_verb (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
+  (compiled_Z10771_sentence_case (compiled_Z12899_join_list_of_strings_with_delimiter default_fuel (call_primitive 810 [a0; (call_primitive 810 [(call_primitive 10000 [a1; (EOk (VText [46]))]); (EOk (VList []))])]) (EOk (VText [32]))))
+
+(* Z18871 English imperative sentence - verb | Z18871@274573 -> Z18872@274574 *)
+let compiled_Z18871_english_imperative_sentence_verb (a0:eval_result value) : Tot (eval_result value) =
+  (compiled_Z10771_sentence_case (compiled_Z12899_join_list_of_strings_with_delimiter default_fuel (call_primitive 810 [a0; (call_primitive 810 [(EOk (VText [33])); (EOk (VList []))])]) (EOk (VText []))))
+
+(* Z18874 English imperative sentence - verb + adverb | Z18874@274576 -> Z18875@274577 *)
+let compiled_Z18874_english_imperative_sentence_verb_adverb (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
+  (compiled_Z10771_sentence_case (call_primitive 10000 [(compiled_Z12899_join_list_of_strings_with_delimiter default_fuel (call_primitive 810 [a0; (call_primitive 810 [a1; (EOk (VList []))])]) (EOk (VText [32]))); (EOk (VText [33]))]))
+
+(* Z18886 English imperative sentence - verb + object | Z18886@274706 -> Z18887@274708 *)
+let compiled_Z18886_english_imperative_sentence_verb_object (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
+  (compiled_Z10771_sentence_case (call_primitive 10000 [(compiled_Z12899_join_list_of_strings_with_delimiter default_fuel (call_primitive 810 [a0; (call_primitive 810 [a1; (EOk (VList []))])]) (EOk (VText [32]))); (EOk (VText [33]))]))
 
 (* Z18898 echo string except for specific replacement | Z18898@275432 -> Z18902@275701 *)
 let compiled_Z18898_echo_string_except_for_specific_replacement (a0:eval_result value) (a1:eval_result value) (a2:eval_result value) : Tot (eval_result value) =
@@ -4339,6 +4489,10 @@ let compiled_Z21356_apply_function_and_forward_input (a0:eval_result value) (a1:
 let compiled_Z21350_associate_list_with_integer_keys (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
   (compiled_Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an default_fuel (EOk (VFunc 21356)) a1 a0)
 
+(* Z21366 Lowercase first word | Z21366@272276 -> Z34775@272275 *)
+let compiled_Z21366_lowercase_first_word (a0:eval_result value) : Tot (eval_result value) =
+  (call_primitive 10000 [(call_primitive 10047 [(compiled_Z11410_discard_from_start_of_first_substring a0 (EOk (VText [32])))]); (compiled_Z11418_discard_until_start_of_first_substring a0 (EOk (VText [32])))])
+
 (* Z21373 Freak pay or mouse pay | Z21373@223641 -> Z21374@154709 *)
 let compiled_Z21373_freak_pay_or_mouse_pay (a0:eval_result value) : Tot (eval_result value) =
   (let cond_1 : eval_result bool = condition_of 802 a0 in
@@ -4382,6 +4536,10 @@ let compiled_Z21806_lemma_string_from_lexeme_and_lang (a0:eval_result value) (a1
 (* Z21980 string includes / or % | Z21980@222275 -> Z28675@222274 *)
 let compiled_Z21980_string_includes_or (a0:eval_result value) : Tot (eval_result value) =
   (call_primitive 10184 [(compiled_Z10070_has_substring a0 (EOk (VText [47]))); (compiled_Z10070_has_substring a0 (EOk (VText [37])))])
+
+(* Z21987 string includes "na" or "nf" | Z21987@272579 -> Z34850@272578 *)
+let compiled_Z21987_string_includes_na_or_nf (a0:eval_result value) : Tot (eval_result value) =
+  (call_primitive 10184 [(compiled_Z10070_has_substring (call_primitive 10047 [a0]) (EOk (VText [110; 97]))); (compiled_Z10070_has_substring (call_primitive 10047 [a0]) (EOk (VText [110; 102])))])
 
 (* Z22044 wrap with code-nowiki XML tags | Z22044@162076 -> Z22048@161999 *)
 let compiled_Z22044_wrap_with_code_nowiki_xml_tags (a0:eval_result value) : Tot (eval_result value) =
@@ -4527,6 +4685,14 @@ let compiled_Z22504_join_list_of_strings_with_spaces (a0:eval_result value) : To
 let compiled_Z22507_replace_multiple_spaces_with_single_spaces (a0:eval_result value) : Tot (eval_result value) =
   (call_primitive 10075 [a0; (EOk (VText [32; 32])); (EOk (VText [32]))])
 
+(* Z22511 capitalise first letter and add full stop | Z22511@292621 -> Z22513@206015 *)
+let compiled_Z22511_capitalise_first_letter_and_add_full_stop (a0:eval_result value) : Tot (eval_result value) =
+  (call_primitive 10000 [(compiled_Z10771_sentence_case a0); (EOk (VText [46]))])
+
+(* Z22514 sentence from list of words (English conventions) | Z22514@287013 -> Z22517@279104 *)
+let compiled_Z22514_sentence_from_list_of_words_english_conventions (a0:eval_result value) : Tot (eval_result value) =
+  (compiled_Z22511_capitalise_first_letter_and_add_full_stop (compiled_Z10084_remove_leading_spaces default_fuel (compiled_Z22507_replace_multiple_spaces_with_single_spaces (compiled_Z22504_join_list_of_strings_with_spaces a0))))
+
 (* Z22518 add word to list then join with spaces | Z22518@166097 -> Z22520@166095 *)
 let compiled_Z22518_add_word_to_list_then_join_with_spaces (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
   (compiled_Z22504_join_list_of_strings_with_spaces (call_primitive 12961 [a1; a0]))
@@ -4561,10 +4727,30 @@ let compiled_Z22649_arabic_numerals_to_devanagari_numerals (a0:eval_result value
 let compiled_Z22725_to_scream_cipher (a0:eval_result value) : Tot (eval_result value) =
   (compiled_Z14613_replace_character_set default_fuel a0 (EOk (VText [65; 66; 67; 68; 69; 70; 71; 72; 73; 74; 75; 76; 77; 78; 79; 80; 81; 82; 83; 84; 85; 86; 87; 88; 89; 90])) (EOk (VText [65; 550; 65; 807; 65; 817; 193; 65; 814; 65; 779; 65; 816; 7842; 65; 787; 7840; 258; 461; 194; 197; 65; 815; 65; 804; 514; 195; 256; 196; 192; 512; 65; 879; 65; 806; 570])))
 
+(* Z22800 hex string as Byte | Z22800@174976 -> Z22882@170377 *)
+let compiled_Z22800_hex_string_as_byte (a0:eval_result value) : Tot (eval_result value) =
+  (make_record 80 [({ key_owner = Some 80; key_index = 1 }, (compiled_Z13799_hexadecimal_to_natural_number a0))])
+
 (* Z22807 First item of lexeme list with lexical category | Z22807@277562 -> Z31132@242512 *)
 let compiled_Z22807_first_item_of_lexeme_list_with_lexical_category (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
   (compiled_Z13397_get_the_nth_element_of_a_list default_fuel a0 (compiled_Z28755_index_of_match_in_list a1 (with_items 873 a0 (fun items ->
      map_direct (fun x -> compiled_Z19298_lexical_category_of_lexeme (EOk x)) items))))
+
+(* Z22812 has substring (optional case-sensitivity) | Z22812@220316 -> Z22817@169932 *)
+let compiled_Z22812_has_substring_optional_case_sensitivity (a0:eval_result value) (a1:eval_result value) (a2:eval_result value) : Tot (eval_result value) =
+  (let cond_1 : eval_result bool = condition_of 802 a2 in
+   match cond_1 with
+   | EErr e -> EErr e
+   | EOk b -> if b then (compiled_Z10070_has_substring a0 a1)
+              else (compiled_Z10070_has_substring (call_primitive 10047 [a0]) (call_primitive 10047 [a1])))
+
+(* Z23022 natural number to codepoint | Z23022@257847 -> Z23023@171081 *)
+let compiled_Z23022_natural_number_to_codepoint (a0:eval_result value) : Tot (eval_result value) =
+  a0
+
+(* Z22829 hex code point to string | Z22829@225369 -> Z23027@171090 *)
+let compiled_Z22829_hex_code_point_to_string (a0:eval_result value) : Tot (eval_result value) =
+  (compiled_Z15631_codepoint_to_string (compiled_Z23022_natural_number_to_codepoint (compiled_Z13799_hexadecimal_to_natural_number a0)))
 
 (* Z22839 first Object or default | Z22839@259875 -> Z27012@245204 *)
 let compiled_Z22839_first_object_or_default (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
@@ -4577,6 +4763,30 @@ let compiled_Z22839_first_object_or_default (a0:eval_result value) (a1:eval_resu
 (* Z22853 labels of Wikidata item (multilingual text) | Z22853@278928 -> Z22854@172022 *)
 let compiled_Z22853_labels_of_wikidata_item_multilingual_text (a0:eval_result value) : Tot (eval_result value) =
   (call_primitive 803 [(make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 54; 48; 48; 49; 75; 50])))]); a0])
+
+(* Z22858 read Byte from string | Z22858@187643 -> Z22870@170431 *)
+let compiled_Z22858_read_byte_from_string (a0:eval_result value) : Tot (eval_result value) =
+  (let cond_1 : eval_result bool = condition_of 802 (compiled_Z11693_string_only_has_characters_from_alphabet a0 (EOk (VText [48; 49; 50; 51; 52; 53; 54; 55; 56; 57]))) in
+   match cond_1 with
+   | EErr e -> EErr e
+   | EOk b -> if b then (let cond_2 : eval_result bool = condition_of 802 (call_primitive 13522 [(call_primitive 11040 [a0]); (EOk (VNat 8))]) in
+   match cond_2 with
+   | EErr e -> EErr e
+   | EOk b -> if b then (make_record 80 [({ key_owner = Some 80; key_index = 1 }, (compiled_Z13797_binary_string_to_natural_number a0))])
+              else (make_record 80 [({ key_owner = Some 80; key_index = 1 }, (compiled_Z14283_string_of_digits_as_natural_number a0))]))
+              else (let cond_3 : eval_result bool = condition_of 802 (call_primitive 13522 [(call_primitive 11040 [a0]); (EOk (VNat 10))]) in
+   match cond_3 with
+   | EErr e -> EErr e
+   | EOk b -> if b then (make_record 80 [({ key_owner = Some 80; key_index = 1 }, (compiled_Z13797_binary_string_to_natural_number (compiled_Z14636_remove_first_n_characters_of_string a0 (EOk (VNat 2)))))])
+              else (make_record 80 [({ key_owner = Some 80; key_index = 1 }, (compiled_Z13799_hexadecimal_to_natural_number a0))])))
+
+(* Z22866 read Byte | Z22866@187637 -> Z22867@170350 *)
+let compiled_Z22866_read_byte (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
+  (compiled_Z22858_read_byte_from_string a0)
+
+(* Z22946 binary string as byte | Z22946@198675 -> Z22954@170795 *)
+let compiled_Z22946_binary_string_as_byte (a0:eval_result value) : Tot (eval_result value) =
+  (compiled_Z22535_natural_number_to_byte (compiled_Z13797_binary_string_to_natural_number a0))
 
 (* Z28548 filter statements by property type | Z28548@292446 -> Z36379@283297 *)
 let compiled_Z28548_filter_statements_by_property_type (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
@@ -4596,13 +4806,25 @@ let compiled_Z22978_values_unqualified_from_wikidata_item_statements (a0:eval_re
   (compiled_Z18475_return_typed_list (with_items 873 (compiled_Z26700_filter_statements_in_wikidata_item_by_properties a0 (call_primitive 810 [a1; (EOk (VList []))])) (fun items ->
      map_direct (fun x -> compiled_Z19308_value_of_wikidata_statement (EOk x)) items)))
 
-(* Z23022 natural number to codepoint | Z23022@257847 -> Z23023@171081 *)
-let compiled_Z23022_natural_number_to_codepoint (a0:eval_result value) : Tot (eval_result value) =
-  a0
-
 (* Z23028 digit string to codepoint | Z23028@171101 -> Z23030@171095 *)
 let compiled_Z23028_digit_string_to_codepoint (a0:eval_result value) : Tot (eval_result value) =
   (compiled_Z23022_natural_number_to_codepoint (compiled_Z14283_string_of_digits_as_natural_number a0))
+
+(* Z23031 codepoint from string leniently | Z23031@189423 -> Z23035@189424 *)
+let compiled_Z23031_codepoint_from_string_leniently (a0:eval_result value) : Tot (eval_result value) =
+  (let cond_1 : eval_result bool = condition_of 802 (compiled_Z13489_is_decimal_natural_number_string_of_arabic_numerals a0) in
+   match cond_1 with
+   | EErr e -> EErr e
+   | EOk b -> if b then (compiled_Z23028_digit_string_to_codepoint a0)
+              else (let cond_2 : eval_result bool = condition_of 802 (call_primitive 10184 [(call_primitive 10615 [(call_primitive 10047 [a0]); (EOk (VText [117; 43]))]); (call_primitive 10615 [(call_primitive 10047 [a0]); (EOk (VText [92; 117]))])]) in
+   match cond_2 with
+   | EErr e -> EErr e
+   | EOk b -> if b then (compiled_Z23022_natural_number_to_codepoint (compiled_Z13799_hexadecimal_to_natural_number (compiled_Z14636_remove_first_n_characters_of_string a0 (EOk (VNat 2)))))
+              else (call_primitive 811 [(call_primitive 22717 [a0])])))
+
+(* Z23041 read code point | Z23041@223677 -> Z23042@191126 *)
+let compiled_Z23041_read_code_point (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
+  (compiled_Z23031_codepoint_from_string_leniently a0)
 
 (* Z23053 code point to digit string | Z23053@171160 -> Z23054@171157 *)
 let compiled_Z23053_code_point_to_digit_string (a0:eval_result value) : Tot (eval_result value) =
@@ -5170,6 +5392,10 @@ let compiled_Z25701_time_of_day_as_24_hour_hh_mm_ss_string (a0:eval_result value
   let part_1 = (call_primitive 810 [(compiled_Z17845_pad_string_with_leading_0_until_it_is_two_characters_long (compiled_Z13713_natural_number_to_digit_string (compiled_Z25085_minute_from_time_of_day a0))); (call_primitive 810 [(compiled_Z17845_pad_string_with_leading_0_until_it_is_two_characters_long (compiled_Z13713_natural_number_to_digit_string (compiled_Z25088_second_from_time_of_day a0))); (EOk (VList []))])]) in
   (compiled_Z12899_join_list_of_strings_with_delimiter default_fuel (call_primitive 810 [(compiled_Z17845_pad_string_with_leading_0_until_it_is_two_characters_long (compiled_Z13713_natural_number_to_digit_string (compiled_Z25082_hour_of_day a0))); part_1]) (EOk (VText [58])))
 
+(* Z25705 time as 12-hour clock with am/pm | Z25705@287726 -> Z25706@196943 *)
+let compiled_Z25705_time_as_12_hour_clock_with_am_pm (a0:eval_result value) : Tot (eval_result value) =
+  (call_primitive 10047 [(compiled_Z25102_time_as_12_hour_clock_with_am_pm a0)])
+
 (* Z25711 time of day from Wikidata datetime | Z25711@225385 -> Z25712@196982 *)
 let compiled_Z25711_time_of_day_from_wikidata_datetime (a0:eval_result value) : Tot (eval_result value) =
   (call_primitive 803 [(make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 54; 48; 54; 49; 75; 50])))]); a0])
@@ -5723,6 +5949,10 @@ let compiled_Z29515_lexeme_sense_id_for_solf_ge_syllable (a0:eval_result value) 
 let compiled_Z29572_html_fragment_contains_second_fragment (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
   (compiled_Z10070_has_substring (compiled_Z27854_html_fragment_as_string a0) (compiled_Z27854_html_fragment_as_string a1))
 
+(* Z29576 HTML fragment contains fragment, case insensitive | Z29576@229860 -> Z29578@229859 *)
+let compiled_Z29576_html_fragment_contains_fragment_case_insensitive (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
+  (compiled_Z10070_has_substring (call_primitive 10047 [(compiled_Z27854_html_fragment_as_string a0)]) (call_primitive 10047 [(compiled_Z27854_html_fragment_as_string a1)]))
+
 (* Z29639 terminate sentence with full stop | Z29639@273824 -> Z29824@231487 *)
 let compiled_Z29639_terminate_sentence_with_full_stop (a0:eval_result value) : Tot (eval_result value) =
   (compiled_Z11542_if_string_output (compiled_Z12696_contains default_fuel (EOk (VList [VNat 46; VNat 63; VNat 33])) (compiled_Z12964_last_element (call_primitive 22717 [a0]))) a0 (call_primitive 10000 [a0; (EOk (VText [46]))]))
@@ -5870,6 +6100,10 @@ let compiled_Z30353_is_common_gender_lexeme (a0:eval_result value) : Tot (eval_r
 let compiled_Z30349_correct_swedish_indefinite_article (a0:eval_result value) : Tot (eval_result value) =
   (compiled_Z11542_if_string_output (compiled_Z30353_is_common_gender_lexeme a0) (EOk (VText [101; 110])) (EOk (VText [101; 116; 116])))
 
+(* Z30404 Armenian capitalise first letter and add full stop | Z30404@234812 -> Z30405@234553 *)
+let compiled_Z30404_armenian_capitalise_first_letter_and_add_full_stop (a0:eval_result value) : Tot (eval_result value) =
+  (call_primitive 10000 [(compiled_Z10771_sentence_case a0); (EOk (VText [1417]))])
+
 (* Z30471 highest element by 'less than' function | Z30471@237925 -> Z30474@234862 *)
 let rec compiled_Z30471_highest_element_by_less_than_function (fuel:nat) (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) (decreases fuel) =
   if fuel = 0 then EErr EFuelExhausted else
@@ -5911,6 +6145,10 @@ let compiled_Z30631_reference_of_wikidata_property (a0:eval_result value) : Tot 
 (* Z30632 reference of Wikidata lexeme form | Z30632@242322 -> Z30634@236313 *)
 let compiled_Z30632_reference_of_wikidata_lexeme_form (a0:eval_result value) : Tot (eval_result value) =
   (call_primitive 803 [(make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 54; 48; 48; 52; 75; 49])))]); a0])
+
+(* Z30676 is pangram (Danish alphabet) | Z30676@242397 -> Z30678@242396 *)
+let compiled_Z30676_is_pangram_danish_alphabet (a0:eval_result value) : Tot (eval_result value) =
+  (compiled_Z13119_is_pangram_of_alphabet (call_primitive 10047 [a0]) (EOk (VText [97; 98; 99; 100; 101; 102; 103; 104; 105; 106; 107; 108; 109; 110; 111; 112; 113; 114; 115; 116; 117; 118; 119; 120; 121; 122; 230; 248; 229])))
 
 (* Z30692 are multisets equivalent? | Z30692@237182 -> Z30718@236927 *)
 let compiled_Z30692_are_multisets_equivalent (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
@@ -5955,6 +6193,10 @@ let compiled_Z30768_is_valid_arguments_to_z30708 (a0:eval_result value) (a1:eval
    | EErr e -> EErr e
    | EOk b -> if b then (compiled_Z30751_is_valid_gnu_coreutils_size_unit a3)
               else (EOk (VBool true)))])
+
+(* Z30785 capitalise first letter of Monolingual text | Z30785@279900 -> Z30789@237394 *)
+let compiled_Z30785_capitalise_first_letter_of_monolingual_text (a0:eval_result value) : Tot (eval_result value) =
+  (compiled_Z30009_apply_string_transformation_to_monolingual_text a0 (EOk (VFunc 10771)))
 
 (* Z30795 append String to Monolingual text | Z30795@242229 -> Z30797@284691 *)
 let compiled_Z30795_append_string_to_monolingual_text (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
@@ -6361,6 +6603,24 @@ let compiled_Z34039_apply_three_or_optionally_four_argument_function (a0:eval_re
    | EOk b -> if b then (call_primitive 21216 [a0; a1; a2; a3])
               else (call_primitive 30438 [a0; a1; a2; a3; a4]))
 
+(* Z34072 във or в? (Bulgarian) | Z34072@268613 -> Z34073@268592 *)
+let compiled_Z34072_or_bulgarian (a0:eval_result value) : Tot (eval_result value) =
+  let part_1 = (call_primitive 810 [(call_primitive 10615 [(call_primitive 10047 [a0]); (EOk (VText [1092]))]); (call_primitive 810 [(call_primitive 10615 [(call_primitive 10047 [a0]); (EOk (VText [102]))]); (call_primitive 810 [(call_primitive 10615 [(call_primitive 10047 [a0]); (EOk (VText [118]))]); (EOk (VList []))])])]) in
+  (let cond_1 : eval_result bool = condition_of 802 (compiled_Z12698_is_any_true default_fuel (call_primitive 810 [(call_primitive 10615 [(call_primitive 10047 [a0]); (EOk (VText [1074]))]); part_1])) in
+   match cond_1 with
+   | EErr e -> EErr e
+   | EOk b -> if b then (EOk (VText [1074; 1098; 1074]))
+              else (EOk (VText [1074])))
+
+(* Z34084 със or с? (Bulgarian) | Z34084@268615 -> Z34086@268595 *)
+let compiled_Z34084_or_bulgarian (a0:eval_result value) : Tot (eval_result value) =
+  let part_1 = (call_primitive 810 [(call_primitive 10615 [(call_primitive 10047 [a0]); (EOk (VText [1079]))]); (call_primitive 810 [(call_primitive 10615 [(call_primitive 10047 [a0]); (EOk (VText [115]))]); (call_primitive 810 [(call_primitive 10615 [(call_primitive 10047 [a0]); (EOk (VText [122]))]); (EOk (VList []))])])]) in
+  (let cond_1 : eval_result bool = condition_of 802 (compiled_Z12698_is_any_true default_fuel (call_primitive 810 [(call_primitive 10615 [(call_primitive 10047 [a0]); (EOk (VText [1089]))]); part_1])) in
+   match cond_1 with
+   | EErr e -> EErr e
+   | EOk b -> if b then (EOk (VText [1089; 1098; 1089]))
+              else (EOk (VText [1089])))
+
 (* Z34120 apply five-argument function | Z34120@268667 -> Z34121@268666 *)
 let compiled_Z34120_apply_five_argument_function (a0:eval_result value) (a1:eval_result value) (a2:eval_result value) (a3:eval_result value) (a4:eval_result value) (a5:eval_result value) : Tot (eval_result value) =
   (call_primitive 1000000002 [a0; a1; a2; a3; a4; a5])
@@ -6372,6 +6632,10 @@ let compiled_Z34122_apply_four_or_optionally_five_argument_function (a0:eval_res
    | EErr e -> EErr e
    | EOk b -> if b then (call_primitive 30438 [a0; a1; a2; a3; a4])
               else (compiled_Z34120_apply_five_argument_function a0 a1 a2 a3 a4 a5))
+
+(* Z34178 Natural number from list of Booleans | Z34178@268974 -> Z34184@268973 *)
+let compiled_Z34178_natural_number_from_list_of_booleans (a0:eval_result value) : Tot (eval_result value) =
+  (compiled_Z13797_binary_string_to_natural_number (compiled_Z14775_list_of_booleans_to_binary_string a0))
 
 (* Z34190 multiset union | Z34190@269315 -> Z34191@269003 *)
 let rec compiled_Z34190_multiset_union (fuel:nat) (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) (decreases fuel) =
@@ -6528,6 +6792,15 @@ let compiled_Z35494_wrap_in_quotes (a0:eval_result value) (a1:eval_result value)
               else a0) in
   (compiled_Z21394_concatenate_many_strings (call_primitive 810 [a1; (call_primitive 810 [part_1; (call_primitive 810 [a2; (EOk (VList []))])])]))
 
+(* Z35524 first letter uppercase for Turkish | Z35524@279902 -> Z35960@279901 *)
+let compiled_Z35524_first_letter_uppercase_for_turkish (a0:eval_result value) : Tot (eval_result value) =
+  let part_1 = (let cond_1 : eval_result bool = condition_of 802 (call_primitive 10615 [(compiled_Z14396_string_of_monolingual_text a0); (EOk (VText [105]))]) in
+   match cond_1 with
+   | EErr e -> EErr e
+   | EOk b -> if b then (call_primitive 10000 [(EOk (VText [304])); (call_primitive 14456 [(compiled_Z14396_string_of_monolingual_text a0)])])
+              else (compiled_Z10771_sentence_case (compiled_Z14396_string_of_monolingual_text a0))) in
+  (compiled_Z861_monolingual_text_from_string_and_natural_language part_1 (compiled_Z14404_language_of_monolingual_text a0))
+
 (* Z35652 Key reference for nth Key in Type | Z35652@278190 -> Z35655@278189 *)
 let compiled_Z35652_key_reference_for_nth_key_in_type (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
   (compiled_Z22549_key_reference_from_string (compiled_Z23320_key_id_of_key (compiled_Z13397_get_the_nth_element_of_a_list default_fuel (compiled_Z30833_list_of_keys_defined_for_type a0) a1)))
@@ -6650,6 +6923,19 @@ let compiled_Z35999_apply_function_with_2_or_3_arguments_in_order (a0:eval_resul
 let compiled_Z36011_list_of_strings_from_multilingual_text (a0:eval_result value) : Tot (eval_result value) =
   (with_items 873 (compiled_Z19279_multilingual_text_to_list_of_monolingual_texts a0) (fun items ->
      map_direct (fun x -> compiled_Z14396_string_of_monolingual_text (EOk x)) items))
+
+(* Z36007 select Wikidata item with matching label | Z36007@280225 -> Z36013@280219 *)
+let compiled_Z36007_select_wikidata_item_with_matching_label (a0:eval_result value) (a1:eval_result value) (a2:eval_result value) (a3:eval_result value) : Tot (eval_result value) =
+  let part_1 = (let cond_1 : eval_result bool = condition_of 802 a3 in
+   match cond_1 with
+   | EErr e -> EErr e
+   | EOk b -> if b then (with_items 873 (with_items 873 a1 (fun items ->
+     map_direct (fun x -> compiled_Z22853_labels_of_wikidata_item_multilingual_text (EOk x)) items)) (fun items ->
+     map_direct (fun x -> compiled_Z36011_list_of_strings_from_multilingual_text (EOk x)) items))
+              else (compiled_Z32806_transform_elements_of_list_of_lists (EOk (VFunc 10018)) (with_items 873 (with_items 873 a1 (fun items ->
+     map_direct (fun x -> compiled_Z22853_labels_of_wikidata_item_multilingual_text (EOk x)) items)) (fun items ->
+     map_direct (fun x -> compiled_Z36011_list_of_strings_from_multilingual_text (EOk x)) items)))) in
+  (compiled_Z22839_first_object_or_default (compiled_Z22820_compress_list default_fuel a1 (compiled_Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments default_fuel (EOk (VFunc 12696)) part_1 (compiled_Z27068_if_true_pass_input_through_function a0 (EOk (VFunc 10018)) (call_primitive 10216 [a3])))) a2)
 
 (* Z36045 Commons image reference from media ID string | Z36045@281981 -> Z36249@281971 *)
 let compiled_Z36045_commons_image_reference_from_media_id_string (a0:eval_result value) : Tot (eval_result value) =
@@ -7153,14 +7439,20 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 10257, [a0; a1] -> Some (compiled_Z10257_binary_false a0 a1)
   | 10265, [a0; a1] -> Some (compiled_Z10265_boolean_left a0 a1)
   | 10272, [a0; a1] -> Some (compiled_Z10272_boolean_not_left a0 a1)
+  | 10281, [a0] -> Some (compiled_Z10281_to_snake_case a0)
   | 10287, [a0; a1] -> Some (compiled_Z10287_binary_true a0 a1)
   | 10298, [a0; a1] -> Some (compiled_Z10298_boolean_right a0 a1)
   | 10306, [a0; a1] -> Some (compiled_Z10306_boolean_not_right a0 a1)
+  | 10324, [a0] -> Some (compiled_Z10324_is_snake_case a0)
   | 10329, [a0; a1] -> Some (compiled_Z10329_boolean_implication a0 a1)
+  | 10336, [a0] -> Some (compiled_Z10336_is_uppercase a0)
+  | 10346, [a0] -> Some (compiled_Z10346_is_lowercase a0)
   | 10348, [a0; a1] -> Some (compiled_Z10348_backwards_boolean_implication a0 a1)
+  | 10366, [a0] -> Some (compiled_Z10366_string_to_hex_utf_8 default_fuel a0)
   | 10379, [a0; a1] -> Some (compiled_Z10379_string_inequality a0 a1)
   | 10393, [a0; a1] -> Some (compiled_Z10393_levenshtein_distance a0 a1)
   | 10423, [a0; a1] -> Some (compiled_Z10423_are_strings_anagrams a0 a1)
+  | 10539, [a0; a1] -> Some (compiled_Z10539_case_insensitive_string_equality a0 a1)
   | 10559, [a0] -> Some (compiled_Z10559_inverse_binary_number a0)
   | 10561, [a0] -> Some (compiled_Z10561_is_character_hebrew a0)
   | 10618, [a0; a1] -> Some (compiled_Z10618_string_ends_with a0 a1)
@@ -7172,6 +7464,7 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 10745, [a0] -> Some (compiled_Z10745_file_name_to_file_extension a0)
   | 10753, [a0] -> Some (compiled_Z10753_duplicate_string a0)
   | 10770, [a0] -> Some (compiled_Z10770_duplication_with_space a0)
+  | 10771, [a0] -> Some (compiled_Z10771_sentence_case a0)
   | 10831, [a0; a1] -> Some (compiled_Z10831_string_intersperse a0 a1)
   | 10846, [a0] -> Some (compiled_Z10846_rot1_latin_alphabet a0)
   | 10851, [a0] -> Some (compiled_Z10851_rot25_latin_alphabet a0)
@@ -7179,11 +7472,13 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 10869, [a0] -> Some (compiled_Z10869_norwegian_genitive a0)
   | 10888, [a0] -> Some (compiled_Z10888_to_final_form_hebrew a0)
   | 10891, [a0] -> Some (compiled_Z10891_final_to_normal_form_hebrew a0)
+  | 10897, [a0] -> Some (compiled_Z10897_is_camel_case a0)
   | 10911, [a0; a1; a2] -> Some (compiled_Z10911_duplicate_string_n_times a0 a1 a2)
   | 10919, [a0] -> Some (compiled_Z10919_csv_record_to_wikitable_row a0)
   | 10962, [a0; a1] -> Some (compiled_Z10962_not_boolean_implication a0 a1)
   | 10964, [a0; a1] -> Some (compiled_Z10964_not_backwards_boolean_implication a0 a1)
   | 10973, [a0; a1] -> Some (compiled_Z10973_is_anagram_simple a0 a1)
+  | 11003, [a0] -> Some (compiled_Z11003_base16_encode default_fuel a0)
   | 11015, [a0] -> Some (compiled_Z11015_is_leap_year_julian_calendar a0)
   | 11019, [a0] -> Some (compiled_Z11019_italicise_in_wikitext a0)
   | 11044, [a0] -> Some (compiled_Z11044_url_fragment a0)
@@ -7225,10 +7520,12 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 11336, [a0] -> Some (compiled_Z11336_regular_croatian_masculine_nominative_singular a0)
   | 11340, [a0] -> Some (compiled_Z11340_regular_croatian_masculine_genitive_singular a0)
   | 11342, [a0] -> Some (compiled_Z11342_is_dna_nucleic_acid_notation a0)
+  | 11349, [a0] -> Some (compiled_Z11349_has_and_is_uppercase a0)
   | 11355, [a0; a1] -> Some (compiled_Z11355_croatian_masculine_noun_declension a0 a1)
   | 11361, [a0] -> Some (compiled_Z11361_regular_croatian_masculine_dative_singular a0)
   | 11366, [a0] -> Some (compiled_Z11366_regular_croatian_masculine_accusative_singular a0)
   | 11370, [a0] -> Some (compiled_Z11370_regular_croatian_masculine_locative_singular a0)
+  | 11383, [a0] -> Some (compiled_Z11383_has_and_is_lowercase a0)
   | 11410, [a0; a1] -> Some (compiled_Z11410_discard_from_start_of_first_substring a0 a1)
   | 11412, [a0; a1] -> Some (compiled_Z11412_discard_from_end_of_first_substring a0 a1)
   | 11414, [a0; a1] -> Some (compiled_Z11414_discard_from_start_of_last_substring default_fuel a0 a1)
@@ -7363,6 +7660,7 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 12593, [a0; a1] -> Some (compiled_Z12593_insert_between_two_strings a0 a1)
   | 12599, [a0; a1] -> Some (compiled_Z12599_classical_chinese_arrange_and_negate_verb_direct_object a0 a1)
   | 12624, [a0; a1] -> Some (compiled_Z12624_replicate_string_n_times default_fuel a0 a1)
+  | 12626, [a0] -> Some (compiled_Z12626_is_pangram_latin_alphabet a0)
   | 12630, [a0] -> Some (compiled_Z12630_esperanto_accusative a0)
   | 12684, [a0] -> Some (compiled_Z12684_are_all_true a0)
   | 12696, [a0; a1] -> Some (compiled_Z12696_contains default_fuel a0 a1)
@@ -7384,12 +7682,14 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 12899, [a0; a1] -> Some (compiled_Z12899_join_list_of_strings_with_delimiter default_fuel a0 a1)
   | 12964, [a0] -> Some (compiled_Z12964_last_element a0)
   | 12967, [a0] -> Some (compiled_Z12967_list_without_last_element a0)
+  | 12982, [a0] -> Some (compiled_Z12982_binary_to_decimal a0)
   | 13013, [a0] -> Some (compiled_Z13013_thai_nominalization_of_adjective a0)
   | 13034, [a0] -> Some (compiled_Z13034_thai_nominalization_of_verb a0)
   | 13036, [a0; a1] -> Some (compiled_Z13036_apply a0 a1)
   | 13078, [a0] -> Some (compiled_Z13078_remove_duplicates_from_untyped_list a0)
   | 13081, [a0; a1] -> Some (compiled_Z13081_remove_all_matching_elements_from_list default_fuel a0 a1)
   | 13087, [a0] -> Some (compiled_Z13087_english_ing_form a0)
+  | 13119, [a0; a1] -> Some (compiled_Z13119_is_pangram_of_alphabet a0 a1)
   | 13173, [a0; a1; a2] -> Some (compiled_Z13173_get_value_string_from_key_string default_fuel a0 a1 a2)
   | 13220, [a0] -> Some (compiled_Z13220_are_all_elements_of_the_list_the_same_type a0)
   | 13224, [a0] -> Some (compiled_Z13224_split_list_into_a_list_of_two_equal_length_lists a0)
@@ -7437,6 +7737,10 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 13767, [a0] -> Some (compiled_Z13767_number_of_unique_prime_divisors a0)
   | 13773, [a0] -> Some (compiled_Z13773_sum_of_prime_divisors a0)
   | 13776, [a0] -> Some (compiled_Z13776_sum_of_unique_prime_divisors a0)
+  | 13797, [a0] -> Some (compiled_Z13797_binary_string_to_natural_number a0)
+  | 13798, [a0] -> Some (compiled_Z13798_octal_to_natural_number a0)
+  | 13799, [a0] -> Some (compiled_Z13799_hexadecimal_to_natural_number a0)
+  | 13806, [a0; a1] -> Some (compiled_Z13806_base_n_to_natural_number default_fuel a0 a1)
   | 13809, [a0] -> Some (compiled_Z13809_n_n a0)
   | 13812, [a0; a1] -> Some (compiled_Z13812_left_shift a0 a1)
   | 13813, [a0; a1] -> Some (compiled_Z13813_right_shift a0 a1)
@@ -7452,6 +7756,7 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 13857, [a0] -> Some (compiled_Z13857_catalan_number a0)
   | 13916, [a0] -> Some (compiled_Z13916_is_light_vowel_damfe_in_igbo a0)
   | 13922, [a0] -> Some (compiled_Z13922_is_heavy_vowel_udaar a0)
+  | 13927, [a0] -> Some (compiled_Z13927_igbo_infinitive_form_of_verb a0)
   | 13928, [a0] -> Some (compiled_Z13928_length_of_binary_representation default_fuel a0)
   | 13948, [a0] -> Some (compiled_Z13948_2_n_1 a0)
   | 13952, [a0] -> Some (compiled_Z13952_nth_lucas_number a0)
@@ -7671,6 +7976,7 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 16467, [a0; a1; a2] -> Some (compiled_Z16467_english_holocene_calendar_conversion_strings a0 a1 a2)
   | 16493, [a0] -> Some (compiled_Z16493_is_leap_year_revised_julian_calendar a0)
   | 16502, [a0] -> Some (compiled_Z16502_count_decimal_places a0)
+  | 16524, [a0] -> Some (compiled_Z16524_suffix_a_verb_to_get_it_negative_imperative_form_igbo a0)
   | 16560, [a0; a1] -> Some (compiled_Z16560_string_for_a_language a0 a1)
   | 16584, [a0] -> Some (compiled_Z16584_opposite_month a0)
   | 16624, [a0; a1] -> Some (compiled_Z16624_is_function_a_reflexive_relation_on_list_of_elements default_fuel a0 a1)
@@ -7679,6 +7985,7 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 16667, [a0; a1] -> Some (compiled_Z16667_same_sign a0 a1)
   | 16688, [a0; a1] -> Some (compiled_Z16688_same_integer a0 a1)
   | 16711, [a0; a1] -> Some (compiled_Z16711_subsequence_exists a0 a1)
+  | 16714, [a0] -> Some (compiled_Z16714_dna_sequence_complement a0)
   | 16750, [a0; a1] -> Some (compiled_Z16750_different_sign a0 a1)
   | 16773, [a0; a1; a2] -> Some (compiled_Z16773_first_natural_number_is_in_closed_interval_of_the_other_two a0 a1 a2)
   | 16798, [a0] -> Some (compiled_Z16798_is_any_false a0)
@@ -7689,6 +7996,7 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 16878, [a0] -> Some (compiled_Z16878_english_number_1000_to_natural_number a0)
   | 16888, [a0] -> Some (compiled_Z16888_reference_string a0)
   | 16945, [a0; a1] -> Some (compiled_Z16945_same_igbo_month a0 a1)
+  | 17036, [a0] -> Some (compiled_Z17036_string_length_in_utf_8_code_units a0)
   | 17065, [a0] -> Some (compiled_Z17065_boolean_to_natural_number a0)
   | 17105, [a0] -> Some (compiled_Z17105_sign_of_integer a0)
   | 17144, [a0] -> Some (compiled_Z17144_absolute_value_of_integer_as_natural_number a0)
@@ -7783,6 +8091,10 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 18683, [a0; a1] -> Some (compiled_Z18683_strict_object_equality a0 a1)
   | 18755, [a0; a1] -> Some (compiled_Z18755_concatenate_typed_lists a0 a1)
   | 18759, [a0] -> Some (compiled_Z18759_reverse_list_preserving_list_typing_untyping a0)
+  | 18845, [a0; a1] -> Some (compiled_Z18845_english_declarative_sentence_subject_verb a0 a1)
+  | 18871, [a0] -> Some (compiled_Z18871_english_imperative_sentence_verb a0)
+  | 18874, [a0; a1] -> Some (compiled_Z18874_english_imperative_sentence_verb_adverb a0 a1)
+  | 18886, [a0; a1] -> Some (compiled_Z18886_english_imperative_sentence_verb_object a0 a1)
   | 18898, [a0; a1; a2] -> Some (compiled_Z18898_echo_string_except_for_specific_replacement a0 a1 a2)
   | 19026, [a0] -> Some (compiled_Z19026_is_mersenne_prime a0)
   | 19033, [a0; a1] -> Some (compiled_Z19033_hamming_distance_on_strings_of_binary_digits a0 a1)
@@ -7893,6 +8205,7 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 21288, [a0; a1; a2] -> Some (compiled_Z21288_is_lexeme_lexical_category_in_language a0 a1 a2)
   | 21350, [a0; a1] -> Some (compiled_Z21350_associate_list_with_integer_keys a0 a1)
   | 21356, [a0; a1] -> Some (compiled_Z21356_apply_function_and_forward_input a0 a1)
+  | 21366, [a0] -> Some (compiled_Z21366_lowercase_first_word a0)
   | 21373, [a0] -> Some (compiled_Z21373_freak_pay_or_mouse_pay a0)
   | 21389, [a0; a1] -> Some (compiled_Z21389_replicate_object_n_times default_fuel a0 a1)
   | 21394, [a0] -> Some (compiled_Z21394_concatenate_many_strings a0)
@@ -7905,6 +8218,7 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 21806, [a0; a1] -> Some (compiled_Z21806_lemma_string_from_lexeme_and_lang a0 a1)
   | 21951, [a0; a1; a2] -> Some (compiled_Z21951_clamp a0 a1 a2)
   | 21980, [a0] -> Some (compiled_Z21980_string_includes_or a0)
+  | 21987, [a0] -> Some (compiled_Z21987_string_includes_na_or_nf a0)
   | 22044, [a0] -> Some (compiled_Z22044_wrap_with_code_nowiki_xml_tags a0)
   | 22097, [a0; a1] -> Some (compiled_Z22097_breton_verb_form a0 a1)
   | 22120, [a0; a1] -> Some (compiled_Z22120_kleenean_identity a0 a1)
@@ -7935,6 +8249,8 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 22499, [a0; a1] -> Some (compiled_Z22499_same_key_reference a0 a1)
   | 22504, [a0] -> Some (compiled_Z22504_join_list_of_strings_with_spaces a0)
   | 22507, [a0] -> Some (compiled_Z22507_replace_multiple_spaces_with_single_spaces a0)
+  | 22511, [a0] -> Some (compiled_Z22511_capitalise_first_letter_and_add_full_stop a0)
+  | 22514, [a0] -> Some (compiled_Z22514_sentence_from_list_of_words_english_conventions a0)
   | 22518, [a0; a1] -> Some (compiled_Z22518_add_word_to_list_then_join_with_spaces a0 a1)
   | 22535, [a0] -> Some (compiled_Z22535_natural_number_to_byte a0)
   | 22549, [a0] -> Some (compiled_Z22549_key_reference_from_string a0)
@@ -7945,15 +8261,23 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 22649, [a0] -> Some (compiled_Z22649_arabic_numerals_to_devanagari_numerals a0)
   | 22683, [a0; a1] -> Some (compiled_Z22683_code_point_equality a0 a1)
   | 22725, [a0] -> Some (compiled_Z22725_to_scream_cipher a0)
+  | 22800, [a0] -> Some (compiled_Z22800_hex_string_as_byte a0)
   | 22807, [a0; a1] -> Some (compiled_Z22807_first_item_of_lexeme_list_with_lexical_category a0 a1)
+  | 22812, [a0; a1; a2] -> Some (compiled_Z22812_has_substring_optional_case_sensitivity a0 a1 a2)
   | 22820, [a0; a1] -> Some (compiled_Z22820_compress_list default_fuel a0 a1)
+  | 22829, [a0] -> Some (compiled_Z22829_hex_code_point_to_string a0)
   | 22839, [a0; a1] -> Some (compiled_Z22839_first_object_or_default a0 a1)
   | 22853, [a0] -> Some (compiled_Z22853_labels_of_wikidata_item_multilingual_text a0)
+  | 22858, [a0] -> Some (compiled_Z22858_read_byte_from_string a0)
   | 22865, [a0; a1] -> Some (compiled_Z22865_keep_elements_common_with_other_list a0 a1)
+  | 22866, [a0; a1] -> Some (compiled_Z22866_read_byte a0 a1)
   | 22874, [a0] -> Some (compiled_Z22874_list_is_duplicate_free a0)
+  | 22946, [a0] -> Some (compiled_Z22946_binary_string_as_byte a0)
   | 22978, [a0; a1] -> Some (compiled_Z22978_values_unqualified_from_wikidata_item_statements a0 a1)
   | 23022, [a0] -> Some (compiled_Z23022_natural_number_to_codepoint a0)
   | 23028, [a0] -> Some (compiled_Z23028_digit_string_to_codepoint a0)
+  | 23031, [a0] -> Some (compiled_Z23031_codepoint_from_string_leniently a0)
+  | 23041, [a0; a1] -> Some (compiled_Z23041_read_code_point a0 a1)
   | 23053, [a0] -> Some (compiled_Z23053_code_point_to_digit_string a0)
   | 23056, [a0] -> Some (compiled_Z23056_code_point_as_character_and_digits a0)
   | 23063, [a0] -> Some (compiled_Z23063_code_point_to_natural_number a0)
@@ -8075,6 +8399,7 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 25642, [a0] -> Some (compiled_Z25642_digits_in_denominator_of_unsimplified_rational a0)
   | 25647, [a0] -> Some (compiled_Z25647_decimal_places_to_preserve_the_significant_figures a0)
   | 25701, [a0] -> Some (compiled_Z25701_time_of_day_as_24_hour_hh_mm_ss_string a0)
+  | 25705, [a0] -> Some (compiled_Z25705_time_as_12_hour_clock_with_am_pm a0)
   | 25711, [a0] -> Some (compiled_Z25711_time_of_day_from_wikidata_datetime a0)
   | 25714, [a0; a1; a2; a3] -> Some (compiled_Z25714_if_function_in_list_apply_2_arguments_else_1 a0 a1 a2 a3)
   | 25726, [a0] -> Some (compiled_Z25726_wikidata_datetime_from_wikidata_time a0)
@@ -8191,6 +8516,7 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 29506, [a0; a1; a2] -> Some (compiled_Z29506_replace_nth_character_with_substitution a0 a1 a2)
   | 29515, [a0] -> Some (compiled_Z29515_lexeme_sense_id_for_solf_ge_syllable a0)
   | 29572, [a0; a1] -> Some (compiled_Z29572_html_fragment_contains_second_fragment a0 a1)
+  | 29576, [a0; a1] -> Some (compiled_Z29576_html_fragment_contains_fragment_case_insensitive a0 a1)
   | 29604, [a0] -> Some (compiled_Z29604_lexeme_is_a_color_term a0)
   | 29607, [a0] -> Some (compiled_Z29607_instances_from_wikidata_lexeme a0)
   | 29612, [a0] -> Some (compiled_Z29612_lexeme_is_a_quantity a0)
@@ -8224,6 +8550,7 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 30316, [a0] -> Some (compiled_Z30316_first_value_from_typed_map a0)
   | 30349, [a0] -> Some (compiled_Z30349_correct_swedish_indefinite_article a0)
   | 30353, [a0] -> Some (compiled_Z30353_is_common_gender_lexeme a0)
+  | 30404, [a0] -> Some (compiled_Z30404_armenian_capitalise_first_letter_and_add_full_stop a0)
   | 30471, [a0; a1] -> Some (compiled_Z30471_highest_element_by_less_than_function default_fuel a0 a1)
   | 30539, [a0] -> Some (compiled_Z30539_grammatical_gender_c_n_of_lexeme a0)
   | 30558, [a0] -> Some (compiled_Z30558_wikidata_lexeme_sense_reference_from_lid_string a0)
@@ -8232,6 +8559,7 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 30617, [a0] -> Some (compiled_Z30617_reified_value_after_type a0)
   | 30631, [a0] -> Some (compiled_Z30631_reference_of_wikidata_property a0)
   | 30632, [a0] -> Some (compiled_Z30632_reference_of_wikidata_lexeme_form a0)
+  | 30676, [a0] -> Some (compiled_Z30676_is_pangram_danish_alphabet a0)
   | 30692, [a0; a1] -> Some (compiled_Z30692_are_multisets_equivalent a0 a1)
   | 30715, [a0] -> Some (compiled_Z30715_prefix a0)
   | 30721, [a0; a1; a2; a3] -> Some (compiled_Z30721_gnu_line_byte_count_option_snippet a0 a1 a2 a3)
@@ -8242,6 +8570,7 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 30751, [a0] -> Some (compiled_Z30751_is_valid_gnu_coreutils_size_unit a0)
   | 30755, [a0; a1] -> Some (compiled_Z30755_is_byte_mode_and_valid_size_unit a0 a1)
   | 30768, [a0; a1; a2; a3] -> Some (compiled_Z30768_is_valid_arguments_to_z30708 a0 a1 a2 a3)
+  | 30785, [a0] -> Some (compiled_Z30785_capitalise_first_letter_of_monolingual_text a0)
   | 30795, [a0; a1] -> Some (compiled_Z30795_append_string_to_monolingual_text a0 a1)
   | 30805, [a0; a1] -> Some (compiled_Z30805_note a0 a1)
   | 30833, [a0] -> Some (compiled_Z30833_list_of_keys_defined_for_type a0)
@@ -8343,8 +8672,11 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 33862, [a0; a1] -> Some (compiled_Z33862_same_error a0 a1)
   | 33876, [a0] -> Some (compiled_Z33876_error_identity a0)
   | 34039, [a0; a1; a2; a3; a4] -> Some (compiled_Z34039_apply_three_or_optionally_four_argument_function a0 a1 a2 a3 a4)
+  | 34072, [a0] -> Some (compiled_Z34072_or_bulgarian a0)
+  | 34084, [a0] -> Some (compiled_Z34084_or_bulgarian a0)
   | 34120, [a0; a1; a2; a3; a4; a5] -> Some (compiled_Z34120_apply_five_argument_function a0 a1 a2 a3 a4 a5)
   | 34122, [a0; a1; a2; a3; a4; a5] -> Some (compiled_Z34122_apply_four_or_optionally_five_argument_function a0 a1 a2 a3 a4 a5)
+  | 34178, [a0] -> Some (compiled_Z34178_natural_number_from_list_of_booleans a0)
   | 34190, [a0; a1] -> Some (compiled_Z34190_multiset_union default_fuel a0 a1)
   | 34197, [a0] -> Some (compiled_Z34197_wrap_string_in_toki_pona_cartouches a0)
   | 34263, [a0] -> Some (compiled_Z34263_successor_of_von_neumann_ordinal a0)
@@ -8375,6 +8707,7 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 35421, [a0; a1; a2; a3] -> Some (compiled_Z35421_apply3_common_2nd_list_1st_and_3rd default_fuel a0 a1 a2 a3)
   | 35475, [a0; a1] -> Some (compiled_Z35475_are_integers_different a0 a1)
   | 35494, [a0; a1; a2; a3; a4] -> Some (compiled_Z35494_wrap_in_quotes a0 a1 a2 a3 a4)
+  | 35524, [a0] -> Some (compiled_Z35524_first_letter_uppercase_for_turkish a0)
   | 35652, [a0; a1] -> Some (compiled_Z35652_key_reference_for_nth_key_in_type a0 a1)
   | 35663, [a0; a1; a2; a3] -> Some (compiled_Z35663_wikidata_quantity_from_components a0 a1 a2 a3)
   | 35672, [a0] -> Some (compiled_Z35672_sentence_separator a0)
@@ -8406,6 +8739,7 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 35941, [a0; a1] -> Some (compiled_Z35941_iterate_function_over_string_to_string default_fuel a0 a1)
   | 35966, [] -> Some (compiled_Z35966_hello_world ())
   | 35999, [a0; a1; a2; a3] -> Some (compiled_Z35999_apply_function_with_2_or_3_arguments_in_order a0 a1 a2 a3)
+  | 36007, [a0; a1; a2; a3] -> Some (compiled_Z36007_select_wikidata_item_with_matching_label a0 a1 a2 a3)
   | 36011, [a0] -> Some (compiled_Z36011_list_of_strings_from_multilingual_text a0)
   | 36045, [a0] -> Some (compiled_Z36045_commons_image_reference_from_media_id_string a0)
   | 36069, [a0] -> Some (compiled_Z36069_all_steps_in_collatz_conjecture_sequence default_fuel a0)

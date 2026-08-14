@@ -71,6 +71,12 @@ export const PRELUDE = new Map([
   // Z29294 object equivalence: three code implementations on the wiki and no
   // composition, and its Python is a structural comparison.
   ["Z29294", (n) => `(define (${n} a b) (equal? a b))`],
+  // R7RS string-downcase and string-upcase are specified as full Unicode
+  // case mapping with final-sigma handling, so these are correct - but they
+  // delegate the claim to the host Scheme's tables rather than restating the
+  // verified one, which is a different oracle from the F* module.
+  ["Z10047", (n) => `(define (${n} s) (string-downcase s))`],
+  ["Z10018", (n) => `(define (${n} s) (string-upcase s))`],
   // A Z882 pair prints as (cons left right), so its accessors are car and cdr.
   // These were used by the listing and defined nowhere, which made every body
   // mentioning a pair fail to run.

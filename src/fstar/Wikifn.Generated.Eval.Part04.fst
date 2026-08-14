@@ -11,8 +11,12 @@ open Wikifn.Eval
 
   part:      5 of 10
   functions: 400
-  ZID range: Z23352 to Z26733
+  ZID range: Z23349 to Z26723
 *)
+
+(* Z23349 approximated Landé g-factor | Z23349@272834 -> Z34911@272833 digest ecd58f18071d176a68ee8c6bad6c769391be79e9fee3d6de34b28bbc0fcbd5b9 *)
+let body_Z23349_approximated_land_g_factor : expr =
+  ECall 19679 [EValue (VRecord 19677 [({ key_owner = Some 19677; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16660)]); ({ key_owner = Some 19677; key_index = 2 }, VNat 1); ({ key_owner = Some 19677; key_index = 3 }, VNat 1)]); ECall 19708 [ECall 19699 [ECall 19679 [ECall 19706 [EArg 0; ECall 19679 [EArg 0; EValue (VRecord 19677 [({ key_owner = Some 19677; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16660)]); ({ key_owner = Some 19677; key_index = 2 }, VNat 1); ({ key_owner = Some 19677; key_index = 3 }, VNat 1)])]]; ECall 19706 [EArg 1; ECall 19679 [EArg 1; EValue (VRecord 19677 [({ key_owner = Some 19677; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16660)]); ({ key_owner = Some 19677; key_index = 2 }, VNat 1); ({ key_owner = Some 19677; key_index = 3 }, VNat 1)])]]]; ECall 19706 [EArg 2; ECall 19679 [EArg 2; EValue (VRecord 19677 [({ key_owner = Some 19677; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16660)]); ({ key_owner = Some 19677; key_index = 2 }, VNat 1); ({ key_owner = Some 19677; key_index = 3 }, VNat 1)])]]]; ECall 19706 [ECall 19706 [EValue (VRecord 19677 [({ key_owner = Some 19677; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16660)]); ({ key_owner = Some 19677; key_index = 2 }, VNat 2); ({ key_owner = Some 19677; key_index = 3 }, VNat 1)]); EArg 0]; ECall 19679 [EArg 0; EValue (VRecord 19677 [({ key_owner = Some 19677; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16660)]); ({ key_owner = Some 19677; key_index = 2 }, VNat 1); ({ key_owner = Some 19677; key_index = 3 }, VNat 1)])]]]]
 
 (* Z23352 Lorentz factor from velocity | Z23352@184623 -> Z24366@184620 digest 2e1cd676e09a62b5a2748b72ce9c966517b132fa77ea5c37e43994641fe3fd83 *)
 let body_Z23352_lorentz_factor_from_velocity : expr =
@@ -1610,12 +1614,9 @@ let body_Z26717_low_german_instantiating_sentence_without_article : expr =
 let body_Z26723_latin_article_less_instantiating_sentence : expr =
   ECall 22511 [ECall 21394 [ECall 810 [ECall 850 [ECall 27410 [ECall 27327 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 53; 49; 51; 55])]); EValue (VFunc 1403)]; EValue (VList [VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 49; 48; 55; 56; 54])]; VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 51; 49; 49; 48; 53])]])]; EValue (VFunc 28248); ECall 24766 [EArg 0; EValue (VFunc 1403)]]; ECall 810 [EValue (VText [32]); ECall 810 [ECall 850 [ECall 27410 [ECall 27327 [EArg 1; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 53; 49; 51; 55])]); EValue (VFunc 1403)]; EValue (VList [VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 49; 48; 55; 56; 54])]; VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 51; 49; 49; 48; 53])]])]; EValue (VFunc 28248); ECall 24766 [EArg 1; EValue (VFunc 1403)]]; ECall 810 [EValue (VText [32; 101; 115; 116]); EValue (VList [])]]]]]]
 
-(* Z26733 apply if not empty, else return empty | Z26733@208215 -> Z26736@206174 digest bc89ff3dfb98ee00f379235bb611ccd2610408e7cdf8b620d29125c7b3a7a6a3 *)
-let body_Z26733_apply_if_not_empty_else_return_empty : expr =
-  ECall 802 [ECall 17180 [EArg 0]; EValue (VFunc 24); ECall 13036 [EArg 1; EArg 0]]
-
 let part_policy (fid:zid) : Tot (option expr) =
   match fid with
+  | 23349 -> Some body_Z23349_approximated_land_g_factor
   | 23352 -> Some body_Z23352_lorentz_factor_from_velocity
   | 23356 -> Some body_Z23356_compare_after_applying_a_single_unary_function
   | 23360 -> Some body_Z23360_object_comparison
@@ -2015,5 +2016,4 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 26712 -> Some body_Z26712_subject_is_an_instance_of_german
   | 26717 -> Some body_Z26717_low_german_instantiating_sentence_without_article
   | 26723 -> Some body_Z26723_latin_article_less_instantiating_sentence
-  | 26733 -> Some body_Z26733_apply_if_not_empty_else_return_empty
   | _ -> None

@@ -193,6 +193,7 @@ let rec parse_argument s i : Wikifn_Eval.value * int =
     let (values, next) = items (i + 1) [] in
     (Wikifn_Eval.VList values, next)
   end
+  else if s.[i] = '{' then parse_object s i
   else if i + 3 < n && String.sub s i 4 = "true" then (Wikifn_Eval.VBool true, i + 4)
   else if i + 4 < n && String.sub s i 5 = "false" then (Wikifn_Eval.VBool false, i + 5)
   else begin
@@ -201,6 +202,125 @@ let rec parse_argument s i : Wikifn_Eval.value * int =
     if j = i then raise (Bad_argument "unsupported argument form")
     else (Wikifn_Eval.VNat (Z.of_string (String.sub s i (j - i))), j)
   end
+
+(* An argument written the way a result is printed.
+ 
+   encode_value renders a record as {"type":"Znnn","fields":{...}}, a pair as
+   {"type":"Z882","first":...,"second":...} and a function as
+   {"type":"Z8","zid":"Znnn"}. Until now none of those could be passed back *in*,
+   so the value model was one-way: the engine could return a record and no
+   caller could hand it one. That asymmetry is what left 7,165 tester cases
+   skipped for "not a readable literal" - most of them records and pairs the
+   engine has had for a while.
+ 
+   Parsing the printed form keeps the two in step by construction, and gives a
+   property worth testing: anything the engine returns can be passed straight
+   back. *)
+and parse_object s i : Wikifn_Eval.value * int =
+  let n = String.length s in
+  let expect c j =
+    let j = skip_ws s j in
+    if j < n && s.[j] = c then j + 1
+    else raise (Bad_argument (Printf.sprintf "expected %c in an object argument" c))
+  in
+  (* Fields are read in whatever order they appear; only the ones each shape
+     needs are kept. *)
+  let rec fields j acc =
+    let j = skip_ws s j in
+    if j < n && s.[j] = '}' then (List.rev acc, j + 1)
+    else
+      let (key, j) = parse_string_literal s (skip_ws s j) in
+      let j = expect ':' j in
+      let j = skip_ws s j in
+      if key = "fields" then
+        (* A nested object of key to value, which is what a record carries. *)
+        let j = expect '{' j in
+        let rec entries j acc2 =
+          let j = skip_ws s j in
+          if j < n && s.[j] = '}' then (List.rev acc2, j + 1)
+          else
+            let (k, j) = parse_string_literal s (skip_ws s j) in
+            let j = expect ':' j in
+            let (v, j) = parse_argument s j in
+            let j = skip_ws s j in
+            if j < n && s.[j] = ',' then entries (j + 1) ((k, v) :: acc2)
+            else entries j ((k, v) :: acc2)
+        in
+        let (entries, j) = entries j [] in
+        let j = skip_ws s j in
+        let j = if j < n && s.[j] = ',' then j + 1 else j in
+        fields j (("fields", Wikifn_Eval.VList (List.map (fun (k, v) ->
+          Wikifn_Eval.VPair (Wikifn_Eval.VText (List.map Z.of_int (decode_utf8 k)), v)) entries)) :: acc)
+      else
+        let (value, j) =
+          if j < n && s.[j] = '"' then
+            let (text, j) = parse_string_literal s j in
+            (Wikifn_Eval.VText (List.map Z.of_int (decode_utf8 text)), j)
+          else parse_argument s j
+        in
+        let j = skip_ws s j in
+        let j = if j < n && s.[j] = ',' then j + 1 else j in
+        fields j ((key, value) :: acc)
+  in
+  let (read, next) = fields (i + 1) [] in
+  let text_of v = match v with
+    | Wikifn_Eval.VText cps -> encode_utf8 cps
+    | _ -> raise (Bad_argument "expected a string in an object argument")
+  in
+  let find k = try Some (List.assoc k read) with Not_found -> None in
+  let type_zid () =
+    match find "type" with
+    | Some v ->
+        let t = text_of v in
+        let digits = String.sub t 1 (String.length t - 1) in
+        (try Z.of_string digits with _ -> raise (Bad_argument ("bad type " ^ t)))
+    | None -> raise (Bad_argument "an object argument needs a type")
+  in
+  match find "type" with
+  | Some t when text_of t = "Z6" ->
+      (match find "text" with
+       | Some v -> (v, next)
+       | None -> raise (Bad_argument "Z6 needs text"))
+  | Some t when text_of t = "Z40" ->
+      (match find "value" with
+       | Some (Wikifn_Eval.VBool b) -> (Wikifn_Eval.VBool b, next)
+       | _ -> raise (Bad_argument "Z40 needs a boolean value"))
+  | Some t when text_of t = "Z13518" ->
+      (match find "value" with
+       | Some (Wikifn_Eval.VNat k) -> (Wikifn_Eval.VNat k, next)
+       | Some v -> (Wikifn_Eval.VNat (Z.of_string (text_of v)), next)
+       | None -> raise (Bad_argument "Z13518 needs a value"))
+  | Some t when text_of t = "Z881" ->
+      (match find "items" with
+       | Some (Wikifn_Eval.VList items) -> (Wikifn_Eval.VList items, next)
+       | _ -> raise (Bad_argument "Z881 needs items"))
+  | Some t when text_of t = "Z8" ->
+      (match find "zid" with
+       | Some v ->
+           let z = text_of v in
+           (Wikifn_Eval.VFunc (Z.of_string (String.sub z 1 (String.length z - 1))), next)
+       | None -> raise (Bad_argument "Z8 needs a zid"))
+  | Some t when text_of t = "Z882" && find "first" <> None ->
+      (match find "first", find "second" with
+       | Some a, Some b -> (Wikifn_Eval.VPair (a, b), next)
+       | _ -> raise (Bad_argument "Z882 needs first and second"))
+  | Some _ ->
+      (* Anything else with fields is a record, including a Z882 written that
+         way. Keys are parsed back into the zkey they were printed from. *)
+      (match find "fields" with
+       | Some (Wikifn_Eval.VList entries) ->
+           let field v = match v with
+             | Wikifn_Eval.VPair (k, value) ->
+                 let spelling = List.map Z.of_int (decode_utf8 (text_of k)) in
+                 (match Wikifn_Zid.parse_zkey spelling with
+                  | FStar_Pervasives_Native.Some key -> (key, value)
+                  | FStar_Pervasives_Native.None ->
+                      raise (Bad_argument ("bad key " ^ text_of k)))
+             | _ -> raise (Bad_argument "malformed record fields")
+           in
+           (Wikifn_Eval.VRecord (type_zid (), List.map field entries), next)
+       | _ -> raise (Bad_argument "an object argument needs fields"))
+  | None -> raise (Bad_argument "an object argument needs a type")
 
 let parse_arguments text =
   let i = skip_ws text 0 in

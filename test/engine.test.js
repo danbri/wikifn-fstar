@@ -28,7 +28,17 @@ test("the engine carries hundreds of generated functions", { skip }, () => {
   assert.ok(catalog.functions.length >= 500, `only ${catalog.functions.length} functions`);
   for (const entry of catalog.functions) {
     assert.match(entry.name, /^Z[1-9][0-9]*/, `${entry.name} does not start with its ZID`);
-    assert.ok(entry.digest, `${entry.zid} has no recorded digest`);
+    if (entry.authored) {
+      // Written in compositions/ to fill a gap, so there is no upstream object
+      // to carry a revision and digest from. It must say so rather than carry a
+      // blank one, because a blank digest reads as a missing digest.
+      assert.equal(
+        entry.digest, "",
+        `${entry.zid} is authored and should carry no digest, not "${entry.digest}"`
+      );
+    } else {
+      assert.ok(entry.digest, `${entry.zid} has no recorded digest`);
+    }
   }
 });
 

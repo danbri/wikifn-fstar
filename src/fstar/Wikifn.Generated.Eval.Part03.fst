@@ -11,8 +11,12 @@ open Wikifn.Eval
 
   part:      4 of 10
   functions: 400
-  ZID range: Z19826 to Z23349
+  ZID range: Z19814 to Z23344
 *)
+
+(* Z19814 nearest rational with specified denominator | Z19814@194924 -> Z19857@137861 digest 9abcdfb2524ac6b93aa9d9540e35f5fb5ffd3af685722c00b39a00a540d60e8f *)
+let body_Z19814_nearest_rational_with_specified_denominator : expr =
+  ECall 19854 [ECall 19841 [ECall 19826 [EArg 0; EArg 1]]; EArg 1]
 
 (* Z19826 multiply rational by natural number | Z19826@236473 -> Z19830@137801 digest 3ee111d360914c49ca910c1f6b510ef2e0b491ee816f7b7c728bcf921804ad68 *)
 let body_Z19826_multiply_rational_by_natural_number : expr =
@@ -1610,12 +1614,9 @@ let body_Z23341_same_argument_reference : expr =
 let body_Z23344_natural_numbers_in_devanagari_script : expr =
   ECall 14613 [ECall 23283 [EArg 0]; EValue (VText [48; 49; 50; 51; 52; 53; 54; 55; 56; 57]); ECall 22302 [EValue (VFunc 1820)]]
 
-(* Z23349 approximated Landé g-factor | Z23349@272834 -> Z34911@272833 digest ecd58f18071d176a68ee8c6bad6c769391be79e9fee3d6de34b28bbc0fcbd5b9 *)
-let body_Z23349_approximated_land_g_factor : expr =
-  ECall 19679 [EValue (VRecord 19677 [({ key_owner = Some 19677; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16660)]); ({ key_owner = Some 19677; key_index = 2 }, VNat 1); ({ key_owner = Some 19677; key_index = 3 }, VNat 1)]); ECall 19708 [ECall 19699 [ECall 19679 [ECall 19706 [EArg 0; ECall 19679 [EArg 0; EValue (VRecord 19677 [({ key_owner = Some 19677; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16660)]); ({ key_owner = Some 19677; key_index = 2 }, VNat 1); ({ key_owner = Some 19677; key_index = 3 }, VNat 1)])]]; ECall 19706 [EArg 1; ECall 19679 [EArg 1; EValue (VRecord 19677 [({ key_owner = Some 19677; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16660)]); ({ key_owner = Some 19677; key_index = 2 }, VNat 1); ({ key_owner = Some 19677; key_index = 3 }, VNat 1)])]]]; ECall 19706 [EArg 2; ECall 19679 [EArg 2; EValue (VRecord 19677 [({ key_owner = Some 19677; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16660)]); ({ key_owner = Some 19677; key_index = 2 }, VNat 1); ({ key_owner = Some 19677; key_index = 3 }, VNat 1)])]]]; ECall 19706 [ECall 19706 [EValue (VRecord 19677 [({ key_owner = Some 19677; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16660)]); ({ key_owner = Some 19677; key_index = 2 }, VNat 2); ({ key_owner = Some 19677; key_index = 3 }, VNat 1)]); EArg 0]; ECall 19679 [EArg 0; EValue (VRecord 19677 [({ key_owner = Some 19677; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16660)]); ({ key_owner = Some 19677; key_index = 2 }, VNat 1); ({ key_owner = Some 19677; key_index = 3 }, VNat 1)])]]]]
-
 let part_policy (fid:zid) : Tot (option expr) =
   match fid with
+  | 19814 -> Some body_Z19814_nearest_rational_with_specified_denominator
   | 19826 -> Some body_Z19826_multiply_rational_by_natural_number
   | 19827 -> Some body_Z19827_rational_number_to_string
   | 19833 -> Some body_Z19833_average_of_two_rationals
@@ -2015,5 +2016,4 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 23338 -> Some body_Z23338_same_argument_declaration
   | 23341 -> Some body_Z23341_same_argument_reference
   | 23344 -> Some body_Z23344_natural_numbers_in_devanagari_script
-  | 23349 -> Some body_Z23349_approximated_land_g_factor
   | _ -> None

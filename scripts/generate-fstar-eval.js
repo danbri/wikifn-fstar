@@ -61,6 +61,33 @@ const partPath = (index) =>
 // derived: the same bodies as the parts, rendered again in the same pass.
 const functionDir = path.join(root, "build", "fstar", "fn");
 
+// Compositions written here rather than read from the dump, filling gaps where
+// Wikifunctions has only a code implementation. They are candidates of last
+// resort: a usable pinned composition always wins, so these add reach without
+// ever changing what the corpus says. See compositions/README.md.
+const authoredDir = path.join(root, "compositions");
+
+async function loadAuthored() {
+  let names;
+  try {
+    names = (await readdir(authoredDir)).filter((name) => name.endsWith(".json"));
+  } catch {
+    return new Map();
+  }
+  const authored = new Map();
+  for (const name of names) {
+    const entry = JSON.parse(await readFile(path.join(authoredDir, name), "utf8"));
+    if (!entry.zid || !entry.Z14K2 || !Array.isArray(entry.arguments) || !entry.why) {
+      throw new Error(`${name} needs zid, arguments, why and Z14K2`);
+    }
+    if (`${entry.zid}.json` !== name) {
+      throw new Error(`${name} declares ${entry.zid}; a file is named for its function`);
+    }
+    authored.set(entry.zid, entry);
+  }
+  return authored;
+}
+
 // Must match apply_primitive and higher_order in src/fstar/Wikifn.Eval.fst.
 const PRIMITIVES = new Set([
   "Z801", "Z802", "Z866", "Z810", "Z811", "Z812", "Z813", "Z821", "Z822",
@@ -82,6 +109,8 @@ const PRIMITIVES = new Set([
   // Z13052 object equality, which is written as apply(self, a, b) and so never
   // bottoms out. It is the comparator under contains, index-of and permutation.
   "Z13052", "Z29294",
+  // Unicode case conversion, root locale, from Wikifn.Unicode.Case.
+  "Z10047", "Z10018",
   // Text and codepoint lists are the same data in two shapes.
   "Z22693", "Z22717",
   // Higher-order application, which is how the corpus writes higher-order code.
@@ -735,6 +764,8 @@ async function main() {
     ...closure.primitives
   ]);
 
+  const authored = await loadAuthored();
+
   const implementations = await query(
     "select zid, function_zid, body_kind from implementations where body_kind='composition'"
   );
@@ -760,7 +791,11 @@ async function main() {
   // callees are not yet implemented is still worth carrying. It simply reports
   // "no implementation" if evaluation actually reaches the gap, and it starts
   // working the moment that gap is filled, with no regeneration.
-  const targets = [...implsByFunction.keys()]
+  // Functions written here are candidates too. A function whose only
+  // implementation on the wiki is code has no composition at all, so it never
+  // appears in implsByFunction - which is exactly the gap compositions/ exists
+  // to fill, and it would never be looked at without this.
+  const targets = [...new Set([...implsByFunction.keys(), ...authored.keys()])]
     .filter((zid) => !PRIMITIVES.has(zid))
     .sort((a, b) => Number(a.slice(1)) - Number(b.slice(1)));
 
@@ -813,6 +848,28 @@ async function main() {
         });
       } catch (error) {
         failure = error instanceof Unsupported ? error.reason : String(error.message ?? error);
+      }
+    }
+
+    // Last, so a pinned composition that works is always preferred. Only a
+    // function with nothing usable from the dump reaches this.
+    const authoredEntry = authored.get(functionZid);
+    if (authoredEntry && translations.length === 0) {
+      try {
+        const tree = await translate(authoredEntry.Z14K2, { argIndex });
+        const rendered = renderFstar(tree);
+        if (rendered.length <= MAX_BODY_BYTES) {
+          translations.push({
+            zid: `${functionZid}-authored`,
+            revision: 0,
+            digest: "",
+            authored: true,
+            tree,
+            calls: [...new Set(collectCalls(tree))]
+          });
+        }
+      } catch (error) {
+        failure = `authored composition: ${error.reason ?? error.message}`;
       }
     }
 
@@ -875,6 +932,7 @@ async function main() {
       argKeys: keys,
       tree: translated,
       implementation: { zid: chosen.zid, revision: chosen.revision, digest: chosen.digest },
+      authored: chosen.authored === true,
       functionRevision: functionObject?.revision ?? 0,
     });
   }
@@ -909,6 +967,7 @@ async function main() {
         entry.tree = better.tree;
         entry.calls = better.calls;
         entry.implementation = { zid: better.zid, revision: better.revision, digest: better.digest };
+        entry.authored = better.authored === true;
         improved = true;
       }
     }
@@ -940,6 +999,7 @@ async function main() {
         entry.tree = escapes.tree;
         entry.calls = escapes.calls;
         entry.implementation = { zid: escapes.zid, revision: escapes.revision, digest: escapes.digest };
+        entry.authored = escapes.authored === true;
         improved = true;
       }
     }
@@ -1652,6 +1712,9 @@ async function main() {
           // dispatcher knows it - executes a thousand functions with full fuel
           // and does not finish.
           compiled: compiledSet.has(entry.zid),
+          // Written in compositions/ rather than read from the dump. It carries
+          // no revision or digest because there is nothing upstream to point at.
+          authored: entry.authored === true,
           mutuallyRecursive: entry.mutuallyRecursive,
           argumentKeys: entry.argKeys,
           // Declared, not checked. The engine has no type checker; these come

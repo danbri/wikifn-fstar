@@ -10,9 +10,13 @@ open Wikifn.Eval
   Z14K2 composition; none of it is authored.
 
   part:      10 of 10
-  functions: 290
-  ZID range: Z37332 to Z38857
+  functions: 291
+  ZID range: Z37328 to Z38857
 *)
+
+(* Z37328 has parts-sentence (Simple) | Z37328@288882 -> Z37331@288931 digest b50604956ead32389fd178ca56a4ecda86352b171f4d72f505984cb27fabdf18 *)
+let body_Z37328_has_parts_sentence_simple : expr =
+  ECall 34669 [ECall 810 [ECall 34669 [ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 1); ({ key_owner = Some 11; key_index = 2 }, ECall 10771 [ECall 24766 [EArg 0; EArg 1]])]; ECall 810 [ECall 26107 [EArg 1; ECall 37321 [EArg 1]]; ECall 810 [ECall 37289 [ECall 33024 [ECall 37008 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList [VFunc 1360]); EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 53; 50; 55])]])]]; EArg 1]; EArg 1]; EValue (VList [])]]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 1); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [32]))]]; ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 1); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [46]))]; EValue (VList [])]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 1); ({ key_owner = Some 11; key_index = 2 }, EValue (VText []))]]
 
 (* Z37332 does Wikidata statement match grammatical feature? | Z37332@289353 -> Z37398@289352 digest 738c541408cffe3f0ee79be06d5bb740886a8013ddb604726fee89d1774bec88 *)
 let body_Z37332_does_wikidata_statement_match_grammatical_feature : expr =
@@ -1176,6 +1180,7 @@ let body_Z38857_apply_a_5_param_fn_to_a_list_of_firsts_same_2_5 : expr =
 
 let part_policy (fid:zid) : Tot (option expr) =
   match fid with
+  | 37328 -> Some body_Z37328_has_parts_sentence_simple
   | 37332 -> Some body_Z37332_does_wikidata_statement_match_grammatical_feature
   | 37337 -> Some body_Z37337_hindi_noun_declension_table
   | 37338 -> Some body_Z37338_matching_representation_string_from_lexeme_for_lan

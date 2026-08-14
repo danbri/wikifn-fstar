@@ -11,7 +11,7 @@ open Wikifn.Eval
 
   part:      2 of 10
   functions: 400
-  ZID range: Z12936 to Z15946
+  ZID range: Z12936 to Z15914
 *)
 
 (* Z12936 Esperanto conditional verb | Z12936@130320 -> Z12937@130321 digest a7beff5bdba5232c09dcf927b9c110853f88619581d4d343b9fd332d7337a2c3 *)
@@ -405,6 +405,10 @@ let body_Z13798_octal_to_natural_number : expr =
 (* Z13799 hexadecimal to natural number | Z13799@269754 -> Z19636@269753 digest 656952bc10e2137f4498ab8af103d4374fb30b2edc33b62991e8f166735b3dbc *)
 let body_Z13799_hexadecimal_to_natural_number : expr =
   ECall 13806 [ECall 31955 [EArg 0; EValue (VText [48; 120])]; EValue (VNat 16)]
+
+(* Z13806 base n to natural number | Z13806@265914 -> Z13806-authored@0 digest  *)
+let body_Z13806_base_n_to_natural_number : expr =
+  ECall 802 [ECall 813 [ECall 22717 [EArg 0]]; EValue (VNat 0); ECall 13521 [ECall 13539 [ECall 802 [ECall 13682 [ECall 811 [ECall 22717 [EArg 0]]; EValue (VNat 97)]; ECall 13569 [ECall 811 [ECall 22717 [EArg 0]]; EValue (VNat 87)]; ECall 802 [ECall 13682 [ECall 811 [ECall 22717 [EArg 0]]; EValue (VNat 65)]; ECall 13569 [ECall 811 [ECall 22717 [EArg 0]]; EValue (VNat 55)]; ECall 13569 [ECall 811 [ECall 22717 [EArg 0]]; EValue (VNat 48)]]]; ECall 13647 [EArg 1; ECall 13569 [ECall 11040 [EArg 0]; EValue (VNat 1)]]]; ECall 13806 [ECall 14456 [EArg 0]; EArg 1]]]
 
 (* Z13809 n^n | Z13809@219507 -> Z14036@150742 digest bd0816881c568019f7247760414ee3f43056ebe79afb2997d8e2ce17b2e822d1 *)
 let body_Z13809_n_n : expr =
@@ -1610,10 +1614,6 @@ let body_Z15907_limited_natural_number : expr =
 let body_Z15914_string_equality_for_natural_numbers : expr =
   ECall 866 [EArg 1; ECall 13713 [EArg 0]]
 
-(* Z15946 are two numeric strings in descending order | Z15946@280233 -> Z36016@280232 digest 29575f81dbabc4e85a4b10b60c6909f49d3e193ee9d9d77bd2e2f47f574cfda6 *)
-let body_Z15946_are_two_numeric_strings_in_descending_order : expr =
-  ECall 850 [ECall 17132 [ECall 16705 [EArg 0; EValue (VFunc 1002)]; ECall 16705 [EArg 1; EValue (VFunc 1002)]]; EValue (VFunc 500); EValue (VBool false)]
-
 let part_policy (fid:zid) : Tot (option expr) =
   match fid with
   | 12936 -> Some body_Z12936_esperanto_conditional_verb
@@ -1714,6 +1714,7 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 13797 -> Some body_Z13797_binary_string_to_natural_number
   | 13798 -> Some body_Z13798_octal_to_natural_number
   | 13799 -> Some body_Z13799_hexadecimal_to_natural_number
+  | 13806 -> Some body_Z13806_base_n_to_natural_number
   | 13809 -> Some body_Z13809_n_n
   | 13812 -> Some body_Z13812_left_shift
   | 13813 -> Some body_Z13813_right_shift
@@ -2015,5 +2016,4 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 15883 -> Some body_Z15883_salted_hash
   | 15907 -> Some body_Z15907_limited_natural_number
   | 15914 -> Some body_Z15914_string_equality_for_natural_numbers
-  | 15946 -> Some body_Z15946_are_two_numeric_strings_in_descending_order
   | _ -> None

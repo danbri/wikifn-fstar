@@ -11,8 +11,12 @@ open Wikifn.Eval
 
   part:      8 of 10
   functions: 400
-  ZID range: Z32281 to Z35215
+  ZID range: Z32277 to Z35212
 *)
+
+(* Z32277 default word separator ", " | Z32277@288306 -> Z32278@288302 digest 10506450a61ee68fa4f4ae681e794a94a99b12b44a386b779cce8e58ddb6d5f8 *)
+let body_Z32277_default_word_separator : expr =
+  EValue (VText [44; 32])
 
 (* Z32281 Returning wd. sep. in S/T Han-script Sinitic langs | Z32281@262665 -> Z32282@262666 digest 46cc412a79f6eed475ea70c33e5442875500c9342d0ba71525c60b85514c91c7 *)
 let body_Z32281_returning_wd_sep_in_s_t_han_script_sinitic_langs : expr =
@@ -1610,12 +1614,9 @@ let body_Z35207_take_sitelinks_from_wikidata_item : expr =
 let body_Z35212_official_and_common_name_english : expr =
   ECall 802 [ECall 813 [ECall 22220 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList []); EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 52; 52; 56])]])]]]; ECall 23753 [EArg 0; EValue (VFunc 1002)]; ECall 21394 [ECall 810 [ECall 21449 [EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 52; 52; 56])]); EArg 0]; ECall 810 [EValue (VText [44; 32; 99; 111; 109; 109; 111; 110; 108; 121; 32; 107; 110; 111; 119; 110; 32; 97; 115; 32]); ECall 810 [ECall 23753 [EArg 0; EValue (VFunc 1002)]; EValue (VList [])]]]]]
 
-(* Z35215 HTML bullet list of lightweight enum members | Z35215@275380 -> Z35216@275369 digest 6656fa4002d5746958d8dccbcaeac2f274d242967aa323f40898a4eea624f8f2 *)
-let body_Z35215_html_bullet_list_of_lightweight_enum_members : expr =
-  ECall 32179 [ECall 13464 [EValue (VFunc 32878); ECall 29493 [ECall 30531 [EArg 1]]; EArg 0]]
-
 let part_policy (fid:zid) : Tot (option expr) =
   match fid with
+  | 32277 -> Some body_Z32277_default_word_separator
   | 32281 -> Some body_Z32281_returning_wd_sep_in_s_t_han_script_sinitic_langs
   | 32283 -> Some body_Z32283_join_list_of_strings_in_given_language
   | 32287 -> Some body_Z32287_state_location_using_entity_and_class_russian
@@ -2015,5 +2016,4 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 35203 -> Some body_Z35203_bengali_article_ful_instantiating_sentence
   | 35207 -> Some body_Z35207_take_sitelinks_from_wikidata_item
   | 35212 -> Some body_Z35212_official_and_common_name_english
-  | 35215 -> Some body_Z35215_html_bullet_list_of_lightweight_enum_members
   | _ -> None

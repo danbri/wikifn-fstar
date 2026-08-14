@@ -11,8 +11,12 @@ open Wikifn.Eval
 
   part:      6 of 10
   functions: 400
-  ZID range: Z26737 to Z29649
+  ZID range: Z26733 to Z29639
 *)
+
+(* Z26733 apply if not empty, else return empty | Z26733@208215 -> Z26736@206174 digest bc89ff3dfb98ee00f379235bb611ccd2610408e7cdf8b620d29125c7b3a7a6a3 *)
+let body_Z26733_apply_if_not_empty_else_return_empty : expr =
+  ECall 802 [ECall 17180 [EArg 0]; EValue (VFunc 24); ECall 13036 [EArg 1; EArg 0]]
 
 (* Z26737 first part of Italian instantiating sentence | Z26737@210377 -> Z26743@276291 digest b9de7f3612b6f230e455c619e24d90c85ddcaee29bab71bf6ee04774a627cb83 *)
 let body_Z26737_first_part_of_italian_instantiating_sentence : expr =
@@ -1610,12 +1614,9 @@ let body_Z29629_english_sentence_describing_the_class_of_a_class : expr =
 let body_Z29639_terminate_sentence_with_full_stop : expr =
   ECall 11542 [ECall 12696 [EValue (VList [VNat 46; VNat 63; VNat 33]); ECall 12964 [ECall 22717 [EArg 0]]]; EArg 0; ECall 10000 [EArg 0; EValue (VText [46])]]
 
-(* Z29649 Wikidata reference from Wikifunctions language obj | Z29649@267629 -> Z33921@284775 digest e6830b5231b8d8fc5299ae6f85da3575b4d6b1875ba8df15eb3f844b906dbb49 *)
-let body_Z29649_wikidata_reference_from_wikifunctions_language_obj : expr =
-  ECall 850 [ECall 24606 [ECall 24646 [EValue (VFunc 33920)]; ECall 14329 [EArg 0]]; EValue (VFunc 36590); ECall 851 [EValue (VFunc 36589); ECall 810 [ECall 14329 [EArg 0]; ECall 810 [EValue (VText [90; 51; 51; 57; 50; 48]); EValue (VList [])]]]]
-
 let part_policy (fid:zid) : Tot (option expr) =
   match fid with
+  | 26733 -> Some body_Z26733_apply_if_not_empty_else_return_empty
   | 26737 -> Some body_Z26737_first_part_of_italian_instantiating_sentence
   | 26745 -> Some body_Z26745_grammatical_gender_m_f_of_lexeme
   | 26750 -> Some body_Z26750_first_element_if_list_not_empty_else_void
@@ -2015,5 +2016,4 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 29623 -> Some body_Z29623_item_qid_is_instance_of_these_items_qids
   | 29629 -> Some body_Z29629_english_sentence_describing_the_class_of_a_class
   | 29639 -> Some body_Z29639_terminate_sentence_with_full_stop
-  | 29649 -> Some body_Z29649_wikidata_reference_from_wikifunctions_language_obj
   | _ -> None

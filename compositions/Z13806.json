@@ -1,0 +1,67 @@
+{
+  "zid": "Z13806",
+  "label": "base n to natural number",
+  "why": "Wikifunctions has only a Python implementation of this, so there is no composition to follow and every function that reaches it stops there. It is expressible from primitives this engine already has.",
+  "note": "Read left to right: the first digit is worth base^(length-1), and the rest is the same function on the remaining characters. Digit values are taken from the codepoint, so it accepts 0-9, a-z and A-Z, which is what the testers use.",
+  "arguments": ["Z13806K1", "Z13806K2"],
+  "Z14K2": {
+    "Z1K1": "Z7",
+    "Z7K1": "Z802",
+    "Z802K1": {
+      "Z1K1": "Z7", "Z7K1": "Z813",
+      "Z813K1": { "Z1K1": "Z7", "Z7K1": "Z22717", "Z22717K1": { "Z1K1": "Z18", "Z18K1": "Z13806K1" } }
+    },
+    "Z802K2": { "Z1K1": "Z13518", "Z13518K1": "0" },
+    "Z802K3": {
+      "Z1K1": "Z7", "Z7K1": "Z13521",
+      "Z13521K1": {
+        "Z1K1": "Z7", "Z7K1": "Z13539",
+        "Z13539K1": {
+          "Z1K1": "Z7", "Z7K1": "Z802",
+          "Z802K1": {
+            "Z1K1": "Z7", "Z7K1": "Z13682",
+            "Z13682K1": { "Z1K1": "Z7", "Z7K1": "Z811", "Z811K1": { "Z1K1": "Z7", "Z7K1": "Z22717", "Z22717K1": { "Z1K1": "Z18", "Z18K1": "Z13806K1" } } },
+            "Z13682K2": { "Z1K1": "Z13518", "Z13518K1": "97" }
+          },
+          "Z802K2": {
+            "Z1K1": "Z7", "Z7K1": "Z13569",
+            "Z13569K1": { "Z1K1": "Z7", "Z7K1": "Z811", "Z811K1": { "Z1K1": "Z7", "Z7K1": "Z22717", "Z22717K1": { "Z1K1": "Z18", "Z18K1": "Z13806K1" } } },
+            "Z13569K2": { "Z1K1": "Z13518", "Z13518K1": "87" }
+          },
+          "Z802K3": {
+            "Z1K1": "Z7", "Z7K1": "Z802",
+            "Z802K1": {
+              "Z1K1": "Z7", "Z7K1": "Z13682",
+              "Z13682K1": { "Z1K1": "Z7", "Z7K1": "Z811", "Z811K1": { "Z1K1": "Z7", "Z7K1": "Z22717", "Z22717K1": { "Z1K1": "Z18", "Z18K1": "Z13806K1" } } },
+              "Z13682K2": { "Z1K1": "Z13518", "Z13518K1": "65" }
+            },
+            "Z802K2": {
+              "Z1K1": "Z7", "Z7K1": "Z13569",
+              "Z13569K1": { "Z1K1": "Z7", "Z7K1": "Z811", "Z811K1": { "Z1K1": "Z7", "Z7K1": "Z22717", "Z22717K1": { "Z1K1": "Z18", "Z18K1": "Z13806K1" } } },
+              "Z13569K2": { "Z1K1": "Z13518", "Z13518K1": "55" }
+            },
+            "Z802K3": {
+              "Z1K1": "Z7", "Z7K1": "Z13569",
+              "Z13569K1": { "Z1K1": "Z7", "Z7K1": "Z811", "Z811K1": { "Z1K1": "Z7", "Z7K1": "Z22717", "Z22717K1": { "Z1K1": "Z18", "Z18K1": "Z13806K1" } } },
+              "Z13569K2": { "Z1K1": "Z13518", "Z13518K1": "48" }
+            }
+          }
+        },
+        "Z13539K2": {
+          "Z1K1": "Z7", "Z7K1": "Z13647",
+          "Z13647K1": { "Z1K1": "Z18", "Z18K1": "Z13806K2" },
+          "Z13647K2": {
+            "Z1K1": "Z7", "Z7K1": "Z13569",
+            "Z13569K1": { "Z1K1": "Z7", "Z7K1": "Z11040", "Z11040K1": { "Z1K1": "Z18", "Z18K1": "Z13806K1" } },
+            "Z13569K2": { "Z1K1": "Z13518", "Z13518K1": "1" }
+          }
+        }
+      },
+      "Z13521K2": {
+        "Z1K1": "Z7", "Z7K1": "Z13806",
+        "Z13806K1": { "Z1K1": "Z7", "Z7K1": "Z14456", "Z14456K1": { "Z1K1": "Z18", "Z18K1": "Z13806K1" } },
+        "Z13806K2": { "Z1K1": "Z18", "Z18K1": "Z13806K2" }
+      }
+    }
+  }
+}

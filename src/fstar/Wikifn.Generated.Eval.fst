@@ -11,7 +11,7 @@ open Wikifn.Eval
   all of them needs tens of gigabytes, while a part of a few hundred takes
   seconds.
 
-  functions: 3890 across 10 parts
+  functions: 3891 across 10 parts
   skipped:   7
 *)
 
@@ -28,12 +28,12 @@ module P09 = Wikifn.Generated.Eval.Part09
 
 let generated_policy (fid:zid) : Tot (option expr) =
   if fid <= 12934 then P00.part_policy fid
-  else if fid <= 15946 then P01.part_policy fid
-  else if fid <= 19814 then P02.part_policy fid
-  else if fid <= 23349 then P03.part_policy fid
-  else if fid <= 26733 then P04.part_policy fid
-  else if fid <= 29649 then P05.part_policy fid
-  else if fid <= 32277 then P06.part_policy fid
-  else if fid <= 35215 then P07.part_policy fid
-  else if fid <= 37328 then P08.part_policy fid
+  else if fid <= 15914 then P01.part_policy fid
+  else if fid <= 19806 then P02.part_policy fid
+  else if fid <= 23344 then P03.part_policy fid
+  else if fid <= 26723 then P04.part_policy fid
+  else if fid <= 29639 then P05.part_policy fid
+  else if fid <= 32276 then P06.part_policy fid
+  else if fid <= 35212 then P07.part_policy fid
+  else if fid <= 37323 then P08.part_policy fid
   else P09.part_policy fid

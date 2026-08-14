@@ -48,10 +48,11 @@ fi
 
 fstar \
   --codegen OCaml \
-  --extract 'Wikifn.Primitive.Kernel Wikifn.Zid Wikifn.Eval Wikifn.Print Wikifn.Generated.Eval Wikifn.Generated.Eval.* Wikifn.Direct Wikifn.Compiled.Direct' \
+  --extract 'Wikifn.Primitive.Kernel Wikifn.Unicode.Case Wikifn.Zid Wikifn.Eval Wikifn.Print Wikifn.Generated.Eval Wikifn.Generated.Eval.* Wikifn.Direct Wikifn.Compiled.Direct' \
   --include "$root/src/fstar" \
   --odir "$ocaml_out" \
   "$root/src/fstar/Wikifn.Primitive.Kernel.fst" \
+  "$root/src/fstar/Wikifn.Unicode.Case.fst" \
   "$root/src/fstar/Wikifn.Zid.fst" \
   "$root/src/fstar/Wikifn.Eval.fst" \
   "$root/src/fstar/Wikifn.Print.fst" \
@@ -87,6 +88,7 @@ ocamlfind_run ocamlc \
   "$prims_dir/Prims.cmo" \
   "$prims_dir/FStar_Pervasives_Native.ml" \
   "$ocaml_out/Wikifn_Primitive_Kernel.ml" \
+  "$ocaml_out/Wikifn_Unicode_Case.ml" \
   "$ocaml_out/Wikifn_Zid.ml" \
   "$ocaml_out/Wikifn_Eval.ml" \
   "$ocaml_out/Wikifn_Print.ml" \

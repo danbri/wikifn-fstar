@@ -68,6 +68,10 @@
 
 (define (Z29294_object_equivalence a b) (equal? a b))
 
+(define (Z10047 s) (string-downcase s))
+
+(define (Z10018 s) (string-upcase s))
+
 (define (fst p) (car p))
 
 (define (snd p) (cdr p))
@@ -205,6 +209,8 @@
 (define Z10000 Z10000_join_two_strings)
 (define Z13052 Z13052_object_equality)
 (define Z29294 Z29294_object_equivalence)
+(define Z10047 Z10047)
+(define Z10018 Z10018)
 (define Z13569 Z13569_subtract_natural_numbers_with_floor_of_0)
 (define Z13582 Z13582_decrement_natural_number_by_one)
 (define Z12668 Z12668_reverse_untyped_list)

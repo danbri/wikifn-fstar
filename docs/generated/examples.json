@@ -1,7 +1,7 @@
 {
   "generated": "scripts/check-engine-testers.js --examples",
   "note": "Arguments taken from Wikifunctions' own Z20 testers. status says what this engine did with them, so 'error' means the example is real and the engine cannot yet run it.",
-  "functions": 1060,
+  "functions": 1061,
   "examples": {
     "Z10012": [
       {
@@ -804,22 +804,25 @@
         "args": [
           "hello world"
         ],
+        "expected": "hello_world",
         "tester": "Z10282",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "Hello World"
         ],
+        "expected": "hello_world",
         "tester": "Z10283",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "ID card Number"
         ],
+        "expected": "id_card_number",
         "tester": "Z10285",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z10287": [
@@ -1001,50 +1004,57 @@
         "args": [
           "hello_world"
         ],
+        "expected": true,
         "tester": "Z10325",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "abc"
         ],
+        "expected": true,
         "tester": "Z10326",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           ""
         ],
+        "expected": true,
         "tester": "Z10327",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "Hello World"
         ],
+        "expected": false,
         "tester": "Z10328",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "Hello_World"
         ],
+        "expected": false,
         "tester": "Z12396",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "my_string"
         ],
+        "expected": true,
         "tester": "Z12443",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "foo bar baz"
         ],
+        "expected": false,
         "tester": "Z25746",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z10329": [
@@ -1090,115 +1100,131 @@
         "args": [
           "CAPITAL"
         ],
+        "expected": true,
         "tester": "Z10338",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "Capital"
         ],
+        "expected": false,
         "tester": "Z10339",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "capital"
         ],
+        "expected": false,
         "tester": "Z10341",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "CONSTANT_NAME"
         ],
+        "expected": true,
         "tester": "Z10342",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           ""
         ],
+        "expected": true,
         "tester": "Z10343",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           " "
         ],
+        "expected": true,
         "tester": "Z11345",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "ХАКАТОН"
         ],
+        "expected": true,
         "tester": "Z16035",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "ГАЛьМІВНИЙ"
         ],
+        "expected": false,
         "tester": "Z16036",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "П'ЯТЬ ТИСЯЧ"
         ],
+        "expected": true,
         "tester": "Z16037",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z10346": [
       {
         "args": [
-          ""
-        ],
-        "tester": "Z10347",
-        "status": "error"
-      },
-      {
-        "args": [
           "capital"
         ],
+        "expected": true,
         "tester": "Z10349",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "variable_name"
         ],
+        "expected": true,
         "tester": "Z10350",
-        "status": "error"
-      },
-      {
-        "args": [
-          "Paris"
-        ],
-        "tester": "Z10351",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "WIKIFUNCTIONS"
         ],
+        "expected": false,
         "tester": "Z10353",
-        "status": "error"
-      },
-      {
-        "args": [
-          "!"
-        ],
-        "tester": "Z11381",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "п'ять тисяч"
         ],
+        "expected": true,
         "tester": "Z16038",
-        "status": "error"
+        "status": "pass"
+      },
+      {
+        "args": [
+          ""
+        ],
+        "expected": true,
+        "tester": "Z10347",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "Paris"
+        ],
+        "expected": false,
+        "tester": "Z10351",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "!"
+        ],
+        "expected": true,
+        "tester": "Z11381",
+        "status": "fail"
       }
     ],
     "Z10348": [
@@ -1457,40 +1483,45 @@
           "lorem ipsum",
           "lorem ipsum"
         ],
+        "expected": true,
         "tester": "Z10540",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "Lorem ipsuM",
           "loREM IPsUm"
         ],
+        "expected": true,
         "tester": "Z10542",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "Éclair",
           "éclair"
         ],
+        "expected": true,
         "tester": "Z10724",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "zażółć gęślą jaźń",
           "ZAŻÓŁĆ GĘŚLĄ JAŹŃ"
         ],
+        "expected": true,
         "tester": "Z10740",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "П'ЯТЬ ТИСЯЧ",
           "п'ять тисяч"
         ],
+        "expected": true,
         "tester": "Z16039",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z10548": [
@@ -1910,8 +1941,9 @@
           false,
           false
         ],
+        "expected": "Z10346 to hold",
         "tester": "Z10729",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z10730": [
@@ -1919,8 +1951,8 @@
         "args": [
           true
         ],
-        "expected": "true",
-        "tester": "Z10732",
+        "expected": "Z10346 to hold",
+        "tester": "Z10731",
         "status": "pass"
       },
       {
@@ -2129,6 +2161,22 @@
     "Z10771": [
       {
         "args": [
+          "this is a test"
+        ],
+        "expected": "This is a test",
+        "tester": "Z10775",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "hello, world!"
+        ],
+        "expected": "Hello, world!",
+        "tester": "Z15864",
+        "status": "pass"
+      },
+      {
+        "args": [
           ""
         ],
         "expected": "",
@@ -2137,38 +2185,27 @@
       },
       {
         "args": [
-          "this is a test"
-        ],
-        "tester": "Z10775",
-        "status": "error"
-      },
-      {
-        "args": [
-          "hello, world!"
-        ],
-        "tester": "Z15864",
-        "status": "error"
-      },
-      {
-        "args": [
           "he is a Greek Australian."
         ],
+        "expected": "He is a Greek Australian.",
         "tester": "Z22524",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "борщ — суп"
         ],
+        "expected": "Борщ — суп",
         "tester": "Z27444",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "ijsselmeer"
         ],
+        "expected": "Ijsselmeer",
         "tester": "Z30783",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z10774": [
@@ -2651,36 +2688,41 @@
         "args": [
           "test"
         ],
+        "expected": true,
         "tester": "Z10899",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "Test"
         ],
+        "expected": false,
         "tester": "Z10900",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "testString"
         ],
+        "expected": true,
         "tester": "Z10904",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "test string"
         ],
+        "expected": false,
         "tester": "Z10905",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "aVeryLongTextWithLotsOfWords"
         ],
+        "expected": true,
         "tester": "Z19456",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -4797,31 +4839,35 @@
     "Z11349": [
       {
         "args": [
-          ""
-        ],
-        "tester": "Z11350",
-        "status": "error"
-      },
-      {
-        "args": [
           "CAPITAL"
         ],
+        "expected": true,
         "tester": "Z11351",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "Capital"
         ],
+        "expected": false,
         "tester": "Z11352",
-        "status": "error"
+        "status": "pass"
+      },
+      {
+        "args": [
+          ""
+        ],
+        "expected": false,
+        "tester": "Z11350",
+        "status": "fail"
       },
       {
         "args": [
           "!"
         ],
+        "expected": false,
         "tester": "Z11380",
-        "status": "error"
+        "status": "fail"
       }
     ],
     "Z11355": [
@@ -4928,29 +4974,33 @@
         "args": [
           "capital"
         ],
+        "expected": true,
         "tester": "Z11384",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           ""
         ],
+        "expected": false,
         "tester": "Z11385",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "!"
         ],
+        "expected": false,
         "tester": "Z11387",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "Capital"
         ],
+        "expected": false,
         "tester": "Z11388",
-        "status": "error"
+        "status": "fail"
       }
     ],
     "Z11410": [
@@ -8474,6 +8524,14 @@
     "Z12626": [
       {
         "args": [
+          "The quick brown fox jumps"
+        ],
+        "expected": false,
+        "tester": "Z14493",
+        "status": "pass"
+      },
+      {
+        "args": [
           "The quick brown fox jumps over the lazy dog."
         ],
         "tester": "Z13123",
@@ -8484,13 +8542,6 @@
           "The five boxing wizards jump quickly."
         ],
         "tester": "Z14492",
-        "status": "error"
-      },
-      {
-        "args": [
-          "The quick brown fox jumps"
-        ],
-        "tester": "Z14493",
         "status": "error"
       },
       {
@@ -11511,8 +11562,9 @@
         "args": [
           "1100100"
         ],
+        "expected": 100,
         "tester": "Z13803",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z13798": [
@@ -11520,8 +11572,9 @@
         "args": [
           "0144"
         ],
+        "expected": 100,
         "tester": "Z13804",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z13799": [
@@ -11529,22 +11582,54 @@
         "args": [
           "0x64"
         ],
+        "expected": 100,
         "tester": "Z13805",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "ff"
         ],
+        "expected": 255,
         "tester": "Z22879",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "64"
         ],
+        "expected": 100,
         "tester": "Z22880",
-        "status": "error"
+        "status": "pass"
+      }
+    ],
+    "Z13806": [
+      {
+        "args": [
+          "abc",
+          36
+        ],
+        "expected": 13368,
+        "tester": "Z13808",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "1234567890ABCDEF",
+          16
+        ],
+        "expected": 1311768467294899700,
+        "tester": "Z15667",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "10",
+          10
+        ],
+        "expected": 10,
+        "tester": "Z31680",
+        "status": "pass"
       }
     ],
     "Z13809": [
@@ -11976,43 +12061,49 @@
         "args": [
           "bịa"
         ],
+        "expected": "ịbịa",
         "tester": "Z13943",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "me"
         ],
+        "expected": "ime",
         "tester": "Z13944",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "de"
         ],
+        "expected": "ide",
         "tester": "Z13945",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "di"
         ],
+        "expected": "idi",
         "tester": "Z13946",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "ga"
         ],
+        "expected": "ịga",
         "tester": "Z13947",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "zụ"
         ],
+        "expected": "ịzụ",
         "tester": "Z16073",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z13928": [
@@ -18060,6 +18151,30 @@
     "Z16714": [
       {
         "args": [
+          ""
+        ],
+        "expected": "",
+        "tester": "Z16716",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "ATCCAG"
+        ],
+        "expected": "TAGGTC",
+        "tester": "Z16717",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "atccag"
+        ],
+        "expected": "TAGGTC",
+        "tester": "Z16790",
+        "status": "pass"
+      },
+      {
+        "args": [
           "ATCGXYZ"
         ],
         "expected": "invalid DNA sequence",
@@ -18068,31 +18183,11 @@
       },
       {
         "args": [
-          ""
-        ],
-        "tester": "Z16716",
-        "status": "error"
-      },
-      {
-        "args": [
-          "ATCCAG"
-        ],
-        "tester": "Z16717",
-        "status": "error"
-      },
-      {
-        "args": [
-          "atccag"
-        ],
-        "tester": "Z16790",
-        "status": "error"
-      },
-      {
-        "args": [
           "ACGT"
         ],
+        "expected": "TGCA",
         "tester": "Z16792",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z16773": [
@@ -21829,15 +21924,17 @@
         "args": [
           "+Infinity"
         ],
+        "expected": true,
         "tester": "Z21988",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "qNaN"
         ],
+        "expected": true,
         "tester": "Z21989",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -22093,22 +22190,25 @@
         "args": [
           "hello, world"
         ],
+        "expected": "Hello, world.",
         "tester": "Z22512",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "борщ — суп"
         ],
+        "expected": "Борщ — суп.",
         "tester": "Z27443",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "Hi."
         ],
+        "expected": "Hi..",
         "tester": "Z38052",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z22514": [
@@ -22225,6 +22325,16 @@
       {
         "args": [
           "functions",
+          "fun",
+          false
+        ],
+        "expected": true,
+        "tester": "Z22813",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "functions",
           "Fun",
           true
         ],
@@ -22235,20 +22345,12 @@
       {
         "args": [
           "functions",
-          "fun",
-          false
-        ],
-        "tester": "Z22813",
-        "status": "error"
-      },
-      {
-        "args": [
-          "functions",
           "Fun",
           false
         ],
+        "expected": true,
         "tester": "Z22819",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z22829": [
@@ -22256,29 +22358,33 @@
         "args": [
           "1F60A"
         ],
+        "expected": "😊",
         "tester": "Z22830",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "0041"
         ],
+        "expected": "A",
         "tester": "Z22831",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "41"
         ],
+        "expected": "A",
         "tester": "Z22832",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "00E4"
         ],
+        "expected": "ä",
         "tester": "Z22833",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z22839": [
@@ -24294,22 +24400,25 @@
         "args": [
           "բարև, աշխարհ"
         ],
+        "expected": "Բարև, աշխարհ։",
         "tester": "Z30406",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "գնում եմ"
         ],
+        "expected": "Գնում եմ։",
         "tester": "Z30407",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "ուզում եմ խոսել"
         ],
+        "expected": "Ուզում եմ խոսել։",
         "tester": "Z30408",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z30479": [
@@ -24368,16 +24477,17 @@
     "Z30676": [
       {
         "args": [
-          "høj bly gom vandt fræk sexquiz på wc"
+          "dette er ikke et pantagram"
         ],
-        "tester": "Z30677",
-        "status": "error"
+        "expected": false,
+        "tester": "Z30679",
+        "status": "pass"
       },
       {
         "args": [
-          "dette er ikke et pantagram"
+          "høj bly gom vandt fræk sexquiz på wc"
         ],
-        "tester": "Z30679",
+        "tester": "Z30677",
         "status": "error"
       }
     ],
@@ -25713,8 +25823,9 @@
         "args": [
           "lyon"
         ],
+        "expected": "Lyon",
         "tester": "Z33282",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z33284": [
@@ -25846,57 +25957,65 @@
         "args": [
           "водата"
         ],
+        "expected": "във",
         "tester": "Z34076",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "Варна"
         ],
+        "expected": "във",
         "tester": "Z34078",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "фурната"
         ],
+        "expected": "във",
         "tester": "Z34079",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "Франция"
         ],
+        "expected": "във",
         "tester": "Z34080",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "града"
         ],
+        "expected": "в",
         "tester": "Z34081",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "София"
         ],
+        "expected": "в",
         "tester": "Z34082",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "Facebook"
         ],
+        "expected": "във",
         "tester": "Z34109",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "Viber"
         ],
+        "expected": "във",
         "tester": "Z34110",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z34084": [
@@ -25904,50 +26023,57 @@
         "args": [
           "сигурност"
         ],
+        "expected": "със",
         "tester": "Z34111",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "Самуил"
         ],
+        "expected": "със",
         "tester": "Z34112",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "захар"
         ],
+        "expected": "със",
         "tester": "Z34113",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "Зорница"
         ],
+        "expected": "със",
         "tester": "Z34114",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "Samsung"
         ],
+        "expected": "със",
         "tester": "Z34115",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "Zoom"
         ],
+        "expected": "със",
         "tester": "Z34116",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "него"
         ],
+        "expected": "с",
         "tester": "Z34117",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z34178": [
@@ -25962,8 +26088,9 @@
             false
           ]
         ],
+        "expected": 42,
         "tester": "Z34179",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -25978,8 +26105,9 @@
             false
           ]
         ],
+        "expected": 42,
         "tester": "Z34180",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -26002,8 +26130,9 @@
             false
           ]
         ],
+        "expected": 51634,
         "tester": "Z34181",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -26011,15 +26140,17 @@
             false
           ]
         ],
+        "expected": 0,
         "tester": "Z34182",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           []
         ],
+        "expected": 0,
         "tester": "Z34183",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z34190": [

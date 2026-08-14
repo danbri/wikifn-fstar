@@ -11,8 +11,12 @@ open Wikifn.Eval
 
   part:      3 of 10
   functions: 400
-  ZID range: Z15953 to Z19814
+  ZID range: Z15946 to Z19806
 *)
+
+(* Z15946 are two numeric strings in descending order | Z15946@280233 -> Z36016@280232 digest 29575f81dbabc4e85a4b10b60c6909f49d3e193ee9d9d77bd2e2f47f574cfda6 *)
+let body_Z15946_are_two_numeric_strings_in_descending_order : expr =
+  ECall 850 [ECall 17132 [ECall 16705 [EArg 0; EValue (VFunc 1002)]; ECall 16705 [EArg 1; EValue (VFunc 1002)]]; EValue (VFunc 500); EValue (VBool false)]
 
 (* Z15953 Ukrainian cardinal | Z15953@202705 -> Z22599@168334 digest dc6ff7d3d83c99dfc80fdc02ff79381bac142f22ab62a8d1f3c0a3c126bb6aa9 *)
 let body_Z15953_ukrainian_cardinal : expr =
@@ -1610,12 +1614,9 @@ let body_Z19800_limit_denominator : expr =
 let body_Z19806_is_rational_number_an_integer : expr =
   ECall 31547 [ECall 19724 [EArg 0]]
 
-(* Z19814 nearest rational with specified denominator | Z19814@194924 -> Z19857@137861 digest 9abcdfb2524ac6b93aa9d9540e35f5fb5ffd3af685722c00b39a00a540d60e8f *)
-let body_Z19814_nearest_rational_with_specified_denominator : expr =
-  ECall 19854 [ECall 19841 [ECall 19826 [EArg 0; EArg 1]]; EArg 1]
-
 let part_policy (fid:zid) : Tot (option expr) =
   match fid with
+  | 15946 -> Some body_Z15946_are_two_numeric_strings_in_descending_order
   | 15953 -> Some body_Z15953_ukrainian_cardinal
   | 15965 -> Some body_Z15965_polish_cardinal
   | 15969 -> Some body_Z15969_reified_z1k1_object_for_key_reference
@@ -2015,5 +2016,4 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 19754 -> Some body_Z19754_less_than_or_equal_to_rational_numbers
   | 19800 -> Some body_Z19800_limit_denominator
   | 19806 -> Some body_Z19806_is_rational_number_an_integer
-  | 19814 -> Some body_Z19814_nearest_rational_with_specified_denominator
   | _ -> None
