@@ -62,23 +62,62 @@ let agreed (#a:Type0) (r1:eval_result a) (n1:nat) (r2:eval_result a) (n2:nat) (e
   : Tot prop
 = r2 == r1 /\ n2 == n1 + extra
 
+(* Each case of the evaluator is its own obligation, so each is asked as its own
+   query. Without this the whole of eval_extra goes to the solver as one term
+   and it gives up; F* will split anyway and warn, but relying on that
+   implicitly is how a proof quietly starts depending on a heuristic. *)
+(* SMT fuel, which is a different thing from the evaluator's fuel and is worth
+   not confusing. `higher_order` lives in a mutual recursive group, so the solver
+   treats it as opaque unless it is allowed to unfold it - and this proof needs
+   it unfolded once on each side to see that whether a higher-order form applies
+   depends on the function and the argument shapes, never on how much fuel there
+   is. Two unfoldings is the default; this needs a little more headroom, and the
+   inductive fuel is for seeing through eval_result and value. *)
+#set-options "--split_queries always --fuel 4 --ifuel 2 --z3rlimit 200"
+
+(* Unconditional, by being disjunctive: either the smaller run ran out, or the
+   two agree and the larger kept the extra.
+ 
+   This is what makes the induction go through without a separate propagation
+   lemma. Stated with a precondition - "the smaller run reached an answer" -
+   every recursive case has to discharge that precondition for its sub-run,
+   which needs the fact that exhaustion propagates, which is a second mutual
+   induction over the same seven functions. Stated this way there is no
+   precondition to discharge: a sub-run either agrees, in which case the case
+   goes through, or it ran out, in which case the surrounding code propagates it
+   and the left disjunct holds at this level too. That propagation is visible in
+   each case rather than needing to be proved once in general. *)
 let agrees_on (#a:Type0) (fuel:nat) (extra:nat)
               (first:(eval_result a & (m:nat{m <= fuel})))
               (second:(eval_result a & (m:nat{m <= fuel + extra})))
   : Tot prop
-= agreed (fst first) (snd first) (fst second) (snd second) extra
+= fst first == EErr EFuelExhausted \/ agreed (fst first) (snd first) (fst second) (snd second) extra
 
 (*
   WHAT IS PROVED HERE, AND WHAT IS NOT.
  
-  Two of the seven lemmas below carry `admit ()`: eval itself and higher_order.
-  The other five - eval_list, map, filter, zip and reduce - discharge.
+  Six of the seven lemmas below discharge, including `eval_extra` itself, which
+  is the one the theorem rests on. One does not: `higher_order_extra`, and it
+  carries an `admit ()` so the obligation is visible rather than implied by a
+  module that checks.
  
-  That does NOT make five of seven done, and the difference matters. All seven
-  are one mutual group, so the five that discharge do so by *calling* eval_extra
-  and using its stated postcondition, which is exactly what the admit assumes.
-  They are proved relative to the two, not independently of them. Nothing here
-  is a result until the admits are gone.
+  Everything here is therefore proved *relative to* that one assumption, because
+  all seven are a single mutual group and `eval_extra` calls it. That is a much
+  smaller assumption than it was - it went from two to one, and this one says
+  something narrow:
+ 
+      whether a higher-order form applies at all depends on the function and the
+      shape of its arguments, never on the fuel; and when it applies, the two
+      runs agree.
+ 
+  Both halves are true by inspection of `higher_order`: its dispatch is an
+  if-chain on `fid` and a match on argument shapes, and `fuel` appears nowhere in
+  either. What the solver will not do is see it, because `higher_order` sits in a
+  mutual recursive group and is opaque without enough unfolding; raising SMT fuel
+  to 4 and the rlimit to 200 did not get there. The likely finish is to restate
+  the dispatch as a separate non-recursive predicate that both `higher_order` and
+  this lemma refer to, so the fuel-independence is syntactic rather than
+  something to be discovered.
  
   What blocks them is one missing lemma, and it is worth naming precisely. Every
   recursive case has to discharge the precondition of its own inductive call:
@@ -96,16 +135,10 @@ let agrees_on (#a:Type0) (fuel:nat) (extra:nat)
   by trying.
 *)
 let rec eval_extra (p:policy) (fuel:nat) (extra:nat) (depth:nat) (env:list value) (e:expr)
-  : Lemma (requires reached (fst (eval p fuel depth env e)))
-          (ensures agrees_on fuel extra (eval p fuel depth env e)
+  : Lemma (ensures agrees_on fuel extra (eval p fuel depth env e)
                           (eval p (fuel + extra) depth env e))
           (decreases %[fuel; 0; 0])
 =
-  (* Blocked on the propagation lemma described above. The case analysis below
-     is the shape the finished proof needs; every branch already lines up with
-     the evaluator, and what is missing is discharging each inductive call's
-     precondition from the parent's. *)
-  admit ();
   match e with
   | EValue _ -> ()
   | EArg _ -> ()
@@ -166,8 +199,7 @@ let rec eval_extra (p:policy) (fuel:nat) (extra:nat) (depth:nat) (env:list value
       end
 
 and eval_list_extra (p:policy) (fuel:nat) (extra:nat) (depth:nat) (env:list value) (es:list expr)
-  : Lemma (requires reached (fst (eval_list p fuel depth env es)))
-          (ensures agrees_on fuel extra (eval_list p fuel depth env es)
+  : Lemma (ensures agrees_on fuel extra (eval_list p fuel depth env es)
                                (eval_list p (fuel + extra) depth env es))
           (decreases %[fuel; 1; es])
 =
@@ -181,17 +213,24 @@ and eval_list_extra (p:policy) (fuel:nat) (extra:nat) (depth:nat) (env:list valu
       | EOk _ -> eval_list_extra p after extra depth env rest
 
 and higher_order_extra (p:policy) (fuel:nat) (extra:nat) (depth:nat) (fid:zid) (args:list value)
-  : Lemma (requires (match higher_order p fuel depth fid args with
-                     | Some a -> reached (fst a)
-                     | None -> True))
-          (ensures (match higher_order p fuel depth fid args,
-                          higher_order p (fuel + extra) depth fid args with
-                    | Some a, Some b -> agreed (fst a) (snd a) (fst b) (snd b) extra
-                    | None, None -> True
-                    | _, _ -> False))
+  : Lemma (ensures (
+      let smaller = higher_order p fuel depth fid args in
+      let larger = higher_order p (fuel + extra) depth fid args in
+      (* Whether a higher-order form applies at all depends on the function and
+         the shape of its arguments, never on the fuel, so the two runs are Some
+         and None together. Saying that separately from the agreement is what
+         lets the solver take them one at a time. *)
+      Some? smaller == Some? larger /\
+      (Some? smaller ==>
+        (fst (Some?.v smaller) == EErr EFuelExhausted \/
+         agreed (fst (Some?.v smaller)) (snd (Some?.v smaller))
+                (fst (Some?.v larger)) (snd (Some?.v larger)) extra))))
           (decreases %[fuel; 3; 0])
 =
-  (* Blocked on the same lemma, through eval_extra. *)
+  (* The one open obligation. See the note at the top: the dispatch is visibly
+     independent of fuel, but `higher_order` is opaque to the solver inside its
+     own mutual group, and the case analysis below cannot be related to it
+     without unfolding both sides. *)
   admit ();
   if fid = fid_map then
     (match args with
@@ -226,8 +265,7 @@ and higher_order_extra (p:policy) (fuel:nat) (extra:nat) (depth:nat) (fid:zid) (
   else ()
 
 and map_extra (p:policy) (fuel:nat) (extra:nat) (depth:nat) (f:zid) (items:list value)
-  : Lemma (requires reached (fst (map_values p fuel depth f items)))
-          (ensures agrees_on fuel extra (map_values p fuel depth f items)
+  : Lemma (ensures agrees_on fuel extra (map_values p fuel depth f items)
                                (map_values p (fuel + extra) depth f items))
           (decreases %[fuel; 2; items])
 =
@@ -241,8 +279,7 @@ and map_extra (p:policy) (fuel:nat) (extra:nat) (depth:nat) (f:zid) (items:list 
       | EOk _ -> map_extra p after extra depth f rest
 
 and filter_extra (p:policy) (fuel:nat) (extra:nat) (depth:nat) (f:zid) (items:list value)
-  : Lemma (requires reached (fst (filter_values p fuel depth f items)))
-          (ensures agrees_on fuel extra (filter_values p fuel depth f items)
+  : Lemma (ensures agrees_on fuel extra (filter_values p fuel depth f items)
                                (filter_values p (fuel + extra) depth f items))
           (decreases %[fuel; 2; items])
 =
@@ -257,8 +294,7 @@ and filter_extra (p:policy) (fuel:nat) (extra:nat) (depth:nat) (f:zid) (items:li
 
 and zip_extra (p:policy) (fuel:nat) (extra:nat) (depth:nat) (f:zid)
               (left:list value) (right:list value)
-  : Lemma (requires reached (fst (zip_with_values p fuel depth f left right)))
-          (ensures agrees_on fuel extra (zip_with_values p fuel depth f left right)
+  : Lemma (ensures agrees_on fuel extra (zip_with_values p fuel depth f left right)
                                (zip_with_values p (fuel + extra) depth f left right))
           (decreases %[fuel; 2; left])
 =
@@ -274,8 +310,7 @@ and zip_extra (p:policy) (fuel:nat) (extra:nat) (depth:nat) (f:zid)
 
 and reduce_extra (p:policy) (fuel:nat) (extra:nat) (depth:nat) (f:zid)
                  (acc:value) (items:list value)
-  : Lemma (requires reached (fst (reduce_values p fuel depth f acc items)))
-          (ensures agrees_on fuel extra (reduce_values p fuel depth f acc items)
+  : Lemma (ensures agrees_on fuel extra (reduce_values p fuel depth f acc items)
                                (reduce_values p (fuel + extra) depth f acc items))
           (decreases %[fuel; 2; items])
 =
@@ -294,10 +329,12 @@ and reduce_extra (p:policy) (fuel:nat) (extra:nat) (depth:nat) (f:zid)
   the whole content. Without it the statement is false, because turning
   "ran out of fuel" into a result is exactly what raising the fuel is for.
 
-  STATED, NOT PROVED: both rest on eval_extra, which carries an admit. They are
-  written out because the statement is the useful half - it says precisely what
-  "the fuel bound is honest" has to mean - and it is what the remaining work has
-  to deliver.
+  PROVED, RELATIVE TO ONE ASSUMPTION: both follow from eval_extra, which
+  discharges - but eval_extra is in a mutual group with higher_order_extra, which
+  carries an admit. So these hold given that whether a higher-order form applies
+  does not depend on the fuel. That is a much narrower thing to be taking on
+  trust than the theorem itself, and it is true by inspection; see the note at
+  the top for why the solver will not see it and what would make it.
 *)
 let eval_fuel_monotone (p:policy) (smaller:nat) (larger:nat{larger >= smaller})
                        (depth:nat) (env:list value) (e:expr)

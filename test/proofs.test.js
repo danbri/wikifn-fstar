@@ -36,12 +36,13 @@ const OPEN = [
   },
   {
     file: "Wikifn.Fuel.fst",
-    what: "admit () in eval_extra and higher_order_extra",
-    count: 2,
-    why: "Fuel monotonicity needs a second mutual induction - that exhaustion "
-       + "propagates - before each recursive call's precondition can be "
-       + "discharged from its parent's. The other five lemmas in the group are "
-       + "proved relative to these two, not independently."
+    what: "admit () in higher_order_extra",
+    count: 1,
+    why: "Whether a higher-order form applies depends on the function and the "
+       + "argument shapes and never on the fuel, which is true by inspection of "
+       + "higher_order but opaque to the solver inside its own mutual group. The "
+       + "other six lemmas, including eval_extra, discharge - relative to this "
+       + "one, since they are a single mutual group."
   }
 ];
 
@@ -81,8 +82,12 @@ test("nothing claims to be proved that rests on an admit", () => {
   const fuel = readFileSync(path.join(fstarDir, "Wikifn.Fuel.fst"), "utf8");
   // The two theorems a caller would cite must say so in the file itself, so the
   // caveat travels with the statement rather than living only in a commit.
+  // The wording may change as the proof lands - "stated, not proved" became
+  // "proved, relative to one assumption" when eval_extra started discharging -
+  // but while anything in the file rests on an admit, the theorems a caller
+  // would cite have to say so next to themselves, not only in a commit message.
   assert.match(
-    fuel, /STATED, NOT PROVED/,
+    fuel, /STATED, NOT PROVED|PROVED, RELATIVE TO/,
     "Wikifn.Fuel states fuel monotonicity; while it rests on an admit it has to say so"
   );
 });
