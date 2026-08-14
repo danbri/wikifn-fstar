@@ -103,6 +103,41 @@ let classical_name (f:zid) : Tot (option text) =
   else if f = 1000000001 then Some [102; 114; 101; 115; 104; 45; 112; 114; 105; 118; 97; 116; 101; 45; 117; 115; 101; 45; 99; 104; 97; 114]
   else None
 
+(* and, or and if are syntax in Scheme, not procedures, so a bare mention of one
+   in value position is a syntax error rather than a reference. The corpus does
+   this: Z13651 bitwise and passes Z10174 to a higher-order function. In value
+   position they are wrapped in a lambda.
+
+   The wrapper for if is eager in both branches, which the special form is not.
+   That is a real difference and it is why only value position is wrapped;
+   in operator position if stays the special form and stays lazy. *)
+let lambda_word : text = [108; 97; 109; 98; 100; 97]
+
+let binary_wrapper (operator:text) : Tot text =
+  let a = [97] in
+  let b = [98] in
+  parenthesise (join_with [cp_space] [
+    lambda_word;
+    parenthesise (join_with [cp_space] [a; b]);
+    parenthesise (join_with [cp_space] [operator; a; b])
+  ])
+
+let if_wrapper () : Tot text =
+  let c = [99] in
+  let t = [116] in
+  let e = [101] in
+  parenthesise (join_with [cp_space] [
+    lambda_word;
+    parenthesise (join_with [cp_space] [c; t; e]);
+    parenthesise (join_with [cp_space] [[105; 102]; c; t; e])
+  ])
+
+let syntactic_wrapper (f:zid) : Tot (option text) =
+  if f = 10174 then Some (binary_wrapper [97; 110; 100])
+  else if f = 10184 then Some (binary_wrapper [111; 114])
+  else if f = 802 || f = 13846 then Some (if_wrapper ())
+  else None
+
 let name_of (lookup:name_lookup) (f:zid) : Tot text =
   match classical_name f with
   | Some name -> name
@@ -122,7 +157,11 @@ let rec print_value (lookup:name_lookup) (v:value) : Tot text (decreases v) =
   | VText s -> quoted s
   | VBool b -> boolean_text b
   | VNat n -> nat_text n
-  | VFunc f -> name_of lookup f
+  | VFunc f -> begin
+      match syntactic_wrapper f with
+      | Some wrapped -> wrapped
+      | None -> name_of lookup f
+    end
   | VPair left right ->
       parenthesise (join_with [cp_space]
         [[99; 111; 110; 115]; print_value lookup left; print_value lookup right])
@@ -186,6 +225,26 @@ let print_example_is_stable () :
 let escaping_a_quote_example () :
   Lemma (quoted [97; 34; 98] == [34; 97; 92; 34; 98; 34])
   = assert_norm (quoted [97; 34; 98] == [34; 97; 92; 34; 98; 34])
+
+let syntax_in_value_position_is_wrapped () :
+  Lemma (
+    print_value no_names (VFunc 10174)
+    == [40; 108; 97; 109; 98; 100; 97; 32; 40; 97; 32; 98; 41; 32; 40; 97; 110; 100; 32; 97; 32; 98; 41; 41]
+  )
+  = assert_norm (
+      print_value no_names (VFunc 10174)
+      == [40; 108; 97; 109; 98; 100; 97; 32; 40; 97; 32; 98; 41; 32; 40; 97; 110; 100; 32; 97; 32; 98; 41; 41]
+    )
+
+let syntax_in_operator_position_is_not_wrapped () :
+  Lemma (
+    print_expr no_names [] (ECall 10174 [EValue (VBool true); EValue (VBool false)])
+    == [40; 97; 110; 100; 32; 35; 116; 32; 35; 102; 41]
+  )
+  = assert_norm (
+      print_expr no_names [] (ECall 10174 [EValue (VBool true); EValue (VBool false)])
+      == [40; 97; 110; 100; 32; 35; 116; 32; 35; 102; 41]
+    )
 
 let classical_names_are_used () :
   Lemma (name_of no_names 810 == [99; 111; 110; 115])

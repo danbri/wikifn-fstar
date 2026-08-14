@@ -90,6 +90,9 @@ let rec encode_value (v : Wikifn_Eval.value) =
 let describe_error (e : Wikifn_Eval.eval_error) =
   match e with
   | Wikifn_Eval.EFuelExhausted -> "fuel exhausted"
+  | Wikifn_Eval.EDepthExceeded ->
+      "nesting depth limit reached; this composition may be defined in terms of \
+       itself without a base case"
   | Wikifn_Eval.EUnboundArgument -> "unbound argument"
   | Wikifn_Eval.EArityMismatch z -> Printf.sprintf "arity mismatch calling Z%s" (Z.to_string z)
   | Wikifn_Eval.ETypeMismatch z -> Printf.sprintf "type mismatch in Z%s" (Z.to_string z)

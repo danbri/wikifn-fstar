@@ -121,6 +121,14 @@
             reference is refused rather than read as text.
           </li>
           <li>
+            Some compositions are defined in terms of each other with no base
+            case — <code>Z844</code> boolean equality is
+            <code>not(inequality)</code> while inequality is
+            <code>not(equality)</code>. Those are marked runnable because every
+            function they call exists, but they report a depth limit rather than
+            returning an answer.
+          </li>
+          <li>
             Fuel is a budget for total evaluation steps, not a depth limit.
             Running out is reported, not hidden. Naively recursive functions
             can need a lot: the corpus's Fibonacci needs about 200,000 steps
@@ -131,6 +139,7 @@
           Downloads:
           <a href="./generated/functions.json">catalogue</a>,
           <a href="./generated/wikifn.scm">all as s-expressions</a>,
+          <a href="./generated/wikifn-prelude.scm">the Scheme prelude for it</a>,
           <a href="./generated/wikifn-compositions.json">all back as canonical Wikifunctions compositions</a>.
         </p>
       </section>

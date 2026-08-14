@@ -19,6 +19,26 @@ const catalog = require(path.join(root, "docs", "generated", "functions.json"));
 
 const byZid = new Map(catalog.functions.map((entry) => [entry.zid, entry]));
 
+// Sources come from Wikifn.Print, the checked F* module the evaluator uses, so
+// an exported program and a running one can never disagree about what a
+// composition says.
+require(path.join(root, "docs", "generated", "wikifn_engine.cjs"));
+const nameTable = JSON.stringify(catalog.names || {});
+const sourceCache = new Map();
+
+function sourceOf(zid) {
+  if (sourceCache.has(zid)) return sourceCache.get(zid);
+  const entry = byZid.get(zid);
+  let text = "";
+  if (entry) {
+    const rendered = JSON.parse(
+      globalThis.wikifnEngineSource(zid, String(entry.arity), nameTable));
+    text = rendered.ok ? rendered.source : "";
+  }
+  sourceCache.set(zid, text);
+  return text;
+}
+
 // Names the generated bodies use that a Scheme already has, or that the prelude
 // below supplies. Anything outside this set makes a program not self-contained.
 const NATIVE = new Set([
@@ -28,49 +48,36 @@ const NATIVE = new Set([
   "add1"
 ]);
 
-// Wikifunctions primitives with no native equivalent. Only the ones a program
-// actually uses are emitted.
-const PRELUDE = new Map([
-  ["Z10008_string_is_empty", `(define (Z10008_string_is_empty s) (string=? s ""))`],
-  ["Z10901_first_character", `(define (Z10901_first_character s)
-  (if (string=? s "") "" (substring s 0 1)))`],
-  ["Z14456_remove_first_character", `(define (Z14456_remove_first_character s)
-  (if (string=? s "") "" (substring s 1 (string-length s))))`],
-  ["Z10615_string_starts_with", `(define (Z10615_string_starts_with s prefix)
-  (let ((n (string-length prefix)))
-    (and (>= (string-length s) n) (string=? (substring s 0 n) prefix))))`],
-  ["Z11040_string_length", `(define (Z11040_string_length s) (string-length s))`],
-  ["Z13569_subtract_natural_numbers_with_floor_of_0",
-   `(define (Z13569_subtract_natural_numbers_with_floor_of_0 a b)
-  (if (< a b) 0 (- a b)))`],
-  ["Z13582_decrement_natural_number_by_one",
-   `(define (Z13582_decrement_natural_number_by_one n) (if (= n 0) 0 (- n 1)))`],
-  ["Z14520_remove_all_characters_in_second_string",
-   `(define (Z14520_remove_all_characters_in_second_string s chars)
-  (list->string
-    (filter (lambda (c) (not (memv c (string->list chars)))) (string->list s))))`],
-  ["Z14124_string_of_characters_from_unicode_range",
-   `(define (Z14124_string_of_characters_from_unicode_range first last)
-  (let loop ((i first) (acc '()))
-    (if (> i last)
-        (list->string (reverse acc))
-        (loop (+ i 1) (cons (integer->char i) acc)))))`],
-  ["Z10075_replace_all_substrings",
-   `(define (Z10075_replace_all_substrings s pattern replacement)
-  (if (string=? pattern "")
-      s
-      (let ((n (string-length s)) (m (string-length pattern)))
-        (let loop ((i 0) (acc ""))
-          (cond ((> (+ i m) n)
-                 (string-append acc (substring s i n)))
-                ((string=? (substring s i (+ i m)) pattern)
-                 (loop (+ i m) (string-append acc replacement)))
-                (else
-                 (loop (+ i 1) (string-append acc (substring s i (+ i 1)))))))))) `]
+// Wikifunctions primitives with no native Scheme equivalent, keyed by ZID and
+// parameterised by the name the printer chose, so a label change cannot break
+// the mapping. Only the ones a program actually uses are emitted.
+export const PRELUDE = new Map([
+  ["Z10008", (n) => `(define (${n} s) (string=? s ""))`],
+  ["Z10901", (n) => `(define (${n} s)\n  (if (string=? s "") "" (substring s 0 1)))`],
+  ["Z14456", (n) => `(define (${n} s)\n  (if (string=? s "") "" (substring s 1 (string-length s))))`],
+  ["Z10615", (n) => `(define (${n} s prefix)\n  (let ((k (string-length prefix)))\n    (and (>= (string-length s) k) (string=? (substring s 0 k) prefix))))`],
+  ["Z11040", (n) => `(define (${n} s) (string-length s))`],
+  ["Z13569", (n) => `(define (${n} a b) (if (< a b) 0 (- a b)))`],
+  ["Z13582", (n) => `(define (${n} k) (if (= k 0) 0 (- k 1)))`],
+  ["Z22717", (n) => `(define (${n} s) (map char->integer (string->list s)))`],
+  ["Z22693", (n) => `(define (${n} cs) (list->string (map integer->char cs)))`],
+  ["Z14520", (n) => `(define (${n} s chars)\n  (list->string\n    (filter (lambda (c) (not (memv c (string->list chars)))) (string->list s))))`],
+  ["Z14124", (n) => `(define (${n} first last)\n  (let loop ((i first) (acc '()))\n    (if (> i last)\n        (list->string (reverse acc))\n        (loop (+ i 1) (cons (integer->char i) acc)))))`],
+  ["Z10075", (n) => `(define (${n} s pattern replacement)\n  (if (string=? pattern "")\n      s\n      (let ((len (string-length s)) (m (string-length pattern)))\n        (let loop ((i 0) (acc ""))\n          (cond ((> (+ i m) len) (string-append acc (substring s i len)))\n                ((string=? (substring s i (+ i m)) pattern)\n                 (loop (+ i m) (string-append acc replacement)))\n                (else (loop (+ i 1) (string-append acc (substring s i (+ i 1))))))))))`],
+  ["Z1000000001", (n) => `;; The first private-use character not already in the input. Not a\n;; Wikifunctions function: the helper the generator emits for an idiom the\n;; corpus writes as a range scan.\n(define (${n} s)\n  (let ((used (string->list s)))\n    (let loop ((code 60928))\n      (cond ((> code 63487) "")\n            ((memv (integer->char code) used) (loop (+ code 1)))\n            (else (string (integer->char code)))))))`]
 ]);
 
+// The name the printer uses for each prelude primitive.
+export const preludeNames = new Map();
+for (const zid of PRELUDE.keys()) {
+  const name = zid === "Z1000000001"
+    ? "fresh-private-use-char"
+    : (catalog.names || {})[zid] || zid;
+  preludeNames.set(name, zid);
+}
+
 // Shims for names not in R7RS-small, so the output runs unmodified anywhere.
-const SHIMS = `(define (identity x) x)
+export const SHIMS = `(define (identity x) x)
 
 (define (add1 n) (+ n 1))
 
@@ -78,14 +85,14 @@ const SHIMS = `(define (identity x) x)
   (if (null? items) seed (fold f (f seed (car items)) (cdr items))))
 `;
 
-const HAS_FILTER_SHIM = `(define (filter pred items)
+export const HAS_FILTER_SHIM = `(define (filter pred items)
   (cond ((null? items) '())
         ((pred (car items)) (cons (car items) (filter pred (cdr items))))
         (else (filter pred (cdr items)))))
 `;
 
 function referencedZids(entry) {
-  return [...new Set([...entry.sexpr.matchAll(/\b(Z[1-9][0-9]*)_[A-Za-z0-9_]*/g)].map((m) => m[0]))];
+  return [...new Set([...sourceOf(entry.zid).matchAll(/\b(Z[1-9][0-9]*)_[A-Za-z0-9_]*/g)].map((m) => m[0]))];
 }
 
 function closureOf(zid, seen = new Set()) {
@@ -105,7 +112,7 @@ function namesUsed(zids) {
   const names = new Set();
   for (const zid of zids) {
     // Strip string literals first: their contents are data, not identifiers.
-    const body = byZid.get(zid).sexpr.replace(/"(?:[^"\\]|\\.)*"/g, '""');
+    const body = sourceOf(zid).replace(/"(?:[^"\\]|\\.)*"/g, '""');
     for (const match of body.matchAll(/[('\s]([A-Za-z_][^\s()"]*|[<>=+*]+\??)/g)) {
       names.add(match[1]);
     }
@@ -121,7 +128,7 @@ function analyse(zid) {
   const preludeNeeded = new Set();
   for (const name of used) {
     if (NATIVE.has(name) || defined.has(name)) continue;
-    if (PRELUDE.has(name)) { preludeNeeded.add(name); continue; }
+    if (preludeNames.has(name)) { preludeNeeded.add(name); continue; }
     if (/^a\d+$/.test(name)) continue; // argument placeholders
     unresolved.push(name);
   }
@@ -149,8 +156,8 @@ function emit(zid, callExpr) {
   };
   place(zid);
 
-  const usesFilter = order.some((z) => /\(filter\b/.test(byZid.get(z).sexpr)) ||
-    preludeNeeded.some((name) => /\(filter\b/.test(PRELUDE.get(name)));
+  const usesFilter = order.some((z) => /\(filter\b/.test(sourceOf(z))) ||
+    preludeNeeded.some((name) => /\(filter\b/.test(PRELUDE.get(preludeNames.get(name))(name)));
 
   const lines = [
     `;; ${entry.zid} ${entry.label}`,
@@ -171,13 +178,15 @@ function emit(zid, callExpr) {
     SHIMS
   ];
   if (usesFilter) lines.push(HAS_FILTER_SHIM);
-  for (const name of preludeNeeded) lines.push(PRELUDE.get(name), "");
+  for (const name of preludeNeeded) {
+    lines.push(PRELUDE.get(preludeNames.get(name))(name), "");
+  }
 
   lines.push(";; ---- generated definitions ----", "");
   for (const z of order) {
     const e = byZid.get(z);
     lines.push(`;; ${e.zid} ${e.label}`);
-    lines.push(e.sexpr);
+    lines.push(sourceOf(e.zid));
     lines.push("");
   }
 
@@ -209,18 +218,21 @@ function listSelfContained() {
   }
 }
 
-const args = process.argv.slice(2);
-if (args.includes("--list-self-contained")) {
-  listSelfContained();
-} else {
-  const zid = args.find((a) => /^Z[1-9][0-9]*$/.test(a));
-  if (!zid) {
-    console.error("usage: export-scheme.js <ZID> [--call '<scheme args>'] [--out FILE]");
-    process.exit(2);
+// CLI only when run directly, so the prelude tables can be imported.
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  const args = process.argv.slice(2);
+  if (args.includes("--list-self-contained")) {
+    listSelfContained();
+  } else {
+    const zid = args.find((a) => /^Z[1-9][0-9]*$/.test(a));
+    if (!zid) {
+      console.error("usage: export-scheme.js <ZID> [--call '<scheme args>'] [--out FILE]");
+      process.exit(2);
+    }
+    const callIndex = args.indexOf("--call");
+    const outIndex = args.indexOf("--out");
+    const program = emit(zid, callIndex >= 0 ? args[callIndex + 1] : undefined);
+    if (outIndex >= 0) await writeFile(args[outIndex + 1], program, "utf8");
+    else console.log(program);
   }
-  const callIndex = args.indexOf("--call");
-  const outIndex = args.indexOf("--out");
-  const program = emit(zid, callIndex >= 0 ? args[callIndex + 1] : undefined);
-  if (outIndex >= 0) await writeFile(args[outIndex + 1], program, "utf8");
-  else console.log(program);
 }

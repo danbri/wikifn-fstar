@@ -107,3 +107,44 @@ test("every generated body renders back to a canonical composition", { skip }, (
     }
   }
 });
+
+// A library must never take its caller down. Evaluation is bounded by fuel for
+// total work and by a depth limit for nesting, and both must be reported rather
+// than thrown. Non-productive definitions exist in the corpus -- Z844 boolean
+// equality is defined as not(inequality) while inequality is defined as
+// not(equality) -- so this is not hypothetical.
+test("no function in the catalogue can crash the host", { skip }, () => {
+  const { call, catalog } = engine();
+  const problems = [];
+  for (const entry of catalog.functions) {
+    for (const args of [
+      Array.from({ length: entry.arity }, () => "ab"),
+      Array.from({ length: entry.arity }, () => 3),
+      Array.from({ length: entry.arity }, () => true),
+      Array.from({ length: entry.arity }, () => [1, 2])
+    ]) {
+      let response;
+      try {
+        response = JSON.parse(
+          globalThis.wikifnEngineCall(entry.zid, "100000", JSON.stringify(args)));
+      } catch (error) {
+        problems.push(`${entry.zid} threw ${error.constructor.name} on ${JSON.stringify(args)}`);
+        continue;
+      }
+      if (typeof response.ok !== "boolean") {
+        problems.push(`${entry.zid} returned no ok field on ${JSON.stringify(args)}`);
+      }
+    }
+  }
+  assert.deepEqual(problems.slice(0, 10), [], `${problems.length} functions misbehaved`);
+});
+
+test("a non-productive definition reports depth rather than hanging", { skip }, () => {
+  const { call } = engine();
+  // Z844 and Z10237 are defined in terms of each other with no base case.
+  for (const zid of ["Z844", "Z10237"]) {
+    const response = call(zid, [true, false], { fuel: 100000 });
+    assert.equal(response.ok, false, `${zid} should not claim success`);
+    assert.match(response.message, /depth|fuel/, `${zid} gave: ${response.message}`);
+  }
+});

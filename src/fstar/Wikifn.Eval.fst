@@ -38,6 +38,7 @@ type value =
 
 type eval_error =
   | EFuelExhausted
+  | EDepthExceeded
   | EUnboundArgument
   | EArityMismatch : zid -> eval_error
   | ETypeMismatch : zid -> eval_error
@@ -386,7 +387,16 @@ let apply_primitive (fid:zid) (args:list value) : Tot (option (eval_result value
    The returned budget is refined to be no larger than the one supplied, which
    is what lets F* see that the recursion terminates. *)
 
-let rec eval (p:policy) (fuel:nat) (env:list value) (e:expr)
+(* A separate limit on nesting depth. Fuel bounds total steps, which is the
+   right budget for work, but it does not bound how deep the call stack gets,
+   and evaluation runs on a host stack that is much smaller than a large fuel
+   allowance. Without this, a non-productive definition such as Z844 boolean
+   equality - defined as not(inequality), where inequality is defined as
+   not(equality) - takes the host down instead of returning an error. A library
+   must not crash its caller. *)
+let max_depth : nat = 900
+
+let rec eval (p:policy) (fuel:nat) (depth:nat) (env:list value) (e:expr)
   : Tot (eval_result value & (remaining:nat{remaining <= fuel})) (decreases %[fuel; 0; 0])
 =
   match e with
@@ -394,92 +404,94 @@ let rec eval (p:policy) (fuel:nat) (env:list value) (e:expr)
   | EArg index -> (env_lookup index env, fuel)
   | ECall fid args ->
       if fuel = 0 then (EErr EFuelExhausted, 0)
+      else if depth >= max_depth then (EErr EDepthExceeded, fuel)
       else
         let next : nat = fuel - 1 in
+        let deeper : nat = depth + 1 in
         if fid = fid_if || fid = fid_if_nat then
           match args with
           | [condition; then_branch; else_branch] -> begin
-              match eval p next env condition with
+              match eval p next deeper env condition with
               | (EOk (VBool b), after) ->
-                  let (result, left) = eval p after env (if b then then_branch else else_branch) in
+                  let (result, left) = eval p after deeper env (if b then then_branch else else_branch) in
                   (result, left)
               | (EOk _, after) -> (EErr (ETypeMismatch fid), after)
               | (EErr err, after) -> (EErr err, after)
             end
           | _ -> (EErr (EArityMismatch fid), next)
         else
-          match eval_list p next env args with
+          match eval_list p next deeper env args with
           | (EErr err, after) -> (EErr err, after)
           | (EOk values, after) -> begin
               match apply_primitive fid values with
               | Some result -> (result, after)
               | None -> begin
-                  match higher_order p after fid values with
+                  match higher_order p after deeper fid values with
                   | Some (result, left) -> (result, left)
                   | None -> begin
                       match p fid with
                       | Some body ->
-                          let (result, left) = eval p after values body in
+                          let (result, left) = eval p after deeper values body in
                           (result, left)
                       | None -> (EErr (ENoImplementation fid), after)
                     end
                 end
             end
 
-and eval_list (p:policy) (fuel:nat) (env:list value) (es:list expr)
+and eval_list (p:policy) (fuel:nat) (depth:nat) (env:list value) (es:list expr)
   : Tot (eval_result (list value) & (remaining:nat{remaining <= fuel})) (decreases %[fuel; 1; es])
 =
   match es with
   | [] -> (EOk [], fuel)
   | head :: rest -> begin
-      match eval p fuel env head with
+      match eval p fuel depth env head with
       | (EErr err, after) -> (EErr err, after)
       | (EOk value, after) -> begin
-          match eval_list p after env rest with
+          match eval_list p after depth env rest with
           | (EErr err, left) -> (EErr err, left)
           | (EOk others, left) -> (EOk (value :: others), left)
         end
     end
 
-and higher_order (p:policy) (fuel:nat) (fid:zid) (args:list value)
+and higher_order (p:policy) (fuel:nat) (depth:nat) (fid:zid) (args:list value)
   : Tot (option (eval_result value & (remaining:nat{remaining <= fuel}))) (decreases %[fuel; 3; 0])
 =
   match args with
   | [VFunc f; VList items] ->
-      if fid = fid_map then Some (map_values p fuel f items)
-      else if fid = fid_filter then Some (filter_values p fuel f items)
+      if fid = fid_map then Some (map_values p fuel depth f items)
+      else if fid = fid_filter then Some (filter_values p fuel depth f items)
       else None
   | [VFunc f; seed; VList items] ->
-      if fid = fid_fold then Some (reduce_values p fuel f seed items)
+      if fid = fid_fold then Some (reduce_values p fuel depth f seed items)
       else None
   | _ -> None
 
-and map_values (p:policy) (fuel:nat) (f:zid) (items:list value)
+and map_values (p:policy) (fuel:nat) (depth:nat) (f:zid) (items:list value)
   : Tot (eval_result value & (remaining:nat{remaining <= fuel})) (decreases %[fuel; 2; items])
 =
   match items with
   | [] -> (EOk (VList []), fuel)
   | head :: rest -> begin
-      match eval p fuel [] (ECall f [EValue head]) with
+      match eval p fuel depth [] (ECall f [EValue head]) with
       | (EErr err, after) -> (EErr err, after)
       | (EOk mapped, after) -> begin
-          match map_values p after f rest with
+          match map_values p after depth f rest with
           | (EErr err, left) -> (EErr err, left)
           | (EOk (VList others), left) -> (EOk (VList (mapped :: others)), left)
           | (EOk _, left) -> (EErr (ETypeMismatch f), left)
         end
     end
 
-and filter_values (p:policy) (fuel:nat) (f:zid) (items:list value)
+and filter_values (p:policy) (fuel:nat) (depth:nat) (f:zid) (items:list value)
   : Tot (eval_result value & (remaining:nat{remaining <= fuel})) (decreases %[fuel; 2; items])
 =
   match items with
   | [] -> (EOk (VList []), fuel)
   | head :: rest -> begin
-      match eval p fuel [] (ECall f [EValue head]) with
+      match eval p fuel depth [] (ECall f [EValue head]) with
       | (EErr err, after) -> (EErr err, after)
       | (EOk (VBool keep), after) -> begin
-          match filter_values p after f rest with
+          match filter_values p after depth f rest with
           | (EErr err, left) -> (EErr err, left)
           | (EOk (VList others), left) -> (EOk (VList (if keep then head :: others else others)), left)
           | (EOk _, left) -> (EErr (ETypeMismatch f), left)
@@ -487,23 +499,23 @@ and filter_values (p:policy) (fuel:nat) (f:zid) (items:list value)
       | (EOk _, after) -> (EErr (ETypeMismatch f), after)
     end
 
-and reduce_values (p:policy) (fuel:nat) (f:zid) (acc:value) (items:list value)
+and reduce_values (p:policy) (fuel:nat) (depth:nat) (f:zid) (acc:value) (items:list value)
   : Tot (eval_result value & (remaining:nat{remaining <= fuel})) (decreases %[fuel; 2; items])
 =
   match items with
   | [] -> (EOk acc, fuel)
   | head :: rest -> begin
-      match eval p fuel [] (ECall f [EValue acc; EValue head]) with
+      match eval p fuel depth [] (ECall f [EValue acc; EValue head]) with
       | (EErr err, after) -> (EErr err, after)
       | (EOk next_acc, after) ->
-          let (result, left) = reduce_values p after f next_acc rest in
+          let (result, left) = reduce_values p after depth f next_acc rest in
           (result, left)
     end
 
 let empty_policy : policy = fun _ -> None
 
 let run (p:policy) (fuel:nat) (fid:zid) (args:list value) : Tot (eval_result value) =
-  let (result, _) = eval p fuel [] (ECall fid (values_as_exprs args)) in
+  let (result, _) = eval p fuel 0 [] (ECall fid (values_as_exprs args)) in
   result
 
 (* How much of the budget a call actually spent, which is the useful number when
@@ -511,5 +523,5 @@ let run (p:policy) (fuel:nat) (fid:zid) (args:list value) : Tot (eval_result val
 let run_with_cost (p:policy) (fuel:nat) (fid:zid) (args:list value)
   : Tot (eval_result value & nat)
 =
-  let (result, remaining) = eval p fuel [] (ECall fid (values_as_exprs args)) in
+  let (result, remaining) = eval p fuel 0 [] (ECall fid (values_as_exprs args)) in
   (result, fuel - remaining)

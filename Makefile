@@ -20,6 +20,7 @@ fstar-generate-eval:
 
 fstar-engine:
 	./scripts/build-fstar-engine.sh
+	node scripts/export-all-scheme.js
 
 engine-testers:
 	node scripts/check-engine-testers.js
