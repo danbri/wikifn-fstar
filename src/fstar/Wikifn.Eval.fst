@@ -61,6 +61,17 @@ type expr =
   | EValue : value -> expr
   | EArg : nat -> expr
   | ECall : zid -> list expr -> expr
+  (* Building a record from fields that are not yet values. A record whose
+     fields are all literals is an EValue; this is for the other case, where a
+     field is an argument or a call.
+
+     Without it, an implementation like Z27217 - which is nothing but
+     {Z11K1: arg2, Z11K2: arg1, Z1K1: Z11} - could not be expressed, so it was
+     skipped, and the only surviving implementation of Z861 was the one that
+     defers to Z26107, which defers straight back. The pair looked like
+     unbreakable mutual recursion when in fact neither function recurses at all
+     and the way out was a plain record. *)
+  | ERecord : zid -> list (zkey & expr) -> expr
 
 (* A policy maps a function ZID to a body written against argument indices. *)
 type policy = zid -> Tot (option expr)
@@ -241,6 +252,21 @@ let rec value_count (items:list value) : Tot nat =
   match items with
   | [] -> 0
   | _ :: rest -> 1 + value_count rest
+
+(* The field expressions of a record, and the way back once they are values.
+   These need no subterm argument: eval spends fuel before evaluating a record's
+   fields, and the termination measure is on fuel. *)
+let rec field_exprs (fields:list (zkey & expr)) : Tot (list expr) =
+  match fields with
+  | [] -> []
+  | (_, e) :: rest -> e :: field_exprs rest
+
+let rec fields_with_values (fields:list (zkey & expr)) (values:list value)
+  : Tot (list (zkey & value))
+=
+  match fields, values with
+  | (k, _) :: field_tail, v :: value_tail -> (k, v) :: fields_with_values field_tail value_tail
+  | _, _ -> []
 
 let rec values_as_exprs (items:list value) : Tot (list expr) =
   match items with
@@ -538,6 +564,15 @@ let rec eval (p:policy) (fuel:nat) (depth:nat) (env:list value) (e:expr)
   match e with
   | EValue v -> (EOk v, fuel)
   | EArg index -> (env_lookup index env, fuel)
+  | ERecord t fields ->
+      if fuel = 0 then (EErr EFuelExhausted, 0)
+      else if depth >= max_depth then (EErr EDepthExceeded, fuel)
+      else
+        let next : nat = fuel - 1 in
+        let deeper : nat = depth + 1 in
+        (match eval_list p next deeper env (field_exprs fields) with
+         | (EErr err, after) -> (EErr err, after)
+         | (EOk values, after) -> (EOk (VRecord t (fields_with_values fields values)), after))
   | ECall fid args ->
       if fuel = 0 then (EErr EFuelExhausted, 0)
       else if depth >= max_depth then (EErr EDepthExceeded, fuel)

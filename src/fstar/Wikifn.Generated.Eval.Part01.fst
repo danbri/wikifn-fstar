@@ -11,8 +11,32 @@ open Wikifn.Eval
 
   part:      2 of 10
   functions: 400
-  ZID range: Z12975 to Z16012
+  ZID range: Z12936 to Z15969
 *)
+
+(* Z12936 Esperanto conditional verb | Z12936@130320 -> Z12937@130321 digest a7beff5bdba5232c09dcf927b9c110853f88619581d4d343b9fd332d7337a2c3 *)
+let body_Z12936_esperanto_conditional_verb : expr =
+  ECall 10000 [ECall 12908 [EArg 0]; EValue (VText [117; 115])]
+
+(* Z12938 Esperanto volitive mood | Z12938@130322 -> Z12939@130323 digest a6de674a5805c092897fcdfc252fd92071b6164c2c20fdf58beef32ff41fbfe0 *)
+let body_Z12938_esperanto_volitive_mood : expr =
+  ECall 10000 [ECall 12908 [EArg 0]; EValue (VText [117])]
+
+(* Z12941 debug | Z12941@162828 -> Z20883@223167 digest 770164f266a350024b2f36f5d3def4f2519e18bb4c60ea3df491d8a4f68952ac *)
+let body_Z12941_debug : expr =
+  ECall 820 [EValue (VText [101; 120; 101; 99; 117; 116; 111; 114; 68; 101; 98; 117; 103; 76; 111; 103; 115]); EArg 0]
+
+(* Z12964 last element | Z12964@275889 -> Z12965@189653 digest 8bf5e7dc40f7a2f817e58a000b111c9debd30e580dfc13d9f4a58688a27ec1e9 *)
+let body_Z12964_last_element : expr =
+  ECall 811 [ECall 12668 [EArg 0]]
+
+(* Z12967 list without last element | Z12967@162674 -> Z12968@130471 digest 3b69c180dd0ab773c5925b800d94b8d8ea38d66b691afbe01a2b5af507813c10 *)
+let body_Z12967_list_without_last_element : expr =
+  ECall 18479 [ECall 812 [ECall 18479 [EArg 0]]]
+
+(* Z12971 Ones complement binary addition | Z12971@267864 -> Z33969@267863 digest 345bfc1807b805e83a6c55daf8d165b3e0abfe6238cdc67c7655d9ba4fd766c5 *)
+let body_Z12971_ones_complement_binary_addition : expr =
+  ECall 13779 [ECall 13521 [ECall 13797 [EArg 0]; ECall 13797 [EArg 1]]]
 
 (* Z12975 Ones complement binary subtraction | Z12975@267867 -> Z33970@267866 digest 2cb92e2763ed9f76e468ee9d5a9394c615f8e4f806c9821eb44cbe6c77f087f2 *)
 let body_Z12975_ones_complement_binary_subtraction : expr =
@@ -618,13 +642,13 @@ let body_Z14139_remove_unicode_characters_8298_to_8303 : expr =
 let body_Z14142_remove_interlinear_annotation_characters : expr =
   ECall 14119 [EArg 0; EValue (VNat 65529); EValue (VNat 65531)]
 
-(* Z14145 remove U+FEFF | Z14145@219243 -> Z14146@155960 digest 069965a1196f79daee1143ab1d5d4041cdde7b535c14c983ad0807af09d772a8 *)
+(* Z14145 remove U+FEFF | Z14145@219243 -> Z14255@159467 digest a7281f23c78c994d8585ddf74fc3b7d1badf2a8593817f578fb8e39c0935b5b8 *)
 let body_Z14145_remove_u_feff : expr =
-  ECall 14119 [EArg 0; EValue (VNat 65279); EValue (VNat 65279)]
+  ECall 10075 [EArg 0; ECall 11534 [EValue (VNat 65279)]; EValue (VText [])]
 
-(* Z14148 remove U+FFFC | Z14148@272935 -> Z14150@155964 digest 92f4df071bd77b2f0ad83a9c166bdc5f60d7630a6a505ff3cf97c82470d4f179 *)
+(* Z14148 remove U+FFFC | Z14148@272935 -> Z17015@227811 digest d4c978e3cc392eac00532f844aea194a566cb7d925be5b54f430deab0f191de5 *)
 let body_Z14148_remove_u_fffc : expr =
-  ECall 14119 [EArg 0; EValue (VNat 65532); EValue (VNat 65532)]
+  ECall 10075 [EArg 0; ECall 11534 [EValue (VNat 65532)]; EValue (VText [])]
 
 (* Z14151 remove scoping for musical notation | Z14151@156712 -> Z14152@156713 digest 28e6f53ca81f9bb26c93962bdf885b0090519e1bbaa9bf1d4d8b4681d8dd745e *)
 let body_Z14151_remove_scoping_for_musical_notation : expr =
@@ -1590,32 +1614,14 @@ let body_Z15965_polish_cardinal : expr =
 let body_Z15969_reified_z1k1_object_for_key_reference : expr =
   ECall 822 [ECall 811 [ECall 805 [EArg 0]]]
 
-(* Z15977 (!) return grammatical number for an integer and language | Z15977@262959 -> Z15987@203139 digest cafd3611a333053a0518f01b0629a39dcf11c806a8e1e893a3c9567b36dff12b *)
-let body_Z15977_return_grammatical_number_for_an_integer_and_language : expr =
-  ECall 802 [ECall 14326 [EArg 1; EValue (VFunc 1002)]; ECall 15982 [EArg 0]; ECall 15988 [EArg 0]]
-
-(* Z15982 (!) grammatical number for languages with only singular and plural | Z15982@271189 -> Z34591@271182 digest ee808722d679be5259eafb793e5e0815f31ea73f8bbcb056e124780b2af21854 *)
-let body_Z15982_grammatical_number_for_languages_with_only_singular_and_plur : expr =
-  ECall 802 [ECall 31547 [EArg 0]; EValue (VText [115; 105; 110; 103; 117; 108; 97; 114]); EValue (VText [112; 108; 117; 114; 97; 108])]
-
-(* Z15991 code point prefix | Z15991@277541 -> Z15993@203405 digest 5c8a09b515b275c0e0cc9c1bc33f57d38b9770c03afd1434ca42d0915dc712de *)
-let body_Z15991_code_point_prefix : expr =
-  ECall 22693 [ECall 810 [EArg 0; ECall 22717 [EArg 1]]]
-
-(* Z15996 first N code points | Z15996@255234 -> Z15999@203412 digest d5551dc9f68f5ee51e75a70f44a262bf71c18a1800124e6d721ec2f6f4e19294 *)
-let body_Z15996_first_n_code_points : expr =
-  ECall 802 [ECall 13522 [EValue (VNat 0); EArg 1]; EValue (VText []); ECall 802 [ECall 13522 [EValue (VNat 1); EArg 1]; ECall 886 [ECall 810 [ECall 811 [ECall 868 [EArg 0]]; EValue (VList [])]]; ECall 14592 [EArg 0; EArg 1]]]
-
-(* Z16000 Igbo month name in Igbo | Z16000@271187 -> Z34593@271186 digest 76295be2f757f76b8879643fff03dc823f2db90f8496598ab6ae69a2f09e1e62 *)
-let body_Z16000_igbo_month_name_in_igbo : expr =
-  ECall 10000 [EValue (VText [7884; 110; 119; 97; 32]); ECall 14396 [ECall 16273 [ECall 20607 [ECall 16365 [EArg 0]]; EValue (VFunc 1002)]]]
-
-(* Z16012 (!) grammatical number for languages with singular, dual and plural | Z16012@271191 -> Z34594@271190 digest a0c189fcce8af7fc434045433c6d628e1beebe7c1aca3e3f6243b92e297e72f7 *)
-let body_Z16012_grammatical_number_for_languages_with_singular_dual_and_plur : expr =
-  ECall 19565 [ECall 31547 [EArg 0]; EValue (VText [115; 105; 110; 103; 117; 108; 97; 114]); ECall 31554 [EArg 0]; EValue (VText [100; 117; 97; 108]); EValue (VText [112; 108; 117; 114; 97; 108])]
-
 let part_policy (fid:zid) : Tot (option expr) =
   match fid with
+  | 12936 -> Some body_Z12936_esperanto_conditional_verb
+  | 12938 -> Some body_Z12938_esperanto_volitive_mood
+  | 12941 -> Some body_Z12941_debug
+  | 12964 -> Some body_Z12964_last_element
+  | 12967 -> Some body_Z12967_list_without_last_element
+  | 12971 -> Some body_Z12971_ones_complement_binary_addition
   | 12975 -> Some body_Z12975_ones_complement_binary_subtraction
   | 12982 -> Some body_Z12982_binary_to_decimal
   | 12987 -> Some body_Z12987_binary_to_hexadecimal
@@ -2010,10 +2016,4 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 15953 -> Some body_Z15953_ukrainian_cardinal
   | 15965 -> Some body_Z15965_polish_cardinal
   | 15969 -> Some body_Z15969_reified_z1k1_object_for_key_reference
-  | 15977 -> Some body_Z15977_return_grammatical_number_for_an_integer_and_language
-  | 15982 -> Some body_Z15982_grammatical_number_for_languages_with_only_singular_and_plur
-  | 15991 -> Some body_Z15991_code_point_prefix
-  | 15996 -> Some body_Z15996_first_n_code_points
-  | 16000 -> Some body_Z16000_igbo_month_name_in_igbo
-  | 16012 -> Some body_Z16012_grammatical_number_for_languages_with_singular_dual_and_plur
   | _ -> None

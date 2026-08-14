@@ -200,6 +200,12 @@ let rec print_expr (lookup:name_lookup) (names:list text) (e:expr)
   | EArg index -> nth_text index names
   | ECall f args ->
       parenthesise (join_with [cp_space] (name_of lookup f :: print_args lookup names args))
+  | ERecord t fields ->
+      (* Same shape as a record value, so a record reads the same whether its
+         fields were literals or computed. *)
+      parenthesise (join_with [cp_space]
+        ([114; 101; 99; 111; 114; 100] :: name_of lookup t
+         :: print_field_exprs lookup names fields))
 
 and print_args (lookup:name_lookup) (names:list text) (args:list expr)
   : Tot (list text) (decreases args)
@@ -207,6 +213,15 @@ and print_args (lookup:name_lookup) (names:list text) (args:list expr)
   match args with
   | [] -> []
   | head :: tail -> print_expr lookup names head :: print_args lookup names tail
+
+and print_field_exprs (lookup:name_lookup) (names:list text) (fields:list (zkey & expr))
+  : Tot (list text) (decreases fields)
+=
+  match fields with
+  | [] -> []
+  | (k, e) :: tail ->
+      parenthesise (join_with [cp_space] [render_zkey k; print_expr lookup names e])
+      :: print_field_exprs lookup names tail
 
 (* A whole definition: (define (name a0 a1) body) *)
 let print_definition

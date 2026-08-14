@@ -65,9 +65,9 @@
 (define (Z844_boolean_equality a0 a1) (Z10243_nand (Z10243_nand a0 a1) (Z10243_nand (Z10243_nand a0 a0) (Z10243_nand a1 a1))))
 (define Z844 Z844_boolean_equality)
 
-;; Z861 Monolingual text from String and Natural language  [mutually recursive: may not terminate]
+;; Z861 Monolingual text from String and Natural language
 ;;   Z861K1: String, Z861K2: Natural language -> Monolingual text   [declared, not checked]
-(define (Z861_monolingual_text_from_string_and_natural_language a0 a1) (Z26107_monolingual_text_from_language_and_string a1 a0))
+(define (Z861_monolingual_text_from_string_and_natural_language a0 a1) (record Z11 (Z11K1 a1) (Z11K2 a0)))
 (define Z861 Z861_monolingual_text_from_string_and_natural_language)
 
 ;; Z889 List equality
@@ -120,22 +120,22 @@
 (define (Z10070_has_substring a0 a1) (not (Z23883_is_zero_natural_number (Z31826_position_1_n_of_first_matching_substring a0 a1))))
 (define Z10070 Z10070_has_substring)
 
-;; Z10079 trim string
+;; Z10079 trim string  [reaches an unimplemented function]
 ;;   Z10079K1: String -> String   [declared, not checked]
 (define (Z10079_trim_string a0) (Z10084_remove_leading_spaces (Z10095_remove_trailing_spaces a0)))
 (define Z10079 Z10079_trim_string)
 
-;; Z10083 is string blank
+;; Z10083 is string blank  [reaches an unimplemented function]
 ;;   Z10083K1: String -> Boolean   [declared, not checked]
 (define (Z10083_is_string_blank a0) (Z10008_is_empty_string (Z10079_trim_string a0)))
 (define Z10083 Z10083_is_string_blank)
 
-;; Z10084 remove leading spaces  [mutually recursive: may not terminate]
+;; Z10084 remove leading spaces  [reaches an unimplemented function; mutually recursive: may not terminate]
 ;;   Z10084K1: String -> String   [declared, not checked]
 (define (Z10084_remove_leading_spaces a0) (Z10012_reverse_string (Z10095_remove_trailing_spaces (Z10012_reverse_string a0))))
 (define Z10084 Z10084_remove_leading_spaces)
 
-;; Z10095 Remove trailing spaces  [mutually recursive: may not terminate]
+;; Z10095 Remove trailing spaces  [reaches an unimplemented function; mutually recursive: may not terminate]
 ;;   Z10095K1: String -> String   [declared, not checked]
 (define (Z10095_remove_trailing_spaces a0) (Z10012_reverse_string (Z10084_remove_leading_spaces (Z10012_reverse_string a0))))
 (define Z10095 Z10095_remove_trailing_spaces)
@@ -149,6 +149,11 @@
 ;;   Z10108K1: String, Z10108K2: Natural number, Z10108K3: String -> String   [declared, not checked]
 (define (Z10108_string_end_padding a0 a1 a2) (if (Z23883_is_zero_natural_number (Z13569_subtract_natural_numbers_with_floor_of_0 a1 (Z11040_string_length a0))) a0 (Z10000_join_two_strings a0 (Z12624_replicate_string_n_times a2 (Z13569_subtract_natural_numbers_with_floor_of_0 a1 (Z11040_string_length a0))))))
 (define Z10108 Z10108_string_end_padding)
+
+;; Z10111 compose two Functions  [reaches an unimplemented function]
+;;   Z10111K1: Function, Z10111K2: Function -> Function   [declared, not checked]
+(define (Z10111_compose_two_functions a0 a1) (record Z8 (Z8K1 (Z21177_get_list_of_argument_declarations a0)) (Z8K2 (Z10112_function_return_type a1)) (Z8K3 (list)) (Z8K4 (list)) (Z8K5 Z10116)))
+(define Z10111 Z10111_compose_two_functions)
 
 ;; Z10112 function return type
 ;;   Z10112K1: Function -> Type   [declared, not checked]
@@ -437,7 +442,7 @@
 
 ;; Z10696 is QID in use?  [reaches an unimplemented function]
 ;;   Z10696K1: String -> Boolean   [declared, not checked]
-(define (Z10696_is_qid_in_use a0) (not (Z23883_is_zero_natural_number (Z30737_length_of_typed_map (Z30248_fetch_wikidata_items (cons (Z22246 a0) (list)) (list Z6031) (list) (list))))))
+(define (Z10696_is_qid_in_use a0) (not (Z23883_is_zero_natural_number (Z30737_length_of_typed_map (Z30248_fetch_wikidata_items (cons (Z22246_wikidata_item_reference_from_qid_string a0) (list)) (list Z6031) (list) (list))))))
 (define Z10696 Z10696_is_qid_in_use)
 
 ;; Z10715 is numeric  [reaches an unimplemented function]
@@ -497,7 +502,7 @@
 
 ;; Z10774 URI percent decode  [reaches an unimplemented function]
 ;;   Z10774K1: String -> String   [declared, not checked]
-(define (Z10774_uri_percent_decode a0) (if (Z23883_is_zero_natural_number (Z31268_first_index_1_n_of_character_in_string (record Z86 (Z86K1 37)) a0)) a0 (if (Z31547_is_natural_number_1 (Z31268_first_index_1_n_of_character_in_string (record Z86 (Z86K1 37)) a0)) (if (Z25540_is_highest_bit_set (Z22800 (Z28630_substring_by_index_0_indexed a0 1 3))) (if (Z25426_get_nth_bit_as_boolean (Z22800 (Z28630_substring_by_index_0_indexed a0 1 3)) 5) (if (Z25426_get_nth_bit_as_boolean (Z22800 (Z28630_substring_by_index_0_indexed a0 1 3)) 4) (Z10000_join_two_strings (Z10373 (Z10000_join_two_strings (Z10000_join_two_strings (Z28630_substring_by_index_0_indexed a0 1 3) (Z28630_substring_by_index_0_indexed a0 4 6)) (Z10000_join_two_strings (Z28630_substring_by_index_0_indexed a0 7 9) (Z28630_substring_by_index_0_indexed a0 10 12)))) (Z10774_uri_percent_decode (Z14636_remove_first_n_characters_of_string a0 12))) (Z10000_join_two_strings (Z10373 (Z15175_join_two_strings_with_separator (Z28630_substring_by_index_0_indexed a0 1 3) (Z28630_substring_by_index_0_indexed a0 7 9) (Z28630_substring_by_index_0_indexed a0 4 6))) (Z10774_uri_percent_decode (Z14636_remove_first_n_characters_of_string a0 9)))) (Z10000_join_two_strings (Z10373 (Z10000_join_two_strings (Z28630_substring_by_index_0_indexed a0 1 3) (Z28630_substring_by_index_0_indexed a0 4 6))) (Z10774_uri_percent_decode (Z14636_remove_first_n_characters_of_string a0 6)))) (Z10000_join_two_strings (Z10373 (Z28630_substring_by_index_0_indexed a0 1 3)) (Z10774_uri_percent_decode (Z14636_remove_first_n_characters_of_string a0 3)))) (Z10000_join_two_strings (Z14592_first_n_characters_of_string a0 (Z13582_decrement_natural_number_by_one (Z31268_first_index_1_n_of_character_in_string (record Z86 (Z86K1 37)) a0))) (Z10774_uri_percent_decode (Z14636_remove_first_n_characters_of_string a0 (Z13582_decrement_natural_number_by_one (Z31268_first_index_1_n_of_character_in_string (record Z86 (Z86K1 37)) a0))))))))
+(define (Z10774_uri_percent_decode a0) (if (Z23883_is_zero_natural_number (Z31268_first_index_1_n_of_character_in_string (record Z86 (Z86K1 37)) a0)) a0 (if (Z31547_is_natural_number_1 (Z31268_first_index_1_n_of_character_in_string (record Z86 (Z86K1 37)) a0)) (if (Z25540_is_highest_bit_set (Z22800_hex_string_as_byte (Z28630_substring_by_index_0_indexed a0 1 3))) (if (Z25426_get_nth_bit_as_boolean (Z22800_hex_string_as_byte (Z28630_substring_by_index_0_indexed a0 1 3)) 5) (if (Z25426_get_nth_bit_as_boolean (Z22800_hex_string_as_byte (Z28630_substring_by_index_0_indexed a0 1 3)) 4) (Z10000_join_two_strings (Z10373 (Z10000_join_two_strings (Z10000_join_two_strings (Z28630_substring_by_index_0_indexed a0 1 3) (Z28630_substring_by_index_0_indexed a0 4 6)) (Z10000_join_two_strings (Z28630_substring_by_index_0_indexed a0 7 9) (Z28630_substring_by_index_0_indexed a0 10 12)))) (Z10774_uri_percent_decode (Z14636_remove_first_n_characters_of_string a0 12))) (Z10000_join_two_strings (Z10373 (Z15175_join_two_strings_with_separator (Z28630_substring_by_index_0_indexed a0 1 3) (Z28630_substring_by_index_0_indexed a0 7 9) (Z28630_substring_by_index_0_indexed a0 4 6))) (Z10774_uri_percent_decode (Z14636_remove_first_n_characters_of_string a0 9)))) (Z10000_join_two_strings (Z10373 (Z10000_join_two_strings (Z28630_substring_by_index_0_indexed a0 1 3) (Z28630_substring_by_index_0_indexed a0 4 6))) (Z10774_uri_percent_decode (Z14636_remove_first_n_characters_of_string a0 6)))) (Z10000_join_two_strings (Z10373 (Z28630_substring_by_index_0_indexed a0 1 3)) (Z10774_uri_percent_decode (Z14636_remove_first_n_characters_of_string a0 3)))) (Z10000_join_two_strings (Z14592_first_n_characters_of_string a0 (Z13582_decrement_natural_number_by_one (Z31268_first_index_1_n_of_character_in_string (record Z86 (Z86K1 37)) a0))) (Z10774_uri_percent_decode (Z14636_remove_first_n_characters_of_string a0 (Z13582_decrement_natural_number_by_one (Z31268_first_index_1_n_of_character_in_string (record Z86 (Z86K1 37)) a0))))))))
 (define Z10774 Z10774_uri_percent_decode)
 
 ;; Z10782 add two integer strings  [reaches an unimplemented function]
@@ -625,6 +630,11 @@
 (define (Z10993_hebrew_convert_to_maqaf_en_dash a0) (Z10193_replace_all_regex_case_sensitive (Z10193_replace_all_regex_case_sensitive (Z10894 a0) "((^|[^\\u05D0-\\u05EA])([משהוכלב]{1,4})?(אי|אין|אל|בין|בלתי|ב[ןרת]|בתר|דו|חד|חוץ|חצי|טרום|יתר|כלל?|כמו|לא|מ[יא]?קרו|מט[אה]|מסב|מעין|מצד|מ?תוך|על|פנים|פסא?ודו|קדם|רב|תלת|תת))\\-(?=[\\u05D0-\\u05EA])" "\\1־") "(?<=[\\u05D0-\\u05EA])\\-(?=(אחר|ות|יחד|י|י?ים|למחצה|מדומה|נגד|על)([^\\u05D0-\\u05EA]|$))" "־"))
 (define Z10993 Z10993_hebrew_convert_to_maqaf_en_dash)
 
+;; Z10996 is leap year (natural number Gregorian calendar)  [reaches an unimplemented function]
+;;   Z10996K1: Natural number -> Boolean   [declared, not checked]
+(define (Z10996_is_leap_year_natural_number_gregorian_calendar a0) (Z20181_is_gregorian_year_leap_year (record Z20159 (Z20159K1 Z17814) (Z20159K2 a0))))
+(define Z10996 Z10996_is_leap_year_natural_number_gregorian_calendar)
+
 ;; Z11003 Base16 Encode  [reaches an unimplemented function; mutually recursive: may not terminate]
 ;;   Z11003K1: String -> String   [declared, not checked]
 (define (Z11003_base16_encode a0) (Z10018 (Z10366_string_to_hex_utf_8 a0)))
@@ -650,7 +660,7 @@
 (define (Z11044_url_fragment a0) (Z10866_string_after_other_string a0 "#"))
 (define Z11044 Z11044_url_fragment)
 
-;; Z11053 URL query string
+;; Z11053 URL query string  [reaches an unimplemented function]
 ;;   Z11053K1: String -> String   [declared, not checked]
 (define (Z11053_url_query_string a0) (Z11542_if_string_output (Z10070_has_substring a0 "?") (Z11410_discard_from_start_of_first_substring (Z11420_discard_until_end_of_first_substring a0 "?") "#") ""))
 (define Z11053 Z11053_url_query_string)
@@ -837,7 +847,7 @@
 
 ;; Z11328 hamming distance between two strings  [reaches an unimplemented function]
 ;;   Z11328K1: String, Z11328K2: String -> Integer   [declared, not checked]
-(define (Z11328_hamming_distance_between_two_strings a0 a1) (if (Z11690_strings_equal_length a0 a1) (Z17101 (Z31026_hamming_distance (Z24453_string_to_grapheme_list a0) (Z24453_string_to_grapheme_list a1))) (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16662))) (Z16683K2 1))))
+(define (Z11328_hamming_distance_between_two_strings a0 a1) (if (Z11690_strings_equal_length a0 a1) (Z17101_natural_number_to_integer (Z31026_hamming_distance (Z24453_string_to_grapheme_list a0) (Z24453_string_to_grapheme_list a1))) (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16662))) (Z16683K2 1))))
 (define Z11328 Z11328_hamming_distance_between_two_strings)
 
 ;; Z11332 regular Croatian feminine instrumental plural
@@ -900,22 +910,22 @@
 (define (Z11412_discard_from_end_of_first_substring a0 a1) (Z10000_join_two_strings (Z11410_discard_from_start_of_first_substring a0 a1) (Z11542_if_string_output (Z10070_has_substring a0 a1) a1 "")))
 (define Z11412 Z11412_discard_from_end_of_first_substring)
 
-;; Z11414 discard from start of last substring  [mutually recursive: may not terminate]
+;; Z11414 discard from start of last substring  [reaches an unimplemented function; mutually recursive: may not terminate]
 ;;   Z11414K1: String, Z11414K2: String -> String   [declared, not checked]
 (define (Z11414_discard_from_start_of_last_substring a0 a1) (Z11170_string_without_suffix (Z11416_discard_from_end_of_last_substring a0 a1) a1))
 (define Z11414 Z11414_discard_from_start_of_last_substring)
 
-;; Z11416 discard from end of last substring  [mutually recursive: may not terminate]
+;; Z11416 discard from end of last substring  [reaches an unimplemented function; mutually recursive: may not terminate]
 ;;   Z11416K1: String, Z11416K2: String -> String   [declared, not checked]
 (define (Z11416_discard_from_end_of_last_substring a0 a1) (Z10000_join_two_strings (Z11414_discard_from_start_of_last_substring a0 a1) (Z11542_if_string_output (Z10070_has_substring a0 a1) a1 "")))
 (define Z11416 Z11416_discard_from_end_of_last_substring)
 
-;; Z11418 discard until start of first substring
+;; Z11418 discard until start of first substring  [reaches an unimplemented function]
 ;;   Z11418K1: String, Z11418K2: String -> String   [declared, not checked]
 (define (Z11418_discard_until_start_of_first_substring a0 a1) (Z10000_join_two_strings (Z11542_if_string_output (Z10070_has_substring a0 a1) a1 "") (Z11420_discard_until_end_of_first_substring a0 a1)))
 (define Z11418 Z11418_discard_until_start_of_first_substring)
 
-;; Z11420 discard until end of first substring
+;; Z11420 discard until end of first substring  [reaches an unimplemented function]
 ;;   Z11420K1: String, Z11420K2: String -> String   [declared, not checked]
 (define (Z11420_discard_until_end_of_first_substring a0 a1) (Z10012_reverse_string (Z11414_discard_from_start_of_last_substring (Z10012_reverse_string a0) (Z10012_reverse_string a1))))
 (define Z11420 Z11420_discard_until_end_of_first_substring)
@@ -1025,9 +1035,14 @@
 (define (Z11531_remove_characters_in_character_range a0 a1 a2) (Z14119_remove_characters_in_unicode_range a0 (Z11515_unicode_of_first_character a1) (Z11515_unicode_of_first_character a2)))
 (define Z11531 Z11531_remove_characters_in_character_range)
 
+;; Z11534 chr of codepoint value
+;;   Z11534K1: Natural number -> String   [declared, not checked]
+(define (Z11534_chr_of_codepoint_value a0) (Z15631_codepoint_to_string (record Z86 (Z86K1 a0))))
+(define Z11534 Z11534_chr_of_codepoint_value)
+
 ;; Z11538 successor of Code point (as String)  [reaches an unimplemented function]
 ;;   Z11538K1: String -> String   [declared, not checked]
-(define (Z11538_successor_of_code_point_as_string a0) (Z15631_codepoint_to_string (Z23022 (add1 (Z11515_unicode_of_first_character a0)))))
+(define (Z11538_successor_of_code_point_as_string a0) (Z15631_codepoint_to_string (Z23022_natural_number_to_codepoint (add1 (Z11515_unicode_of_first_character a0)))))
 (define Z11538 Z11538_successor_of_code_point_as_string)
 
 ;; Z11542 if (string output)
@@ -1047,7 +1062,7 @@
 
 ;; Z11564 predecessor of Code point (as String)  [reaches an unimplemented function]
 ;;   Z11564K1: String -> String   [declared, not checked]
-(define (Z11564_predecessor_of_code_point_as_string a0) (Z15631_codepoint_to_string (Z23022 (Z13582_decrement_natural_number_by_one (Z11515_unicode_of_first_character a0)))))
+(define (Z11564_predecessor_of_code_point_as_string a0) (Z15631_codepoint_to_string (Z23022_natural_number_to_codepoint (Z13582_decrement_natural_number_by_one (Z11515_unicode_of_first_character a0)))))
 (define Z11564 Z11564_predecessor_of_code_point_as_string)
 
 ;; Z11573 is heterogram
@@ -1407,7 +1422,7 @@
 
 ;; Z12176 is leap year (Nanakshahi calendar)  [reaches an unimplemented function]
 ;;   Z12176K1: Natural number -> Boolean   [declared, not checked]
-(define (Z12176_is_leap_year_nanakshahi_calendar a0) (Z32261_are_integers_congruent_modulo_other_integer (Z17101 a0) (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16660))) (Z16683K2 3)) (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16660))) (Z16683K2 4))))
+(define (Z12176_is_leap_year_nanakshahi_calendar a0) (Z32261_are_integers_congruent_modulo_other_integer (Z17101_natural_number_to_integer a0) (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16660))) (Z16683K2 3)) (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16660))) (Z16683K2 4))))
 (define Z12176 Z12176_is_leap_year_nanakshahi_calendar)
 
 ;; Z12180 Sindhi (Perso-Arabic) feminine u > uni
@@ -1650,15 +1665,30 @@
 (define (Z12400_has_diacritics a0) (Z10379_string_inequality a0 (Z12391_remove_diacritics a0)))
 (define Z12400 Z12400_has_diacritics)
 
-;; Z12427 is prime
+;; Z12427 is prime  [reaches an unimplemented function]
 ;;   Z12427K1: Natural number -> Boolean   [declared, not checked]
 (define (Z12427_is_prime a0) (Z14946_is_k_almost_prime a0 1))
 (define Z12427 Z12427_is_prime)
 
-;; Z12429 is odd (integer)  [mutually recursive: may not terminate]
+;; Z12429 is odd (integer)  [reaches an unimplemented function; mutually recursive: may not terminate]
 ;;   Z12429K1: Integer -> Boolean   [declared, not checked]
 (define (Z12429_is_odd_integer a0) (not (Z12480_is_even_integer a0)))
 (define Z12429 Z12429_is_odd_integer)
+
+;; Z12436 Does this French verb belong to 1st group?  [reaches an unimplemented function]
+;;   Z12436K1: Wikidata lexeme reference -> Boolean   [declared, not checked]
+(define (Z12436_does_this_french_verb_belong_to_1st_group a0) (Z12696_contains (Z19300_statements_from_lexeme (Z6825 a0)) (record Z6003 (Z6003K1 a0) (Z6003K2 (record Z6092 (Z6092K1 "P5186"))) (Z6003K3 (record Z6091 (Z6091K1 "Q2993354"))) (Z6003K4 Z6042))))
+(define Z12436 Z12436_does_this_french_verb_belong_to_1st_group)
+
+;; Z12439 Does this French verb belong to 2nd group?  [reaches an unimplemented function]
+;;   Z12439K1: Wikidata lexeme reference -> Boolean   [declared, not checked]
+(define (Z12439_does_this_french_verb_belong_to_2nd_group a0) (Z12696_contains (Z19300_statements_from_lexeme (Z6825 a0)) (record Z6003 (Z6003K1 a0) (Z6003K2 (record Z6092 (Z6092K1 "P5186"))) (Z6003K3 (record Z6091 (Z6091K1 "Q2993353"))) (Z6003K4 Z6042))))
+(define Z12439 Z12439_does_this_french_verb_belong_to_2nd_group)
+
+;; Z12440 Does this French verb belong to 3rd group?  [reaches an unimplemented function]
+;;   Z12440K1: Wikidata lexeme reference -> Boolean   [declared, not checked]
+(define (Z12440_does_this_french_verb_belong_to_3rd_group a0) (Z12696_contains (Z19300_statements_from_lexeme (Z6825 a0)) (record Z6003 (Z6003K1 a0) (Z6003K2 (record Z6092 (Z6092K1 "P5186"))) (Z6003K3 (record Z6091 (Z6091K1 "Q2993358"))) (Z6003K4 Z6042))))
+(define Z12440 Z12440_does_this_french_verb_belong_to_3rd_group)
 
 ;; Z12448 Breton conjugation preterite 1st person singular (-is)
 ;;   Z12448K1: String -> String   [declared, not checked]
@@ -1705,7 +1735,7 @@
 (define (Z12473_cosine a0) (Z16463_sine_float64_rad (Z20849 a0 (Z21033_divide_float64 Z20862 (record Z20838 (Z20838K1 (record Z16659 (Z16659K1 Z16660))) (Z20838K2 (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16660))) (Z16683K2 1))) (Z20838K3 0) (Z20838K4 (record Z20825 (Z20825K1 Z20837))))))))
 (define Z12473 Z12473_cosine)
 
-;; Z12480 is even (integer)  [mutually recursive: may not terminate]
+;; Z12480 is even (integer)  [reaches an unimplemented function; mutually recursive: may not terminate]
 ;;   Z12480K1: Integer -> Boolean   [declared, not checked]
 (define (Z12480_is_even_integer a0) (not (Z12429_is_odd_integer a0)))
 (define Z12480 Z12480_is_even_integer)
@@ -1860,7 +1890,7 @@
 (define (Z12671_sort_a_list_by_string_length a0) (Z19510_sort_list_by_increasing_metric_function a0 Z11040_string_length))
 (define Z12671 Z12671_sort_a_list_by_string_length)
 
-;; Z12676 flatten untyped list  [mutually recursive: may not terminate]
+;; Z12676 flatten untyped list  [reaches an unimplemented function; mutually recursive: may not terminate]
 ;;   Z12676K1: Typed list(Object), Z12676K2: Natural number -> Typed list(Object)   [declared, not checked]
 (define (Z12676_flatten_untyped_list a0 a1) (if (= a1 0) (Z18475_return_typed_list a0) (Z23606_flatten_typed_list (Z27665_concatenate_many_untyped_lists a0) (Z13582_decrement_natural_number_by_one a1))))
 (define Z12676 Z12676_flatten_untyped_list)
@@ -2007,7 +2037,7 @@
 
 ;; Z12905 Decimal to ASCII  [reaches an unimplemented function]
 ;;   Z12905K1: String -> String   [declared, not checked]
-(define (Z12905_decimal_to_ascii a0) (Z22693_codepoint_list_to_string (Z18475_return_typed_list (map Z23022 (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z14290_read_natural_number (Z13407_tokenize_on_white_space a0) Z1002)))))
+(define (Z12905_decimal_to_ascii a0) (Z22693_codepoint_list_to_string (Z18475_return_typed_list (map Z23022_natural_number_to_codepoint (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z14290_read_natural_number (Z13407_tokenize_on_white_space a0) Z1002)))))
 (define Z12905 Z12905_decimal_to_ascii)
 
 ;; Z12910 (!) Acceleration (m/s2, Newton's Second law)  [reaches an unimplemented function]
@@ -2062,7 +2092,7 @@
 
 ;; Z12975 Ones complement binary subtraction  [reaches an unimplemented function]
 ;;   Z12975K1: String, Z12975K2: String -> String   [declared, not checked]
-(define (Z12975_ones_complement_binary_subtraction a0 a1) (Z13779_natural_number_to_binary_string_without_prefix (Z20391_integer_to_exact_natural_number_or_0 (Z16693_add_integers (Z17315_subtract_natural_numbers_as_integer (Z13797_binary_string_to_natural_number a0) (Z13797_binary_string_to_natural_number a1)) (if (Z17215_is_negative_integer (Z17315_subtract_natural_numbers_as_integer (Z13797_binary_string_to_natural_number a0) (Z13797_binary_string_to_natural_number a1))) (Z17101 (Z13644_2_n (Z11040_string_length (Z11519_longer_of_two_strings a0 a1)))) (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16661))) (Z16683K2 0)))))))
+(define (Z12975_ones_complement_binary_subtraction a0 a1) (Z13779_natural_number_to_binary_string_without_prefix (Z20391_integer_to_exact_natural_number_or_0 (Z16693_add_integers (Z17315_subtract_natural_numbers_as_integer (Z13797_binary_string_to_natural_number a0) (Z13797_binary_string_to_natural_number a1)) (if (Z17215_is_negative_integer (Z17315_subtract_natural_numbers_as_integer (Z13797_binary_string_to_natural_number a0) (Z13797_binary_string_to_natural_number a1))) (Z17101_natural_number_to_integer (Z13644_2_n (Z11040_string_length (Z11519_longer_of_two_strings a0 a1)))) (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16661))) (Z16683K2 0)))))))
 (define Z12975 Z12975_ones_complement_binary_subtraction)
 
 ;; Z12982 Binary to decimal  [reaches an unimplemented function]
@@ -2405,22 +2435,22 @@
 (define (Z13726_divisors a0) (if (Z23883_is_zero_natural_number a0) (list) (Z17873_sort_list_ascending_natural_numbers (Z19202_remove_duplicates_from_typed_list (map Z13558_product_of_list_natural_numbers (Z18475_return_typed_list (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z30075_return_list_if_non_empty_else_backup (Z18194_powerset (Z17895_untype_a_list (Z13728_prime_divisors a0))) (list 1))))))))
 (define Z13726 Z13726_divisors)
 
-;; Z13728 prime divisors  [mutually recursive: may not terminate]
+;; Z13728 prime divisors  [reaches an unimplemented function; mutually recursive: may not terminate]
 ;;   Z13728K1: Natural number -> Typed list(Natural number)   [declared, not checked]
 (define (Z13728_prime_divisors a0) (if (<= a0 1) (list) (Z12961_append_element_to_typed_list (Z13735_largest_prime_divisor a0) (Z13728_prime_divisors (Z13745_n_largest_prime_dividing_n a0)))))
 (define Z13728 Z13728_prime_divisors)
 
-;; Z13730 unique prime divisors
+;; Z13730 unique prime divisors  [reaches an unimplemented function]
 ;;   Z13730K1: Natural number -> Typed list(Natural number)   [declared, not checked]
 (define (Z13730_unique_prime_divisors a0) (Z19205_remove_duplicates_preserving_typing_untyping (Z13728_prime_divisors a0)))
 (define Z13730 Z13730_unique_prime_divisors)
 
-;; Z13732 smallest prime divisor
+;; Z13732 smallest prime divisor  [reaches an unimplemented function]
 ;;   Z13732K1: Natural number -> Natural number   [declared, not checked]
 (define (Z13732_smallest_prime_divisor a0) (Z19509_minimum_of_natural_number_list (Z13728_prime_divisors a0)))
 (define Z13732 Z13732_smallest_prime_divisor)
 
-;; Z13735 largest prime divisor  [mutually recursive: may not terminate]
+;; Z13735 largest prime divisor  [reaches an unimplemented function; mutually recursive: may not terminate]
 ;;   Z13735K1: Natural number -> Natural number   [declared, not checked]
 (define (Z13735_largest_prime_divisor a0) (Z12964_last_element (Z13728_prime_divisors a0)))
 (define Z13735 Z13735_largest_prime_divisor)
@@ -2430,7 +2460,7 @@
 (define (Z13740_is_natural_number_divisible a0 a1) (if (= a1 0) #f (= (Z13551_remainder_of_natural_number_division a0 a1) 0)))
 (define Z13740 Z13740_is_natural_number_divisible)
 
-;; Z13745 n/(largest prime dividing n)  [mutually recursive: may not terminate]
+;; Z13745 n/(largest prime dividing n)  [reaches an unimplemented function; mutually recursive: may not terminate]
 ;;   Z13745K1: Natural number -> Natural number   [declared, not checked]
 (define (Z13745_n_largest_prime_dividing_n a0) (Z13546_divide_natural_numbers a0 (Z13735_largest_prime_divisor a0)))
 (define Z13745 Z13745_n_largest_prime_dividing_n)
@@ -2445,12 +2475,12 @@
 (define (Z13760_number_of_divisors a0) (length (Z13726_divisors a0)))
 (define Z13760 Z13760_number_of_divisors)
 
-;; Z13764 number of prime divisors
+;; Z13764 number of prime divisors  [reaches an unimplemented function]
 ;;   Z13764K1: Natural number -> Natural number   [declared, not checked]
 (define (Z13764_number_of_prime_divisors a0) (length (Z13728_prime_divisors a0)))
 (define Z13764 Z13764_number_of_prime_divisors)
 
-;; Z13767 number of unique prime divisors
+;; Z13767 number of unique prime divisors  [reaches an unimplemented function]
 ;;   Z13767K1: Natural number -> Natural number   [declared, not checked]
 (define (Z13767_number_of_unique_prime_divisors a0) (length (Z13730_unique_prime_divisors a0)))
 (define Z13767 Z13767_number_of_unique_prime_divisors)
@@ -2460,12 +2490,12 @@
 (define (Z13770_sum_of_divisors a0) (+ (Z13993_sum_of_proper_divisors a0) a0))
 (define Z13770 Z13770_sum_of_divisors)
 
-;; Z13773 sum of prime divisors
+;; Z13773 sum of prime divisors  [reaches an unimplemented function]
 ;;   Z13773K1: Natural number -> Natural number   [declared, not checked]
 (define (Z13773_sum_of_prime_divisors a0) (Z14038_sum_the_elements_of_a_list_of_natural_numbers (Z13728_prime_divisors a0)))
 (define Z13773 Z13773_sum_of_prime_divisors)
 
-;; Z13776 sum of unique prime divisors
+;; Z13776 sum of unique prime divisors  [reaches an unimplemented function]
 ;;   Z13776K1: Natural number -> Natural number   [declared, not checked]
 (define (Z13776_sum_of_unique_prime_divisors a0) (Z14038_sum_the_elements_of_a_list_of_natural_numbers (Z13730_unique_prime_divisors a0)))
 (define Z13776 Z13776_sum_of_unique_prime_divisors)
@@ -2592,7 +2622,7 @@
 
 ;; Z13909 rectified linear unit  [reaches an unimplemented function]
 ;;   Z13909K1: Integer -> Integer   [declared, not checked]
-(define (Z13909_rectified_linear_unit a0) (Z17101 (Z20391_integer_to_exact_natural_number_or_0 a0)))
+(define (Z13909_rectified_linear_unit a0) (Z17101_natural_number_to_integer (Z20391_integer_to_exact_natural_number_or_0 a0)))
 (define Z13909 Z13909_rectified_linear_unit)
 
 ;; Z13916 is light vowel (ụdamfe) in Igbo
@@ -2642,7 +2672,7 @@
 
 ;; Z13957 Dedekind psi function  [reaches an unimplemented function]
 ;;   Z13957K1: Natural number -> Natural number   [declared, not checked]
-(define (Z13957_dedekind_psi_function a0) (Z20391_integer_to_exact_natural_number_or_0 (Z19682 (Z23909_product_of_list_rational_numbers (Z18475_return_typed_list (cons (Z19854 a0 1) (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l Z19854 (map add1 (Z13730_unique_prime_divisors a0)) (Z13730_unique_prime_divisors a0))))))))
+(define (Z13957_dedekind_psi_function a0) (Z20391_integer_to_exact_natural_number_or_0 (Z19682_truncate_rational_number (Z23909_product_of_list_rational_numbers (Z18475_return_typed_list (cons (Z19854_simplified_rational_from_z_numerator_denominator a0 1) (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l Z19854_simplified_rational_from_z_numerator_denominator (map add1 (Z13730_unique_prime_divisors a0)) (Z13730_unique_prime_divisors a0))))))))
 (define Z13957 Z13957_dedekind_psi_function)
 
 ;; Z13959 n^(n-1)
@@ -2705,7 +2735,7 @@
 (define (Z13984_sum_of_odd_divisors a0) (Z14038_sum_the_elements_of_a_list_of_natural_numbers (Z18475_return_typed_list (filter Z34353_is_natural_number_odd (Z13726_divisors a0)))))
 (define Z13984 Z13984_sum_of_odd_divisors)
 
-;; Z13986 number of primes <= n
+;; Z13986 number of primes <= n  [reaches an unimplemented function]
 ;;   Z13986K1: Natural number -> Natural number   [declared, not checked]
 (define (Z13986_number_of_primes_n a0) (length (filter Z12427_is_prime (Z23921_generate_list_from_function_index_0_n identity a0))))
 (define Z13986 Z13986_number_of_primes_n)
@@ -2782,7 +2812,7 @@
 
 ;; Z14119 remove characters in unicode range  [reaches an unimplemented function; mutually recursive: may not terminate]
 ;;   Z14119K1: String, Z14119K2: Natural number, Z14119K3: Natural number -> String   [declared, not checked]
-(define (Z14119_remove_characters_in_unicode_range a0 a1 a2) (Z11531_remove_characters_in_character_range a0 (Z11534 a1) (Z11534 a2)))
+(define (Z14119_remove_characters_in_unicode_range a0 a1 a2) (Z11531_remove_characters_in_character_range a0 (Z11534_chr_of_codepoint_value a1) (Z11534_chr_of_codepoint_value a2)))
 (define Z14119 Z14119_remove_characters_in_unicode_range)
 
 ;; Z14127 remove obsolete characters for Khmer  [reaches an unimplemented function]
@@ -2815,14 +2845,14 @@
 (define (Z14142_remove_interlinear_annotation_characters a0) (Z14119_remove_characters_in_unicode_range a0 65529 65531))
 (define Z14142 Z14142_remove_interlinear_annotation_characters)
 
-;; Z14145 remove U+FEFF  [reaches an unimplemented function]
+;; Z14145 remove U+FEFF
 ;;   Z14145K1: String -> String   [declared, not checked]
-(define (Z14145_remove_u_feff a0) (Z14119_remove_characters_in_unicode_range a0 65279 65279))
+(define (Z14145_remove_u_feff a0) (Z10075_replace_all_substrings a0 (Z11534_chr_of_codepoint_value 65279) ""))
 (define Z14145 Z14145_remove_u_feff)
 
-;; Z14148 remove U+FFFC  [reaches an unimplemented function]
+;; Z14148 remove U+FFFC
 ;;   Z14148K1: String -> String   [declared, not checked]
-(define (Z14148_remove_u_fffc a0) (Z14119_remove_characters_in_unicode_range a0 65532 65532))
+(define (Z14148_remove_u_fffc a0) (Z10075_replace_all_substrings a0 (Z11534_chr_of_codepoint_value 65532) ""))
 (define Z14148 Z14148_remove_u_fffc)
 
 ;; Z14151 remove scoping for musical notation  [reaches an unimplemented function]
@@ -2840,17 +2870,17 @@
 (define (Z14159_astronomical_symbols a0) (if (Z17180_is_void (Z36007_select_wikidata_item_with_matching_label a0 (Z30172_list_of_values_from_a_typed_map (Z30248_fetch_wikidata_items (list (record Z6091 (Z6091K1 "Q525")) (record Z6091 (Z6091K1 "Q16877383")) (record Z6091 (Z6091K1 "Q613883")) (record Z6091 (Z6091K1 "Q47652")) (record Z6091 (Z6091K1 "Q2")) (record Z6091 (Z6091K1 "Q111")) (record Z6091 (Z6091K1 "Q319")) (record Z6091 (Z6091K1 "Q134388")) (record Z6091 (Z6091K1 "Q324")) (record Z6091 (Z6091K1 "Q107636904")) (record Z6091 (Z6091K1 "Q339"))) (list Z6033 Z6036) (list Z1430 Z1002 Z1005) (list (record Z6092 (Z6092K1 "P487"))))) Z24 #f)) "" (Z19308_value_of_wikidata_statement (Z23451_wikidata_statement_with_highest_rank (Z36007_select_wikidata_item_with_matching_label a0 (Z30172_list_of_values_from_a_typed_map (Z30248_fetch_wikidata_items (list (record Z6091 (Z6091K1 "Q525")) (record Z6091 (Z6091K1 "Q16877383")) (record Z6091 (Z6091K1 "Q613883")) (record Z6091 (Z6091K1 "Q47652")) (record Z6091 (Z6091K1 "Q2")) (record Z6091 (Z6091K1 "Q111")) (record Z6091 (Z6091K1 "Q319")) (record Z6091 (Z6091K1 "Q134388")) (record Z6091 (Z6091K1 "Q324")) (record Z6091 (Z6091K1 "Q107636904")) (record Z6091 (Z6091K1 "Q339"))) (list Z6033 Z6036) (list Z1430 Z1002 Z1005) (list (record Z6092 (Z6092K1 "P487"))))) Z24 #f) (record Z6092 (Z6092K1 "P487"))))))
 (define Z14159 Z14159_astronomical_symbols)
 
-;; Z14166 nth digit of π  [mutually recursive: may not terminate]
+;; Z14166 nth digit of π  [reaches an unimplemented function; mutually recursive: may not terminate]
 ;;   Z14166K1: Natural number -> Natural number   [declared, not checked]
 (define (Z14166_nth_digit_of a0) (Z14175_nth_decimal_place_of (Z13582_decrement_natural_number_by_one a0)))
 (define Z14166 Z14166_nth_digit_of)
 
-;; Z14175 nth decimal place of π  [mutually recursive: may not terminate]
+;; Z14175 nth decimal place of π  [reaches an unimplemented function; mutually recursive: may not terminate]
 ;;   Z14175K1: Natural number -> Natural number   [declared, not checked]
 (define (Z14175_nth_decimal_place_of a0) (Z14166_nth_digit_of (add1 a0)))
 (define Z14175 Z14175_nth_decimal_place_of)
 
-;; Z14180 pi string up to the nth digit
+;; Z14180 pi string up to the nth digit  [reaches an unimplemented function]
 ;;   Z14180K1: Natural number -> String   [declared, not checked]
 (define (Z14180_pi_string_up_to_the_nth_digit a0) (Z11542_if_string_output (<= a0 1) "3" (Z11542_if_string_output (= a0 2) "3.1" (Z10000_join_two_strings (Z14180_pi_string_up_to_the_nth_digit (Z13582_decrement_natural_number_by_one a0)) (Z13713_natural_number_to_digit_string (Z14166_nth_digit_of a0))))))
 (define Z14180 Z14180_pi_string_up_to_the_nth_digit)
@@ -3010,7 +3040,7 @@
 (define (Z14446_distance_between_two_points_on_earth_si_unit_output_in_meter a0 a1 a2 a3) (Z26315_round_float64_ties_to_even_as_integer (Z21032_multiply_float64 (Z18362_distance_between_two_points_on_earth_in_kilometers_haversine a0 a1 a2 a3) (record Z20838 (Z20838K1 (record Z16659 (Z16659K1 Z16660))) (Z20838K2 (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16660))) (Z16683K2 9))) (Z20838K3 4292493394837504) (Z20838K4 (record Z20825 (Z20825K1 Z20837)))))))
 (define Z14446 Z14446_distance_between_two_points_on_earth_si_unit_output_in_meter)
 
-;; Z14450 count substrings
+;; Z14450 count substrings  [reaches an unimplemented function]
 ;;   Z14450K1: String, Z14450K2: String -> Natural number   [declared, not checked]
 (define (Z14450_count_substrings a0 a1) (if (Z10070_has_substring a0 a1) (add1 (Z14450_count_substrings (Z11420_discard_until_end_of_first_substring a0 a1) a1)) 0))
 (define Z14450 Z14450_count_substrings)
@@ -3140,7 +3170,7 @@
 (define (Z14643_is_forsyth_edwards_notation a0) (Z12684_are_all_true (cons (= (length (Z13407_tokenize_on_white_space a0)) 6) (cons (Z14646_is_fen_field_1 (car (Z13407_tokenize_on_white_space a0))) (cons (Z14648 (Z13397_get_the_nth_element_of_a_list (Z13407_tokenize_on_white_space a0) 2)) (cons (Z14653 (Z13397_get_the_nth_element_of_a_list (Z13407_tokenize_on_white_space a0) 3)) (cons (Z14657 (Z13397_get_the_nth_element_of_a_list (Z13407_tokenize_on_white_space a0) 4)) (cons (Z14662 (Z13397_get_the_nth_element_of_a_list (Z13407_tokenize_on_white_space a0) 5)) (cons (Z14672_is_fen_field_6 (Z13397_get_the_nth_element_of_a_list (Z13407_tokenize_on_white_space a0) 6)) (list))))))))))
 (define Z14643 Z14643_is_forsyth_edwards_notation)
 
-;; Z14646 is FEN field 1
+;; Z14646 is FEN field 1  [reaches an unimplemented function]
 ;;   Z14646K1: String -> Boolean   [declared, not checked]
 (define (Z14646_is_fen_field_1 a0) (Z12684_are_all_true (cons (= (Z14450_count_substrings a0 "/") 7) (cons (Z11693_string_only_has_characters_from_alphabet a0 "PNBRQKpnbrqk12345678/") (list)))))
 (define Z14646 Z14646_is_fen_field_1)
@@ -3205,17 +3235,17 @@
 (define (Z14775_list_of_booleans_to_binary_string a0) (Z22693_codepoint_list_to_string (Z18475_return_typed_list (Z32695_apply_a_3_param_fn_to_a_list_of_firsts_same_2_3 (lambda (c t e) (if c t e)) a0 (record Z86 (Z86K1 49)) (record Z86 (Z86K1 48))))))
 (define Z14775 Z14775_list_of_booleans_to_binary_string)
 
-;; Z14783 is Fermat pseudoprime
+;; Z14783 is Fermat pseudoprime  [reaches an unimplemented function]
 ;;   Z14783K1: Natural number, Z14783K2: Natural number -> Boolean   [declared, not checked]
 (define (Z14783_is_fermat_pseudoprime a0 a1) (if (Z12427_is_prime a0) #f (= (Z13818_modular_exponentiation a1 (Z13582_decrement_natural_number_by_one a0) a0) 1)))
 (define Z14783 Z14783_is_fermat_pseudoprime)
 
-;; Z14792 is Poulet number
+;; Z14792 is Poulet number  [reaches an unimplemented function]
 ;;   Z14792K1: Natural number -> Boolean   [declared, not checked]
 (define (Z14792_is_poulet_number a0) (Z14783_is_fermat_pseudoprime a0 2))
 (define Z14792 Z14792_is_poulet_number)
 
-;; Z14810 is Wieferich prime
+;; Z14810 is Wieferich prime  [reaches an unimplemented function]
 ;;   Z14810K1: Natural number -> Boolean   [declared, not checked]
 (define (Z14810_is_wieferich_prime a0) (bool-and (Z12427_is_prime a0) (Z14815_is_wieferich_number a0)))
 (define Z14810 Z14810_is_wieferich_prime)
@@ -3290,17 +3320,17 @@
 (define (Z14938_is_k_hyperperfect_number a0 a1) (= (add1 (* a1 (Z13582_decrement_natural_number_by_one (Z13993_sum_of_proper_divisors a0)))) a0))
 (define Z14938 Z14938_is_k_hyperperfect_number)
 
-;; Z14946 is k-almost prime
+;; Z14946 is k-almost prime  [reaches an unimplemented function]
 ;;   Z14946K1: Natural number, Z14946K2: Natural number -> Boolean   [declared, not checked]
 (define (Z14946_is_k_almost_prime a0 a1) (= (Z13764_number_of_prime_divisors a0) a1))
 (define Z14946 Z14946_is_k_almost_prime)
 
-;; Z14953 is semiprime
+;; Z14953 is semiprime  [reaches an unimplemented function]
 ;;   Z14953K1: Natural number -> Boolean   [declared, not checked]
 (define (Z14953_is_semiprime a0) (Z14946_is_k_almost_prime a0 2))
 (define Z14953 Z14953_is_semiprime)
 
-;; Z14958 is sphenic number
+;; Z14958 is sphenic number  [reaches an unimplemented function]
 ;;   Z14958K1: Natural number -> Boolean   [declared, not checked]
 (define (Z14958_is_sphenic_number a0) (bool-and (Z15276_is_square_free_integer a0) (Z14946_is_k_almost_prime a0 3)))
 (define Z14958 Z14958_is_sphenic_number)
@@ -3370,7 +3400,7 @@
 (define (Z15050_is_palindromic_number a0) (Z10096_is_a_palindrome (Z13713_natural_number_to_digit_string a0)))
 (define Z15050 Z15050_is_palindromic_number)
 
-;; Z15055 is palindromic prime
+;; Z15055 is palindromic prime  [reaches an unimplemented function]
 ;;   Z15055K1: Natural number -> Boolean   [declared, not checked]
 (define (Z15055_is_palindromic_prime a0) (bool-and (Z12427_is_prime a0) (Z15050_is_palindromic_number a0)))
 (define Z15055 Z15055_is_palindromic_prime)
@@ -3505,7 +3535,7 @@
 (define (Z15195_is_strobogrammatic_number a0) (string=? (Z13713_natural_number_to_digit_string a0) (Z14613_replace_character_set (Z10012_reverse_string (Z13713_natural_number_to_digit_string a0)) "0123456789" "01abcd9e86")))
 (define Z15195 Z15195_is_strobogrammatic_number)
 
-;; Z15201 is Størmer number
+;; Z15201 is Størmer number  [reaches an unimplemented function]
 ;;   Z15201K1: Natural number -> Boolean   [declared, not checked]
 (define (Z15201_is_st_rmer_number a0) (>= (Z13735_largest_prime_divisor (add1 (Z13663_n_2_natural_number a0))) (Z15107_double a0)))
 (define Z15201 Z15201_is_st_rmer_number)
@@ -3520,17 +3550,17 @@
 (define (Z15213_nth_thabit_number a0) (if (Z23883_is_zero_natural_number a0) 0 (Z13582_decrement_natural_number_by_one (* 3 (Z13644_2_n (Z13582_decrement_natural_number_by_one a0))))))
 (define Z15213 Z15213_nth_thabit_number)
 
-;; Z15218 is k-smooth number
+;; Z15218 is k-smooth number  [reaches an unimplemented function]
 ;;   Z15218K1: Natural number, Z15218K2: Natural number -> Boolean   [declared, not checked]
 (define (Z15218_is_k_smooth_number a0 a1) (<= (Z13735_largest_prime_divisor a0) a1))
 (define Z15218 Z15218_is_k_smooth_number)
 
-;; Z15224 is regular number
+;; Z15224 is regular number  [reaches an unimplemented function]
 ;;   Z15224K1: Natural number -> Boolean   [declared, not checked]
 (define (Z15224_is_regular_number a0) (Z15218_is_k_smooth_number a0 5))
 (define Z15224 Z15224_is_regular_number)
 
-;; Z15228 is unusual number
+;; Z15228 is unusual number  [reaches an unimplemented function]
 ;;   Z15228K1: Natural number -> Boolean   [declared, not checked]
 (define (Z15228_is_unusual_number a0) (> (Z13663_n_2_natural_number (Z13735_largest_prime_divisor a0)) a0))
 (define Z15228 Z15228_is_unusual_number)
@@ -3540,7 +3570,7 @@
 (define (Z15232_mccarthy_91_function a0) (if (<= a0 100) 91 (Z13569_subtract_natural_numbers_with_floor_of_0 a0 10)))
 (define Z15232 Z15232_mccarthy_91_function)
 
-;; Z15241 is k-rough number
+;; Z15241 is k-rough number  [reaches an unimplemented function]
 ;;   Z15241K1: Natural number, Z15241K2: Natural number -> Boolean   [declared, not checked]
 (define (Z15241_is_k_rough_number a0 a1) (>= (Z13732_smallest_prime_divisor a0) a1))
 (define Z15241 Z15241_is_k_rough_number)
@@ -3555,22 +3585,22 @@
 (define (Z15251_is_perfect_kth_power a0 a1) (Z12684_are_all_true (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z13740_is_natural_number_divisible (map snd (Z35860_prime_divisors_of_natural_with_their_exponents a0)) a1)))
 (define Z15251 Z15251_is_perfect_kth_power)
 
-;; Z15265 is perfect power
+;; Z15265 is perfect power  [reaches an unimplemented function]
 ;;   Z15265K1: Natural number -> Boolean   [declared, not checked]
 (define (Z15265_is_perfect_power a0) (bool-and (>= (Z13764_number_of_prime_divisors a0) 2) (Z31547_is_natural_number_1 (Z13767_number_of_unique_prime_divisors a0))))
 (define Z15265 Z15265_is_perfect_power)
 
-;; Z15272 product of unique prime divisors of Natural number
+;; Z15272 product of unique prime divisors of Natural number  [reaches an unimplemented function]
 ;;   Z15272K1: Natural number -> Natural number   [declared, not checked]
 (define (Z15272_product_of_unique_prime_divisors_of_natural_number a0) (Z13558_product_of_list_natural_numbers (Z13730_unique_prime_divisors a0)))
 (define Z15272 Z15272_product_of_unique_prime_divisors_of_natural_number)
 
-;; Z15276 is square-free integer
+;; Z15276 is square-free integer  [reaches an unimplemented function]
 ;;   Z15276K1: Natural number -> Boolean   [declared, not checked]
 (define (Z15276_is_square_free_integer a0) (= (Z15272_product_of_unique_prime_divisors_of_natural_number a0) a0))
 (define Z15276 Z15276_is_square_free_integer)
 
-;; Z15282 is Lucas–Carmichael number
+;; Z15282 is Lucas–Carmichael number  [reaches an unimplemented function]
 ;;   Z15282K1: Natural number -> Boolean   [declared, not checked]
 (define (Z15282_is_lucas_carmichael_number a0) (bool-and (bool-and (Z34353_is_natural_number_odd a0) (Z15276_is_square_free_integer a0)) (Z12684_are_all_true (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an Z13740_is_natural_number_divisible (add1 a0) (map add1 (Z13728_prime_divisors a0))))))
 (define Z15282 Z15282_is_lucas_carmichael_number)
@@ -3882,7 +3912,7 @@
 
 ;; Z15659 subfactorial  [reaches an unimplemented function]
 ;;   Z15659K1: Natural number -> Natural number   [declared, not checked]
-(define (Z15659_subfactorial a0) (Z20391_integer_to_exact_natural_number_or_0 (Z19682 (Z20080_sum_the_elements_of_a_list_of_rational_numbers (Z18475_return_typed_list (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l Z19854 (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z17120_multiply_integers (Z34575_generate_alternating_sign_terms_for_summation (add1 a0) #f) (Z17101 (Z13667_factorial a0))) (map Z13667_factorial (Z13831_natural_number_range 0 a0))))))))
+(define (Z15659_subfactorial a0) (Z20391_integer_to_exact_natural_number_or_0 (Z19682_truncate_rational_number (Z20080_sum_the_elements_of_a_list_of_rational_numbers (Z18475_return_typed_list (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l Z19854_simplified_rational_from_z_numerator_denominator (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z17120_multiply_integers (Z34575_generate_alternating_sign_terms_for_summation (add1 a0) #f) (Z17101_natural_number_to_integer (Z13667_factorial a0))) (map Z13667_factorial (Z13831_natural_number_range 0 a0))))))))
 (define Z15659 Z15659_subfactorial)
 
 ;; Z15671 natural number to base n  [reaches an unimplemented function; mutually recursive: may not terminate]
@@ -3915,12 +3945,12 @@
 (define (Z15735_is_power_of_2 a0) (bool-and (not (Z23883_is_zero_natural_number a0)) (= (Z15117_highest_power_of_2_dividing_n a0) a0)))
 (define Z15735 Z15735_is_power_of_2)
 
-;; Z15741 is power of k
+;; Z15741 is power of k  [reaches an unimplemented function]
 ;;   Z15741K1: Natural number, Z15741K2: Natural number -> Boolean   [declared, not checked]
 (define (Z15741_is_power_of_k a0 a1) (if (Z31547_is_natural_number_1 a0) (not (Z23883_is_zero_natural_number a1)) (Z12846_contains_all_of_list (Z13728_prime_divisors a0) (Z13728_prime_divisors a1))))
 (define Z15741 Z15741_is_power_of_k)
 
-;; Z15757 is Cunningham number
+;; Z15757 is Cunningham number  [reaches an unimplemented function]
 ;;   Z15757K1: Natural number -> Boolean   [declared, not checked]
 (define (Z15757_is_cunningham_number a0) (bool-or (Z15265_is_perfect_power (add1 a0)) (Z15265_is_perfect_power (Z13582_decrement_natural_number_by_one a0))))
 (define Z15757 Z15757_is_cunningham_number)
@@ -4070,7 +4100,7 @@
 (define (Z16085_croatian_cardinal a0) (Z22576 (list "nula" "jedan" "dva" "tri" "četiri" "pet" "šest" "sedam" "osam" "devet") (list "jedanaest" "dvanaest" "trinaest" "četrnaest" "petnaest" "šesnaest" "sedamnaest" "osamnaest" "devetnaest") (list "deset" "dvadeset" "trideset" "četrdeset" "pedeset" "šezdeset" "sedamdeset" "osamdeset" "devedeset") (list "sto" "dvjesto" "trista" "četiristo" "petsto" "šeststo" "sedamsto" "osamsto" "devetsto ") (list) (list "tisuća" "tisuće" "tisuća") (list "mi") (list "lijun" "lijuna" "lijuna") (list "lijarda" "lijarde" "lijardi") a0))
 (define Z16085 Z16085_croatian_cardinal)
 
-;; Z16136 following month
+;; Z16136 following month  [reaches an unimplemented function]
 ;;   Z16136K1: Gregorian calendar month -> Gregorian calendar month   [declared, not checked]
 (define (Z16136_following_month a0) (Z16293_n_months_before_month a0 11))
 (define Z16136 Z16136_following_month)
@@ -4110,27 +4140,32 @@
 (define (Z16272_twelve_months) (list Z16101 Z16102 Z16103 Z16104 Z16105 Z16106 Z16107 Z16108 Z16109 Z16110 Z16111 Z16112))
 (define Z16272 Z16272_twelve_months)
 
-;; Z16273 monolingual text in specified language from multilingual text  [reaches an unimplemented function]
+;; Z16273 monolingual text in specified language from multilingual text
 ;;   Z16273K1: Multilingual text, Z16273K2: Natural language -> Monolingual text   [declared, not checked]
-(define (Z16273_monolingual_text_in_specified_language_from_multilingual_tex a0 a1) (Z16277 (Z19279_multilingual_text_to_list_of_monolingual_texts a0) a1))
+(define (Z16273_monolingual_text_in_specified_language_from_multilingual_tex a0 a1) (Z16277_first_monolingual_text_in_specified_language (Z19279_multilingual_text_to_list_of_monolingual_texts a0) a1))
 (define Z16273 Z16273_monolingual_text_in_specified_language_from_multilingual_tex)
+
+;; Z16277 first monolingual text in specified language
+;;   Z16277K1: Typed list(Monolingual text), Z16277K2: Natural language -> Monolingual text   [declared, not checked]
+(define (Z16277_first_monolingual_text_in_specified_language a0 a1) (if (null? a0) (record Z11 (Z11K1 a1) (Z11K2 "")) (if (Z14326_same_language a1 (Z14404_language_of_monolingual_text (car a0))) (car a0) (Z16277_first_monolingual_text_in_specified_language (cdr a0) a1))))
+(define Z16277 Z16277_first_monolingual_text_in_specified_language)
 
 ;; Z16289 month is in list
 ;;   Z16289K1: Gregorian calendar month, Z16289K2: Typed list(Gregorian calendar month) -> Boolean   [declared, not checked]
 (define (Z16289_month_is_in_list a0 a1) (Z12696_contains a1 a0))
 (define Z16289 Z16289_month_is_in_list)
 
-;; Z16293 N months before month  [mutually recursive: may not terminate]
+;; Z16293 N months before month  [reaches an unimplemented function; mutually recursive: may not terminate]
 ;;   Z16293K1: Gregorian calendar month, Z16293K2: Natural number -> Gregorian calendar month   [declared, not checked]
 (define (Z16293_n_months_before_month a0 a1) (Z17958_run_unary_endofunction_n_times Z16299_previous_month a0 a1))
 (define Z16293 Z16293_n_months_before_month)
 
-;; Z16299 previous month  [mutually recursive: may not terminate]
+;; Z16299 previous month  [reaches an unimplemented function; mutually recursive: may not terminate]
 ;;   Z16299K1: Gregorian calendar month -> Gregorian calendar month   [declared, not checked]
 (define (Z16299_previous_month a0) (Z16293_n_months_before_month a0 1))
 (define Z16299 Z16299_previous_month)
 
-;; Z16307 N months after month
+;; Z16307 N months after month  [reaches an unimplemented function]
 ;;   Z16307K1: Gregorian calendar month, Z16307K2: Natural number -> Gregorian calendar month   [declared, not checked]
 (define (Z16307_n_months_after_month a0 a1) (if (= a1 0) a0 (Z16307_n_months_after_month (Z16136_following_month a0) (Z13582_decrement_natural_number_by_one a1))))
 (define Z16307 Z16307_n_months_after_month)
@@ -4140,7 +4175,7 @@
 (define (Z16316_days_in_month_when_not_a_leap_year a0) (Z19565_triple_if (Z16137_same_month a0 Z16102) 28 (Z16289_month_is_in_list a0 (list Z16104 Z16106 Z16109 Z16111)) 30 31))
 (define Z16316 Z16316_days_in_month_when_not_a_leap_year)
 
-;; Z16330 months in period (list)
+;; Z16330 months in period (list)  [reaches an unimplemented function]
 ;;   Z16330K1: Gregorian calendar month, Z16330K2: Gregorian calendar month -> Typed list(Gregorian calendar month)   [declared, not checked]
 (define (Z16330_months_in_period_list a0 a1) (if (Z16137_same_month a0 a1) (cons a0 (list)) (cons a0 (Z16330_months_in_period_list (Z16136_following_month a0) a1))))
 (define Z16330 Z16330_months_in_period_list)
@@ -4220,7 +4255,7 @@
 (define (Z16493_is_leap_year_revised_julian_calendar a0) (bool-and (Z23883_is_zero_natural_number (Z13551_remainder_of_natural_number_division (Z14283 a0) 4)) (bool-or (not (Z23883_is_zero_natural_number (Z13551_remainder_of_natural_number_division (Z14283 a0) 100))) (bool-or (= (Z13551_remainder_of_natural_number_division (Z14283 a0) 900) 200) (= (Z13551_remainder_of_natural_number_division (Z14283 a0) 900) 600)))))
 (define Z16493 Z16493_is_leap_year_revised_julian_calendar)
 
-;; Z16502 (!) count decimal places
+;; Z16502 (!) count decimal places  [reaches an unimplemented function]
 ;;   Z16502K1: String -> Natural number   [declared, not checked]
 (define (Z16502_count_decimal_places a0) (Z13569_subtract_natural_numbers_with_floor_of_0 (Z11040_string_length a0) (Z11040_string_length (Z11416_discard_from_end_of_last_substring a0 "."))))
 (define Z16502 Z16502_count_decimal_places)
@@ -4250,9 +4285,9 @@
 (define (Z16556_object_labels a0) (Z19279_multilingual_text_to_list_of_monolingual_texts (Z803_value_by_key (record Z39 (Z39K1 "Z2K3")) (Z828 a0))))
 (define Z16556 Z16556_object_labels)
 
-;; Z16560 string for a language  [reaches an unimplemented function]
+;; Z16560 string for a language
 ;;   Z16560K1: Typed list(Monolingual text), Z16560K2: Natural language -> String   [declared, not checked]
-(define (Z16560_string_for_a_language a0 a1) (Z14396_string_of_monolingual_text (Z16277 a0 a1)))
+(define (Z16560_string_for_a_language a0 a1) (Z14396_string_of_monolingual_text (Z16277_first_monolingual_text_in_specified_language a0 a1)))
 (define Z16560 Z16560_string_for_a_language)
 
 ;; Z16568 object label  [reaches an unimplemented function]
@@ -4270,7 +4305,7 @@
 (define (Z16580_month_label a0 a1) (Z24086_display_gregorian_calendar_month a0 a1))
 (define Z16580 Z16580_month_label)
 
-;; Z16584 opposite month
+;; Z16584 opposite month  [reaches an unimplemented function]
 ;;   Z16584K1: Gregorian calendar month -> Gregorian calendar month   [declared, not checked]
 (define (Z16584_opposite_month a0) (Z16307_n_months_after_month a0 6))
 (define Z16584 Z16584_opposite_month)
@@ -4337,7 +4372,7 @@
 
 ;; Z16705 read Integer  [reaches an unimplemented function]
 ;;   Z16705K1: String, Z16705K2: Natural language -> Integer   [declared, not checked]
-(define (Z16705_read_integer a0 a1) (Z17192_if_integer_output (string=? (Z10908_dashes_to_hyphen_minus (Z10901_get_first_character_of_string a0)) "-") (Z17267_negate_natural_number_to_integer (Z14290_read_natural_number (Z14456_remove_first_character a0) a1)) (Z17101 (Z14290_read_natural_number (Z10075_replace_all_substrings a0 "+" "") a1))))
+(define (Z16705_read_integer a0 a1) (Z17192_if_integer_output (string=? (Z10908_dashes_to_hyphen_minus (Z10901_get_first_character_of_string a0)) "-") (Z17267_negate_natural_number_to_integer (Z14290_read_natural_number (Z14456_remove_first_character a0) a1)) (Z17101_natural_number_to_integer (Z14290_read_natural_number (Z10075_replace_all_substrings a0 "+" "") a1))))
 (define Z16705 Z16705_read_integer)
 
 ;; Z16711 subsequence exists
@@ -4420,7 +4455,7 @@
 (define (Z16855_english_number_20_to_natural_number a0) (Z13708_index_of_first_listing_1_n_note_limitation a0 (list "one" "two" "three" "four" "five" "six" "seven" "eight" "nine" "ten" "eleven" "twelve" "thirteen" "fourteen" "fifteen" "sixteen" "seventeen" "eighteen" "nineteen")))
 (define Z16855 Z16855_english_number_20_to_natural_number)
 
-;; Z16862 English number <100 to natural number
+;; Z16862 English number <100 to natural number  [reaches an unimplemented function]
 ;;   Z16862K1: String -> Natural number   [declared, not checked]
 (define (Z16862_english_number_100_to_natural_number a0) (+ (Z16855_english_number_20_to_natural_number (Z11420_discard_until_end_of_first_substring a0 "-")) (Z16869_english_multiple_of_10_between_20_and_90_inclusive_to_natura (Z11410_discard_from_start_of_first_substring a0 "-"))))
 (define Z16862 Z16862_english_number_100_to_natural_number)
@@ -4430,7 +4465,7 @@
 (define (Z16869_english_multiple_of_10_between_20_and_90_inclusive_to_natura a0) (* (Z13708_index_of_first_listing_1_n_note_limitation a0 (list "" "twenty" "thirty" "forty" "fifty" "sixty" "seventy" "eighty" "ninety")) 10))
 (define Z16869 Z16869_english_multiple_of_10_between_20_and_90_inclusive_to_natura)
 
-;; Z16878 English number <1000 to natural number
+;; Z16878 English number <1000 to natural number  [reaches an unimplemented function]
 ;;   Z16878K1: String -> Natural number   [declared, not checked]
 (define (Z16878_english_number_1000_to_natural_number a0) (+ (if (Z10070_has_substring a0 "hundred") (* (Z16855_english_number_20_to_natural_number (Z11410_discard_from_start_of_first_substring a0 " hundred")) 100) 0) (Z16862_english_number_100_to_natural_number (Z11420_discard_until_end_of_first_substring a0 "hundred and "))))
 (define Z16878 Z16878_english_number_1000_to_natural_number)
@@ -4500,6 +4535,11 @@
 (define (Z17073_vietnamese_cardinal a0) (Z17081 a0))
 (define Z17073 Z17073_vietnamese_cardinal)
 
+;; Z17101 natural number to integer  [reaches an unimplemented function]
+;;   Z17101K1: Natural number -> Integer   [declared, not checked]
+(define (Z17101_natural_number_to_integer a0) (Z17192_if_integer_output (= a0 0) (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16661))) (Z16683K2 0)) (record Z16683 (Z16683K1 Z16660) (Z16683K2 a0))))
+(define Z17101 Z17101_natural_number_to_integer)
+
 ;; Z17105 sign of integer
 ;;   Z17105K1: Integer -> Sign   [declared, not checked]
 (define (Z17105_sign_of_integer a0) (Z803_value_by_key (record Z39 (Z39K1 "Z16683K1")) a0))
@@ -4542,7 +4582,7 @@
 
 ;; Z17153 increment integer  [reaches an unimplemented function]
 ;;   Z17153K1: Integer -> Integer   [declared, not checked]
-(define (Z17153_increment_integer a0) (Z17192_if_integer_output (Z17229_is_non_negative_integer a0) (Z17101 (add1 (Z17144_absolute_value_of_integer_as_natural_number a0))) (Z17267_negate_natural_number_to_integer (Z13582_decrement_natural_number_by_one (Z17144_absolute_value_of_integer_as_natural_number a0)))))
+(define (Z17153_increment_integer a0) (Z17192_if_integer_output (Z17229_is_non_negative_integer a0) (Z17101_natural_number_to_integer (add1 (Z17144_absolute_value_of_integer_as_natural_number a0))) (Z17267_negate_natural_number_to_integer (Z13582_decrement_natural_number_by_one (Z17144_absolute_value_of_integer_as_natural_number a0)))))
 (define Z17153 Z17153_increment_integer)
 
 ;; Z17160 decrement integer  [reaches an unimplemented function]
@@ -4612,13 +4652,18 @@
 
 ;; Z17263 natural number exponentiation of integers  [reaches an unimplemented function]
 ;;   Z17263K1: Integer, Z17263K2: Natural number -> Integer   [declared, not checked]
-(define (Z17263_natural_number_exponentiation_of_integers a0 a1) (Z13036_apply (Z31490_if_either (Z17229_is_non_negative_integer a0) (Z13555_natural_number_is_even a1) Z17101 Z17267_negate_natural_number_to_integer) (expt (Z17144_absolute_value_of_integer_as_natural_number a0) a1)))
+(define (Z17263_natural_number_exponentiation_of_integers a0 a1) (Z13036_apply (Z31490_if_either (Z17229_is_non_negative_integer a0) (Z13555_natural_number_is_even a1) Z17101_natural_number_to_integer Z17267_negate_natural_number_to_integer) (expt (Z17144_absolute_value_of_integer_as_natural_number a0) a1)))
 (define Z17263 Z17263_natural_number_exponentiation_of_integers)
 
 ;; Z17267 negate natural number to integer  [reaches an unimplemented function]
 ;;   Z17267K1: Natural number -> Integer   [declared, not checked]
-(define (Z17267_negate_natural_number_to_integer a0) (Z17186_negate_integer (Z17101 a0)))
+(define (Z17267_negate_natural_number_to_integer a0) (Z17186_negate_integer (Z17101_natural_number_to_integer a0)))
 (define Z17267 Z17267_negate_natural_number_to_integer)
+
+;; Z17291 floor divide integers  [reaches an unimplemented function]
+;;   Z17291K1: Integer, Z17291K2: Integer -> Integer   [declared, not checked]
+(define (Z17291_floor_divide_integers a0 a1) (Z19565_triple_if (Z17239_is_zero_integer a1) (Z851 Z28194 (cons "Z17291K2" (cons a1 (list)))) (Z17239_is_zero_integer a0) (record Z16683 (Z16683K1 Z16661) (Z16683K2 0)) (record Z16683 (Z16683K1 (Z16728_multiply_signs (Z17105_sign_of_integer a0) (Z17105_sign_of_integer a1))) (Z16683K2 (Z13546_divide_natural_numbers (if (Z16667_same_sign (Z16728_multiply_signs (Z17105_sign_of_integer a0) (Z17105_sign_of_integer a1)) Z16662) (Z13582_decrement_natural_number_by_one (+ (Z17144_absolute_value_of_integer_as_natural_number a0) (Z17144_absolute_value_of_integer_as_natural_number a1))) (Z17144_absolute_value_of_integer_as_natural_number a0)) (Z17144_absolute_value_of_integer_as_natural_number a1))))))
+(define Z17291 Z17291_floor_divide_integers)
 
 ;; Z17301 ordered pair of natural numbers representing integer  [reaches an unimplemented function]
 ;;   Z17301K1: Integer -> Typed list(Natural number)   [declared, not checked]
@@ -4632,7 +4677,7 @@
 
 ;; Z17315 subtract natural numbers as integer  [reaches an unimplemented function; mutually recursive: may not terminate]
 ;;   Z17315K1: Natural number, Z17315K2: Natural number -> Integer   [declared, not checked]
-(define (Z17315_subtract_natural_numbers_as_integer a0 a1) (Z17111_subtract_an_integer (Z17101 a0) (Z17101 a1)))
+(define (Z17315_subtract_natural_numbers_as_integer a0 a1) (Z17111_subtract_an_integer (Z17101_natural_number_to_integer a0) (Z17101_natural_number_to_integer a1)))
 (define Z17315 Z17315_subtract_natural_numbers_as_integer)
 
 ;; Z17321 are equivalent ordered pairs representing integers
@@ -4667,7 +4712,7 @@
 
 ;; Z17355 apply integer function to natural number  [reaches an unimplemented function]
 ;;   Z17355K1: Function, Z17355K2: Natural number -> Object   [declared, not checked]
-(define (Z17355_apply_integer_function_to_natural_number a0 a1) (Z13036_apply a0 (Z17101 a1)))
+(define (Z17355_apply_integer_function_to_natural_number a0 a1) (Z13036_apply a0 (Z17101_natural_number_to_integer a1)))
 (define Z17355 Z17355_apply_integer_function_to_natural_number)
 
 ;; Z17359 Key index as String
@@ -4692,7 +4737,7 @@
 
 ;; Z17386 Lucas sequence U_n(P,Q)  [reaches an unimplemented function]
 ;;   Z17386K1: Integer, Z17386K2: Integer, Z17386K3: Natural number -> Integer   [declared, not checked]
-(define (Z17386_lucas_sequence_u_n_p_q a0 a1 a2) (Z17192_if_integer_output (<= a2 1) (Z17101 a2) (Z17111_subtract_an_integer (Z17120_multiply_integers a0 (Z17386_lucas_sequence_u_n_p_q a0 a1 (Z13582_decrement_natural_number_by_one a2))) (Z17120_multiply_integers a1 (Z17386_lucas_sequence_u_n_p_q a0 a1 (Z13569_subtract_natural_numbers_with_floor_of_0 a2 2))))))
+(define (Z17386_lucas_sequence_u_n_p_q a0 a1 a2) (Z17192_if_integer_output (<= a2 1) (Z17101_natural_number_to_integer a2) (Z17111_subtract_an_integer (Z17120_multiply_integers a0 (Z17386_lucas_sequence_u_n_p_q a0 a1 (Z13582_decrement_natural_number_by_one a2))) (Z17120_multiply_integers a1 (Z17386_lucas_sequence_u_n_p_q a0 a1 (Z13569_subtract_natural_numbers_with_floor_of_0 a2 2))))))
 (define Z17386 Z17386_lucas_sequence_u_n_p_q)
 
 ;; Z17394 Lucas sequence V_n(P,Q)  [reaches an unimplemented function]
@@ -4722,7 +4767,7 @@
 
 ;; Z17442 day to day number (starting Sunday=1, integer)  [reaches an unimplemented function]
 ;;   Z17442K1: Day of the week -> Integer   [declared, not checked]
-(define (Z17442_day_to_day_number_starting_sunday_1_integer a0) (Z17101 (Z17485_day_to_day_number_starting_sunday_1 a0)))
+(define (Z17442_day_to_day_number_starting_sunday_1_integer a0) (Z17101_natural_number_to_integer (Z17485_day_to_day_number_starting_sunday_1 a0)))
 (define Z17442 Z17442_day_to_day_number_starting_sunday_1_integer)
 
 ;; Z17452 total occurrences of day in month  [reaches an unimplemented function]
@@ -4772,7 +4817,7 @@
 
 ;; Z17536 total occurrences of day in year  [reaches an unimplemented function]
 ;;   Z17536K1: Natural number, Z17536K2: Day of the week -> Natural number   [declared, not checked]
-(define (Z17536_total_occurrences_of_day_in_year a0 a1) (Z31490_if_either (Z17414_same_day_of_the_week a1 (Z17540_get_day_of_the_week_from_numerical_date 1 1 a0)) (bool-and (Z10996 a0) (Z17414_same_day_of_the_week a1 (Z17540_get_day_of_the_week_from_numerical_date 2 1 a0))) 53 52))
+(define (Z17536_total_occurrences_of_day_in_year a0 a1) (Z31490_if_either (Z17414_same_day_of_the_week a1 (Z17540_get_day_of_the_week_from_numerical_date 1 1 a0)) (bool-and (Z10996_is_leap_year_natural_number_gregorian_calendar a0) (Z17414_same_day_of_the_week a1 (Z17540_get_day_of_the_week_from_numerical_date 2 1 a0))) 53 52))
 (define Z17536 Z17536_total_occurrences_of_day_in_year)
 
 ;; Z17540 get day of the week from numerical date  [reaches an unimplemented function; mutually recursive: may not terminate]
@@ -4927,7 +4972,7 @@
 
 ;; Z17873 sort list ascending (natural numbers)  [reaches an unimplemented function]
 ;;   Z17873K1: Typed list(Natural number) -> Typed list(Natural number)   [declared, not checked]
-(define (Z17873_sort_list_ascending_natural_numbers a0) (map Z17144_absolute_value_of_integer_as_natural_number (Z17869_sort_list_ascending_integers (identity (Z18475_return_typed_list (map Z17101 a0))))))
+(define (Z17873_sort_list_ascending_natural_numbers a0) (map Z17144_absolute_value_of_integer_as_natural_number (Z17869_sort_list_ascending_integers (identity (Z18475_return_typed_list (map Z17101_natural_number_to_integer a0))))))
 (define Z17873 Z17873_sort_list_ascending_natural_numbers)
 
 ;; Z17879 is this list untyped?
@@ -5130,7 +5175,7 @@
 (define (Z18066_add_suffix_ns_to_string_if_it_does_not_end_with_ns a0) (Z17973_add_suffix_to_string_if_it_does_not_already_end_with_the_suf a0 "ns"))
 (define Z18066 Z18066_add_suffix_ns_to_string_if_it_does_not_end_with_ns)
 
-;; Z18069 select alphabetically first item  [mutually recursive: may not terminate]
+;; Z18069 select alphabetically first item  [reaches an unimplemented function; mutually recursive: may not terminate]
 ;;   Z18069K1: String, Z18069K2: String -> String   [declared, not checked]
 (define (Z18069_select_alphabetically_first_item a0 a1) (car (Z18281_sort_in_alphabetic_order (cons a0 (cons a1 (list))))))
 (define Z18069 Z18069_select_alphabetically_first_item)
@@ -5220,7 +5265,7 @@
 (define (Z18276_append_natural_number_to_list a0 a1) (Z12961_append_element_to_typed_list a0 a1))
 (define Z18276 Z18276_append_natural_number_to_list)
 
-;; Z18281 sort in alphabetic order  [mutually recursive: may not terminate]
+;; Z18281 sort in alphabetic order  [reaches an unimplemented function; mutually recursive: may not terminate]
 ;;   Z18281K1: Typed list(String) -> Typed list(String)   [declared, not checked]
 (define (Z18281_sort_in_alphabetic_order a0) (Z27612_order_list_with_comparing_function a0 Z18069_select_alphabetically_first_item))
 (define Z18281 Z18281_sort_in_alphabetic_order)
@@ -5485,7 +5530,7 @@
 (define (Z19020_is_a_typed_list a0) (string=? "Z881" (Z35428_value_by_key_or_else (record Z39 (Z39K1 "Z6K1")) (Z850 (snd (Z29446_second_element_performance (snd (Z29446_second_element_performance (snd (car (Z805 a0))))))) Z516 (identity "")) "")))
 (define Z19020 Z19020_is_a_typed_list)
 
-;; Z19026 is Mersenne prime
+;; Z19026 is Mersenne prime  [reaches an unimplemented function]
 ;;   Z19026K1: Natural number -> Boolean   [declared, not checked]
 (define (Z19026_is_mersenne_prime a0) (bool-and (Z15735_is_power_of_2 (add1 a0)) (Z12427_is_prime a0)))
 (define Z19026 Z19026_is_mersenne_prime)
@@ -5767,7 +5812,7 @@
 
 ;; Z19467 light year to parsec  [reaches an unimplemented function]
 ;;   Z19467K1: Natural number -> String   [declared, not checked]
-(define (Z19467_light_year_to_parsec a0) (Z25656_display_rational_as_formatted_decimal_inferring_sf (Z19706 (Z21653_natural_number_as_rational_number a0) (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 3066014) (Z19677K3 10000000))) Z1002))
+(define (Z19467_light_year_to_parsec a0) (Z25656_display_rational_as_formatted_decimal_inferring_sf (Z19706_multiply_rational_numbers (Z21653_natural_number_as_rational_number a0) (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 3066014) (Z19677K3 10000000))) Z1002))
 (define Z19467 Z19467_light_year_to_parsec)
 
 ;; Z19499 sort English adjectives
@@ -5875,29 +5920,44 @@
 (define (Z19661_echo_string a0) (identity a0))
 (define Z19661 Z19661_echo_string)
 
-;; Z19686 same Rational number  [reaches an unimplemented function]
+;; Z19679 add rational numbers  [reaches an unimplemented function]
+;;   Z19679K1: Rational number, Z19679K2: Rational number -> Rational number   [declared, not checked]
+(define (Z19679_add_rational_numbers a0 a1) (Z20112_rational_number_identity (record Z19677 (Z19677K1 (if (Z19686_same_rational_number a0 (Z19694_negate_rational_number a1)) Z16661 (if (Z19752_greater_than_or_equal_to_rational_numbers (Z19736_max_of_rational_numbers a0 a1) (Z21692_absolute_value_of_rational_number (Z19740_min_of_rational_numbers a0 a1))) Z16660 Z16662))) (Z19677K2 (Z17144_absolute_value_of_integer_as_natural_number (Z16693_add_integers (Z27826_multiply_natural_by_integer (Z19724_denominator_of_simplified_rational_number a1) (Z27820_signed_numerator_of_simplified_rational_number a0)) (Z27826_multiply_natural_by_integer (Z19724_denominator_of_simplified_rational_number a0) (Z27820_signed_numerator_of_simplified_rational_number a1))))) (Z19677K3 (* (Z19724_denominator_of_simplified_rational_number a0) (Z19724_denominator_of_simplified_rational_number a1))))))
+(define Z19679 Z19679_add_rational_numbers)
+
+;; Z19682 truncate Rational number  [reaches an unimplemented function]
+;;   Z19682K1: Rational number -> Integer   [declared, not checked]
+(define (Z19682_truncate_rational_number a0) (record Z16683 (Z16683K1 (if (Z23883_is_zero_natural_number (Z13546_divide_natural_numbers (Z19733_numerator_of_unsimplified_rational_number a0) (Z19862_denominator_of_unsimplified_rational_number a0))) Z16661 (Z19717_sign_of_rational_number a0))) (Z16683K2 (Z13546_divide_natural_numbers (Z19733_numerator_of_unsimplified_rational_number a0) (Z19862_denominator_of_unsimplified_rational_number a0)))))
+(define Z19682 Z19682_truncate_rational_number)
+
+;; Z19686 same Rational number
 ;;   Z19686K1: Rational number, Z19686K2: Rational number -> Boolean   [declared, not checked]
 (define (Z19686_same_rational_number a0 a1) (Z19892_same_rational_number_object (Z20112_rational_number_identity a0) (Z20112_rational_number_identity a1)))
 (define Z19686 Z19686_same_rational_number)
 
 ;; Z19694 negate rational number  [reaches an unimplemented function]
 ;;   Z19694K1: Rational number -> Rational number   [declared, not checked]
-(define (Z19694_negate_rational_number a0) (Z19706 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16662))) (Z19677K2 1) (Z19677K3 1)) a0))
+(define (Z19694_negate_rational_number a0) (record Z19677 (Z19677K1 (Z16676_invert_sign (Z19717_sign_of_rational_number a0))) (Z19677K2 (Z19733_numerator_of_unsimplified_rational_number a0)) (Z19677K3 (Z19862_denominator_of_unsimplified_rational_number a0))))
 (define Z19694 Z19694_negate_rational_number)
 
 ;; Z19699 subtract rational numbers  [reaches an unimplemented function]
 ;;   Z19699K1: Rational number, Z19699K2: Rational number -> Rational number   [declared, not checked]
-(define (Z19699_subtract_rational_numbers a0 a1) (Z19679 a0 (Z19694_negate_rational_number a1)))
+(define (Z19699_subtract_rational_numbers a0 a1) (Z19679_add_rational_numbers a0 (Z19694_negate_rational_number a1)))
 (define Z19699 Z19699_subtract_rational_numbers)
 
-;; Z19708 divide rational numbers  [reaches an unimplemented function; mutually recursive: may not terminate]
+;; Z19706 multiply rational numbers  [reaches an unimplemented function]
+;;   Z19706K1: Rational number, Z19706K2: Rational number -> Rational number   [declared, not checked]
+(define (Z19706_multiply_rational_numbers a0 a1) (record Z19677 (Z19677K1 (Z16728_multiply_signs (Z19717_sign_of_rational_number a0) (Z19717_sign_of_rational_number a1))) (Z19677K2 (* (Z19722_numerator_of_simplified_rational_number a0) (Z19722_numerator_of_simplified_rational_number a1))) (Z19677K3 (* (Z19724_denominator_of_simplified_rational_number a0) (Z19724_denominator_of_simplified_rational_number a1)))))
+(define Z19706 Z19706_multiply_rational_numbers)
+
+;; Z19708 divide rational numbers  [reaches an unimplemented function]
 ;;   Z19708K1: Rational number, Z19708K2: Rational number -> Rational number   [declared, not checked]
-(define (Z19708_divide_rational_numbers a0 a1) (Z19706 a0 (Z19711_multiplicative_inverse_of_rational_number a1)))
+(define (Z19708_divide_rational_numbers a0 a1) (Z19706_multiply_rational_numbers a0 (Z19711_multiplicative_inverse_of_rational_number a1)))
 (define Z19708 Z19708_divide_rational_numbers)
 
-;; Z19711 multiplicative inverse of Rational number  [reaches an unimplemented function; mutually recursive: may not terminate]
+;; Z19711 multiplicative inverse of Rational number
 ;;   Z19711K1: Rational number -> Rational number   [declared, not checked]
-(define (Z19711_multiplicative_inverse_of_rational_number a0) (Z19708_divide_rational_numbers (record Z19677 (Z19677K1 Z16660) (Z19677K2 1) (Z19677K3 1)) a0))
+(define (Z19711_multiplicative_inverse_of_rational_number a0) (record Z19677 (Z19677K1 (Z19717_sign_of_rational_number a0)) (Z19677K2 (Z19724_denominator_of_simplified_rational_number a0)) (Z19677K3 (Z19722_numerator_of_simplified_rational_number a0))))
 (define Z19711 Z19711_multiplicative_inverse_of_rational_number)
 
 ;; Z19717 sign of rational number
@@ -5930,9 +5990,9 @@
 (define (Z19740_min_of_rational_numbers a0 a1) (if (Z19753_less_than_rational_numbers a0 a1) a0 a1))
 (define Z19740 Z19740_min_of_rational_numbers)
 
-;; Z19744 Integer as Rational number  [reaches an unimplemented function]
+;; Z19744 Integer as Rational number
 ;;   Z19744K1: Integer -> Rational number   [declared, not checked]
-(define (Z19744_integer_as_rational_number a0) (Z19854 a0 1))
+(define (Z19744_integer_as_rational_number a0) (record Z19677 (Z19677K1 (Z17105_sign_of_integer a0)) (Z19677K2 (Z17144_absolute_value_of_integer_as_natural_number a0)) (Z19677K3 1)))
 (define Z19744 Z19744_integer_as_rational_number)
 
 ;; Z19751 Greater than (rational numbers)  [reaches an unimplemented function]
@@ -5947,12 +6007,12 @@
 
 ;; Z19753 less than (rational numbers)  [reaches an unimplemented function]
 ;;   Z19753K1: Rational number, Z19753K2: Rational number -> Boolean   [declared, not checked]
-(define (Z19753_less_than_rational_numbers a0 a1) (Z17140_less_than_integer (Z27826 (Z19724_denominator_of_simplified_rational_number a1) (Z27820_signed_numerator_of_simplified_rational_number a0)) (Z27826 (Z19724_denominator_of_simplified_rational_number a0) (Z27820_signed_numerator_of_simplified_rational_number a1))))
+(define (Z19753_less_than_rational_numbers a0 a1) (Z17140_less_than_integer (Z27826_multiply_natural_by_integer (Z19724_denominator_of_simplified_rational_number a1) (Z27820_signed_numerator_of_simplified_rational_number a0)) (Z27826_multiply_natural_by_integer (Z19724_denominator_of_simplified_rational_number a0) (Z27820_signed_numerator_of_simplified_rational_number a1))))
 (define Z19753 Z19753_less_than_rational_numbers)
 
 ;; Z19754 less than or equal to (rational numbers)  [reaches an unimplemented function]
 ;;   Z19754K1: Rational number, Z19754K2: Rational number -> Boolean   [declared, not checked]
-(define (Z19754_less_than_or_equal_to_rational_numbers a0 a1) (Z17363_less_than_or_equal_integer (Z27826 (Z19724_denominator_of_simplified_rational_number a1) (Z27820_signed_numerator_of_simplified_rational_number a0)) (Z27826 (Z19724_denominator_of_simplified_rational_number a0) (Z27820_signed_numerator_of_simplified_rational_number a1))))
+(define (Z19754_less_than_or_equal_to_rational_numbers a0 a1) (Z17363_less_than_or_equal_integer (Z27826_multiply_natural_by_integer (Z19724_denominator_of_simplified_rational_number a1) (Z27820_signed_numerator_of_simplified_rational_number a0)) (Z27826_multiply_natural_by_integer (Z19724_denominator_of_simplified_rational_number a0) (Z27820_signed_numerator_of_simplified_rational_number a1))))
 (define Z19754 Z19754_less_than_or_equal_to_rational_numbers)
 
 ;; Z19800 limit denominator  [reaches an unimplemented function]
@@ -5967,8 +6027,13 @@
 
 ;; Z19814 nearest rational with specified denominator  [reaches an unimplemented function]
 ;;   Z19814K1: Rational number, Z19814K2: Natural number -> Rational number   [declared, not checked]
-(define (Z19814_nearest_rational_with_specified_denominator a0 a1) (Z19854 (Z19841_rational_to_nearest_integer_even_integer_tiebreak (Z19826 a0 a1)) a1))
+(define (Z19814_nearest_rational_with_specified_denominator a0 a1) (Z19854_simplified_rational_from_z_numerator_denominator (Z19841_rational_to_nearest_integer_even_integer_tiebreak (Z19826_multiply_rational_by_natural_number a0 a1)) a1))
 (define Z19814 Z19814_nearest_rational_with_specified_denominator)
+
+;; Z19826 multiply rational by natural number
+;;   Z19826K1: Rational number, Z19826K2: Natural number -> Rational number   [declared, not checked]
+(define (Z19826_multiply_rational_by_natural_number a0 a1) (record Z19677 (Z19677K1 (Z19717_sign_of_rational_number a0)) (Z19677K2 (* (Z19722_numerator_of_simplified_rational_number a0) a1)) (Z19677K3 (Z19724_denominator_of_simplified_rational_number a0))))
+(define Z19826 Z19826_multiply_rational_by_natural_number)
 
 ;; Z19827 Rational number to string  [reaches an unimplemented function]
 ;;   Z19827K1: Rational number -> String   [declared, not checked]
@@ -5982,8 +6047,18 @@
 
 ;; Z19841 rational to nearest integer, even integer tiebreak  [reaches an unimplemented function]
 ;;   Z19841K1: Rational number -> Integer   [declared, not checked]
-(define (Z19841_rational_to_nearest_integer_even_integer_tiebreak a0) (Z19682 (Z27705 a0 (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16661))) (Z16683K2 0)))))
+(define (Z19841_rational_to_nearest_integer_even_integer_tiebreak a0) (Z19682_truncate_rational_number (Z27705 a0 (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16661))) (Z16683K2 0)))))
 (define Z19841 Z19841_rational_to_nearest_integer_even_integer_tiebreak)
+
+;; Z19848 rational from integer numerator and denominator  [reaches an unimplemented function]
+;;   Z19848K1: Integer, Z19848K2: Integer -> Rational number   [declared, not checked]
+(define (Z19848_rational_from_integer_numerator_and_denominator a0 a1) (record Z19677 (Z19677K1 (Z16728_multiply_signs (Z17105_sign_of_integer a0) (Z17105_sign_of_integer a1))) (Z19677K2 (Z17144_absolute_value_of_integer_as_natural_number a0)) (Z19677K3 (Z17144_absolute_value_of_integer_as_natural_number a1))))
+(define Z19848 Z19848_rational_from_integer_numerator_and_denominator)
+
+;; Z19854 simplified rational from Z numerator, denominator
+;;   Z19854K1: Integer, Z19854K2: Natural number -> Rational number   [declared, not checked]
+(define (Z19854_simplified_rational_from_z_numerator_denominator a0 a1) (Z20112_rational_number_identity (record Z19677 (Z19677K1 (Z17105_sign_of_integer a0)) (Z19677K2 (Z17144_absolute_value_of_integer_as_natural_number a0)) (Z19677K3 a1))))
+(define Z19854 Z19854_simplified_rational_from_z_numerator_denominator)
 
 ;; Z19858 format [sign, numerator, denominator] as string  [reaches an unimplemented function]
 ;;   Z19858K1: Sign, Z19858K2: Natural number, Z19858K3: Natural number -> String   [declared, not checked]
@@ -5997,13 +6072,18 @@
 
 ;; Z19866 string to rational number  [reaches an unimplemented function]
 ;;   Z19866K1: String -> Rational number   [declared, not checked]
-(define (Z19866_string_to_rational_number a0) (Z19896 (Z19901_sign_of_string_representing_rational_number a0) (Z19886 a0)))
+(define (Z19866_string_to_rational_number a0) (Z19896_create_rational_number_from_list_and_sign (Z19901_sign_of_string_representing_rational_number a0) (Z19886 a0)))
 (define Z19866 Z19866_string_to_rational_number)
 
 ;; Z19892 same Rational number object
 ;;   Z19892K1: Rational number, Z19892K2: Rational number -> Boolean   [declared, not checked]
 (define (Z19892_same_rational_number_object a0 a1) (if (Z19108_same_key_value a0 (record Z39 (Z39K1 "Z19677K1")) a1) (if (Z19108_same_key_value a0 (record Z39 (Z39K1 "Z19677K3")) a1) (Z19108_same_key_value a0 (record Z39 (Z39K1 "Z19677K2")) a1) #f) #f))
 (define Z19892 Z19892_same_rational_number_object)
+
+;; Z19896 Create rational number from list and sign
+;;   Z19896K1: Sign, Z19896K2: Typed list(Natural number) -> Rational number   [declared, not checked]
+(define (Z19896_create_rational_number_from_list_and_sign a0 a1) (record Z19677 (Z19677K1 a0) (Z19677K2 (car a1)) (Z19677K3 (Z16360_second_element_error_handling a1))))
+(define Z19896 Z19896_create_rational_number_from_list_and_sign)
 
 ;; Z19901 sign of string representing rational number  [reaches an unimplemented function]
 ;;   Z19901K1: String -> Sign   [declared, not checked]
@@ -6012,7 +6092,7 @@
 
 ;; Z19914 Are rational numbers additive inverses?  [reaches an unimplemented function]
 ;;   Z19914K1: Rational number, Z19914K2: Rational number -> Boolean   [declared, not checked]
-(define (Z19914_are_rational_numbers_additive_inverses a0 a1) (Z19922_is_rational_number_0 (Z19679 a0 a1)))
+(define (Z19914_are_rational_numbers_additive_inverses a0 a1) (Z19922_is_rational_number_0 (Z19679_add_rational_numbers a0 a1)))
 (define Z19914 Z19914_are_rational_numbers_additive_inverses)
 
 ;; Z19922 Is rational number 0
@@ -6022,12 +6102,12 @@
 
 ;; Z19931 Are rational numbers multiplicative inverse?  [reaches an unimplemented function]
 ;;   Z19931K1: Rational number, Z19931K2: Rational number -> Boolean   [declared, not checked]
-(define (Z19931_are_rational_numbers_multiplicative_inverse a0 a1) (Z25200_is_rational_number_1 (Z19706 a0 a1)))
+(define (Z19931_are_rational_numbers_multiplicative_inverse a0 a1) (Z25200_is_rational_number_1 (Z19706_multiply_rational_numbers a0 a1)))
 (define Z19931 Z19931_are_rational_numbers_multiplicative_inverse)
 
 ;; Z19952 Rational number as items of continued frac  [reaches an unimplemented function]
 ;;   Z19952K1: Rational number -> Typed list(Natural number)   [declared, not checked]
-(define (Z19952_rational_number_as_items_of_continued_frac a0) (Z19565_triple_if (Z21714_is_negative_rational_number a0) (Z19952_rational_number_as_items_of_continued_frac (Z21692_absolute_value_of_rational_number a0)) (Z19806_is_rational_number_an_integer a0) (cons (Z17144_absolute_value_of_integer_as_natural_number (Z19682 a0)) (list)) (cons (Z17144_absolute_value_of_integer_as_natural_number (Z19682 a0)) (Z19952_rational_number_as_items_of_continued_frac (Z19711_multiplicative_inverse_of_rational_number (Z19699_subtract_rational_numbers a0 (Z19744_integer_as_rational_number (Z19682 a0))))))))
+(define (Z19952_rational_number_as_items_of_continued_frac a0) (Z19565_triple_if (Z21714_is_negative_rational_number a0) (Z19952_rational_number_as_items_of_continued_frac (Z21692_absolute_value_of_rational_number a0)) (Z19806_is_rational_number_an_integer a0) (cons (Z17144_absolute_value_of_integer_as_natural_number (Z19682_truncate_rational_number a0)) (list)) (cons (Z17144_absolute_value_of_integer_as_natural_number (Z19682_truncate_rational_number a0)) (Z19952_rational_number_as_items_of_continued_frac (Z19711_multiplicative_inverse_of_rational_number (Z19699_subtract_rational_numbers a0 (Z19744_integer_as_rational_number (Z19682_truncate_rational_number a0))))))))
 (define Z19952 Z19952_rational_number_as_items_of_continued_frac)
 
 ;; Z19967 complementary probability  [reaches an unimplemented function]
@@ -6037,7 +6117,7 @@
 
 ;; Z20000 Bayes' theorem conditional probability P(A|B)  [reaches an unimplemented function]
 ;;   Z20000K1: Rational number, Z20000K2: Rational number, Z20000K3: Rational number -> Rational number   [declared, not checked]
-(define (Z20000_bayes_theorem_conditional_probability_p_a_b a0 a1 a2) (Z19708_divide_rational_numbers (Z19706 a0 a1) a2))
+(define (Z20000_bayes_theorem_conditional_probability_p_a_b a0 a1 a2) (Z19708_divide_rational_numbers (Z19706_multiply_rational_numbers a0 a1) a2))
 (define Z20000 Z20000_bayes_theorem_conditional_probability_p_a_b)
 
 ;; Z20006 rational modulo  [reaches an unimplemented function]
@@ -6082,7 +6162,7 @@
 
 ;; Z20080 sum the elements of a list of rational numbers  [reaches an unimplemented function]
 ;;   Z20080K1: Typed list(Rational number) -> Rational number   [declared, not checked]
-(define (Z20080_sum_the_elements_of_a_list_of_rational_numbers a0) (Z20089_reduce_list_only Z19679 a0 (record Z19677 (Z19677K1 Z16661) (Z19677K2 0) (Z19677K3 1))))
+(define (Z20080_sum_the_elements_of_a_list_of_rational_numbers a0) (Z20089_reduce_list_only Z19679_add_rational_numbers a0 (record Z19677 (Z19677K1 Z16661) (Z19677K2 0) (Z19677K3 1))))
 (define Z20080 Z20080_sum_the_elements_of_a_list_of_rational_numbers)
 
 ;; Z20089 reduce (list only)
@@ -6090,14 +6170,19 @@
 (define (Z20089_reduce_list_only a0 a1 a2) (if (null? a1) a2 (Z12781_left_fold a1 a0)))
 (define Z20089 Z20089_reduce_list_only)
 
+;; Z20094 Binomial probability mass function  [reaches an unimplemented function]
+;;   Z20094K1: Natural number, Z20094K2: Natural number, Z20094K3: Rational number -> Rational number   [declared, not checked]
+(define (Z20094_binomial_probability_mass_function a0 a1 a2) (Z19826_multiply_rational_by_natural_number (Z19706_multiply_rational_numbers (Z19953 a2 (record Z19677 (Z19677K1 Z16660) (Z19677K2 a0) (Z19677K3 1))) (Z19953 (Z19967_complementary_probability a2) (record Z19677 (Z19677K1 Z16660) (Z19677K2 (Z13569_subtract_natural_numbers_with_floor_of_0 a1 a0)) (Z19677K3 1)))) (Z13848_binomial_coefficient a1 a0)))
+(define Z20094 Z20094_binomial_probability_mass_function)
+
 ;; Z20107 is error  [reaches an unimplemented function]
 ;;   Z20107K1: Object -> Boolean   [declared, not checked]
 (define (Z20107_is_error a0) (Z19352_object_has_this_type a0 Z5))
 (define Z20107 Z20107_is_error)
 
-;; Z20112 Rational number identity  [reaches an unimplemented function]
+;; Z20112 Rational number identity
 ;;   Z20112K1: Rational number -> Rational number   [declared, not checked]
-(define (Z20112_rational_number_identity a0) (Z19826 a0 1))
+(define (Z20112_rational_number_identity a0) (Z19826_multiply_rational_by_natural_number a0 1))
 (define Z20112 Z20112_rational_number_identity)
 
 ;; Z20116 Rational number object identity
@@ -6115,10 +6200,20 @@
 (define (Z20160_gregorian_year_to_year_number a0) (Z803_value_by_key (record Z39 (Z39K1 "Z20159K2")) a0))
 (define Z20160 Z20160_gregorian_year_to_year_number)
 
+;; Z20165 value by key index  [reaches an unimplemented function]
+;;   Z20165K1: Natural number, Z20165K2: Object -> Object   [declared, not checked]
+(define (Z20165_value_by_key_index a0 a1) (Z803_value_by_key (record Z39 (Z39K1 (Z10000_join_two_strings (Z16888_reference_string (Z15969_reified_z1k1_object_for_key_reference a1)) (Z10000_join_two_strings "K" (Z13713_natural_number_to_digit_string a0))))) a1))
+(define Z20165 Z20165_value_by_key_index)
+
 ;; Z20166 same Gregorian year
 ;;   Z20166K1: Gregorian year, Z20166K2: Gregorian year -> Boolean   [declared, not checked]
 (define (Z20166_same_gregorian_year a0 a1) (Z13052_object_equality a0 a1))
 (define Z20166 Z20166_same_gregorian_year)
+
+;; Z20172 next year  [reaches an unimplemented function]
+;;   Z20172K1: Gregorian year -> Gregorian year   [declared, not checked]
+(define (Z20172_next_year a0) (if (Z20166_same_gregorian_year a0 (record Z20159 (Z20159K1 (record Z17813 (Z17813K1 Z17815))) (Z20159K2 1))) (record Z20159 (Z20159K1 Z17814) (Z20159K2 1)) (record Z20159 (Z20159K1 (Z20185_gregorian_era_of_gregorian_year a0)) (Z20159K2 (Z13036_apply (if (Z28875_is_year_ad a0) add1 Z13582_decrement_natural_number_by_one) (Z20160_gregorian_year_to_year_number a0))))))
+(define Z20172 Z20172_next_year)
 
 ;; Z20181 is Gregorian year leap year?  [reaches an unimplemented function]
 ;;   Z20181K1: Gregorian year -> Boolean   [declared, not checked]
@@ -6162,7 +6257,7 @@
 
 ;; Z20226 probability of union  [reaches an unimplemented function]
 ;;   Z20226K1: Rational number, Z20226K2: Rational number, Z20226K3: Rational number -> Rational number   [declared, not checked]
-(define (Z20226_probability_of_union a0 a1 a2) (Z19699_subtract_rational_numbers (Z19679 a0 a1) a2))
+(define (Z20226_probability_of_union a0 a1 a2) (Z19699_subtract_rational_numbers (Z19679_add_rational_numbers a0 a1) a2))
 (define Z20226 Z20226_probability_of_union)
 
 ;; Z20231 is verb lexeme?
@@ -6177,7 +6272,7 @@
 
 ;; Z20257 Gregorian year to ISO 8601 year integer  [reaches an unimplemented function]
 ;;   Z20257K1: Gregorian year -> Integer   [declared, not checked]
-(define (Z20257_gregorian_year_to_iso_8601_year_integer a0) (if (Z17817_same_gregorian_era (Z20185_gregorian_era_of_gregorian_year a0) Z17814) (Z17101 (Z20160_gregorian_year_to_year_number a0)) (Z17111_subtract_an_integer (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16660))) (Z16683K2 1)) (Z17101 (Z20160_gregorian_year_to_year_number a0)))))
+(define (Z20257_gregorian_year_to_iso_8601_year_integer a0) (if (Z17817_same_gregorian_era (Z20185_gregorian_era_of_gregorian_year a0) Z17814) (Z17101_natural_number_to_integer (Z20160_gregorian_year_to_year_number a0)) (Z17111_subtract_an_integer (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16660))) (Z16683K2 1)) (Z17101_natural_number_to_integer (Z20160_gregorian_year_to_year_number a0)))))
 (define Z20257 Z20257_gregorian_year_to_iso_8601_year_integer)
 
 ;; Z20266 is integer divisible
@@ -6192,18 +6287,23 @@
 
 ;; Z20290 starts on  [reaches an unimplemented function; mutually recursive: may not terminate]
 ;;   Z20290K1: Gregorian year -> Day of the week   [declared, not checked]
-(define (Z20290_starts_on a0) (Z17420_next_day_of_the_week (Z20302_day_of_the_week_this_year_ends_with (Z20314 a0))))
+(define (Z20290_starts_on a0) (Z17420_next_day_of_the_week (Z20302_day_of_the_week_this_year_ends_with (Z20314_previous_year a0))))
 (define Z20290 Z20290_starts_on)
 
 ;; Z20302 day of the week this year ends with  [reaches an unimplemented function; mutually recursive: may not terminate]
 ;;   Z20302K1: Gregorian year -> Day of the week   [declared, not checked]
-(define (Z20302_day_of_the_week_this_year_ends_with a0) (Z17435_previous_day_of_the_week (Z20290_starts_on (Z20172 a0))))
+(define (Z20302_day_of_the_week_this_year_ends_with a0) (Z17435_previous_day_of_the_week (Z20290_starts_on (Z20172_next_year a0))))
 (define Z20302 Z20302_day_of_the_week_this_year_ends_with)
 
 ;; Z20305 unless exception
 ;;   Z20305K1: Object, Z20305K2: Boolean, Z20305K3: Object -> Object   [declared, not checked]
 (define (Z20305_unless_exception a0 a1 a2) (if a1 a2 a0))
 (define Z20305 Z20305_unless_exception)
+
+;; Z20314 previous year  [reaches an unimplemented function]
+;;   Z20314K1: Gregorian year -> Gregorian year   [declared, not checked]
+(define (Z20314_previous_year a0) (if (Z20166_same_gregorian_year a0 (record Z20159 (Z20159K1 (record Z17813 (Z17813K1 Z17814))) (Z20159K2 1))) (record Z20159 (Z20159K1 Z17815) (Z20159K2 1)) (record Z20159 (Z20159K1 (Z20185_gregorian_era_of_gregorian_year a0)) (Z20159K2 (Z13036_apply (if (Z28875_is_year_ad a0) Z13582_decrement_natural_number_by_one add1) (Z20160_gregorian_year_to_year_number a0))))))
+(define Z20314 Z20314_previous_year)
 
 ;; Z20323 Triangle of Power operation  [reaches an unimplemented function]
 ;;   Z20323K1: Rational number, Z20323K2: Rational number, Z20323K3: Natural number -> Rational number   [declared, not checked]
@@ -6232,12 +6332,12 @@
 
 ;; Z20367 Move N dates  [reaches an unimplemented function]
 ;;   Z20367K1: Day of Roman year, Z20367K2: Integer, Z20367K3: Boolean -> Day of Roman year   [declared, not checked]
-(define (Z20367_move_n_dates a0 a1 a2) (Z20362 (Z16693_add_integers (Z17101 (Z20357_day_of_roman_year_to_day_number_in_year a0 a2)) a1) a2))
+(define (Z20367_move_n_dates a0 a1 a2) (Z20362 (Z16693_add_integers (Z17101_natural_number_to_integer (Z20357_day_of_roman_year_to_day_number_in_year a0 a2)) a1) a2))
 (define Z20367 Z20367_move_n_dates)
 
 ;; Z20371 Day from Date + Year  [reaches an unimplemented function]
 ;;   Z20371K1: Day of Roman year, Z20371K2: Gregorian year -> Day of the week   [declared, not checked]
-(define (Z20371_day_from_date_year a0 a1) (Z17517_advance_n_days_of_the_week (Z20290_starts_on a1) (Z17111_subtract_an_integer (Z17101 (Z20357_day_of_roman_year_to_day_number_in_year a0 (Z20181_is_gregorian_year_leap_year a1))) (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16660))) (Z16683K2 1)))))
+(define (Z20371_day_from_date_year a0 a1) (Z20421_day_of_the_week (record Z20420 (Z20420K1 a1) (Z20420K2 a0))))
 (define Z20371 Z20371_day_from_date_year)
 
 ;; Z20388 day of month from date
@@ -6290,6 +6390,21 @@
 (define (Z20456_is_earlier_in_the_same_month a0 a1) (bool-and (Z16137_same_month (Z20343_month_from_day_of_the_roman_year a0) (Z20343_month_from_day_of_the_roman_year a1)) (Z20452_is_earlier_in_its_month a0 a1)))
 (define Z20456 Z20456_is_earlier_in_the_same_month)
 
+;; Z20584 rational from sign and natural numbers
+;;   Z20584K1: Sign, Z20584K2: Natural number, Z20584K3: Natural number -> Rational number   [declared, not checked]
+(define (Z20584_rational_from_sign_and_natural_numbers a0 a1 a2) (record Z19677 (Z19677K1 a0) (Z19677K2 a1) (Z19677K3 a2)))
+(define Z20584 Z20584_rational_from_sign_and_natural_numbers)
+
+;; Z20588 Gregorian year from components
+;;   Z20588K1: Gregorian era, Z20588K2: Natural number -> Gregorian year   [declared, not checked]
+(define (Z20588_gregorian_year_from_components a0 a1) (record Z20159 (Z20159K1 a0) (Z20159K2 a1)))
+(define Z20588 Z20588_gregorian_year_from_components)
+
+;; Z20591 Day of Roman year from components
+;;   Z20591K1: Gregorian calendar month, Z20591K2: Natural number -> Day of Roman year   [declared, not checked]
+(define (Z20591_day_of_roman_year_from_components a0 a1) (record Z20342 (Z20342K1 a0) (Z20342K2 a1)))
+(define Z20591 Z20591_day_of_roman_year_from_components)
+
 ;; Z20597 intro for year in English  [reaches an unimplemented function]
 ;;   Z20597K1: Gregorian year -> String   [declared, not checked]
 (define (Z20597_intro_for_year_in_english a0) (Z12899_join_list_of_strings_with_delimiter (cons (Z13713_natural_number_to_digit_string (Z20160_gregorian_year_to_year_number a0)) (cons (Z20600_parenthesize (Z11022 (Z20160_gregorian_year_to_year_number a0))) (cons "was a" (cons (Z11542_if_string_output (Z20181_is_gregorian_year_leap_year a0) "leap" "common") (cons "year of the Gregorian calendar." (list)))))) " "))
@@ -6327,7 +6442,7 @@
 
 ;; Z20648 Numbers of days in a month  [reaches an unimplemented function]
 ;;   Z20648K1: Gregorian calendar month, Z20648K2: Gregorian year -> Integer   [declared, not checked]
-(define (Z20648_numbers_of_days_in_a_month a0 a1) (Z17101 (Z27068_if_true_pass_input_through_function (Z16316_days_in_month_when_not_a_leap_year a0) add1 (Z20181_is_gregorian_year_leap_year a1))))
+(define (Z20648_numbers_of_days_in_a_month a0 a1) (Z17101_natural_number_to_integer (Z27068_if_true_pass_input_through_function (Z16316_days_in_month_when_not_a_leap_year a0) add1 (Z20181_is_gregorian_year_leap_year a1))))
 (define Z20648 Z20648_numbers_of_days_in_a_month)
 
 ;; Z20653 Validate string to list of string options
@@ -6349,6 +6464,11 @@
 ;;   Z20662K1: Typed list(Object), Z20662K2: Typed list(Object) -> Object   [declared, not checked]
 (define (Z20662_zip_two_lists a0 a1) (Z24176_transpose_rational_matrix (identity (cons a0 (cons a1 (list))))))
 (define Z20662 Z20662_zip_two_lists)
+
+;; Z20669 caesar cipher (Dagbani alphabet)  [reaches an unimplemented function]
+;;   Z20669K1: String, Z20669K2: Integer -> String   [declared, not checked]
+(define (Z20669_caesar_cipher_dagbani_alphabet a0 a1) (Z23869 Z23946 a0 (Z20391_integer_to_exact_natural_number_or_0 (Z17167_integer_modulo_another_integer a1 (record Z16683 (Z16683K1 Z16660) (Z16683K2 (length Z23946)))))))
+(define Z20669 Z20669_caesar_cipher_dagbani_alphabet)
 
 ;; Z20673 Gloss of Lexeme Sense as text of language  [reaches an unimplemented function]
 ;;   Z20673K1: Wikidata lexeme sense reference, Z20673K2: Natural language -> Monolingual text   [declared, not checked]
@@ -6402,7 +6522,7 @@
 
 ;; Z20756 age  [reaches an unimplemented function]
 ;;   Z20756K1: Gregorian calendar date, Z20756K2: Gregorian calendar date -> Natural number   [declared, not checked]
-(define (Z20756_age a0 a1) (Z20391_integer_to_exact_natural_number_or_0 (Z17111_subtract_an_integer (Z17111_subtract_an_integer (Z20257_gregorian_year_to_iso_8601_year_integer (Z803_value_by_key (record Z39 (Z39K1 "Z20420K1")) a1)) (Z20257_gregorian_year_to_iso_8601_year_integer (Z803_value_by_key (record Z39 (Z39K1 "Z20420K1")) a0))) (Z17101 (Z17065_boolean_to_natural_number (Z20406_earlier_in_year (Z803_value_by_key (record Z39 (Z39K1 "Z20420K2")) a1) (Z803_value_by_key (record Z39 (Z39K1 "Z20420K2")) a0)))))))
+(define (Z20756_age a0 a1) (Z20391_integer_to_exact_natural_number_or_0 (Z17111_subtract_an_integer (Z17111_subtract_an_integer (Z20257_gregorian_year_to_iso_8601_year_integer (Z803_value_by_key (record Z39 (Z39K1 "Z20420K1")) a1)) (Z20257_gregorian_year_to_iso_8601_year_integer (Z803_value_by_key (record Z39 (Z39K1 "Z20420K1")) a0))) (Z17101_natural_number_to_integer (Z17065_boolean_to_natural_number (Z20406_earlier_in_year (Z803_value_by_key (record Z39 (Z39K1 "Z20420K2")) a1) (Z803_value_by_key (record Z39 (Z39K1 "Z20420K2")) a0)))))))
 (define Z20756 Z20756_age)
 
 ;; Z20780 display date  [reaches an unimplemented function]
@@ -6430,9 +6550,14 @@
 (define (Z20850_same_float64 a0 a1) (bool-and (Z21439_same_floating_point_special_value (Z21145_special_value_of_floating_point a0) (Z21145_special_value_of_floating_point a1)) (bool-or (not (Z21439_same_floating_point_special_value (Z21145_special_value_of_floating_point a0) Z20837)) (Z11828_and_quaternary (Z16667_same_sign (Z21136_extract_sign_of_floating_point_number a0) (Z21136_extract_sign_of_floating_point_number a1)) (Z16688_same_integer (Z21139_exponent_of_floating_point_number a0) (Z21139_exponent_of_floating_point_number a1)) (= (Z21142_significand_of_floating_point_number a0) (Z21142_significand_of_floating_point_number a1)) #t))))
 (define Z20850 Z20850_same_float64)
 
+;; Z20856 percent of date range completed  [reaches an unimplemented function]
+;;   Z20856K1: Gregorian calendar date, Z20856K2: Gregorian calendar date, Z20856K3: Gregorian calendar date -> Rational number   [declared, not checked]
+(define (Z20856_percent_of_date_range_completed a0 a1 a2) (identity (record Z19677 (Z19677K1 Z16660) (Z19677K2 (Z17144_absolute_value_of_integer_as_natural_number (Z20744_days_until a1 a0))) (Z19677K3 (Z17144_absolute_value_of_integer_as_natural_number (Z20744_days_until a1 a2))))))
+(define Z20856 Z20856_percent_of_date_range_completed)
+
 ;; Z20863 volume of a rectangular prism (Rational numbers)  [reaches an unimplemented function]
 ;;   Z20863K1: Rational number, Z20863K2: Rational number, Z20863K3: Rational number -> Rational number   [declared, not checked]
-(define (Z20863_volume_of_a_rectangular_prism_rational_numbers a0 a1 a2) (Z19706 a2 (Z19706 a0 a1)))
+(define (Z20863_volume_of_a_rectangular_prism_rational_numbers a0 a1 a2) (Z19706_multiply_rational_numbers a2 (Z19706_multiply_rational_numbers a0 a1)))
 (define Z20863 Z20863_volume_of_a_rectangular_prism_rational_numbers)
 
 ;; Z20870 volume of a pyramid  [reaches an unimplemented function]
@@ -6442,7 +6567,7 @@
 
 ;; Z20877 area of a rectangle  [reaches an unimplemented function]
 ;;   Z20877K1: Rational number, Z20877K2: Rational number -> Rational number   [declared, not checked]
-(define (Z20877_area_of_a_rectangle a0 a1) (Z19706 a0 a1))
+(define (Z20877_area_of_a_rectangle a0 a1) (Z19706_multiply_rational_numbers a0 a1))
 (define Z20877 Z20877_area_of_a_rectangle)
 
 ;; Z20898 Intro for year  [reaches an unimplemented function]
@@ -6567,7 +6692,7 @@
 
 ;; Z21071 float as rational  [reaches an unimplemented function; mutually recursive: may not terminate]
 ;;   Z21071K1: float64 -> Rational number   [declared, not checked]
-(define (Z21071_float_as_rational a0) (if (Z34827_is_float64_finite a0) (Z19706 (if (Z10615_string_starts_with (Z21158_display_float64_as_binary_string a0) "1") (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16662))) (Z19677K2 1) (Z19677K3 1)) (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 1))) (Z19706 (Z19953 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 2) (Z19677K3 1)) (Z19744_integer_as_rational_number (Z17315_subtract_natural_numbers_as_integer (if (Z10615_string_starts_with (Z14456_remove_first_character (Z21158_display_float64_as_binary_string a0)) "00000000000") 1 (Z13797_binary_string_to_natural_number (Z28630_substring_by_index_0_indexed (Z21158_display_float64_as_binary_string a0) 1 12))) 1075))) (Z21653_natural_number_as_rational_number (Z13797_binary_string_to_natural_number (Z10000_join_two_strings (if (Z10615_string_starts_with (Z14456_remove_first_character (Z21158_display_float64_as_binary_string a0)) "00000000000") "" "1") (Z14636_remove_first_n_characters_of_string (Z21158_display_float64_as_binary_string a0) 12)))))) (Z851 Z516 (cons "Z21071K1" (cons a0 (list))))))
+(define (Z21071_float_as_rational a0) (if (Z34827_is_float64_finite a0) (Z19706_multiply_rational_numbers (if (Z10615_string_starts_with (Z21158_display_float64_as_binary_string a0) "1") (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16662))) (Z19677K2 1) (Z19677K3 1)) (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 1))) (Z19706_multiply_rational_numbers (Z19953 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 2) (Z19677K3 1)) (Z19744_integer_as_rational_number (Z17315_subtract_natural_numbers_as_integer (if (Z10615_string_starts_with (Z14456_remove_first_character (Z21158_display_float64_as_binary_string a0)) "00000000000") 1 (Z13797_binary_string_to_natural_number (Z28630_substring_by_index_0_indexed (Z21158_display_float64_as_binary_string a0) 1 12))) 1075))) (Z21653_natural_number_as_rational_number (Z13797_binary_string_to_natural_number (Z10000_join_two_strings (if (Z10615_string_starts_with (Z14456_remove_first_character (Z21158_display_float64_as_binary_string a0)) "00000000000") "" "1") (Z14636_remove_first_n_characters_of_string (Z21158_display_float64_as_binary_string a0) 12)))))) (Z851 Z516 (cons "Z21071K1" (cons a0 (list))))))
 (define Z21071 Z21071_float_as_rational)
 
 ;; Z21105 is string 1  [reaches an unimplemented function]
@@ -6577,7 +6702,7 @@
 
 ;; Z21121 convert units  [reaches an unimplemented function]
 ;;   Z21121K1: String, Z21121K2: String, Z21121K3: String, Z21121K4: Integer, Z21121K5: Boolean, Z21121K6: Boolean, Z21121K7: Natural language -> String   [declared, not checked]
-(define (Z21121_convert_units a0 a1 a2 a3 a4 a5 a6) (Z28614_display_quantity_and_parenthesised_conversion (Z25785 (Z27182_join_two_strings_with_space a0 a1) a6) (Z25792 a2) a6))
+(define (Z21121_convert_units a0 a1 a2 a3 a4 a5 a6) (Z28614_display_quantity_and_parenthesised_conversion (Z25785_read_wikidata_quantity (Z27182_join_two_strings_with_space a0 a1) a6) (Z25792 a2) a6))
 (define Z21121 Z21121_convert_units)
 
 ;; Z21132 (!) vararg apply  [reaches an unimplemented function]
@@ -6675,6 +6800,11 @@
 (define (Z21236_throw_if_not_of_lang_run_otherwise a0 a1 a2) (if (Z14326_same_language (Z19295_language_of_lexeme a0) a1) (Z851 Z500 (list "Lexeme not of correct language")) a2))
 (define Z21236 Z21236_throw_if_not_of_lang_run_otherwise)
 
+;; Z21240 convert a language code to a Russian adverb  [reaches an unimplemented function]
+;;   Z21240K1: String -> String   [declared, not checked]
+(define (Z21240_convert_a_language_code_to_a_russian_adverb a0) (if (Z10008_is_empty_string a0) a0 (Z10000_join_two_strings "на " (Z19241_first_matching_representation_string_from_lexeme (car (Z23616_lexemes_from_wikidata_item_reference (Z29649_wikidata_reference_from_wikifunctions_language_obj (record Z60 (Z60K1 a0) (Z60K2 (list)))) Z1005)) (list (record Z6091 (Z6091K1 "Q146078")))))))
+(define Z21240 Z21240_convert_a_language_code_to_a_russian_adverb)
+
 ;; Z21249 Rational number as percentage  [reaches an unimplemented function]
 ;;   Z21249K1: Rational number -> String   [declared, not checked]
 (define (Z21249_rational_number_as_percentage a0) (Z21000_float_as_percent (Z20854 a0)))
@@ -6687,7 +6817,7 @@
 
 ;; Z21273 area of a triangle  [reaches an unimplemented function]
 ;;   Z21273K1: Rational number, Z21273K2: Rational number -> Rational number   [declared, not checked]
-(define (Z21273_area_of_a_triangle a0 a1) (Z19706 a0 (Z19706 a1 (record Z19677 (Z19677K1 Z16660) (Z19677K2 1) (Z19677K3 2)))))
+(define (Z21273_area_of_a_triangle a0 a1) (Z19706_multiply_rational_numbers a0 (Z19706_multiply_rational_numbers a1 (record Z19677 (Z19677K1 Z16660) (Z19677K2 1) (Z19677K3 2)))))
 (define Z21273 Z21273_area_of_a_triangle)
 
 ;; Z21278 area of a regular polygon  [reaches an unimplemented function]
@@ -6707,17 +6837,17 @@
 
 ;; Z21294 Bernoulli probability mass function  [reaches an unimplemented function]
 ;;   Z21294K1: Natural number, Z21294K2: Rational number -> Rational number   [declared, not checked]
-(define (Z21294_bernoulli_probability_mass_function a0 a1) (Z20094 a0 1 a1))
+(define (Z21294_bernoulli_probability_mass_function a0 a1) (Z20094_binomial_probability_mass_function a0 1 a1))
 (define Z21294 Z21294_bernoulli_probability_mass_function)
 
 ;; Z21312 Geometric probability mass function  [reaches an unimplemented function]
 ;;   Z21312K1: Natural number, Z21312K2: Rational number -> Rational number   [declared, not checked]
-(define (Z21312_geometric_probability_mass_function a0 a1) (Z19706 (Z21320_power_of_rational_number (Z19967_complementary_probability a1) (Z17101 a0)) a1))
+(define (Z21312_geometric_probability_mass_function a0 a1) (Z19706_multiply_rational_numbers (Z21320_power_of_rational_number (Z19967_complementary_probability a1) (Z17101_natural_number_to_integer a0)) a1))
 (define Z21312 Z21312_geometric_probability_mass_function)
 
 ;; Z21320 power of rational number  [reaches an unimplemented function]
 ;;   Z21320K1: Rational number, Z21320K2: Integer -> Rational number   [declared, not checked]
-(define (Z21320_power_of_rational_number a0 a1) (Z19565_triple_if (Z16667_same_sign (Z17105_sign_of_integer a1) Z16661) (record Z19677 (Z19677K1 Z16660) (Z19677K2 1) (Z19677K3 1)) (Z16667_same_sign (Z17105_sign_of_integer a1) Z16660) (Z19706 a0 (Z21320_power_of_rational_number a0 (Z17160_decrement_integer a1))) (Z21320_power_of_rational_number (Z19711_multiplicative_inverse_of_rational_number a0) (Z17128_absolute_value_of_integer a1))))
+(define (Z21320_power_of_rational_number a0 a1) (Z19565_triple_if (Z16667_same_sign (Z17105_sign_of_integer a1) Z16661) (record Z19677 (Z19677K1 Z16660) (Z19677K2 1) (Z19677K3 1)) (Z16667_same_sign (Z17105_sign_of_integer a1) Z16660) (Z19706_multiply_rational_numbers a0 (Z21320_power_of_rational_number a0 (Z17160_decrement_integer a1))) (Z21320_power_of_rational_number (Z19711_multiplicative_inverse_of_rational_number a0) (Z17128_absolute_value_of_integer a1))))
 (define Z21320 Z21320_power_of_rational_number)
 
 ;; Z21329 linguonym for language in target language  [reaches an unimplemented function]
@@ -6800,6 +6930,11 @@
 (define (Z21430_convert_leading_binary_bit_to_float64_sign a0) (Z19565_triple_if (string=? a0 "0") Z16660 (string=? a0 "1") Z16662 Z16661))
 (define Z21430 Z21430_convert_leading_binary_bit_to_float64_sign)
 
+;; Z21435 convert 64 bit string to float64  [reaches an unimplemented function]
+;;   Z21435K1: String -> float64   [declared, not checked]
+(define (Z21435_convert_64_bit_string_to_float64 a0) (identity (record Z20838 (Z20838K1 (Z21430_convert_leading_binary_bit_to_float64_sign (Z10901_get_first_character_of_string a0))) (Z20838K2 (Z21163_convert_biased_exponent_bits_to_integer_exponent (Z14460_final_n_characters_of_string (Z14592_first_n_characters_of_string a0 12) 11))) (Z20838K3 (Z13797_binary_string_to_natural_number (Z14460_final_n_characters_of_string a0 52))) (Z20838K4 (Z21438_64_bit_binary_string_to_float64_special_value a0)))))
+(define Z21435 Z21435_convert_64_bit_string_to_float64)
+
 ;; Z21438 64 bit binary string to float64 special value  [reaches an unimplemented function]
 ;;   Z21438K1: String -> Floating point special value   [declared, not checked]
 (define (Z21438_64_bit_binary_string_to_float64_special_value a0) (Z19601_n_ifs (cons (string=? a0 "0000000000000000000000000000000000000000000000000000000000000000") (cons (string=? a0 "1000000000000000000000000000000000000000000000000000000000000000") (cons (string=? a0 "0111111111110000000000000000000000000000000000000000000000000000") (cons (string=? a0 "1111111111110000000000000000000000000000000000000000000000000000") (cons (string=? a0 "0111111111110000000000000000000000000000000000000000000000000001") (cons (string=? a0 "0111111111111000000000000000000000000000000000000000000000000001") (cons (string=? a0 "0111111111111111111111111111111111111111111111111111111111111111") (list)))))))) (list Z20829 Z20831 Z20832 Z20833 Z20835 Z20836 Z20834 Z20837)))
@@ -6815,9 +6950,14 @@
 (define (Z21449_first_value_of_property_from_wikidata_item a0 a1) (Z28159_first_element_otherwise_throw_error (Z22978_values_unqualified_from_wikidata_item_statements a1 a0) "Z28158" (cons (Z28163_id_of_wikidata_item a1) (cons (Z20046_wikidata_property_id_string a0) (list)))))
 (define Z21449 Z21449_first_value_of_property_from_wikidata_item)
 
+;; Z21458 wikidata item reference from natural number
+;;   Z21458K1: Natural number -> Wikidata item reference   [declared, not checked]
+(define (Z21458_wikidata_item_reference_from_natural_number a0) (record Z6091 (Z6091K1 (Z10000_join_two_strings "Q" (Z13713_natural_number_to_digit_string a0)))))
+(define Z21458 Z21458_wikidata_item_reference_from_natural_number)
+
 ;; Z21534 truncate float64 to Integer  [reaches an unimplemented function]
 ;;   Z21534K1: float64 -> Integer   [declared, not checked]
-(define (Z21534_truncate_float64_to_integer a0) (Z19682 (Z21071_float_as_rational a0)))
+(define (Z21534_truncate_float64_to_integer a0) (Z19682_truncate_rational_number (Z21071_float_as_rational a0)))
 (define Z21534 Z21534_truncate_float64_to_integer)
 
 ;; Z21577 item reference from sense  [reaches an unimplemented function]
@@ -6935,7 +7075,7 @@
 (define (Z21805_rank_english_lexemes a0 a1 a2 a3) (Z12899_join_list_of_strings_with_delimiter (cons (Z21806_lemma_string_from_lexeme_and_lang a0 Z1002) (cons " is the " (cons (if (= a1 1) "" (Z10000_join_two_strings (Z14531_natural_number_with_english_ordinal_suffix a1) " ")) (cons (Z19241_first_matching_representation_string_from_lexeme a2 (list (record Z6091 (Z6091K1 "Q1817208")))) (cons " " (cons (Z19241_first_matching_representation_string_from_lexeme a3 (list (record Z6091 (Z6091K1 "Q110786")))) (list))))))) ""))
 (define Z21805 Z21805_rank_english_lexemes)
 
-;; Z21806 lemma string from lexeme and lang  [reaches an unimplemented function]
+;; Z21806 lemma string from lexeme and lang
 ;;   Z21806K1: Wikidata lexeme, Z21806K2: Natural language -> String   [declared, not checked]
 (define (Z21806_lemma_string_from_lexeme_and_lang a0 a1) (Z14396_string_of_monolingual_text (Z16273_monolingual_text_in_specified_language_from_multilingual_tex (Z19293_lemmas_of_lexeme a0) a1)))
 (define Z21806 Z21806_lemma_string_from_lexeme_and_lang)
@@ -6952,7 +7092,7 @@
 
 ;; Z21835 rational from finite simple continued fraction  [reaches an unimplemented function]
 ;;   Z21835K1: Typed list(Integer) -> Rational number   [declared, not checked]
-(define (Z21835_rational_from_finite_simple_continued_fraction a0) (Z19565_triple_if (Z12755_is_single_element_list a0) (Z19854 (car a0) 1) (null? a0) (record Z19677 (Z19677K1 Z16661) (Z19677K2 0) (Z19677K3 1)) (Z19679 (Z19854 (car a0) 1) (Z19711_multiplicative_inverse_of_rational_number (Z21835_rational_from_finite_simple_continued_fraction (cdr a0))))))
+(define (Z21835_rational_from_finite_simple_continued_fraction a0) (Z19565_triple_if (Z12755_is_single_element_list a0) (Z19854_simplified_rational_from_z_numerator_denominator (car a0) 1) (null? a0) (record Z19677 (Z19677K1 Z16661) (Z19677K2 0) (Z19677K3 1)) (Z19679_add_rational_numbers (Z19854_simplified_rational_from_z_numerator_denominator (car a0) 1) (Z19711_multiplicative_inverse_of_rational_number (Z21835_rational_from_finite_simple_continued_fraction (cdr a0))))))
 (define Z21835 Z21835_rational_from_finite_simple_continued_fraction)
 
 ;; Z21848 Quadratic equation solver (float64)  [reaches an unimplemented function]
@@ -7062,7 +7202,7 @@
 
 ;; Z22027 area of a circle (rational approximation)  [reaches an unimplemented function]
 ;;   Z22027K1: Rational number -> Rational number   [declared, not checked]
-(define (Z22027_area_of_a_circle_rational_approximation a0) (Z19706 (Z21071_float_as_rational Z20862) (Z19706 a0 a0)))
+(define (Z22027_area_of_a_circle_rational_approximation a0) (Z19706_multiply_rational_numbers (Z21071_float_as_rational Z20862) (Z19706_multiply_rational_numbers a0 a0)))
 (define Z22027 Z22027_area_of_a_circle_rational_approximation)
 
 ;; Z22044 wrap with code-nowiki XML tags
@@ -7150,6 +7290,16 @@
 (define (Z22240_gregorian_calendar_month_to_wikidata_reference a0) (Z13397_get_the_nth_element_of_a_list (list (record Z6091 (Z6091K1 "Q108")) (record Z6091 (Z6091K1 "Q109")) (record Z6091 (Z6091K1 "Q110")) (record Z6091 (Z6091K1 "Q118")) (record Z6091 (Z6091K1 "Q119")) (record Z6091 (Z6091K1 "Q120")) (record Z6091 (Z6091K1 "Q121")) (record Z6091 (Z6091K1 "Q122")) (record Z6091 (Z6091K1 "Q123")) (record Z6091 (Z6091K1 "Q124")) (record Z6091 (Z6091K1 "Q125")) (record Z6091 (Z6091K1 "Q126"))) (Z16230_month_to_month_number a0)))
 (define Z22240 Z22240_gregorian_calendar_month_to_wikidata_reference)
 
+;; Z22246 Wikidata item reference from QID string
+;;   Z22246K1: String -> Wikidata item reference   [declared, not checked]
+(define (Z22246_wikidata_item_reference_from_qid_string a0) (record Z6091 (Z6091K1 a0)))
+(define Z22246 Z22246_wikidata_item_reference_from_qid_string)
+
+;; Z22249 Wikidata lexeme reference from LID string
+;;   Z22249K1: String -> Wikidata lexeme reference   [declared, not checked]
+(define (Z22249_wikidata_lexeme_reference_from_lid_string a0) (identity (record Z6095 (Z6095K1 a0))))
+(define Z22249 Z22249_wikidata_lexeme_reference_from_lid_string)
+
 ;; Z22252 Drop-down item (test)
 ;;   Z22252K1: Function -> Type   [declared, not checked]
 (define (Z22252_drop_down_item_test a0) (identity a0))
@@ -7212,12 +7362,12 @@
 
 ;; Z22322 Population density  [reaches an unimplemented function]
 ;;   Z22322K1: Natural number, Z22322K2: float64 -> Natural number   [declared, not checked]
-(define (Z22322_population_density a0 a1) (Z17144_absolute_value_of_integer_as_natural_number (Z19841_rational_to_nearest_integer_even_integer_tiebreak (Z19706 (Z21653_natural_number_as_rational_number a0) (Z19711_multiplicative_inverse_of_rational_number (Z21071_float_as_rational a1))))))
+(define (Z22322_population_density a0 a1) (Z17144_absolute_value_of_integer_as_natural_number (Z19841_rational_to_nearest_integer_even_integer_tiebreak (Z19706_multiply_rational_numbers (Z21653_natural_number_as_rational_number a0) (Z19711_multiplicative_inverse_of_rational_number (Z21071_float_as_rational a1))))))
 (define Z22322 Z22322_population_density)
 
 ;; Z22327 Annual Population growth rate  [reaches an unimplemented function]
 ;;   Z22327K1: Natural number, Z22327K2: Natural number, Z22327K3: Natural number, Z22327K4: Natural number -> float64   [declared, not checked]
-(define (Z22327_annual_population_growth_rate a0 a1 a2 a3) (Z31490_if_either (Z12696_contains (cons a0 (cons a1 (cons a2 (cons a3 (list))))) 0) (< a3 a1) (record Z20838 (Z20838K1 (record Z16659 (Z16659K1 Z16662))) (Z20838K2 (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16661))) (Z16683K2 0))) (Z20838K3 0) (Z20838K4 (record Z20825 (Z20825K1 Z20837)))) (Z20854 (Z27705 (Z19854 (Z17120_multiply_integers (record Z16683 (Z16683K1 Z16660) (Z16683K2 100)) (Z17315_subtract_natural_numbers_as_integer a2 a0)) (* a0 (Z13569_subtract_natural_numbers_with_floor_of_0 a3 a1))) (record Z16683 (Z16683K1 Z16660) (Z16683K2 2))))))
+(define (Z22327_annual_population_growth_rate a0 a1 a2 a3) (Z31490_if_either (Z12696_contains (cons a0 (cons a1 (cons a2 (cons a3 (list))))) 0) (< a3 a1) (record Z20838 (Z20838K1 (record Z16659 (Z16659K1 Z16662))) (Z20838K2 (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16661))) (Z16683K2 0))) (Z20838K3 0) (Z20838K4 (record Z20825 (Z20825K1 Z20837)))) (Z20854 (Z27705 (Z19854_simplified_rational_from_z_numerator_denominator (Z17120_multiply_integers (record Z16683 (Z16683K1 Z16660) (Z16683K2 100)) (Z17315_subtract_natural_numbers_as_integer a2 a0)) (* a0 (Z13569_subtract_natural_numbers_with_floor_of_0 a3 a1))) (record Z16683 (Z16683K1 Z16660) (Z16683K2 2))))))
 (define Z22327 Z22327_annual_population_growth_rate)
 
 ;; Z22344 str left  [reaches an unimplemented function]
@@ -7230,9 +7380,9 @@
 (define (Z22373_byte_equality a0 a1) (= (Z22475_value_by_key_safer (record Z39 (Z39K1 "Z80K1")) a0) (Z22475_value_by_key_safer (record Z39 (Z39K1 "Z80K1")) a1)))
 (define Z22373 Z22373_byte_equality)
 
-;; Z22380 next byte  [reaches an unimplemented function]
+;; Z22380 next byte
 ;;   Z22380K1: Byte -> Byte   [declared, not checked]
-(define (Z22380_next_byte a0) (if (Z22373_byte_equality a0 (record Z80 (Z80K1 255))) (record Z80 (Z80K1 0)) (Z22535 (add1 (Z14567_byte_to_natural_number a0)))))
+(define (Z22380_next_byte a0) (if (Z22373_byte_equality a0 (record Z80 (Z80K1 255))) (record Z80 (Z80K1 0)) (Z22535_natural_number_to_byte (add1 (Z14567_byte_to_natural_number a0)))))
 (define Z22380 Z22380_next_byte)
 
 ;; Z22386 English [p/n] is/are a/an/ [][agent n] of [][obj]  [reaches an unimplemented function]
@@ -7340,6 +7490,16 @@
 (define (Z22529_bitwise_not a0) (Z22672_list_of_booleans_to_byte (map not (Z22654_byte_as_list_of_booleans a0))))
 (define Z22529 Z22529_bitwise_not)
 
+;; Z22535 natural number to byte
+;;   Z22535K1: Natural number -> Byte   [declared, not checked]
+(define (Z22535_natural_number_to_byte a0) (if (> 256 a0) (record Z80 (Z80K1 a0)) (record Z80 (Z80K1 255))))
+(define Z22535 Z22535_natural_number_to_byte)
+
+;; Z22549 Key reference from String
+;;   Z22549K1: String -> Key reference   [declared, not checked]
+(define (Z22549_key_reference_from_string a0) (record Z39 (Z39K1 a0)))
+(define Z22549 Z22549_key_reference_from_string)
+
 ;; Z22556 grammatical features inherited from lexeme  [reaches an unimplemented function]
 ;;   Z22556K1: Wikidata lexeme form -> Typed list(Wikidata item reference)   [declared, not checked]
 (define (Z22556_grammatical_features_inherited_from_lexeme a0) (Z22559_grammatical_features_of_lexeme (Z6825 (Z22483_lexeme_reference_of_lexeme_form a0))))
@@ -7442,7 +7602,7 @@
 
 ;; Z22672 list of Booleans to Byte  [reaches an unimplemented function]
 ;;   Z22672K1: Typed list(Boolean) -> Byte   [declared, not checked]
-(define (Z22672_list_of_booleans_to_byte a0) (Z22535 (Z13797_binary_string_to_natural_number (Z12781_left_fold (map Z13713_natural_number_to_digit_string (map Z17065_boolean_to_natural_number a0)) Z10000_join_two_strings))))
+(define (Z22672_list_of_booleans_to_byte a0) (Z22535_natural_number_to_byte (Z13797_binary_string_to_natural_number (Z12781_left_fold (map Z13713_natural_number_to_digit_string (map Z17065_boolean_to_natural_number a0)) Z10000_join_two_strings))))
 (define Z22672 Z22672_list_of_booleans_to_byte)
 
 ;; Z22683 Code point equality
@@ -7454,6 +7614,11 @@
 ;;   Z22696K1: Wikidata item reference, Z22696K2: Natural language -> Wikidata lexeme   [declared, not checked]
 (define (Z22696_fetch_first_lexeme_from_item_ref_and_lang_p5137 a0 a1) (Z6825 (Z22839_first_object_or_default (Z6830 a0 (record Z6092 (Z6092K1 "P5137")) a1) (Z28154_throw_error "Z28248" (cons (Z20041_wikidata_item_reference_id_string a0) (cons "P5137" (cons (Z14329_language_to_language_tag a1) (list))))))))
 (define Z22696 Z22696_fetch_first_lexeme_from_item_ref_and_lang_p5137)
+
+;; Z22697 first matching representation text from item  [reaches an unimplemented function]
+;;   Z22697K1: Wikidata item reference, Z22697K2: Natural language, Z22697K3: Typed list(Wikidata item reference) -> Monolingual text   [declared, not checked]
+(define (Z22697_first_matching_representation_text_from_item a0 a1 a2) (identity (record Z11 (Z11K1 a1) (Z11K2 (Z19241_first_matching_representation_string_from_lexeme (Z27327_best_lexeme_for_wikidata_item a0 (record Z6092 (Z6092K1 "P5137")) a1) a2)))))
+(define Z22697 Z22697_first_matching_representation_text_from_item)
 
 ;; Z22710 Grammatical gender based noun phrase  [reaches an unimplemented function]
 ;;   Z22710K1: Wikidata lexeme, Z22710K2: Wikidata lexeme -> String   [declared, not checked]
@@ -7469,6 +7634,11 @@
 ;;   Z22785K1: Wikidata lexeme -> String   [declared, not checked]
 (define (Z22785_italian_singular_definite_article a0) (if (Z22786 (Z27410_better_matching_representation_string_from_lexeme a0 (list (record Z6091 (Z6091K1 "Q110786"))))) "l'" (if (Z19316_same_wikidata_item_reference (Z13397_get_the_nth_element_of_a_list (Z20616_grammatical_genders_from_wikidata_lexeme a0) 1) (record Z6091 (Z6091K1 "Q499327"))) (if (Z22791 (Z27410_better_matching_representation_string_from_lexeme a0 (list (record Z6091 (Z6091K1 "Q110786"))))) "lo " "il ") "la ")))
 (define Z22785 Z22785_italian_singular_definite_article)
+
+;; Z22800 hex string as Byte  [reaches an unimplemented function]
+;;   Z22800K1: String -> Byte   [declared, not checked]
+(define (Z22800_hex_string_as_byte a0) (record Z80 (Z80K1 (Z13799_hexadecimal_to_natural_number a0))))
+(define Z22800 Z22800_hex_string_as_byte)
 
 ;; Z22807 First item of lexeme list with lexical category
 ;;   Z22807K1: Typed list(Wikidata lexeme), Z22807K2: Wikidata item reference -> Wikidata lexeme   [declared, not checked]
@@ -7487,7 +7657,7 @@
 
 ;; Z22829 hex code point to string  [reaches an unimplemented function]
 ;;   Z22829K1: String -> String   [declared, not checked]
-(define (Z22829_hex_code_point_to_string a0) (Z15631_codepoint_to_string (Z23022 (Z13799_hexadecimal_to_natural_number a0))))
+(define (Z22829_hex_code_point_to_string a0) (Z15631_codepoint_to_string (Z23022_natural_number_to_codepoint (Z13799_hexadecimal_to_natural_number a0))))
 (define Z22829 Z22829_hex_code_point_to_string)
 
 ;; Z22836 Is number a perfect square?  [reaches an unimplemented function]
@@ -7505,6 +7675,11 @@
 (define (Z22853_labels_of_wikidata_item_multilingual_text a0) (Z803_value_by_key (record Z39 (Z39K1 "Z6001K2")) a0))
 (define Z22853 Z22853_labels_of_wikidata_item_multilingual_text)
 
+;; Z22858 read Byte from string  [reaches an unimplemented function]
+;;   Z22858K1: String -> Byte   [declared, not checked]
+(define (Z22858_read_byte_from_string a0) (if (Z11693_string_only_has_characters_from_alphabet a0 "0123456789") (if (= (Z11040_string_length a0) 8) (record Z80 (Z80K1 (Z13797_binary_string_to_natural_number a0))) (record Z80 (Z80K1 (Z14283 a0)))) (if (= (Z11040_string_length a0) 10) (record Z80 (Z80K1 (Z13797_binary_string_to_natural_number (Z14636_remove_first_n_characters_of_string a0 2)))) (record Z80 (Z80K1 (Z13799_hexadecimal_to_natural_number a0))))))
+(define Z22858 Z22858_read_byte_from_string)
+
 ;; Z22865 keep elements common with other list
 ;;   Z22865K1: Typed list(Object), Z22865K2: Typed list(Object) -> Typed list(Object)   [declared, not checked]
 (define (Z22865_keep_elements_common_with_other_list a0 a1) (Z22820_compress_list a0 (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an Z12696_contains a1 a0)))
@@ -7512,7 +7687,7 @@
 
 ;; Z22866 read Byte  [reaches an unimplemented function]
 ;;   Z22866K1: String, Z22866K2: Natural language -> Byte   [declared, not checked]
-(define (Z22866_read_byte a0 a1) (Z22858 a0))
+(define (Z22866_read_byte a0 a1) (Z22858_read_byte_from_string a0))
 (define Z22866 Z22866_read_byte)
 
 ;; Z22874 list is duplicate-free?
@@ -7557,7 +7732,7 @@
 
 ;; Z22946 binary string as byte  [reaches an unimplemented function]
 ;;   Z22946K1: String -> Byte   [declared, not checked]
-(define (Z22946_binary_string_as_byte a0) (Z22535 (Z13797_binary_string_to_natural_number a0)))
+(define (Z22946_binary_string_as_byte a0) (Z22535_natural_number_to_byte (Z13797_binary_string_to_natural_number a0)))
 (define Z22946 Z22946_binary_string_as_byte)
 
 ;; Z22964 Italian indefinite article  [reaches an unimplemented function]
@@ -7585,14 +7760,19 @@
 (define (Z23006_italian_plural_definite_article a0) (if (Z19316_same_wikidata_item_reference (Z23067_grammatical_gender_of_first_plural_form a0) (record Z6091 (Z6091K1 "Q499327"))) (if (bool-or (Z22786 (Z14396_string_of_monolingual_text (Z19260_plural_form_of_lexeme_as_monolingual_text a0))) (Z22791 (Z14396_string_of_monolingual_text (Z19260_plural_form_of_lexeme_as_monolingual_text a0)))) "gli " "i ") "le "))
 (define Z23006 Z23006_italian_plural_definite_article)
 
+;; Z23022 natural number to codepoint
+;;   Z23022K1: Natural number -> Unicode code point   [declared, not checked]
+(define (Z23022_natural_number_to_codepoint a0) (record Z86 (Z86K1 a0)))
+(define Z23022 Z23022_natural_number_to_codepoint)
+
 ;; Z23028 digit string to codepoint  [reaches an unimplemented function]
 ;;   Z23028K1: String -> Unicode code point   [declared, not checked]
-(define (Z23028_digit_string_to_codepoint a0) (Z23022 (Z14283 a0)))
+(define (Z23028_digit_string_to_codepoint a0) (Z23022_natural_number_to_codepoint (Z14283 a0)))
 (define Z23028 Z23028_digit_string_to_codepoint)
 
 ;; Z23031 codepoint from string leniently  [reaches an unimplemented function]
 ;;   Z23031K1: String -> Unicode code point   [declared, not checked]
-(define (Z23031_codepoint_from_string_leniently a0) (if (Z13489_is_decimal_natural_number_string_of_arabic_numerals a0) (Z23028_digit_string_to_codepoint a0) (if (bool-or (Z10615_string_starts_with (Z10047 a0) "u+") (Z10615_string_starts_with (Z10047 a0) "\\u")) (Z23022 (Z13799_hexadecimal_to_natural_number (Z14636_remove_first_n_characters_of_string a0 2))) (car (Z22717_string_to_codepoint_list a0)))))
+(define (Z23031_codepoint_from_string_leniently a0) (if (Z13489_is_decimal_natural_number_string_of_arabic_numerals a0) (Z23028_digit_string_to_codepoint a0) (if (bool-or (Z10615_string_starts_with (Z10047 a0) "u+") (Z10615_string_starts_with (Z10047 a0) "\\u")) (Z23022_natural_number_to_codepoint (Z13799_hexadecimal_to_natural_number (Z14636_remove_first_n_characters_of_string a0 2))) (car (Z22717_string_to_codepoint_list a0)))))
 (define Z23031 Z23031_codepoint_from_string_leniently)
 
 ;; Z23041 read code point  [reaches an unimplemented function]
@@ -7705,6 +7885,11 @@
 (define (Z23147_statement_has_predicate_unit_symbol a0) (Z19267_same_wikidata_property_reference (Z19306_predicate_of_wikidata_statement a0) (record Z6092 (Z6092K1 "P5061"))))
 (define Z23147 Z23147_statement_has_predicate_unit_symbol)
 
+;; Z23156 first monolingual text from list with language
+;;   Z23156K1: Typed list(Monolingual text), Z23156K2: Natural language -> Monolingual text   [declared, not checked]
+(define (Z23156_first_monolingual_text_from_list_with_language a0 a1) (Z22839_first_object_or_default (Z23143_filter_list_of_monolingual_texts_by_language a0 a1) (record Z11 (Z11K1 a1) (Z11K2 ""))))
+(define Z23156 Z23156_first_monolingual_text_from_list_with_language)
+
 ;; Z23159 string of first listed monolingual text with lang
 ;;   Z23159K1: Typed list(Monolingual text), Z23159K2: Natural language -> String   [declared, not checked]
 (define (Z23159_string_of_first_listed_monolingual_text_with_lang a0 a1) (Z14396_string_of_monolingual_text (Z22839_first_object_or_default (Z23143_filter_list_of_monolingual_texts_by_language a0 a1) (record Z11 (Z11K1 (record Z60 (Z60K1 "zxx") (Z60K2 (list)))) (Z11K2 "")))))
@@ -7727,7 +7912,7 @@
 
 ;; Z23216 Calculate mass  [reaches an unimplemented function]
 ;;   Z23216K1: Rational number, Z23216K2: Rational number -> Rational number   [declared, not checked]
-(define (Z23216_calculate_mass a0 a1) (Z19706 a0 a1))
+(define (Z23216_calculate_mass a0 a1) (Z19706_multiply_rational_numbers a0 a1))
 (define Z23216 Z23216_calculate_mass)
 
 ;; Z23223 property labels
@@ -7827,12 +8012,12 @@
 
 ;; Z23349 approximated Landé g-factor  [reaches an unimplemented function]
 ;;   Z23349K1: Rational number, Z23349K2: Rational number, Z23349K3: Rational number -> Rational number   [declared, not checked]
-(define (Z23349_approximated_land_g_factor a0 a1 a2) (Z19679 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 1)) (Z19708_divide_rational_numbers (Z19699_subtract_rational_numbers (Z19679 (Z19706 a0 (Z19679 a0 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 1)))) (Z19706 a1 (Z19679 a1 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 1))))) (Z19706 a2 (Z19679 a2 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 1))))) (Z19706 (Z19706 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 2) (Z19677K3 1)) a0) (Z19679 a0 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 1)))))))
+(define (Z23349_approximated_land_g_factor a0 a1 a2) (Z19679_add_rational_numbers (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 1)) (Z19708_divide_rational_numbers (Z19699_subtract_rational_numbers (Z19679_add_rational_numbers (Z19706_multiply_rational_numbers a0 (Z19679_add_rational_numbers a0 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 1)))) (Z19706_multiply_rational_numbers a1 (Z19679_add_rational_numbers a1 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 1))))) (Z19706_multiply_rational_numbers a2 (Z19679_add_rational_numbers a2 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 1))))) (Z19706_multiply_rational_numbers (Z19706_multiply_rational_numbers (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 2) (Z19677K3 1)) a0) (Z19679_add_rational_numbers a0 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 1)))))))
 (define Z23349 Z23349_approximated_land_g_factor)
 
 ;; Z23352 Lorentz factor from velocity  [reaches an unimplemented function]
 ;;   Z23352K1: Rational number -> Rational number   [declared, not checked]
-(define (Z23352_lorentz_factor_from_velocity a0) (Z19711_multiplicative_inverse_of_rational_number (Z24081 (Z19699_subtract_rational_numbers (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 1)) (Z19706 a0 a0)))))
+(define (Z23352_lorentz_factor_from_velocity a0) (Z19711_multiplicative_inverse_of_rational_number (Z24081 (Z19699_subtract_rational_numbers (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 1)) (Z19706_multiply_rational_numbers a0 a0)))))
 (define Z23352 Z23352_lorentz_factor_from_velocity)
 
 ;; Z23356 compare after applying a single unary function
@@ -7870,6 +8055,11 @@
 (define (Z23403_wikidata_item_reference_to_gregorian_month a0) (Z30531_reference_or_object_from_zid_string (Z31973_title_of_wikidata_sitelink (Z34914_wikifunctions_sitelink_for_wikidata_item a0))))
 (define Z23403 Z23403_wikidata_item_reference_to_gregorian_month)
 
+;; Z23407 Wikidata item reference to Roman day  [reaches an unimplemented function]
+;;   Z23407K1: Wikidata item reference -> Day of Roman year   [declared, not checked]
+(define (Z23407_wikidata_item_reference_to_roman_day a0) (record Z20342 (Z20342K1 (Z23403_wikidata_item_reference_to_gregorian_month (Z19308_value_of_wikidata_statement (Z23451_wikidata_statement_with_highest_rank (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list Z1360) (list (record Z6092 (Z6092K1 "P361")))) (record Z6092 (Z6092K1 "P361")))))) (Z20342K2 (Z14283 (Z33579_qualifier_value_of_wikidata_statement (Z23451_wikidata_statement_with_highest_rank (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list Z1360) (list (record Z6092 (Z6092K1 "P361")))) (record Z6092 (Z6092K1 "P361"))) (record Z6092 (Z6092K1 "P1545")))))))
+(define Z23407 Z23407_wikidata_item_reference_to_roman_day)
+
 ;; Z23410 subject is a kind of, English sentence  [reaches an unimplemented function]
 ;;   Z23410K1: Wikidata item reference, Z23410K2: Wikidata item reference, Z23410K3: Natural language -> Monolingual text   [declared, not checked]
 (define (Z23410_subject_is_a_kind_of_english_sentence a0 a1 a2) (Z26107_monolingual_text_from_language_and_string a2 (Z22514_sentence_from_list_of_words_english_conventions (cons (Z32319_add_indefinite_article_in_english (Z34927_string_from_lexeme_or_label_given_item_ref_lang a0 a2)) (cons "is" (cons (Z32319_add_indefinite_article_in_english (Z34927_string_from_lexeme_or_label_given_item_ref_lang a1 a2)) (list)))))))
@@ -7900,9 +8090,9 @@
 (define (Z23433_lexeme_reference_of_lexeme_sense a0) (Z803_value_by_key (record Z39 (Z39K1 "Z6006K4")) a0))
 (define Z23433 Z23433_lexeme_reference_of_lexeme_sense)
 
-;; Z23439 values from object  [reaches an unimplemented function]
+;; Z23439 values from object
 ;;   Z23439K1: Object -> Typed list(Object)   [declared, not checked]
-(define (Z23439_values_from_object a0) (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z803_value_by_key (map fst (cdr (Z805 a0))) a0))
+(define (Z23439_values_from_object a0) (Z18475_return_typed_list (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z803_value_by_key (map Z22549_key_reference_from_string (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an Z803_value_by_key (record Z39 (Z39K1 "Z3K2")) (Z803_value_by_key (record Z39 (Z39K1 "Z4K2")) (Z16829_type_of_object a0)))) a0)))
 (define Z23439 Z23439_values_from_object)
 
 ;; Z23443 reference string from Key reference
@@ -7942,7 +8132,7 @@
 
 ;; Z23474 value of Wikidata claim to day of the year  [reaches an unimplemented function]
 ;;   Z23474K1: Object, Z23474K2: Gregorian year -> Day of Roman year   [declared, not checked]
-(define (Z23474_value_of_wikidata_claim_to_day_of_the_year a0 a1) (if (Z19084_same_type (Z16829_type_of_object a0) Z6091) (if (Z23592_is_wikidata_reference_to_roman_day a0) (Z23407 a0) (if (Z23596_is_wikidata_day_of_the_week_within_a_given_month a0) (Z23423_day_of_the_week_within_a_given_month_from_wikidata a0 a1) (if (Z23600_is_wikidata_reference_of_day_relative_to_easter a0) (Z20367_move_n_dates (if (Z17229_is_non_negative_integer (Z20219_difference_between_gregorian_years (record Z20159 (Z20159K1 Z17814) (Z20159K2 1583)) a1)) (Z23254 a1) (Z23269 a1)) (Z23447_wikidata_reference_of_day_relative_to_easter a0) (Z20181_is_gregorian_year_leap_year a1)) a0))) a0))
+(define (Z23474_value_of_wikidata_claim_to_day_of_the_year a0 a1) (if (Z19084_same_type (Z16829_type_of_object a0) Z6091) (if (Z23592_is_wikidata_reference_to_roman_day a0) (Z23407_wikidata_item_reference_to_roman_day a0) (if (Z23596_is_wikidata_day_of_the_week_within_a_given_month a0) (Z23423_day_of_the_week_within_a_given_month_from_wikidata a0 a1) (if (Z23600_is_wikidata_reference_of_day_relative_to_easter a0) (Z20367_move_n_dates (if (Z17229_is_non_negative_integer (Z20219_difference_between_gregorian_years (record Z20159 (Z20159K1 Z17814) (Z20159K2 1583)) a1)) (Z23254 a1) (Z23269 a1)) (Z23447_wikidata_reference_of_day_relative_to_easter a0) (Z20181_is_gregorian_year_leap_year a1)) a0))) a0))
 (define Z23474 Z23474_value_of_wikidata_claim_to_day_of_the_year)
 
 ;; Z23486 count lexeme senses in lexeme
@@ -8060,7 +8250,7 @@
 (define (Z23604_plural_lexeme_forms_for_a_wikidata_item a0 a1) (filter Z22490_is_lexeme_form_plural_including_parent_lexeme (Z23610_lexeme_forms_representing_item a0 a1)))
 (define Z23604 Z23604_plural_lexeme_forms_for_a_wikidata_item)
 
-;; Z23606 flatten Typed list  [mutually recursive: may not terminate]
+;; Z23606 flatten Typed list  [reaches an unimplemented function; mutually recursive: may not terminate]
 ;;   Z23606K1: Typed list(Object), Z23606K2: Natural number -> Typed list(Object)   [declared, not checked]
 (define (Z23606_flatten_typed_list a0 a1) (Z12676_flatten_untyped_list (Z17895_untype_a_list a0) a1))
 (define Z23606 Z23606_flatten_typed_list)
@@ -8077,7 +8267,7 @@
 
 ;; Z23630 (#) add two numbers  [reaches an unimplemented function]
 ;;   Z23630K1: Object, Z23630K2: Object -> Object   [declared, not checked]
-(define (Z23630_add_two_numbers a0 a1) (Z23660_rational_number_as_simplest_type (Z19679 (Z23668_number_as_rational_number a0) (Z23668_number_as_rational_number a1))))
+(define (Z23630_add_two_numbers a0 a1) (Z23660_rational_number_as_simplest_type (Z19679_add_rational_numbers (Z23668_number_as_rational_number a0) (Z23668_number_as_rational_number a1))))
 (define Z23630 Z23630_add_two_numbers)
 
 ;; Z23645 is Integer (type)?  [reaches an unimplemented function]
@@ -8130,15 +8320,20 @@
 (define (Z23688_does_wikidata_statement_have_preferred_rank a0) (Z23683_is_wikidata_statement_rank_preferred (Z20206_rank_of_wikidata_statement a0)))
 (define Z23688 Z23688_does_wikidata_statement_have_preferred_rank)
 
-;; Z23694 prototype Wikidata entity reference picker  [reaches an unimplemented function]
+;; Z23694 prototype Wikidata entity reference picker
 ;;   Z23694K1: String, Z23694K2: Typed list(Wikidata item reference), Z23694K3: Typed list(Wikidata lexeme reference) -> Object   [declared, not checked]
-(define (Z23694_prototype_wikidata_entity_reference_picker a0 a1 a2) (if (Z10008_is_empty_string a0) (if (null? a1) (car a2) (car a1)) (if (Z10615_string_starts_with a0 "Q") (Z22246 a0) (Z22249 a0))))
+(define (Z23694_prototype_wikidata_entity_reference_picker a0 a1 a2) (if (Z10008_is_empty_string a0) (if (null? a1) (car a2) (car a1)) (if (Z10615_string_starts_with a0 "Q") (Z22246_wikidata_item_reference_from_qid_string a0) (Z22249_wikidata_lexeme_reference_from_lid_string a0))))
 (define Z23694 Z23694_prototype_wikidata_entity_reference_picker)
 
 ;; Z23716 constrained Wikidata statement value
 ;;   Z23716K1: String, Z23716K2: Typed list(Wikidata item reference), Z23716K3: Typed list(Wikidata lexeme reference), Z23716K4: Typed list(Wikidata lexeme form reference), Z23716K5: Typed list(Wikidata lexeme sense reference), Z23716K6: Typed list(Monolingual text) -> Object   [declared, not checked]
 (define (Z23716_constrained_wikidata_statement_value a0 a1 a2 a3 a4 a5) (if (Z10008_is_empty_string a0) (car (map car (filter Z23120_is_non_empty_list (cons a1 (cons a2 (cons a3 (cons a4 (cons a5 (list))))))))) a0))
 (define Z23716 Z23716_constrained_wikidata_statement_value)
+
+;; Z23723 emulate Wikidata statement object
+;;   Z23723K1: Typed list(Wikidata item reference), Z23723K2: Typed list(Wikidata lexeme reference), Z23723K3: Wikidata property reference, Z23723K4: Typed list(Wikidata item reference), Z23723K5: Typed list(Wikidata lexeme reference), Z23723K6: Typed list(Object), Z23723K7: Wikidata statement rank, Z23723K8: Typed list(Wikidata property claim), Z23723K9: Typed list(Wikidata reference), Z23723K10: Wikidata claim subtype -> Wikidata statement   [declared, not checked]
+(define (Z23723_emulate_wikidata_statement_object a0 a1 a2 a3 a4 a5 a6 a7 a8 a9) (record Z6003 (Z6003K1 (car (Z30075_return_list_if_non_empty_else_backup a0 a1))) (Z6003K2 a2) (Z6003K3 (Z22839_first_object_or_default (Z30075_return_list_if_non_empty_else_backup a3 a4) (car a5))) (Z6003K4 a6) (Z6003K5 (list)) (Z6003K6 (list)) (Z6003K7 a9)))
+(define Z23723 Z23723_emulate_wikidata_statement_object)
 
 ;; Z23726 Classifying sentence in English  [reaches an unimplemented function]
 ;;   Z23726K1: Wikidata item reference -> String   [declared, not checked]
@@ -8172,7 +8367,7 @@
 
 ;; Z23772 Integer list from Natural number list  [reaches an unimplemented function]
 ;;   Z23772K1: Typed list(Natural number) -> Typed list(Integer)   [declared, not checked]
-(define (Z23772_integer_list_from_natural_number_list a0) (Z18475_return_typed_list (map Z17101 a0)))
+(define (Z23772_integer_list_from_natural_number_list a0) (Z18475_return_typed_list (map Z17101_natural_number_to_integer a0)))
 (define Z23772 Z23772_integer_list_from_natural_number_list)
 
 ;; Z23801 Unix timestamp from Gregorian calendar date  [reaches an unimplemented function]
@@ -8207,12 +8402,12 @@
 
 ;; Z23896 Chudnovsky term  [reaches an unimplemented function]
 ;;   Z23896K1: Natural number -> Rational number   [declared, not checked]
-(define (Z23896_chudnovsky_term a0) (Z19854 (Z33745 (Z17053_boolean_to_sign (Z13555_natural_number_is_even a0)) (* (Z13667_factorial (* 6 a0)) (+ (* 545140134 a0) 13591409))) (Z14694_multiply_three_natural_numbers (Z13667_factorial (* 3 a0)) (Z13977_n_3 (Z13667_factorial a0)) (expt 640320 (* 3 a0)))))
+(define (Z23896_chudnovsky_term a0) (Z19854_simplified_rational_from_z_numerator_denominator (Z33745_make_integer (Z17053_boolean_to_sign (Z13555_natural_number_is_even a0)) (* (Z13667_factorial (* 6 a0)) (+ (* 545140134 a0) 13591409))) (Z14694_multiply_three_natural_numbers (Z13667_factorial (* 3 a0)) (Z13977_n_3 (Z13667_factorial a0)) (expt 640320 (* 3 a0)))))
 (define Z23896 Z23896_chudnovsky_term)
 
 ;; Z23899 partial sum of series from k=0 (rational)  [reaches an unimplemented function]
 ;;   Z23899K1: Function, Z23899K2: Natural number -> Rational number   [declared, not checked]
-(define (Z23899_partial_sum_of_series_from_k_0_rational a0 a1) (Z19679 (Z23668_number_as_rational_number (Z13036_apply a0 0)) (Z23882_partial_sum_of_series_from_k_1_rational a0 a1)))
+(define (Z23899_partial_sum_of_series_from_k_0_rational a0 a1) (Z19679_add_rational_numbers (Z23668_number_as_rational_number (Z13036_apply a0 0)) (Z23882_partial_sum_of_series_from_k_1_rational a0 a1)))
 (define Z23899 Z23899_partial_sum_of_series_from_k_0_rational)
 
 ;; Z23902 pi approximation from Chudnovsky partial sum (f64)  [reaches an unimplemented function]
@@ -8222,7 +8417,7 @@
 
 ;; Z23909 product of list (Rational numbers)  [reaches an unimplemented function]
 ;;   Z23909K1: Typed list(Rational number) -> Rational number   [declared, not checked]
-(define (Z23909_product_of_list_rational_numbers a0) (fold Z19706 a0 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 1))))
+(define (Z23909_product_of_list_rational_numbers a0) (fold Z19706_multiply_rational_numbers a0 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 1))))
 (define Z23909 Z23909_product_of_list_rational_numbers)
 
 ;; Z23917 rational from truncated simple continued fraction  [reaches an unimplemented function]
@@ -8242,12 +8437,12 @@
 
 ;; Z23928 continued fraction from rational  [reaches an unimplemented function]
 ;;   Z23928K1: Rational number -> Typed list(Integer)   [declared, not checked]
-(define (Z23928_continued_fraction_from_rational a0) (if (Z19922_is_rational_number_0 a0) (list (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16661))) (Z16683K2 0))) (cons (Z19682 a0) (if (Z19806_is_rational_number_an_integer a0) (list) (Z23928_continued_fraction_from_rational (Z19711_multiplicative_inverse_of_rational_number (Z23934_non_integer_part_of_rational a0)))))))
+(define (Z23928_continued_fraction_from_rational a0) (if (Z19922_is_rational_number_0 a0) (list (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16661))) (Z16683K2 0))) (cons (Z19682_truncate_rational_number a0) (if (Z19806_is_rational_number_an_integer a0) (list) (Z23928_continued_fraction_from_rational (Z19711_multiplicative_inverse_of_rational_number (Z23934_non_integer_part_of_rational a0)))))))
 (define Z23928 Z23928_continued_fraction_from_rational)
 
 ;; Z23934 non-integer part of rational  [reaches an unimplemented function]
 ;;   Z23934K1: Rational number -> Rational number   [declared, not checked]
-(define (Z23934_non_integer_part_of_rational a0) (Z19699_subtract_rational_numbers a0 (Z19744_integer_as_rational_number (Z19682 a0))))
+(define (Z23934_non_integer_part_of_rational a0) (Z19699_subtract_rational_numbers a0 (Z19744_integer_as_rational_number (Z19682_truncate_rational_number a0))))
 (define Z23934 Z23934_non_integer_part_of_rational)
 
 ;; Z23997 is a standard date format?  [reaches an unimplemented function]
@@ -8267,12 +8462,12 @@
 
 ;; Z24055 add vectors (rational)  [reaches an unimplemented function]
 ;;   Z24055K1: Typed list(Rational number), Z24055K2: Typed list(Rational number) -> Typed list(Rational number)   [declared, not checked]
-(define (Z24055_add_vectors_rational a0 a1) (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l Z19679 a0 a1))
+(define (Z24055_add_vectors_rational a0 a1) (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l Z19679_add_rational_numbers a0 a1))
 (define Z24055 Z24055_add_vectors_rational)
 
 ;; Z24060 rational times vector  [reaches an unimplemented function]
 ;;   Z24060K1: Rational number, Z24060K2: Typed list(Rational number) -> Typed list(Rational number)   [declared, not checked]
-(define (Z24060_rational_times_vector a0 a1) (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z19706 a1 a0))
+(define (Z24060_rational_times_vector a0 a1) (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z19706_multiply_rational_numbers a1 a0))
 (define Z24060 Z24060_rational_times_vector)
 
 ;; Z24073 Sandbox Composition  [reaches an unimplemented function]
@@ -8282,7 +8477,7 @@
 
 ;; Z24078 speed from βγ  [reaches an unimplemented function]
 ;;   Z24078K1: Rational number -> Rational number   [declared, not checked]
-(define (Z24078_speed_from a0) (Z19708_divide_rational_numbers a0 (Z24081 (Z19679 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 1)) (Z21320_power_of_rational_number a0 (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16660))) (Z16683K2 2)))))))
+(define (Z24078_speed_from a0) (Z19708_divide_rational_numbers a0 (Z24081 (Z19679_add_rational_numbers (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 1)) (Z21320_power_of_rational_number a0 (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16660))) (Z16683K2 2)))))))
 (define Z24078 Z24078_speed_from)
 
 ;; Z24086 display Gregorian calendar month  [reaches an unimplemented function]
@@ -8360,12 +8555,12 @@
 (define (Z24162_sum_rational_matrices a0 a1) (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l Z24055_add_vectors_rational a0 a1))
 (define Z24162 Z24162_sum_rational_matrices)
 
-;; Z24166 same list of rationals  [reaches an unimplemented function]
+;; Z24166 same list of rationals
 ;;   Z24166K1: Typed list(Rational number), Z24166K2: Typed list(Rational number) -> Boolean   [declared, not checked]
 (define (Z24166_same_list_of_rationals a0 a1) (Z889_list_equality a0 a1 Z19686_same_rational_number))
 (define Z24166 Z24166_same_list_of_rationals)
 
-;; Z24171 same rational matrix  [reaches an unimplemented function]
+;; Z24171 same rational matrix
 ;;   Z24171K1: Typed list(Typed list(Rational number)), Z24171K2: Typed list(Typed list(Rational number)) -> Boolean   [declared, not checked]
 (define (Z24171_same_rational_matrix a0 a1) (Z889_list_equality a0 a1 Z24166_same_list_of_rationals))
 (define Z24171 Z24171_same_rational_matrix)
@@ -8387,7 +8582,7 @@
 
 ;; Z24185 dot product (rational vectors)  [reaches an unimplemented function]
 ;;   Z24185K1: Typed list(Rational number), Z24185K2: Typed list(Rational number) -> Rational number   [declared, not checked]
-(define (Z24185_dot_product_rational_vectors a0 a1) (Z19679 (Z19706 (car a0) (car a1)) (if (Z12755_is_single_element_list a0) (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16661))) (Z19677K2 0) (Z19677K3 1)) (Z24185_dot_product_rational_vectors (cdr a0) (cdr a1)))))
+(define (Z24185_dot_product_rational_vectors a0 a1) (Z19679_add_rational_numbers (Z19706_multiply_rational_numbers (car a0) (car a1)) (if (Z12755_is_single_element_list a0) (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16661))) (Z19677K2 0) (Z19677K3 1)) (Z24185_dot_product_rational_vectors (cdr a0) (cdr a1)))))
 (define Z24185 Z24185_dot_product_rational_vectors)
 
 ;; Z24191 right product of matrix with vector  [reaches an unimplemented function]
@@ -8462,7 +8657,7 @@
 
 ;; Z24266 double (rational)  [reaches an unimplemented function]
 ;;   Z24266K1: Rational number -> Rational number   [declared, not checked]
-(define (Z24266_double_rational a0) (Z19706 a0 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 2) (Z19677K3 1))))
+(define (Z24266_double_rational a0) (Z19706_multiply_rational_numbers a0 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 2) (Z19677K3 1))))
 (define Z24266 Z24266_double_rational)
 
 ;; Z24271 Newton's method, n iterations (rational)  [reaches an unimplemented function]
@@ -8537,7 +8732,7 @@
 
 ;; Z24382 generate list of powers of q from 0 to n  [reaches an unimplemented function]
 ;;   Z24382K1: Rational number, Z24382K2: Natural number -> Typed list(Rational number)   [declared, not checked]
-(define (Z24382_generate_list_of_powers_of_q_from_0_to_n a0 a1) (Z18475_return_typed_list (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an Z21320_power_of_rational_number a0 (map Z17101 (Z13831_natural_number_range 0 a1)))))
+(define (Z24382_generate_list_of_powers_of_q_from_0_to_n a0 a1) (Z18475_return_typed_list (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an Z21320_power_of_rational_number a0 (map Z17101_natural_number_to_integer (Z13831_natural_number_range 0 a1)))))
 (define Z24382 Z24382_generate_list_of_powers_of_q_from_0_to_n)
 
 ;; Z24387 generate list of [f(0) to f(n)]
@@ -8547,7 +8742,7 @@
 
 ;; Z24395 partial sum of power series from a_n = 1/f(n)  [reaches an unimplemented function]
 ;;   Z24395K1: Rational number, Z24395K2: Rational number, Z24395K3: Natural number, Z24395K4: Function -> Rational number   [declared, not checked]
-(define (Z24395_partial_sum_of_power_series_from_a_n_1_f_n a0 a1 a2 a3) (if (Z23883_is_zero_natural_number a2) (Z19711_multiplicative_inverse_of_rational_number (Z23668_number_as_rational_number (Z13036_apply a3 0))) (Z19679 (Z24395_partial_sum_of_power_series_from_a_n_1_f_n a0 a1 (Z13582_decrement_natural_number_by_one a2) a3) (Z19706 (Z19711_multiplicative_inverse_of_rational_number (Z23668_number_as_rational_number (Z13036_apply a3 a2))) (Z21320_power_of_rational_number (Z19699_subtract_rational_numbers a0 a1) (Z17101 a2))))))
+(define (Z24395_partial_sum_of_power_series_from_a_n_1_f_n a0 a1 a2 a3) (if (Z23883_is_zero_natural_number a2) (Z19711_multiplicative_inverse_of_rational_number (Z23668_number_as_rational_number (Z13036_apply a3 0))) (Z19679_add_rational_numbers (Z24395_partial_sum_of_power_series_from_a_n_1_f_n a0 a1 (Z13582_decrement_natural_number_by_one a2) a3) (Z19706_multiply_rational_numbers (Z19711_multiplicative_inverse_of_rational_number (Z23668_number_as_rational_number (Z13036_apply a3 a2))) (Z21320_power_of_rational_number (Z19699_subtract_rational_numbers a0 a1) (Z17101_natural_number_to_integer a2))))))
 (define Z24395 Z24395_partial_sum_of_power_series_from_a_n_1_f_n)
 
 ;; Z24403 is rational in range (inclusive)  [reaches an unimplemented function]
@@ -8577,7 +8772,7 @@
 
 ;; Z24487 square of rational number  [reaches an unimplemented function]
 ;;   Z24487K1: Rational number -> Rational number   [declared, not checked]
-(define (Z24487_square_of_rational_number a0) (Z19706 a0 a0))
+(define (Z24487_square_of_rational_number a0) (Z19706_multiply_rational_numbers a0 a0))
 (define Z24487 Z24487_square_of_rational_number)
 
 ;; Z24506 same rational within tolerance  [reaches an unimplemented function]
@@ -8609,6 +8804,11 @@
 ;;   Z24582K1: float64, Z24582K2: float64 -> Boolean   [declared, not checked]
 (define (Z24582_exactly_identical_float64_objects a0 a1) (Z18683_strict_object_equality a0 a1))
 (define Z24582 Z24582_exactly_identical_float64_objects)
+
+;; Z24591 integer square root  [reaches an unimplemented function]
+;;   Z24591K1: Integer -> Integer   [declared, not checked]
+(define (Z24591_integer_square_root a0) (if (Z17204_is_positive_integer a0) (record Z16683 (Z16683K1 Z16660) (Z16683K2 (Z17352_apply_natural_number_function_to_positive_integer Z15256 a0))) (if (Z17239_is_zero_integer a0) (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16661))) (Z16683K2 0)) Z24)))
+(define Z24591 Z24591_integer_square_root)
 
 ;; Z24603 Typed map identity (string-keyed)
 ;;   Z24603K1: Typed map(String, Object) -> Typed map(String, Object)   [declared, not checked]
@@ -8660,9 +8860,9 @@
 (define (Z24665_make_typed_pair_from_untyped_list a0) (Z30414_make_typed_pair (car a0) (Z16360_second_element_error_handling a0)))
 (define Z24665 Z24665_make_typed_pair_from_untyped_list)
 
-;; Z24669 previous byte  [reaches an unimplemented function]
+;; Z24669 previous byte
 ;;   Z24669K1: Byte -> Byte   [declared, not checked]
-(define (Z24669_previous_byte a0) (if (Z22373_byte_equality a0 (record Z80 (Z80K1 0))) (record Z80 (Z80K1 255)) (Z22535 (Z13582_decrement_natural_number_by_one (Z14567_byte_to_natural_number a0)))))
+(define (Z24669_previous_byte a0) (if (Z22373_byte_equality a0 (record Z80 (Z80K1 0))) (record Z80 (Z80K1 255)) (Z22535_natural_number_to_byte (Z13582_decrement_natural_number_by_one (Z14567_byte_to_natural_number a0)))))
 (define Z24669 Z24669_previous_byte)
 
 ;; Z24676 three main forms of English verb  [reaches an unimplemented function]
@@ -8672,7 +8872,7 @@
 
 ;; Z24687 three main forms of English verb by LID  [reaches an unimplemented function]
 ;;   Z24687K1: String -> String   [declared, not checked]
-(define (Z24687_three_main_forms_of_english_verb_by_lid a0) (Z24676_three_main_forms_of_english_verb (Z6825 (Z22249 a0))))
+(define (Z24687_three_main_forms_of_english_verb_by_lid a0) (Z24676_three_main_forms_of_english_verb (Z6825 (Z22249_wikidata_lexeme_reference_from_lid_string a0))))
 (define Z24687 Z24687_three_main_forms_of_english_verb_by_lid)
 
 ;; Z24709 next Byte (error on overflow)  [reaches an unimplemented function]
@@ -8680,14 +8880,14 @@
 (define (Z24709_next_byte_error_on_overflow a0) (if (Z22373_byte_equality a0 (record Z80 (Z80K1 255))) (Z851 Z24708 (cons "Z24709K1" (cons a0 (list)))) (Z22380_next_byte a0)))
 (define Z24709 Z24709_next_byte_error_on_overflow)
 
-;; Z24713 clamped next byte  [reaches an unimplemented function]
+;; Z24713 clamped next byte
 ;;   Z24713K1: Byte -> Byte   [declared, not checked]
 (define (Z24713_clamped_next_byte a0) (if (Z22373_byte_equality a0 (record Z80 (Z80K1 255))) (record Z80 (Z80K1 255)) (Z22380_next_byte a0)))
 (define Z24713 Z24713_clamped_next_byte)
 
 ;; Z24716 bitwise NAND  [reaches an unimplemented function]
 ;;   Z24716K1: Byte, Z24716K2: Byte -> Byte   [declared, not checked]
-(define (Z24716_bitwise_nand a0 a1) (Z22529_bitwise_not (Z22535 (Z13651_bitwise_and (Z14567_byte_to_natural_number a0) (Z14567_byte_to_natural_number a1)))))
+(define (Z24716_bitwise_nand a0 a1) (Z22529_bitwise_not (Z22535_natural_number_to_byte (Z13651_bitwise_and (Z14567_byte_to_natural_number a0) (Z14567_byte_to_natural_number a1)))))
 (define Z24716 Z24716_bitwise_nand)
 
 ;; Z24736 plane of code point
@@ -8775,9 +8975,14 @@
 (define (Z24948_year_from_calendar_date a0) (Z803_value_by_key (record Z39 (Z39K1 "Z20420K1")) a0))
 (define Z24948 Z24948_year_from_calendar_date)
 
+;; Z24962 date from day of year and year
+;;   Z24962K1: Day of Roman year, Z24962K2: Gregorian year -> Gregorian calendar date   [declared, not checked]
+(define (Z24962_date_from_day_of_year_and_year a0 a1) (identity (record Z20420 (Z20420K1 a1) (Z20420K2 a0))))
+(define Z24962 Z24962_date_from_day_of_year_and_year)
+
 ;; Z24968 previous calendar day  [reaches an unimplemented function]
 ;;   Z24968K1: Gregorian calendar date -> Gregorian calendar date   [declared, not checked]
-(define (Z24968_previous_calendar_day a0) (Z24962 (Z20367_move_n_dates (Z24936_day_of_year_from_calendar_date a0) (record Z16683 (Z16683K1 Z16662) (Z16683K2 1)) (Z20181_is_gregorian_year_leap_year (Z24948_year_from_calendar_date a0))) (if (Z20348_same_day_of_roman_year (Z24936_day_of_year_from_calendar_date a0) (record Z20342 (Z20342K1 (record Z16098 (Z16098K1 Z16101))) (Z20342K2 1))) (Z20314 (Z24948_year_from_calendar_date a0)) (Z24948_year_from_calendar_date a0))))
+(define (Z24968_previous_calendar_day a0) (Z24962_date_from_day_of_year_and_year (Z20367_move_n_dates (Z24936_day_of_year_from_calendar_date a0) (record Z16683 (Z16683K1 Z16662) (Z16683K2 1)) (Z20181_is_gregorian_year_leap_year (Z24948_year_from_calendar_date a0))) (if (Z20348_same_day_of_roman_year (Z24936_day_of_year_from_calendar_date a0) (record Z20342 (Z20342K1 (record Z16098 (Z16098K1 Z16101))) (Z20342K2 1))) (Z20314_previous_year (Z24948_year_from_calendar_date a0)) (Z24948_year_from_calendar_date a0))))
 (define Z24968 Z24968_previous_calendar_day)
 
 ;; Z24974 date as English "day Month" string  [reaches an unimplemented function]
@@ -8870,14 +9075,19 @@
 (define (Z25118_read_time_of_day a0 a1) (if (Z25128 a0) (Z25158 a0) (Z13036_apply (Z14310_select_a_function_based_on_language Z25662 a1) a0)))
 (define Z25118 Z25118_read_time_of_day)
 
-;; Z25167 add to time of day  [reaches an unimplemented function]
+;; Z25167 add to time of day
 ;;   Z25167K1: Time of day, Z25167K2: Natural number, Z25167K3: Natural number, Z25167K4: Natural number -> Time of day   [declared, not checked]
-(define (Z25167_add_to_time_of_day a0 a1 a2 a3) (Z25179 (Z13551_remainder_of_natural_number_division (Z14038_sum_the_elements_of_a_list_of_natural_numbers (cons (Z25108_time_of_day_as_seconds_past_midnight a0) (cons (* a1 3600) (cons (* a2 60) (cons a3 (list)))))) 86400)))
+(define (Z25167_add_to_time_of_day a0 a1 a2 a3) (Z25179_number_of_seconds_from_midnight_to_time_of_day (Z13551_remainder_of_natural_number_division (Z14038_sum_the_elements_of_a_list_of_natural_numbers (cons (Z25108_time_of_day_as_seconds_past_midnight a0) (cons (* a1 3600) (cons (* a2 60) (cons a3 (list)))))) 86400)))
 (define Z25167 Z25167_add_to_time_of_day)
+
+;; Z25179 number of seconds from midnight to time of day
+;;   Z25179K1: Natural number -> Time of day   [declared, not checked]
+(define (Z25179_number_of_seconds_from_midnight_to_time_of_day a0) (if (= a0 86400) (record Z6060 (Z6060K1 23) (Z6060K2 59) (Z6060K3 60)) (record Z6060 (Z6060K1 (Z13546_divide_natural_numbers a0 3600)) (Z6060K2 (Z13546_divide_natural_numbers (Z13551_remainder_of_natural_number_division a0 3600) 60)) (Z6060K3 (Z13551_remainder_of_natural_number_division a0 60)))))
+(define Z25179 Z25179_number_of_seconds_from_midnight_to_time_of_day)
 
 ;; Z25187 fraction of regular day to time of day  [reaches an unimplemented function]
 ;;   Z25187K1: Rational number -> Time of day   [declared, not checked]
-(define (Z25187_fraction_of_regular_day_to_time_of_day a0) (Z25179 (if (Z25200_is_rational_number_1 a0) 86400 (Z25196_integer_modulo_natural_number (Z20032_floor_of_rational_number (Z19826 a0 86400)) 86400))))
+(define (Z25187_fraction_of_regular_day_to_time_of_day a0) (Z25179_number_of_seconds_from_midnight_to_time_of_day (if (Z25200_is_rational_number_1 a0) 86400 (Z25196_integer_modulo_natural_number (Z20032_floor_of_rational_number (Z19826_multiply_rational_by_natural_number a0 86400)) 86400))))
 (define Z25187 Z25187_fraction_of_regular_day_to_time_of_day)
 
 ;; Z25191 number of seconds in day  [reaches an unimplemented function]
@@ -8887,7 +9097,7 @@
 
 ;; Z25196 integer modulo natural number  [reaches an unimplemented function]
 ;;   Z25196K1: Integer, Z25196K2: Natural number -> Natural number   [declared, not checked]
-(define (Z25196_integer_modulo_natural_number a0 a1) (Z17144_absolute_value_of_integer_as_natural_number (Z17167_integer_modulo_another_integer a0 (Z17101 a1))))
+(define (Z25196_integer_modulo_natural_number a0 a1) (Z17144_absolute_value_of_integer_as_natural_number (Z17167_integer_modulo_another_integer a0 (Z17101_natural_number_to_integer a1))))
 (define Z25196 Z25196_integer_modulo_natural_number)
 
 ;; Z25200 is rational number 1?  [reaches an unimplemented function]
@@ -8897,7 +9107,7 @@
 
 ;; Z25207 time as fraction of day  [reaches an unimplemented function]
 ;;   Z25207K1: Time of day -> Rational number   [declared, not checked]
-(define (Z25207_time_as_fraction_of_day a0) (Z19854 (Z17101 (Z25108_time_of_day_as_seconds_past_midnight a0)) 86400))
+(define (Z25207_time_as_fraction_of_day a0) (Z19854_simplified_rational_from_z_numerator_denominator (Z17101_natural_number_to_integer (Z25108_time_of_day_as_seconds_past_midnight a0)) 86400))
 (define Z25207 Z25207_time_as_fraction_of_day)
 
 ;; Z25217 frequency of pitch in A440 equal temperament  [reaches an unimplemented function]
@@ -8995,12 +9205,12 @@
 (define (Z25310_are_bounds_symmetric a0) (Z19686_same_rational_number (Z19833_average_of_two_rationals (Z25297_lower_bound_from_quantity a0) (Z25300_upper_bound_from_quantity a0)) (Z25294_amount_from_quantity a0)))
 (define Z25310 Z25310_are_bounds_symmetric)
 
-;; Z25315 rational has terminating decimal form
+;; Z25315 rational has terminating decimal form  [reaches an unimplemented function]
 ;;   Z25315K1: Rational number -> Boolean   [declared, not checked]
 (define (Z25315_rational_has_terminating_decimal_form a0) (Z25318_has_no_prime_factors_other_than_2_or_5 (Z19724_denominator_of_simplified_rational_number a0)))
 (define Z25315 Z25315_rational_has_terminating_decimal_form)
 
-;; Z25318 has no prime factors other than 2 or 5
+;; Z25318 has no prime factors other than 2 or 5  [reaches an unimplemented function]
 ;;   Z25318K1: Natural number -> Boolean   [declared, not checked]
 (define (Z25318_has_no_prime_factors_other_than_2_or_5 a0) (null? (Z19198_remove_elements_common_to_second_list (Z17895_untype_a_list (Z13730_unique_prime_divisors a0)) (list 2 5))))
 (define Z25318 Z25318_has_no_prime_factors_other_than_2_or_5)
@@ -9052,7 +9262,7 @@
 
 ;; Z25432 proper fraction part of rational  [reaches an unimplemented function]
 ;;   Z25432K1: Rational number -> Rational number   [declared, not checked]
-(define (Z25432_proper_fraction_part_of_rational a0) (Z19699_subtract_rational_numbers a0 (Z19744_integer_as_rational_number (Z19682 a0))))
+(define (Z25432_proper_fraction_part_of_rational a0) (Z19699_subtract_rational_numbers a0 (Z19744_integer_as_rational_number (Z19682_truncate_rational_number a0))))
 (define Z25432 Z25432_proper_fraction_part_of_rational)
 
 ;; Z25442 float64 as string (comma radix)  [reaches an unimplemented function]
@@ -9062,22 +9272,22 @@
 
 ;; Z25445 rational as plain decimal to decimal places  [reaches an unimplemented function]
 ;;   Z25445K1: Rational number, Z25445K2: Natural number -> String   [declared, not checked]
-(define (Z25445_rational_as_plain_decimal_to_decimal_places a0 a1) (Z10000_join_two_strings (Z10000_join_two_strings (if (Z21714_is_negative_rational_number a0) "-" "") (Z25073_integer_to_digit_string_hyphen_negative (Z17128_absolute_value_of_integer (Z19682 (Z19814_nearest_rational_with_specified_denominator a0 (Z24517 a1)))))) (Z11542_if_string_output (Z23883_is_zero_natural_number a1) "" (Z10000_join_two_strings "." (Z14770_pad_string_with_leading_characters_to_specified_length (Z13713_natural_number_to_digit_string (Z17144_absolute_value_of_integer_as_natural_number (Z19841_rational_to_nearest_integer_even_integer_tiebreak (Z19826 (Z19699_subtract_rational_numbers (Z19814_nearest_rational_with_specified_denominator a0 (Z24517 a1)) (Z19744_integer_as_rational_number (Z19682 (Z19814_nearest_rational_with_specified_denominator a0 (Z24517 a1))))) (Z24517 a1))))) a1 "0")))))
+(define (Z25445_rational_as_plain_decimal_to_decimal_places a0 a1) (Z10000_join_two_strings (Z10000_join_two_strings (if (Z21714_is_negative_rational_number a0) "-" "") (Z25073_integer_to_digit_string_hyphen_negative (Z17128_absolute_value_of_integer (Z19682_truncate_rational_number (Z19814_nearest_rational_with_specified_denominator a0 (Z24517 a1)))))) (Z11542_if_string_output (Z23883_is_zero_natural_number a1) "" (Z10000_join_two_strings "." (Z14770_pad_string_with_leading_characters_to_specified_length (Z13713_natural_number_to_digit_string (Z17144_absolute_value_of_integer_as_natural_number (Z19841_rational_to_nearest_integer_even_integer_tiebreak (Z19826_multiply_rational_by_natural_number (Z19699_subtract_rational_numbers (Z19814_nearest_rational_with_specified_denominator a0 (Z24517 a1)) (Z19744_integer_as_rational_number (Z19682_truncate_rational_number (Z19814_nearest_rational_with_specified_denominator a0 (Z24517 a1))))) (Z24517 a1))))) a1 "0")))))
 (define Z25445 Z25445_rational_as_plain_decimal_to_decimal_places)
 
 ;; Z25462 set nth bit  [reaches an unimplemented function]
 ;;   Z25462K1: Byte, Z25462K2: Natural number -> Byte   [declared, not checked]
-(define (Z25462_set_nth_bit a0 a1) (Z22535 (Z13652_bitwise_or (Z14567_byte_to_natural_number a0) (Z13644_2_n a1))))
+(define (Z25462_set_nth_bit a0 a1) (Z22535_natural_number_to_byte (Z13652_bitwise_or (Z14567_byte_to_natural_number a0) (Z13644_2_n a1))))
 (define Z25462 Z25462_set_nth_bit)
 
 ;; Z25467 switch nth bit  [reaches an unimplemented function]
 ;;   Z25467K1: Byte, Z25467K2: Natural number -> Byte   [declared, not checked]
-(define (Z25467_switch_nth_bit a0 a1) (Z22535 (Z13653_bitwise_xor (Z14567_byte_to_natural_number a0) (Z13644_2_n a1))))
+(define (Z25467_switch_nth_bit a0 a1) (Z22535_natural_number_to_byte (Z13653_bitwise_xor (Z14567_byte_to_natural_number a0) (Z13644_2_n a1))))
 (define Z25467 Z25467_switch_nth_bit)
 
 ;; Z25472 clear nth bit  [reaches an unimplemented function]
 ;;   Z25472K1: Byte, Z25472K2: Natural number -> Byte   [declared, not checked]
-(define (Z25472_clear_nth_bit a0 a1) (Z22535 (Z13651_bitwise_and (Z14567_byte_to_natural_number a0) (Z14567_byte_to_natural_number (Z25467_switch_nth_bit (record Z80 (Z80K1 255)) a1)))))
+(define (Z25472_clear_nth_bit a0 a1) (Z22535_natural_number_to_byte (Z13651_bitwise_and (Z14567_byte_to_natural_number a0) (Z14567_byte_to_natural_number (Z25467_switch_nth_bit (record Z80 (Z80K1 255)) a1)))))
 (define Z25472 Z25472_clear_nth_bit)
 
 ;; Z25488 Gender-matching forms from lexeme  [reaches an unimplemented function]
@@ -9247,13 +9457,18 @@
 
 ;; Z25768 day of the year  [reaches an unimplemented function]
 ;;   Z25768K1: Gregorian calendar date -> Natural number   [declared, not checked]
-(define (Z25768_day_of_the_year a0) (Z17144_absolute_value_of_integer_as_natural_number (Z20744_days_until (Z24962 (record Z20342 (Z20342K1 (record Z16098 (Z16098K1 Z16112))) (Z20342K2 31)) (Z20314 (Z24948_year_from_calendar_date a0))) a0)))
+(define (Z25768_day_of_the_year a0) (Z17144_absolute_value_of_integer_as_natural_number (Z20744_days_until (Z24962_date_from_day_of_year_and_year (record Z20342 (Z20342K1 (record Z16098 (Z16098K1 Z16112))) (Z20342K2 31)) (Z20314_previous_year (Z24948_year_from_calendar_date a0))) a0)))
 (define Z25768 Z25768_day_of_the_year)
 
 ;; Z25775 days until the end of the year  [reaches an unimplemented function]
 ;;   Z25775K1: Gregorian calendar date -> Natural number   [declared, not checked]
 (define (Z25775_days_until_the_end_of_the_year a0) (Z13569_subtract_natural_numbers_with_floor_of_0 (if (Z20181_is_gregorian_year_leap_year (Z24948_year_from_calendar_date a0)) 366 365) (Z25768_day_of_the_year a0)))
 (define Z25775 Z25775_days_until_the_end_of_the_year)
+
+;; Z25785 read Wikidata quantity  [reaches an unimplemented function]
+;;   Z25785K1: String, Z25785K2: Natural language -> Wikidata quantity   [declared, not checked]
+(define (Z25785_read_wikidata_quantity a0 a1) (record Z6010 (Z6010K1 (Z25812_amount_from_string_representing_quantity (Z27085_value_string_from_quantity_string a0) a1)) (Z6010K2 (if (Z27092_quantity_string_implies_void_lower_bound a0) (Z26199_nullary_void) (Z25840_lower_bound_from_quantity_string (Z27085_value_string_from_quantity_string a0) a1))) (Z6010K3 (if (Z27097_quantity_string_implies_void_upper_bound a0) (Z26199_nullary_void) (Z25860_upper_bound_from_quantity_string (Z27085_value_string_from_quantity_string a0) a1))) (Z6010K4 (Z25806_qid_of_unit_from_quantity_string a0))))
+(define Z25785 Z25785_read_wikidata_quantity)
 
 ;; Z25800 unit string from quantity string  [reaches an unimplemented function]
 ;;   Z25800K1: String -> String   [declared, not checked]
@@ -9282,7 +9497,7 @@
 
 ;; Z25860 upper bound from quantity string  [reaches an unimplemented function]
 ;;   Z25860K1: String, Z25860K2: Natural language -> Rational number   [declared, not checked]
-(define (Z25860_upper_bound_from_quantity_string a0 a1) (if (Z23883_is_zero_natural_number (Z25847 a0 "[-−\\d\\,\\.]+" "")) (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16661))) (Z19677K2 0) (Z19677K3 1)) (if (= (Z25847 a0 "[-−\\d\\,\\.]+" "g") 1) (Z25812_amount_from_string_representing_quantity a0 a1) (if (Z10070_has_substring a0 "≤") (Z21930_rational_number_reader (Z25853 a0 "[-−\\d\\,\\.]+" "g" (if (Z10070_has_substring a0 "≥") 3 2)) a1) (Z25867_set_denominator (Z19679 (Z25812_amount_from_string_representing_quantity a0 a1) (Z21930_rational_number_reader (Z25853 a0 "[-−\\d\\,\\.]+" "g" 2) a1)) (Z19862_denominator_of_unsimplified_rational_number (Z25812_amount_from_string_representing_quantity a0 a1)))))))
+(define (Z25860_upper_bound_from_quantity_string a0 a1) (if (Z23883_is_zero_natural_number (Z25847 a0 "[-−\\d\\,\\.]+" "")) (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16661))) (Z19677K2 0) (Z19677K3 1)) (if (= (Z25847 a0 "[-−\\d\\,\\.]+" "g") 1) (Z25812_amount_from_string_representing_quantity a0 a1) (if (Z10070_has_substring a0 "≤") (Z21930_rational_number_reader (Z25853 a0 "[-−\\d\\,\\.]+" "g" (if (Z10070_has_substring a0 "≥") 3 2)) a1) (Z25867_set_denominator (Z19679_add_rational_numbers (Z25812_amount_from_string_representing_quantity a0 a1) (Z21930_rational_number_reader (Z25853 a0 "[-−\\d\\,\\.]+" "g" 2) a1)) (Z19862_denominator_of_unsimplified_rational_number (Z25812_amount_from_string_representing_quantity a0 a1)))))))
 (define Z25860 Z25860_upper_bound_from_quantity_string)
 
 ;; Z25867 set denominator  [reaches an unimplemented function; mutually recursive: may not terminate]
@@ -9315,9 +9530,14 @@
 (define (Z25889_globe_from_wikidata_geo_coordinate a0) (Z803_value_by_key (record Z39 (Z39K1 "Z6011K4")) a0))
 (define Z25889 Z25889_globe_from_wikidata_geo_coordinate)
 
+;; Z25897 first weekday of the month  [reaches an unimplemented function]
+;;   Z25897K1: Gregorian calendar date, Z25897K2: Day of the week -> Gregorian calendar date   [declared, not checked]
+(define (Z25897_first_weekday_of_the_month a0 a1) (record Z20420 (Z20420K1 (Z24948_year_from_calendar_date a0)) (Z20420K2 (Z20730 (Z24948_year_from_calendar_date a0) (Z26504_month_from_date a0) a1 1))))
+(define Z25897 Z25897_first_weekday_of_the_month)
+
 ;; Z25907 n weeks later  [reaches an unimplemented function]
 ;;   Z25907K1: Gregorian calendar date, Z25907K2: Natural number -> Gregorian calendar date   [declared, not checked]
-(define (Z25907_n_weeks_later a0 a1) (Z20750 a0 (Z17101 (* 7 a1))))
+(define (Z25907_n_weeks_later a0 a1) (Z20750 a0 (Z17101_natural_number_to_integer (* 7 a1))))
 (define Z25907 Z25907_n_weeks_later)
 
 ;; Z25912 n weeks earlier  [reaches an unimplemented function]
@@ -9332,17 +9552,17 @@
 
 ;; Z25950 rational from sign degrees minutes and seconds  [reaches an unimplemented function]
 ;;   Z25950K1: Sign, Z25950K2: Natural number, Z25950K3: Natural number, Z25950K4: Rational number -> Rational number   [declared, not checked]
-(define (Z25950_rational_from_sign_degrees_minutes_and_seconds a0 a1 a2 a3) (Z25867_set_denominator (Z19706 (Z19744_integer_as_rational_number (Z17151_sign_to_unit_integer a0)) (Z20080_sum_the_elements_of_a_list_of_rational_numbers (cons (Z21653_natural_number_as_rational_number a1) (cons (Z19708_divide_rational_numbers (Z21653_natural_number_as_rational_number a2) (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 60) (Z19677K3 1))) (cons (Z19708_divide_rational_numbers a3 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 3600) (Z19677K3 1))) (list)))))) (* 3600 (Z19862_denominator_of_unsimplified_rational_number a3))))
+(define (Z25950_rational_from_sign_degrees_minutes_and_seconds a0 a1 a2 a3) (Z25867_set_denominator (Z19706_multiply_rational_numbers (Z19744_integer_as_rational_number (Z17151_sign_to_unit_integer a0)) (Z20080_sum_the_elements_of_a_list_of_rational_numbers (cons (Z21653_natural_number_as_rational_number a1) (cons (Z19708_divide_rational_numbers (Z21653_natural_number_as_rational_number a2) (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 60) (Z19677K3 1))) (cons (Z19708_divide_rational_numbers a3 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 3600) (Z19677K3 1))) (list)))))) (* 3600 (Z19862_denominator_of_unsimplified_rational_number a3))))
 (define Z25950 Z25950_rational_from_sign_degrees_minutes_and_seconds)
 
 ;; Z25959 βγ from speed  [reaches an unimplemented function]
 ;;   Z25959K1: Rational number -> Rational number   [declared, not checked]
-(define (Z25959_from_speed a0) (Z19706 a0 (Z23352_lorentz_factor_from_velocity a0)))
+(define (Z25959_from_speed a0) (Z19706_multiply_rational_numbers a0 (Z23352_lorentz_factor_from_velocity a0)))
 (define Z25959 Z25959_from_speed)
 
 ;; Z25970 USD inflation calculator  [reaches an unimplemented function]
 ;;   Z25970K1: Rational number, Z25970K2: Gregorian year, Z25970K3: Gregorian year -> Rational number   [declared, not checked]
-(define (Z25970_usd_inflation_calculator a0 a1 a2) (Z19814_nearest_rational_with_specified_denominator (Z19708_divide_rational_numbers (Z19706 (Z25966 a2) a0) (Z25966 a1)) 100))
+(define (Z25970_usd_inflation_calculator a0 a1 a2) (Z19814_nearest_rational_with_specified_denominator (Z19708_divide_rational_numbers (Z19706_multiply_rational_numbers (Z25966 a2) a0) (Z25966 a1)) 100))
 (define Z25970 Z25970_usd_inflation_calculator)
 
 ;; Z25974 dir attribute  [reaches an unimplemented function]
@@ -9352,7 +9572,7 @@
 
 ;; Z25985 multiply Wikidata quantity by rational number  [reaches an unimplemented function]
 ;;   Z25985K1: Wikidata quantity, Z25985K2: Rational number -> Wikidata quantity   [declared, not checked]
-(define (Z25985_multiply_wikidata_quantity_by_rational_number a0 a1) (Z25985_multiply_wikidata_quantity_by_rational_number (Z26959 a0) a1))
+(define (Z25985_multiply_wikidata_quantity_by_rational_number a0 a1) (Z25985_multiply_wikidata_quantity_by_rational_number (Z26959_valid_wikidata_quantity a0) a1))
 (define Z25985 Z25985_multiply_wikidata_quantity_by_rational_number)
 
 ;; Z25999 convert Wikidata quantity to SI units  [reaches an unimplemented function]
@@ -9395,9 +9615,9 @@
 (define (Z26103_german_nom_indef_article_noun_from_item a0) (Z26070_german_nominative_indef_article_noun_from_lexeme (Z22696_fetch_first_lexeme_from_item_ref_and_lang_p5137 (Z23756_wikidata_item_reference_from_wikidata_item a0) Z1430)))
 (define Z26103 Z26103_german_nom_indef_article_noun_from_item)
 
-;; Z26107 monolingual text from language and string  [mutually recursive: may not terminate]
+;; Z26107 monolingual text from language and string
 ;;   Z26107K1: Natural language, Z26107K2: String -> Monolingual text   [declared, not checked]
-(define (Z26107_monolingual_text_from_language_and_string a0 a1) (Z861_monolingual_text_from_string_and_natural_language a1 a0))
+(define (Z26107_monolingual_text_from_language_and_string a0 a1) (identity (record Z11 (Z11K1 a0) (Z11K2 a1))))
 (define Z26107 Z26107_monolingual_text_from_language_and_string)
 
 ;; Z26111 display Gregorian year in Sinitic langs Hans/Hant  [reaches an unimplemented function]
@@ -9437,7 +9657,7 @@
 
 ;; Z26151 display Wikidata geo-coordinate as Plus Code  [reaches an unimplemented function]
 ;;   Z26151K1: Wikidata geo-coordinate, Z26151K2: Natural language -> String   [declared, not checked]
-(define (Z26151_display_wikidata_geo_coordinate_as_plus_code a0 a1) (Z25963 (Z25880_latitude_from_wikidata_geo_coordinate a0) (Z25883_longitude_from_wikidata_geo_coordinate a0) (Z19565_triple_if (Z19751_greater_than_rational_numbers (Z25886_precision_from_wikidata_geo_coordinate a0) (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 1))) 2 (Z19751_greater_than_rational_numbers (Z25886_precision_from_wikidata_geo_coordinate a0) (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 8000))) (+ 4 (* 2 (Z17144_absolute_value_of_integer_as_natural_number (Z20841 (Z21775_negate_float64 (Z21037_logarithm_with_arbitrary_base_float64 (Z20854 (Z25886_precision_from_wikidata_geo_coordinate a0)) (record Z20838 (Z20838K1 (record Z16659 (Z16659K1 Z16660))) (Z20838K2 (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16660))) (Z16683K2 4))) (Z20838K3 1125899906842624) (Z20838K4 (record Z20825 (Z20825K1 Z20837)))))))))) (+ 10 (Z17144_absolute_value_of_integer_as_natural_number (Z20841 (Z21775_negate_float64 (Z21037_logarithm_with_arbitrary_base_float64 (Z20854 (Z19706 (Z25886_precision_from_wikidata_geo_coordinate a0) (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 8000) (Z19677K3 1)))) (record Z20838 (Z20838K1 (record Z16659 (Z16659K1 Z16660))) (Z20838K2 (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16660))) (Z16683K2 2))) (Z20838K3 0) (Z20838K4 (record Z20825 (Z20825K1 Z20837))))))))))))
+(define (Z26151_display_wikidata_geo_coordinate_as_plus_code a0 a1) (Z25963 (Z25880_latitude_from_wikidata_geo_coordinate a0) (Z25883_longitude_from_wikidata_geo_coordinate a0) (Z19565_triple_if (Z19751_greater_than_rational_numbers (Z25886_precision_from_wikidata_geo_coordinate a0) (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 1))) 2 (Z19751_greater_than_rational_numbers (Z25886_precision_from_wikidata_geo_coordinate a0) (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 8000))) (+ 4 (* 2 (Z17144_absolute_value_of_integer_as_natural_number (Z20841 (Z21775_negate_float64 (Z21037_logarithm_with_arbitrary_base_float64 (Z20854 (Z25886_precision_from_wikidata_geo_coordinate a0)) (record Z20838 (Z20838K1 (record Z16659 (Z16659K1 Z16660))) (Z20838K2 (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16660))) (Z16683K2 4))) (Z20838K3 1125899906842624) (Z20838K4 (record Z20825 (Z20825K1 Z20837)))))))))) (+ 10 (Z17144_absolute_value_of_integer_as_natural_number (Z20841 (Z21775_negate_float64 (Z21037_logarithm_with_arbitrary_base_float64 (Z20854 (Z19706_multiply_rational_numbers (Z25886_precision_from_wikidata_geo_coordinate a0) (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 8000) (Z19677K3 1)))) (record Z20838 (Z20838K1 (record Z16659 (Z16659K1 Z16660))) (Z20838K2 (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16660))) (Z16683K2 2))) (Z20838K3 0) (Z20838K4 (record Z20825 (Z20825K1 Z20837))))))))))))
 (define Z26151 Z26151_display_wikidata_geo_coordinate_as_plus_code)
 
 ;; Z26166 month of Day of Roman year unknown  [reaches an unimplemented function]
@@ -9462,7 +9682,7 @@
 
 ;; Z26209 degrees arcminutes arcseconds to rational degrees  [reaches an unimplemented function]
 ;;   Z26209K1: Rational number, Z26209K2: Rational number, Z26209K3: Rational number -> Rational number   [declared, not checked]
-(define (Z26209_degrees_arcminutes_arcseconds_to_rational_degrees a0 a1 a2) (Z19679 (Z19679 a0 (Z19706 a1 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 60)))) (Z19706 a2 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 3600)))))
+(define (Z26209_degrees_arcminutes_arcseconds_to_rational_degrees a0 a1 a2) (Z19679_add_rational_numbers (Z19679_add_rational_numbers a0 (Z19706_multiply_rational_numbers a1 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 60)))) (Z19706_multiply_rational_numbers a2 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 3600)))))
 (define Z26209 Z26209_degrees_arcminutes_arcseconds_to_rational_degrees)
 
 ;; Z26237 Day of Roman Year fully defined  [reaches an unimplemented function]
@@ -9527,7 +9747,7 @@
 
 ;; Z26344 read Wikidata geo-coordinate  [reaches an unimplemented function]
 ;;   Z26344K1: String, Z26344K2: Natural language -> Wikidata geo-coordinate   [declared, not checked]
-(define (Z26344_read_wikidata_geo_coordinate a0 a1) (Z26410 (Z25930 a0 a1) (Z26214 (Z26414_remove_first_and_last_character (Z25833 a0 "(\\(.*\\))" "")) a1)))
+(define (Z26344_read_wikidata_geo_coordinate a0 a1) (Z26410_replace_globe_in_wikidata_geo_coordinate (Z25930 a0 a1) (Z26214 (Z26414_remove_first_and_last_character (Z25833 a0 "(\\(.*\\))" "")) a1)))
 (define Z26344 Z26344_read_wikidata_geo_coordinate)
 
 ;; Z26364 convert (m/f) grammatical genders to (m/f/n)  [reaches an unimplemented function]
@@ -9555,6 +9775,11 @@
 (define (Z26399_accusative_case_of_wikidata_lexeme a0) (Z19530_first_text_of_lexeme_matching_grammatical_features a0 (list (record Z6091 (Z6091K1 "Q146078")))))
 (define Z26399 Z26399_accusative_case_of_wikidata_lexeme)
 
+;; Z26410 replace globe in Wikidata geo-coordinate
+;;   Z26410K1: Wikidata geo-coordinate, Z26410K2: Wikidata item reference -> Wikidata geo-coordinate   [declared, not checked]
+(define (Z26410_replace_globe_in_wikidata_geo_coordinate a0 a1) (record Z6011 (Z6011K1 (Z25880_latitude_from_wikidata_geo_coordinate a0)) (Z6011K2 (Z25883_longitude_from_wikidata_geo_coordinate a0)) (Z6011K3 (Z25886_precision_from_wikidata_geo_coordinate a0)) (Z6011K4 a1)))
+(define Z26410 Z26410_replace_globe_in_wikidata_geo_coordinate)
+
 ;; Z26414 remove first and last character
 ;;   Z26414K1: String -> String   [declared, not checked]
 (define (Z26414_remove_first_and_last_character a0) (Z14456_remove_first_character (Z11879_remove_last_character a0)))
@@ -9562,13 +9787,18 @@
 
 ;; Z26424 calculate inflation  [reaches an unimplemented function]
 ;;   Z26424K1: String, Z26424K2: Rational number, Z26424K3: Gregorian year, Z26424K4: Gregorian year -> Rational number   [declared, not checked]
-(define (Z26424_calculate_inflation a0 a1 a2 a3) (Z19708_divide_rational_numbers (Z19706 (Z13036_apply (Z26437_get_function_for_country_s_cpi_by_year a0) a3) a1) (Z13036_apply (Z26437_get_function_for_country_s_cpi_by_year a0) a2)))
+(define (Z26424_calculate_inflation a0 a1 a2 a3) (Z19708_divide_rational_numbers (Z19706_multiply_rational_numbers (Z13036_apply (Z26437_get_function_for_country_s_cpi_by_year a0) a3) a1) (Z13036_apply (Z26437_get_function_for_country_s_cpi_by_year a0) a2)))
 (define Z26424 Z26424_calculate_inflation)
 
 ;; Z26437 get Function for country's CPI by year  [reaches an unimplemented function]
 ;;   Z26437K1: String -> Function   [declared, not checked]
 (define (Z26437_get_function_for_country_s_cpi_by_year a0) (Z22193_switch a0 (list "US" "UK" "EU" "AR" "AT" "AU" "AU-road" "BD" "BE") (list Z25966 Z26428 Z26444 Z26487 Z26491 Z26495 Z26499 Z26756 Z26760)))
 (define Z26437 Z26437_get_function_for_country_s_cpi_by_year)
+
+;; Z26447 geohashing  [reaches an unimplemented function]
+;;   Z26447K1: Wikidata geo-coordinate, Z26447K2: Gregorian calendar date, Z26447K3: Rational number -> Wikidata geo-coordinate   [declared, not checked]
+(define (Z26447_geohashing a0 a1 a2) (identity (record Z6011 (Z6011K1 (Z19679_add_rational_numbers (Z19744_integer_as_rational_number (Z19682_truncate_rational_number (Z25880_latitude_from_wikidata_geo_coordinate a0))) (Z19814_nearest_rational_with_specified_denominator (Z26452 (Z10000_join_two_strings (if (Z21702_is_positive_rational_number (Z25880_latitude_from_wikidata_geo_coordinate a0)) "0." "-0.") (Z14592_first_n_characters_of_string (Z10137_md5 (Z26448_geohash_string a1 a2)) 16))) 1000000))) (Z6011K2 (Z19679_add_rational_numbers (Z19744_integer_as_rational_number (Z19682_truncate_rational_number (Z25883_longitude_from_wikidata_geo_coordinate a0))) (Z19814_nearest_rational_with_specified_denominator (Z26452 (Z10000_join_two_strings (if (Z21702_is_positive_rational_number (Z25883_longitude_from_wikidata_geo_coordinate a0)) "0." "-0.") (Z14460_final_n_characters_of_string (Z10137_md5 (Z26448_geohash_string a1 a2)) 16))) 1000000))) (Z6011K3 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 1000000))) (Z6011K4 (record Z6091 (Z6091K1 "Q2"))))))
+(define Z26447 Z26447_geohashing)
 
 ;; Z26448 geohash string  [reaches an unimplemented function]
 ;;   Z26448K1: Gregorian calendar date, Z26448K2: Rational number -> String   [declared, not checked]
@@ -9582,7 +9812,7 @@
 
 ;; Z26458 Wikidata geocoordinates compatible within error  [reaches an unimplemented function]
 ;;   Z26458K1: Wikidata geo-coordinate, Z26458K2: Wikidata geo-coordinate -> Boolean   [declared, not checked]
-(define (Z26458_wikidata_geocoordinates_compatible_within_error a0 a1) (bool-and (Z19316_same_wikidata_item_reference (Z25889_globe_from_wikidata_geo_coordinate a0) (Z25889_globe_from_wikidata_geo_coordinate a1)) (bool-and (Z19754_less_than_or_equal_to_rational_numbers (Z26463_absolute_value_of_difference_of_rationals (Z25883_longitude_from_wikidata_geo_coordinate a0) (Z25883_longitude_from_wikidata_geo_coordinate a1)) (Z19679 (Z25886_precision_from_wikidata_geo_coordinate a0) (Z25886_precision_from_wikidata_geo_coordinate a1))) (Z19754_less_than_or_equal_to_rational_numbers (Z26463_absolute_value_of_difference_of_rationals (Z25880_latitude_from_wikidata_geo_coordinate a0) (Z25880_latitude_from_wikidata_geo_coordinate a1)) (Z19679 (Z25886_precision_from_wikidata_geo_coordinate a0) (Z25886_precision_from_wikidata_geo_coordinate a1))))))
+(define (Z26458_wikidata_geocoordinates_compatible_within_error a0 a1) (bool-and (Z19316_same_wikidata_item_reference (Z25889_globe_from_wikidata_geo_coordinate a0) (Z25889_globe_from_wikidata_geo_coordinate a1)) (bool-and (Z19754_less_than_or_equal_to_rational_numbers (Z26463_absolute_value_of_difference_of_rationals (Z25883_longitude_from_wikidata_geo_coordinate a0) (Z25883_longitude_from_wikidata_geo_coordinate a1)) (Z19679_add_rational_numbers (Z25886_precision_from_wikidata_geo_coordinate a0) (Z25886_precision_from_wikidata_geo_coordinate a1))) (Z19754_less_than_or_equal_to_rational_numbers (Z26463_absolute_value_of_difference_of_rationals (Z25880_latitude_from_wikidata_geo_coordinate a0) (Z25880_latitude_from_wikidata_geo_coordinate a1)) (Z19679_add_rational_numbers (Z25886_precision_from_wikidata_geo_coordinate a0) (Z25886_precision_from_wikidata_geo_coordinate a1))))))
 (define Z26458 Z26458_wikidata_geocoordinates_compatible_within_error)
 
 ;; Z26463 absolute value of difference of rationals  [reaches an unimplemented function]
@@ -9615,9 +9845,14 @@
 (define (Z26527_conversions_to_si_units_of_an_item a0) (Z22978_values_unqualified_from_wikidata_item_statements a0 (record Z6092 (Z6092K1 "P2370"))))
 (define Z26527 Z26527_conversions_to_si_units_of_an_item)
 
+;; Z26533 replace unit in Wikidata quantity  [reaches an unimplemented function]
+;;   Z26533K1: Wikidata quantity, Z26533K2: Wikidata item reference -> Wikidata quantity   [declared, not checked]
+(define (Z26533_replace_unit_in_wikidata_quantity a0 a1) (record Z6010 (Z6010K1 (Z25294_amount_from_quantity a0)) (Z6010K2 (Z25297_lower_bound_from_quantity a0)) (Z6010K3 (Z25300_upper_bound_from_quantity a0)) (Z6010K4 a1)))
+(define Z26533 Z26533_replace_unit_in_wikidata_quantity)
+
 ;; Z26536 multiply quantity by rational and apply new unit  [reaches an unimplemented function]
 ;;   Z26536K1: Wikidata quantity, Z26536K2: Rational number, Z26536K3: Wikidata item reference -> Wikidata quantity   [declared, not checked]
-(define (Z26536_multiply_quantity_by_rational_and_apply_new_unit a0 a1 a2) (Z26533 (Z25985_multiply_wikidata_quantity_by_rational_number a0 a1) a2))
+(define (Z26536_multiply_quantity_by_rational_and_apply_new_unit a0 a1 a2) (Z26533_replace_unit_in_wikidata_quantity (Z25985_multiply_wikidata_quantity_by_rational_number a0 a1) a2))
 (define Z26536 Z26536_multiply_quantity_by_rational_and_apply_new_unit)
 
 ;; Z26539 conversions to SI units of an item reference  [reaches an unimplemented function]
@@ -9792,7 +10027,7 @@
 
 ;; Z26809 move Hijri month by N months  [reaches an unimplemented function]
 ;;   Z26809K1: Hijri calendar month, Z26809K2: Integer -> Hijri calendar month   [declared, not checked]
-(define (Z26809_move_hijri_month_by_n_months a0 a1) (Z26774 (Z25196_integer_modulo_natural_number (Z16693_add_integers (Z17101 (Z26766_hijri_calendar_month_to_month_number a0)) a1) 12)))
+(define (Z26809_move_hijri_month_by_n_months a0 a1) (Z26774 (Z25196_integer_modulo_natural_number (Z16693_add_integers (Z17101_natural_number_to_integer (Z26766_hijri_calendar_month_to_month_number a0)) a1) 12)))
 (define Z26809 Z26809_move_hijri_month_by_n_months)
 
 ;; Z26821 Indonesian ordinal from natural number  [reaches an unimplemented function]
@@ -9867,7 +10102,7 @@
 
 ;; Z26904 advance N elements  [reaches an unimplemented function]
 ;;   Z26904K1: Object, Z26904K2: Integer, Z26904K3: Typed list(Object) -> Object   [declared, not checked]
-(define (Z26904_advance_n_elements a0 a1 a2) (Z13397_get_the_nth_element_of_a_list a2 (Z26858_integer_modulo_natural_result_between_1_m (Z16693_add_integers (Z17101 (Z13708_index_of_first_listing_1_n_note_limitation a0 a2)) a1) (length a2))))
+(define (Z26904_advance_n_elements a0 a1 a2) (Z13397_get_the_nth_element_of_a_list a2 (Z26858_integer_modulo_natural_result_between_1_m (Z16693_add_integers (Z17101_natural_number_to_integer (Z13708_index_of_first_listing_1_n_note_limitation a0 a2)) a1) (length a2))))
 (define Z26904 Z26904_advance_n_elements)
 
 ;; Z26911 previous instance of Wikidata enumeration  [reaches an unimplemented function]
@@ -9910,6 +10145,11 @@
 (define (Z26955_do_not_use_spo_sentence_singulars_in_present a0 a1 a2 a3) (Z11542_if_string_output (string=? (Z11060_get_last_character_of_string (Z26039_subject_is_instance_of_string a1 a2 a3)) ".") (Z11879_remove_last_character (Z26039_subject_is_instance_of_string a1 a2 a3)) (Z26039_subject_is_instance_of_string a1 a2 a3)))
 (define Z26955 Z26955_do_not_use_spo_sentence_singulars_in_present)
 
+;; Z26959 valid Wikidata quantity  [reaches an unimplemented function]
+;;   Z26959K1: Wikidata quantity -> Wikidata quantity   [declared, not checked]
+(define (Z26959_valid_wikidata_quantity a0) (identity (record Z6010 (Z6010K1 (Z25294_amount_from_quantity a0)) (Z6010K2 (Z25297_lower_bound_from_quantity a0)) (Z6010K3 (Z25300_upper_bound_from_quantity a0)) (Z6010K4 (Z25303_unit_qid_from_quantity a0)))))
+(define Z26959 Z26959_valid_wikidata_quantity)
+
 ;; Z26966 quantities have identical lower bounds  [reaches an unimplemented function]
 ;;   Z26966K1: Wikidata quantity, Z26966K2: Wikidata quantity -> Boolean   [declared, not checked]
 (define (Z26966_quantities_have_identical_lower_bounds a0 a1) (if (Z26950_is_lower_bound_void a0) (Z26950_is_lower_bound_void a1) (if (Z26950_is_lower_bound_void a1) #f (Z19892_same_rational_number_object (Z25297_lower_bound_from_quantity a0) (Z25297_lower_bound_from_quantity a1)))))
@@ -9922,12 +10162,12 @@
 
 ;; Z26978 multiply rationals maintaining the first precision  [reaches an unimplemented function]
 ;;   Z26978K1: Rational number, Z26978K2: Rational number -> Rational number   [declared, not checked]
-(define (Z26978_multiply_rationals_maintaining_the_first_precision a0 a1) (Z27699_round_rational_with_numerator_length (Z19706 a0 a1) (Z28982_digits_in_numerator_of_unsimplified_rational a0)))
+(define (Z26978_multiply_rationals_maintaining_the_first_precision a0 a1) (Z27699_round_rational_with_numerator_length (Z19706_multiply_rational_numbers a0 a1) (Z28982_digits_in_numerator_of_unsimplified_rational a0)))
 (define Z26978 Z26978_multiply_rationals_maintaining_the_first_precision)
 
 ;; Z26982 equal rational with numerator length  [reaches an unimplemented function]
 ;;   Z26982K1: Rational number, Z26982K2: Natural number -> Rational number   [declared, not checked]
-(define (Z26982_equal_rational_with_numerator_length a0 a1) (Z20584 (Z19717_sign_of_rational_number a0) (Z27022 a0 a1) (Z27028 a0 a1)))
+(define (Z26982_equal_rational_with_numerator_length a0 a1) (Z20584_rational_from_sign_and_natural_numbers (Z19717_sign_of_rational_number a0) (Z27022 a0 a1) (Z27028 a0 a1)))
 (define Z26982 Z26982_equal_rational_with_numerator_length)
 
 ;; Z26985 rational with power of 10 denominator  [reaches an unimplemented function]
@@ -9940,7 +10180,7 @@
 (define (Z26988_n_has_number_of_factors_of_specified_m a0 a1) (if (Z13740_is_natural_number_divisible a0 a1) (add1 (Z26988_n_has_number_of_factors_of_specified_m (Z13546_divide_natural_numbers a0 a1) a1)) 0))
 (define Z26988 Z26988_n_has_number_of_factors_of_specified_m)
 
-;; Z26996 is rational a decimal?
+;; Z26996 is rational a decimal?  [reaches an unimplemented function]
 ;;   Z26996K1: Rational number -> Boolean   [declared, not checked]
 (define (Z26996_is_rational_a_decimal a0) (Z15741_is_power_of_k (Z19862_denominator_of_unsimplified_rational_number a0) 10))
 (define Z26996 Z26996_is_rational_a_decimal)
@@ -9952,7 +10192,7 @@
 
 ;; Z27043 opposite instance of Wikidata enumeration  [reaches an unimplemented function]
 ;;   Z27043K1: Object -> Object   [declared, not checked]
-(define (Z27043_opposite_instance_of_wikidata_enumeration a0) (Z26895_advance_n_from_instance_of_wikidata_enumeration a0 (Z17101 (Z15111_floor_n_2 (Z26891_number_of_possible_values_of_wikidata_enumeration (Z16829_type_of_object a0))))))
+(define (Z27043_opposite_instance_of_wikidata_enumeration a0) (Z26895_advance_n_from_instance_of_wikidata_enumeration a0 (Z17101_natural_number_to_integer (Z15111_floor_n_2 (Z26891_number_of_possible_values_of_wikidata_enumeration (Z16829_type_of_object a0))))))
 (define Z27043 Z27043_opposite_instance_of_wikidata_enumeration)
 
 ;; Z27047 specular instance of Wikidata enumeration  [reaches an unimplemented function]
@@ -9964,6 +10204,11 @@
 ;;   Z27053K1: String -> String   [declared, not checked]
 (define (Z27053_convert_digits_to_lower_indices_subscript a0) (Z14613_replace_character_set a0 "0123456789" "₀₁₂₃₄₅₆₇₈₉"))
 (define Z27053 Z27053_convert_digits_to_lower_indices_subscript)
+
+;; Z27064 swap lower and upper bounds of quantity
+;;   Z27064K1: Wikidata quantity -> Wikidata quantity   [declared, not checked]
+(define (Z27064_swap_lower_and_upper_bounds_of_quantity a0) (identity (record Z6010 (Z6010K1 (Z803_value_by_key (record Z39 (Z39K1 "Z6010K1")) a0)) (Z6010K2 (Z803_value_by_key (record Z39 (Z39K1 "Z6010K3")) a0)) (Z6010K3 (Z803_value_by_key (record Z39 (Z39K1 "Z6010K2")) a0)) (Z6010K4 (Z803_value_by_key (record Z39 (Z39K1 "Z6010K4")) a0)))))
+(define Z27064 Z27064_swap_lower_and_upper_bounds_of_quantity)
 
 ;; Z27068 if true, pass input through function
 ;;   Z27068K1: Object, Z27068K2: Function, Z27068K3: Boolean -> Object   [declared, not checked]
@@ -10047,7 +10292,7 @@
 
 ;; Z27190 months between  [reaches an unimplemented function]
 ;;   Z27190K1: Gregorian calendar date, Z27190K2: Gregorian calendar date -> Natural number   [declared, not checked]
-(define (Z27190_months_between a0 a1) (if (Z25276_later_date a0 a1) (Z27190_months_between a1 a0) (Z13036_apply (if (> (Z28143_day_of_month_from_gregorian_calendar_date a0) (Z28143_day_of_month_from_gregorian_calendar_date a1)) Z13582_decrement_natural_number_by_one identity) (Z17144_absolute_value_of_integer_as_natural_number (Z16693_add_integers (Z17120_multiply_integers (record Z16683 (Z16683K1 Z16660) (Z16683K2 12)) (Z17111_subtract_an_integer (Z20257_gregorian_year_to_iso_8601_year_integer (Z24948_year_from_calendar_date a1)) (Z20257_gregorian_year_to_iso_8601_year_integer (Z24948_year_from_calendar_date a0)))) (Z17111_subtract_an_integer (Z17101 (Z16230_month_to_month_number (Z26504_month_from_date a1))) (Z17101 (Z16230_month_to_month_number (Z26504_month_from_date a0)))))))))
+(define (Z27190_months_between a0 a1) (if (Z25276_later_date a0 a1) (Z27190_months_between a1 a0) (Z13036_apply (if (> (Z28143_day_of_month_from_gregorian_calendar_date a0) (Z28143_day_of_month_from_gregorian_calendar_date a1)) Z13582_decrement_natural_number_by_one identity) (Z17144_absolute_value_of_integer_as_natural_number (Z16693_add_integers (Z17120_multiply_integers (record Z16683 (Z16683K1 Z16660) (Z16683K2 12)) (Z17111_subtract_an_integer (Z20257_gregorian_year_to_iso_8601_year_integer (Z24948_year_from_calendar_date a1)) (Z20257_gregorian_year_to_iso_8601_year_integer (Z24948_year_from_calendar_date a0)))) (Z17111_subtract_an_integer (Z17101_natural_number_to_integer (Z16230_month_to_month_number (Z26504_month_from_date a1))) (Z17101_natural_number_to_integer (Z16230_month_to_month_number (Z26504_month_from_date a0)))))))))
 (define Z27190 Z27190_months_between)
 
 ;; Z27198 time between two dates with unit, chosen language  [reaches an unimplemented function]
@@ -10067,12 +10312,12 @@
 
 ;; Z27225 divide day in regular intervals  [reaches an unimplemented function]
 ;;   Z27225K1: Time of day, Z27225K2: Natural number -> Typed list(Time of day)   [declared, not checked]
-(define (Z27225_divide_day_in_regular_intervals a0 a1) (map Z25187_fraction_of_regular_day_to_time_of_day (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z20006_rational_modulo (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z19679 (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z27232_rational_from_two_natural_numbers (Z13831_natural_number_range 0 (Z13582_decrement_natural_number_by_one a1)) a1) (Z25207_time_as_fraction_of_day a0)) (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 1)))))
+(define (Z27225_divide_day_in_regular_intervals a0 a1) (map Z25187_fraction_of_regular_day_to_time_of_day (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z20006_rational_modulo (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z19679_add_rational_numbers (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z27232_rational_from_two_natural_numbers (Z13831_natural_number_range 0 (Z13582_decrement_natural_number_by_one a1)) a1) (Z25207_time_as_fraction_of_day a0)) (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 1)))))
 (define Z27225 Z27225_divide_day_in_regular_intervals)
 
 ;; Z27232 rational from two natural numbers  [reaches an unimplemented function]
 ;;   Z27232K1: Natural number, Z27232K2: Natural number -> Rational number   [declared, not checked]
-(define (Z27232_rational_from_two_natural_numbers a0 a1) (Z20584 Z16660 a0 a1))
+(define (Z27232_rational_from_two_natural_numbers a0 a1) (Z20584_rational_from_sign_and_natural_numbers Z16660 a0 a1))
 (define Z27232 Z27232_rational_from_two_natural_numbers)
 
 ;; Z27243 superlative definition (monolingual)  [reaches an unimplemented function]
@@ -10235,6 +10480,11 @@
 (define (Z27475_solar_longitude_radians_from_date a0) (Z28100_approximate_solar_longitude_rad_from_day_of_year (Z25768_day_of_the_year a0)))
 (define Z27475 Z27475_solar_longitude_radians_from_date)
 
+;; Z27478 Gregorian date and time from (rational) JD  [reaches an unimplemented function]
+;;   Z27478K1: Rational number -> Wikidata datetime   [declared, not checked]
+(define (Z27478_gregorian_date_and_time_from_rational_jd a0) (identity (record Z6061 (Z6061K1 (Z20750 (record Z20420 (Z20420K1 (record Z20159 (Z20159K1 Z17815) (Z20159K2 4714))) (Z20420K2 (record Z20342 (Z20342K1 Z16111) (Z20342K2 24)))) (Z20032_floor_of_rational_number (Z19679_add_rational_numbers a0 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 2)))))) (Z6061K2 (Z25187_fraction_of_regular_day_to_time_of_day (Z25432_proper_fraction_part_of_rational (Z19679_add_rational_numbers a0 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 2)))))))))
+(define Z27478 Z27478_gregorian_date_and_time_from_rational_jd)
+
 ;; Z27490 Luxembourgish article-less instantiating sentence  [reaches an unimplemented function]
 ;;   Z27490K1: Wikidata item reference, Z27490K2: Wikidata item reference -> String   [declared, not checked]
 (define (Z27490_luxembourgish_article_less_instantiating_sentence a0 a1) (Z21394_concatenate_many_strings (cons (Z23753_label_of_item_reference_in_language_or_to_mul a0 Z1099) (cons " ass " (cons (if (Z20643_is_feminine_grammatical_gender (Z22696_fetch_first_lexeme_from_item_ref_and_lang_p5137 a1 Z1099)) (Z21394_concatenate_many_strings (cons "eng " (cons (Z23753_label_of_item_reference_in_language_or_to_mul a1 Z1099) (list)))) (Z27254 "en" (Z23753_label_of_item_reference_in_language_or_to_mul a1 Z1099))) (cons "." (list)))))))
@@ -10322,12 +10572,12 @@
 
 ;; Z27604 Julian date (rational) from datetime  [reaches an unimplemented function]
 ;;   Z27604K1: Wikidata datetime -> Rational number   [declared, not checked]
-(define (Z27604_julian_date_rational_from_datetime a0) (Z19679 (Z23668_number_as_rational_number (Z22844 (Z25603_gregorian_calendar_date_from_wikidata_datetime a0))) (Z19699_subtract_rational_numbers (Z25207_time_as_fraction_of_day (Z25711_time_of_day_from_wikidata_datetime a0)) (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 2)))))
+(define (Z27604_julian_date_rational_from_datetime a0) (Z19679_add_rational_numbers (Z23668_number_as_rational_number (Z22844 (Z25603_gregorian_calendar_date_from_wikidata_datetime a0))) (Z19699_subtract_rational_numbers (Z25207_time_as_fraction_of_day (Z25711_time_of_day_from_wikidata_datetime a0)) (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 2)))))
 (define Z27604 Z27604_julian_date_rational_from_datetime)
 
 ;; Z27610 order statements by "series ordinal"  [reaches an unimplemented function]
 ;;   Z27610K1: Typed list(Wikidata statement) -> Typed list(Wikidata statement)   [declared, not checked]
-(define (Z27610_order_statements_by_series_ordinal a0) (Z18755_concatenate_typed_lists (map snd (Z21347_sort_integer_keyed_list_ascending (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l Z30414_make_typed_pair (map Z17101 (map Z14283 (Z37048_first_elements_of_each_of_list_of_lists (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z28321_qualifier_values_of_statement_with_predicate a0 (record Z6092 (Z6092K1 "P1545")))))) (Z22820_compress_list a0 (map Z23120_is_non_empty_list (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z28321_qualifier_values_of_statement_with_predicate a0 (record Z6092 (Z6092K1 "P1545")))))))) (Z22820_compress_list a0 (map null? (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z28321_qualifier_values_of_statement_with_predicate a0 (record Z6092 (Z6092K1 "P1545")))))))
+(define (Z27610_order_statements_by_series_ordinal a0) (Z18755_concatenate_typed_lists (map snd (Z21347_sort_integer_keyed_list_ascending (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l Z30414_make_typed_pair (map Z17101_natural_number_to_integer (map Z14283 (Z37048_first_elements_of_each_of_list_of_lists (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z28321_qualifier_values_of_statement_with_predicate a0 (record Z6092 (Z6092K1 "P1545")))))) (Z22820_compress_list a0 (map Z23120_is_non_empty_list (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z28321_qualifier_values_of_statement_with_predicate a0 (record Z6092 (Z6092K1 "P1545")))))))) (Z22820_compress_list a0 (map null? (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z28321_qualifier_values_of_statement_with_predicate a0 (record Z6092 (Z6092K1 "P1545")))))))
 (define Z27610 Z27610_order_statements_by_series_ordinal)
 
 ;; Z27612 (#) order list with comparing function
@@ -10377,7 +10627,7 @@
 
 ;; Z27730 decimal places in rational significant figures  [reaches an unimplemented function; mutually recursive: may not terminate]
 ;;   Z27730K1: Rational number, Z27730K2: Natural number -> Integer   [declared, not checked]
-(define (Z27730_decimal_places_in_rational_significant_figures a0 a1) (Z17111_subtract_an_integer (Z17160_decrement_integer (Z17101 a1)) (Z17192_if_integer_output (Z19922_is_rational_number_0 a0) (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16661))) (Z16683K2 0)) (Z27762_decimal_exponent_in_rounded_scientific_notation a0 a1))))
+(define (Z27730_decimal_places_in_rational_significant_figures a0 a1) (Z17111_subtract_an_integer (Z17160_decrement_integer (Z17101_natural_number_to_integer a1)) (Z17192_if_integer_output (Z19922_is_rational_number_0 a0) (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16661))) (Z16683K2 0)) (Z27762_decimal_exponent_in_rounded_scientific_notation a0 a1))))
 (define Z27730 Z27730_decimal_places_in_rational_significant_figures)
 
 ;; Z27748 switch on gender (m/f) and number (s/p)  [reaches an unimplemented function]
@@ -10402,12 +10652,12 @@
 
 ;; Z27778 round natural to significant figures  [reaches an unimplemented function]
 ;;   Z27778K1: Natural number, Z27778K2: Natural number -> Natural number   [declared, not checked]
-(define (Z27778_round_natural_to_significant_figures a0 a1) (Z20391_integer_to_exact_natural_number_or_0 (Z35338_round_integer_to_nearest_n (Z17101 a0) (Z24517 (Z13569_subtract_natural_numbers_with_floor_of_0 (Z14344_number_of_digits_in_decimal_string_representation_of_a_natur a0) a1)))))
+(define (Z27778_round_natural_to_significant_figures a0 a1) (Z20391_integer_to_exact_natural_number_or_0 (Z35338_round_integer_to_nearest_n (Z17101_natural_number_to_integer a0) (Z24517 (Z13569_subtract_natural_numbers_with_floor_of_0 (Z14344_number_of_digits_in_decimal_string_representation_of_a_natur a0) a1)))))
 (define Z27778 Z27778_round_natural_to_significant_figures)
 
 ;; Z27783 winning probability from Elo rating  [reaches an unimplemented function]
 ;;   Z27783K1: Natural number, Z27783K2: Natural number -> Rational number   [declared, not checked]
-(define (Z27783_winning_probability_from_elo_rating a0 a1) (Z19711_multiplicative_inverse_of_rational_number (Z19679 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 1)) (Z21071_float_as_rational (Z21028 (record Z20838 (Z20838K1 (record Z16659 (Z16659K1 Z16660))) (Z20838K2 (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16660))) (Z16683K2 3))) (Z20838K3 1125899906842624) (Z20838K4 (record Z20825 (Z20825K1 Z20837)))) (Z20854 (Z19854 (Z17315_subtract_natural_numbers_as_integer a1 a0) 400)))))))
+(define (Z27783_winning_probability_from_elo_rating a0 a1) (Z19711_multiplicative_inverse_of_rational_number (Z19679_add_rational_numbers (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 1)) (Z21071_float_as_rational (Z21028 (record Z20838 (Z20838K1 (record Z16659 (Z16659K1 Z16660))) (Z20838K2 (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16660))) (Z16683K2 3))) (Z20838K3 1125899906842624) (Z20838K4 (record Z20825 (Z20825K1 Z20837)))) (Z20854 (Z19854_simplified_rational_from_z_numerator_denominator (Z17315_subtract_natural_numbers_as_integer a1 a0) 400)))))))
 (define Z27783 Z27783_winning_probability_from_elo_rating)
 
 ;; Z27803 round to decimal (unsimplified) with sig figs  [reaches an unimplemented function; mutually recursive: may not terminate]
@@ -10415,14 +10665,19 @@
 (define (Z27803_round_to_decimal_unsimplified_with_sig_figs a0 a1) (Z27719_round_rational_to_fix_decimal_places_unsimplified a0 (Z27730_decimal_places_in_rational_significant_figures a0 a1)))
 (define Z27803 Z27803_round_to_decimal_unsimplified_with_sig_figs)
 
-;; Z27820 signed numerator of simplified rational number  [reaches an unimplemented function]
+;; Z27820 signed numerator of simplified rational number
 ;;   Z27820K1: Rational number -> Integer   [declared, not checked]
-(define (Z27820_signed_numerator_of_simplified_rational_number a0) (Z33745 (Z19717_sign_of_rational_number a0) (Z19722_numerator_of_simplified_rational_number a0)))
+(define (Z27820_signed_numerator_of_simplified_rational_number a0) (Z33745_make_integer (Z19717_sign_of_rational_number a0) (Z19722_numerator_of_simplified_rational_number a0)))
 (define Z27820 Z27820_signed_numerator_of_simplified_rational_number)
 
-;; Z27836 unsimplified rational from Z, N  [reaches an unimplemented function]
+;; Z27826 multiply natural by integer  [reaches an unimplemented function]
+;;   Z27826K1: Natural number, Z27826K2: Integer -> Integer   [declared, not checked]
+(define (Z27826_multiply_natural_by_integer a0 a1) (record Z16683 (Z16683K1 (if (Z23883_is_zero_natural_number a0) Z16661 (Z17105_sign_of_integer a1))) (Z16683K2 (* a0 (Z17144_absolute_value_of_integer_as_natural_number a1)))))
+(define Z27826 Z27826_multiply_natural_by_integer)
+
+;; Z27836 unsimplified rational from Z, N
 ;;   Z27836K1: Integer, Z27836K2: Natural number -> Rational number   [declared, not checked]
-(define (Z27836_unsimplified_rational_from_z_n a0 a1) (Z20584 (Z17105_sign_of_integer a0) (Z17144_absolute_value_of_integer_as_natural_number a0) a1))
+(define (Z27836_unsimplified_rational_from_z_n a0 a1) (Z20584_rational_from_sign_and_natural_numbers (Z17105_sign_of_integer a0) (Z17144_absolute_value_of_integer_as_natural_number a0) a1))
 (define Z27836 Z27836_unsimplified_rational_from_z_n)
 
 ;; Z27846 scale Wikidata quantity to new units  [reaches an unimplemented function]
@@ -10452,7 +10707,7 @@
 
 ;; Z27885 name for table header  [reaches an unimplemented function]
 ;;   Z27885K1: Wikidata item reference, Z27885K2: Natural language -> String   [declared, not checked]
-(define (Z27885_name_for_table_header a0 a1) (Z34096 (Z23753_label_of_item_reference_in_language_or_to_mul a0 a1) a1))
+(define (Z27885_name_for_table_header a0 a1) (Z34096_conditional_sentence_case (Z23753_label_of_item_reference_in_language_or_to_mul a0 a1) a1))
 (define Z27885 Z27885_name_for_table_header)
 
 ;; Z27893 choose the language and replace the parameters  [reaches an unimplemented function]
@@ -10465,7 +10720,7 @@
 (define (Z27899_label_of_item_in_fallback_language a0 a1) (car (Z24114_label_strings_from_wikidata_item_for_language_list a0 (Z24144_fallback_languages a1 #t #t))))
 (define Z27899 Z27899_label_of_item_in_fallback_language)
 
-;; Z27905 choose string in first available language
+;; Z27905 choose string in first available language  [reaches an unimplemented function]
 ;;   Z27905K1: Multilingual text, Z27905K2: Typed list(Natural language) -> String   [declared, not checked]
 (define (Z27905_choose_string_in_first_available_language a0 a1) (Z14396_string_of_monolingual_text (Z34947_best_monolingual_text_of_multilingual_per_lang a0 a1)))
 (define Z27905 Z27905_choose_string_in_first_available_language)
@@ -10627,8 +10882,13 @@
 
 ;; Z28128 Gregorian date from Wikidata statement  [reaches an unimplemented function]
 ;;   Z28128K1: Wikidata statement -> Gregorian calendar date   [declared, not checked]
-(define (Z28128_gregorian_date_from_wikidata_statement a0) (Z28133 (Z25726_wikidata_datetime_from_wikidata_time (Z19308_value_of_wikidata_statement a0))))
+(define (Z28128_gregorian_date_from_wikidata_statement a0) (Z28133_valid_gregorian_date_from_wikidata_datetime (Z25726_wikidata_datetime_from_wikidata_time (Z19308_value_of_wikidata_statement a0))))
 (define Z28128 Z28128_gregorian_date_from_wikidata_statement)
+
+;; Z28133 valid Gregorian date from Wikidata datetime  [reaches an unimplemented function]
+;;   Z28133K1: Wikidata datetime -> Gregorian calendar date   [declared, not checked]
+(define (Z28133_valid_gregorian_date_from_wikidata_datetime a0) (identity (record Z20420 (Z20420K1 (Z24948_year_from_calendar_date (Z25603_gregorian_calendar_date_from_wikidata_datetime a0))) (Z20420K2 (record Z20342 (Z20342K1 (Z28137_return_default_if_void (Z26504_month_from_date (Z25603_gregorian_calendar_date_from_wikidata_datetime a0)) Z16101)) (Z20342K2 (if (= (Z28143_day_of_month_from_gregorian_calendar_date (Z25603_gregorian_calendar_date_from_wikidata_datetime a0)) 0) 1 (Z28143_day_of_month_from_gregorian_calendar_date (Z25603_gregorian_calendar_date_from_wikidata_datetime a0)))))))))
+(define Z28133 Z28133_valid_gregorian_date_from_wikidata_datetime)
 
 ;; Z28137 return default if void  [reaches an unimplemented function]
 ;;   Z28137K1: Object, Z28137K2: Object -> Object   [declared, not checked]
@@ -10702,7 +10962,7 @@
 
 ;; Z28217 competition winner  [reaches an unimplemented function]
 ;;   Z28217K1: Wikidata item, Z28217K2: Gregorian year -> Wikidata item reference   [declared, not checked]
-(define (Z28217_competition_winner a0 a1) (Z28787_item_from_item_and_property_references (Z13397_get_the_nth_element_of_a_list (Z22978_values_unqualified_from_wikidata_item_statements a0 (record Z6092 (Z6092K1 "P527"))) (Z28755_index_of_match_in_list a1 (map Z28773_gregorian_year_from_wikidata_time (map Z19308_value_of_wikidata_statement (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z22839_first_object_or_default (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z29694_get_best_statements_for_wikidata_prop_from_item (Z30172_list_of_values_from_a_typed_map (Z30248_fetch_wikidata_items (Z22978_values_unqualified_from_wikidata_item_statements a0 (record Z6092 (Z6092K1 "P527"))) (list Z6036) (list) (list (record Z6092 (Z6092K1 "P585")) (record Z6092 (Z6092K1 "P1346"))))) (record Z6092 (Z6092K1 "P585"))) (Z23723 (list) (list) (record Z6092 (Z6092K1 "P585")) (list) (list) (list (record Z6064 (Z6064K1 (record Z6061 (Z6061K1 (record Z20420 (Z20420K1 (record Z20159 (Z20159K1 (record Z17813 (Z17813K1 Z17814))) (Z20159K2 9999))) (Z20420K2 (record Z20342 (Z20342K1 (record Z16098 (Z16098K1 Z16101))) (Z20342K2 1))))) (Z6061K2 (record Z6060 (Z6060K1 0) (Z6060K2 0) (Z6060K3 0))))) (Z6064K2 (record Z6062 (Z6062K1 (record Z6091 (Z6091K1 "Q577"))))) (Z6064K3 0) (Z6064K4 0) (Z6064K5 (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16661))) (Z16683K2 0))) (Z6064K6 (record Z6063 (Z6063K1 (record Z6091 (Z6091K1 "Q1985727"))))))) Z6042 (list) (list) Z6021)))))) (record Z6092 (Z6092K1 "P1346"))))
+(define (Z28217_competition_winner a0 a1) (Z28787_item_from_item_and_property_references (Z13397_get_the_nth_element_of_a_list (Z22978_values_unqualified_from_wikidata_item_statements a0 (record Z6092 (Z6092K1 "P527"))) (Z28755_index_of_match_in_list a1 (map Z28773_gregorian_year_from_wikidata_time (map Z19308_value_of_wikidata_statement (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z22839_first_object_or_default (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z29694_get_best_statements_for_wikidata_prop_from_item (Z30172_list_of_values_from_a_typed_map (Z30248_fetch_wikidata_items (Z22978_values_unqualified_from_wikidata_item_statements a0 (record Z6092 (Z6092K1 "P527"))) (list Z6036) (list) (list (record Z6092 (Z6092K1 "P585")) (record Z6092 (Z6092K1 "P1346"))))) (record Z6092 (Z6092K1 "P585"))) (Z23723_emulate_wikidata_statement_object (list) (list) (record Z6092 (Z6092K1 "P585")) (list) (list) (list (record Z6064 (Z6064K1 (record Z6061 (Z6061K1 (record Z20420 (Z20420K1 (record Z20159 (Z20159K1 (record Z17813 (Z17813K1 Z17814))) (Z20159K2 9999))) (Z20420K2 (record Z20342 (Z20342K1 (record Z16098 (Z16098K1 Z16101))) (Z20342K2 1))))) (Z6061K2 (record Z6060 (Z6060K1 0) (Z6060K2 0) (Z6060K3 0))))) (Z6064K2 (record Z6062 (Z6062K1 (record Z6091 (Z6091K1 "Q577"))))) (Z6064K3 0) (Z6064K4 0) (Z6064K5 (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16661))) (Z16683K2 0))) (Z6064K6 (record Z6063 (Z6063K1 (record Z6091 (Z6091K1 "Q1985727"))))))) Z6042 (list) (list) Z6021)))))) (record Z6092 (Z6092K1 "P1346"))))
 (define Z28217 Z28217_competition_winner)
 
 ;; Z28219 Multiplication table (code)  [reaches an unimplemented function; mutually recursive: may not terminate]
@@ -10742,7 +11002,7 @@
 
 ;; Z28254 header from item in plural  [reaches an unimplemented function]
 ;;   Z28254K1: Wikidata item reference, Z28254K2: Natural language -> String   [declared, not checked]
-(define (Z28254_header_from_item_in_plural a0 a1) (Z34096 (Z27410_better_matching_representation_string_from_lexeme (Z27327_best_lexeme_for_wikidata_item a0 (record Z6092 (Z6092K1 "P5137")) a1) (list (record Z6091 (Z6091K1 "Q146786")) (record Z6091 (Z6091K1 "Q131105")) (record Z6091 (Z6091K1 "Q694268")) (record Z6091 (Z6091K1 "Q101252532")))) a1))
+(define (Z28254_header_from_item_in_plural a0 a1) (Z34096_conditional_sentence_case (Z27410_better_matching_representation_string_from_lexeme (Z27327_best_lexeme_for_wikidata_item a0 (record Z6092 (Z6092K1 "P5137")) a1) (list (record Z6091 (Z6091K1 "Q146786")) (record Z6091 (Z6091K1 "Q131105")) (record Z6091 (Z6091K1 "Q694268")) (record Z6091 (Z6091K1 "Q101252532")))) a1))
 (define Z28254 Z28254_header_from_item_in_plural)
 
 ;; Z28261 next chemical element  [reaches an unimplemented function]
@@ -10845,9 +11105,14 @@
 (define (Z28373_type_from_quoted_reference a0) (Z803_value_by_key (record Z39 (Z39K1 "Z2K2")) (Z828 a0)))
 (define Z28373 Z28373_type_from_quoted_reference)
 
+;; Z28381 read Rational number in Bangla  [reaches an unimplemented function]
+;;   Z28381K1: String -> Rational number   [declared, not checked]
+(define (Z28381_read_rational_number_in_bangla a0) (identity (record Z19677 (Z19677K1 (Z19901_sign_of_string_representing_rational_number (Z18983_convert_bangla_numerals_to_arabic_numerals a0))) (Z19677K2 (Z19933 (Z18983_convert_bangla_numerals_to_arabic_numerals a0))) (Z19677K3 (Z19943 (Z18983_convert_bangla_numerals_to_arabic_numerals a0))))))
+(define Z28381 Z28381_read_rational_number_in_bangla)
+
 ;; Z28392 estimated hiking time in hours  [reaches an unimplemented function]
 ;;   Z28392K1: Rational number, Z28392K2: Rational number, Z28392K3: Rational number -> Rational number   [declared, not checked]
-(define (Z28392_estimated_hiking_time_in_hours a0 a1 a2) (Z19679 (Z19736_max_of_rational_numbers (Z28395_estimated_horizontal_hiking_time_in_hours a0) (Z28407_estimated_vertical_hiking_time_in_hours a1 a2)) (Z19708_divide_rational_numbers (Z19740_min_of_rational_numbers (Z28395_estimated_horizontal_hiking_time_in_hours a0) (Z28407_estimated_vertical_hiking_time_in_hours a1 a2)) (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 2) (Z19677K3 1)))))
+(define (Z28392_estimated_hiking_time_in_hours a0 a1 a2) (Z19679_add_rational_numbers (Z19736_max_of_rational_numbers (Z28395_estimated_horizontal_hiking_time_in_hours a0) (Z28407_estimated_vertical_hiking_time_in_hours a1 a2)) (Z19708_divide_rational_numbers (Z19740_min_of_rational_numbers (Z28395_estimated_horizontal_hiking_time_in_hours a0) (Z28407_estimated_vertical_hiking_time_in_hours a1 a2)) (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 2) (Z19677K3 1)))))
 (define Z28392 Z28392_estimated_hiking_time_in_hours)
 
 ;; Z28395 estimated horizontal hiking time in hours  [reaches an unimplemented function]
@@ -10872,12 +11137,12 @@
 
 ;; Z28414 rational number hours to HH:MM  [reaches an unimplemented function]
 ;;   Z28414K1: Rational number -> String   [declared, not checked]
-(define (Z28414_rational_number_hours_to_hh_mm a0) (Z12899_join_list_of_strings_with_delimiter (cons (Z17845_pad_string_with_leading_0_until_it_is_two_characters_long (Z25073_integer_to_digit_string_hyphen_negative (Z19682 (Z19814_nearest_rational_with_specified_denominator a0 60)))) (cons (Z17845_pad_string_with_leading_0_until_it_is_two_characters_long (Z25073_integer_to_digit_string_hyphen_negative (Z19841_rational_to_nearest_integer_even_integer_tiebreak (Z19706 (Z25432_proper_fraction_part_of_rational (Z19814_nearest_rational_with_specified_denominator a0 60)) (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 60) (Z19677K3 1)))))) (list))) ":"))
+(define (Z28414_rational_number_hours_to_hh_mm a0) (Z12899_join_list_of_strings_with_delimiter (cons (Z17845_pad_string_with_leading_0_until_it_is_two_characters_long (Z25073_integer_to_digit_string_hyphen_negative (Z19682_truncate_rational_number (Z19814_nearest_rational_with_specified_denominator a0 60)))) (cons (Z17845_pad_string_with_leading_0_until_it_is_two_characters_long (Z25073_integer_to_digit_string_hyphen_negative (Z19841_rational_to_nearest_integer_even_integer_tiebreak (Z19706_multiply_rational_numbers (Z25432_proper_fraction_part_of_rational (Z19814_nearest_rational_with_specified_denominator a0 60)) (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 60) (Z19677K3 1)))))) (list))) ":"))
 (define Z28414 Z28414_rational_number_hours_to_hh_mm)
 
 ;; Z28416 rational number of hours to whole minutes  [reaches an unimplemented function]
 ;;   Z28416K1: Rational number -> Natural number   [declared, not checked]
-(define (Z28416_rational_number_of_hours_to_whole_minutes a0) (Z17144_absolute_value_of_integer_as_natural_number (Z19682 (Z19706 a0 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 60) (Z19677K3 1))))))
+(define (Z28416_rational_number_of_hours_to_whole_minutes a0) (Z17144_absolute_value_of_integer_as_natural_number (Z19682_truncate_rational_number (Z19706_multiply_rational_numbers a0 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 60) (Z19677K3 1))))))
 (define Z28416 Z28416_rational_number_of_hours_to_whole_minutes)
 
 ;; Z28425 float64 as string (Eastern Nagri)  [reaches an unimplemented function]
@@ -10887,7 +11152,7 @@
 
 ;; Z28432 Year-specific sentence from statement, in English  [reaches an unimplemented function]
 ;;   Z28432K1: Wikidata item, Z28432K2: Wikidata statement, Z28432K3: Natural language -> String   [declared, not checked]
-(define (Z28432_year_specific_sentence_from_statement_in_english a0 a1 a2) (Z21394_concatenate_many_strings (cons "The " (cons (Z14396_string_of_monolingual_text (Z16273_monolingual_text_in_specified_language_from_multilingual_tex (Z23223_property_labels (Z6822 (Z19306_predicate_of_wikidata_statement a1))) a2)) (cons " of " (cons (Z23468_text_from_wikidata_item_label_for_given_language a0 a2) (cons " was " (cons (Z25326_display_quantity_with_digits_and_unit (Z19308_value_of_wikidata_statement a1) a2) (cons " in " (cons (Z28824_display_year_in_english_without_ad_after_99_ad (Z24948_year_from_calendar_date (Z28133 (Z25726_wikidata_datetime_from_wikidata_time (car (Z28321_qualifier_values_of_statement_with_predicate a1 (record Z6092 (Z6092K1 "P585")))))))) (cons "." (list))))))))))))
+(define (Z28432_year_specific_sentence_from_statement_in_english a0 a1 a2) (Z21394_concatenate_many_strings (cons "The " (cons (Z14396_string_of_monolingual_text (Z16273_monolingual_text_in_specified_language_from_multilingual_tex (Z23223_property_labels (Z6822 (Z19306_predicate_of_wikidata_statement a1))) a2)) (cons " of " (cons (Z23468_text_from_wikidata_item_label_for_given_language a0 a2) (cons " was " (cons (Z25326_display_quantity_with_digits_and_unit (Z19308_value_of_wikidata_statement a1) a2) (cons " in " (cons (Z28824_display_year_in_english_without_ad_after_99_ad (Z24948_year_from_calendar_date (Z28133_valid_gregorian_date_from_wikidata_datetime (Z25726_wikidata_datetime_from_wikidata_time (car (Z28321_qualifier_values_of_statement_with_predicate a1 (record Z6092 (Z6092K1 "P585")))))))) (cons "." (list))))))))))))
 (define Z28432 Z28432_year_specific_sentence_from_statement_in_english)
 
 ;; Z28436 Year-specific sentence from statement  [reaches an unimplemented function]
@@ -10895,14 +11160,14 @@
 (define (Z28436_year_specific_sentence_from_statement a0 a1 a2) (Z35999_apply_function_with_2_or_3_arguments_in_order (Z14310_select_a_function_based_on_language Z28435 a2) a0 a1 a2))
 (define Z28436 Z28436_year_specific_sentence_from_statement)
 
-;; Z28439 value of first key  [reaches an unimplemented function]
+;; Z28439 value of first key
 ;;   Z28439K1: Object -> Object   [declared, not checked]
 (define (Z28439_value_of_first_key a0) (car (Z23439_values_from_object a0)))
 (define Z28439 Z28439_value_of_first_key)
 
 ;; Z28442 value of second key  [reaches an unimplemented function]
 ;;   Z28442K1: Object -> Object   [declared, not checked]
-(define (Z28442_value_of_second_key a0) (Z20165 2 a0))
+(define (Z28442_value_of_second_key a0) (Z20165_value_by_key_index 2 a0))
 (define Z28442 Z28442_value_of_second_key)
 
 ;; Z28445 most recent year-specific sentence about item  [reaches an unimplemented function]
@@ -10932,17 +11197,17 @@
 
 ;; Z28482 Filter statements by year  [reaches an unimplemented function]
 ;;   Z28482K1: Typed list(Wikidata statement), Z28482K2: Gregorian year -> Typed list(Wikidata statement)   [declared, not checked]
-(define (Z28482_filter_statements_by_year a0 a1) (Z22820_compress_list (Z28513 a0 (list (record Z6092 (Z6092K1 "P585")))) (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z12696_contains (map Z24948_year_from_calendar_date (map Z28133 (map Z25726_wikidata_datetime_from_wikidata_time (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z33579_qualifier_value_of_wikidata_statement (Z28513 a0 (list (record Z6092 (Z6092K1 "P585")))) (record Z6092 (Z6092K1 "P585")))))) a1)))
+(define (Z28482_filter_statements_by_year a0 a1) (Z22820_compress_list (Z28513 a0 (list (record Z6092 (Z6092K1 "P585")))) (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z12696_contains (map Z24948_year_from_calendar_date (map Z28133_valid_gregorian_date_from_wikidata_datetime (map Z25726_wikidata_datetime_from_wikidata_time (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z33579_qualifier_value_of_wikidata_statement (Z28513 a0 (list (record Z6092 (Z6092K1 "P585")))) (record Z6092 (Z6092K1 "P585")))))) a1)))
 (define Z28482 Z28482_filter_statements_by_year)
 
 ;; Z28495 days until next Easter  [reaches an unimplemented function]
 ;;   Z28495K1: Gregorian calendar date -> Natural number   [declared, not checked]
-(define (Z28495_days_until_next_easter a0) (if (Z25271 (Z24962 (Z25262_catholic_easter_day (Z24948_year_from_calendar_date a0)) (Z24948_year_from_calendar_date a0)) a0) (Z17144_absolute_value_of_integer_as_natural_number (Z20744_days_until (Z24962 (Z25262_catholic_easter_day (Z20172 (Z24948_year_from_calendar_date a0))) (Z20172 (Z24948_year_from_calendar_date a0))) a0)) (Z17144_absolute_value_of_integer_as_natural_number (Z20744_days_until (Z24962 (Z25262_catholic_easter_day (Z24948_year_from_calendar_date a0)) (Z24948_year_from_calendar_date a0)) a0))))
+(define (Z28495_days_until_next_easter a0) (if (Z25271 (Z24962_date_from_day_of_year_and_year (Z25262_catholic_easter_day (Z24948_year_from_calendar_date a0)) (Z24948_year_from_calendar_date a0)) a0) (Z17144_absolute_value_of_integer_as_natural_number (Z20744_days_until (Z24962_date_from_day_of_year_and_year (Z25262_catholic_easter_day (Z20172_next_year (Z24948_year_from_calendar_date a0))) (Z20172_next_year (Z24948_year_from_calendar_date a0))) a0)) (Z17144_absolute_value_of_integer_as_natural_number (Z20744_days_until (Z24962_date_from_day_of_year_and_year (Z25262_catholic_easter_day (Z24948_year_from_calendar_date a0)) (Z24948_year_from_calendar_date a0)) a0))))
 (define Z28495 Z28495_days_until_next_easter)
 
 ;; Z28498 days since last Easter  [reaches an unimplemented function]
 ;;   Z28498K1: Gregorian calendar date -> Integer   [declared, not checked]
-(define (Z28498_days_since_last_easter a0) (if (Z17215_is_negative_integer (Z20744_days_until (Z24962 (Z25262_catholic_easter_day (Z24948_year_from_calendar_date a0)) (Z24948_year_from_calendar_date a0)) a0)) (Z20744_days_until (Z24962 (Z25262_catholic_easter_day (Z20314 (Z24948_year_from_calendar_date a0))) (Z20314 (Z24948_year_from_calendar_date a0))) a0) (Z20744_days_until (Z24962 (Z25262_catholic_easter_day (Z24948_year_from_calendar_date a0)) (Z24948_year_from_calendar_date a0)) a0)))
+(define (Z28498_days_since_last_easter a0) (if (Z17215_is_negative_integer (Z20744_days_until (Z24962_date_from_day_of_year_and_year (Z25262_catholic_easter_day (Z24948_year_from_calendar_date a0)) (Z24948_year_from_calendar_date a0)) a0)) (Z20744_days_until (Z24962_date_from_day_of_year_and_year (Z25262_catholic_easter_day (Z20314_previous_year (Z24948_year_from_calendar_date a0))) (Z20314_previous_year (Z24948_year_from_calendar_date a0))) a0) (Z20744_days_until (Z24962_date_from_day_of_year_and_year (Z25262_catholic_easter_day (Z24948_year_from_calendar_date a0)) (Z24948_year_from_calendar_date a0)) a0)))
 (define Z28498 Z28498_days_since_last_easter)
 
 ;; Z28509 convert Wikidata quantity to compatible unit  [reaches an unimplemented function]
@@ -10957,7 +11222,7 @@
 
 ;; Z28549 multiply quantity by rational without rounding  [reaches an unimplemented function]
 ;;   Z28549K1: Wikidata quantity, Z28549K2: Rational number -> Wikidata quantity   [declared, not checked]
-(define (Z28549_multiply_quantity_by_rational_without_rounding a0 a1) (if (Z21714_is_negative_rational_number a1) (Z35663 (Z19706 (Z25294_amount_from_quantity a0) a1) (if (Z17180_is_void (Z25300_upper_bound_from_quantity a0)) Z24 (Z19706 (Z25300_upper_bound_from_quantity a0) a1)) (if (Z17180_is_void (Z25297_lower_bound_from_quantity a0)) Z24 (Z19706 (Z25297_lower_bound_from_quantity a0) a1)) (Z25303_unit_qid_from_quantity a0)) (Z35663 (Z19706 (Z25294_amount_from_quantity a0) a1) (if (Z17180_is_void (Z25297_lower_bound_from_quantity a0)) Z24 (Z19706 (Z25297_lower_bound_from_quantity a0) a1)) (if (Z17180_is_void (Z25300_upper_bound_from_quantity a0)) Z24 (Z19706 (Z25300_upper_bound_from_quantity a0) a1)) (Z25303_unit_qid_from_quantity a0))))
+(define (Z28549_multiply_quantity_by_rational_without_rounding a0 a1) (if (Z21714_is_negative_rational_number a1) (Z35663_wikidata_quantity_from_components (Z19706_multiply_rational_numbers (Z25294_amount_from_quantity a0) a1) (if (Z17180_is_void (Z25300_upper_bound_from_quantity a0)) Z24 (Z19706_multiply_rational_numbers (Z25300_upper_bound_from_quantity a0) a1)) (if (Z17180_is_void (Z25297_lower_bound_from_quantity a0)) Z24 (Z19706_multiply_rational_numbers (Z25297_lower_bound_from_quantity a0) a1)) (Z25303_unit_qid_from_quantity a0)) (Z35663_wikidata_quantity_from_components (Z19706_multiply_rational_numbers (Z25294_amount_from_quantity a0) a1) (if (Z17180_is_void (Z25297_lower_bound_from_quantity a0)) Z24 (Z19706_multiply_rational_numbers (Z25297_lower_bound_from_quantity a0) a1)) (if (Z17180_is_void (Z25300_upper_bound_from_quantity a0)) Z24 (Z19706_multiply_rational_numbers (Z25300_upper_bound_from_quantity a0) a1)) (Z25303_unit_qid_from_quantity a0))))
 (define Z28549 Z28549_multiply_quantity_by_rational_without_rounding)
 
 ;; Z28553 quantities are equivalent (including ~bounds)  [reaches an unimplemented function]
@@ -10970,10 +11235,15 @@
 (define (Z28570_gregorian_dates_have_same_month a0 a1) (Z16137_same_month (Z26504_month_from_date a0) (Z26504_month_from_date a1)))
 (define Z28570 Z28570_gregorian_dates_have_same_month)
 
-;; Z28580 same RGBA color  [reaches an unimplemented function]
+;; Z28580 same RGBA color
 ;;   Z28580K1: RGBA color, Z28580K2: RGBA color -> Boolean   [declared, not checked]
 (define (Z28580_same_rgba_color a0 a1) (Z12684_are_all_true (cons (Z19686_same_rational_number (Z803_value_by_key (record Z39 (Z39K1 "Z28579K1")) a0) (Z803_value_by_key (record Z39 (Z39K1 "Z28579K1")) a1)) (cons (Z19686_same_rational_number (Z803_value_by_key (record Z39 (Z39K1 "Z28579K2")) a0) (Z803_value_by_key (record Z39 (Z39K1 "Z28579K2")) a1)) (cons (Z19686_same_rational_number (Z803_value_by_key (record Z39 (Z39K1 "Z28579K3")) a0) (Z803_value_by_key (record Z39 (Z39K1 "Z28579K3")) a1)) (cons (Z19686_same_rational_number (Z803_value_by_key (record Z39 (Z39K1 "Z28579K4")) a0) (Z803_value_by_key (record Z39 (Z39K1 "Z28579K4")) a1)) (list)))))))
 (define Z28580 Z28580_same_rgba_color)
+
+;; Z28587 make opaque  [reaches an unimplemented function]
+;;   Z28587K1: RGBA color -> RGBA color   [declared, not checked]
+(define (Z28587_make_opaque a0) (identity (record Z28579 (Z28579K1 (Z803_value_by_key (record Z39 (Z39K1 "Z28579K1")) a0)) (Z28579K2 (Z803_value_by_key (record Z39 (Z39K1 "Z28579K2")) a0)) (Z28579K3 (Z803_value_by_key (record Z39 (Z39K1 "Z28579K3")) a0)) (Z28579K4 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 1))))))
+(define Z28587 Z28587_make_opaque)
 
 ;; Z28595 Gregorian dates are same day of month
 ;;   Z28595K1: Gregorian calendar date, Z28595K2: Gregorian calendar date -> Boolean   [declared, not checked]
@@ -11007,8 +11277,13 @@
 
 ;; Z28624 read RGBA color  [reaches an unimplemented function]
 ;;   Z28624K1: String, Z28624K2: Natural language -> RGBA color   [declared, not checked]
-(define (Z28624_read_rgba_color a0 a1) (Z28628 (Z14515_remove_all_characters_not_in_second_string a0 "0123456789abcdefABCDEF")))
+(define (Z28624_read_rgba_color a0 a1) (Z28628_default_rgba_color_reader (Z14515_remove_all_characters_not_in_second_string a0 "0123456789abcdefABCDEF")))
 (define Z28624 Z28624_read_rgba_color)
+
+;; Z28628 default RGBA color reader  [reaches an unimplemented function]
+;;   Z28628K1: String -> RGBA color   [declared, not checked]
+(define (Z28628_default_rgba_color_reader a0) (identity (record Z28579 (Z28579K1 (Z27232_rational_from_two_natural_numbers (Z13799_hexadecimal_to_natural_number (Z28630_substring_by_index_0_indexed a0 0 2)) 255)) (Z28579K2 (Z27232_rational_from_two_natural_numbers (Z13799_hexadecimal_to_natural_number (Z28630_substring_by_index_0_indexed a0 2 4)) 255)) (Z28579K3 (Z27232_rational_from_two_natural_numbers (Z13799_hexadecimal_to_natural_number (Z28630_substring_by_index_0_indexed a0 4 6)) 255)) (Z28579K4 (if (Z23356_compare_after_applying_a_single_unary_function a0 Z11040_string_length 6 =) (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 1)) (Z27232_rational_from_two_natural_numbers (Z13799_hexadecimal_to_natural_number (Z14460_final_n_characters_of_string a0 2)) 255))))))
+(define Z28628 Z28628_default_rgba_color_reader)
 
 ;; Z28630 substring by index (0-indexed)
 ;;   Z28630K1: String, Z28630K2: Natural number, Z28630K3: Natural number -> String   [declared, not checked]
@@ -11027,7 +11302,7 @@
 
 ;; Z28645 fraction as hex (2 digit uppercase)  [reaches an unimplemented function]
 ;;   Z28645K1: Rational number -> String   [declared, not checked]
-(define (Z28645_fraction_as_hex_2_digit_uppercase a0) (Z17845_pad_string_with_leading_0_until_it_is_two_characters_long (Z10018 (Z13781_natural_number_to_hexadecimal_lowercase_without_prefix (Z20391_integer_to_exact_natural_number_or_0 (Z19682 (Z19826 a0 255)))))))
+(define (Z28645_fraction_as_hex_2_digit_uppercase a0) (Z17845_pad_string_with_leading_0_until_it_is_two_characters_long (Z10018 (Z13781_natural_number_to_hexadecimal_lowercase_without_prefix (Z20391_integer_to_exact_natural_number_or_0 (Z19682_truncate_rational_number (Z19826_multiply_rational_by_natural_number a0 255)))))))
 (define Z28645 Z28645_fraction_as_hex_2_digit_uppercase)
 
 ;; Z28650 display RGBA color  [reaches an unimplemented function]
@@ -11095,6 +11370,11 @@
 (define (Z28735_every_nth_item_of_list_starting_with_nth a0 a1) (Z31809_every_nth_item_of_list_starting_with_first (Z13369_remove_first_n_elements_of_list a0 (Z13582_decrement_natural_number_by_one a1)) a1))
 (define Z28735 Z28735_every_nth_item_of_list_starting_with_nth)
 
+;; Z28738 Forward or backward time zones  [reaches an unimplemented function]
+;;   Z28738K1: Wikidata time, Z28738K2: Integer -> Wikidata time   [declared, not checked]
+(define (Z28738_forward_or_backward_time_zones a0 a1) (record Z6064 (Z6064K1 (identity "WIP")) (Z6064K2 (Z803_value_by_key (record Z39 (Z39K1 "Z6064K2")) a0)) (Z6064K3 (Z803_value_by_key (record Z39 (Z39K1 "Z6064K3")) a0)) (Z6064K4 (Z803_value_by_key (record Z39 (Z39K1 "Z6064K4")) a0)) (Z6064K5 (Z16693_add_integers (Z803_value_by_key (record Z39 (Z39K1 "Z6064K5")) a0) a1)) (Z6064K6 (Z803_value_by_key (record Z39 (Z39K1 "Z6064K6")) a0))))
+(define Z28738 Z28738_forward_or_backward_time_zones)
+
 ;; Z28748 name and lifespan from Wikidata item  [reaches an unimplemented function]
 ;;   Z28748K1: Wikidata item, Z28748K2: Natural language -> String   [declared, not checked]
 (define (Z28748_name_and_lifespan_from_wikidata_item a0 a1) (Z21394_concatenate_many_strings (cons (Z23159_string_of_first_listed_monolingual_text_with_lang (Z24139_item_labels_filtered_by_language_list a0 (cons a1 (list))) a1) (cons " (" (cons (if (Z27299_wikidata_item_has_claim a0 (record Z6092 (Z6092K1 "P570"))) (Z21394_concatenate_many_strings (cons (Z28767_year_from_wikidata_time a0 (record Z6092 (Z6092K1 "P569")) a1) (cons "–" (cons (Z28767_year_from_wikidata_time a0 (record Z6092 (Z6092K1 "P570")) a1) (list))))) (Z21394_concatenate_many_strings (cons "born " (cons (Z28767_year_from_wikidata_time a0 (record Z6092 (Z6092K1 "P569")) a1) (list))))) (cons ")" (list)))))))
@@ -11107,12 +11387,12 @@
 
 ;; Z28764 Area of a Circular Sector  [reaches an unimplemented function]
 ;;   Z28764K1: Rational number, Z28764K2: Rational number -> Rational number   [declared, not checked]
-(define (Z28764_area_of_a_circular_sector a0 a1) (Z19706 (Z19706 (Z21320_power_of_rational_number a0 (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16660))) (Z16683K2 2))) a1) (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 2))))
+(define (Z28764_area_of_a_circular_sector a0 a1) (Z19706_multiply_rational_numbers (Z19706_multiply_rational_numbers (Z21320_power_of_rational_number a0 (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16660))) (Z16683K2 2))) a1) (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 2))))
 (define Z28764 Z28764_area_of_a_circular_sector)
 
 ;; Z28767 year from Wikidata time  [reaches an unimplemented function]
 ;;   Z28767K1: Wikidata item, Z28767K2: Wikidata property reference, Z28767K3: Natural language -> String   [declared, not checked]
-(define (Z28767_year_from_wikidata_time a0 a1 a2) (Z13713_natural_number_to_digit_string (Z20160_gregorian_year_to_year_number (Z24948_year_from_calendar_date (Z28133 (Z25726_wikidata_datetime_from_wikidata_time (Z21449_first_value_of_property_from_wikidata_item a1 a0)))))))
+(define (Z28767_year_from_wikidata_time a0 a1 a2) (Z13713_natural_number_to_digit_string (Z20160_gregorian_year_to_year_number (Z24948_year_from_calendar_date (Z28133_valid_gregorian_date_from_wikidata_datetime (Z25726_wikidata_datetime_from_wikidata_time (Z21449_first_value_of_property_from_wikidata_item a1 a0)))))))
 (define Z28767 Z28767_year_from_wikidata_time)
 
 ;; Z28773 Gregorian year from Wikidata time  [reaches an unimplemented function]
@@ -11267,7 +11547,7 @@
 
 ;; Z29036 print Wikidata datetime limited by precision  [reaches an unimplemented function]
 ;;   Z29036K1: Wikidata datetime, Z29036K2: Wikidata time precision, Z29036K3: Natural language -> String   [declared, not checked]
-(define (Z29036_print_wikidata_datetime_limited_by_precision a0 a1 a2) (if (<= (Z26882_instance_of_wikidata_enum_to_number a1) 10) (Z14396_string_of_monolingual_text (Z35331_print_gregorian_year_limited_by_precision (Z24948_year_from_calendar_date (Z28133 a0)) a1 a2)) (Z13397_get_the_nth_element_of_a_list (cons (Z25721_display_wikidata_datetime a0 a2) (cons (Z25721_display_wikidata_datetime a0 a2) (cons (Z25721_display_wikidata_datetime a0 a2) (cons (Z25721_display_wikidata_datetime a0 a2) (cons (Z25721_display_wikidata_datetime a0 a2) (list)))))) (Z13569_subtract_natural_numbers_with_floor_of_0 (Z26882_instance_of_wikidata_enum_to_number a1) 10))))
+(define (Z29036_print_wikidata_datetime_limited_by_precision a0 a1 a2) (if (<= (Z26882_instance_of_wikidata_enum_to_number a1) 10) (Z14396_string_of_monolingual_text (Z35331_print_gregorian_year_limited_by_precision (Z24948_year_from_calendar_date (Z28133_valid_gregorian_date_from_wikidata_datetime a0)) a1 a2)) (Z13397_get_the_nth_element_of_a_list (cons (Z25721_display_wikidata_datetime a0 a2) (cons (Z25721_display_wikidata_datetime a0 a2) (cons (Z25721_display_wikidata_datetime a0 a2) (cons (Z25721_display_wikidata_datetime a0 a2) (cons (Z25721_display_wikidata_datetime a0 a2) (list)))))) (Z13569_subtract_natural_numbers_with_floor_of_0 (Z26882_instance_of_wikidata_enum_to_number a1) 10))))
 (define Z29036 Z29036_print_wikidata_datetime_limited_by_precision)
 
 ;; Z29045 HTML fragment contains string
@@ -11412,7 +11692,7 @@
 
 ;; Z29308 outer product, u⊗v (rational vectors)  [reaches an unimplemented function]
 ;;   Z29308K1: Typed list(Rational number), Z29308K2: Typed list(Rational number) -> Typed list(Typed list(Rational number))   [declared, not checked]
-(define (Z29308_outer_product_u_v_rational_vectors a0 a1) (Z29286_table_from_function_of_row_and_column_elements Z19706 a0 a1))
+(define (Z29308_outer_product_u_v_rational_vectors a0 a1) (Z29286_table_from_function_of_row_and_column_elements Z19706_multiply_rational_numbers a0 a1))
 (define Z29308 Z29308_outer_product_u_v_rational_vectors)
 
 ;; Z29315 form for table header  [reaches an unimplemented function]
@@ -11612,7 +11892,7 @@
 
 ;; Z29568 Year-specific sentence from statement, in French  [reaches an unimplemented function]
 ;;   Z29568K1: Wikidata item, Z29568K2: Wikidata statement -> Monolingual text   [declared, not checked]
-(define (Z29568_year_specific_sentence_from_statement_in_french a0 a1) (Z861_monolingual_text_from_string_and_natural_language (Z21394_concatenate_many_strings (cons "La " (cons (Z14396_string_of_monolingual_text (Z16273_monolingual_text_in_specified_language_from_multilingual_tex (Z23223_property_labels (Z6822 (Z19306_predicate_of_wikidata_statement a1))) Z1004)) (cons " de " (cons (Z23468_text_from_wikidata_item_label_for_given_language a0 Z1004) (cons " était de " (cons (Z25326_display_quantity_with_digits_and_unit (Z19308_value_of_wikidata_statement a1) Z1004) (cons " en " (cons (Z20241_display_gregorian_year (Z24948_year_from_calendar_date (Z28133 (Z25726_wikidata_datetime_from_wikidata_time (car (Z28321_qualifier_values_of_statement_with_predicate a1 (record Z6092 (Z6092K1 "P585"))))))) Z1004) (cons "." (list))))))))))) Z1004))
+(define (Z29568_year_specific_sentence_from_statement_in_french a0 a1) (Z861_monolingual_text_from_string_and_natural_language (Z21394_concatenate_many_strings (cons "La " (cons (Z14396_string_of_monolingual_text (Z16273_monolingual_text_in_specified_language_from_multilingual_tex (Z23223_property_labels (Z6822 (Z19306_predicate_of_wikidata_statement a1))) Z1004)) (cons " de " (cons (Z23468_text_from_wikidata_item_label_for_given_language a0 Z1004) (cons " était de " (cons (Z25326_display_quantity_with_digits_and_unit (Z19308_value_of_wikidata_statement a1) Z1004) (cons " en " (cons (Z20241_display_gregorian_year (Z24948_year_from_calendar_date (Z28133_valid_gregorian_date_from_wikidata_datetime (Z25726_wikidata_datetime_from_wikidata_time (car (Z28321_qualifier_values_of_statement_with_predicate a1 (record Z6092 (Z6092K1 "P585"))))))) Z1004) (cons "." (list))))))))))) Z1004))
 (define Z29568 Z29568_year_specific_sentence_from_statement_in_french)
 
 ;; Z29572 HTML fragment contains second fragment
@@ -11680,6 +11960,11 @@
 (define (Z29623_item_qid_is_instance_of_these_items_qids a0) (Z23543_item_is_instance_of_these_items_references (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list) (list (record Z6092 (Z6092K1 "P31"))))))
 (define Z29623 Z29623_item_qid_is_instance_of_these_items_qids)
 
+;; Z29629 English sentence describing the class of a class  [reaches an unimplemented function]
+;;   Z29629K1: Wikidata item reference, Z29629K2: Wikidata item reference, Z29629K3: Wikidata item reference -> Monolingual text   [declared, not checked]
+(define (Z29629_english_sentence_describing_the_class_of_a_class a0 a1 a2) (record Z11 (Z11K1 Z1002) (Z11K2 (Z22511_capitalise_first_letter_and_add_full_stop (Z22504_join_list_of_strings_with_spaces (cons (Z23753_label_of_item_reference_in_language_or_to_mul a0 Z1002) (cons "is" (cons (Z23753_label_of_item_reference_in_language_or_to_mul a1 Z1002) (cons (Z23753_label_of_item_reference_in_language_or_to_mul a2 Z1002) (list))))))))))
+(define Z29629 Z29629_english_sentence_describing_the_class_of_a_class)
+
 ;; Z29639 terminate sentence with full stop
 ;;   Z29639K1: String -> String   [declared, not checked]
 (define (Z29639_terminate_sentence_with_full_stop a0) (Z11542_if_string_output (Z12696_contains (list (record Z86 (Z86K1 46)) (record Z86 (Z86K1 63)) (record Z86 (Z86K1 33))) (Z12964_last_element (Z22717_string_to_codepoint_list a0))) a0 (Z10000_join_two_strings a0 ".")))
@@ -11737,7 +12022,7 @@
 
 ;; Z29717 ArticlePlaceholder render main Wikidata statement  [reaches an unimplemented function]
 ;;   Z29717K1: Natural language, Z29717K2: Wikidata statement -> HTML fragment   [declared, not checked]
-(define (Z29717_articleplaceholder_render_main_wikidata_statement a0 a1) (Z27873_wrap_an_html_fragment_in_a_tag (Z29718_select_per_wikidata_claim_subtype (Z28328_claim_type_of_wikidata_statement a1) (Z29749_monolingual_text_as_html_with_visible_language_tag (Z35121 Z6022 a0) a0) (Z29749_monolingual_text_as_html_with_visible_language_tag (Z35121 Z6023 a0) a0) (Z30097 a0 a1)) "span" (list) (list)))
+(define (Z29717_articleplaceholder_render_main_wikidata_statement a0 a1) (Z27873_wrap_an_html_fragment_in_a_tag (Z29718_select_per_wikidata_claim_subtype (Z28328_claim_type_of_wikidata_statement a1) (Z29749_monolingual_text_as_html_with_visible_language_tag (Z35121_label_of_wikidata_claim_subtype Z6022 a0) a0) (Z29749_monolingual_text_as_html_with_visible_language_tag (Z35121_label_of_wikidata_claim_subtype Z6023 a0) a0) (Z30097 a0 a1)) "span" (list) (list)))
 (define Z29717 Z29717_articleplaceholder_render_main_wikidata_statement)
 
 ;; Z29718 select per Wikidata claim subtype  [reaches an unimplemented function]
@@ -11754,6 +12039,11 @@
 ;;   Z29725K1: Typed list(Object), Z29725K2: Typed list(Object) -> Typed list(Object)   [declared, not checked]
 (define (Z29725_sort_according_to_other_list a0 a1) (Z12767_concatenate_two_untyped_lists (Z17895_untype_a_list (Z22865_keep_elements_common_with_other_list a1 a0)) (Z17895_untype_a_list (Z19198_remove_elements_common_to_second_list a0 a1))))
 (define Z29725 Z29725_sort_according_to_other_list)
+
+;; Z29727 Wikidata property reference from PID string
+;;   Z29727K1: String -> Wikidata property reference   [declared, not checked]
+(define (Z29727_wikidata_property_reference_from_pid_string a0) (identity (record Z6092 (Z6092K1 a0))))
+(define Z29727 Z29727_wikidata_property_reference_from_pid_string)
 
 ;; Z29728 sort Wikidata property refs in typical order  [reaches an unimplemented function]
 ;;   Z29728K1: Typed list(Wikidata property reference) -> Typed list(Wikidata property reference)   [declared, not checked]
@@ -11784,6 +12074,11 @@
 ;;   Z29773K1: Wikidata item reference, Z29773K2: Wikidata item reference, Z29773K3: Wikidata item reference, Z29773K4: Natural language -> Monolingual text   [declared, not checked]
 (define (Z29773_description_of_class_with_adj_superclass_english a0 a1 a2 a3) (Z26107_monolingual_text_from_language_and_string a3 (Z22511_capitalise_first_letter_and_add_full_stop (Z22504_join_list_of_strings_with_spaces (cons (Z11542_if_string_output (Z11863_is_it_one_of_aeiou (Z10901_get_first_character_of_string (Z23753_label_of_item_reference_in_language_or_to_mul a0 a3))) "an" "a") (cons (Z23753_label_of_item_reference_in_language_or_to_mul a0 a3) (cons "is" (cons (Z22664_indefinite_noun_phrase_with_adjective a2 a1 a3) (list)))))))))
 (define Z29773 Z29773_description_of_class_with_adj_superclass_english)
+
+;; Z29778 English demonym for Wikidata item  [reaches an unimplemented function]
+;;   Z29778K1: Wikidata item reference -> Monolingual text   [declared, not checked]
+(define (Z29778_english_demonym_for_wikidata_item a0) (if (null? (Z6830 a0 (record Z6092 (Z6092K1 "P6271")) Z1002)) (record Z11 (Z11K1 Z1002) (Z11K2 (Z17654 (Z23753_label_of_item_reference_in_language_or_to_mul a0 Z1002)))) (Z19252_singular_form_of_lexeme_as_monolingual_text (Z6825 (car (Z6830 a0 (record Z6092 (Z6092K1 "P6271")) Z1002))))))
+(define Z29778 Z29778_english_demonym_for_wikidata_item)
 
 ;; Z29784 ArticlePlaceholder render statement group  [reaches an unimplemented function]
 ;;   Z29784K1: Natural language, Z29784K2: Wikidata property reference, Z29784K3: Typed list(Wikidata statement) -> HTML fragment   [declared, not checked]
@@ -11842,8 +12137,18 @@
 
 ;; Z29849 English ordinal class location fragment  [reaches an unimplemented function]
 ;;   Z29849K1: Wikidata item reference, Z29849K2: Natural number, Z29849K3: Wikidata item reference, Z29849K4: Wikidata item reference, Z29849K5: Wikidata item reference -> Monolingual text   [declared, not checked]
-(define (Z29849_english_ordinal_class_location_fragment a0 a1 a2 a3 a4) (Z26107_monolingual_text_from_language_and_string Z1002 (Z22514_sentence_from_list_of_words_english_conventions (cons (Z24766_label_text_for_item_in_given_language_or_fallback a0 Z1002) (cons "is the" (cons (Z14396_string_of_monolingual_text (Z29852 (Z37847_first_lexeme_ref_from_item_ref_and_language a2 Z1002) a1 Z1002)) (cons (Z24766_label_text_for_item_in_given_language_or_fallback a3 Z1002) (cons (Z30798_english_preposition_for_location_in_on_at a4) (cons (Z14396_string_of_monolingual_text (Z33138_definite_article_or_empty_monolingual_en a4 #f #f #f)) (cons (Z24766_label_text_for_item_in_given_language_or_fallback a4 Z1002) (list)))))))))))
+(define (Z29849_english_ordinal_class_location_fragment a0 a1 a2 a3 a4) (Z26107_monolingual_text_from_language_and_string Z1002 (Z22514_sentence_from_list_of_words_english_conventions (cons (Z24766_label_text_for_item_in_given_language_or_fallback a0 Z1002) (cons "is the" (cons (Z14396_string_of_monolingual_text (Z29852_english_ordinal_superlative_construction (Z37847_first_lexeme_ref_from_item_ref_and_language a2 Z1002) a1 Z1002)) (cons (Z24766_label_text_for_item_in_given_language_or_fallback a3 Z1002) (cons (Z30798_english_preposition_for_location_in_on_at a4) (cons (Z14396_string_of_monolingual_text (Z33138_definite_article_or_empty_monolingual_en a4 #f #f #f)) (cons (Z24766_label_text_for_item_in_given_language_or_fallback a4 Z1002) (list)))))))))))
 (define Z29849 Z29849_english_ordinal_class_location_fragment)
+
+;; Z29851 English superlative form of adjective  [reaches an unimplemented function]
+;;   Z29851K1: Wikidata lexeme reference, Z29851K2: Natural language -> Monolingual text   [declared, not checked]
+(define (Z29851_english_superlative_form_of_adjective a0 a1) (if (null? (Z19243_select_lexeme_forms_from_lexeme (Z6825 a0) (list (record Z6091 (Z6091K1 "Q1817208"))))) (record Z11 (Z11K1 Z1002) (Z11K2 (Z12203_english_regular_superlative_form (Z27410_better_matching_representation_string_from_lexeme (Z6825 a0) (list (record Z6091 (Z6091K1 "Q3482678"))))))) (car (Z22396_get_texts_of_representations_of_wd_lexeme_form (car (Z19243_select_lexeme_forms_from_lexeme (Z6825 a0) (list (record Z6091 (Z6091K1 "Q1817208")))))))))
+(define Z29851 Z29851_english_superlative_form_of_adjective)
+
+;; Z29852 English ordinal-superlative construction  [reaches an unimplemented function]
+;;   Z29852K1: Wikidata lexeme reference, Z29852K2: Natural number, Z29852K3: Natural language -> Monolingual text   [declared, not checked]
+(define (Z29852_english_ordinal_superlative_construction a0 a1 a2) (if (= a1 1) (Z29851_english_superlative_form_of_adjective a0 a2) (record Z11 (Z11K1 (Z14404_language_of_monolingual_text (Z29851_english_superlative_form_of_adjective a0 a2))) (Z11K2 (Z15175_join_two_strings_with_separator (Z14526_english_ordinal a1) (Z14396_string_of_monolingual_text (Z29851_english_superlative_form_of_adjective a0 a2)) (if (Z10615_string_starts_with (Z14396_string_of_monolingual_text (Z29851_english_superlative_form_of_adjective a0 a2)) "most ") " " "-"))))))
+(define Z29852 Z29852_english_ordinal_superlative_construction)
 
 ;; Z29865 defining qualities of Wikidata item  [reaches an unimplemented function]
 ;;   Z29865K1: Wikidata item reference -> Typed list(Wikidata statement)   [declared, not checked]
@@ -11865,9 +12170,9 @@
 (define (Z29883_display_time_of_day_without_seconds_rounded a0 a1) (Z29890 (Z25091_display_time_of_day (Z29884_round_time_of_day_to_the_nearest_minute a0) a1) ":.." "" 2))
 (define Z29883 Z29883_display_time_of_day_without_seconds_rounded)
 
-;; Z29884 round Time of day to the nearest minute  [reaches an unimplemented function]
+;; Z29884 round Time of day to the nearest minute
 ;;   Z29884K1: Time of day -> Time of day   [declared, not checked]
-(define (Z29884_round_time_of_day_to_the_nearest_minute a0) (if (<= (Z25088_second_from_time_of_day a0) 29) (Z35911 (Z25082_hour_of_day a0) (Z25085_minute_from_time_of_day a0) 0) (if (= (Z25085_minute_from_time_of_day a0) 59) (Z35911 (if (= (Z25082_hour_of_day a0) 23) 0 (add1 (Z25082_hour_of_day a0))) 0 0) (Z35911 (Z25082_hour_of_day a0) (add1 (Z25085_minute_from_time_of_day a0)) 0))))
+(define (Z29884_round_time_of_day_to_the_nearest_minute a0) (if (<= (Z25088_second_from_time_of_day a0) 29) (Z35911_time_of_day_from_components (Z25082_hour_of_day a0) (Z25085_minute_from_time_of_day a0) 0) (if (= (Z25085_minute_from_time_of_day a0) 59) (Z35911_time_of_day_from_components (if (= (Z25082_hour_of_day a0) 23) 0 (add1 (Z25082_hour_of_day a0))) 0 0) (Z35911_time_of_day_from_components (Z25082_hour_of_day a0) (add1 (Z25085_minute_from_time_of_day a0)) 0))))
 (define Z29884 Z29884_round_time_of_day_to_the_nearest_minute)
 
 ;; Z29894 country (QID) has regional daylight savings dates
@@ -11875,14 +12180,29 @@
 (define (Z29894_country_qid_has_regional_daylight_savings_dates a0) (Z12696_contains (list (record Z6091 (Z6091K1 "Q16")) (record Z6091 (Z6091K1 "Q223")) (record Z6091 (Z6091K1 "Q96")) (record Z6091 (Z6091K1 "Q30")) (record Z6091 (Z6091K1 "Q212")) (record Z6091 (Z6091K1 "Q298")) (record Z6091 (Z6091K1 "Q408")) (record Z6091 (Z6091K1 "Q142"))) a0))
 (define Z29894 Z29894_country_qid_has_regional_daylight_savings_dates)
 
+;; Z29899 country-wide daylight savings start date in year  [reaches an unimplemented function]
+;;   Z29899K1: Wikidata item reference, Z29899K2: Gregorian year -> Gregorian calendar date   [declared, not checked]
+(define (Z29899_country_wide_daylight_savings_start_date_in_year a0 a1) (Z19601_n_ifs (cons (Z12696_contains (list (record Z6091 (Z6091K1 "Q778")) (record Z6091 (Z6091K1 "Q23635")) (record Z6091 (Z6091K1 "Q790")) (record Z6091 (Z6091K1 "Q34617")) (record Z6091 (Z6091K1 "Q18221")) (record Z6091 (Z6091K1 "Q241"))) a0) (cons (Z12696_contains (list (record Z6091 (Z6091K1 "Q458")) (record Z6091 (Z6091K1 "Q37362")) (record Z6091 (Z6091K1 "Q222")) (record Z6091 (Z6091K1 "Q228")) (record Z6091 (Z6091K1 "Q225")) (record Z6091 (Z6091K1 "Q4628")) (record Z6091 (Z6091K1 "Q1410")) (record Z6091 (Z6091K1 "Q25230")) (record Z6091 (Z6091K1 "Q9676")) (record Z6091 (Z6091K1 "Q785")) (record Z6091 (Z6091K1 "Q1246")) (record Z6091 (Z6091K1 "Q347")) (record Z6091 (Z6091K1 "Q235")) (record Z6091 (Z6091K1 "Q236")) (record Z6091 (Z6091K1 "Q221")) (record Z6091 (Z6091K1 "Q23681")) (record Z6091 (Z6091K1 "Q20")) (record Z6091 (Z6091K1 "Q238")) (record Z6091 (Z6091K1 "Q403")) (record Z6091 (Z6091K1 "Q39")) (record Z6091 (Z6091K1 "Q145")) (record Z6091 (Z6091K1 "Q237")) (record Z6091 (Z6091K1 "Q40")) (record Z6091 (Z6091K1 "Q31")) (record Z6091 (Z6091K1 "Q219")) (record Z6091 (Z6091K1 "Q224")) (record Z6091 (Z6091K1 "Q229")) (record Z6091 (Z6091K1 "Q213")) (record Z6091 (Z6091K1 "Q35")) (record Z6091 (Z6091K1 "Q191")) (record Z6091 (Z6091K1 "Q33")) (record Z6091 (Z6091K1 "Q183")) (record Z6091 (Z6091K1 "Q41")) (record Z6091 (Z6091K1 "Q28")) (record Z6091 (Z6091K1 "Q27")) (record Z6091 (Z6091K1 "Q38")) (record Z6091 (Z6091K1 "Q211")) (record Z6091 (Z6091K1 "Q37")) (record Z6091 (Z6091K1 "Q32")) (record Z6091 (Z6091K1 "Q233")) (record Z6091 (Z6091K1 "Q55")) (record Z6091 (Z6091K1 "Q36")) (record Z6091 (Z6091K1 "Q45")) (record Z6091 (Z6091K1 "Q218")) (record Z6091 (Z6091K1 "Q214")) (record Z6091 (Z6091K1 "Q215")) (record Z6091 (Z6091K1 "Q29")) (record Z6091 (Z6091K1 "Q34")) (record Z6091 (Z6091K1 "Q217")) (record Z6091 (Z6091K1 "Q907112")) (record Z6091 (Z6091K1 "Q822"))) a0) (cons (Z19316_same_wikidata_item_reference a0 (record Z6091 (Z6091K1 "Q801"))) (cons (Z19316_same_wikidata_item_reference a0 (record Z6091 (Z6091K1 "Q79"))) (cons (Z19316_same_wikidata_item_reference a0 (record Z6091 (Z6091K1 "Q664"))) (list)))))) (cons (Z29903_full_date_of_weekday_occurrence_in_month_of_year a1 Z16103 Z17409 2) (cons (Z25901 (record Z20420 (Z20420K1 a1) (Z20420K2 (record Z20342 (Z20342K1 Z16103) (Z20342K2 1)))) Z17409) (cons (Z20750 (Z25901 (record Z20420 (Z20420K1 a1) (Z20420K2 (record Z20342 (Z20342K1 (record Z16098 (Z16098K1 Z16103))) (Z20342K2 1)))) Z17409) (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16662))) (Z16683K2 2))) (cons (Z25901 (record Z20420 (Z20420K1 a1) (Z20420K2 (record Z20342 (Z20342K1 (record Z16098 (Z16098K1 Z16104))) (Z20342K2 1)))) Z17407) (cons (Z25901 (record Z20420 (Z20420K1 a1) (Z20420K2 (record Z20342 (Z20342K1 (record Z16098 (Z16098K1 Z16109))) (Z20342K2 1)))) Z17409) (cons (record Z20420 (Z20420K1 a1) (Z20420K2 (record Z20342 (Z20342K1 (Z26199_nullary_void)) (Z20342K2 0)))) (list)))))))))
+(define Z29899 Z29899_country_wide_daylight_savings_start_date_in_year)
+
+;; Z29903 full date of weekday occurrence in month of year  [reaches an unimplemented function]
+;;   Z29903K1: Gregorian year, Z29903K2: Gregorian calendar month, Z29903K3: Day of the week, Z29903K4: Natural number -> Gregorian calendar date   [declared, not checked]
+(define (Z29903_full_date_of_weekday_occurrence_in_month_of_year a0 a1 a2 a3) (identity (record Z20420 (Z20420K1 a0) (Z20420K2 (Z20730 a0 a1 a2 a3)))))
+(define Z29903 Z29903_full_date_of_weekday_occurrence_in_month_of_year)
+
 ;; Z29911 Gregorian calendar date not fully defined  [reaches an unimplemented function]
 ;;   Z29911K1: Gregorian calendar date -> Boolean   [declared, not checked]
 (define (Z29911_gregorian_calendar_date_not_fully_defined a0) (not (Z26237_day_of_roman_year_fully_defined (Z24936_day_of_year_from_calendar_date a0))))
 (define Z29911 Z29911_gregorian_calendar_date_not_fully_defined)
 
+;; Z29916 country-wide daylight savings end date in year  [reaches an unimplemented function]
+;;   Z29916K1: Wikidata item reference, Z29916K2: Gregorian year -> Gregorian calendar date   [declared, not checked]
+(define (Z29916_country_wide_daylight_savings_end_date_in_year a0 a1) (Z19601_n_ifs (cons (Z12696_contains (list (record Z6091 (Z6091K1 "Q778")) (record Z6091 (Z6091K1 "Q23635")) (record Z6091 (Z6091K1 "Q790")) (record Z6091 (Z6091K1 "Q34617")) (record Z6091 (Z6091K1 "Q18221")) (record Z6091 (Z6091K1 "Q241"))) a0) (cons (Z12696_contains (list (record Z6091 (Z6091K1 "Q458")) (record Z6091 (Z6091K1 "Q37362")) (record Z6091 (Z6091K1 "Q222")) (record Z6091 (Z6091K1 "Q228")) (record Z6091 (Z6091K1 "Q225")) (record Z6091 (Z6091K1 "Q4628")) (record Z6091 (Z6091K1 "Q1410")) (record Z6091 (Z6091K1 "Q25230")) (record Z6091 (Z6091K1 "Q9676")) (record Z6091 (Z6091K1 "Q785")) (record Z6091 (Z6091K1 "Q1246")) (record Z6091 (Z6091K1 "Q347")) (record Z6091 (Z6091K1 "Q235")) (record Z6091 (Z6091K1 "Q236")) (record Z6091 (Z6091K1 "Q221")) (record Z6091 (Z6091K1 "Q23681")) (record Z6091 (Z6091K1 "Q20")) (record Z6091 (Z6091K1 "Q238")) (record Z6091 (Z6091K1 "Q403")) (record Z6091 (Z6091K1 "Q39")) (record Z6091 (Z6091K1 "Q145")) (record Z6091 (Z6091K1 "Q237")) (record Z6091 (Z6091K1 "Q40")) (record Z6091 (Z6091K1 "Q31")) (record Z6091 (Z6091K1 "Q219")) (record Z6091 (Z6091K1 "Q224")) (record Z6091 (Z6091K1 "Q229")) (record Z6091 (Z6091K1 "Q213")) (record Z6091 (Z6091K1 "Q35")) (record Z6091 (Z6091K1 "Q191")) (record Z6091 (Z6091K1 "Q33")) (record Z6091 (Z6091K1 "Q183")) (record Z6091 (Z6091K1 "Q41")) (record Z6091 (Z6091K1 "Q28")) (record Z6091 (Z6091K1 "Q27")) (record Z6091 (Z6091K1 "Q38")) (record Z6091 (Z6091K1 "Q211")) (record Z6091 (Z6091K1 "Q37")) (record Z6091 (Z6091K1 "Q32")) (record Z6091 (Z6091K1 "Q233")) (record Z6091 (Z6091K1 "Q55")) (record Z6091 (Z6091K1 "Q36")) (record Z6091 (Z6091K1 "Q45")) (record Z6091 (Z6091K1 "Q218")) (record Z6091 (Z6091K1 "Q214")) (record Z6091 (Z6091K1 "Q215")) (record Z6091 (Z6091K1 "Q29")) (record Z6091 (Z6091K1 "Q34")) (record Z6091 (Z6091K1 "Q217")) (record Z6091 (Z6091K1 "Q907112")) (record Z6091 (Z6091K1 "Q822")) (record Z6091 (Z6091K1 "Q801"))) a0) (cons (Z19316_same_wikidata_item_reference a0 (record Z6091 (Z6091K1 "Q219060"))) (cons (Z19316_same_wikidata_item_reference a0 (record Z6091 (Z6091K1 "Q79"))) (cons (Z19316_same_wikidata_item_reference a0 (record Z6091 (Z6091K1 "Q664"))) (list)))))) (cons (Z29903_full_date_of_weekday_occurrence_in_month_of_year a1 Z16111 Z17409 1) (cons (Z25901 (record Z20420 (Z20420K1 a1) (Z20420K2 (record Z20342 (Z20342K1 (record Z16098 (Z16098K1 Z16110))) (Z20342K2 1)))) Z17409) (cons (Z24968_previous_calendar_day (Z25901 (record Z20420 (Z20420K1 a1) (Z20420K2 (record Z20342 (Z20342K1 (record Z16098 (Z16098K1 Z16110))) (Z20342K2 1)))) Z17409)) (cons (Z20440_next_day (Z25901 (record Z20420 (Z20420K1 a1) (Z20420K2 (record Z20342 (Z20342K1 (record Z16098 (Z16098K1 Z16110))) (Z20342K2 1)))) Z17406)) (cons (Z29903_full_date_of_weekday_occurrence_in_month_of_year a1 Z16104 Z17409 1) (cons (record Z20420 (Z20420K1 (record Z20159 (Z20159K1 (record Z17813 (Z17813K1 Z17814))) (Z20159K2 2025))) (Z20420K2 (record Z20342 (Z20342K1 (record Z16098 (Z16098K1 Z16101))) (Z20342K2 1)))) (list)))))))))
+(define Z29916 Z29916_country_wide_daylight_savings_end_date_in_year)
+
 ;; Z29919 location in daylight savings time on date  [reaches an unimplemented function]
 ;;   Z29919K1: Wikidata item, Z29919K2: Gregorian calendar date -> Boolean   [declared, not checked]
-(define (Z29919_location_in_daylight_savings_time_on_date a0 a1) (if (bool-or (not (Z29961_country_qid_has_daylight_savings (Z29921_country_qid_of_location_item a0))) (Z29894_country_qid_has_regional_daylight_savings_dates (Z29921_country_qid_of_location_item a0))) #f (Z29924_date_in_start_end_period_of_same_year_complex a1 (Z29899 (Z29921_country_qid_of_location_item a0) (Z24948_year_from_calendar_date a1)) (Z29916 (Z29921_country_qid_of_location_item a0) (Z24948_year_from_calendar_date a1)))))
+(define (Z29919_location_in_daylight_savings_time_on_date a0 a1) (if (bool-or (not (Z29961_country_qid_has_daylight_savings (Z29921_country_qid_of_location_item a0))) (Z29894_country_qid_has_regional_daylight_savings_dates (Z29921_country_qid_of_location_item a0))) #f (Z29924_date_in_start_end_period_of_same_year_complex a1 (Z29899_country_wide_daylight_savings_start_date_in_year (Z29921_country_qid_of_location_item a0) (Z24948_year_from_calendar_date a1)) (Z29916_country_wide_daylight_savings_end_date_in_year (Z29921_country_qid_of_location_item a0) (Z24948_year_from_calendar_date a1)))))
 (define Z29919 Z29919_location_in_daylight_savings_time_on_date)
 
 ;; Z29921 country (QID) of location item  [reaches an unimplemented function]
@@ -11912,7 +12232,7 @@
 
 ;; Z29958 Wikifunctions language obj from Wikidata reference  [reaches an unimplemented function]
 ;;   Z29958K1: Wikidata item reference -> Natural language   [declared, not checked]
-(define (Z29958_wikifunctions_language_obj_from_wikidata_reference a0) (Z35171 (Z19308_value_of_wikidata_statement (Z22839_first_object_or_default (Z29691_get_statements_for_wikidata_property_from_item (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list Z1360) (list (record Z6092 (Z6092K1 "P220")) (record Z6092 (Z6092K1 "P424")))) (record Z6092 (Z6092K1 "P424"))) (car (Z29691_get_statements_for_wikidata_property_from_item (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list Z1360) (list (record Z6092 (Z6092K1 "P220")) (record Z6092 (Z6092K1 "P424")))) (record Z6092 (Z6092K1 "P220")))))) (list)))
+(define (Z29958_wikifunctions_language_obj_from_wikidata_reference a0) (Z35171_natural_language_from_langcode_and_aliases (Z19308_value_of_wikidata_statement (Z22839_first_object_or_default (Z29691_get_statements_for_wikidata_property_from_item (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list Z1360) (list (record Z6092 (Z6092K1 "P220")) (record Z6092 (Z6092K1 "P424")))) (record Z6092 (Z6092K1 "P424"))) (car (Z29691_get_statements_for_wikidata_property_from_item (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list Z1360) (list (record Z6092 (Z6092K1 "P220")) (record Z6092 (Z6092K1 "P424")))) (record Z6092 (Z6092K1 "P220")))))) (list)))
 (define Z29958 Z29958_wikifunctions_language_obj_from_wikidata_reference)
 
 ;; Z29961 country (QID) has daylight savings
@@ -11927,7 +12247,7 @@
 
 ;; Z29975 add hours (rational) to Time  [reaches an unimplemented function]
 ;;   Z29975K1: Time of day, Z29975K2: Rational number -> Time of day   [declared, not checked]
-(define (Z29975_add_hours_rational_to_time a0 a1) (Z25167_add_to_time_of_day a0 0 0 (Z17144_absolute_value_of_integer_as_natural_number (Z19841_rational_to_nearest_integer_even_integer_tiebreak (Z19826 a1 3600)))))
+(define (Z29975_add_hours_rational_to_time a0 a1) (Z25167_add_to_time_of_day a0 0 0 (Z17144_absolute_value_of_integer_as_natural_number (Z19841_rational_to_nearest_integer_even_integer_tiebreak (Z19826_multiply_rational_by_natural_number a1 3600)))))
 (define Z29975 Z29975_add_hours_rational_to_time)
 
 ;; Z29979 (#) best time zone for location and date  [reaches an unimplemented function]
@@ -12062,7 +12382,7 @@
 
 ;; Z30155 emulate WD statement object from WD property claim  [reaches an unimplemented function]
 ;;   Z30155K1: Wikidata property claim -> Wikidata statement   [declared, not checked]
-(define (Z30155_emulate_wd_statement_object_from_wd_property_claim a0) (Z23723 (list) (list) (Z28294_predicate_of_wikidata_property_claim a0) (if (Z19084_same_type (Z16829_type_of_object (Z28297_value_of_wikidata_property_claim a0)) Z6091) (cons (Z28297_value_of_wikidata_property_claim a0) (list)) (list)) (if (Z19084_same_type (Z16829_type_of_object (Z28297_value_of_wikidata_property_claim a0)) Z6095) (cons (Z28297_value_of_wikidata_property_claim a0) (list)) (list)) (if (Z23568_not_in (Z16829_type_of_object (Z28297_value_of_wikidata_property_claim a0)) (list Z6091 Z6095)) (cons (Z28297_value_of_wikidata_property_claim a0) (list)) (list)) Z6042 (list) (list) (Z28300_claim_type_of_wikidata_property_claim a0)))
+(define (Z30155_emulate_wd_statement_object_from_wd_property_claim a0) (Z23723_emulate_wikidata_statement_object (list) (list) (Z28294_predicate_of_wikidata_property_claim a0) (if (Z19084_same_type (Z16829_type_of_object (Z28297_value_of_wikidata_property_claim a0)) Z6091) (cons (Z28297_value_of_wikidata_property_claim a0) (list)) (list)) (if (Z19084_same_type (Z16829_type_of_object (Z28297_value_of_wikidata_property_claim a0)) Z6095) (cons (Z28297_value_of_wikidata_property_claim a0) (list)) (list)) (if (Z23568_not_in (Z16829_type_of_object (Z28297_value_of_wikidata_property_claim a0)) (list Z6091 Z6095)) (cons (Z28297_value_of_wikidata_property_claim a0) (list)) (list)) Z6042 (list) (list) (Z28300_claim_type_of_wikidata_property_claim a0)))
 (define Z30155 Z30155_emulate_wd_statement_object_from_wd_property_claim)
 
 ;; Z30157 group by selector func and apply func w/ key, vals
@@ -12117,7 +12437,7 @@
 
 ;; Z30217 sort statements by Wikidata property type  [reaches an unimplemented function]
 ;;   Z30217K1: Typed list(Wikidata property reference), Z30217K2: Typed list(Wikidata statement) -> Typed list(Wikidata statement)   [declared, not checked]
-(define (Z30217_sort_statements_by_wikidata_property_type a0 a1) (Z27665_concatenate_many_untyped_lists (map snd (Z21347_sort_integer_keyed_list_ascending (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l Z30414_make_typed_pair (map Z17101 (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z13708_index_of_first_listing_1_n_note_limitation (map fst (Z30157_group_by_selector_func_and_apply_func_w_key_vals a1 Z19306_predicate_of_wikidata_statement Z30414_make_typed_pair)) (Z29725_sort_according_to_other_list (map fst (Z30157_group_by_selector_func_and_apply_func_w_key_vals a1 Z19306_predicate_of_wikidata_statement Z30414_make_typed_pair)) a0))) (map snd (Z30157_group_by_selector_func_and_apply_func_w_key_vals a1 Z19306_predicate_of_wikidata_statement Z30414_make_typed_pair)))))))
+(define (Z30217_sort_statements_by_wikidata_property_type a0 a1) (Z27665_concatenate_many_untyped_lists (map snd (Z21347_sort_integer_keyed_list_ascending (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l Z30414_make_typed_pair (map Z17101_natural_number_to_integer (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z13708_index_of_first_listing_1_n_note_limitation (map fst (Z30157_group_by_selector_func_and_apply_func_w_key_vals a1 Z19306_predicate_of_wikidata_statement Z30414_make_typed_pair)) (Z29725_sort_according_to_other_list (map fst (Z30157_group_by_selector_func_and_apply_func_w_key_vals a1 Z19306_predicate_of_wikidata_statement Z30414_make_typed_pair)) a0))) (map snd (Z30157_group_by_selector_func_and_apply_func_w_key_vals a1 Z19306_predicate_of_wikidata_statement Z30414_make_typed_pair)))))))
 (define Z30217 Z30217_sort_statements_by_wikidata_property_type)
 
 ;; Z30232 regular Wikitable of conjugation for Wiktionary  [reaches an unimplemented function]
@@ -12140,7 +12460,7 @@
 (define (Z30248_fetch_wikidata_items a0 a1 a2 a3) (Z6820 a0 a1 a2 a3))
 (define Z30248 Z30248_fetch_wikidata_items)
 
-;; Z30250 concatenate lemmas with spaces  [reaches an unimplemented function]
+;; Z30250 concatenate lemmas with spaces
 ;;   Z30250K1: Typed list(Wikidata lexeme), Z30250K2: Natural language -> String   [declared, not checked]
 (define (Z30250_concatenate_lemmas_with_spaces a0 a1) (Z22504_join_list_of_strings_with_spaces (cons (Z21806_lemma_string_from_lexeme_and_lang a0 a1) (list))))
 (define Z30250 Z30250_concatenate_lemmas_with_spaces)
@@ -12160,9 +12480,9 @@
 (define (Z30271_typed_map_from_two_lists a0 a1) (Z24646 (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l Z17534 a0 a1)))
 (define Z30271 Z30271_typed_map_from_two_lists)
 
-;; Z30275 clamped add bytes  [reaches an unimplemented function]
+;; Z30275 clamped add bytes
 ;;   Z30275K1: Byte, Z30275K2: Byte -> Byte   [declared, not checked]
-(define (Z30275_clamped_add_bytes a0 a1) (if (> (+ (Z14567_byte_to_natural_number a0) (Z14567_byte_to_natural_number a1)) 255) (record Z80 (Z80K1 255)) (Z22535 (+ (Z14567_byte_to_natural_number a0) (Z14567_byte_to_natural_number a1)))))
+(define (Z30275_clamped_add_bytes a0 a1) (if (> (+ (Z14567_byte_to_natural_number a0) (Z14567_byte_to_natural_number a1)) 255) (record Z80 (Z80K1 255)) (Z22535_natural_number_to_byte (+ (Z14567_byte_to_natural_number a0) (Z14567_byte_to_natural_number a1)))))
 (define Z30275 Z30275_clamped_add_bytes)
 
 ;; Z30282 get (i,j)th element from list of lists
@@ -12175,14 +12495,14 @@
 (define (Z30289_typed_pair_identity a0) (identity a0))
 (define Z30289 Z30289_typed_pair_identity)
 
-;; Z30290 clamped subtract bytes  [reaches an unimplemented function]
+;; Z30290 clamped subtract bytes
 ;;   Z30290K1: Byte, Z30290K2: Byte -> Byte   [declared, not checked]
-(define (Z30290_clamped_subtract_bytes a0 a1) (Z22535 (Z13569_subtract_natural_numbers_with_floor_of_0 (Z14567_byte_to_natural_number a0) (Z14567_byte_to_natural_number a1))))
+(define (Z30290_clamped_subtract_bytes a0 a1) (Z22535_natural_number_to_byte (Z13569_subtract_natural_numbers_with_floor_of_0 (Z14567_byte_to_natural_number a0) (Z14567_byte_to_natural_number a1))))
 (define Z30290 Z30290_clamped_subtract_bytes)
 
-;; Z30294 clamped multiply bytes  [reaches an unimplemented function]
+;; Z30294 clamped multiply bytes
 ;;   Z30294K1: Byte, Z30294K2: Byte -> Byte   [declared, not checked]
-(define (Z30294_clamped_multiply_bytes a0 a1) (if (> (* (Z14567_byte_to_natural_number a0) (Z14567_byte_to_natural_number a1)) 255) (record Z80 (Z80K1 255)) (Z22535 (* (Z14567_byte_to_natural_number a0) (Z14567_byte_to_natural_number a1)))))
+(define (Z30294_clamped_multiply_bytes a0 a1) (if (> (* (Z14567_byte_to_natural_number a0) (Z14567_byte_to_natural_number a1)) 255) (record Z80 (Z80K1 255)) (Z22535_natural_number_to_byte (* (Z14567_byte_to_natural_number a0) (Z14567_byte_to_natural_number a1)))))
 (define Z30294 Z30294_clamped_multiply_bytes)
 
 ;; Z30299 first Typed pair from Typed map
@@ -12382,7 +12702,7 @@
 
 ;; Z30555 Wikidata item for solfege syllable  [reaches an unimplemented function]
 ;;   Z30555K1: String -> Wikidata item   [declared, not checked]
-(define (Z30555_wikidata_item_for_solfege_syllable a0) (Z30556_wikidata_item_from_sense_reference (Z30558 (Z29515_lexeme_sense_id_for_solf_ge_syllable a0))))
+(define (Z30555_wikidata_item_for_solfege_syllable a0) (Z30556_wikidata_item_from_sense_reference (Z30558_wikidata_lexeme_sense_reference_from_lid_string (Z29515_lexeme_sense_id_for_solf_ge_syllable a0))))
 (define Z30555 Z30555_wikidata_item_for_solfege_syllable)
 
 ;; Z30556 Wikidata item from sense reference  [reaches an unimplemented function]
@@ -12390,9 +12710,14 @@
 (define (Z30556_wikidata_item_from_sense_reference a0) (Z6821_fetch_wikidata_item (Z21577_item_reference_from_sense (Z6826 a0))))
 (define Z30556 Z30556_wikidata_item_from_sense_reference)
 
+;; Z30558 Wikidata lexeme sense reference from LID string
+;;   Z30558K1: String -> Wikidata lexeme sense reference   [declared, not checked]
+(define (Z30558_wikidata_lexeme_sense_reference_from_lid_string a0) (identity (record Z6096 (Z6096K1 a0))))
+(define Z30558 Z30558_wikidata_lexeme_sense_reference_from_lid_string)
+
 ;; Z30561 height of inscribed equilateral triangle  [reaches an unimplemented function]
 ;;   Z30561K1: Rational number -> Rational number   [declared, not checked]
-(define (Z30561_height_of_inscribed_equilateral_triangle a0) (Z19706 a0 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 3) (Z19677K3 2))))
+(define (Z30561_height_of_inscribed_equilateral_triangle a0) (Z19706_multiply_rational_numbers a0 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 3) (Z19677K3 2))))
 (define Z30561 Z30561_height_of_inscribed_equilateral_triangle)
 
 ;; Z30565 inscribed equilateral triangle side length  [reaches an unimplemented function]
@@ -12420,14 +12745,14 @@
 (define (Z30583_area_of_equilateral_triangle_inscribed_radius a0) (Z21032_multiply_float64 (Z21033_divide_float64 (Z21032_multiply_float64 (record Z20838 (Z20838K1 (record Z16659 (Z16659K1 Z16660))) (Z20838K2 (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16660))) (Z16683K2 1))) (Z20838K3 2251799813685248) (Z20838K4 (record Z20825 (Z20825K1 Z20837)))) (Z22318_square_root_of_float64 (record Z20838 (Z20838K1 (record Z16659 (Z16659K1 Z16660))) (Z20838K2 (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16660))) (Z16683K2 1))) (Z20838K3 2251799813685248) (Z20838K4 (record Z20825 (Z20825K1 Z20837)))))) (record Z20838 (Z20838K1 (record Z16659 (Z16659K1 Z16660))) (Z20838K2 (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16660))) (Z16683K2 2))) (Z20838K3 0) (Z20838K4 (record Z20825 (Z20825K1 Z20837))))) (Z21028 a0 (record Z20838 (Z20838K1 (record Z16659 (Z16659K1 Z16660))) (Z20838K2 (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16660))) (Z16683K2 1))) (Z20838K3 0) (Z20838K4 (record Z20825 (Z20825K1 Z20837)))))))
 (define Z30583 Z30583_area_of_equilateral_triangle_inscribed_radius)
 
-;; Z30590 Lexeme reference from Lexeme Sense reference  [reaches an unimplemented function]
+;; Z30590 Lexeme reference from Lexeme Sense reference
 ;;   Z30590K1: Wikidata lexeme sense reference -> Wikidata lexeme reference   [declared, not checked]
-(define (Z30590_lexeme_reference_from_lexeme_sense_reference a0) (Z23433_lexeme_reference_of_lexeme_sense (Z6826 a0)))
+(define (Z30590_lexeme_reference_from_lexeme_sense_reference a0) (Z22249_wikidata_lexeme_reference_from_lid_string (Z11410_discard_from_start_of_first_substring (Z23127_lexeme_sense_reference_string a0) "-")))
 (define Z30590 Z30590_lexeme_reference_from_lexeme_sense_reference)
 
-;; Z30591 Lexeme reference from Lexeme Form reference  [reaches an unimplemented function]
+;; Z30591 Lexeme reference from Lexeme Form reference
 ;;   Z30591K1: Wikidata lexeme form reference -> Wikidata lexeme reference   [declared, not checked]
-(define (Z30591_lexeme_reference_from_lexeme_form_reference a0) (Z22483_lexeme_reference_of_lexeme_form (Z6824 a0)))
+(define (Z30591_lexeme_reference_from_lexeme_form_reference a0) (Z22249_wikidata_lexeme_reference_from_lid_string (Z11410_discard_from_start_of_first_substring (Z803_value_by_key (record Z39 (Z39K1 "Z6094K1")) a0) "-")))
 (define Z30591 Z30591_lexeme_reference_from_lexeme_form_reference)
 
 ;; Z30598 Malay article-less instantiating sentence  [reaches an unimplemented function]
@@ -12474,6 +12799,11 @@
 ;;   Z30654K1: Wikidata item reference, Z30654K2: Wikidata item reference -> Monolingual text   [declared, not checked]
 (define (Z30654_malay_article_ful_instantiating_sentence a0 a1) (Z26107_monolingual_text_from_language_and_string Z1531 (Z12899_join_list_of_strings_with_delimiter (cons (Z10771_sentence_case (Z19241_first_matching_representation_string_from_lexeme (Z22696_fetch_first_lexeme_from_item_ref_and_lang_p5137 a0 Z1531) (list))) (cons " ialah sejenis " (cons (Z19241_first_matching_representation_string_from_lexeme (Z22696_fetch_first_lexeme_from_item_ref_and_lang_p5137 a1 Z1531) (list)) (cons "." (list))))) "")))
 (define Z30654 Z30654_malay_article_ful_instantiating_sentence)
+
+;; Z30664 Dominical letter  [reaches an unimplemented function]
+;;   Z30664K1: Gregorian year -> String   [declared, not checked]
+(define (Z30664_dominical_letter a0) (Z10000_join_two_strings (Z13397_get_the_nth_element_of_a_list (list "A" "G" "F" "E" "D" "C" "B") (Z17485_day_to_day_number_starting_sunday_1 (Z20421_day_of_the_week (record Z20420 (Z20420K1 a0) (Z20420K2 (record Z20342 (Z20342K1 (record Z16098 (Z16098K1 Z16101))) (Z20342K2 1))))))) (Z11542_if_string_output (Z20181_is_gregorian_year_leap_year a0) (Z13397_get_the_nth_element_of_a_list (list "G" "F" "E" "D" "C" "B" "A") (Z17485_day_to_day_number_starting_sunday_1 (Z20421_day_of_the_week (record Z20420 (Z20420K1 a0) (Z20420K2 (record Z20342 (Z20342K1 (record Z16098 (Z16098K1 Z16101))) (Z20342K2 1))))))) "")))
+(define Z30664 Z30664_dominical_letter)
 
 ;; Z30671 defining role sentence in Low German  [reaches an unimplemented function]
 ;;   Z30671K1: Wikidata item reference, Z30671K2: Wikidata item reference, Z30671K3: Wikidata item reference, Z30671K4: Natural language -> Monolingual text   [declared, not checked]
@@ -12672,7 +13002,7 @@
 
 ;; Z30950 is a valid CAS Registry Number  [reaches an unimplemented function]
 ;;   Z30950K1: String -> Boolean   [declared, not checked]
-(define (Z30950_is_a_valid_cas_registry_number a0) (if (= (Z14450_count_substrings a0 "-") 2) (if (bool-and (bool-and (>= (Z11040_string_length (Z13397_get_the_nth_element_of_a_list (Z25614_split_string_to_list a0 "-") 1)) 2) (<= (Z11040_string_length (Z13397_get_the_nth_element_of_a_list (Z25614_split_string_to_list a0 "-") 1)) 7)) (bool-and (= (Z11040_string_length (Z13397_get_the_nth_element_of_a_list (Z25614_split_string_to_list a0 "-") 2)) 2) (= (Z11040_string_length (Z13397_get_the_nth_element_of_a_list (Z25614_split_string_to_list a0 "-") 3)) 1))) (if (Z16688_same_integer (Z17167_integer_modulo_another_integer (Z17101 (Z33637_weighted_sum_natural_values_natural_weights (Z25520_list_of_decimal_digits_in_a_number (Z15767_reverse_decimal_digits (Z14283 (Z10000_join_two_strings (Z13397_get_the_nth_element_of_a_list (Z25614_split_string_to_list a0 "-") 1) (Z13397_get_the_nth_element_of_a_list (Z25614_split_string_to_list a0 "-") 2))))) (Z24855_type_untyped_list_as_natural_number (Z17895_untype_a_list (Z31619_generate_range_of_integers (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16660))) (Z16683K2 1)) (Z17101 (+ (Z11040_string_length (Z13397_get_the_nth_element_of_a_list (Z25614_split_string_to_list a0 "-") 1)) (Z11040_string_length (Z13397_get_the_nth_element_of_a_list (Z25614_split_string_to_list a0 "-") 2))))))))) (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16660))) (Z16683K2 10))) (Z17101 (Z14283 (Z13397_get_the_nth_element_of_a_list (Z25614_split_string_to_list a0 "-") 3)))) #t #f) #f) #f))
+(define (Z30950_is_a_valid_cas_registry_number a0) (if (= (Z14450_count_substrings a0 "-") 2) (if (bool-and (bool-and (>= (Z11040_string_length (Z13397_get_the_nth_element_of_a_list (Z25614_split_string_to_list a0 "-") 1)) 2) (<= (Z11040_string_length (Z13397_get_the_nth_element_of_a_list (Z25614_split_string_to_list a0 "-") 1)) 7)) (bool-and (= (Z11040_string_length (Z13397_get_the_nth_element_of_a_list (Z25614_split_string_to_list a0 "-") 2)) 2) (= (Z11040_string_length (Z13397_get_the_nth_element_of_a_list (Z25614_split_string_to_list a0 "-") 3)) 1))) (if (Z16688_same_integer (Z17167_integer_modulo_another_integer (Z17101_natural_number_to_integer (Z33637_weighted_sum_natural_values_natural_weights (Z25520_list_of_decimal_digits_in_a_number (Z15767_reverse_decimal_digits (Z14283 (Z10000_join_two_strings (Z13397_get_the_nth_element_of_a_list (Z25614_split_string_to_list a0 "-") 1) (Z13397_get_the_nth_element_of_a_list (Z25614_split_string_to_list a0 "-") 2))))) (Z24855_type_untyped_list_as_natural_number (Z17895_untype_a_list (Z31619_generate_range_of_integers (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16660))) (Z16683K2 1)) (Z17101_natural_number_to_integer (+ (Z11040_string_length (Z13397_get_the_nth_element_of_a_list (Z25614_split_string_to_list a0 "-") 1)) (Z11040_string_length (Z13397_get_the_nth_element_of_a_list (Z25614_split_string_to_list a0 "-") 2))))))))) (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16660))) (Z16683K2 10))) (Z17101_natural_number_to_integer (Z14283 (Z13397_get_the_nth_element_of_a_list (Z25614_split_string_to_list a0 "-") 3)))) #t #f) #f) #f))
 (define Z30950 Z30950_is_a_valid_cas_registry_number)
 
 ;; Z30954 Codex CSS-only link button  [reaches an unimplemented function]
@@ -12790,6 +13120,11 @@
 (define (Z31098_apply_three_parameter_function_pairwise_to_3_lists a0 a1 a2 a3) (if (bool-or (null? a1) (bool-or (null? a2) (null? a3))) (list) (cons (Z21216_apply_three_argument_function a0 (car a1) (car a2) (car a3)) (Z31098_apply_three_parameter_function_pairwise_to_3_lists a0 (cdr a1) (cdr a2) (cdr a3)))))
 (define Z31098 Z31098_apply_three_parameter_function_pairwise_to_3_lists)
 
+;; Z31104 name of Wikidata item in Toki Pona  [reaches an unimplemented function]
+;;   Z31104K1: Wikidata item reference -> Monolingual text   [declared, not checked]
+(define (Z31104_name_of_wikidata_item_in_toki_pona a0) (if (Z10008_is_empty_string (Z23753_label_of_item_reference_in_language_or_to_mul a0 Z1762)) (Z30035_prepend_string_to_monolingual_text (Z10000_join_two_strings (Z19308_value_of_wikidata_statement (car (Z29694_get_best_statements_for_wikidata_prop_from_item a0 (record Z6092 (Z6092K1 "P13326"))))) " ") (Z30785_capitalise_first_letter_of_monolingual_text (record Z11 (Z11K1 Z1762) (Z11K2 (Z30901 (car (Z29957_get_ipa_transcriptions_of_lexeme_form (car (Z30075_return_list_if_non_empty_else_backup (Z30075_return_list_if_non_empty_else_backup (Z19243_select_lexeme_forms_from_lexeme (Z6825 (Z30590_lexeme_reference_from_lexeme_sense_reference (car (Z30931_endonymic_lexeme_senses_for_wikidata_item (Z6821_fetch_wikidata_item a0))))) (list (record Z6091 (Z6091K1 "Q131105")))) (Z19243_select_lexeme_forms_from_lexeme (Z6825 (Z30590_lexeme_reference_from_lexeme_sense_reference (car (Z30931_endonymic_lexeme_senses_for_wikidata_item (Z6821_fetch_wikidata_item a0))))) (list (record Z6091 (Z6091K1 "Q110786"))))) (Z19302_lexeme_forms_from_lexeme (Z6825 (Z30590_lexeme_reference_from_lexeme_sense_reference (car (Z30931_endonymic_lexeme_senses_for_wikidata_item (Z6821_fetch_wikidata_item a0))))))))))))))) (record Z11 (Z11K1 Z1762) (Z11K2 (Z23753_label_of_item_reference_in_language_or_to_mul a0 Z1762)))))
+(define Z31104 Z31104_name_of_wikidata_item_in_toki_pona)
+
 ;; Z31108 Western musical scale degree to Svara  [reaches an unimplemented function]
 ;;   Z31108K1: Wikidata item -> Wikidata item reference   [declared, not checked]
 (define (Z31108_western_musical_scale_degree_to_svara a0) (Z19308_value_of_wikidata_statement (Z23680_best_ranked_statement_from_list (Z31659_get_property_statements_with_qualifier_from_item a0 (record Z6092 (Z6092K1 "P460")) (record Z6092 (Z6092K1 "P3831")) (record Z6091 (Z6091K1 "Q7380503"))))))
@@ -12827,7 +13162,7 @@
 
 ;; Z31161 value of integral dimensionless Wikidata quantity  [reaches an unimplemented function]
 ;;   Z31161K1: Wikidata quantity -> Integer   [declared, not checked]
-(define (Z31161_value_of_integral_dimensionless_wikidata_quantity a0) (Z19682 (Z25294_amount_from_quantity (Z28509_convert_wikidata_quantity_to_compatible_unit a0 (record Z6091 (Z6091K1 "Q199"))))))
+(define (Z31161_value_of_integral_dimensionless_wikidata_quantity a0) (Z19682_truncate_rational_number (Z25294_amount_from_quantity (Z28509_convert_wikidata_quantity_to_compatible_unit a0 (record Z6091 (Z6091K1 "Q199"))))))
 (define Z31161 Z31161_value_of_integral_dimensionless_wikidata_quantity)
 
 ;; Z31168 best of Monolingual texts according to fallbacks  [reaches an unimplemented function]
@@ -12852,7 +13187,7 @@
 
 ;; Z31188 days until next Meyboom  [reaches an unimplemented function]
 ;;   Z31188K1: Gregorian calendar date -> Natural number   [declared, not checked]
-(define (Z31188_days_until_next_meyboom a0) (Z17144_absolute_value_of_integer_as_natural_number (Z20744_days_until a0 (Z24962 (record Z20342 (Z20342K1 (record Z16098 (Z16098K1 Z16108))) (Z20342K2 9)) (Z24948_year_from_calendar_date a0)))))
+(define (Z31188_days_until_next_meyboom a0) (Z17144_absolute_value_of_integer_as_natural_number (Z20744_days_until a0 (Z24962_date_from_day_of_year_and_year (record Z20342 (Z20342K1 (record Z16098 (Z16098K1 Z16108))) (Z20342K2 9)) (Z24948_year_from_calendar_date a0)))))
 (define Z31188 Z31188_days_until_next_meyboom)
 
 ;; Z31205 Template:0 (multi-wiki)  [reaches an unimplemented function]
@@ -13092,7 +13427,7 @@
 
 ;; Z31585 all k-diagonals of matrix  [reaches an unimplemented function]
 ;;   Z31585K1: Typed list(Typed list(Object)) -> Typed list(Typed list(Object))   [declared, not checked]
-(define (Z31585_all_k_diagonals_of_matrix a0) (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an Z31587_get_k_diagonal_of_list_of_lists a0 (Z31619_generate_range_of_integers (Z17267_negate_natural_number_to_integer (Z13582_decrement_natural_number_by_one (fst (Z31612_size_of_matrix a0)))) (Z17101 (Z13582_decrement_natural_number_by_one (snd (Z31612_size_of_matrix a0)))))))
+(define (Z31585_all_k_diagonals_of_matrix a0) (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an Z31587_get_k_diagonal_of_list_of_lists a0 (Z31619_generate_range_of_integers (Z17267_negate_natural_number_to_integer (Z13582_decrement_natural_number_by_one (fst (Z31612_size_of_matrix a0)))) (Z17101_natural_number_to_integer (Z13582_decrement_natural_number_by_one (snd (Z31612_size_of_matrix a0)))))))
 (define Z31585 Z31585_all_k_diagonals_of_matrix)
 
 ;; Z31587 get k-diagonal of list of lists  [reaches an unimplemented function]
@@ -13125,9 +13460,14 @@
 (define (Z31619_generate_range_of_integers a0 a1) (if (Z17140_less_than_integer a1 a0) (list) (cons a0 (Z31619_generate_range_of_integers (Z17153_increment_integer a0) a1))))
 (define Z31619 Z31619_generate_range_of_integers)
 
+;; Z31655 item from item with property and qualifier  [reaches an unimplemented function]
+;;   Z31655K1: Wikidata item, Z31655K2: Wikidata property, Z31655K3: Wikidata property, Z31655K4: Wikidata item -> Wikidata item   [declared, not checked]
+(define (Z31655_item_from_item_with_property_and_qualifier a0 a1 a2 a3) (Z19308_value_of_wikidata_statement (car (Z29870_filter_wd_statements_by_exact_qualifier_w_value (Z29691_get_statements_for_wikidata_property_from_item a0 a1) (record Z6007 (Z6007K1 a2) (Z6007K2 a3) (Z6007K3 Z6021))))))
+(define Z31655 Z31655_item_from_item_with_property_and_qualifier)
+
 ;; Z31659 get property statements with qualifier from item  [reaches an unimplemented function]
 ;;   Z31659K1: Wikidata item, Z31659K2: Wikidata property reference, Z31659K3: Wikidata property reference, Z31659K4: Wikidata item reference -> Typed list(Wikidata statement)   [declared, not checked]
-(define (Z31659_get_property_statements_with_qualifier_from_item a0 a1 a2 a3) (Z29870_filter_wd_statements_by_exact_qualifier_w_value (Z26700_filter_statements_in_wikidata_item_by_properties a0 (cons a1 (list))) (Z35133 a2 a3)))
+(define (Z31659_get_property_statements_with_qualifier_from_item a0 a1 a2 a3) (Z29870_filter_wd_statements_by_exact_qualifier_w_value (Z26700_filter_statements_in_wikidata_item_by_properties a0 (cons a1 (list))) (Z35133_construct_wikidata_property_claim_from_pid_and_qid a2 a3)))
 (define Z31659 Z31659_get_property_statements_with_qualifier_from_item)
 
 ;; Z31661 perimeter of circle with radius  [reaches an unimplemented function]
@@ -13217,7 +13557,7 @@
 
 ;; Z31818 add rational to all elements of a list  [reaches an unimplemented function]
 ;;   Z31818K1: Typed list(Rational number), Z31818K2: Rational number -> Typed list(Rational number)   [declared, not checked]
-(define (Z31818_add_rational_to_all_elements_of_a_list a0 a1) (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z19679 a0 a1))
+(define (Z31818_add_rational_to_all_elements_of_a_list a0 a1) (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z19679_add_rational_numbers a0 a1))
 (define Z31818 Z31818_add_rational_to_all_elements_of_a_list)
 
 ;; Z31819 multiply array elements by rational  [reaches an unimplemented function]
@@ -13342,12 +13682,12 @@
 
 ;; Z32027 Mediant of two rational numbers  [reaches an unimplemented function]
 ;;   Z32027K1: Rational number, Z32027K2: Rational number -> Rational number   [declared, not checked]
-(define (Z32027_mediant_of_two_rational_numbers a0 a1) (Z19854 (Z16693_add_integers (Z27820_signed_numerator_of_simplified_rational_number a0) (Z27820_signed_numerator_of_simplified_rational_number a1)) (+ (Z19724_denominator_of_simplified_rational_number a0) (Z19724_denominator_of_simplified_rational_number a1))))
+(define (Z32027_mediant_of_two_rational_numbers a0 a1) (Z19854_simplified_rational_from_z_numerator_denominator (Z16693_add_integers (Z27820_signed_numerator_of_simplified_rational_number a0) (Z27820_signed_numerator_of_simplified_rational_number a1)) (+ (Z19724_denominator_of_simplified_rational_number a0) (Z19724_denominator_of_simplified_rational_number a1))))
 (define Z32027 Z32027_mediant_of_two_rational_numbers)
 
 ;; Z32053 simple cite web  [reaches an unimplemented function]
 ;;   Z32053K1: String, Z32053K2: String, Z32053K3: String, Z32053K4: Gregorian calendar date, Z32053K5: Natural language -> HTML fragment   [declared, not checked]
-(define (Z32053_simple_cite_web a0 a1 a2 a3 a4) (Z27873_wrap_an_html_fragment_in_a_tag (Z27926_join_multiple_html_fragments (cons (Z27873_wrap_an_html_fragment_in_a_tag (if (Z24331_is_not_empty_string a1) (Z27868 a1) a0) "a" (list "href") (cons a0 (list))) (cons (Z27861 ". ") (cons (if (Z24331_is_not_empty_string a2) (Z27849_join_two_html_fragments (Z27873_wrap_an_html_fragment_in_a_tag (Z27868 a2) "i" (list) (list)) (record Z89 (Z89K1 ". "))) (record Z89 (Z89K1 ""))) (cons (Z27849_join_two_html_fragments (Z27849_join_two_html_fragments (Z27868 (Z34096 (Z24766_label_text_for_item_in_given_language_or_fallback (record Z6091 (Z6091K1 "Q114946753")) a4) a4)) (record Z89 (Z89K1 ": "))) (Z27868 (Z20780_display_date a3 a4))) (cons (record Z89 (Z89K1 ".")) (list))))))) "sup" (list "class") (list "ext-wikilambda-reference")))
+(define (Z32053_simple_cite_web a0 a1 a2 a3 a4) (Z27873_wrap_an_html_fragment_in_a_tag (Z27926_join_multiple_html_fragments (cons (Z27873_wrap_an_html_fragment_in_a_tag (if (Z24331_is_not_empty_string a1) (Z27868 a1) a0) "a" (list "href") (cons a0 (list))) (cons (Z27861 ". ") (cons (if (Z24331_is_not_empty_string a2) (Z27849_join_two_html_fragments (Z27873_wrap_an_html_fragment_in_a_tag (Z27868 a2) "i" (list) (list)) (record Z89 (Z89K1 ". "))) (record Z89 (Z89K1 ""))) (cons (Z27849_join_two_html_fragments (Z27849_join_two_html_fragments (Z27868 (Z34096_conditional_sentence_case (Z24766_label_text_for_item_in_given_language_or_fallback (record Z6091 (Z6091K1 "Q114946753")) a4) a4)) (record Z89 (Z89K1 ": "))) (Z27868 (Z20780_display_date a3 a4))) (cons (record Z89 (Z89K1 ".")) (list))))))) "sup" (list "class") (list "ext-wikilambda-reference")))
 (define Z32053 Z32053_simple_cite_web)
 
 ;; Z32063 monolingual text list contains monolingual text
@@ -13382,7 +13722,7 @@
 
 ;; Z32109 sort list of Unicode code points, ascending  [reaches an unimplemented function]
 ;;   Z32109K1: Typed list(Unicode code point) -> Typed list(Unicode code point)   [declared, not checked]
-(define (Z32109_sort_list_of_unicode_code_points_ascending a0) (map Z23022 (Z17873_sort_list_ascending_natural_numbers (Z18475_return_typed_list (map Z23063_code_point_to_natural_number a0)))))
+(define (Z32109_sort_list_of_unicode_code_points_ascending a0) (map Z23022_natural_number_to_codepoint (Z17873_sort_list_ascending_natural_numbers (Z18475_return_typed_list (map Z23063_code_point_to_natural_number a0)))))
 (define Z32109 Z32109_sort_list_of_unicode_code_points_ascending)
 
 ;; Z32117 length of hypotenuse of a right triangle  [reaches an unimplemented function]
@@ -13402,7 +13742,7 @@
 
 ;; Z32145 section title from Wikidata item reference  [reaches an unimplemented function]
 ;;   Z32145K1: Wikidata item reference, Z32145K2: Natural language -> HTML fragment   [declared, not checked]
-(define (Z32145_section_title_from_wikidata_item_reference a0 a1) (Z31465_section_title_h2 (Z34096 (Z36270_label_text_for_item_in_lang_or_ltd_fallback_or_qid a0 a1) a1)))
+(define (Z32145_section_title_from_wikidata_item_reference a0 a1) (Z31465_section_title_h2 (Z34096_conditional_sentence_case (Z36270_label_text_for_item_in_lang_or_ltd_fallback_or_qid a0 a1) a1)))
 (define Z32145 Z32145_section_title_from_wikidata_item_reference)
 
 ;; Z32149 paragraph from list of fragments with separator  [reaches an unimplemented function]
@@ -13434,6 +13774,21 @@
 ;;   Z32169K1: Wikidata item reference, Z32169K2: Natural language -> String   [declared, not checked]
 (define (Z32169_label_of_item_with_definite_article_french a0 a1) (Z11542_if_string_output #f (Z10000_join_two_strings "les " (Z23753_label_of_item_reference_in_language_or_to_mul a0 a1)) (Z11542_if_string_output (Z32201_elide_french_article_before_this_word (Z23753_label_of_item_reference_in_language_or_to_mul a0 a1)) (Z10000_join_two_strings "l'" (Z23753_label_of_item_reference_in_language_or_to_mul a0 a1)) (Z11542_if_string_output (Z22281_noun_lid_gender_in_french_is_female (Z37847_first_lexeme_ref_from_item_ref_and_language a0 a1)) (Z10000_join_two_strings "la " (Z23753_label_of_item_reference_in_language_or_to_mul a0 a1)) (Z10000_join_two_strings "le " (Z23753_label_of_item_reference_in_language_or_to_mul a0 a1))))))
 (define Z32169 Z32169_label_of_item_with_definite_article_french)
+
+;; Z32175 Malay ordinal class location fragment  [reaches an unimplemented function]
+;;   Z32175K1: Wikidata item reference, Z32175K2: Natural number, Z32175K3: Wikidata item reference, Z32175K4: Wikidata item reference, Z32175K5: Wikidata item reference -> Monolingual text   [declared, not checked]
+(define (Z32175_malay_ordinal_class_location_fragment a0 a1 a2 a3 a4) (Z30009_apply_string_transformation_to_monolingual_text (Z30784 (record Z11 (Z11K1 Z1531) (Z11K2 (Z21394_concatenate_many_strings (cons (Z24766_label_text_for_item_in_given_language_or_fallback a0 Z1531) (cons " merupakan " (cons (Z24766_label_text_for_item_in_given_language_or_fallback a3 Z1531) (cons " " (cons (Z14396_string_of_monolingual_text (Z32176_malay_ordinal_superlative_construction (Z37847_first_lexeme_ref_from_item_ref_and_language a2 Z1531) a1 Z1531)) (cons " di " (cons (Z24766_label_text_for_item_in_given_language_or_fallback a4 Z1531) (list)))))))))))) Z29639_terminate_sentence_with_full_stop))
+(define Z32175 Z32175_malay_ordinal_class_location_fragment)
+
+;; Z32176 Malay ordinal-superlative construction  [reaches an unimplemented function]
+;;   Z32176K1: Wikidata lexeme reference, Z32176K2: Natural number, Z32176K3: Natural language -> Monolingual text   [declared, not checked]
+(define (Z32176_malay_ordinal_superlative_construction a0 a1 a2) (if (= a1 1) (Z32177_malay_superlative_form_of_adjective_lexeme_based a0 a2) (record Z11 (Z11K1 (Z14404_language_of_monolingual_text (Z32177_malay_superlative_form_of_adjective_lexeme_based a0 a2))) (Z11K2 (Z15175_join_two_strings_with_separator (Z30603_malay_ordinal a1) (Z14396_string_of_monolingual_text (Z32177_malay_superlative_form_of_adjective_lexeme_based a0 a2)) (if (Z10615_string_starts_with (Z14396_string_of_monolingual_text (Z32177_malay_superlative_form_of_adjective_lexeme_based a0 a2)) "ter") " " " "))))))
+(define Z32176 Z32176_malay_ordinal_superlative_construction)
+
+;; Z32177 Malay superlative form of adjective (lexeme based)  [reaches an unimplemented function]
+;;   Z32177K1: Wikidata lexeme reference, Z32177K2: Natural language -> Monolingual text   [declared, not checked]
+(define (Z32177_malay_superlative_form_of_adjective_lexeme_based a0 a1) (if (null? (Z19243_select_lexeme_forms_from_lexeme (Z6825 a0) (list (record Z6091 (Z6091K1 "Q1817208"))))) (record Z11 (Z11K1 Z1531) (Z11K2 (Z32185_malay_first_superlative_form_ter (Z27410_better_matching_representation_string_from_lexeme (Z6825 a0) (list (record Z6091 (Z6091K1 "Q3482678"))))))) (car (Z22396_get_texts_of_representations_of_wd_lexeme_form (car (Z19243_select_lexeme_forms_from_lexeme (Z6825 a0) (list (record Z6091 (Z6091K1 "Q1817208")))))))))
+(define Z32177 Z32177_malay_superlative_form_of_adjective_lexeme_based)
 
 ;; Z32179 unordered list with item tagging  [reaches an unimplemented function]
 ;;   Z32179K1: Typed list(HTML fragment) -> HTML fragment   [declared, not checked]
@@ -13515,6 +13870,11 @@
 (define (Z32234_join_text_like_objects_into_html_fragment a0) (Z27926_join_multiple_html_fragments (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l Z13351_apply_list_of_functions (Z29791_zip_multiple_lists (identity (cons (Z13717_replace_elements_of_list_according_to_key_value_lookup_lists (map Z22764 (map Z16829_type_of_object a0)) (list "Z6" "Z11" "Z89") (list identity Z33457_monolingual_text_as_html_with_language_span identity)) (cons (Z13717_replace_elements_of_list_according_to_key_value_lookup_lists (map Z22764 (map Z16829_type_of_object a0)) (list "Z6" "Z11" "Z89") (list Z27861 identity identity)) (list))))) a0)))
 (define Z32234 Z32234_join_text_like_objects_into_html_fragment)
 
+;; Z32238 English simple cite web + language  [reaches an unimplemented function]
+;;   Z32238K1: String, Z32238K2: String, Z32238K3: String, Z32238K4: Gregorian calendar date, Z32238K5: Natural language -> HTML fragment   [declared, not checked]
+(define (Z32238_english_simple_cite_web_language a0 a1 a2 a3 a4) (Z27873_wrap_an_html_fragment_in_a_tag (Z27926_join_multiple_html_fragments (cons (Z27873_wrap_an_html_fragment_in_a_tag (if (Z24331_is_not_empty_string a1) (Z27868 a1) (Z27868 a0)) "a" (list "href") (cons a0 (list))) (cons (record Z89 (Z89K1 ". ")) (cons (if (Z24331_is_not_empty_string a2) (Z27849_join_two_html_fragments (Z27873_wrap_an_html_fragment_in_a_tag (Z27868 a2) "i" (list) (list)) (record Z89 (Z89K1 ". "))) (record Z89 (Z89K1 ""))) (cons (Z27849_join_two_html_fragments (record Z89 (Z89K1 "Retrieved ")) (Z27868 (Z15175_join_two_strings_with_separator (Z24974_date_as_english_day_month_string (Z24936_day_of_year_from_calendar_date a3)) (Z13713_natural_number_to_digit_string (Z20160_gregorian_year_to_year_number (Z24948_year_from_calendar_date a3))) " "))) (cons (if (Z29750_language_is_acceptable_substitute Z1002 a4) (record Z89 (Z89K1 "")) (Z27926_join_multiple_html_fragments (cons (record Z89 (Z89K1 " (In ")) (cons (Z27868 (Z16568_object_label (record Z99 (Z99K1 a4)) Z1002)) (cons (record Z89 (Z89K1 ")")) (list)))))) (cons (record Z89 (Z89K1 ".")) (list)))))))) "sup" (list "class") (list "ext-wikilambda-reference")))
+(define Z32238 Z32238_english_simple_cite_web_language)
+
 ;; Z32243 Superlative definition, in Malay  [reaches an unimplemented function]
 ;;   Z32243K1: Wikidata item reference, Z32243K2: Wikidata item reference, Z32243K3: Wikidata item reference, Z32243K4: Wikidata item reference -> Monolingual text   [declared, not checked]
 (define (Z32243_superlative_definition_in_malay a0 a1 a2 a3) (Z26107_monolingual_text_from_language_and_string Z1531 (Z21394_concatenate_many_strings (cons (Z10771_sentence_case (Z23753_label_of_item_reference_in_language_or_to_mul a0 Z1531)) (cons " merupakan " (cons (Z23753_label_of_item_reference_in_language_or_to_mul a2 Z1531) (cons " " (cons (Z32185_malay_first_superlative_form_ter (Z22839_first_object_or_default (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z27410_better_matching_representation_string_from_lexeme (map Z6825 (Z23471_lexeme_references_from_wikidata_item_reference a1 Z1531)) (list)) (Z23753_label_of_item_reference_in_language_or_to_mul a1 Z1531))) (cons " di " (cons (Z23753_label_of_item_reference_in_language_or_to_mul a3 Z1531) (cons "." (list))))))))))))
@@ -13527,7 +13887,7 @@
 
 ;; Z32249 English collective role sentence  [reaches an unimplemented function]
 ;;   Z32249K1: Wikidata item reference, Z32249K2: Wikidata item reference, Z32249K3: Wikidata item reference, Z32249K4: Natural language -> Monolingual text   [declared, not checked]
-(define (Z32249_english_collective_role_sentence a0 a1 a2 a3) (Z26107_monolingual_text_from_language_and_string a3 (Z21394_concatenate_many_strings (cons (Z10771_sentence_case (Z32606 a0 a3 (list))) (cons " are " (cons (Z32606 a1 a3 (list)) (cons " of " (cons (Z850 (Z21806_lemma_string_from_lexeme_and_lang (Z27327_best_lexeme_for_wikidata_item a2 (record Z6092 (Z6092K1 "P5137")) a3) a3) Z500 (Z23753_label_of_item_reference_in_language_or_to_mul a2 a3)) (cons "." (list))))))))))
+(define (Z32249_english_collective_role_sentence a0 a1 a2 a3) (Z26107_monolingual_text_from_language_and_string a3 (Z21394_concatenate_many_strings (cons (Z10771_sentence_case (Z32606_plural_from_wikidata_item_in_language_w_features a0 a3 (list))) (cons " are " (cons (Z32606_plural_from_wikidata_item_in_language_w_features a1 a3 (list)) (cons " of " (cons (Z850 (Z21806_lemma_string_from_lexeme_and_lang (Z27327_best_lexeme_for_wikidata_item a2 (record Z6092 (Z6092K1 "P5137")) a3) a3) Z500 (Z23753_label_of_item_reference_in_language_or_to_mul a2 a3)) (cons "." (list))))))))))
 (define Z32249 Z32249_english_collective_role_sentence)
 
 ;; Z32250 Russian classify a class of nouns fragment  [reaches an unimplemented function]
@@ -13650,6 +14010,11 @@
 (define (Z32378_grammatical_number_s_p_of_lexeme_form a0) (if (Z12696_contains (Z22638_all_grammatical_features_of_lexeme_form a0) (record Z6091 (Z6091K1 "Q146786"))) (record Z26934 (Z26934K1 (record Z6091 (Z6091K1 "Q146786")))) (record Z26934 (Z26934K1 (record Z6091 (Z6091K1 "Q110786"))))))
 (define Z32378 Z32378_grammatical_number_s_p_of_lexeme_form)
 
+;; Z32385 Russian sentence describing the class of a class  [reaches an unimplemented function]
+;;   Z32385K1: Wikidata item reference, Z32385K2: Wikidata item reference, Z32385K3: Wikidata item reference -> Monolingual text   [declared, not checked]
+(define (Z32385_russian_sentence_describing_the_class_of_a_class a0 a1 a2) (record Z11 (Z11K1 Z1005) (Z11K2 (Z22511_capitalise_first_letter_and_add_full_stop (Z22504_join_list_of_strings_with_spaces (cons (Z24102_label_of_item_reference_in_specific_general_lang a0 Z1005) (cons "—" (cons "это" (cons (Z22710_grammatical_gender_based_noun_phrase (Z27327_best_lexeme_for_wikidata_item a2 (record Z6092 (Z6092K1 "P5137")) Z1005) (Z27327_best_lexeme_for_wikidata_item a1 (record Z6092 (Z6092K1 "P5137")) Z1005)) (list))))))))))
+(define Z32385 Z32385_russian_sentence_describing_the_class_of_a_class)
+
 ;; Z32387 add definite article to Lorrain form  [reaches an unimplemented function]
 ;;   Z32387K1: Wikidata lexeme form -> String   [declared, not checked]
 (define (Z32387_add_definite_article_to_lorrain_form a0) (Z15175_join_two_strings_with_separator (Z27748_switch_on_gender_m_f_and_number_s_p (Z26745_grammatical_gender_m_f_of_lexeme (Z6825 (Z22483_lexeme_reference_of_lexeme_form a0))) (Z32378_grammatical_number_s_p_of_lexeme_form a0) (Z22478_string_of_first_representation_of_lexeme_form (Z6824 (record Z6094 (Z6094K1 "L1560184-F1")))) (Z22478_string_of_first_representation_of_lexeme_form (Z6824 (record Z6094 (Z6094K1 "L1560184-F2")))) (Z22478_string_of_first_representation_of_lexeme_form (Z6824 (record Z6094 (Z6094K1 "L1560184-F3")))) (Z22478_string_of_first_representation_of_lexeme_form (Z6824 (record Z6094 (Z6094K1 "L1560184-F3"))))) (Z22478_string_of_first_representation_of_lexeme_form a0) " "))
@@ -13752,7 +14117,7 @@
 
 ;; Z32522 Latin simple present collective sentence  [reaches an unimplemented function]
 ;;   Z32522K1: Wikidata item reference, Z32522K2: Wikidata item reference, Z32522K3: Wikidata item reference, Z32522K4: Natural language -> Monolingual text   [declared, not checked]
-(define (Z32522_latin_simple_present_collective_sentence a0 a1 a2 a3) (Z26107_monolingual_text_from_language_and_string a3 (Z32527 (Z21394_concatenate_many_strings (cons (Z32606 a0 a3 (list (record Z6091 (Z6091K1 "Q131105")))) (cons " " (cons (Z32606 a1 a3 (list (record Z6091 (Z6091K1 "Q146078")))) (cons " " (cons (Z27410_better_matching_representation_string_from_lexeme (Z27327_best_lexeme_for_wikidata_item a2 (record Z6092 (Z6092K1 "P9970")) a3) (list (record Z6091 (Z6091K1 "Q146786")) (record Z6091 (Z6091K1 "Q51929074")) (record Z6091 (Z6091K1 "Q192613")) (record Z6091 (Z6091K1 "Q682111")) (record Z6091 (Z6091K1 "Q1317831")))) (cons "." (list)))))))))))
+(define (Z32522_latin_simple_present_collective_sentence a0 a1 a2 a3) (Z26107_monolingual_text_from_language_and_string a3 (Z32527 (Z21394_concatenate_many_strings (cons (Z32606_plural_from_wikidata_item_in_language_w_features a0 a3 (list (record Z6091 (Z6091K1 "Q131105")))) (cons " " (cons (Z32606_plural_from_wikidata_item_in_language_w_features a1 a3 (list (record Z6091 (Z6091K1 "Q146078")))) (cons " " (cons (Z27410_better_matching_representation_string_from_lexeme (Z27327_best_lexeme_for_wikidata_item a2 (record Z6092 (Z6092K1 "P9970")) a3) (list (record Z6091 (Z6091K1 "Q146786")) (record Z6091 (Z6091K1 "Q51929074")) (record Z6091 (Z6091K1 "Q192613")) (record Z6091 (Z6091K1 "Q682111")) (record Z6091 (Z6091K1 "Q1317831")))) (cons "." (list)))))))))))
 (define Z32522 Z32522_latin_simple_present_collective_sentence)
 
 ;; Z32531 (DEPRECATED) simple present collective sentence  [reaches an unimplemented function]
@@ -13825,14 +14190,19 @@
 (define (Z32599_find_lexemes_for_a_wikidata_item_in_language_group a0 a1 a2) (Z30075_return_list_if_non_empty_else_backup (Z6830 a0 a1 a2) (if (Z10070_has_substring (Z14329_language_to_language_tag a2) "-") (Z6830 a0 a1 (Z24097_language_from_language_variant a2)) (list))))
 (define Z32599 Z32599_find_lexemes_for_a_wikidata_item_in_language_group)
 
+;; Z32606 plural from wikidata item in language w/ features  [reaches an unimplemented function]
+;;   Z32606K1: Wikidata item reference, Z32606K2: Natural language, Z32606K3: Typed list(Wikidata item reference) -> String   [declared, not checked]
+(define (Z32606_plural_from_wikidata_item_in_language_w_features a0 a1 a2) (Z850 (Z27410_better_matching_representation_string_from_lexeme (Z27327_best_lexeme_for_wikidata_item a0 (record Z6092 (Z6092K1 "P5137")) a1) (cons (record Z6091 (Z6091K1 "Q146786")) a2)) Z500 (Z14396_string_of_monolingual_text (Z14391_plural_in_language_of_monolingual_text (record Z11 (Z11K1 a1) (Z11K2 (Z24766_label_text_for_item_in_given_language_or_fallback a0 a1)))))))
+(define Z32606 Z32606_plural_from_wikidata_item_in_language_w_features)
+
 ;; Z32612 Latin collective role sentence  [reaches an unimplemented function]
 ;;   Z32612K1: Wikidata item reference, Z32612K2: Wikidata item reference, Z32612K3: Wikidata item reference, Z32612K4: Natural language -> Monolingual text   [declared, not checked]
-(define (Z32612_latin_collective_role_sentence a0 a1 a2 a3) (Z26107_monolingual_text_from_language_and_string a3 (Z32527 (Z21394_concatenate_many_strings (cons (Z32606 a0 a3 (list (record Z6091 (Z6091K1 "Q131105")))) (cons " sunt " (cons (Z32606 a1 a3 (list (record Z6091 (Z6091K1 "Q146078")))) (cons " " (cons (Z850 (Z27410_better_matching_representation_string_from_lexeme (Z27327_best_lexeme_for_wikidata_item a2 (record Z6092 (Z6092K1 "P5137")) a3) (list (record Z6091 (Z6091K1 "Q146233")) (record Z6091 (Z6091K1 "Q110786")))) Z500 (Z24766_label_text_for_item_in_given_language_or_fallback a2 a3)) (cons "." (list)))))))))))
+(define (Z32612_latin_collective_role_sentence a0 a1 a2 a3) (Z26107_monolingual_text_from_language_and_string a3 (Z32527 (Z21394_concatenate_many_strings (cons (Z32606_plural_from_wikidata_item_in_language_w_features a0 a3 (list (record Z6091 (Z6091K1 "Q131105")))) (cons " sunt " (cons (Z32606_plural_from_wikidata_item_in_language_w_features a1 a3 (list (record Z6091 (Z6091K1 "Q146078")))) (cons " " (cons (Z850 (Z27410_better_matching_representation_string_from_lexeme (Z27327_best_lexeme_for_wikidata_item a2 (record Z6092 (Z6092K1 "P5137")) a3) (list (record Z6091 (Z6091K1 "Q146233")) (record Z6091 (Z6091K1 "Q110786")))) Z500 (Z24766_label_text_for_item_in_given_language_or_fallback a2 a3)) (cons "." (list)))))))))))
 (define Z32612 Z32612_latin_collective_role_sentence)
 
 ;; Z32621 English verb describing noun sentence  [reaches an unimplemented function]
 ;;   Z32621K1: Wikidata item reference, Z32621K2: Wikidata item reference, Z32621K3: Natural language -> Monolingual text   [declared, not checked]
-(define (Z32621_english_verb_describing_noun_sentence a0 a1 a2) (Z26107_monolingual_text_from_language_and_string a2 (Z22511_capitalise_first_letter_and_add_full_stop (Z21394_concatenate_many_strings (cons (Z32606 a0 a2 (list)) (cons " " (cons (Z27410_better_matching_representation_string_from_lexeme (Z27327_best_lexeme_for_wikidata_item a1 (record Z6092 (Z6092K1 "P9970")) a2) (list (record Z6091 (Z6091K1 "Q3910936")))) (list))))))))
+(define (Z32621_english_verb_describing_noun_sentence a0 a1 a2) (Z26107_monolingual_text_from_language_and_string a2 (Z22511_capitalise_first_letter_and_add_full_stop (Z21394_concatenate_many_strings (cons (Z32606_plural_from_wikidata_item_in_language_w_features a0 a2 (list)) (cons " " (cons (Z27410_better_matching_representation_string_from_lexeme (Z27327_best_lexeme_for_wikidata_item a1 (record Z6092 (Z6092K1 "P9970")) a2) (list (record Z6091 (Z6091K1 "Q3910936")))) (list))))))))
 (define Z32621 Z32621_english_verb_describing_noun_sentence)
 
 ;; Z32626 join list of places (default format)
@@ -13922,7 +14292,7 @@
 
 ;; Z32702 [X] [present verb] [Y], Multilingual  [reaches an unimplemented function]
 ;;   Z32702K1: Wikidata item reference, Z32702K2: Wikidata item reference, Z32702K3: Wikidata item reference, Z32702K4: Boolean, Z32702K5: Boolean, Z32702K6: Natural language -> Monolingual text   [declared, not checked]
-(define (Z32702_x_present_verb_y_multilingual a0 a1 a2 a3 a4 a5) (Z26107_monolingual_text_from_language_and_string a5 (Z22511_capitalise_first_letter_and_add_full_stop (Z21394_concatenate_many_strings (cons (if a3 (Z32606 a0 a5 (list)) (Z850 (Z27410_better_matching_representation_string_from_lexeme (Z27327_best_lexeme_for_wikidata_item a0 (record Z6092 (Z6092K1 "P5137")) a5) (list (record Z6091 (Z6091K1 "Q110786")))) Z500 (Z24766_label_text_for_item_in_given_language_or_fallback a0 a5))) (cons " " (cons (Z27410_better_matching_representation_string_from_lexeme (Z27327_best_lexeme_for_wikidata_item a2 (record Z6092 (Z6092K1 "P9970")) a5) (cons (record Z6091 (Z6091K1 "Q3910936")) (cons (if a3 (record Z6091 (Z6091K1 "Q146786")) (record Z6091 (Z6091K1 "Q110786"))) (list)))) (cons " " (cons (if a4 (Z32606 a1 a5 (list)) (Z850 (Z27410_better_matching_representation_string_from_lexeme (Z27327_best_lexeme_for_wikidata_item a1 (record Z6092 (Z6092K1 "P5137")) a5) (list (record Z6091 (Z6091K1 "Q110786")))) Z500 (Z24766_label_text_for_item_in_given_language_or_fallback a1 a5))) (list))))))))))
+(define (Z32702_x_present_verb_y_multilingual a0 a1 a2 a3 a4 a5) (Z26107_monolingual_text_from_language_and_string a5 (Z22511_capitalise_first_letter_and_add_full_stop (Z21394_concatenate_many_strings (cons (if a3 (Z32606_plural_from_wikidata_item_in_language_w_features a0 a5 (list)) (Z850 (Z27410_better_matching_representation_string_from_lexeme (Z27327_best_lexeme_for_wikidata_item a0 (record Z6092 (Z6092K1 "P5137")) a5) (list (record Z6091 (Z6091K1 "Q110786")))) Z500 (Z24766_label_text_for_item_in_given_language_or_fallback a0 a5))) (cons " " (cons (Z27410_better_matching_representation_string_from_lexeme (Z27327_best_lexeme_for_wikidata_item a2 (record Z6092 (Z6092K1 "P9970")) a5) (cons (record Z6091 (Z6091K1 "Q3910936")) (cons (if a3 (record Z6091 (Z6091K1 "Q146786")) (record Z6091 (Z6091K1 "Q110786"))) (list)))) (cons " " (cons (if a4 (Z32606_plural_from_wikidata_item_in_language_w_features a1 a5 (list)) (Z850 (Z27410_better_matching_representation_string_from_lexeme (Z27327_best_lexeme_for_wikidata_item a1 (record Z6092 (Z6092K1 "P5137")) a5) (list (record Z6091 (Z6091K1 "Q110786")))) Z500 (Z24766_label_text_for_item_in_given_language_or_fallback a1 a5))) (list))))))))))
 (define Z32702 Z32702_x_present_verb_y_multilingual)
 
 ;; Z32728 defining role sentence in Russian  [reaches an unimplemented function]
@@ -13955,10 +14325,15 @@
 (define (Z32753_list_of_strings_from_monolingual_stringset a0) (Z803_value_by_key (record Z39 (Z39K1 "Z31K2")) a0))
 (define Z32753 Z32753_list_of_strings_from_monolingual_stringset)
 
-;; Z32756 monolingual stringset from multilingual & language  [reaches an unimplemented function]
+;; Z32756 monolingual stringset from multilingual & language
 ;;   Z32756K1: Multilingual stringset, Z32756K2: Natural language -> Monolingual stringset   [declared, not checked]
-(define (Z32756_monolingual_stringset_from_multilingual_language a0 a1) (Z32757 (Z23236_monolingual_stringsets_from_multilingual_stringset a0) a1))
+(define (Z32756_monolingual_stringset_from_multilingual_language a0 a1) (Z32757_first_monolingual_stringset_in_language_from_list (Z23236_monolingual_stringsets_from_multilingual_stringset a0) a1))
 (define Z32756 Z32756_monolingual_stringset_from_multilingual_language)
+
+;; Z32757 first monolingual stringset in language from list
+;;   Z32757K1: Typed list(Monolingual stringset), Z32757K2: Natural language -> Monolingual stringset   [declared, not checked]
+(define (Z32757_first_monolingual_stringset_in_language_from_list a0 a1) (if (null? a0) (record Z31 (Z31K1 a1) (Z31K2 (list))) (if (Z14326_same_language (Z32766_language_of_monolingual_stringset (car a0)) a1) (car a0) (Z32757_first_monolingual_stringset_in_language_from_list (cdr a0) a1))))
+(define Z32757 Z32757_first_monolingual_stringset_in_language_from_list)
 
 ;; Z32758 identical monolingual stringset
 ;;   Z32758K1: Monolingual stringset, Z32758K2: Monolingual stringset -> Boolean   [declared, not checked]
@@ -13970,10 +14345,15 @@
 (define (Z32766_language_of_monolingual_stringset a0) (Z803_value_by_key (record Z39 (Z39K1 "Z31K1")) a0))
 (define Z32766 Z32766_language_of_monolingual_stringset)
 
-;; Z32772 list of strings from multilingual stringset & lang  [reaches an unimplemented function]
+;; Z32772 list of strings from multilingual stringset & lang
 ;;   Z32772K1: Multilingual stringset, Z32772K2: Natural language -> Typed list(String)   [declared, not checked]
 (define (Z32772_list_of_strings_from_multilingual_stringset_lang a0 a1) (Z32753_list_of_strings_from_monolingual_stringset (Z32756_monolingual_stringset_from_multilingual_language a0 a1)))
 (define Z32772 Z32772_list_of_strings_from_multilingual_stringset_lang)
+
+;; Z32787 try synthesising IPA transcription for Lexeme Form  [reaches an unimplemented function]
+;;   Z32787K1: Wikidata lexeme form -> Typed list(Monolingual text)   [declared, not checked]
+(define (Z32787_try_synthesising_ipa_transcription_for_lexeme_form a0) (Z19601_n_ifs (cons (Z14326_same_language (Z19295_language_of_lexeme (Z6825 (Z22483_lexeme_reference_of_lexeme_form a0))) Z1830) (list)) (cons (Z14046_element_to_list (record Z11 (Z11K1 Z1830) (Z11K2 (Z32793 (Z14396_string_of_monolingual_text (Z16273_monolingual_text_in_specified_language_from_multilingual_tex (Z22399_representations_of_lexeme_form a0) (record Z60 (Z60K1 "ja-kana") (Z60K2 (list))))))))) (cons (list) (list)))))
+(define Z32787 Z32787_try_synthesising_ipa_transcription_for_lexeme_form)
 
 ;; Z32788 State location using entity and class, zh  [reaches an unimplemented function]
 ;;   Z32788K1: Wikidata item reference, Z32788K2: Wikidata item reference, Z32788K3: Wikidata item reference, Z32788K4: Natural language -> Monolingual text   [declared, not checked]
@@ -14007,7 +14387,7 @@
 
 ;; Z32831 Latin verb describing noun sentence  [reaches an unimplemented function]
 ;;   Z32831K1: Wikidata item reference, Z32831K2: Wikidata item reference, Z32831K3: Natural language -> Monolingual text   [declared, not checked]
-(define (Z32831_latin_verb_describing_noun_sentence a0 a1 a2) (Z26107_monolingual_text_from_language_and_string a2 (Z32527 (Z21394_concatenate_many_strings (cons (Z32606 a0 a2 (list (record Z6091 (Z6091K1 "Q131105")))) (cons " " (cons (Z27410_better_matching_representation_string_from_lexeme (Z27327_best_lexeme_for_wikidata_item a1 (record Z6092 (Z6092K1 "P9970")) a2) (list (record Z6091 (Z6091K1 "Q146786")) (record Z6091 (Z6091K1 "Q51929074")) (record Z6091 (Z6091K1 "Q192613")) (record Z6091 (Z6091K1 "Q682111")) (record Z6091 (Z6091K1 "Q1317831")))) (cons "." (list)))))))))
+(define (Z32831_latin_verb_describing_noun_sentence a0 a1 a2) (Z26107_monolingual_text_from_language_and_string a2 (Z32527 (Z21394_concatenate_many_strings (cons (Z32606_plural_from_wikidata_item_in_language_w_features a0 a2 (list (record Z6091 (Z6091K1 "Q131105")))) (cons " " (cons (Z27410_better_matching_representation_string_from_lexeme (Z27327_best_lexeme_for_wikidata_item a1 (record Z6092 (Z6092K1 "P9970")) a2) (list (record Z6091 (Z6091K1 "Q146786")) (record Z6091 (Z6091K1 "Q51929074")) (record Z6091 (Z6091K1 "Q192613")) (record Z6091 (Z6091K1 "Q682111")) (record Z6091 (Z6091K1 "Q1317831")))) (cons "." (list)))))))))
 (define Z32831 Z32831_latin_verb_describing_noun_sentence)
 
 ;; Z32839 plural section title (from single QID)  [reaches an unimplemented function]
@@ -14117,7 +14497,7 @@
 
 ;; Z32962 entity is instance of class  [reaches an unimplemented function]
 ;;   Z32962K1: Wikidata item reference, Z32962K2: Wikidata item reference, Z32962K3: Natural language -> HTML fragment   [declared, not checked]
-(define (Z32962_entity_is_instance_of_class a0 a1 a2) (Z37493 (Z26039_subject_is_instance_of_string a0 a1 a2) "Z26043" (cons a1 (list)) (cons a0 (cons a1 (list))) a2))
+(define (Z32962_entity_is_instance_of_class a0 a1 a2) (Z37493_nlg_string_to_html_fragment_with_span_for_defaults (Z26039_subject_is_instance_of_string a0 a1 a2) "Z26043" (cons a1 (list)) (cons a0 (cons a1 (list))) a2))
 (define Z32962 Z32962_entity_is_instance_of_class)
 
 ;; Z32965 Article-ful instantiating fragment, HTML  [reaches an unimplemented function]
@@ -14152,7 +14532,7 @@
 
 ;; Z32989 Japanese verb describing noun sentence  [reaches an unimplemented function]
 ;;   Z32989K1: Wikidata item reference, Z32989K2: Wikidata item reference, Z32989K3: Natural language -> Monolingual text   [declared, not checked]
-(define (Z32989_japanese_verb_describing_noun_sentence a0 a1 a2) (Z26107_monolingual_text_from_language_and_string a2 (Z21394_concatenate_many_strings (cons (Z32606 a0 a2 (list)) (cons "は" (cons (Z27410_better_matching_representation_string_from_lexeme (Z27327_best_lexeme_for_wikidata_item a1 (record Z6092 (Z6092K1 "P9970")) a2) (list (record Z6091 (Z6091K1 "Q2898727")))) (cons "。" (list))))))))
+(define (Z32989_japanese_verb_describing_noun_sentence a0 a1 a2) (Z26107_monolingual_text_from_language_and_string a2 (Z21394_concatenate_many_strings (cons (Z32606_plural_from_wikidata_item_in_language_w_features a0 a2 (list)) (cons "は" (cons (Z27410_better_matching_representation_string_from_lexeme (Z27327_best_lexeme_for_wikidata_item a1 (record Z6092 (Z6092K1 "P9970")) a2) (list (record Z6091 (Z6091K1 "Q2898727")))) (cons "。" (list))))))))
 (define Z32989 Z32989_japanese_verb_describing_noun_sentence)
 
 ;; Z32992 Cite Wikidata  [reaches an unimplemented function]
@@ -14164,6 +14544,11 @@
 ;;   Z32994K1: Wikidata item reference, Z32994K2: Wikidata item reference, Z32994K3: Wikidata item reference, Z32994K4: Natural language -> Monolingual text   [declared, not checked]
 (define (Z32994_japanese_collective_role_sentence a0 a1 a2 a3) (Z26107_monolingual_text_from_language_and_string a3 (Z12899_join_list_of_strings_with_delimiter (cons (Z10771_sentence_case (Z23753_label_of_item_reference_in_language_or_to_mul a0 a3)) (cons "は" (cons (Z23753_label_of_item_reference_in_language_or_to_mul a2 a3) (cons "の" (cons (Z22839_first_object_or_default (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z27410_better_matching_representation_string_from_lexeme (Z23616_lexemes_from_wikidata_item_reference a1 a3) (list)) (Z23753_label_of_item_reference_in_language_or_to_mul a1 a3)) (cons "である。" (list))))))) "")))
 (define Z32994 Z32994_japanese_collective_role_sentence)
+
+;; Z32997 Date to monolingual string  [reaches an unimplemented function]
+;;   Z32997K1: Gregorian calendar date, Z32997K2: Natural language -> Monolingual text   [declared, not checked]
+(define (Z32997_date_to_monolingual_string a0 a1) (record Z11 (Z11K1 a1) (Z11K2 (Z20780_display_date a0 a1))))
+(define Z32997 Z32997_date_to_monolingual_string)
 
 ;; Z32998 value of best statement of Lexeme with predicate  [reaches an unimplemented function]
 ;;   Z32998K1: Wikidata lexeme, Z32998K2: Wikidata property reference -> Object   [declared, not checked]
@@ -14357,7 +14742,7 @@
 
 ;; Z33201 add complex128s  [reaches an unimplemented function]
 ;;   Z33201K1: Complex number (float64), Z33201K2: Complex number (float64) -> Complex number (float64)   [declared, not checked]
-(define (Z33201_add_complex128s a0 a1) (Z33227 (Z20849 (Z33214_real_part a0) (Z33214_real_part a1)) (Z20849 (Z33221_imaginary_part a0) (Z33221_imaginary_part a1))))
+(define (Z33201_add_complex128s a0 a1) (Z33227_complex128_from_real_and_imaginary_parts (Z20849 (Z33214_real_part a0) (Z33214_real_part a1)) (Z20849 (Z33221_imaginary_part a0) (Z33221_imaginary_part a1))))
 (define Z33201 Z33201_add_complex128s)
 
 ;; Z33202 same complex128  [reaches an unimplemented function]
@@ -14379,6 +14764,11 @@
 ;;   Z33221K1: Complex number (float64) -> float64   [declared, not checked]
 (define (Z33221_imaginary_part a0) (Z803_value_by_key (record Z39 (Z39K1 "Z33198K2")) a0))
 (define Z33221 Z33221_imaginary_part)
+
+;; Z33227 complex128 from real and imaginary parts
+;;   Z33227K1: float64, Z33227K2: float64 -> Complex number (float64)   [declared, not checked]
+(define (Z33227_complex128_from_real_and_imaginary_parts a0 a1) (identity (record Z33198 (Z33198K1 a0) (Z33198K2 a1))))
+(define Z33227 Z33227_complex128_from_real_and_imaginary_parts)
 
 ;; Z33238 Bangla fragment sentence wrapper (string list)  [reaches an unimplemented function]
 ;;   Z33238K1: Typed list(String) -> Monolingual text   [declared, not checked]
@@ -14404,6 +14794,11 @@
 ;;   Z33267K1: Wikidata item reference, Z33267K2: Wikidata item reference, Z33267K3: Wikidata item reference, Z33267K4: Natural language -> Monolingual text   [declared, not checked]
 (define (Z33267_describing_entity_with_adjective_class_bangla a0 a1 a2 a3) (Z33238_bangla_fragment_sentence_wrapper_string_list (cons (Z33172_bangla_label_of_wikidata_item (Z30120_fetch_wikidata_item_or_parts a0 (list Z6033) (list Z1011) (list))) (cons "একটি" (cons (Z14396_string_of_monolingual_text (Z19530_first_text_of_lexeme_matching_grammatical_features (Z6825 (car (Z23471_lexeme_references_from_wikidata_item_reference a1 Z1011))) (list (record Z6091 (Z6091K1 "Q3482678"))))) (cons (Z33172_bangla_label_of_wikidata_item (Z30120_fetch_wikidata_item_or_parts a2 (list Z6033) (list Z1011) (list))) (list)))))))
 (define Z33267 Z33267_describing_entity_with_adjective_class_bangla)
+
+;; Z33281 normalize city name  [reaches an unimplemented function]
+;;   Z33281K1: String -> String   [declared, not checked]
+(define (Z33281_normalize_city_name a0) (Z14396_string_of_monolingual_text (Z30785_capitalise_first_letter_of_monolingual_text (record Z11 (Z11K1 Z1002) (Z11K2 a0)))))
+(define Z33281 Z33281_normalize_city_name)
 
 ;; Z33284 validate city name in English  [reaches an unimplemented function]
 ;;   Z33284K1: String -> Boolean   [declared, not checked]
@@ -14432,7 +14827,7 @@
 
 ;; Z33304 complex128 from magnitude and angle  [reaches an unimplemented function]
 ;;   Z33304K1: float64, Z33304K2: float64 -> Complex number (float64)   [declared, not checked]
-(define (Z33304_complex128_from_magnitude_and_angle a0 a1) (Z33227 (Z21032_multiply_float64 a0 (Z12473_cosine a1)) (Z21032_multiply_float64 a0 (Z16463_sine_float64_rad a1))))
+(define (Z33304_complex128_from_magnitude_and_angle a0 a1) (Z33227_complex128_from_real_and_imaginary_parts (Z21032_multiply_float64 a0 (Z12473_cosine a1)) (Z21032_multiply_float64 a0 (Z16463_sine_float64_rad a1))))
 (define Z33304 Z33304_complex128_from_magnitude_and_angle)
 
 ;; Z33306 abstract wikilink string  [reaches an unimplemented function]
@@ -14492,7 +14887,7 @@
 
 ;; Z33372 negate complex128  [reaches an unimplemented function]
 ;;   Z33372K1: Complex number (float64) -> Complex number (float64)   [declared, not checked]
-(define (Z33372_negate_complex128 a0) (Z33227 (Z21775_negate_float64 (Z33214_real_part a0)) (Z21775_negate_float64 (Z33221_imaginary_part a0))))
+(define (Z33372_negate_complex128 a0) (Z33227_complex128_from_real_and_imaginary_parts (Z21775_negate_float64 (Z33214_real_part a0)) (Z21775_negate_float64 (Z33221_imaginary_part a0))))
 (define Z33372 Z33372_negate_complex128)
 
 ;; Z33391 monolingual text from lang and str in zh-Hant/Hans  [reaches an unimplemented function]
@@ -14532,7 +14927,7 @@
 
 ;; Z33449 (DO NOT USE) Multilingual punctuation with spacing  [reaches an unimplemented function]
 ;;   Z33449K1: Wikidata item reference, Z33449K2: Natural language -> Monolingual text   [declared, not checked]
-(define (Z33449_do_not_use_multilingual_punctuation_with_spacing a0 a1) (Z22839_first_object_or_default (Z803_value_by_key (record Z39 (Z39K1 "Z31K2")) (Z32757 (Z803_value_by_key (record Z39 (Z39K1 "Z6001K4")) (Z6821_fetch_wikidata_item a0)) a1)) ""))
+(define (Z33449_do_not_use_multilingual_punctuation_with_spacing a0 a1) (Z22839_first_object_or_default (Z803_value_by_key (record Z39 (Z39K1 "Z31K2")) (Z32757_first_monolingual_stringset_in_language_from_list (Z803_value_by_key (record Z39 (Z39K1 "Z6001K4")) (Z6821_fetch_wikidata_item a0)) a1)) ""))
 (define Z33449 Z33449_do_not_use_multilingual_punctuation_with_spacing)
 
 ;; Z33453 Filter but fallback if empty
@@ -14557,7 +14952,7 @@
 
 ;; Z33499 magnitude of complex128  [reaches an unimplemented function]
 ;;   Z33499K1: Complex number (float64) -> float64   [declared, not checked]
-(define (Z33499_magnitude_of_complex128 a0) (Z22318_square_root_of_float64 (Z33214_real_part (Z33700 a0 (Z33679 a0)))))
+(define (Z33499_magnitude_of_complex128 a0) (Z22318_square_root_of_float64 (Z33214_real_part (Z33700_multiply_complex_numbers_float64 a0 (Z33679_complex_conjugate_complex128s a0)))))
 (define Z33499 Z33499_magnitude_of_complex128)
 
 ;; Z33506 same complex128 within tolerance  [reaches an unimplemented function]
@@ -14592,7 +14987,7 @@
 
 ;; Z33592 integer from object  [reaches an unimplemented function]
 ;;   Z33592K1: Object -> Integer   [declared, not checked]
-(define (Z33592_integer_from_object a0) (Z17101 (Z14283 (Z31120_string_from_object a0))))
+(define (Z33592_integer_from_object a0) (Z17101_natural_number_to_integer (Z14283 (Z31120_string_from_object a0))))
 (define Z33592 Z33592_integer_from_object)
 
 ;; Z33593 exponent minus log  [reaches an unimplemented function]
@@ -14670,6 +15065,11 @@
 (define (Z33672_float_as_plain_decimal_to_decimal_places a0 a1) (Z25445_rational_as_plain_decimal_to_decimal_places (Z21071_float_as_rational a0) a1))
 (define Z33672 Z33672_float_as_plain_decimal_to_decimal_places)
 
+;; Z33679 complex conjugate (complex128s)  [reaches an unimplemented function]
+;;   Z33679K1: Complex number (float64) -> Complex number (float64)   [declared, not checked]
+(define (Z33679_complex_conjugate_complex128s a0) (record Z33198 (Z33198K1 (Z33214_real_part a0)) (Z33198K2 (Z21775_negate_float64 (Z33221_imaginary_part a0)))))
+(define Z33679 Z33679_complex_conjugate_complex128s)
+
 ;; Z33682 frequency of MIDI note number  [reaches an unimplemented function]
 ;;   Z33682K1: Integer, Z33682K2: Wikidata item -> float64   [declared, not checked]
 (define (Z33682_frequency_of_midi_note_number a0 a1) (Z21032_multiply_float64 (Z33603_reference_frequency_of_pitch_standard a1) (Z25232_frequency_ratio_of_semitone_distance_in_12tet (Z17111_subtract_an_integer a0 (Z33606_midi_number_of_reference_note a1)))))
@@ -14682,12 +15082,22 @@
 
 ;; Z33690 subsection title from Wikidata item reference  [reaches an unimplemented function]
 ;;   Z33690K1: Wikidata item reference, Z33690K2: Natural language -> HTML fragment   [declared, not checked]
-(define (Z33690_subsection_title_from_wikidata_item_reference a0 a1) (Z33691 (Z34096 (Z36270_label_text_for_item_in_lang_or_ltd_fallback_or_qid a0 a1) a1)))
+(define (Z33690_subsection_title_from_wikidata_item_reference a0 a1) (Z33691 (Z34096_conditional_sentence_case (Z36270_label_text_for_item_in_lang_or_ltd_fallback_or_qid a0 a1) a1)))
 (define Z33690 Z33690_subsection_title_from_wikidata_item_reference)
+
+;; Z33700 multiply Complex numbers (float64)  [reaches an unimplemented function]
+;;   Z33700K1: Complex number (float64), Z33700K2: Complex number (float64) -> Complex number (float64)   [declared, not checked]
+(define (Z33700_multiply_complex_numbers_float64 a0 a1) (record Z33198 (Z33198K1 (Z21031 (Z21032_multiply_float64 (Z33214_real_part a0) (Z33214_real_part a1)) (Z21032_multiply_float64 (Z33221_imaginary_part a0) (Z33221_imaginary_part a1)))) (Z33198K2 (Z20849 (Z21032_multiply_float64 (Z33214_real_part a0) (Z33221_imaginary_part a1)) (Z21032_multiply_float64 (Z33214_real_part a1) (Z33221_imaginary_part a0))))))
+(define Z33700 Z33700_multiply_complex_numbers_float64)
+
+;; Z33708 divide Complex numbers (float64)  [reaches an unimplemented function]
+;;   Z33708K1: Complex number (float64), Z33708K2: Complex number (float64) -> Complex number (float64)   [declared, not checked]
+(define (Z33708_divide_complex_numbers_float64 a0 a1) (Z35073_divide_complex128_by_float64 (record Z33198 (Z33198K1 (Z20849 (Z21032_multiply_float64 (Z33214_real_part a0) (Z33214_real_part a1)) (Z21032_multiply_float64 (Z33221_imaginary_part a0) (Z33221_imaginary_part a1)))) (Z33198K2 (Z21031 (Z21032_multiply_float64 (Z33221_imaginary_part a0) (Z33214_real_part a1)) (Z21032_multiply_float64 (Z33214_real_part a0) (Z33221_imaginary_part a1))))) (Z33713_square_magnitude_of_complex_number_float64 a1)))
+(define Z33708 Z33708_divide_complex_numbers_float64)
 
 ;; Z33713 square magnitude of Complex number (float64)  [reaches an unimplemented function]
 ;;   Z33713K1: Complex number (float64) -> float64   [declared, not checked]
-(define (Z33713_square_magnitude_of_complex_number_float64 a0) (Z33214_real_part (Z33700 a0 (Z33679 a0))))
+(define (Z33713_square_magnitude_of_complex_number_float64 a0) (Z33214_real_part (Z33700_multiply_complex_numbers_float64 a0 (Z33679_complex_conjugate_complex128s a0))))
 (define Z33713 Z33713_square_magnitude_of_complex_number_float64)
 
 ;; Z33720 pad end of list
@@ -14704,6 +15114,11 @@
 ;;   Z33738K1: Natural language -> Word order   [declared, not checked]
 (define (Z33738_word_order_sov_svo_of_natural_language a0) (Z33731_word_order_sov_svo_of_wd_language_item (Z29649_wikidata_reference_from_wikifunctions_language_obj a0)))
 (define Z33738 Z33738_word_order_sov_svo_of_natural_language)
+
+;; Z33745 make Integer
+;;   Z33745K1: Sign, Z33745K2: Natural number -> Integer   [declared, not checked]
+(define (Z33745_make_integer a0 a1) (record Z16683 (Z16683K1 a0) (Z16683K2 a1)))
+(define Z33745 Z33745_make_integer)
 
 ;; Z33753 Basque article-less instantiating sentence  [reaches an unimplemented function]
 ;;   Z33753K1: Wikidata item reference, Z33753K2: Wikidata item reference -> String   [declared, not checked]
@@ -14762,7 +15177,7 @@
 
 ;; Z33834 Mandelbrot set function, complex128  [reaches an unimplemented function]
 ;;   Z33834K1: Complex number (float64), Z33834K2: Complex number (float64) -> Complex number (float64)   [declared, not checked]
-(define (Z33834_mandelbrot_set_function_complex128 a0 a1) (Z33201_add_complex128s (Z33700 a0 a0) a1))
+(define (Z33834_mandelbrot_set_function_complex128 a0 a1) (Z33201_add_complex128s (Z33700_multiply_complex_numbers_float64 a0 a0) a1))
 (define Z33834 Z33834_mandelbrot_set_function_complex128)
 
 ;; Z33837 (!) all possible translations of a lexeme sense  [reaches an unimplemented function]
@@ -14782,7 +15197,7 @@
 
 ;; Z33848 abstract wikilink (sentence case)  [reaches an unimplemented function]
 ;;   Z33848K1: Wikidata item reference, Z33848K2: Natural language -> HTML fragment   [declared, not checked]
-(define (Z33848_abstract_wikilink_sentence_case a0 a1) (Z36489_abstract_link_with_text_string_specified_if_qid a0 (Z34096 (Z36270_label_text_for_item_in_lang_or_ltd_fallback_or_qid a0 a1) a1)))
+(define (Z33848_abstract_wikilink_sentence_case a0 a1) (Z36489_abstract_link_with_text_string_specified_if_qid a0 (Z34096_conditional_sentence_case (Z36270_label_text_for_item_in_lang_or_ltd_fallback_or_qid a0 a1) a1)))
 (define Z33848 Z33848_abstract_wikilink_sentence_case)
 
 ;; Z33852 main articles, default  [reaches an unimplemented function]
@@ -14800,9 +15215,14 @@
 (define (Z33862_same_error a0 a1) (Z29294 (Z33876_error_identity a0) a1))
 (define Z33862 Z33862_same_error)
 
-;; Z33876 Error identity  [reaches an unimplemented function]
+;; Z33873 Toki Pona noun classification sentence  [reaches an unimplemented function]
+;;   Z33873K1: Wikidata item reference, Z33873K2: Wikidata item reference -> Monolingual text   [declared, not checked]
+(define (Z33873_toki_pona_noun_classification_sentence a0 a1) (record Z11 (Z11K1 Z1762) (Z11K2 (Z21394_concatenate_many_strings (cons (Z23753_label_of_item_reference_in_language_or_to_mul a0 Z1762) (cons " la ale li " (cons (Z23753_label_of_item_reference_in_language_or_to_mul a1 Z1762) (cons "." (list)))))))))
+(define Z33873 Z33873_toki_pona_noun_classification_sentence)
+
+;; Z33876 Error identity
 ;;   Z33876K1: Error -> Error   [declared, not checked]
-(define (Z33876_error_identity a0) (if (Z852 a0 (Z803_value_by_key (record Z39 (Z39K1 "Z5K1")) a0)) a0 (Z851 Z500 (list "(en) reached \"unreachable\" error in Z33876 [Z33907]"))))
+(define (Z33876_error_identity a0) (record Z5 (Z5K1 (Z803_value_by_key (record Z39 (Z39K1 "Z5K1")) a0)) (Z5K2 (Z803_value_by_key (record Z39 (Z39K1 "Z5K2")) a0))))
 (define Z33876 Z33876_error_identity)
 
 ;; Z33880 Spanish article for  [reaches an unimplemented function]
@@ -14855,6 +15275,11 @@
 (define (Z33977_state_origin_using_entity_and_class_english a0 a1 a2 a3) (Z26107_monolingual_text_from_language_and_string a3 (Z22511_capitalise_first_letter_and_add_full_stop (Z21394_concatenate_many_strings (cons (Z23468_text_from_wikidata_item_label_for_given_language (Z30120_fetch_wikidata_item_or_parts a0 (list Z6033) Z33034 (list)) a3) (cons " is " (cons (Z21739_an_or_a_english (Z23468_text_from_wikidata_item_label_for_given_language (Z30120_fetch_wikidata_item_or_parts a1 (list Z6033) Z33034 (list)) a3)) (cons " " (cons (Z23468_text_from_wikidata_item_label_for_given_language (Z30120_fetch_wikidata_item_or_parts a1 (list Z6033) Z33034 (list)) a3) (cons " from " (cons (if (Z35811_is_monolingual_text_blank (Z33138_definite_article_or_empty_monolingual_en a2 #f #f #f)) "" "the ") (cons (Z23468_text_from_wikidata_item_label_for_given_language (Z30120_fetch_wikidata_item_or_parts a2 (list Z6033) Z33034 (list)) a3) (list)))))))))))))
 (define Z33977 Z33977_state_origin_using_entity_and_class_english)
 
+;; Z33995 subject is instance of multiple objects, English  [reaches an unimplemented function]
+;;   Z33995K1: Wikidata item reference, Z33995K2: Typed list(Wikidata item reference), Z33995K3: Natural language -> Monolingual text   [declared, not checked]
+(define (Z33995_subject_is_instance_of_multiple_objects_english a0 a1 a2) (record Z11 (Z11K1 a2) (Z11K2 (Z22511_capitalise_first_letter_and_add_full_stop (Z21394_concatenate_many_strings (cons (Z23753_label_of_item_reference_in_language_or_to_mul a0 a2) (cons " is " (cons (Z21739_an_or_a_english (Z23753_label_of_item_reference_in_language_or_to_mul (car a1) a2)) (cons " " (cons (if (Z30164_list_has_length a1 1) (Z23753_label_of_item_reference_in_language_or_to_mul (car a1) a2) (if (Z30164_list_has_length a1 2) (Z21394_concatenate_many_strings (cons (Z23753_label_of_item_reference_in_language_or_to_mul (car a1) a2) (cons " and " (cons (Z23753_label_of_item_reference_in_language_or_to_mul (Z13397_get_the_nth_element_of_a_list a1 2) a2) (list))))) (Z21394_concatenate_many_strings (cons (Z12899_join_list_of_strings_with_delimiter (Z26929_label_texts_for_wikidata_item_qids_one_language (Z12967_list_without_last_element a1) a2) ", ") (cons ", and " (cons (Z23753_label_of_item_reference_in_language_or_to_mul (Z12964_last_element a1) a2) (list))))))) (list)))))))))))
+(define Z33995 Z33995_subject_is_instance_of_multiple_objects_english)
+
 ;; Z33999 Toki Pona object-verb-object sentence  [reaches an unimplemented function]
 ;;   Z33999K1: Wikidata item reference, Z33999K2: Wikidata item reference, Z33999K3: Wikidata item reference -> Monolingual text   [declared, not checked]
 (define (Z33999_toki_pona_object_verb_object_sentence a0 a1 a2) (Z26107_monolingual_text_from_language_and_string Z1762 (Z21394_concatenate_many_strings (cons (Z23753_label_of_item_reference_in_language_or_to_mul a0 Z1762) (cons " li " (cons (Z19241_first_matching_representation_string_from_lexeme (Z27327_best_lexeme_for_wikidata_item a2 (record Z6092 (Z6092K1 "P9970")) Z1762) (list)) (cons " e " (cons (Z23753_label_of_item_reference_in_language_or_to_mul a1 Z1762) (cons "." (list))))))))))
@@ -14904,6 +15329,11 @@
 ;;   Z34088K1: Wikidata item reference, Z34088K2: Wikidata item reference, Z34088K3: Wikidata item reference -> Monolingual text   [declared, not checked]
 (define (Z34088_state_origin_using_entity_and_class_bulgarian a0 a1 a2) (Z26107_monolingual_text_from_language_and_string Z1823 (Z22511_capitalise_first_letter_and_add_full_stop (Z12899_join_list_of_strings_with_delimiter (cons (Z23468_text_from_wikidata_item_label_for_given_language (Z30120_fetch_wikidata_item_or_parts a0 (list Z6033) (list Z1823) (list)) Z1823) (cons "е" (cons (Z23468_text_from_wikidata_item_label_for_given_language (Z30120_fetch_wikidata_item_or_parts a1 (list Z6033) (list Z1823) (list)) Z1823) (cons "от" (cons (Z23468_text_from_wikidata_item_label_for_given_language (Z30120_fetch_wikidata_item_or_parts a2 (list Z6033) (list Z1823) (list)) Z1823) (list)))))) " "))))
 (define Z34088 Z34088_state_origin_using_entity_and_class_bulgarian)
+
+;; Z34096 conditional sentence case  [reaches an unimplemented function]
+;;   Z34096K1: String, Z34096K2: Natural language -> String   [declared, not checked]
+(define (Z34096_conditional_sentence_case a0 a1) (Z14396_string_of_monolingual_text (Z30784 (record Z11 (Z11K1 a1) (Z11K2 a0)))))
+(define Z34096 Z34096_conditional_sentence_case)
 
 ;; Z34105 Bulgarian article-less instantiating sentence  [reaches an unimplemented function]
 ;;   Z34105K1: Wikidata item reference, Z34105K2: Wikidata item reference -> String   [declared, not checked]
@@ -14980,10 +15410,20 @@
 (define (Z34227_english_past_article_less_instantiating_sentence a0 a1) (Z22511_capitalise_first_letter_and_add_full_stop (Z21394_concatenate_many_strings (cons (Z23753_label_of_item_reference_in_language_or_to_mul a0 Z1002) (cons " was " (cons (Z21739_an_or_a_english (Z23753_label_of_item_reference_in_language_or_to_mul a1 Z1002)) (cons " " (cons (Z23753_label_of_item_reference_in_language_or_to_mul a1 Z1002) (list)))))))))
 (define Z34227 Z34227_english_past_article_less_instantiating_sentence)
 
+;; Z34250 plural subsection title from Wikidata label  [reaches an unimplemented function]
+;;   Z34250K1: Wikidata item reference, Z34250K2: Natural language -> HTML fragment   [declared, not checked]
+(define (Z34250_plural_subsection_title_from_wikidata_label a0 a1) (Z33691 (Z34096_conditional_sentence_case (Z14396_string_of_monolingual_text (Z14391_plural_in_language_of_monolingual_text (record Z11 (Z11K1 a1) (Z11K2 (Z23753_label_of_item_reference_in_language_or_to_mul a0 a1))))) a1)))
+(define Z34250 Z34250_plural_subsection_title_from_wikidata_label)
+
 ;; Z34253 subject is Nth instance of class by creator  [reaches an unimplemented function]
 ;;   Z34253K1: Wikidata item reference, Z34253K2: Natural number, Z34253K3: Wikidata item reference, Z34253K4: Wikidata item reference, Z34253K5: Natural language -> Monolingual text   [declared, not checked]
 (define (Z34253_subject_is_nth_instance_of_class_by_creator a0 a1 a2 a3 a4) (Z29390_apply_the_needed_arguments (Z14310_select_a_function_based_on_language Z34255 a4) (cons a0 (cons a1 (cons a2 (cons a3 (cons a4 (list))))))))
 (define Z34253 Z34253_subject_is_nth_instance_of_class_by_creator)
+
+;; Z34257 English Nth instance of class by creator  [reaches an unimplemented function]
+;;   Z34257K1: Wikidata item reference, Z34257K2: Natural number, Z34257K3: Wikidata item reference, Z34257K4: Wikidata item reference, Z34257K5: Natural language -> Monolingual text   [declared, not checked]
+(define (Z34257_english_nth_instance_of_class_by_creator a0 a1 a2 a3 a4) (record Z11 (Z11K1 a4) (Z11K2 (Z22511_capitalise_first_letter_and_add_full_stop (Z21394_concatenate_many_strings (cons (Z24766_label_text_for_item_in_given_language_or_fallback a0 a4) (cons " is the " (cons (Z14526_english_ordinal a1) (cons " " (cons (Z24766_label_text_for_item_in_given_language_or_fallback a2 a4) (cons " by " (cons (Z24766_label_text_for_item_in_given_language_or_fallback a3 a4) (list)))))))))))))
+(define Z34257 Z34257_english_nth_instance_of_class_by_creator)
 
 ;; Z34261 Bangla latest software version sentence  [reaches an unimplemented function]
 ;;   Z34261K1: Wikidata item reference -> String   [declared, not checked]
@@ -15125,6 +15565,11 @@
 (define (Z34637_entity_is_part_of_value_from_wd_sentence a0 a1) (Z31684_apply_two_argument_function_validated_arguments (Z14310_select_a_function_based_on_language Z34682 a1) a0 a1))
 (define Z34637 Z34637_entity_is_part_of_value_from_wd_sentence)
 
+;; Z34638 part-of sentence in English  [reaches an unimplemented function]
+;;   Z34638K1: Wikidata item reference, Z34638K2: Natural language -> Monolingual text   [declared, not checked]
+(define (Z34638_part_of_sentence_in_english a0 a1) (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (record Z11 (Z11K1 a1) (Z11K2 (Z10771_sentence_case (Z24766_label_text_for_item_in_given_language_or_fallback a0 a1)))) (cons (record Z11 (Z11K1 a1) (Z11K2 "is part of the")) (cons (Z34644_join_list_of_monolingual_texts_with_oxford_comma (Z33024_label_texts_for_wikidata_items (Z34641_item_is_part_of_these_items (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list Z1360) (list (record Z6092 (Z6092K1 "P361"))))) a1) a1) (list)))) (record Z11 (Z11K1 a1) (Z11K2 " "))) (cons (record Z11 (Z11K1 a1) (Z11K2 ".")) (list))) (record Z11 (Z11K1 a1) (Z11K2 ""))))
+(define Z34638 Z34638_part_of_sentence_in_english)
+
 ;; Z34639 predicate is P361
 ;;   Z34639K1: Wikidata statement -> Boolean   [declared, not checked]
 (define (Z34639_predicate_is_p361 a0) (Z20212_does_statement_have_predicate a0 (record Z6092 (Z6092K1 "P361"))))
@@ -15134,6 +15579,16 @@
 ;;   Z34641K1: Wikidata item -> Typed list(Wikidata item reference)   [declared, not checked]
 (define (Z34641_item_is_part_of_these_items a0) (Z22978_values_unqualified_from_wikidata_item_statements a0 (record Z6092 (Z6092K1 "P361"))))
 (define Z34641 Z34641_item_is_part_of_these_items)
+
+;; Z34644 join list of monolingual texts with Oxford comma  [reaches an unimplemented function]
+;;   Z34644K1: Typed list(Monolingual text), Z34644K2: Natural language -> Monolingual text   [declared, not checked]
+(define (Z34644_join_list_of_monolingual_texts_with_oxford_comma a0 a1) (if (= (length a0) 0) (record Z11 (Z11K1 a1) (Z11K2 "")) (if (= (length a0) 1) (car a0) (if (= (length a0) 2) (Z34669_join_list_of_monolingual_texts_with_delimiter a0 (record Z11 (Z11K1 a1) (Z11K2 " and "))) (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (Z34669_join_list_of_monolingual_texts_with_delimiter (Z12967_list_without_last_element a0) (record Z11 (Z11K1 Z1002) (Z11K2 ", "))) (cons (Z12964_last_element a0) (list))) (record Z11 (Z11K1 a1) (Z11K2 ", and ")))))))
+(define Z34644 Z34644_join_list_of_monolingual_texts_with_oxford_comma)
+
+;; Z34663 coerce text-like object to Monolingual text  [reaches an unimplemented function]
+;;   Z34663K1: Object, Z34663K2: Natural language -> Monolingual text   [declared, not checked]
+(define (Z34663_coerce_text_like_object_to_monolingual_text a0 a1) (if (Z19084_same_type (Z16829_type_of_object a0) Z11) a0 (record Z11 (Z11K1 a1) (Z11K2 (Z27068_if_true_pass_input_through_function a0 Z15631_codepoint_to_string (Z19084_same_type (Z16829_type_of_object a0) Z86))))))
+(define Z34663 Z34663_coerce_text_like_object_to_monolingual_text)
 
 ;; Z34669 join list of Monolingual texts with delimiter
 ;;   Z34669K1: Typed list(Monolingual text), Z34669K2: Monolingual text -> Monolingual text   [declared, not checked]
@@ -15225,7 +15680,7 @@
 (define (Z34943_better_matching_multilingual_text_form_from_lexeme a0 a1) (Z22399_representations_of_lexeme_form (Z38338 a0 a1)))
 (define Z34943 Z34943_better_matching_multilingual_text_form_from_lexeme)
 
-;; Z34947 best monolingual text of multilingual per [lang]  [mutually recursive: may not terminate]
+;; Z34947 best monolingual text of multilingual per [lang]  [reaches an unimplemented function; mutually recursive: may not terminate]
 ;;   Z34947K1: Multilingual text, Z34947K2: Typed list(Natural language) -> Monolingual text   [declared, not checked]
 (define (Z34947_best_monolingual_text_of_multilingual_per_lang a0 a1) (Z35809_monolingual_text_from_list_w_highest_listed_lang (Z19279_multilingual_text_to_list_of_monolingual_texts a0) a1))
 (define Z34947 Z34947_best_monolingual_text_of_multilingual_per_lang)
@@ -15257,7 +15712,7 @@
 
 ;; Z35018 Year specific sentence from statement in Bangla  [reaches an unimplemented function]
 ;;   Z35018K1: Wikidata item, Z35018K2: Wikidata statement -> String   [declared, not checked]
-(define (Z35018_year_specific_sentence_from_statement_in_bangla a0 a1) (Z23159_string_of_first_listed_monolingual_text_with_lang (cons (Z33238_bangla_fragment_sentence_wrapper_string_list (cons (Z35010 (Z35013_display_year_in_bangla_no_after_1899 (Z24948_year_from_calendar_date (Z28133 (Z25726_wikidata_datetime_from_wikidata_time (car (Z28321_qualifier_values_of_statement_with_predicate a1 (record Z6092 (Z6092K1 "P585"))))))))) (cons (Z18831 (Z23468_text_from_wikidata_item_label_for_given_language a0 Z1011)) (cons (Z14396_string_of_monolingual_text (Z16273_monolingual_text_in_specified_language_from_multilingual_tex (Z23223_property_labels (Z6822 (Z19306_predicate_of_wikidata_statement a1))) Z1011)) (cons "ছিল" (cons (Z25326_display_quantity_with_digits_and_unit (Z19308_value_of_wikidata_statement a1) Z1011) (list))))))) (list)) Z1011))
+(define (Z35018_year_specific_sentence_from_statement_in_bangla a0 a1) (Z23159_string_of_first_listed_monolingual_text_with_lang (cons (Z33238_bangla_fragment_sentence_wrapper_string_list (cons (Z35010 (Z35013_display_year_in_bangla_no_after_1899 (Z24948_year_from_calendar_date (Z28133_valid_gregorian_date_from_wikidata_datetime (Z25726_wikidata_datetime_from_wikidata_time (car (Z28321_qualifier_values_of_statement_with_predicate a1 (record Z6092 (Z6092K1 "P585"))))))))) (cons (Z18831 (Z23468_text_from_wikidata_item_label_for_given_language a0 Z1011)) (cons (Z14396_string_of_monolingual_text (Z16273_monolingual_text_in_specified_language_from_multilingual_tex (Z23223_property_labels (Z6822 (Z19306_predicate_of_wikidata_statement a1))) Z1011)) (cons "ছিল" (cons (Z25326_display_quantity_with_digits_and_unit (Z19308_value_of_wikidata_statement a1) Z1011) (list))))))) (list)) Z1011))
 (define Z35018 Z35018_year_specific_sentence_from_statement_in_bangla)
 
 ;; Z35022 inception sentence  [reaches an unimplemented function]
@@ -15282,12 +15737,12 @@
 
 ;; Z35072 multiply complex128 by float64  [reaches an unimplemented function]
 ;;   Z35072K1: Complex number (float64), Z35072K2: float64 -> Complex number (float64)   [declared, not checked]
-(define (Z35072_multiply_complex128_by_float64 a0 a1) (Z33227 (Z21032_multiply_float64 (Z33214_real_part a0) a1) (Z21032_multiply_float64 (Z33221_imaginary_part a0) a1)))
+(define (Z35072_multiply_complex128_by_float64 a0 a1) (Z33227_complex128_from_real_and_imaginary_parts (Z21032_multiply_float64 (Z33214_real_part a0) a1) (Z21032_multiply_float64 (Z33221_imaginary_part a0) a1)))
 (define Z35072 Z35072_multiply_complex128_by_float64)
 
 ;; Z35073 divide complex128 by float64  [reaches an unimplemented function]
 ;;   Z35073K1: Complex number (float64), Z35073K2: float64 -> Complex number (float64)   [declared, not checked]
-(define (Z35073_divide_complex128_by_float64 a0 a1) (Z33227 (Z21033_divide_float64 (Z33214_real_part a0) a1) (Z21033_divide_float64 (Z33221_imaginary_part a0) a1)))
+(define (Z35073_divide_complex128_by_float64 a0 a1) (Z33227_complex128_from_real_and_imaginary_parts (Z21033_divide_float64 (Z33214_real_part a0) a1) (Z21033_divide_float64 (Z33221_imaginary_part a0) a1)))
 (define Z35073 Z35073_divide_complex128_by_float64)
 
 ;; Z35085 reference HTML marker from reference  [reaches an unimplemented function]
@@ -15320,10 +15775,20 @@
 (define (Z35105_label_or_fallback_from_wikidata_item_monolingual a0 a1) (car (Z24139_item_labels_filtered_by_language_list a0 (Z24144_fallback_languages a1 #t #t))))
 (define Z35105 Z35105_label_or_fallback_from_wikidata_item_monolingual)
 
+;; Z35121 label of Wikidata claim subtype  [reaches an unimplemented function]
+;;   Z35121K1: Wikidata claim subtype, Z35121K2: Natural language -> Monolingual text   [declared, not checked]
+(define (Z35121_label_of_wikidata_claim_subtype a0 a1) (Z31168_best_of_monolingual_texts_according_to_fallbacks a1 (Z12961_append_element_to_typed_list (record Z11 (Z11K1 Z1360) (Z11K2 (Z29718_select_per_wikidata_claim_subtype a0 "¬(∃ val)" "∃ val" "val"))) (Z16556_object_labels (Z29113_quoted_reference_from_zid_string (Z16365_zid_string_from_identity_object a0))))))
+(define Z35121 Z35121_label_of_wikidata_claim_subtype)
+
 ;; Z35126 does Wikidata property have data type external-ID?  [reaches an unimplemented function]
 ;;   Z35126K1: Wikidata property reference -> Boolean   [declared, not checked]
 (define (Z35126_does_wikidata_property_have_data_type_external_id a0) (bool-or (Z12696_contains (Z25614_split_string_to_list "P503~P297~P298~P299~P300~P773~P1278~P791~P946~P3035~P218~P219~P220~P6519~P1798~P221~P506~P2620~P3097~P356~P3212~P212~P957~P1208~P236~P7363~P1827~P1243~P1160~P5209~P2766~P498~P2627~P2263~P627~P646~P685~P815~P846~P2426~P2892~P3088~P3151~P3444~P3606~P4342~P5055~P5257~P6025~P6105~P8072~P8707~P9157~P10585~P12218~P13591" "~") (Z20046_wikidata_property_id_string a0)) (Z12696_contains Z30960 a0)))
 (define Z35126 Z35126_does_wikidata_property_have_data_type_external_id)
+
+;; Z35133 construct Wikidata property claim from PID and QID  [reaches an unimplemented function]
+;;   Z35133K1: Wikidata property reference, Z35133K2: Object -> Wikidata property claim   [declared, not checked]
+(define (Z35133_construct_wikidata_property_claim_from_pid_and_qid a0 a1) (record Z6007 (Z6007K1 a0) (Z6007K2 a1) (Z6007K3 Z6021)))
+(define Z35133 Z35133_construct_wikidata_property_claim_from_pid_and_qid)
 
 ;; Z35139 Toki Pona defining role sentence  [reaches an unimplemented function]
 ;;   Z35139K1: Wikidata item reference, Z35139K2: Wikidata item reference, Z35139K3: Wikidata item reference -> Monolingual text   [declared, not checked]
@@ -15354,6 +15819,11 @@
 ;;   Z35167K1: Wikidata item, Z35167K2: Natural language -> HTML fragment   [declared, not checked]
 (define (Z35167_infobox_for_person_as_item a0 a1) (Z35175_infobox_template (Z35176_name_native_name_as_html_fragment a0 a1) (identity (Z31262_apply_with_common_1st_and_3rd_args_and_n_2nd_args Z35374_infobox_row_from_wikidata_property a0 Z35371 a1))))
 (define Z35167 Z35167_infobox_for_person_as_item)
+
+;; Z35171 natural language from langcode and aliases  [reaches an unimplemented function]
+;;   Z35171K1: String, Z35171K2: Typed list(String) -> Natural language   [declared, not checked]
+(define (Z35171_natural_language_from_langcode_and_aliases a0 a1) (Z160 (record Z60 (Z60K1 a0) (Z60K2 a1))))
+(define Z35171 Z35171_natural_language_from_langcode_and_aliases)
 
 ;; Z35175 infobox template  [reaches an unimplemented function]
 ;;   Z35175K1: HTML fragment, Z35175K2: Typed list(Object) -> HTML fragment   [declared, not checked]
@@ -15417,12 +15887,12 @@
 
 ;; Z35222 lateral surface area of a prism  [reaches an unimplemented function]
 ;;   Z35222K1: Rational number, Z35222K2: Rational number -> Rational number   [declared, not checked]
-(define (Z35222_lateral_surface_area_of_a_prism a0 a1) (Z19706 a0 a1))
+(define (Z35222_lateral_surface_area_of_a_prism a0 a1) (Z19706_multiply_rational_numbers a0 a1))
 (define Z35222 Z35222_lateral_surface_area_of_a_prism)
 
 ;; Z35223 surface area of a prism  [reaches an unimplemented function]
 ;;   Z35223K1: Rational number, Z35223K2: Rational number -> Rational number   [declared, not checked]
-(define (Z35223_surface_area_of_a_prism a0 a1) (Z19679 (Z24266_double_rational a0) a1))
+(define (Z35223_surface_area_of_a_prism a0 a1) (Z19679_add_rational_numbers (Z24266_double_rational a0) a1))
 (define Z35223 Z35223_surface_area_of_a_prism)
 
 ;; Z35224 average flow rate  [reaches an unimplemented function]
@@ -15527,12 +15997,12 @@
 
 ;; Z35334 print Gregorian year limited by precision, English  [reaches an unimplemented function]
 ;;   Z35334K1: Gregorian year, Z35334K2: Wikidata time precision, Z35334K3: Natural language -> Monolingual text   [declared, not checked]
-(define (Z35334_print_gregorian_year_limited_by_precision_english a0 a1 a2) (Z861_monolingual_text_from_string_and_natural_language (if (Z25733_equal_wikidata_time_precision a1 (record Z6062 (Z6062K1 (record Z6091 (Z6091K1 "Q577"))))) (Z28824_display_year_in_english_without_ad_after_99_ad a0) (Z26936_switch_on_wikidata_enumeration_value a1 (cons (if (Z16688_same_integer (Z19841_rational_to_nearest_integer_even_integer_tiebreak (Z19854 (Z20257_gregorian_year_to_iso_8601_year_integer a0) 1000000000)) (record Z16683 (Z16683K1 Z16661) (Z16683K2 0))) (Z35334_print_gregorian_year_limited_by_precision_english a0 (record Z6062 (Z6062K1 (record Z6091 (Z6091K1 "Q577")))) a2) (Z10000_join_two_strings (Z16700_display_integer (Z19841_rational_to_nearest_integer_even_integer_tiebreak (Z19854 (Z20257_gregorian_year_to_iso_8601_year_integer a0) 1000000000)) a2) (if (Z28855_is_year_bc a0) " million years BCE" " million years CE"))) (cons (if (Z16688_same_integer (Z35338_round_integer_to_nearest_n (Z20257_gregorian_year_to_iso_8601_year_integer a0) 100000000) (record Z16683 (Z16683K1 Z16661) (Z16683K2 0))) (Z35334_print_gregorian_year_limited_by_precision_english a0 (record Z6062 (Z6062K1 (record Z6091 (Z6091K1 "Q577")))) a2) (Z10000_join_two_strings (Z16700_display_integer (Z17291 (Z17128_absolute_value_of_integer (Z35338_round_integer_to_nearest_n (Z20257_gregorian_year_to_iso_8601_year_integer a0) 100000000)) (record Z16683 (Z16683K1 Z16660) (Z16683K2 1000000))) a2) (if (Z28855_is_year_bc a0) " million years BCE" " million years CE"))) (cons (if (Z16688_same_integer (Z35338_round_integer_to_nearest_n (Z20257_gregorian_year_to_iso_8601_year_integer a0) 10000000) (record Z16683 (Z16683K1 Z16661) (Z16683K2 0))) (Z35334_print_gregorian_year_limited_by_precision_english a0 (record Z6062 (Z6062K1 (record Z6091 (Z6091K1 "Q577")))) a2) (Z10000_join_two_strings (Z16700_display_integer (Z17291 (Z17128_absolute_value_of_integer (Z35338_round_integer_to_nearest_n (Z20257_gregorian_year_to_iso_8601_year_integer a0) 10000000)) (record Z16683 (Z16683K1 Z16660) (Z16683K2 1000000))) a2) (if (Z28855_is_year_bc a0) " million years BCE" " million years CE"))) (cons (if (Z16688_same_integer (Z19841_rational_to_nearest_integer_even_integer_tiebreak (Z19854 (Z20257_gregorian_year_to_iso_8601_year_integer a0) 1000000)) (record Z16683 (Z16683K1 Z16661) (Z16683K2 0))) (Z35334_print_gregorian_year_limited_by_precision_english a0 (record Z6062 (Z6062K1 (record Z6091 (Z6091K1 "Q577")))) a2) (Z10000_join_two_strings (Z16700_display_integer (Z19841_rational_to_nearest_integer_even_integer_tiebreak (Z19854 (Z20257_gregorian_year_to_iso_8601_year_integer a0) 1000000)) a2) (if (Z28855_is_year_bc a0) " million years BCE" " million years CE"))) (cons (if (Z16688_same_integer (Z35338_round_integer_to_nearest_n (Z20257_gregorian_year_to_iso_8601_year_integer a0) 100000) (record Z16683 (Z16683K1 Z16661) (Z16683K2 0))) (Z35334_print_gregorian_year_limited_by_precision_english a0 (record Z6062 (Z6062K1 (record Z6091 (Z6091K1 "Q577")))) a2) (Z10000_join_two_strings (Z16700_display_integer (Z35338_round_integer_to_nearest_n (Z20257_gregorian_year_to_iso_8601_year_integer a0) 100000) a2) (Z10000_join_two_strings (Z11218_english_count_plurality (Z17144_absolute_value_of_integer_as_natural_number (Z35338_round_integer_to_nearest_n (Z20257_gregorian_year_to_iso_8601_year_integer a0) 100000)) "year" "years") (if (Z28855_is_year_bc a0) " BCE" " CE")))) (cons (if (Z16688_same_integer (Z35338_round_integer_to_nearest_n (Z20257_gregorian_year_to_iso_8601_year_integer a0) 10000) (record Z16683 (Z16683K1 Z16661) (Z16683K2 0))) (Z35334_print_gregorian_year_limited_by_precision_english a0 (record Z6062 (Z6062K1 (record Z6091 (Z6091K1 "Q577")))) a2) (Z10000_join_two_strings (Z16700_display_integer (Z35338_round_integer_to_nearest_n (Z20257_gregorian_year_to_iso_8601_year_integer a0) 10000) a2) (Z10000_join_two_strings (Z11218_english_count_plurality (Z17144_absolute_value_of_integer_as_natural_number (Z35338_round_integer_to_nearest_n (Z20257_gregorian_year_to_iso_8601_year_integer a0) 10000)) "year" "years") (if (Z28855_is_year_bc a0) " BCE" " CE")))) (cons (if (Z16688_same_integer (Z20053_ceiling_of_rational_number (Z27232_rational_from_two_natural_numbers (Z20160_gregorian_year_to_year_number a0) 1000)) (record Z16683 (Z16683K1 Z16661) (Z16683K2 0))) (Z35334_print_gregorian_year_limited_by_precision_english a0 (record Z6062 (Z6062K1 (record Z6091 (Z6091K1 "Q577")))) a2) (Z10000_join_two_strings (Z16700_display_integer (Z20053_ceiling_of_rational_number (Z27232_rational_from_two_natural_numbers (Z20160_gregorian_year_to_year_number a0) 1000)) a2) (if (Z28855_is_year_bc a0) ". millennium BCE" ". millennium"))) (cons (if (Z16688_same_integer (Z20053_ceiling_of_rational_number (Z27232_rational_from_two_natural_numbers (Z20160_gregorian_year_to_year_number a0) 100)) (record Z16683 (Z16683K1 Z16661) (Z16683K2 0))) (Z35334_print_gregorian_year_limited_by_precision_english a0 (record Z6062 (Z6062K1 (record Z6091 (Z6091K1 "Q577")))) a2) (Z10000_join_two_strings (Z16700_display_integer (Z20053_ceiling_of_rational_number (Z27232_rational_from_two_natural_numbers (Z20160_gregorian_year_to_year_number a0) 100)) a2) (if (Z28855_is_year_bc a0) ". century BCE" ". century"))) (cons (if (Z16688_same_integer (Z20032_floor_of_rational_number (Z27232_rational_from_two_natural_numbers (Z20160_gregorian_year_to_year_number a0) 10)) (record Z16683 (Z16683K1 Z16661) (Z16683K2 0))) (Z35334_print_gregorian_year_limited_by_precision_english a0 (record Z6062 (Z6062K1 (record Z6091 (Z6091K1 "Q577")))) a2) (Z10000_join_two_strings (Z16700_display_integer (Z17120_multiply_integers (Z20032_floor_of_rational_number (Z27232_rational_from_two_natural_numbers (Z20160_gregorian_year_to_year_number a0) 10)) (record Z16683 (Z16683K1 Z16660) (Z16683K2 10))) a2) (if (Z28855_is_year_bc a0) "s BCE" "s"))) (list)))))))))))) Z1002))
+(define (Z35334_print_gregorian_year_limited_by_precision_english a0 a1 a2) (Z861_monolingual_text_from_string_and_natural_language (if (Z25733_equal_wikidata_time_precision a1 (record Z6062 (Z6062K1 (record Z6091 (Z6091K1 "Q577"))))) (Z28824_display_year_in_english_without_ad_after_99_ad a0) (Z26936_switch_on_wikidata_enumeration_value a1 (cons (if (Z16688_same_integer (Z19841_rational_to_nearest_integer_even_integer_tiebreak (Z19854_simplified_rational_from_z_numerator_denominator (Z20257_gregorian_year_to_iso_8601_year_integer a0) 1000000000)) (record Z16683 (Z16683K1 Z16661) (Z16683K2 0))) (Z35334_print_gregorian_year_limited_by_precision_english a0 (record Z6062 (Z6062K1 (record Z6091 (Z6091K1 "Q577")))) a2) (Z10000_join_two_strings (Z16700_display_integer (Z19841_rational_to_nearest_integer_even_integer_tiebreak (Z19854_simplified_rational_from_z_numerator_denominator (Z20257_gregorian_year_to_iso_8601_year_integer a0) 1000000000)) a2) (if (Z28855_is_year_bc a0) " million years BCE" " million years CE"))) (cons (if (Z16688_same_integer (Z35338_round_integer_to_nearest_n (Z20257_gregorian_year_to_iso_8601_year_integer a0) 100000000) (record Z16683 (Z16683K1 Z16661) (Z16683K2 0))) (Z35334_print_gregorian_year_limited_by_precision_english a0 (record Z6062 (Z6062K1 (record Z6091 (Z6091K1 "Q577")))) a2) (Z10000_join_two_strings (Z16700_display_integer (Z17291_floor_divide_integers (Z17128_absolute_value_of_integer (Z35338_round_integer_to_nearest_n (Z20257_gregorian_year_to_iso_8601_year_integer a0) 100000000)) (record Z16683 (Z16683K1 Z16660) (Z16683K2 1000000))) a2) (if (Z28855_is_year_bc a0) " million years BCE" " million years CE"))) (cons (if (Z16688_same_integer (Z35338_round_integer_to_nearest_n (Z20257_gregorian_year_to_iso_8601_year_integer a0) 10000000) (record Z16683 (Z16683K1 Z16661) (Z16683K2 0))) (Z35334_print_gregorian_year_limited_by_precision_english a0 (record Z6062 (Z6062K1 (record Z6091 (Z6091K1 "Q577")))) a2) (Z10000_join_two_strings (Z16700_display_integer (Z17291_floor_divide_integers (Z17128_absolute_value_of_integer (Z35338_round_integer_to_nearest_n (Z20257_gregorian_year_to_iso_8601_year_integer a0) 10000000)) (record Z16683 (Z16683K1 Z16660) (Z16683K2 1000000))) a2) (if (Z28855_is_year_bc a0) " million years BCE" " million years CE"))) (cons (if (Z16688_same_integer (Z19841_rational_to_nearest_integer_even_integer_tiebreak (Z19854_simplified_rational_from_z_numerator_denominator (Z20257_gregorian_year_to_iso_8601_year_integer a0) 1000000)) (record Z16683 (Z16683K1 Z16661) (Z16683K2 0))) (Z35334_print_gregorian_year_limited_by_precision_english a0 (record Z6062 (Z6062K1 (record Z6091 (Z6091K1 "Q577")))) a2) (Z10000_join_two_strings (Z16700_display_integer (Z19841_rational_to_nearest_integer_even_integer_tiebreak (Z19854_simplified_rational_from_z_numerator_denominator (Z20257_gregorian_year_to_iso_8601_year_integer a0) 1000000)) a2) (if (Z28855_is_year_bc a0) " million years BCE" " million years CE"))) (cons (if (Z16688_same_integer (Z35338_round_integer_to_nearest_n (Z20257_gregorian_year_to_iso_8601_year_integer a0) 100000) (record Z16683 (Z16683K1 Z16661) (Z16683K2 0))) (Z35334_print_gregorian_year_limited_by_precision_english a0 (record Z6062 (Z6062K1 (record Z6091 (Z6091K1 "Q577")))) a2) (Z10000_join_two_strings (Z16700_display_integer (Z35338_round_integer_to_nearest_n (Z20257_gregorian_year_to_iso_8601_year_integer a0) 100000) a2) (Z10000_join_two_strings (Z11218_english_count_plurality (Z17144_absolute_value_of_integer_as_natural_number (Z35338_round_integer_to_nearest_n (Z20257_gregorian_year_to_iso_8601_year_integer a0) 100000)) "year" "years") (if (Z28855_is_year_bc a0) " BCE" " CE")))) (cons (if (Z16688_same_integer (Z35338_round_integer_to_nearest_n (Z20257_gregorian_year_to_iso_8601_year_integer a0) 10000) (record Z16683 (Z16683K1 Z16661) (Z16683K2 0))) (Z35334_print_gregorian_year_limited_by_precision_english a0 (record Z6062 (Z6062K1 (record Z6091 (Z6091K1 "Q577")))) a2) (Z10000_join_two_strings (Z16700_display_integer (Z35338_round_integer_to_nearest_n (Z20257_gregorian_year_to_iso_8601_year_integer a0) 10000) a2) (Z10000_join_two_strings (Z11218_english_count_plurality (Z17144_absolute_value_of_integer_as_natural_number (Z35338_round_integer_to_nearest_n (Z20257_gregorian_year_to_iso_8601_year_integer a0) 10000)) "year" "years") (if (Z28855_is_year_bc a0) " BCE" " CE")))) (cons (if (Z16688_same_integer (Z20053_ceiling_of_rational_number (Z27232_rational_from_two_natural_numbers (Z20160_gregorian_year_to_year_number a0) 1000)) (record Z16683 (Z16683K1 Z16661) (Z16683K2 0))) (Z35334_print_gregorian_year_limited_by_precision_english a0 (record Z6062 (Z6062K1 (record Z6091 (Z6091K1 "Q577")))) a2) (Z10000_join_two_strings (Z16700_display_integer (Z20053_ceiling_of_rational_number (Z27232_rational_from_two_natural_numbers (Z20160_gregorian_year_to_year_number a0) 1000)) a2) (if (Z28855_is_year_bc a0) ". millennium BCE" ". millennium"))) (cons (if (Z16688_same_integer (Z20053_ceiling_of_rational_number (Z27232_rational_from_two_natural_numbers (Z20160_gregorian_year_to_year_number a0) 100)) (record Z16683 (Z16683K1 Z16661) (Z16683K2 0))) (Z35334_print_gregorian_year_limited_by_precision_english a0 (record Z6062 (Z6062K1 (record Z6091 (Z6091K1 "Q577")))) a2) (Z10000_join_two_strings (Z16700_display_integer (Z20053_ceiling_of_rational_number (Z27232_rational_from_two_natural_numbers (Z20160_gregorian_year_to_year_number a0) 100)) a2) (if (Z28855_is_year_bc a0) ". century BCE" ". century"))) (cons (if (Z16688_same_integer (Z20032_floor_of_rational_number (Z27232_rational_from_two_natural_numbers (Z20160_gregorian_year_to_year_number a0) 10)) (record Z16683 (Z16683K1 Z16661) (Z16683K2 0))) (Z35334_print_gregorian_year_limited_by_precision_english a0 (record Z6062 (Z6062K1 (record Z6091 (Z6091K1 "Q577")))) a2) (Z10000_join_two_strings (Z16700_display_integer (Z17120_multiply_integers (Z20032_floor_of_rational_number (Z27232_rational_from_two_natural_numbers (Z20160_gregorian_year_to_year_number a0) 10)) (record Z16683 (Z16683K1 Z16660) (Z16683K2 10))) a2) (if (Z28855_is_year_bc a0) "s BCE" "s"))) (list)))))))))))) Z1002))
 (define Z35334 Z35334_print_gregorian_year_limited_by_precision_english)
 
 ;; Z35338 round Integer to nearest n  [reaches an unimplemented function]
 ;;   Z35338K1: Integer, Z35338K2: Natural number -> Integer   [declared, not checked]
-(define (Z35338_round_integer_to_nearest_n a0 a1) (Z17120_multiply_integers (Z19841_rational_to_nearest_integer_even_integer_tiebreak (Z19854 a0 a1)) (Z17101 a1)))
+(define (Z35338_round_integer_to_nearest_n a0 a1) (Z17120_multiply_integers (Z19841_rational_to_nearest_integer_even_integer_tiebreak (Z19854_simplified_rational_from_z_numerator_denominator a0 a1)) (Z17101_natural_number_to_integer a1)))
 (define Z35338 Z35338_round_integer_to_nearest_n)
 
 ;; Z35352 get basic English phrase category  [reaches an unimplemented function]
@@ -15642,7 +16112,7 @@
 
 ;; Z35437 convert X11 color name to RGBA color  [reaches an unimplemented function]
 ;;   Z35437K1: String -> RGBA color   [declared, not checked]
-(define (Z35437_convert_x11_color_name_to_rgba_color a0) (Z28628 (Z14456_remove_first_character (Z17713 a0))))
+(define (Z35437_convert_x11_color_name_to_rgba_color a0) (Z28628_default_rgba_color_reader (Z14456_remove_first_character (Z17713 a0))))
 (define Z35437 Z35437_convert_x11_color_name_to_rgba_color)
 
 ;; Z35449 Sign of difference of Integers  [reaches an unimplemented function]
@@ -15682,7 +16152,7 @@
 
 ;; Z35505 article-less instantiating sentence (simple)  [reaches an unimplemented function]
 ;;   Z35505K1: Wikidata item reference, Z35505K2: Wikidata item reference, Z35505K3: Natural language -> String   [declared, not checked]
-(define (Z35505_article_less_instantiating_sentence_simple a0 a1 a2) (Z34096 (Z21394_concatenate_many_strings (cons (Z36270_label_text_for_item_in_lang_or_ltd_fallback_or_qid a0 a2) (cons " " (cons (Z36625_third_person_singular_form_of_to_be_simple a2) (cons (Z36622_indefinite_article_simple a2) (cons (Z36270_label_text_for_item_in_lang_or_ltd_fallback_or_qid a1 a2) (cons "." (list)))))))) a2))
+(define (Z35505_article_less_instantiating_sentence_simple a0 a1 a2) (Z34096_conditional_sentence_case (Z21394_concatenate_many_strings (cons (Z36270_label_text_for_item_in_lang_or_ltd_fallback_or_qid a0 a2) (cons " " (cons (Z36625_third_person_singular_form_of_to_be_simple a2) (cons (Z36622_indefinite_article_simple a2) (cons (Z36270_label_text_for_item_in_lang_or_ltd_fallback_or_qid a1 a2) (cons "." (list)))))))) a2))
 (define Z35505 Z35505_article_less_instantiating_sentence_simple)
 
 ;; Z35524 first letter uppercase for Turkish  [reaches an unimplemented function]
@@ -15717,7 +16187,7 @@
 
 ;; Z35585 determinant of square matrix (Rational numbers)  [reaches an unimplemented function]
 ;;   Z35585K1: Typed list(Typed list(Rational number)) -> Rational number   [declared, not checked]
-(define (Z35585_determinant_of_square_matrix_rational_numbers a0) (Z19565_triple_if (not (Z35587_is_a_square_matrix a0)) (Z851 Z516 (cons "Z35585K1" (cons a0 (list)))) (= (length a0) 2) (Z19699_subtract_rational_numbers (Z19706 (Z30282_get_i_j_th_element_from_list_of_lists a0 1 1) (Z30282_get_i_j_th_element_from_list_of_lists a0 2 2)) (Z19706 (Z30282_get_i_j_th_element_from_list_of_lists a0 1 2) (Z30282_get_i_j_th_element_from_list_of_lists a0 2 1))) (Z20080_sum_the_elements_of_a_list_of_rational_numbers (Z18475_return_typed_list (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l Z19706 (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l Z19706 (map Z19744_integer_as_rational_number (Z34575_generate_alternating_sign_terms_for_summation (length a0) #f)) (car a0)) (map Z35585_determinant_of_square_matrix_rational_numbers (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an Z35597_list_of_lists_without_nth_elements_of_each_1_n (cdr a0) (Z13831_natural_number_range 1 (length a0)))))))))
+(define (Z35585_determinant_of_square_matrix_rational_numbers a0) (Z19565_triple_if (not (Z35587_is_a_square_matrix a0)) (Z851 Z516 (cons "Z35585K1" (cons a0 (list)))) (= (length a0) 2) (Z19699_subtract_rational_numbers (Z19706_multiply_rational_numbers (Z30282_get_i_j_th_element_from_list_of_lists a0 1 1) (Z30282_get_i_j_th_element_from_list_of_lists a0 2 2)) (Z19706_multiply_rational_numbers (Z30282_get_i_j_th_element_from_list_of_lists a0 1 2) (Z30282_get_i_j_th_element_from_list_of_lists a0 2 1))) (Z20080_sum_the_elements_of_a_list_of_rational_numbers (Z18475_return_typed_list (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l Z19706_multiply_rational_numbers (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l Z19706_multiply_rational_numbers (map Z19744_integer_as_rational_number (Z34575_generate_alternating_sign_terms_for_summation (length a0) #f)) (car a0)) (map Z35585_determinant_of_square_matrix_rational_numbers (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an Z35597_list_of_lists_without_nth_elements_of_each_1_n (cdr a0) (Z13831_natural_number_range 1 (length a0)))))))))
 (define Z35585 Z35585_determinant_of_square_matrix_rational_numbers)
 
 ;; Z35587 is a square matrix?  [reaches an unimplemented function]
@@ -15760,9 +16230,9 @@
 (define (Z35646_season_a_month_falls_in_southern_hemisphere a0) (Z27043_opposite_instance_of_wikidata_enumeration (Z35641_season_a_month_falls_in_northern_hemisphere a0)))
 (define Z35646 Z35646_season_a_month_falls_in_southern_hemisphere)
 
-;; Z35652 Key reference for nth Key in Type  [reaches an unimplemented function]
+;; Z35652 Key reference for nth Key in Type
 ;;   Z35652K1: Type, Z35652K2: Natural number -> Key reference   [declared, not checked]
-(define (Z35652_key_reference_for_nth_key_in_type a0 a1) (Z22549 (Z23320_key_id_of_key (Z13397_get_the_nth_element_of_a_list (Z30833_list_of_keys_defined_for_type a0) a1))))
+(define (Z35652_key_reference_for_nth_key_in_type a0 a1) (Z22549_key_reference_from_string (Z23320_key_id_of_key (Z13397_get_the_nth_element_of_a_list (Z30833_list_of_keys_defined_for_type a0) a1))))
 (define Z35652 Z35652_key_reference_for_nth_key_in_type)
 
 ;; Z35656 quoted Reference to Type from Key reference  [reaches an unimplemented function]
@@ -15770,9 +16240,14 @@
 (define (Z35656_quoted_reference_to_type_from_key_reference a0) (Z29113_quoted_reference_from_zid_string (Z11410_discard_from_start_of_first_substring (Z23443_reference_string_from_key_reference a0) "K")))
 (define Z35656 Z35656_quoted_reference_to_type_from_key_reference)
 
+;; Z35663 Wikidata quantity from components
+;;   Z35663K1: Rational number, Z35663K2: Rational number, Z35663K3: Rational number, Z35663K4: Wikidata item reference -> Wikidata quantity   [declared, not checked]
+(define (Z35663_wikidata_quantity_from_components a0 a1 a2 a3) (record Z6010 (Z6010K1 a0) (Z6010K2 a1) (Z6010K3 a2) (Z6010K4 a3)))
+(define Z35663 Z35663_wikidata_quantity_from_components)
+
 ;; Z35666 round Wikidata quantity to fixed decimal places  [reaches an unimplemented function]
 ;;   Z35666K1: Wikidata quantity, Z35666K2: Integer -> Wikidata quantity   [declared, not checked]
-(define (Z35666_round_wikidata_quantity_to_fixed_decimal_places a0 a1) (Z35663 (Z27719_round_rational_to_fix_decimal_places_unsimplified (Z25294_amount_from_quantity a0) a1) (if (Z26950_is_lower_bound_void a0) Z24 (Z27719_round_rational_to_fix_decimal_places_unsimplified (Z25297_lower_bound_from_quantity a0) a1)) (if (Z26946_is_upper_bound_void a0) Z24 (Z27719_round_rational_to_fix_decimal_places_unsimplified (Z25300_upper_bound_from_quantity a0) a1)) (Z25303_unit_qid_from_quantity a0)))
+(define (Z35666_round_wikidata_quantity_to_fixed_decimal_places a0 a1) (Z35663_wikidata_quantity_from_components (Z27719_round_rational_to_fix_decimal_places_unsimplified (Z25294_amount_from_quantity a0) a1) (if (Z26950_is_lower_bound_void a0) Z24 (Z27719_round_rational_to_fix_decimal_places_unsimplified (Z25297_lower_bound_from_quantity a0) a1)) (if (Z26946_is_upper_bound_void a0) Z24 (Z27719_round_rational_to_fix_decimal_places_unsimplified (Z25300_upper_bound_from_quantity a0) a1)) (Z25303_unit_qid_from_quantity a0)))
 (define Z35666 Z35666_round_wikidata_quantity_to_fixed_decimal_places)
 
 ;; Z35672 sentence separator
@@ -15815,7 +16290,7 @@
 (define (Z35721_sign_of_difference_of_rational_numbers a0 a1) (Z19717_sign_of_rational_number (Z19699_subtract_rational_numbers a0 a1)))
 (define Z35721 Z35721_sign_of_difference_of_rational_numbers)
 
-;; Z35727 are Rational numbers different?  [reaches an unimplemented function]
+;; Z35727 are Rational numbers different?
 ;;   Z35727K1: Rational number, Z35727K2: Rational number -> Boolean   [declared, not checked]
 (define (Z35727_are_rational_numbers_different a0 a1) (not (Z19686_same_rational_number a0 a1)))
 (define Z35727 Z35727_are_rational_numbers_different)
@@ -15834,6 +16309,11 @@
 ;;   Z35740K1: HTML fragment -> Boolean   [declared, not checked]
 (define (Z35740_is_html_fragment_not_empty a0) (Z24331_is_not_empty_string (Z27854_html_fragment_as_string a0)))
 (define Z35740 Z35740_is_html_fragment_not_empty)
+
+;; Z35743 Wikidata lexeme form reference from LFID String
+;;   Z35743K1: String -> Wikidata lexeme form reference   [declared, not checked]
+(define (Z35743_wikidata_lexeme_form_reference_from_lfid_string a0) (record Z6094 (Z6094K1 a0)))
+(define Z35743 Z35743_wikidata_lexeme_form_reference_from_lfid_string)
 
 ;; Z35745 Wikidata lexeme form reference to String
 ;;   Z35745K1: Wikidata lexeme form reference -> String   [declared, not checked]
@@ -15865,6 +16345,11 @@
 (define (Z35776_value_of_blue_channel_in_rgba_colour a0) (Z803_value_by_key (record Z39 (Z39K1 "Z28579K3")) a0))
 (define Z35776 Z35776_value_of_blue_channel_in_rgba_colour)
 
+;; Z35778 RGBA color from components (rationals)  [reaches an unimplemented function]
+;;   Z35778K1: Rational number, Z35778K2: Rational number, Z35778K3: Rational number, Z35778K4: Rational number -> RGBA color   [declared, not checked]
+(define (Z35778_rgba_color_from_components_rationals a0 a1 a2 a3) (if (Z11828_and_quaternary (Z24403_is_rational_in_range_inclusive a0 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16661))) (Z19677K2 0) (Z19677K3 1)) (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 1))) (Z24403_is_rational_in_range_inclusive a1 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16661))) (Z19677K2 0) (Z19677K3 1)) (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 1))) (Z24403_is_rational_in_range_inclusive a2 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16661))) (Z19677K2 0) (Z19677K3 1)) (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 1))) (Z24403_is_rational_in_range_inclusive a3 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16661))) (Z19677K2 0) (Z19677K3 1)) (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 1)))) (record Z28579 (Z28579K1 a0) (Z28579K2 a1) (Z28579K3 a2) (Z28579K4 a3)) (Z851 Z516 (Z13397_get_the_nth_element_of_a_list (cons (cons "Z35778K1" (cons a0 (list))) (cons (cons "Z35778K2" (cons a1 (list))) (cons (cons "Z35778K3" (cons a2 (list))) (cons (cons "Z35778K4" (cons a3 (list))) (list))))) (Z31032_index_of_first_mismatching_element (cons (Z24403_is_rational_in_range_inclusive a0 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16661))) (Z19677K2 0) (Z19677K3 1)) (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 1))) (cons (Z24403_is_rational_in_range_inclusive a1 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16661))) (Z19677K2 0) (Z19677K3 1)) (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 1))) (cons (Z24403_is_rational_in_range_inclusive a2 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16661))) (Z19677K2 0) (Z19677K3 1)) (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 1))) (cons (Z24403_is_rational_in_range_inclusive a3 (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16661))) (Z19677K2 0) (Z19677K3 1)) (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 1))) (list))))) #t Z844_boolean_equality)))))
+(define Z35778 Z35778_rgba_color_from_components_rationals)
+
 ;; Z35786 Gregorian date is on or before other date  [reaches an unimplemented function]
 ;;   Z35786K1: Gregorian calendar date, Z35786K2: Gregorian calendar date -> Boolean   [declared, not checked]
 (define (Z35786_gregorian_date_is_on_or_before_other_date a0 a1) (Z16768_sign_is_non_positive (Z35544_sign_of_difference_of_gregorian_calendar_dates a0 a1)))
@@ -15895,17 +16380,17 @@
 (define (Z35806_labels_of_wikidata_item_typed_list_monolingual a0) (Z19279_multilingual_text_to_list_of_monolingual_texts (Z22853_labels_of_wikidata_item_multilingual_text a0)))
 (define Z35806 Z35806_labels_of_wikidata_item_typed_list_monolingual)
 
-;; Z35809 monolingual text from list w highest listed lang  [mutually recursive: may not terminate]
+;; Z35809 monolingual text from list w highest listed lang  [reaches an unimplemented function; mutually recursive: may not terminate]
 ;;   Z35809K1: Typed list(Monolingual text), Z35809K2: Typed list(Natural language) -> Monolingual text   [declared, not checked]
 (define (Z35809_monolingual_text_from_list_w_highest_listed_lang a0 a1) (Z34947_best_monolingual_text_of_multilingual_per_lang (Z35828_multilingual_text_from_list_of_monolingual_texts a0) a1))
 (define Z35809 Z35809_monolingual_text_from_list_w_highest_listed_lang)
 
-;; Z35811 is monolingual text blank?
+;; Z35811 is monolingual text blank?  [reaches an unimplemented function]
 ;;   Z35811K1: Monolingual text -> Boolean   [declared, not checked]
 (define (Z35811_is_monolingual_text_blank a0) (Z10083_is_string_blank (Z14396_string_of_monolingual_text a0)))
 (define Z35811 Z35811_is_monolingual_text_blank)
 
-;; Z35815 does monolingual text have content?
+;; Z35815 does monolingual text have content?  [reaches an unimplemented function]
 ;;   Z35815K1: Monolingual text -> Boolean   [declared, not checked]
 (define (Z35815_does_monolingual_text_have_content a0) (not (Z35811_is_monolingual_text_blank a0)))
 (define Z35815 Z35815_does_monolingual_text_have_content)
@@ -15920,9 +16405,9 @@
 (define (Z35839_mark_mul_text a0) (Z27873_wrap_an_html_fragment_in_a_tag (Z32234_join_text_like_objects_into_html_fragment (cons a0 (list))) "span" (list "style") (list "color: magenta;")))
 (define Z35839 Z35839_mark_mul_text)
 
-;; Z35847 signed numerator of unsimplified Rational number  [reaches an unimplemented function]
+;; Z35847 signed numerator of unsimplified Rational number
 ;;   Z35847K1: Rational number -> Integer   [declared, not checked]
-(define (Z35847_signed_numerator_of_unsimplified_rational_number a0) (Z33745 (Z19717_sign_of_rational_number a0) (Z19733_numerator_of_unsimplified_rational_number a0)))
+(define (Z35847_signed_numerator_of_unsimplified_rational_number a0) (Z33745_make_integer (Z19717_sign_of_rational_number a0) (Z19733_numerator_of_unsimplified_rational_number a0)))
 (define Z35847 Z35847_signed_numerator_of_unsimplified_rational_number)
 
 ;; Z35860 prime divisors of Natural with their exponents  [reaches an unimplemented function]
@@ -15974,6 +16459,11 @@
 ;;   Z35904K1: String -> String   [declared, not checked]
 (define (Z35904_convert_symbols_in_swu_string_to_fsw a0) (Z35941_iterate_function_over_string_to_string Z35901_convert_swu_symbols_to_fsw a0))
 (define Z35904 Z35904_convert_symbols_in_swu_string_to_fsw)
+
+;; Z35911 Time of day from components
+;;   Z35911K1: Natural number, Z35911K2: Natural number, Z35911K3: Natural number -> Time of day   [declared, not checked]
+(define (Z35911_time_of_day_from_components a0 a1 a2) (record Z6060 (Z6060K1 a0) (Z6060K2 a1) (Z6060K3 a2)))
+(define Z35911 Z35911_time_of_day_from_components)
 
 ;; Z35921 NLG default text (String)
 ;;   Z35921K1: Object -> String   [declared, not checked]
@@ -16067,7 +16557,7 @@
 
 ;; Z36018 generate finite arithmetic progression of Integers  [reaches an unimplemented function]
 ;;   Z36018K1: Natural number, Z36018K2: Natural number, Z36018K3: Integer, Z36018K4: Integer -> Typed list(Integer)   [declared, not checked]
-(define (Z36018_generate_finite_arithmetic_progression_of_integers a0 a1 a2 a3) (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an Z16693_add_integers a2 (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an Z17120_multiply_integers a3 (Z31619_generate_range_of_integers (Z17101 a0) (Z17101 a1)))))
+(define (Z36018_generate_finite_arithmetic_progression_of_integers a0 a1 a2 a3) (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an Z16693_add_integers a2 (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an Z17120_multiply_integers a3 (Z31619_generate_range_of_integers (Z17101_natural_number_to_integer a0) (Z17101_natural_number_to_integer a1)))))
 (define Z36018 Z36018_generate_finite_arithmetic_progression_of_integers)
 
 ;; Z36033 generate finite geometric progression of Integers  [reaches an unimplemented function]
@@ -16084,6 +16574,11 @@
 ;;   Z36043K1: Wikidata item -> Commons image reference   [declared, not checked]
 (define (Z36043_get_image_for_wikidata_item a0) (Z21449_first_value_of_property_from_wikidata_item (record Z6092 (Z6092K1 "P18")) a0))
 (define Z36043 Z36043_get_image_for_wikidata_item)
+
+;; Z36045 Commons image reference from media ID string
+;;   Z36045K1: String -> Commons image reference   [declared, not checked]
+(define (Z36045_commons_image_reference_from_media_id_string a0) (record Z310 (Z310K1 a0)))
+(define Z36045 Z36045_commons_image_reference_from_media_id_string)
 
 ;; Z36049 thumbnail image  [reaches an unimplemented function]
 ;;   Z36049K1: Commons image reference, Z36049K2: Multilingual text, Z36049K3: Natural language -> HTML fragment   [declared, not checked]
@@ -16570,6 +17065,11 @@
 (define (Z36605_grammatical_genders_from_wikidata_lexeme_reference a0) (Z20616_grammatical_genders_from_wikidata_lexeme (Z6825 a0)))
 (define Z36605 Z36605_grammatical_genders_from_wikidata_lexeme_reference)
 
+;; Z36608 Create Syntactic table
+;;   Z36608K1: Natural language, Z36608K2: Wikidata item reference, Z36608K3: Typed list(Wikidata item reference), Z36608K4: Typed list((experimental) Syntactic option) -> (experimental) Syntactic table   [declared, not checked]
+(define (Z36608_create_syntactic_table a0 a1 a2 a3) (record Z36462 (Z36462K1 a0) (Z36462K2 a1) (Z36462K3 a2) (Z36462K4 a3)))
+(define Z36608 Z36608_create_syntactic_table)
+
 ;; Z36610 definite article (simple)  [reaches an unimplemented function]
 ;;   Z36610K1: Natural language -> String   [declared, not checked]
 (define (Z36610_definite_article_simple a0) (Z22193_switch a0 (list Z1002 Z1532 Z1576 Z1137 Z1402 Z1051 Z1062 Z1272 Z1078) (cons "the " (cons "die " (cons "la " (cons "e " (cons "" (cons "" (cons "" (cons "" (cons "" (cons (Z35921_nlg_default_text_string "(the) ") (list)))))))))))))
@@ -16602,7 +17102,7 @@
 
 ;; Z36632 logo image from Wikidata, en  [reaches an unimplemented function]
 ;;   Z36632K1: Wikidata item reference -> HTML fragment   [declared, not checked]
-(define (Z36632_logo_image_from_wikidata_en a0) (Z36049_thumbnail_image (Z36045 (Z36634_first_image_value_of_property_from_wikidata_item (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list Z1360) (list (record Z6092 (Z6092K1 "P154")))) (record Z6092 (Z6092K1 "P154")))) (record Z12 (Z12K1 (list (record Z11 (Z11K1 Z1002) (Z11K2 "Logo"))))) Z1002))
+(define (Z36632_logo_image_from_wikidata_en a0) (Z36049_thumbnail_image (Z36045_commons_image_reference_from_media_id_string (Z36634_first_image_value_of_property_from_wikidata_item (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list Z1360) (list (record Z6092 (Z6092K1 "P154")))) (record Z6092 (Z6092K1 "P154")))) (record Z12 (Z12K1 (list (record Z11 (Z11K1 Z1002) (Z11K2 "Logo"))))) Z1002))
 (define Z36632 Z36632_logo_image_from_wikidata_en)
 
 ;; Z36634 first image value of property from wikidata item  [reaches an unimplemented function]
@@ -16635,6 +17135,21 @@
 (define (Z36652_number_of_options a0) (length (Z36650_options_of_table a0)))
 (define Z36652 Z36652_number_of_options)
 
+;; Z36656 Create Syntactic option
+;;   Z36656K1: Typed list(Wikidata item reference), Z36656K2: Typed list(HTML fragment) -> (experimental) Syntactic option   [declared, not checked]
+(define (Z36656_create_syntactic_option a0 a1) (record Z36463 (Z36463K1 a0) (Z36463K2 a1)))
+(define Z36656 Z36656_create_syntactic_option)
+
+;; Z36658 Create Syntactic option from options and String  [reaches an unimplemented function]
+;;   Z36658K1: Typed list(Wikidata item reference), Z36658K2: String -> (experimental) Syntactic option   [declared, not checked]
+(define (Z36658_create_syntactic_option_from_options_and_string a0 a1) (record Z36463 (Z36463K1 a0) (Z36463K2 (cons (Z27868 a1) (list)))))
+(define Z36658 Z36658_create_syntactic_option_from_options_and_string)
+
+;; Z36660 Create Syntactic option with options and mono text  [reaches an unimplemented function]
+;;   Z36660K1: Typed list(Wikidata item reference), Z36660K2: Monolingual text -> (experimental) Syntactic option   [declared, not checked]
+(define (Z36660_create_syntactic_option_with_options_and_mono_text a0 a1) (record Z36463 (Z36463K1 a0) (Z36463K2 (cons (Z27868 (Z14396_string_of_monolingual_text a1)) (list)))))
+(define Z36660 Z36660_create_syntactic_option_with_options_and_mono_text)
+
 ;; Z36662 features of option
 ;;   Z36662K1: (experimental) Syntactic option -> Typed list(Wikidata item reference)   [declared, not checked]
 (define (Z36662_features_of_option a0) (Z803_value_by_key (record Z39 (Z39K1 "Z36463K1")) a0))
@@ -16654,6 +17169,11 @@
 ;;   Z36678K1: Wikidata item reference, Z36678K2: Natural language -> HTML fragment   [declared, not checked]
 (define (Z36678_infobox_for_populated_place a0 a1) (Z33328_create_html_table_fragment (record Z89 (Z89K1 "")) (record Z89 (Z89K1 "")) (cons (Z37644_infobox_section a0 "city" a1) (cons (Z37623_infobox_row a0 (record Z6092 (Z6092K1 "P17")) a1) (cons (Z37623_infobox_row a0 (record Z6092 (Z6092K1 "P421")) a1) (cons (Z38086_infobox_row_coordinate_hyperlinked a0 a1) (list)))))))
 (define Z36678 Z36678_infobox_for_populated_place)
+
+;; Z36682 specific property of subject is value (Simple)  [reaches an unimplemented function]
+;;   Z36682K1: Wikidata item reference, Z36682K2: Wikidata property reference, Z36682K3: Object, Z36682K4: Natural language -> HTML fragment   [declared, not checked]
+(define (Z36682_specific_property_of_subject_is_value_simple a0 a1 a2 a3) (Z32234_join_text_like_objects_into_html_fragment (cons (Z34096_conditional_sentence_case (Z36610_definite_article_simple a3) a3) (cons (Z32556_fallback_string_if_error_empty_or_not_a_string (Z24766_label_text_for_item_in_given_language_or_fallback (Z35364_wikidata_item_of_property (Z35036_fetch_wikidata_property_or_parts a1 (list Z6036) a3 (list (record Z6092 (Z6092K1 "P1629"))))) a3) (Z14396_string_of_monolingual_text (Z29825_label_of_property_in_language_or_fallbacks a3 a1))) (cons (Z22193_switch a3 (list Z1002 Z1532 Z1576 Z1402 Z1137 Z1062 Z1272 Z1078) (list " of " " van " " de " " на " " di " " z " " od " " dari " " (of) ")) (cons (Z32220_comment_abstract_wikipedia (record Z11 (Z11K1 a3) (Z11K2 "Optional \"the \""))) (cons (Z24766_label_text_for_item_in_given_language_or_fallback a0 a3) (cons " " (cons (Z36625_third_person_singular_form_of_to_be_simple a3) (cons (Z32220_comment_abstract_wikipedia (record Z11 (Z11K1 a3) (Z11K2 "Optional \"the \""))) (cons (Z36209_display_any_value_from_wd_triple a2 a3) (cons "." (list)))))))))))))
+(define Z36682 Z36682_specific_property_of_subject_is_value_simple)
 
 ;; Z36691 short name of item  [reaches an unimplemented function]
 ;;   Z36691K1: Wikidata item, Z36691K2: Natural language -> String   [declared, not checked]
@@ -16689,6 +17209,11 @@
 ;;   Z36727K1: Typed list(Wikidata item reference), Z36727K2: (experimental) Syntactic table -> Typed list(Wikidata item reference)   [declared, not checked]
 (define (Z36727_which_of_these_features_is_inherent a0 a1) (Z22865_keep_elements_common_with_other_list (Z36644_inherent_features_of_table a1) a0))
 (define Z36727 Z36727_which_of_these_features_is_inherent)
+
+;; Z36731 specific property of subject is value, Dutch  [reaches an unimplemented function]
+;;   Z36731K1: Wikidata item reference, Z36731K2: Wikidata property reference, Z36731K3: Object, Z36731K4: Natural language -> HTML fragment   [declared, not checked]
+(define (Z36731_specific_property_of_subject_is_value_dutch a0 a1 a2 a3) (Z32234_join_text_like_objects_into_html_fragment (cons (Z34096_conditional_sentence_case (Z35158_dutch_nominative_def_article_noun_from_item (Z35364_wikidata_item_of_property (Z35036_fetch_wikidata_property_or_parts a1 (list Z6036) (list) (list (record Z6092 (Z6092K1 "P1629")))))) a3) (cons " van " (cons (Z32220_comment_abstract_wikipedia (record Z11 (Z11K1 a3) (Z11K2 "Optioneel \"de/het\""))) (cons (Z24766_label_text_for_item_in_given_language_or_fallback a0 a3) (cons " is " (cons (Z32220_comment_abstract_wikipedia (record Z11 (Z11K1 a3) (Z11K2 "Optioneel \"de/het\""))) (cons (Z36209_display_any_value_from_wd_triple a2 a3) (cons "." (list)))))))))))
+(define Z36731 Z36731_specific_property_of_subject_is_value_dutch)
 
 ;; Z36733 single option
 ;;   Z36733K1: (experimental) Syntactic table -> Boolean   [declared, not checked]
@@ -16850,6 +17375,16 @@
 (define (Z36916_infobox_for_holiday a0 a1) (Z33328_create_html_table_fragment (record Z89 (Z89K1 "")) (record Z89 (Z89K1 "")) (cons (Z37644_infobox_section a0 "default" a1) (cons (Z37623_infobox_row a0 (record Z6092 (Z6092K1 "P547")) a1) (cons (Z33319_create_html_tr_fragment (cons (Z33315_create_html_td_fragment (Z10771_sentence_case (Z24766_label_text_for_item_in_given_language_or_fallback (record Z6091 (Z6091K1 "Q205892")) a1))) (cons (Z33315_create_html_td_fragment (Z10771_sentence_case (Z24766_label_text_for_item_in_given_language_or_fallback (Z21449_first_value_of_property_from_wikidata_item (record Z6092 (Z6092K1 "P837")) (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list Z1360) (list (record Z6092 (Z6092K1 "P547")) (record Z6092 (Z6092K1 "P837"))))) a1))) (list)))) (list))))))
 (define Z36916 Z36916_infobox_for_holiday)
 
+;; Z36957 strong table  [reaches an unimplemented function]
+;;   Z36957K1: (experimental) Syntactic table -> (experimental) Syntactic table   [declared, not checked]
+(define (Z36957_strong_table a0) (record Z36462 (Z36462K1 (Z36613_language_of_table a0)) (Z36462K2 (Z36636_part_of_speech_of_table a0)) (Z36462K3 (Z36644_inherent_features_of_table a0)) (Z36462K4 (map Z36959_strong_option (Z36650_options_of_table a0)))))
+(define Z36957 Z36957_strong_table)
+
+;; Z36959 strong option  [reaches an unimplemented function]
+;;   Z36959K1: (experimental) Syntactic option -> (experimental) Syntactic option   [declared, not checked]
+(define (Z36959_strong_option a0) (record Z36463 (Z36463K1 (Z36662_features_of_option a0)) (Z36463K2 (map Z36961_strong_html (Z36666_fragments_of_option a0)))))
+(define Z36959 Z36959_strong_option)
+
 ;; Z36961 strong HTML  [reaches an unimplemented function]
 ;;   Z36961K1: HTML fragment -> HTML fragment   [declared, not checked]
 (define (Z36961_strong_html a0) (Z35049_wrap_an_html_fragment_in_a_simple_tag a0 "strong"))
@@ -16895,10 +17430,20 @@
 (define (Z36998_wrap_fragment_in_link_to_item_article_in_language a0 a1 a2) (if (Z17180_is_void (Z31697_wikipedia_language_edition_link_for_wikidata_item a1 a2)) a0 (Z27873_wrap_an_html_fragment_in_a_tag a0 "a" (list "href") (cons (Z31703_url_string_of_wikidata_sitelink (car (Z6839_fetch_wikidata_sitelinks a1 (list "wiki") (cons a2 (list))))) (list)))))
 (define Z36998 Z36998_wrap_fragment_in_link_to_item_article_in_language)
 
+;; Z37004 wrap option with a link  [reaches an unimplemented function]
+;;   Z37004K1: (experimental) Syntactic option, Z37004K2: Wikidata item reference, Z37004K3: Natural language -> (experimental) Syntactic option   [declared, not checked]
+(define (Z37004_wrap_option_with_a_link a0 a1 a2) (record Z36463 (Z36463K1 (Z36662_features_of_option a0)) (Z36463K2 (Z32695_apply_a_3_param_fn_to_a_list_of_firsts_same_2_3 Z36998_wrap_fragment_in_link_to_item_article_in_language (Z36666_fragments_of_option a0) a1 a2))))
+(define Z37004 Z37004_wrap_option_with_a_link)
+
 ;; Z37005 entity has part-of sentence  [reaches an unimplemented function]
 ;;   Z37005K1: Wikidata item reference, Z37005K2: Natural language -> Monolingual text   [declared, not checked]
 (define (Z37005_entity_has_part_of_sentence a0 a1) (Z31684_apply_two_argument_function_validated_arguments (Z14310_select_a_function_based_on_language Z37017 a1) a0 a1))
 (define Z37005 Z37005_entity_has_part_of_sentence)
+
+;; Z37006 has parts-sentence in English  [reaches an unimplemented function]
+;;   Z37006K1: Wikidata item reference, Z37006K2: Natural language -> Monolingual text   [declared, not checked]
+(define (Z37006_has_parts_sentence_in_english a0 a1) (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (record Z11 (Z11K1 a1) (Z11K2 (Z10771_sentence_case (Z24766_label_text_for_item_in_given_language_or_fallback a0 a1)))) (cons (record Z11 (Z11K1 a1) (Z11K2 "consists of")) (cons (Z34644_join_list_of_monolingual_texts_with_oxford_comma (Z33024_label_texts_for_wikidata_items (Z37008_item_has_parts (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list Z1360) (list (record Z6092 (Z6092K1 "P527"))))) a1) a1) (list)))) (record Z11 (Z11K1 a1) (Z11K2 " "))) (cons (record Z11 (Z11K1 a1) (Z11K2 ".")) (list))) (record Z11 (Z11K1 a1) (Z11K2 ""))))
+(define Z37006 Z37006_has_parts_sentence_in_english)
 
 ;; Z37008 item has parts  [reaches an unimplemented function]
 ;;   Z37008K1: Wikidata item -> Typed list(Wikidata item reference)   [declared, not checked]
@@ -16925,6 +17470,11 @@
 (define (Z37025_main_articles_swedish a0 a1 a2 a3) (if (Z12755_is_single_element_list a0) (Z27849_join_two_html_fragments (record Z89 (Z89K1 "Huvudartikel: ")) (Z32428_abstract_wikilink (car a0) a3)) (Z27926_join_multiple_html_fragments (cons (record Z89 (Z89K1 "Huvudartiklar: ")) (cons (Z35766_join_multiple_html_fragments_with_a_separator (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z32428_abstract_wikilink (Z12967_list_without_last_element a0) a3) (record Z89 (Z89K1 ", "))) (cons (record Z89 (Z89K1 " och ")) (cons (Z32428_abstract_wikilink (Z12964_last_element a0) a3) (list))))))))
 (define Z37025 Z37025_main_articles_swedish)
 
+;; Z37029 link table  [reaches an unimplemented function]
+;;   Z37029K1: (experimental) Syntactic table, Z37029K2: Wikidata item reference, Z37029K3: Natural language -> (experimental) Syntactic table   [declared, not checked]
+(define (Z37029_link_table a0 a1 a2) (record Z36462 (Z36462K1 (Z36613_language_of_table a0)) (Z36462K2 (Z36636_part_of_speech_of_table a0)) (Z36462K3 (Z36644_inherent_features_of_table a0)) (Z36462K4 (Z32695_apply_a_3_param_fn_to_a_list_of_firsts_same_2_3 Z37004_wrap_option_with_a_link (Z36650_options_of_table a0) a1 a2))))
+(define Z37029 Z37029_link_table)
+
 ;; Z37033 superlative definition, in Esperanto  [reaches an unimplemented function]
 ;;   Z37033K1: Wikidata item reference, Z37033K2: Wikidata item reference, Z37033K3: Wikidata item reference, Z37033K4: Wikidata item reference, Z37033K5: Natural language -> Monolingual text   [declared, not checked]
 (define (Z37033_superlative_definition_in_esperanto a0 a1 a2 a3 a4) (Z26107_monolingual_text_from_language_and_string a4 (Z22514_sentence_from_list_of_words_english_conventions (cons (Z36270_label_text_for_item_in_lang_or_ltd_fallback_or_qid a0 a4) (cons "estas la plej" (cons (Z36270_label_text_for_item_in_lang_or_ltd_fallback_or_qid a1 a4) (cons (Z36270_label_text_for_item_in_lang_or_ltd_fallback_or_qid a2 a4) (cons "de la" (cons (Z36270_label_text_for_item_in_lang_or_ltd_fallback_or_qid a3 a4) (list))))))))))
@@ -16947,7 +17497,7 @@
 
 ;; Z37054 parse hexadecimal Unicode scalar or range as pair  [reaches an unimplemented function]
 ;;   Z37054K1: String -> Typed pair(Unicode code point, Unicode code point)   [declared, not checked]
-(define (Z37054_parse_hexadecimal_unicode_scalar_or_range_as_pair a0) (Z30414_make_typed_pair (Z23022 (Z13799_hexadecimal_to_natural_number (Z11410_discard_from_start_of_first_substring a0 ".."))) (Z23022 (Z13799_hexadecimal_to_natural_number (Z11424_discard_until_end_of_last_substring a0 "..")))))
+(define (Z37054_parse_hexadecimal_unicode_scalar_or_range_as_pair a0) (Z30414_make_typed_pair (Z23022_natural_number_to_codepoint (Z13799_hexadecimal_to_natural_number (Z11410_discard_from_start_of_first_substring a0 ".."))) (Z23022_natural_number_to_codepoint (Z13799_hexadecimal_to_natural_number (Z11424_discard_until_end_of_last_substring a0 "..")))))
 (define Z37054 Z37054_parse_hexadecimal_unicode_scalar_or_range_as_pair)
 
 ;; Z37058 is Unicode code point contained in range (pair)?
@@ -16977,7 +17527,7 @@
 
 ;; Z37080 English linked noun as table from item  [reaches an unimplemented function]
 ;;   Z37080K1: Wikidata item reference, Z37080K2: Natural language -> (experimental) Syntactic table   [declared, not checked]
-(define (Z37080_english_linked_noun_as_table_from_item a0 a1) (Z37029 (Z36766_english_noun_from_item_reference a0 a1) a0 a1))
+(define (Z37080_english_linked_noun_as_table_from_item a0 a1) (Z37029_link_table (Z36766_english_noun_from_item_reference a0 a1) a0 a1))
 (define Z37080 Z37080_english_linked_noun_as_table_from_item)
 
 ;; Z37083 English instantiate present a noun phrase as noun  [reaches an unimplemented function]
@@ -17157,8 +17707,18 @@
 
 ;; Z37279 place is located by body of water, Swedish  [reaches an unimplemented function]
 ;;   Z37279K1: Wikidata item reference, Z37279K2: Wikidata item reference, Z37279K3: Natural language -> Monolingual text   [declared, not checked]
-(define (Z37279_place_is_located_by_body_of_water_swedish a0 a1 a2) (Z26107_monolingual_text_from_language_and_string a2 (Z22511_capitalise_first_letter_and_add_full_stop (Z22504_join_list_of_strings_with_spaces (cons (Z23468_text_from_wikidata_item_label_for_given_language (Z30120_fetch_wikidata_item_or_parts a0 (list Z6033) (cons a2 (list)) (list)) a2) (cons "ligger vid" (cons (Z14396_string_of_monolingual_text (Z22697 (car (Z29623_item_qid_is_instance_of_these_items_qids a1)) a2 (list (record Z6091 (Z6091K1 "Q110786")) (record Z6091 (Z6091K1 "Q53997851")) (record Z6091 (Z6091K1 "Q131105"))))) (cons (Z23468_text_from_wikidata_item_label_for_given_language (Z30120_fetch_wikidata_item_or_parts a1 (list Z6033) (cons a2 (list)) (list)) a2) (list)))))))))
+(define (Z37279_place_is_located_by_body_of_water_swedish a0 a1 a2) (Z26107_monolingual_text_from_language_and_string a2 (Z22511_capitalise_first_letter_and_add_full_stop (Z22504_join_list_of_strings_with_spaces (cons (Z23468_text_from_wikidata_item_label_for_given_language (Z30120_fetch_wikidata_item_or_parts a0 (list Z6033) (cons a2 (list)) (list)) a2) (cons "ligger vid" (cons (Z14396_string_of_monolingual_text (Z22697_first_matching_representation_text_from_item (car (Z29623_item_qid_is_instance_of_these_items_qids a1)) a2 (list (record Z6091 (Z6091K1 "Q110786")) (record Z6091 (Z6091K1 "Q53997851")) (record Z6091 (Z6091K1 "Q131105"))))) (cons (Z23468_text_from_wikidata_item_label_for_given_language (Z30120_fetch_wikidata_item_or_parts a1 (list Z6033) (cons a2 (list)) (list)) a2) (list)))))))))
 (define Z37279 Z37279_place_is_located_by_body_of_water_swedish)
+
+;; Z37286 has parts-sentence Default  [reaches an unimplemented function]
+;;   Z37286K1: Wikidata item reference, Z37286K2: Natural language -> Monolingual text   [declared, not checked]
+(define (Z37286_has_parts_sentence_default a0 a1) (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (record Z11 (Z11K1 a1) (Z11K2 (Z10771_sentence_case (Z24766_label_text_for_item_in_given_language_or_fallback a0 a1)))) (cons (Z26107_monolingual_text_from_language_and_string a1 (Z37321_consists_of_simple a1)) (cons (Z37289_join_list_of_monolingual_texts_without_oxford_comm (Z33024_label_texts_for_wikidata_items (Z37008_item_has_parts (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list Z1360) (list (record Z6092 (Z6092K1 "P527"))))) a1) a1) (list)))) (record Z11 (Z11K1 a1) (Z11K2 " "))) (cons (record Z11 (Z11K1 a1) (Z11K2 ".")) (list))) (record Z11 (Z11K1 a1) (Z11K2 ""))))
+(define Z37286 Z37286_has_parts_sentence_default)
+
+;; Z37289 join list of monolingual texts without Oxford comm  [reaches an unimplemented function]
+;;   Z37289K1: Typed list(Monolingual text), Z37289K2: Natural language -> Monolingual text   [declared, not checked]
+(define (Z37289_join_list_of_monolingual_texts_without_oxford_comm a0 a1) (if (= (length a0) 0) (record Z11 (Z11K1 a1) (Z11K2 "")) (if (= (length a0) 1) (car a0) (if (= (length a0) 2) (Z34669_join_list_of_monolingual_texts_with_delimiter a0 (Z861_monolingual_text_from_string_and_natural_language (Z37311_and_indicating_last_entry_of_list_simple a1) a1)) (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (Z34669_join_list_of_monolingual_texts_with_delimiter (Z12967_list_without_last_element a0) (record Z11 (Z11K1 a1) (Z11K2 ", "))) (cons (Z12964_last_element a0) (list))) (Z26107_monolingual_text_from_language_and_string a1 (Z37311_and_indicating_last_entry_of_list_simple a1)))))))
+(define Z37289 Z37289_join_list_of_monolingual_texts_without_oxford_comm)
 
 ;; Z37297 filter Lexeme forms by lack of features
 ;;   Z37297K1: Typed list(Wikidata lexeme form), Z37297K2: Typed list(Wikidata item reference) -> Typed list(Wikidata lexeme form)   [declared, not checked]
@@ -17200,6 +17760,11 @@
 (define (Z37323_filter_monolingual_text_valued_statements_by_langs a0 a1) (if (null? a1) (list) (if (Z12864_lists_have_equal_length (Z22820_compress_list a0 (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z19352_object_has_this_type (map Z19308_value_of_wikidata_statement a0) Z11)) a0) (Z12767_concatenate_two_untyped_lists (Z22820_compress_list a0 (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z33175_language_of_monolingual_text_is_exactly (map Z19308_value_of_wikidata_statement a0) (car a1))) (Z37323_filter_monolingual_text_valued_statements_by_langs (Z22820_compress_list a0 (Z36132_invert_all_of_typed_list_of_booleans (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z33175_language_of_monolingual_text_is_exactly (map Z19308_value_of_wikidata_statement a0) (car a1)))) (cdr a1))) (Z37323_filter_monolingual_text_valued_statements_by_langs (Z22820_compress_list a0 (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z19352_object_has_this_type (map Z19308_value_of_wikidata_statement a0) Z11)) a1))))
 (define Z37323 Z37323_filter_monolingual_text_valued_statements_by_langs)
 
+;; Z37328 has parts-sentence (Simple)  [reaches an unimplemented function]
+;;   Z37328K1: Wikidata item reference, Z37328K2: Natural language -> Monolingual text   [declared, not checked]
+(define (Z37328_has_parts_sentence_simple a0 a1) (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (record Z11 (Z11K1 a1) (Z11K2 (Z10771_sentence_case (Z24766_label_text_for_item_in_given_language_or_fallback a0 a1)))) (cons (Z26107_monolingual_text_from_language_and_string a1 (Z37321_consists_of_simple a1)) (cons (Z37289_join_list_of_monolingual_texts_without_oxford_comm (Z33024_label_texts_for_wikidata_items (Z37008_item_has_parts (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list Z1360) (list (record Z6092 (Z6092K1 "P527"))))) a1) a1) (list)))) (record Z11 (Z11K1 a1) (Z11K2 " "))) (cons (record Z11 (Z11K1 a1) (Z11K2 ".")) (list))) (record Z11 (Z11K1 a1) (Z11K2 ""))))
+(define Z37328 Z37328_has_parts_sentence_simple)
+
 ;; Z37332 does Wikidata statement match grammatical feature?  [reaches an unimplemented function]
 ;;   Z37332K1: Wikidata statement, Z37332K2: Object -> Kleenean   [declared, not checked]
 (define (Z37332_does_wikidata_statement_match_grammatical_feature a0 a1) (if (Z12696_contains (list (record Z6091 (Z6091K1 "Q499327")) (record Z6091 (Z6091K1 "Q1775415")) (record Z6091 (Z6091K1 "Q1305037")) (record Z6091 (Z6091K1 "Q1775461"))) (Z37375_coerce_to_wikidata_reference_object_qid_pid_etc a1)) (if (Z12696_contains (Z37393_grammatical_features_of_statement_from_qualifiers a0) a1) Z22113 (if (bool-or (Z23120_is_non_empty_list (Z28312_qualifiers_of_wikidata_statement_with_predicate a0 (record Z6092 (Z6092K1 "P5185")))) (bool-and (not (Z19352_object_has_this_type a1 Z6091)) (Z13752_is_there_a_common_element_on_these_lists (Z37393_grammatical_features_of_statement_from_qualifiers a0) (Z29493_enumeration_reference_values_from_type (Z16829_type_of_object a1))))) Z22115 Z22114)) (if (Z12696_contains (list (record Z6091 (Z6091K1 "Q110786")) (record Z6091 (Z6091K1 "Q110022")) (record Z6091 (Z6091K1 "Q489410")) (record Z6091 (Z6091K1 "Q146786")) (record Z6091 (Z6091K1 "Q113890342"))) (Z37375_coerce_to_wikidata_reference_object_qid_pid_etc a1)) (if (Z12696_contains (Z37393_grammatical_features_of_statement_from_qualifiers a0) a1) Z22113 (if (bool-or (Z23120_is_non_empty_list (Z28312_qualifiers_of_wikidata_statement_with_predicate a0 (record Z6092 (Z6092K1 "P11054")))) (bool-and (not (Z19352_object_has_this_type a1 Z6091)) (Z13752_is_there_a_common_element_on_these_lists (Z37393_grammatical_features_of_statement_from_qualifiers a0) (Z29493_enumeration_reference_values_from_type (Z16829_type_of_object a1))))) Z22115 Z22114)) Z22114)))
@@ -17219,6 +17784,11 @@
 ;;   Z37346K1: Wikidata lexeme, Z37346K2: Natural language -> HTML fragment   [declared, not checked]
 (define (Z37346_urdu_noun_declension_table a0 a1) (Z36341 (Z27878_create_wikitable_with_columns_and_rows_headers (record Z89 (Z89K1 "")) (cons (Z27885_name_for_table_header (record Z6091 (Z6091K1 "Q128234")) a1) (cons (Z27885_name_for_table_header (record Z6091 (Z6091K1 "Q110786")) a1) (cons (Z27885_name_for_table_header (record Z6091 (Z6091K1 "Q146786")) a1) (list)))) (cons (Z27885_name_for_table_header (record Z6091 (Z6091K1 "Q1751855")) a1) (cons (Z27885_name_for_table_header (record Z6091 (Z6091K1 "Q1233197")) a1) (cons (Z27885_name_for_table_header (record Z6091 (Z6091K1 "Q185077")) a1) (list)))) (Z15142_list_identity (cons (cons (Z850 (Z37338_matching_representation_string_from_lexeme_for_lan a0 (list (record Z6091 (Z6091K1 "Q1751855")) (record Z6091 (Z6091K1 "Q110786"))) (list Z1717)) Z28290 "") (cons (Z850 (Z37338_matching_representation_string_from_lexeme_for_lan a0 (list (record Z6091 (Z6091K1 "Q1751855")) (record Z6091 (Z6091K1 "Q146786"))) (list Z1717)) Z28290 "") (list))) (cons (cons (Z850 (Z37338_matching_representation_string_from_lexeme_for_lan a0 (list (record Z6091 (Z6091K1 "Q1233197")) (record Z6091 (Z6091K1 "Q110786"))) (list Z1717)) Z28290 "") (cons (Z850 (Z37338_matching_representation_string_from_lexeme_for_lan a0 (list (record Z6091 (Z6091K1 "Q1233197")) (record Z6091 (Z6091K1 "Q146786"))) (list Z1717)) Z28290 "") (list))) (cons (cons (Z850 (Z37338_matching_representation_string_from_lexeme_for_lan a0 (list (record Z6091 (Z6091K1 "Q185077")) (record Z6091 (Z6091K1 "Q110786"))) (list Z1717)) Z28290 "") (cons (Z850 (Z37338_matching_representation_string_from_lexeme_for_lan a0 (list (record Z6091 (Z6091K1 "Q185077")) (record Z6091 (Z6091K1 "Q146786"))) (list Z1717)) Z28290 "") (list))) (list))))))))
 (define Z37346 Z37346_urdu_noun_declension_table)
+
+;; Z37348 place is located by body of water, English  [reaches an unimplemented function]
+;;   Z37348K1: Wikidata item reference, Z37348K2: Wikidata item reference, Z37348K3: Natural language -> Monolingual text   [declared, not checked]
+(define (Z37348_place_is_located_by_body_of_water_english a0 a1 a2) (record Z11 (Z11K1 a2) (Z11K2 (Z22514_sentence_from_list_of_words_english_conventions (cons (Z36270_label_text_for_item_in_lang_or_ltd_fallback_or_qid a0 a2) (cons "is located by" (cons (if (Z22131_is_kleenean_true (Z32645_item_indicates_definite_article_english (Z6821_fetch_wikidata_item a1))) "the" "") (cons (Z36270_label_text_for_item_in_lang_or_ltd_fallback_or_qid a1 a2) (list)))))))))
+(define Z37348 Z37348_place_is_located_by_body_of_water_english)
 
 ;; Z37353 is Statement contemporary with Wikidata time?  [reaches an unimplemented function]
 ;;   Z37353K1: Wikidata statement, Z37353K2: Wikidata time -> Kleenean   [declared, not checked]
@@ -17242,7 +17812,7 @@
 
 ;; Z37375 coerce to Wikidata reference object (QID/PID/etc.)  [reaches an unimplemented function]
 ;;   Z37375K1: Object -> Object   [declared, not checked]
-(define (Z37375_coerce_to_wikidata_reference_object_qid_pid_etc a0) (if (Z12696_contains (list Z6091 Z6092 Z6095 Z6096 Z6094) (Z16829_type_of_object a0)) a0 (if (Z15777_is_string a0) (Z13036_apply (Z22193_switch (Z10901_get_first_character_of_string "Q42") (list "Q" "P" "L") (cons Z22246 (cons Z29727 (cons (Z19565_triple_if (Z10070_has_substring "Q42" "-F") Z35743 (Z10070_has_substring "Q42" "-S") Z30558 Z22249) (list))))) "Q42") (if (Z12696_contains (list Z6091 Z6092 Z6095 Z6096 Z6094) (Z16829_type_of_object (Z6895 a0))) (Z6895 a0) (Z851 Z516 (cons "Z37375K1" (cons a0 (list))))))))
+(define (Z37375_coerce_to_wikidata_reference_object_qid_pid_etc a0) (if (Z12696_contains (list Z6091 Z6092 Z6095 Z6096 Z6094) (Z16829_type_of_object a0)) a0 (if (Z15777_is_string a0) (Z13036_apply (Z22193_switch (Z10901_get_first_character_of_string "Q42") (list "Q" "P" "L") (cons Z22246_wikidata_item_reference_from_qid_string (cons Z29727_wikidata_property_reference_from_pid_string (cons (Z19565_triple_if (Z10070_has_substring "Q42" "-F") Z35743_wikidata_lexeme_form_reference_from_lfid_string (Z10070_has_substring "Q42" "-S") Z30558_wikidata_lexeme_sense_reference_from_lid_string Z22249_wikidata_lexeme_reference_from_lid_string) (list))))) "Q42") (if (Z12696_contains (list Z6091 Z6092 Z6095 Z6096 Z6094) (Z16829_type_of_object (Z6895 a0))) (Z6895 a0) (Z851 Z516 (cons "Z37375K1" (cons a0 (list))))))))
 (define Z37375 Z37375_coerce_to_wikidata_reference_object_qid_pid_etc)
 
 ;; Z37387 Hindi lexeme inflection table  [reaches an unimplemented function]
@@ -17325,6 +17895,16 @@
 (define (Z37481_does_wikidata_property_have_data_type_url a0) (Z12696_contains Z37486 a0))
 (define Z37481 Z37481_does_wikidata_property_have_data_type_url)
 
+;; Z37493 NLG string to HTML fragment with span for defaults  [reaches an unimplemented function]
+;;   Z37493K1: String, Z37493K2: String, Z37493K3: Typed list(Wikidata item reference), Z37493K4: Typed list(Wikidata item reference), Z37493K5: Natural language -> HTML fragment   [declared, not checked]
+(define (Z37493_nlg_string_to_html_fragment_with_span_for_defaults a0 a1 a2 a3 a4) (Z37464_monolingual_text_as_html_with_lang_col_links (if (bool-and (Z10615_string_starts_with a0 "❌≪") (Z10618_string_ends_with a0 "≫❌")) (record Z11 (Z11K1 Z1360) (Z11K2 (Z26414_remove_first_and_last_character (Z26414_remove_first_and_last_character a0)))) (record Z11 (Z11K1 a4) (Z11K2 a0))) a1 a2 a3 a4))
+(define Z37493 Z37493_nlg_string_to_html_fragment_with_span_for_defaults)
+
+;; Z37507 positive adjective from full adjective
+;;   Z37507K1: (experimental) Syntactic table -> (experimental) Syntactic table   [declared, not checked]
+(define (Z37507_positive_adjective_from_full_adjective a0) (record Z36462 (Z36462K1 (Z36613_language_of_table a0)) (Z36462K2 (record Z6091 (Z6091K1 "Q34698"))) (Z36462K3 (Z12961_append_element_to_typed_list (record Z6091 (Z6091K1 "Q3482678")) (Z36644_inherent_features_of_table a0))) (Z36462K4 (Z37510_options_with_feature (Z36650_options_of_table a0) (record Z6091 (Z6091K1 "Q3482678"))))))
+(define Z37507 Z37507_positive_adjective_from_full_adjective)
+
 ;; Z37510 options with feature
 ;;   Z37510K1: Typed list((experimental) Syntactic option), Z37510K2: Wikidata item reference -> Typed list((experimental) Syntactic option)   [declared, not checked]
 (define (Z37510_options_with_feature a0 a1) (Z28316_filter_with_second_common_element Z37512_option_has_feature a0 a1))
@@ -17337,7 +17917,7 @@
 
 ;; Z37541 Unicode code point of Bangla character  [reaches an unimplemented function]
 ;;   Z37541K1: String -> Integer   [declared, not checked]
-(define (Z37541_unicode_code_point_of_bangla_character a0) (Z17101 (Z11515_unicode_of_first_character a0)))
+(define (Z37541_unicode_code_point_of_bangla_character a0) (Z17101_natural_number_to_integer (Z11515_unicode_of_first_character a0)))
 (define Z37541 Z37541_unicode_code_point_of_bangla_character)
 
 ;; Z37551 Flesch Reading-Ease score  [reaches an unimplemented function]
@@ -17347,7 +17927,7 @@
 
 ;; Z37609 Flesch Reading-Ease of text  [reaches an unimplemented function]
 ;;   Z37609K1: String -> float64   [declared, not checked]
-(define (Z37609_flesch_reading_ease_of_text a0) (Z37551_flesch_reading_ease_score (Z17101 (length (Z13402_words_from_string a0))) (Z17101 (length (Z18522 a0))) (Z17101 (Z20089_reduce_list_only + (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an Z13036_apply Z29940 (Z13402_words_from_string a0)) 0))))
+(define (Z37609_flesch_reading_ease_of_text a0) (Z37551_flesch_reading_ease_score (Z17101_natural_number_to_integer (length (Z13402_words_from_string a0))) (Z17101_natural_number_to_integer (length (Z18522 a0))) (Z17101_natural_number_to_integer (Z20089_reduce_list_only + (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an Z13036_apply Z29940 (Z13402_words_from_string a0)) 0))))
 (define Z37609 Z37609_flesch_reading_ease_of_text)
 
 ;; Z37623 infobox row  [reaches an unimplemented function]
@@ -17452,8 +18032,13 @@
 
 ;; Z37737 X exists in N Ys, Swedish  [reaches an unimplemented function]
 ;;   Z37737K1: Wikidata item reference, Z37737K2: Natural number, Z37737K3: Wikidata item reference -> String   [declared, not checked]
-(define (Z37737_x_exists_in_n_ys_swedish a0 a1 a2) (Z22511_capitalise_first_letter_and_add_full_stop (Z22504_join_list_of_strings_with_spaces (cons (Z24766_label_text_for_item_in_given_language_or_fallback a0 Z1592) (cons "finns" (cons (if (Z12696_contains (list (record Z6091 (Z6091K1 "Q34770"))) a2) "på" "i") (cons (if (> a1 12) (Z14280_display_natural_number a1 Z1592) (if (Z30353_is_common_gender_lexeme (Z27327_best_lexeme_for_wikidata_item a2 (record Z6092 (Z6092K1 "P5137")) Z1592)) (Z16008 a1) (Z37749_swedish_cardinal_neuter a1))) (cons (Z14396_string_of_monolingual_text (Z22697 a2 Z1592 (cons (record Z6091 (Z6091K1 "Q131105")) (cons (record Z6091 (Z6091K1 "Q53997857")) (cons (if (= a1 1) (record Z6091 (Z6091K1 "Q110786")) (record Z6091 (Z6091K1 "Q146786"))) (list)))))) (list)))))))))
+(define (Z37737_x_exists_in_n_ys_swedish a0 a1 a2) (Z22511_capitalise_first_letter_and_add_full_stop (Z22504_join_list_of_strings_with_spaces (cons (Z24766_label_text_for_item_in_given_language_or_fallback a0 Z1592) (cons "finns" (cons (if (Z12696_contains (list (record Z6091 (Z6091K1 "Q34770"))) a2) "på" "i") (cons (if (> a1 12) (Z14280_display_natural_number a1 Z1592) (if (Z30353_is_common_gender_lexeme (Z27327_best_lexeme_for_wikidata_item a2 (record Z6092 (Z6092K1 "P5137")) Z1592)) (Z16008 a1) (Z37749_swedish_cardinal_neuter a1))) (cons (Z14396_string_of_monolingual_text (Z22697_first_matching_representation_text_from_item a2 Z1592 (cons (record Z6091 (Z6091K1 "Q131105")) (cons (record Z6091 (Z6091K1 "Q53997857")) (cons (if (= a1 1) (record Z6091 (Z6091K1 "Q110786")) (record Z6091 (Z6091K1 "Q146786"))) (list)))))) (list)))))))))
 (define Z37737 Z37737_x_exists_in_n_ys_swedish)
+
+;; Z37745 depicts-sentence in English  [reaches an unimplemented function]
+;;   Z37745K1: Wikidata item reference, Z37745K2: Natural language -> Monolingual text   [declared, not checked]
+(define (Z37745_depicts_sentence_in_english a0 a1) (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (record Z11 (Z11K1 a1) (Z11K2 (Z10771_sentence_case (Z24766_label_text_for_item_in_given_language_or_fallback a0 a1)))) (cons (record Z11 (Z11K1 a1) (Z11K2 "depicts")) (cons (Z34644_join_list_of_monolingual_texts_with_oxford_comma (Z33024_label_texts_for_wikidata_items (Z37747_item_depicts (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list Z1360) (list (record Z6092 (Z6092K1 "P180"))))) a1) a1) (list)))) (record Z11 (Z11K1 a1) (Z11K2 " "))) (cons (record Z11 (Z11K1 a1) (Z11K2 ".")) (list))) (record Z11 (Z11K1 a1) (Z11K2 ""))))
+(define Z37745 Z37745_depicts_sentence_in_english)
 
 ;; Z37747 item depicts  [reaches an unimplemented function]
 ;;   Z37747K1: Wikidata item -> Typed list(Wikidata item reference)   [declared, not checked]
@@ -17480,6 +18065,11 @@
 (define (Z37772_item_influenced_by a0) (map Z19308_value_of_wikidata_statement (Z27610_order_statements_by_series_ordinal (Z29691_get_statements_for_wikidata_property_from_item a0 (record Z6092 (Z6092K1 "P737"))))))
 (define Z37772 Z37772_item_influenced_by)
 
+;; Z37774 influenced by-sentence in English  [reaches an unimplemented function]
+;;   Z37774K1: Wikidata item reference, Z37774K2: Natural language -> Monolingual text   [declared, not checked]
+(define (Z37774_influenced_by_sentence_in_english a0 a1) (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (record Z11 (Z11K1 a1) (Z11K2 (Z10771_sentence_case (Z24766_label_text_for_item_in_given_language_or_fallback a0 a1)))) (cons (record Z11 (Z11K1 a1) (Z11K2 "is influenced by")) (cons (Z34644_join_list_of_monolingual_texts_with_oxford_comma (Z33024_label_texts_for_wikidata_items (Z37772_item_influenced_by (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list Z1360) (list (record Z6092 (Z6092K1 "P737"))))) a1) a1) (list)))) (record Z11 (Z11K1 a1) (Z11K2 " "))) (cons (record Z11 (Z11K1 a1) (Z11K2 ".")) (list))) (record Z11 (Z11K1 a1) (Z11K2 ""))))
+(define Z37774 Z37774_influenced_by_sentence_in_english)
+
 ;; Z37777 entity influenced by-sentence  [reaches an unimplemented function]
 ;;   Z37777K1: Wikidata item reference, Z37777K2: Natural language -> Monolingual text   [declared, not checked]
 (define (Z37777_entity_influenced_by_sentence a0 a1) (Z31684_apply_two_argument_function_validated_arguments (Z14310_select_a_function_based_on_language Z37776 a1) a0 a1))
@@ -17487,7 +18077,7 @@
 
 ;; Z37782 infobox for row, date  [reaches an unimplemented function]
 ;;   Z37782K1: Wikidata item reference, Z37782K2: Wikidata property reference, Z37782K3: Natural language -> HTML fragment   [declared, not checked]
-(define (Z37782_infobox_for_row_date a0 a1 a2) (Z37640_if_html_output (Z27299_wikidata_item_has_claim (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list Z1360) (cons a1 (list))) a1) (Z33319_create_html_tr_fragment (cons (Z33315_create_html_td_fragment (Z34096 (Z24766_label_text_for_item_in_given_language_or_fallback (Z35364_wikidata_item_of_property (Z35036_fetch_wikidata_property_or_parts a1 (list Z6036) (list) (list (record Z6092 (Z6092K1 "P1629"))))) a2) a2)) (cons (Z33315_create_html_td_fragment (Z35192_display_wikidata_date_from_statement (Z23451_wikidata_statement_with_highest_rank (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list Z1360) (cons a1 (list))) a1) a2)) (list)))) (record Z89 (Z89K1 ""))))
+(define (Z37782_infobox_for_row_date a0 a1 a2) (Z37640_if_html_output (Z27299_wikidata_item_has_claim (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list Z1360) (cons a1 (list))) a1) (Z33319_create_html_tr_fragment (cons (Z33315_create_html_td_fragment (Z34096_conditional_sentence_case (Z24766_label_text_for_item_in_given_language_or_fallback (Z35364_wikidata_item_of_property (Z35036_fetch_wikidata_property_or_parts a1 (list Z6036) (list) (list (record Z6092 (Z6092K1 "P1629"))))) a2) a2)) (cons (Z33315_create_html_td_fragment (Z35192_display_wikidata_date_from_statement (Z23451_wikidata_statement_with_highest_rank (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list Z1360) (cons a1 (list))) a1) a2)) (list)))) (record Z89 (Z89K1 ""))))
 (define Z37782 Z37782_infobox_for_row_date)
 
 ;; Z37791 Intro for species with hypernym in English  [reaches an unimplemented function]
@@ -17509,6 +18099,11 @@
 ;;   Z37808K1: Wikidata item reference, Z37808K2: Natural language -> Typed list(Object)   [declared, not checked]
 (define (Z37808_year_and_describing_authority_of_taxon a0 a1) (Z18475_return_typed_list (cons (Z28818_display_simplified_gregorian_year (Z28773_gregorian_year_from_wikidata_time (Z33579_qualifier_value_of_wikidata_statement (Z37836_taxon_name_statements_of_qid a0) (record Z6092 (Z6092K1 "P574")))) Z1002 (record Z20159 (Z20159K1 (record Z17813 (Z17813K1 Z17814))) (Z20159K2 1))) (cons (map Z28297_value_of_wikidata_property_claim (Z28312_qualifiers_of_wikidata_statement_with_predicate (Z37836_taxon_name_statements_of_qid a0) (record Z6092 (Z6092K1 "P405")))) (list)))))
 (define Z37808 Z37808_year_and_describing_authority_of_taxon)
+
+;; Z37809 developed in-sentence in English  [reaches an unimplemented function]
+;;   Z37809K1: Wikidata item reference, Z37809K2: Natural language -> Monolingual text   [declared, not checked]
+(define (Z37809_developed_in_sentence_in_english a0 a1) (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (record Z11 (Z11K1 a1) (Z11K2 (Z10771_sentence_case (Z24766_label_text_for_item_in_given_language_or_fallback a0 a1)))) (cons (record Z11 (Z11K1 a1) (Z11K2 "is programmed in")) (cons (Z34644_join_list_of_monolingual_texts_with_oxford_comma (Z33024_label_texts_for_wikidata_items (Z37805_item_developed_in (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list Z1360) (list (record Z6092 (Z6092K1 "P277"))))) a1) a1) (list)))) (record Z11 (Z11K1 a1) (Z11K2 " "))) (cons (record Z11 (Z11K1 a1) (Z11K2 ".")) (list))) (record Z11 (Z11K1 a1) (Z11K2 ""))))
+(define Z37809 Z37809_developed_in_sentence_in_english)
 
 ;; Z37821 Common name of taxon  [reaches an unimplemented function]
 ;;   Z37821K1: Wikidata item reference, Z37821K2: Natural language -> String   [declared, not checked]
@@ -17562,13 +18157,18 @@
 
 ;; Z37855 join Wikidata item property val (en, Oxford comma)  [reaches an unimplemented function]
 ;;   Z37855K1: Wikidata item reference, Z37855K2: Wikidata property reference, Z37855K3: Natural language -> Monolingual text   [declared, not checked]
-(define (Z37855_join_wikidata_item_property_val_en_oxford_comma a0 a1 a2) (Z34644 (Z33024_label_texts_for_wikidata_items (map Z19308_value_of_wikidata_statement (Z27610_order_statements_by_series_ordinal (Z29691_get_statements_for_wikidata_property_from_item (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list Z1360) (cons a1 (list))) a1))) a2) a2))
+(define (Z37855_join_wikidata_item_property_val_en_oxford_comma a0 a1 a2) (Z34644_join_list_of_monolingual_texts_with_oxford_comma (Z33024_label_texts_for_wikidata_items (map Z19308_value_of_wikidata_statement (Z27610_order_statements_by_series_ordinal (Z29691_get_statements_for_wikidata_property_from_item (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list Z1360) (cons a1 (list))) a1))) a2) a2))
 (define Z37855 Z37855_join_wikidata_item_property_val_en_oxford_comma)
 
 ;; Z37858 join Wikidata item property values, French  [reaches an unimplemented function]
 ;;   Z37858K1: Wikidata item reference, Z37858K2: Wikidata property reference, Z37858K3: Natural language -> Monolingual text   [declared, not checked]
-(define (Z37858_join_wikidata_item_property_values_french a0 a1 a2) (Z37859 (Z33024_label_texts_for_wikidata_items (map Z19308_value_of_wikidata_statement (Z27610_order_statements_by_series_ordinal (Z29691_get_statements_for_wikidata_property_from_item (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list Z1360) (cons a1 (list))) a1))) a2) a2))
+(define (Z37858_join_wikidata_item_property_values_french a0 a1 a2) (Z37859_join_list_of_monolingual_texts_with_comma_french (Z33024_label_texts_for_wikidata_items (map Z19308_value_of_wikidata_statement (Z27610_order_statements_by_series_ordinal (Z29691_get_statements_for_wikidata_property_from_item (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list Z1360) (cons a1 (list))) a1))) a2) a2))
 (define Z37858 Z37858_join_wikidata_item_property_values_french)
+
+;; Z37859 join list of monolingual texts with comma, French  [reaches an unimplemented function]
+;;   Z37859K1: Typed list(Monolingual text), Z37859K2: Natural language -> Monolingual text   [declared, not checked]
+(define (Z37859_join_list_of_monolingual_texts_with_comma_french a0 a1) (if (= (length a0) 0) (record Z11 (Z11K1 a0) (Z11K2 "")) (if (= (length a0) 1) (car a0) (if (= (length a0) 2) (Z34669_join_list_of_monolingual_texts_with_delimiter a0 (record Z11 (Z11K1 a1) (Z11K2 " et "))) (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (Z34669_join_list_of_monolingual_texts_with_delimiter (Z12967_list_without_last_element a0) (record Z11 (Z11K1 Z1002) (Z11K2 ", "))) (cons (Z12964_last_element a0) (list))) (record Z11 (Z11K1 a1) (Z11K2 " et ")))))))
+(define Z37859 Z37859_join_list_of_monolingual_texts_with_comma_french)
 
 ;; Z37866 Infobox row property type  [reaches an unimplemented function]
 ;;   Z37866K1: Wikidata item reference, Z37866K2: Wikidata property reference, Z37866K3: Natural language -> String   [declared, not checked]
@@ -17599,6 +18199,11 @@
 ;;   Z37883K1: Wikidata item reference, Z37883K2: Wikidata property reference, Z37883K3: Natural language -> String   [declared, not checked]
 (define (Z37883_infobox_value_string a0 a1 a2) (Z27854_html_fragment_as_string (Z36209_display_any_value_from_wd_triple (Z19308_value_of_wikidata_statement (Z23680_best_ranked_statement_from_list (Z22220_statements_from_wikidata_item (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list) (cons a1 (list)))))) a2)))
 (define Z37883 Z37883_infobox_value_string)
+
+;; Z37886 made from materials-sentence, English  [reaches an unimplemented function]
+;;   Z37886K1: Wikidata item reference, Z37886K2: Natural language -> Monolingual text   [declared, not checked]
+(define (Z37886_made_from_materials_sentence_english a0 a1) (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (record Z11 (Z11K1 a1) (Z11K2 (Z10771_sentence_case (Z24766_label_text_for_item_in_given_language_or_fallback a0 a1)))) (cons (record Z11 (Z11K1 a1) (Z11K2 "is made from")) (cons (Z37870_join_wd_item_property_values a0 (record Z6092 (Z6092K1 "P186")) a1) (list)))) (record Z11 (Z11K1 a1) (Z11K2 " "))) (cons (record Z11 (Z11K1 a1) (Z11K2 ".")) (list))) (record Z11 (Z11K1 a1) (Z11K2 ""))))
+(define Z37886 Z37886_made_from_materials_sentence_english)
 
 ;; Z37890 entity made from-sentence  [reaches an unimplemented function]
 ;;   Z37890K1: Wikidata item reference, Z37890K2: Natural language -> Monolingual text   [declared, not checked]
@@ -17680,6 +18285,11 @@
 (define (Z37941_taxonomic_lineage_of_qid_helper a0 a1) (if (Z12696_contains a1 a0) (Z854 (Z851 Z507 (cons a0 (list))) a0) (if (bool-or (Z32431_item_qid_has_statement_with_value_for_property a0 (record Z6092 (Z6092K1 "P105")) (record Z6091 (Z6091K1 "Q146481"))) (not (Z27299_wikidata_item_has_claim (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list) (list (record Z6092 (Z6092K1 "P171")))) (record Z6092 (Z6092K1 "P171"))))) (identity (Z12961_append_element_to_typed_list a0 a1)) (Z854 (Z37941_taxonomic_lineage_of_qid_helper (Z23459_wikidata_statement_value_with_higher_rank (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list) (list (record Z6092 (Z6092K1 "P171")))) (record Z6092 (Z6092K1 "P171"))) (Z12961_append_element_to_typed_list a0 a1)) a0))))
 (define Z37941 Z37941_taxonomic_lineage_of_qid_helper)
 
+;; Z37945 developed by-sentence in English   [reaches an unimplemented function]
+;;   Z37945K1: Wikidata item reference, Z37945K2: Boolean, Z37945K3: Natural language -> Monolingual text   [declared, not checked]
+(define (Z37945_developed_by_sentence_in_english a0 a1 a2) (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (record Z11 (Z11K1 a0) (Z11K2 (Z10771_sentence_case (if a1 "it" (Z24766_label_text_for_item_in_given_language_or_fallback a0 a2))))) (cons (record Z11 (Z11K1 a2) (Z11K2 "is developed by")) (cons (Z37870_join_wd_item_property_values a0 (record Z6092 (Z6092K1 "P178")) a2) (list)))) (record Z11 (Z11K1 a2) (Z11K2 " "))) (cons (record Z11 (Z11K1 a2) (Z11K2 ".")) (list))) (record Z11 (Z11K1 a2) (Z11K2 ""))))
+(define Z37945 Z37945_developed_by_sentence_in_english)
+
 ;; Z37951 entity developed by-sentence  [reaches an unimplemented function]
 ;;   Z37951K1: Wikidata item reference, Z37951K2: Boolean, Z37951K3: Natural language -> Monolingual text   [declared, not checked]
 (define (Z37951_entity_developed_by_sentence a0 a1 a2) (Z21216_apply_three_argument_function (Z14310_select_a_function_based_on_language Z37950 a2) a0 a1 a2))
@@ -17689,6 +18299,11 @@
 ;;   Z37956K1: Wikidata item reference, Z37956K2: Natural language -> HTML fragment   [declared, not checked]
 (define (Z37956_linked_label_of_item_with_definite_article_french a0 a1) (Z37661_inject_abstract_wikilink_into_html_simple (Z27868 (Z32169_label_of_item_with_definite_article_french a0 a1)) a0 a1))
 (define Z37956 Z37956_linked_label_of_item_with_definite_article_french)
+
+;; Z37959 created by-sentence in English  [reaches an unimplemented function]
+;;   Z37959K1: Wikidata item reference, Z37959K2: Boolean, Z37959K3: Wikidata item reference, Z37959K4: Natural language -> Monolingual text   [declared, not checked]
+(define (Z37959_created_by_sentence_in_english a0 a1 a2 a3) (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (record Z11 (Z11K1 a3) (Z11K2 (Z10771_sentence_case (if a1 "it" (Z24766_label_text_for_item_in_given_language_or_fallback a0 a3))))) (cons (if (Z19316_same_wikidata_item_reference a2 (record Z6091 (Z6091K1 "Q1994301"))) (record Z11 (Z11K1 a3) (Z11K2 "was created by")) (record Z11 (Z11K1 a3) (Z11K2 "is created by"))) (cons (Z37870_join_wd_item_property_values a0 (record Z6092 (Z6092K1 "P170")) a3) (list)))) (record Z11 (Z11K1 a3) (Z11K2 " "))) (cons (record Z11 (Z11K1 a3) (Z11K2 ".")) (list))) (record Z11 (Z11K1 a3) (Z11K2 ""))))
+(define Z37959 Z37959_created_by_sentence_in_english)
 
 ;; Z37963 entity created by-sentence  [reaches an unimplemented function]
 ;;   Z37963K1: Wikidata item reference, Z37963K2: Boolean, Z37963K3: Wikidata item reference, Z37963K4: Natural language -> Monolingual text   [declared, not checked]
@@ -17812,7 +18427,7 @@
 
 ;; Z38119 round Natural number to nearest n  [reaches an unimplemented function]
 ;;   Z38119K1: Natural number, Z38119K2: Natural number -> Natural number   [declared, not checked]
-(define (Z38119_round_natural_number_to_nearest_n a0 a1) (Z20391_integer_to_exact_natural_number_or_0 (Z35338_round_integer_to_nearest_n (Z17101 a0) a1)))
+(define (Z38119_round_natural_number_to_nearest_n a0 a1) (Z20391_integer_to_exact_natural_number_or_0 (Z35338_round_integer_to_nearest_n (Z17101_natural_number_to_integer a0) a1)))
 (define Z38119 Z38119_round_natural_number_to_nearest_n)
 
 ;; Z38150 is +inf (float64)  [reaches an unimplemented function]
@@ -17997,7 +18612,7 @@
 
 ;; Z38357 infobox row for quantity  [reaches an unimplemented function]
 ;;   Z38357K1: Wikidata item reference, Z38357K2: Wikidata property reference, Z38357K3: Natural language -> HTML fragment   [declared, not checked]
-(define (Z38357_infobox_row_for_quantity a0 a1 a2) (Z37640_if_html_output (Z27299_wikidata_item_has_claim (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list Z1360) (cons a1 (list))) a1) (Z33319_create_html_tr_fragment (cons (Z33315_create_html_td_fragment (Z34096 (Z24766_label_text_for_item_in_given_language_or_fallback (Z35364_wikidata_item_of_property (Z35036_fetch_wikidata_property_or_parts a1 (list Z6036) (list) (list (record Z6092 (Z6092K1 "P1629"))))) a2) a2)) (cons (Z27873_wrap_an_html_fragment_in_a_tag (Z36209_display_any_value_from_wd_triple (Z19308_value_of_wikidata_statement (Z23680_best_ranked_statement_from_list (Z22220_statements_from_wikidata_item (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list) (cons a1 (list)))))) a2) "td" (list) (list)) (list)))) (record Z89 (Z89K1 ""))))
+(define (Z38357_infobox_row_for_quantity a0 a1 a2) (Z37640_if_html_output (Z27299_wikidata_item_has_claim (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list Z1360) (cons a1 (list))) a1) (Z33319_create_html_tr_fragment (cons (Z33315_create_html_td_fragment (Z34096_conditional_sentence_case (Z24766_label_text_for_item_in_given_language_or_fallback (Z35364_wikidata_item_of_property (Z35036_fetch_wikidata_property_or_parts a1 (list Z6036) (list) (list (record Z6092 (Z6092K1 "P1629"))))) a2) a2)) (cons (Z27873_wrap_an_html_fragment_in_a_tag (Z36209_display_any_value_from_wd_triple (Z19308_value_of_wikidata_statement (Z23680_best_ranked_statement_from_list (Z22220_statements_from_wikidata_item (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list) (cons a1 (list)))))) a2) "td" (list) (list)) (list)))) (record Z89 (Z89K1 ""))))
 (define Z38357 Z38357_infobox_row_for_quantity)
 
 ;; Z38364 infobox for planet  [reaches an unimplemented function]
@@ -18007,7 +18622,7 @@
 
 ;; Z38367 infobox for row, date with column name  [reaches an unimplemented function]
 ;;   Z38367K1: Wikidata item reference, Z38367K2: Wikidata property reference, Z38367K3: Wikidata item reference, Z38367K4: Natural language -> HTML fragment   [declared, not checked]
-(define (Z38367_infobox_for_row_date_with_column_name a0 a1 a2 a3) (Z37640_if_html_output (Z27299_wikidata_item_has_claim (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list Z1360) (cons a1 (list))) a1) (Z33319_create_html_tr_fragment (cons (Z33315_create_html_td_fragment (Z34096 (Z24766_label_text_for_item_in_given_language_or_fallback a2 a3) a3)) (cons (Z33315_create_html_td_fragment (Z35192_display_wikidata_date_from_statement (Z23451_wikidata_statement_with_highest_rank (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list Z1360) (cons a1 (list))) a1) a3)) (list)))) (record Z89 (Z89K1 ""))))
+(define (Z38367_infobox_for_row_date_with_column_name a0 a1 a2 a3) (Z37640_if_html_output (Z27299_wikidata_item_has_claim (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list Z1360) (cons a1 (list))) a1) (Z33319_create_html_tr_fragment (cons (Z33315_create_html_td_fragment (Z34096_conditional_sentence_case (Z24766_label_text_for_item_in_given_language_or_fallback a2 a3) a3)) (cons (Z33315_create_html_td_fragment (Z35192_display_wikidata_date_from_statement (Z23451_wikidata_statement_with_highest_rank (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list Z1360) (cons a1 (list))) a1) a3)) (list)))) (record Z89 (Z89K1 ""))))
 (define Z38367 Z38367_infobox_for_row_date_with_column_name)
 
 ;; Z38373 infobox for galaxy  [reaches an unimplemented function]
@@ -18030,7 +18645,7 @@
 (define (Z38382_replace_except_last a0 a1 a2) (if (Z10070_has_substring a0 a1) (Z10000_join_two_strings (Z10075_replace_all_substrings a0 a1 a2) (Z11422_discard_until_start_of_last_substring a0 a1)) a0))
 (define Z38382 Z38382_replace_except_last)
 
-;; Z38383 string before last occurrence
+;; Z38383 string before last occurrence  [reaches an unimplemented function]
 ;;   Z38383K1: String, Z38383K2: String -> String   [declared, not checked]
 (define (Z38383_string_before_last_occurrence a0 a1) (Z11170_string_without_suffix (Z11416_discard_from_end_of_last_substring a0 a1) a1))
 (define Z38383 Z38383_string_before_last_occurrence)
@@ -18040,10 +18655,70 @@
 (define (Z38388_entity_supports_paradigms_sentence a0 a1 a2) (Z21216_apply_three_argument_function (Z14310_select_a_function_based_on_language Z38392 a2) a0 a1 a2))
 (define Z38388 Z38388_entity_supports_paradigms_sentence)
 
+;; Z38389 paradigms-sentence in English  [reaches an unimplemented function]
+;;   Z38389K1: Wikidata item reference, Z38389K2: Boolean, Z38389K3: Natural language -> Monolingual text   [declared, not checked]
+(define (Z38389_paradigms_sentence_in_english a0 a1 a2) (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (record Z11 (Z11K1 a2) (Z11K2 (Z10771_sentence_case (if a1 "it" (Z24766_label_text_for_item_in_given_language_or_fallback a0 a2))))) (cons (record Z11 (Z11K1 a2) (Z11K2 "supports")) (cons (Z26107_monolingual_text_from_language_and_string a2 (Z38382_replace_except_last (Z14396_string_of_monolingual_text (Z37870_join_wd_item_property_values a0 (record Z6092 (Z6092K1 "P3966")) a2)) " programming" "")) (list)))) (record Z11 (Z11K1 a2) (Z11K2 " "))) (cons (record Z11 (Z11K1 a2) (Z11K2 ".")) (list))) (record Z11 (Z11K1 a2) (Z11K2 ""))))
+(define Z38389 Z38389_paradigms_sentence_in_english)
+
 ;; Z38395 is language written from right to left?  [reaches an unimplemented function]
 ;;   Z38395K1: Natural language -> Boolean   [declared, not checked]
 (define (Z38395_is_language_written_from_right_to_left a0) (not (Z13752_is_there_a_common_element_on_these_lists (Z34993 (Z11410_discard_from_start_of_first_substring (Z11420_discard_until_end_of_first_substring (Z14329_language_to_language_tag (Z34854 a0)) "-") "-")) (list (record Z6091 (Z6091K1 "Q17321844")) (record Z6091 (Z6091K1 "Q105395085"))))))
 (define Z38395 Z38395_is_language_written_from_right_to_left)
+
+;; Z38399 named after-sentence in English  [reaches an unimplemented function]
+;;   Z38399K1: Wikidata item reference, Z38399K2: Boolean, Z38399K3: Wikidata item reference, Z38399K4: Natural language -> Monolingual text   [declared, not checked]
+(define (Z38399_named_after_sentence_in_english a0 a1 a2 a3) (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (record Z11 (Z11K1 a3) (Z11K2 (Z10771_sentence_case (if a1 "it" (Z24766_label_text_for_item_in_given_language_or_fallback a0 a3))))) (cons (if (Z19316_same_wikidata_item_reference a2 (record Z6091 (Z6091K1 "Q1994301"))) (record Z11 (Z11K1 a3) (Z11K2 "was named after")) (record Z11 (Z11K1 a3) (Z11K2 "is named after"))) (cons (Z37870_join_wd_item_property_values a0 (record Z6092 (Z6092K1 "P138")) a3) (list)))) (record Z11 (Z11K1 a3) (Z11K2 " "))) (cons (record Z11 (Z11K1 a3) (Z11K2 ".")) (list))) (record Z11 (Z11K1 a3) (Z11K2 ""))))
+(define Z38399 Z38399_named_after_sentence_in_english)
+
+;; Z38402 depicted by-sentence in English  [reaches an unimplemented function]
+;;   Z38402K1: Wikidata item reference, Z38402K2: Boolean, Z38402K3: Wikidata item reference, Z38402K4: Natural language -> Monolingual text   [declared, not checked]
+(define (Z38402_depicted_by_sentence_in_english a0 a1 a2 a3) (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (record Z11 (Z11K1 a3) (Z11K2 (Z10771_sentence_case (if a1 "it" (Z24766_label_text_for_item_in_given_language_or_fallback a0 a3))))) (cons (if (Z19316_same_wikidata_item_reference a2 (record Z6091 (Z6091K1 "Q1994301"))) (record Z11 (Z11K1 a3) (Z11K2 "was depicted by")) (record Z11 (Z11K1 a3) (Z11K2 "is depicted by"))) (cons (Z37870_join_wd_item_property_values a0 (record Z6092 (Z6092K1 "P1299")) a3) (list)))) (record Z11 (Z11K1 a3) (Z11K2 " "))) (cons (record Z11 (Z11K1 a3) (Z11K2 ".")) (list))) (record Z11 (Z11K1 a3) (Z11K2 ""))))
+(define Z38402 Z38402_depicted_by_sentence_in_english)
+
+;; Z38403 main subject-sentence in English  [reaches an unimplemented function]
+;;   Z38403K1: Wikidata item reference, Z38403K2: Boolean, Z38403K3: Wikidata item reference, Z38403K4: Natural language -> Monolingual text   [declared, not checked]
+(define (Z38403_main_subject_sentence_in_english a0 a1 a2 a3) (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (record Z11 (Z11K1 a3) (Z11K2 (Z10771_sentence_case (if a1 "its main subjects" (Z15175_join_two_strings_with_separator "The main subjects of" (Z24766_label_text_for_item_in_given_language_or_fallback a0 a3) " "))))) (cons (if (Z19316_same_wikidata_item_reference a2 (record Z6091 (Z6091K1 "Q1994301"))) (record Z11 (Z11K1 a3) (Z11K2 "included")) (record Z11 (Z11K1 a3) (Z11K2 "include"))) (cons (Z37870_join_wd_item_property_values a0 (record Z6092 (Z6092K1 "P921")) a3) (list)))) (record Z11 (Z11K1 a3) (Z11K2 " "))) (cons (record Z11 (Z11K1 a3) (Z11K2 ".")) (list))) (record Z11 (Z11K1 a3) (Z11K2 ""))))
+(define Z38403 Z38403_main_subject_sentence_in_english)
+
+;; Z38404 uses-sentence in English  [reaches an unimplemented function]
+;;   Z38404K1: Wikidata item reference, Z38404K2: Boolean, Z38404K3: Wikidata item reference, Z38404K4: Natural language -> Monolingual text   [declared, not checked]
+(define (Z38404_uses_sentence_in_english a0 a1 a2 a3) (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (record Z11 (Z11K1 a3) (Z11K2 (Z10771_sentence_case (if a1 "it" (Z24766_label_text_for_item_in_given_language_or_fallback a0 a3))))) (cons (if (Z19316_same_wikidata_item_reference a2 (record Z6091 (Z6091K1 "Q1994301"))) (record Z11 (Z11K1 a3) (Z11K2 "used")) (record Z11 (Z11K1 a3) (Z11K2 "uses"))) (cons (Z37870_join_wd_item_property_values a0 (record Z6092 (Z6092K1 "P2283")) a3) (list)))) (record Z11 (Z11K1 a3) (Z11K2 " "))) (cons (record Z11 (Z11K1 a3) (Z11K2 ".")) (list))) (record Z11 (Z11K1 a3) (Z11K2 ""))))
+(define Z38404 Z38404_uses_sentence_in_english)
+
+;; Z38405 has use-sentence in English  [reaches an unimplemented function]
+;;   Z38405K1: Wikidata item reference, Z38405K2: Boolean, Z38405K3: Wikidata item reference, Z38405K4: Natural language -> Monolingual text   [declared, not checked]
+(define (Z38405_has_use_sentence_in_english a0 a1 a2 a3) (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (record Z11 (Z11K1 a3) (Z11K2 (Z10771_sentence_case (if a1 "its uses" (Z15175_join_two_strings_with_separator "The uses of" (Z24766_label_text_for_item_in_given_language_or_fallback a0 a3) " "))))) (cons (if (Z19316_same_wikidata_item_reference a2 (record Z6091 (Z6091K1 "Q1994301"))) (record Z11 (Z11K1 a3) (Z11K2 "included")) (record Z11 (Z11K1 a3) (Z11K2 "include"))) (cons (Z37870_join_wd_item_property_values a0 (record Z6092 (Z6092K1 "P366")) a3) (list)))) (record Z11 (Z11K1 a3) (Z11K2 " "))) (cons (record Z11 (Z11K1 a3) (Z11K2 ".")) (list))) (record Z11 (Z11K1 a3) (Z11K2 ""))))
+(define Z38405 Z38405_has_use_sentence_in_english)
+
+;; Z38406 has characteristic-sentence in English  [reaches an unimplemented function]
+;;   Z38406K1: Wikidata item reference, Z38406K2: Boolean, Z38406K3: Wikidata item reference, Z38406K4: Natural language -> Monolingual text   [declared, not checked]
+(define (Z38406_has_characteristic_sentence_in_english a0 a1 a2 a3) (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (record Z11 (Z11K1 a3) (Z11K2 (Z10771_sentence_case (if a1 "its characteristics" (Z15175_join_two_strings_with_separator "The characteristics of" (Z24766_label_text_for_item_in_given_language_or_fallback a0 a3) " "))))) (cons (if (Z19316_same_wikidata_item_reference a2 (record Z6091 (Z6091K1 "Q1994301"))) (record Z11 (Z11K1 a3) (Z11K2 "included")) (record Z11 (Z11K1 a3) (Z11K2 "include"))) (cons (Z37870_join_wd_item_property_values a0 (record Z6092 (Z6092K1 "P1552")) a3) (list)))) (record Z11 (Z11K1 a3) (Z11K2 " "))) (cons (record Z11 (Z11K1 a3) (Z11K2 ".")) (list))) (record Z11 (Z11K1 a3) (Z11K2 ""))))
+(define Z38406 Z38406_has_characteristic_sentence_in_english)
+
+;; Z38407 platform-sentence in English  [reaches an unimplemented function]
+;;   Z38407K1: Wikidata item reference, Z38407K2: Boolean, Z38407K3: Wikidata item reference, Z38407K4: Natural language -> Monolingual text   [declared, not checked]
+(define (Z38407_platform_sentence_in_english a0 a1 a2 a3) (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (record Z11 (Z11K1 a3) (Z11K2 (Z10771_sentence_case (if a1 "it" (Z24766_label_text_for_item_in_given_language_or_fallback a0 a3))))) (cons (if (Z19316_same_wikidata_item_reference a2 (record Z6091 (Z6091K1 "Q1994301"))) (record Z11 (Z11K1 a3) (Z11K2 "was available on")) (record Z11 (Z11K1 a3) (Z11K2 "is available on"))) (cons (Z37870_join_wd_item_property_values a0 (record Z6092 (Z6092K1 "P400")) a3) (list)))) (record Z11 (Z11K1 a3) (Z11K2 " "))) (cons (record Z11 (Z11K1 a3) (Z11K2 ".")) (list))) (record Z11 (Z11K1 a3) (Z11K2 ""))))
+(define Z38407 Z38407_platform_sentence_in_english)
+
+;; Z38408 characteristic of-sentence in English  [reaches an unimplemented function]
+;;   Z38408K1: Wikidata item reference, Z38408K2: Boolean, Z38408K3: Wikidata item reference, Z38408K4: Natural language -> Monolingual text   [declared, not checked]
+(define (Z38408_characteristic_of_sentence_in_english a0 a1 a2 a3) (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (record Z11 (Z11K1 a3) (Z11K2 (Z10771_sentence_case (if a1 "it" (Z24766_label_text_for_item_in_given_language_or_fallback a0 a3))))) (cons (if (Z19316_same_wikidata_item_reference a2 (record Z6091 (Z6091K1 "Q1994301"))) (record Z11 (Z11K1 a3) (Z11K2 "was characteristic of")) (record Z11 (Z11K1 a3) (Z11K2 "is characteristic of"))) (cons (Z37870_join_wd_item_property_values a0 (record Z6092 (Z6092K1 "P13044")) a3) (list)))) (record Z11 (Z11K1 a3) (Z11K2 " "))) (cons (record Z11 (Z11K1 a3) (Z11K2 ".")) (list))) (record Z11 (Z11K1 a3) (Z11K2 ""))))
+(define Z38408 Z38408_characteristic_of_sentence_in_english)
+
+;; Z38409 depends on software-sentence in English  [reaches an unimplemented function]
+;;   Z38409K1: Wikidata item reference, Z38409K2: Boolean, Z38409K3: Wikidata item reference, Z38409K4: Natural language -> Monolingual text   [declared, not checked]
+(define (Z38409_depends_on_software_sentence_in_english a0 a1 a2 a3) (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (record Z11 (Z11K1 a3) (Z11K2 (Z10771_sentence_case (if a1 "it" (Z24766_label_text_for_item_in_given_language_or_fallback a0 a3))))) (cons (if (Z19316_same_wikidata_item_reference a2 (record Z6091 (Z6091K1 "Q1994301"))) (record Z11 (Z11K1 a3) (Z11K2 "depended on")) (record Z11 (Z11K1 a3) (Z11K2 "depends on"))) (cons (Z37870_join_wd_item_property_values a0 (record Z6092 (Z6092K1 "P1547")) a3) (list)))) (record Z11 (Z11K1 a3) (Z11K2 " "))) (cons (record Z11 (Z11K1 a3) (Z11K2 ".")) (list))) (record Z11 (Z11K1 a3) (Z11K2 ""))))
+(define Z38409 Z38409_depends_on_software_sentence_in_english)
+
+;; Z38410 symbolizes-sentence in English  [reaches an unimplemented function]
+;;   Z38410K1: Wikidata item reference, Z38410K2: Boolean, Z38410K3: Wikidata item reference, Z38410K4: Natural language -> Monolingual text   [declared, not checked]
+(define (Z38410_symbolizes_sentence_in_english a0 a1 a2 a3) (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (record Z11 (Z11K1 a3) (Z11K2 (Z10771_sentence_case (if a1 "it" (Z24766_label_text_for_item_in_given_language_or_fallback a0 a3))))) (cons (if (Z19316_same_wikidata_item_reference a2 (record Z6091 (Z6091K1 "Q1994301"))) (record Z11 (Z11K1 a3) (Z11K2 "symbolized")) (record Z11 (Z11K1 a3) (Z11K2 "symbolizes"))) (cons (Z37870_join_wd_item_property_values a0 (record Z6092 (Z6092K1 "P4878")) a3) (list)))) (record Z11 (Z11K1 a3) (Z11K2 " "))) (cons (record Z11 (Z11K1 a3) (Z11K2 ".")) (list))) (record Z11 (Z11K1 a3) (Z11K2 ""))))
+(define Z38410 Z38410_symbolizes_sentence_in_english)
+
+;; Z38411 shares border with-sentence in English  [reaches an unimplemented function]
+;;   Z38411K1: Wikidata item reference, Z38411K2: Boolean, Z38411K3: Wikidata item reference, Z38411K4: Natural language -> Monolingual text   [declared, not checked]
+(define (Z38411_shares_border_with_sentence_in_english a0 a1 a2 a3) (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (record Z11 (Z11K1 a3) (Z11K2 (Z10771_sentence_case (if a1 "it" (Z24766_label_text_for_item_in_given_language_or_fallback a0 a3))))) (cons (if (Z19316_same_wikidata_item_reference a2 (record Z6091 (Z6091K1 "Q1994301"))) (record Z11 (Z11K1 a3) (Z11K2 "shared border with")) (record Z11 (Z11K1 a3) (Z11K2 "shares border with"))) (cons (Z37870_join_wd_item_property_values a0 (record Z6092 (Z6092K1 "P47")) a3) (list)))) (record Z11 (Z11K1 a3) (Z11K2 " "))) (cons (record Z11 (Z11K1 a3) (Z11K2 ".")) (list))) (record Z11 (Z11K1 a3) (Z11K2 ""))))
+(define Z38411 Z38411_shares_border_with_sentence_in_english)
 
 ;; Z38425 shares border with-sentence  [reaches an unimplemented function]
 ;;   Z38425K1: Wikidata item reference, Z38425K2: Boolean, Z38425K3: Wikidata item reference, Z38425K4: Natural language -> Monolingual text   [declared, not checked]
@@ -18110,6 +18785,16 @@
 (define (Z38488_has_use_sentence a0 a1 a2 a3) (Z30438_apply_four_argument_function (Z14310_select_a_function_based_on_language Z38418 a3) a0 a1 a2 a3))
 (define Z38488 Z38488_has_use_sentence)
 
+;; Z38495 named after-sentence in Dutch  [reaches an unimplemented function]
+;;   Z38495K1: Wikidata item reference, Z38495K2: Boolean, Z38495K3: Wikidata item reference, Z38495K4: Natural language -> Monolingual text   [declared, not checked]
+(define (Z38495_named_after_sentence_in_dutch a0 a1 a2 a3) (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (record Z11 (Z11K1 a3) (Z11K2 (Z10771_sentence_case (if a1 "het" (Z24766_label_text_for_item_in_given_language_or_fallback a0 a3))))) (cons (if (Z19316_same_wikidata_item_reference a2 (record Z6091 (Z6091K1 "Q1994301"))) (record Z11 (Z11K1 a3) (Z11K2 "was vernoemd naar")) (record Z11 (Z11K1 a3) (Z11K2 "is vernoemd naar"))) (cons (Z37870_join_wd_item_property_values a0 (record Z6092 (Z6092K1 "P138")) a3) (list)))) (record Z11 (Z11K1 a3) (Z11K2 " "))) (cons (record Z11 (Z11K1 a3) (Z11K2 ".")) (list))) (record Z11 (Z11K1 a3) (Z11K2 ""))))
+(define Z38495 Z38495_named_after_sentence_in_dutch)
+
+;; Z38499 color-sentence in English  [reaches an unimplemented function]
+;;   Z38499K1: Wikidata item reference, Z38499K2: Boolean, Z38499K3: Wikidata item reference, Z38499K4: Natural language -> Monolingual text   [declared, not checked]
+(define (Z38499_color_sentence_in_english a0 a1 a2 a3) (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (record Z11 (Z11K1 a3) (Z11K2 (Z10771_sentence_case (if a1 "its colors" (Z15175_join_two_strings_with_separator "The colors of" (Z24766_label_text_for_item_in_given_language_or_fallback a0 a3) " "))))) (cons (if (Z19316_same_wikidata_item_reference a2 (record Z6091 (Z6091K1 "Q1994301"))) (record Z11 (Z11K1 a3) (Z11K2 "included")) (record Z11 (Z11K1 a3) (Z11K2 "include"))) (cons (Z37870_join_wd_item_property_values a0 (record Z6092 (Z6092K1 "P462")) a3) (list)))) (record Z11 (Z11K1 a3) (Z11K2 " "))) (cons (record Z11 (Z11K1 a3) (Z11K2 ".")) (list))) (record Z11 (Z11K1 a3) (Z11K2 ""))))
+(define Z38499 Z38499_color_sentence_in_english)
+
 ;; Z38503 color-sentence  [reaches an unimplemented function]
 ;;   Z38503K1: Wikidata item reference, Z38503K2: Boolean, Z38503K3: Wikidata item reference, Z38503K4: Natural language -> Monolingual text   [declared, not checked]
 (define (Z38503_color_sentence a0 a1 a2 a3) (Z30438_apply_four_argument_function (Z14310_select_a_function_based_on_language Z38505 a3) a0 a1 a2 a3))
@@ -18129,6 +18814,16 @@
 ;;   Z38520K1: Wikidata item reference, Z38520K2: Boolean, Z38520K3: Wikidata item reference, Z38520K4: Natural language -> Monolingual text   [declared, not checked]
 (define (Z38520_auto_classifying_sentence_entity_subclass a0 a1 a2 a3) (Z30438_apply_four_argument_function (Z14310_select_a_function_based_on_language Z38523 a3) a0 a1 a2 a3))
 (define Z38520 Z38520_auto_classifying_sentence_entity_subclass)
+
+;; Z38521 auto-classifying sentence – subclass, English  [reaches an unimplemented function]
+;;   Z38521K1: Wikidata item reference, Z38521K2: Boolean, Z38521K3: Wikidata item reference, Z38521K4: Natural language -> Monolingual text   [declared, not checked]
+(define (Z38521_auto_classifying_sentence_subclass_english a0 a1 a2 a3) (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (record Z11 (Z11K1 a3) (Z11K2 (Z10771_sentence_case (if a1 "it" (Z24766_label_text_for_item_in_given_language_or_fallback a0 a3))))) (cons (if (Z19316_same_wikidata_item_reference a2 (record Z6091 (Z6091K1 "Q1994301"))) (record Z11 (Z11K1 a3) (Z11K2 "was")) (record Z11 (Z11K1 a3) (Z11K2 "is"))) (cons (Z26107_monolingual_text_from_language_and_string a3 (Z21739_an_or_a_english (Z14396_string_of_monolingual_text (Z37870_join_wd_item_property_values a0 (record Z6092 (Z6092K1 "P279")) a3)))) (cons (Z37870_join_wd_item_property_values a0 (record Z6092 (Z6092K1 "P279")) a3) (list))))) (record Z11 (Z11K1 a3) (Z11K2 " "))) (cons (record Z11 (Z11K1 a3) (Z11K2 ".")) (list))) (record Z11 (Z11K1 a3) (Z11K2 ""))))
+(define Z38521 Z38521_auto_classifying_sentence_subclass_english)
+
+;; Z38536 entity supports programming lang-sentence, English  [reaches an unimplemented function]
+;;   Z38536K1: Wikidata item reference, Z38536K2: Boolean, Z38536K3: Wikidata item reference, Z38536K4: Natural language -> Monolingual text   [declared, not checked]
+(define (Z38536_entity_supports_programming_lang_sentence_english a0 a1 a2 a3) (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (record Z11 (Z11K1 a3) (Z11K2 (Z10771_sentence_case (if a1 "it" (Z24766_label_text_for_item_in_given_language_or_fallback a0 a3))))) (cons (if (Z19316_same_wikidata_item_reference a2 (record Z6091 (Z6091K1 "Q1994301"))) (record Z11 (Z11K1 a3) (Z11K2 "supported programming language")) (record Z11 (Z11K1 a3) (Z11K2 "supports programming language"))) (cons (Z37870_join_wd_item_property_values a0 (record Z6092 (Z6092K1 "P3985")) a3) (list)))) (record Z11 (Z11K1 a3) (Z11K2 " "))) (cons (record Z11 (Z11K1 a3) (Z11K2 ".")) (list))) (record Z11 (Z11K1 a3) (Z11K2 ""))))
+(define Z38536 Z38536_entity_supports_programming_lang_sentence_english)
 
 ;; Z38539 infobox for sculpture  [reaches an unimplemented function]
 ;;   Z38539K1: Wikidata item reference, Z38539K2: Natural language -> HTML fragment   [declared, not checked]
@@ -18195,6 +18890,11 @@
 (define (Z38595_evaluate_anonymous_function a0) (Z38590_evaluate_list_or_element_in_s_expression (Z38561_body_of_an_anonymous_function_as_list a0)))
 (define Z38595 Z38595_evaluate_anonymous_function)
 
+;; Z38598 bind value by identifier  [reaches an unimplemented function]
+;;   Z38598K1: (experimental) Anonymous function, Z38598K2: String, Z38598K3: Object -> (experimental) Anonymous function   [declared, not checked]
+(define (Z38598_bind_value_by_identifier a0 a1 a2) (record Z38546 (Z38546K1 (Z28316_filter_with_second_common_element Z38604_argument_declaration_has_not_key (Z38552_arguments_of_an_anonymous_function a0) a1)) (Z38546K2 (Z38556_return_type_of_an_anonymous_function a0)) (Z38546K3 (Z38619_substitute_reference_in_s_expression (Z38561_body_of_an_anonymous_function_as_list a0) a1 a2))))
+(define Z38598 Z38598_bind_value_by_identifier)
+
 ;; Z38600 argument declaration has key
 ;;   Z38600K1: (experimental) Argument decl. for anon. function, Z38600K2: String -> Boolean   [declared, not checked]
 (define (Z38600_argument_declaration_has_key a0 a1) (string=? (Z38563_id_of_argument_declaration_as_string a0) a1))
@@ -18229,6 +18929,21 @@
 ;;   Z38625K1: Object -> Boolean   [declared, not checked]
 (define (Z38625_is_argument_reference_for_anonymous_function a0) (Z19352_object_has_this_type a0 Z38548))
 (define Z38625 Z38625_is_argument_reference_for_anonymous_function)
+
+;; Z38635 anonymous function from function
+;;   Z38635K1: Function, Z38635K2: Typed list(Wikidata item reference) -> (experimental) Anonymous function   [declared, not checked]
+(define (Z38635_anonymous_function_from_function a0 a1) (record Z38546 (Z38546K1 (Z31098_apply_three_parameter_function_pairwise_to_3_lists Z38638_argument_declaration_from_number_type_and_meaning (Z13831_natural_number_range 1 (length (Z21177_get_list_of_argument_declarations a0))) (Z21177_get_list_of_argument_declarations a0) a1)) (Z38546K2 (Z10112_function_return_type a0)) (Z38546K3 (cons a0 (map Z38641_argument_reference_from_number (Z13831_natural_number_range 1 (length (Z21177_get_list_of_argument_declarations a0))))))))
+(define Z38635 Z38635_anonymous_function_from_function)
+
+;; Z38638 argument declaration from number, type and meaning
+;;   Z38638K1: Natural number, Z38638K2: Argument declaration, Z38638K3: Wikidata item reference -> (experimental) Argument decl. for anon. function   [declared, not checked]
+(define (Z38638_argument_declaration_from_number_type_and_meaning a0 a1 a2) (record Z38545 (Z38545K1 (Z10000_join_two_strings "K" (Z13713_natural_number_to_digit_string a0))) (Z38545K2 (Z21174_type_declared_for_argument a1)) (Z38545K3 a2)))
+(define Z38638 Z38638_argument_declaration_from_number_type_and_meaning)
+
+;; Z38641 argument reference from number
+;;   Z38641K1: Natural number -> (experimental) argument ref. for anon. function   [declared, not checked]
+(define (Z38641_argument_reference_from_number a0) (record Z38548 (Z38548K1 (Z10000_join_two_strings "K" (Z13713_natural_number_to_digit_string a0)))))
+(define Z38641 Z38641_argument_reference_from_number)
 
 ;; Z38644 argument declaration by position
 ;;   Z38644K1: (experimental) Anonymous function, Z38644K2: Natural number -> (experimental) Argument decl. for anon. function   [declared, not checked]
@@ -18272,7 +18987,7 @@
 
 ;; Z38676 bind value by position  [reaches an unimplemented function]
 ;;   Z38676K1: (experimental) Anonymous function, Z38676K2: Natural number, Z38676K3: Object -> (experimental) Anonymous function   [declared, not checked]
-(define (Z38676_bind_value_by_position a0 a1 a2) (Z38598 a0 (Z38668_id_of_argument_declaration_by_position a0 a1) a2))
+(define (Z38676_bind_value_by_position a0 a1 a2) (Z38598_bind_value_by_identifier a0 (Z38668_id_of_argument_declaration_by_position a0 a1) a2))
 (define Z38676 Z38676_bind_value_by_position)
 
 ;; Z38680 is Wikidata reference sourced from Wikimedia proj?
@@ -18312,7 +19027,7 @@
 
 ;; Z38714 join lemmas from lexemes, French  [reaches an unimplemented function]
 ;;   Z38714K1: Typed list(Wikidata lexeme reference) -> Monolingual text   [declared, not checked]
-(define (Z38714_join_lemmas_from_lexemes_french a0) (Z37859 (map Z19254_first_monolingual_text_from_multilingual_text (map Z19293_lemmas_of_lexeme (map Z6825 a0))) Z1004))
+(define (Z38714_join_lemmas_from_lexemes_french a0) (Z37859_join_list_of_monolingual_texts_with_comma_french (map Z19254_first_monolingual_text_from_multilingual_text (map Z19293_lemmas_of_lexeme (map Z6825 a0))) Z1004))
 (define Z38714 Z38714_join_lemmas_from_lexemes_french)
 
 ;; Z38720 join occupation list of person, French  [reaches an unimplemented function]
@@ -18392,7 +19107,7 @@
 
 ;; Z38778 join occupation list of person, English  [reaches an unimplemented function]
 ;;   Z38778K1: Wikidata item reference -> Monolingual text   [declared, not checked]
-(define (Z38778_join_occupation_list_of_person_english a0) (Z34644 (map Z38775_lemma_or_fallback_qid_label_english (Z38723_occupation_list_of_person a0)) Z1002))
+(define (Z38778_join_occupation_list_of_person_english a0) (Z34644_join_list_of_monolingual_texts_with_oxford_comma (map Z38775_lemma_or_fallback_qid_label_english (Z38723_occupation_list_of_person a0)) Z1002))
 (define Z38778 Z38778_join_occupation_list_of_person_english)
 
 ;; Z38782  join occupation list of person  [reaches an unimplemented function]
@@ -18405,24 +19120,49 @@
 (define (Z38788_lexeme_for_qid_english a0) (car (Z6830 a0 (record Z6092 (Z6092K1 "P5137")) Z1002)))
 (define Z38788 Z38788_lexeme_for_qid_english)
 
+;; Z38797 notable works-sentence, English  [reaches an unimplemented function]
+;;   Z38797K1: Wikidata item reference, Z38797K2: Boolean, Z38797K3: Wikidata item reference, Z38797K4: Natural language -> Monolingual text   [declared, not checked]
+(define (Z38797_notable_works_sentence_english a0 a1 a2 a3) (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (record Z11 (Z11K1 a3) (Z11K2 (Z10771_sentence_case (if a1 (Z19565_triple_if (Z19316_same_wikidata_item_reference (Z38726_gender_of_person a0) (record Z6091 (Z6091K1 "Q6581072"))) "Her notable works" (Z19316_same_wikidata_item_reference (Z38726_gender_of_person a0) (record Z6091 (Z6091K1 "Q6581097"))) "His notable works" "Their notable works") (Z12899_join_list_of_strings_with_delimiter (cons "The notable works of" (cons (Z24766_label_text_for_item_in_given_language_or_fallback a0 a3) (list))) " "))))) (cons (if (Z19316_same_wikidata_item_reference a2 (record Z6091 (Z6091K1 "Q1994301"))) (record Z11 (Z11K1 a3) (Z11K2 "included")) (record Z11 (Z11K1 a3) (Z11K2 "include"))) (cons (Z37870_join_wd_item_property_values a0 (record Z6092 (Z6092K1 "P800")) a3) (list)))) (record Z11 (Z11K1 a3) (Z11K2 " "))) (cons (record Z11 (Z11K1 a3) (Z11K2 ".")) (list))) (record Z11 (Z11K1 a3) (Z11K2 ""))))
+(define Z38797 Z38797_notable_works_sentence_english)
+
+;; Z38799 notable works-sentence, French  [reaches an unimplemented function]
+;;   Z38799K1: Wikidata item reference, Z38799K2: Boolean, Z38799K3: Wikidata item reference, Z38799K4: Natural language -> Monolingual text   [declared, not checked]
+(define (Z38799_notable_works_sentence_french a0 a1 a2 a3) (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (record Z11 (Z11K1 a3) (Z11K2 (Z10771_sentence_case (if a1 (Z19565_triple_if (Z19316_same_wikidata_item_reference (Z38726_gender_of_person a0) (record Z6091 (Z6091K1 "Q6581072"))) "Elle" (Z19316_same_wikidata_item_reference (Z38726_gender_of_person a0) (record Z6091 (Z6091K1 "Q6581097"))) "Il" "Il") (Z24766_label_text_for_item_in_given_language_or_fallback a0 a3))))) (cons (if (Z19316_same_wikidata_item_reference a2 (record Z6091 (Z6091K1 "Q1994301"))) (if (Z19316_same_wikidata_item_reference (Z38726_gender_of_person a0) (record Z6091 (Z6091K1 "Q6581097"))) (record Z11 (Z11K1 a3) (Z11K2 "est connu pour ses œuvres :")) (record Z11 (Z11K1 a3) (Z11K2 "était connue pour ses œuvres :"))) (if (Z19316_same_wikidata_item_reference (Z38726_gender_of_person a0) (record Z6091 (Z6091K1 "Q6581097"))) (record Z11 (Z11K1 a3) (Z11K2 "est connu pour ses œuvres :")) (record Z11 (Z11K1 a3) (Z11K2 "est connue pour ses œuvres :")))) (cons (Z37870_join_wd_item_property_values a0 (record Z6092 (Z6092K1 "P800")) a3) (list)))) (record Z11 (Z11K1 a3) (Z11K2 " "))) (cons (record Z11 (Z11K1 a3) (Z11K2 ".")) (list))) (record Z11 (Z11K1 a3) (Z11K2 ""))))
+(define Z38799 Z38799_notable_works_sentence_french)
+
 ;; Z38804 notable works-sentence  [reaches an unimplemented function]
 ;;   Z38804K1: Wikidata item reference, Z38804K2: Boolean, Z38804K3: Wikidata item reference, Z38804K4: Natural language -> Monolingual text   [declared, not checked]
 (define (Z38804_notable_works_sentence a0 a1 a2 a3) (Z30438_apply_four_argument_function (Z14310_select_a_function_based_on_language Z38803 a3) a0 a1 a2 a3))
 (define Z38804 Z38804_notable_works_sentence)
+
+;; Z38808 professions sentence, English  [reaches an unimplemented function]
+;;   Z38808K1: Wikidata item reference, Z38808K2: Boolean, Z38808K3: Wikidata item reference, Z38808K4: Natural language -> Monolingual text   [declared, not checked]
+(define (Z38808_professions_sentence_english a0 a1 a2 a3) (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (record Z11 (Z11K1 a3) (Z11K2 (Z10771_sentence_case (if a1 (Z19565_triple_if (Z19316_same_wikidata_item_reference (Z38726_gender_of_person a0) (record Z6091 (Z6091K1 "Q6581072"))) "She" (Z19316_same_wikidata_item_reference (Z38726_gender_of_person a0) (record Z6091 (Z6091K1 "Q6581097"))) "He" "They") (Z24766_label_text_for_item_in_given_language_or_fallback a0 a3))))) (cons (if (Z19316_same_wikidata_item_reference a2 (record Z6091 (Z6091K1 "Q1994301"))) (Z19565_triple_if (Z19316_same_wikidata_item_reference (Z38726_gender_of_person a0) (record Z6091 (Z6091K1 "Q6581072"))) (record Z11 (Z11K1 a3) (Z11K2 "was")) (Z19316_same_wikidata_item_reference (Z38726_gender_of_person a0) (record Z6091 (Z6091K1 "Q6581097"))) (record Z11 (Z11K1 a3) (Z11K2 "was")) (record Z11 (Z11K1 a3) (Z11K2 "were"))) (Z19565_triple_if (Z19316_same_wikidata_item_reference (Z38726_gender_of_person a0) (record Z6091 (Z6091K1 "Q6581072"))) (record Z11 (Z11K1 a3) (Z11K2 "is")) (Z19316_same_wikidata_item_reference (Z38726_gender_of_person a0) (record Z6091 (Z6091K1 "Q6581097"))) (record Z11 (Z11K1 a3) (Z11K2 "is")) (record Z11 (Z11K1 a3) (Z11K2 "are")))) (cons (Z26107_monolingual_text_from_language_and_string a3 (Z21739_an_or_a_english (Z14396_string_of_monolingual_text (Z38782_join_occupation_list_of_person a0 a3)))) (cons (Z38782_join_occupation_list_of_person a0 a3) (list))))) (record Z11 (Z11K1 a3) (Z11K2 " "))) (cons (record Z11 (Z11K1 a3) (Z11K2 ".")) (list))) (record Z11 (Z11K1 a3) (Z11K2 ""))))
+(define Z38808 Z38808_professions_sentence_english)
 
 ;; Z38814 prefix with indefinite article, English  [reaches an unimplemented function]
 ;;   Z38814K1: String -> String   [declared, not checked]
 (define (Z38814_prefix_with_indefinite_article_english a0) (Z15175_join_two_strings_with_separator (Z21739_an_or_a_english a0) a0 " "))
 (define Z38814 Z38814_prefix_with_indefinite_article_english)
 
+;; Z38829 professions sentence, French  [reaches an unimplemented function]
+;;   Z38829K1: Wikidata item reference, Z38829K2: Boolean, Z38829K3: Wikidata item reference, Z38829K4: Natural language -> Monolingual text   [declared, not checked]
+(define (Z38829_professions_sentence_french a0 a1 a2 a3) (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (record Z11 (Z11K1 a3) (Z11K2 (Z10771_sentence_case (if a1 (Z19565_triple_if (Z19316_same_wikidata_item_reference (Z38726_gender_of_person a0) (record Z6091 (Z6091K1 "Q6581072"))) "Elle" (Z19316_same_wikidata_item_reference (Z38726_gender_of_person a0) (record Z6091 (Z6091K1 "Q6581097"))) "Il" "Il") (Z24766_label_text_for_item_in_given_language_or_fallback a0 a3))))) (cons (if (Z19316_same_wikidata_item_reference a2 (record Z6091 (Z6091K1 "Q1994301"))) (record Z11 (Z11K1 a3) (Z11K2 "était")) (record Z11 (Z11K1 a3) (Z11K2 "est"))) (cons (Z38782_join_occupation_list_of_person a0 a3) (list)))) (record Z11 (Z11K1 a3) (Z11K2 " "))) (cons (record Z11 (Z11K1 a3) (Z11K2 ".")) (list))) (record Z11 (Z11K1 a3) (Z11K2 ""))))
+(define Z38829 Z38829_professions_sentence_french)
+
 ;; Z38833 professions sentence  [reaches an unimplemented function]
 ;;   Z38833K1: Wikidata item reference, Z38833K2: Boolean, Z38833K3: Wikidata item reference, Z38833K4: Natural language -> Monolingual text   [declared, not checked]
 (define (Z38833_professions_sentence a0 a1 a2 a3) (Z30438_apply_four_argument_function (Z14310_select_a_function_based_on_language Z38832 a3) a0 a1 a2 a3))
 (define Z38833 Z38833_professions_sentence)
 
+;; Z38839 join lists-monolingual texts without Oxford comma
+;;   Z38839K1: Typed list(Monolingual text), Z38839K2: Natural language -> Monolingual text   [declared, not checked]
+(define (Z38839_join_lists_monolingual_texts_without_oxford_comma a0 a1) (if (= (length a0) 0) (record Z11 (Z11K1 a1) (Z11K2 "")) (if (= (length a0) 1) (car a0) (if (= (length a0) 2) (Z34669_join_list_of_monolingual_texts_with_delimiter a0 (record Z11 (Z11K1 a1) (Z11K2 " and "))) (Z34669_join_list_of_monolingual_texts_with_delimiter (cons (Z34669_join_list_of_monolingual_texts_with_delimiter (Z12967_list_without_last_element a0) (record Z11 (Z11K1 a1) (Z11K2 ", "))) (cons (Z12964_last_element a0) (list))) (record Z11 (Z11K1 a1) (Z11K2 " and ")))))))
+(define Z38839 Z38839_join_lists_monolingual_texts_without_oxford_comma)
+
 ;; Z38844 join WD item property val (en, w/o Oxford comma)  [reaches an unimplemented function]
 ;;   Z38844K1: Wikidata item reference, Z38844K2: Wikidata property reference, Z38844K3: Natural language -> Monolingual text   [declared, not checked]
-(define (Z38844_join_wd_item_property_val_en_w_o_oxford_comma a0 a1 a2) (Z38839 (Z33024_label_texts_for_wikidata_items (map Z19308_value_of_wikidata_statement (Z27610_order_statements_by_series_ordinal (Z29691_get_statements_for_wikidata_property_from_item (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list Z1360) (cons a1 (list))) a1))) a2) a2))
+(define (Z38844_join_wd_item_property_val_en_w_o_oxford_comma a0 a1 a2) (Z38839_join_lists_monolingual_texts_without_oxford_comma (Z33024_label_texts_for_wikidata_items (map Z19308_value_of_wikidata_statement (Z27610_order_statements_by_series_ordinal (Z29691_get_statements_for_wikidata_property_from_item (Z30120_fetch_wikidata_item_or_parts a0 (list Z6036) (list Z1360) (cons a1 (list))) a1))) a2) a2))
 (define Z38844 Z38844_join_wd_item_property_val_en_w_o_oxford_comma)
 
 ;; Z38857 apply a 5-param fn to a list of firsts, same 2-5  [reaches an unimplemented function]

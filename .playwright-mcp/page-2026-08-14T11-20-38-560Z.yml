@@ -1,0 +1,71 @@
+- main [ref=f4e2]:
+  - generic [ref=f4e3]:
+    - paragraph [ref=f4e4]: wikifn-fstar
+    - heading "Wikifn Engine Browser" [level=1] [ref=f4e5]
+    - paragraph [ref=f4e6]: 3,676 real Wikifunctions compositions, mechanically translated into F*, checked by F*, extracted to OCaml, compiled to JavaScript, and running in this page. Search for a function, read its source as an s-expression, and run it.
+    - paragraph [ref=f4e7]:
+      - text: Not all of them can run yet. A function is
+      - strong [ref=f4e8]: runnable
+      - text: when every function it reaches is implemented; the rest are carried because calls are by reference, so they start working as soon as the gap is filled.
+    - paragraph [ref=f4e9]:
+      - link "Demos menu" [ref=f4e10] [cursor=pointer]:
+        - /url: ./demos.html
+      - text: ·
+      - link "How it works" [ref=f4e11] [cursor=pointer]:
+        - /url: ./engine.md
+  - generic [ref=f4e12]:
+    - heading "Loading the engine" [level=2] [ref=f4e13]
+    - paragraph [ref=f4e14]: The artifact and catalogue are a couple of megabytes, served compressed. They start downloading as soon as you arrive; nothing can be searched or run until they finish, and the status below says which it is.
+    - status [ref=f4e15]: Fetching the catalogue…
+    - button "Try again" [ref=f4e16] [cursor=pointer]
+  - generic [ref=f4e17]:
+    - heading "What this is and is not" [level=2] [ref=f4e18]
+    - list [ref=f4e19]:
+      - listitem [ref=f4e20]:
+        - text: Each body is a mechanical translation of a pinned
+        - code [ref=f4e21]: Z14K2
+        - text: composition. None of it was written by hand, and each carries the revision and digest it came from.
+      - listitem [ref=f4e22]:
+        - text: The primitives underneath
+        - emphasis [ref=f4e23]: are
+        - text: written by hand, in F*. They are a claim about what Wikifunctions means, checked against Wikifunctions' own testers rather than proved.
+      - listitem [ref=f4e24]: "A function marked runnable has every function it reaches implemented. Being runnable is not the same as being verified: only the tester results in the engine notes support correctness claims."
+      - listitem [ref=f4e25]: Arguments are literal values. There is no object store, so a reference is refused rather than read as text.
+      - listitem [ref=f4e26]:
+        - text: Some compositions are defined in terms of each other with no base case.
+        - code [ref=f4e27]: Z844
+        - text: boolean equality is
+        - code [ref=f4e28]: not(inequality)
+        - text: while inequality is
+        - code [ref=f4e29]: not(equality)
+        - text: ; reversing a list is defined through appending to one, which is defined through reversing. Where another implementation escapes the cycle the generator picks it, and where the wiki's own evaluator escapes by preferring a code implementation the function is grounded in the kernel instead. What is left reports a depth limit rather than returning an answer.
+      - listitem [ref=f4e30]:
+        - text: Each function shows its declared argument and return types. Those come from the pinned
+        - code [ref=f4e31]: Z8
+        - text: and are
+        - emphasis [ref=f4e32]: not
+        - text: "checked: the engine has no type checker, so they say what the function was declared to want, not what it enforces."
+      - listitem [ref=f4e33]:
+        - text: "Fuel is a budget for total evaluation steps, not a depth limit. Running out is reported, not hidden. Naively recursive functions can need a lot: the corpus's Fibonacci needs about 200,000 steps for"
+        - code [ref=f4e34]: n = 20
+        - text: ", because it is written without memoisation."
+    - paragraph [ref=f4e35]:
+      - text: "Downloads:"
+      - link "catalogue" [ref=f4e36] [cursor=pointer]:
+        - /url: ./generated/functions.json
+      - text: ","
+      - link "everything as one loadable Scheme file" [ref=f4e37] [cursor=pointer]:
+        - /url: ./generated/wikifn-bundle.scm
+      - text: ","
+      - link "the definitions alone" [ref=f4e38] [cursor=pointer]:
+        - /url: ./generated/wikifn.scm
+      - text: ","
+      - link "the prelude alone" [ref=f4e39] [cursor=pointer]:
+        - /url: ./generated/wikifn-prelude.scm
+      - text: ","
+      - link "name hints" [ref=f4e40] [cursor=pointer]:
+        - /url: ./generated/wikifn-hints.scm
+      - text: ","
+      - link "all back as canonical Wikifunctions compositions" [ref=f4e41] [cursor=pointer]:
+        - /url: ./generated/wikifn-compositions.json
+      - text: .

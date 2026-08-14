@@ -144,7 +144,7 @@ test("a non-productive definition reports a limit rather than hanging", { skip }
   // Some mutual cycles have no implementation that escapes them: Z12429 is odd
   // and Z12480 is even are defined in terms of each other. Evaluation must stop
   // and say so rather than run until the host gives out.
-  const stuck = catalog.functions.filter((entry) => entry.mutuallyRecursive && entry.runnable);
+  const stuck = catalog.functions.filter((entry) => entry.mutuallyRecursive);
   assert.ok(stuck.length > 0, "expected some functions to remain in a cycle");
   let reported = 0;
   for (const entry of stuck) {
@@ -152,6 +152,21 @@ test("a non-productive definition reports a limit rather than hanging", { skip }
     if (!response.ok && /depth|fuel/.test(response.message)) reported += 1;
   }
   assert.ok(reported > 0, "no cycle reported a depth or fuel limit");
+});
+
+// The catalogue used to call these runnable, because runnable meant "every
+// function it reaches is implemented" - which is true of a cycle, and useless.
+// It advertised functions that provably cannot terminate, and the only way to
+// find out was to run one and read a depth limit back.
+test("nothing that reaches a cycle is advertised as runnable", { skip }, () => {
+  const { catalog } = engine();
+  const lying = catalog.functions.filter((entry) => entry.runnable && entry.reachesCycle);
+  assert.deepEqual(
+    lying.slice(0, 10).map((entry) => entry.zid), [],
+    `${lying.length} functions are marked runnable but reach a non-productive cycle`
+  );
+  const marked = catalog.functions.filter((entry) => entry.reachesCycle);
+  assert.ok(marked.length > 0, "expected the catalogue to mark functions that reach a cycle");
 });
 
 // Z844 boolean equality had an implementation defined as not(inequality) while

@@ -11,16 +11,16 @@ open Wikifn.Eval
 
   part:      1 of 10
   functions: 400
-  ZID range: Z844 to Z12971
+  ZID range: Z844 to Z12934
 *)
 
 (* Z844 Boolean equality | Z844@246880 -> Z31484@250336 digest 43f679fde596bb2a4e912c545cdd4f039632c929773a3eb02c726fa34311beb6 *)
 let body_Z844_boolean_equality : expr =
   ECall 10243 [ECall 10243 [EArg 0; EArg 1]; ECall 10243 [ECall 10243 [EArg 0; EArg 0]; ECall 10243 [EArg 1; EArg 1]]]
 
-(* Z861 Monolingual text from String and Natural language | Z861@271582 -> Z27215@209227 digest 33ac3cacc0341e9e24d65238b50c45c32b43b3171f29fb5f2d30f8289f984680 *)
+(* Z861 Monolingual text from String and Natural language | Z861@271582 -> Z27217@209293 digest a63d8097603f2a9835b3e980c9309334d1f787aba965a96111b3d03a5cc2dee3 *)
 let body_Z861_monolingual_text_from_string_and_natural_language : expr =
-  ECall 26107 [EArg 1; EArg 0]
+  ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 1); ({ key_owner = Some 11; key_index = 2 }, EArg 0)]
 
 (* Z889 List equality | Z889@290451 -> Z15872@200226 digest ed31f09aaa61b03e4942dbe574d686f92c903c06f41ec3b474a60d9587183449 *)
 let body_Z889_list_equality : expr =
@@ -85,6 +85,10 @@ let body_Z10096_is_a_palindrome : expr =
 (* Z10108 string end padding | Z10108@255191 -> Z31780@255190 digest d88ce4d74ceb509f2e8911e0768cce2b453691195da42e94a7ba9e80d1181414 *)
 let body_Z10108_string_end_padding : expr =
   ECall 802 [ECall 23883 [ECall 13569 [EArg 1; ECall 11040 [EArg 0]]]; EArg 0; ECall 10000 [EArg 0; ECall 12624 [EArg 2; ECall 13569 [EArg 1; ECall 11040 [EArg 0]]]]]
+
+(* Z10111 compose two Functions | Z10111@237715 -> Z10116@296241 digest ed258e3a1edfaf3a59a5998473e4dd987ff910cd21bbd298fab4488515c75930 *)
+let body_Z10111_compose_two_functions : expr =
+  ERecord 8 [({ key_owner = Some 8; key_index = 1 }, ECall 21177 [EArg 0]); ({ key_owner = Some 8; key_index = 2 }, ECall 10112 [EArg 1]); ({ key_owner = Some 8; key_index = 3 }, EValue (VList [])); ({ key_owner = Some 8; key_index = 4 }, EValue (VList [])); ({ key_owner = Some 8; key_index = 5 }, EValue (VFunc 10116))]
 
 (* Z10112 function return type | Z10112@262236 -> Z10114@174325 digest 2f808a7bc34de6a1f5cc822c989bf1823075050d6f11d16cc4e39e20e8a998a6 *)
 let body_Z10112_function_return_type : expr =
@@ -466,6 +470,10 @@ let body_Z10973_is_anagram_simple : expr =
 let body_Z10993_hebrew_convert_to_maqaf_en_dash : expr =
   ECall 10193 [ECall 10193 [ECall 10894 [EArg 0]; EValue (VText [40; 40; 94; 124; 91; 94; 92; 117; 48; 53; 68; 48; 45; 92; 117; 48; 53; 69; 65; 93; 41; 40; 91; 1502; 1513; 1492; 1493; 1499; 1500; 1489; 93; 123; 49; 44; 52; 125; 41; 63; 40; 1488; 1497; 124; 1488; 1497; 1503; 124; 1488; 1500; 124; 1489; 1497; 1503; 124; 1489; 1500; 1514; 1497; 124; 1489; 91; 1503; 1512; 1514; 93; 124; 1489; 1514; 1512; 124; 1491; 1493; 124; 1495; 1491; 124; 1495; 1493; 1509; 124; 1495; 1510; 1497; 124; 1496; 1512; 1493; 1501; 124; 1497; 1514; 1512; 124; 1499; 1500; 1500; 63; 124; 1499; 1502; 1493; 124; 1500; 1488; 124; 1502; 91; 1497; 1488; 93; 63; 1511; 1512; 1493; 124; 1502; 1496; 91; 1488; 1492; 93; 124; 1502; 1505; 1489; 124; 1502; 1506; 1497; 1503; 124; 1502; 1510; 1491; 124; 1502; 63; 1514; 1493; 1498; 124; 1506; 1500; 124; 1508; 1504; 1497; 1501; 124; 1508; 1505; 1488; 63; 1493; 1491; 1493; 124; 1511; 1491; 1501; 124; 1512; 1489; 124; 1514; 1500; 1514; 124; 1514; 1514; 41; 41; 92; 45; 40; 63; 61; 91; 92; 117; 48; 53; 68; 48; 45; 92; 117; 48; 53; 69; 65; 93; 41]); EValue (VText [92; 49; 1470])]; EValue (VText [40; 63; 60; 61; 91; 92; 117; 48; 53; 68; 48; 45; 92; 117; 48; 53; 69; 65; 93; 41; 92; 45; 40; 63; 61; 40; 1488; 1495; 1512; 124; 1493; 1514; 124; 1497; 1495; 1491; 124; 1497; 124; 1497; 63; 1497; 1501; 124; 1500; 1502; 1495; 1510; 1492; 124; 1502; 1491; 1493; 1502; 1492; 124; 1504; 1490; 1491; 124; 1506; 1500; 41; 40; 91; 94; 92; 117; 48; 53; 68; 48; 45; 92; 117; 48; 53; 69; 65; 93; 124; 36; 41; 41]); EValue (VText [1470])]
 
+(* Z10996 is leap year (natural number Gregorian calendar) | Z10996@216653 -> Z20380@141023 digest fdcf56d06d9f3a970c13d27d77e0b9a815814b67194adadc51b89e7e2609b475 *)
+let body_Z10996_is_leap_year_natural_number_gregorian_calendar : expr =
+  ECall 20181 [ERecord 20159 [({ key_owner = Some 20159; key_index = 1 }, EValue (VFunc 17814)); ({ key_owner = Some 20159; key_index = 2 }, EArg 0)]]
+
 (* Z11003 Base16 Encode | Z11003@280513 -> Z36061@280504 digest 4866d38b79ecc98805fa49a82546c76c3df0e828a4a42f3b839ff6d82c10e1e6 *)
 let body_Z11003_base16_encode : expr =
   ECall 10018 [ECall 10366 [EArg 0]]
@@ -785,6 +793,10 @@ let body_Z11528_in_codepoint_order_three_characters : expr =
 (* Z11531 remove characters in character range | Z11531@220323 -> Z14123@155355 digest 5f89f952c2e774ea95c090fedf18e12c45dee7019047cf99f62e115c77f6845c *)
 let body_Z11531_remove_characters_in_character_range : expr =
   ECall 14119 [EArg 0; ECall 11515 [EArg 1]; ECall 11515 [EArg 2]]
+
+(* Z11534 chr of codepoint value | Z11534@255991 -> Z31853@255990 digest 421fd3416b4b54384a84679fce1b9ec7faef8111ae2f01bbd1da6581cb4e8efe *)
+let body_Z11534_chr_of_codepoint_value : expr =
+  ECall 15631 [ERecord 86 [({ key_owner = Some 86; key_index = 1 }, EArg 0)]]
 
 (* Z11538 successor of Code point (as String) | Z11538@257977 -> Z32132@257970 digest c7e2a794ea511c08f15407b82bf97593cd40c4cc6b070fee6acc838a1b08fdd8 *)
 let body_Z11538_successor_of_code_point_as_string : expr =
@@ -1294,6 +1306,18 @@ let body_Z12427_is_prime : expr =
 let body_Z12429_is_odd_integer : expr =
   ECall 10216 [ECall 12480 [EArg 0]]
 
+(* Z12436 Does this French verb belong to 1st group? | Z12436@201628 -> Z12441@139736 digest 82ee0a139c8c758083ed2a7b27eb09735909ae329b5389767520561b0b0e33bc *)
+let body_Z12436_does_this_french_verb_belong_to_1st_group : expr =
+  ECall 12696 [ECall 19300 [ECall 6825 [EArg 0]]; ERecord 6003 [({ key_owner = Some 6003; key_index = 1 }, EArg 0); ({ key_owner = Some 6003; key_index = 2 }, EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 53; 49; 56; 54])])); ({ key_owner = Some 6003; key_index = 3 }, EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 50; 57; 57; 51; 51; 53; 52])])); ({ key_owner = Some 6003; key_index = 4 }, EValue (VFunc 6042))]]
+
+(* Z12439 Does this French verb belong to 2nd group? | Z12439@201629 -> Z12446@139735 digest c53bb156f64aff0cc29405ba21fbbf02488bcaa834f50182613606169f1ef3a2 *)
+let body_Z12439_does_this_french_verb_belong_to_2nd_group : expr =
+  ECall 12696 [ECall 19300 [ECall 6825 [EArg 0]]; ERecord 6003 [({ key_owner = Some 6003; key_index = 1 }, EArg 0); ({ key_owner = Some 6003; key_index = 2 }, EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 53; 49; 56; 54])])); ({ key_owner = Some 6003; key_index = 3 }, EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 50; 57; 57; 51; 51; 53; 51])])); ({ key_owner = Some 6003; key_index = 4 }, EValue (VFunc 6042))]]
+
+(* Z12440 Does this French verb belong to 3rd group? | Z12440@201630 -> Z12491@139734 digest 3ec0e6605185140e6e3140deb5a3f53d3e4a8a878f8b410f5b6fe22b2502674c *)
+let body_Z12440_does_this_french_verb_belong_to_3rd_group : expr =
+  ECall 12696 [ECall 19300 [ECall 6825 [EArg 0]]; ERecord 6003 [({ key_owner = Some 6003; key_index = 1 }, EArg 0); ({ key_owner = Some 6003; key_index = 2 }, EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 53; 49; 56; 54])])); ({ key_owner = Some 6003; key_index = 3 }, EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 50; 57; 57; 51; 51; 53; 56])])); ({ key_owner = Some 6003; key_index = 4 }, EValue (VFunc 6042))]]
+
 (* Z12448 Breton conjugation preterite 1st person singular (-is) | Z12448@284199 -> Z12450@206675 digest be76417c7495e88cd10cd5475347ec42902ea46f82abeca353ebd93375ed5568 *)
 let body_Z12448_breton_conjugation_preterite_1st_person_singular_is : expr =
   ECall 10000 [EArg 0; EValue (VText [105; 115])]
@@ -1590,30 +1614,6 @@ let body_Z12932_esperanto_indicative_past_tense : expr =
 let body_Z12934_esperanto_indicative_future_tense : expr =
   ECall 10000 [ECall 12908 [EArg 0]; EValue (VText [111; 115])]
 
-(* Z12936 Esperanto conditional verb | Z12936@130320 -> Z12937@130321 digest a7beff5bdba5232c09dcf927b9c110853f88619581d4d343b9fd332d7337a2c3 *)
-let body_Z12936_esperanto_conditional_verb : expr =
-  ECall 10000 [ECall 12908 [EArg 0]; EValue (VText [117; 115])]
-
-(* Z12938 Esperanto volitive mood | Z12938@130322 -> Z12939@130323 digest a6de674a5805c092897fcdfc252fd92071b6164c2c20fdf58beef32ff41fbfe0 *)
-let body_Z12938_esperanto_volitive_mood : expr =
-  ECall 10000 [ECall 12908 [EArg 0]; EValue (VText [117])]
-
-(* Z12941 debug | Z12941@162828 -> Z20883@223167 digest 770164f266a350024b2f36f5d3def4f2519e18bb4c60ea3df491d8a4f68952ac *)
-let body_Z12941_debug : expr =
-  ECall 820 [EValue (VText [101; 120; 101; 99; 117; 116; 111; 114; 68; 101; 98; 117; 103; 76; 111; 103; 115]); EArg 0]
-
-(* Z12964 last element | Z12964@275889 -> Z12965@189653 digest 8bf5e7dc40f7a2f817e58a000b111c9debd30e580dfc13d9f4a58688a27ec1e9 *)
-let body_Z12964_last_element : expr =
-  ECall 811 [ECall 12668 [EArg 0]]
-
-(* Z12967 list without last element | Z12967@162674 -> Z12968@130471 digest 3b69c180dd0ab773c5925b800d94b8d8ea38d66b691afbe01a2b5af507813c10 *)
-let body_Z12967_list_without_last_element : expr =
-  ECall 18479 [ECall 812 [ECall 18479 [EArg 0]]]
-
-(* Z12971 Ones complement binary addition | Z12971@267864 -> Z33969@267863 digest 345bfc1807b805e83a6c55daf8d165b3e0abfe6238cdc67c7655d9ba4fd766c5 *)
-let body_Z12971_ones_complement_binary_addition : expr =
-  ECall 13779 [ECall 13521 [ECall 13797 [EArg 0]; ECall 13797 [EArg 1]]]
-
 let part_policy (fid:zid) : Tot (option expr) =
   match fid with
   | 844 -> Some body_Z844_boolean_equality
@@ -1634,6 +1634,7 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 10095 -> Some body_Z10095_remove_trailing_spaces
   | 10096 -> Some body_Z10096_is_a_palindrome
   | 10108 -> Some body_Z10108_string_end_padding
+  | 10111 -> Some body_Z10111_compose_two_functions
   | 10112 -> Some body_Z10112_function_return_type
   | 10119 -> Some body_Z10119_sandbox_function_z8
   | 10137 -> Some body_Z10137_md5
@@ -1729,6 +1730,7 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 10964 -> Some body_Z10964_not_backwards_boolean_implication
   | 10973 -> Some body_Z10973_is_anagram_simple
   | 10993 -> Some body_Z10993_hebrew_convert_to_maqaf_en_dash
+  | 10996 -> Some body_Z10996_is_leap_year_natural_number_gregorian_calendar
   | 11003 -> Some body_Z11003_base16_encode
   | 11007 -> Some body_Z11007_base16_decode
   | 11015 -> Some body_Z11015_is_leap_year_julian_calendar
@@ -1809,6 +1811,7 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 11523 -> Some body_Z11523_first_letter_of_strings_codepoints_in_ascending_order
   | 11528 -> Some body_Z11528_in_codepoint_order_three_characters
   | 11531 -> Some body_Z11531_remove_characters_in_character_range
+  | 11534 -> Some body_Z11534_chr_of_codepoint_value
   | 11538 -> Some body_Z11538_successor_of_code_point_as_string
   | 11542 -> Some body_Z11542_if_string_output
   | 11553 -> Some body_Z11553_remove_emoticons_emoji
@@ -1936,6 +1939,9 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 12400 -> Some body_Z12400_has_diacritics
   | 12427 -> Some body_Z12427_is_prime
   | 12429 -> Some body_Z12429_is_odd_integer
+  | 12436 -> Some body_Z12436_does_this_french_verb_belong_to_1st_group
+  | 12439 -> Some body_Z12439_does_this_french_verb_belong_to_2nd_group
+  | 12440 -> Some body_Z12440_does_this_french_verb_belong_to_3rd_group
   | 12448 -> Some body_Z12448_breton_conjugation_preterite_1st_person_singular_is
   | 12451 -> Some body_Z12451_breton_conjugation_preterite_1st_person_singular_jon
   | 12454 -> Some body_Z12454_breton_conjugation_preterite_2nd_person_singular
@@ -2010,10 +2016,4 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 12930 -> Some body_Z12930_esperanto_indicative_present_tense
   | 12932 -> Some body_Z12932_esperanto_indicative_past_tense
   | 12934 -> Some body_Z12934_esperanto_indicative_future_tense
-  | 12936 -> Some body_Z12936_esperanto_conditional_verb
-  | 12938 -> Some body_Z12938_esperanto_volitive_mood
-  | 12941 -> Some body_Z12941_debug
-  | 12964 -> Some body_Z12964_last_element
-  | 12967 -> Some body_Z12967_list_without_last_element
-  | 12971 -> Some body_Z12971_ones_complement_binary_addition
   | _ -> None

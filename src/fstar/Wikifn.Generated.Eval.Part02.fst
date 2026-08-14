@@ -11,8 +11,32 @@ open Wikifn.Eval
 
   part:      3 of 10
   functions: 400
-  ZID range: Z16015 to Z20041
+  ZID range: Z15977 to Z19854
 *)
+
+(* Z15977 (!) return grammatical number for an integer and language | Z15977@262959 -> Z15987@203139 digest cafd3611a333053a0518f01b0629a39dcf11c806a8e1e893a3c9567b36dff12b *)
+let body_Z15977_return_grammatical_number_for_an_integer_and_language : expr =
+  ECall 802 [ECall 14326 [EArg 1; EValue (VFunc 1002)]; ECall 15982 [EArg 0]; ECall 15988 [EArg 0]]
+
+(* Z15982 (!) grammatical number for languages with only singular and plural | Z15982@271189 -> Z34591@271182 digest ee808722d679be5259eafb793e5e0815f31ea73f8bbcb056e124780b2af21854 *)
+let body_Z15982_grammatical_number_for_languages_with_only_singular_and_plur : expr =
+  ECall 802 [ECall 31547 [EArg 0]; EValue (VText [115; 105; 110; 103; 117; 108; 97; 114]); EValue (VText [112; 108; 117; 114; 97; 108])]
+
+(* Z15991 code point prefix | Z15991@277541 -> Z15993@203405 digest 5c8a09b515b275c0e0cc9c1bc33f57d38b9770c03afd1434ca42d0915dc712de *)
+let body_Z15991_code_point_prefix : expr =
+  ECall 22693 [ECall 810 [EArg 0; ECall 22717 [EArg 1]]]
+
+(* Z15996 first N code points | Z15996@255234 -> Z15999@203412 digest d5551dc9f68f5ee51e75a70f44a262bf71c18a1800124e6d721ec2f6f4e19294 *)
+let body_Z15996_first_n_code_points : expr =
+  ECall 802 [ECall 13522 [EValue (VNat 0); EArg 1]; EValue (VText []); ECall 802 [ECall 13522 [EValue (VNat 1); EArg 1]; ECall 886 [ECall 810 [ECall 811 [ECall 868 [EArg 0]]; EValue (VList [])]]; ECall 14592 [EArg 0; EArg 1]]]
+
+(* Z16000 Igbo month name in Igbo | Z16000@271187 -> Z34593@271186 digest 76295be2f757f76b8879643fff03dc823f2db90f8496598ab6ae69a2f09e1e62 *)
+let body_Z16000_igbo_month_name_in_igbo : expr =
+  ECall 10000 [EValue (VText [7884; 110; 119; 97; 32]); ECall 14396 [ECall 16273 [ECall 20607 [ECall 16365 [EArg 0]]; EValue (VFunc 1002)]]]
+
+(* Z16012 (!) grammatical number for languages with singular, dual and plural | Z16012@271191 -> Z34594@271190 digest a0c189fcce8af7fc434045433c6d628e1beebe7c1aca3e3f6243b92e297e72f7 *)
+let body_Z16012_grammatical_number_for_languages_with_singular_dual_and_plur : expr =
+  ECall 19565 [ECall 31547 [EArg 0]; EValue (VText [115; 105; 110; 103; 117; 108; 97; 114]); ECall 31554 [EArg 0]; EValue (VText [100; 117; 97; 108]); EValue (VText [112; 108; 117; 114; 97; 108])]
 
 (* Z16015 (!) grammatical number for languages with singular, paucal (2-5) and plural | Z16015@271193 -> Z34595@271192 digest e49b1d72af72ffd2aa403cc23bd52f04b891865326f8b5787446ba790ad24f0e *)
 let body_Z16015_grammatical_number_for_languages_with_singular_paucal_2_5_an : expr =
@@ -57,6 +81,10 @@ let body_Z16272_twelve_months : expr =
 (* Z16273 monolingual text in specified language from multilingual text | Z16273@271243 -> Z16282@296267 digest 35841ab73dc23c858bc18cb78bd123da725441cacb83b0345a582cbae6892c6d *)
 let body_Z16273_monolingual_text_in_specified_language_from_multilingual_tex : expr =
   ECall 16277 [ECall 19279 [EArg 0]; EArg 1]
+
+(* Z16277 first monolingual text in specified language | Z16277@271235 -> Z16279@211972 digest 537367f6589afc2e9f9cc56ca05a7df42636e6b9c0e6909b5bb8360490a5e849 *)
+let body_Z16277_first_monolingual_text_in_specified_language : expr =
+  ECall 802 [ECall 813 [EArg 0]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 1); ({ key_owner = Some 11; key_index = 2 }, EValue (VText []))]; ECall 802 [ECall 14326 [EArg 1; ECall 14404 [ECall 811 [EArg 0]]]; ECall 811 [EArg 0]; ECall 16277 [ECall 812 [EArg 0]; EArg 1]]]
 
 (* Z16289 month is in list | Z16289@218566 -> Z18970@277144 digest a4cf0a6b642a33dad854899f964d2994cf2fc9f4ea526099bc366489b01abe1e *)
 let body_Z16289_month_is_in_list : expr =
@@ -366,6 +394,10 @@ let body_Z17065_boolean_to_natural_number : expr =
 let body_Z17073_vietnamese_cardinal : expr =
   ECall 17081 [EArg 0]
 
+(* Z17101 natural number to integer | Z17101@266853 -> Z17286@232486 digest 1ce43671a9d891f5beb9c54140d62a5c5689e2b66be53a89941e04e717595d2e *)
+let body_Z17101_natural_number_to_integer : expr =
+  ECall 17192 [ECall 13522 [EArg 0; EValue (VNat 0)]; EValue (VRecord 16683 [({ key_owner = Some 16683; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16661)]); ({ key_owner = Some 16683; key_index = 2 }, VNat 0)]); ERecord 16683 [({ key_owner = Some 16683; key_index = 1 }, EValue (VFunc 16660)); ({ key_owner = Some 16683; key_index = 2 }, EArg 0)]]
+
 (* Z17105 sign of integer | Z17105@225359 -> Z17213@231195 digest be4301fbd500ec9e53d5783994d7b1ebcdd5a3fb39a68762d831ac6e8fe055c8 *)
 let body_Z17105_sign_of_integer : expr =
   ECall 803 [EValue (VRecord 39 [({ key_owner = Some 39; key_index = 1 }, VText [90; 49; 54; 54; 56; 51; 75; 49])]); EArg 0]
@@ -461,6 +493,10 @@ let body_Z17263_natural_number_exponentiation_of_integers : expr =
 (* Z17267 negate natural number to integer | Z17267@260518 -> Z17501@237720 digest 0e3ef536feceaf7aca0fd3e2c06ac53c16dcc346e92c9535463650f3680083ec *)
 let body_Z17267_negate_natural_number_to_integer : expr =
   ECall 17186 [ECall 17101 [EArg 0]]
+
+(* Z17291 floor divide integers | Z17291@271344 -> Z34628@271343 digest d633f61d47cdb90473cd96c2ce60eacefa07fe5cb64498bccb6b88ba83f97ca8 *)
+let body_Z17291_floor_divide_integers : expr =
+  ECall 19565 [ECall 17239 [EArg 1]; ECall 851 [EValue (VFunc 28194); ECall 810 [EValue (VText [90; 49; 55; 50; 57; 49; 75; 50]); ECall 810 [EArg 1; EValue (VList [])]]]; ECall 17239 [EArg 0]; EValue (VRecord 16683 [({ key_owner = Some 16683; key_index = 1 }, VFunc 16661); ({ key_owner = Some 16683; key_index = 2 }, VNat 0)]); ERecord 16683 [({ key_owner = Some 16683; key_index = 1 }, ECall 16728 [ECall 17105 [EArg 0]; ECall 17105 [EArg 1]]); ({ key_owner = Some 16683; key_index = 2 }, ECall 13546 [ECall 802 [ECall 16667 [ECall 16728 [ECall 17105 [EArg 0]; ECall 17105 [EArg 1]]; EValue (VFunc 16662)]; ECall 13582 [ECall 13521 [ECall 17144 [EArg 0]; ECall 17144 [EArg 1]]]; ECall 17144 [EArg 0]]; ECall 17144 [EArg 1]])]]
 
 (* Z17301 ordered pair of natural numbers representing integer | Z17301@233325 -> Z17305@233329 digest 04965825c0f07f108d0e16988478541054257189f79d36ba3a4e6d0fd20ba7a2 *)
 let body_Z17301_ordered_pair_of_natural_numbers_representing_integer : expr =
@@ -1466,25 +1502,37 @@ let body_Z19658_convert_a_language_object_to_a_russian_adverb : expr =
 let body_Z19661_echo_string : expr =
   ECall 801 [EArg 0]
 
+(* Z19679 add rational numbers | Z19679@292609 -> Z32018@257233 digest 56fe4d31904c9e91a453f80988949ffb53052d4e7c0904117854a6ca56a40912 *)
+let body_Z19679_add_rational_numbers : expr =
+  ECall 20112 [ERecord 19677 [({ key_owner = Some 19677; key_index = 1 }, ECall 802 [ECall 19686 [EArg 0; ECall 19694 [EArg 1]]; EValue (VFunc 16661); ECall 802 [ECall 19752 [ECall 19736 [EArg 0; EArg 1]; ECall 21692 [ECall 19740 [EArg 0; EArg 1]]]; EValue (VFunc 16660); EValue (VFunc 16662)]]); ({ key_owner = Some 19677; key_index = 2 }, ECall 17144 [ECall 16693 [ECall 27826 [ECall 19724 [EArg 1]; ECall 27820 [EArg 0]]; ECall 27826 [ECall 19724 [EArg 0]; ECall 27820 [EArg 1]]]]); ({ key_owner = Some 19677; key_index = 3 }, ECall 13539 [ECall 19724 [EArg 0]; ECall 19724 [EArg 1]])]]
+
+(* Z19682 truncate Rational number | Z19682@271958 -> Z34722@271957 digest 2812400234673082dfa47bd7bb2da3725a119c2d58937e961221748a853f55c6 *)
+let body_Z19682_truncate_rational_number : expr =
+  ERecord 16683 [({ key_owner = Some 16683; key_index = 1 }, ECall 802 [ECall 23883 [ECall 13546 [ECall 19733 [EArg 0]; ECall 19862 [EArg 0]]]; EValue (VFunc 16661); ECall 19717 [EArg 0]]); ({ key_owner = Some 16683; key_index = 2 }, ECall 13546 [ECall 19733 [EArg 0]; ECall 19862 [EArg 0]])]
+
 (* Z19686 same Rational number | Z19686@197910 -> Z20115@139293 digest 9e8ce8ada0338fe8595587bc04d174ea4bd9f32318e7d4c1a3e7543951022f7d *)
 let body_Z19686_same_rational_number : expr =
   ECall 19892 [ECall 20112 [EArg 0]; ECall 20112 [EArg 1]]
 
-(* Z19694 negate rational number | Z19694@296357 -> Z38837@296356 digest 76b6b19051eca8360840126253d4813efe9457359089a64f48211e540fb62ca5 *)
+(* Z19694 negate rational number | Z19694@296357 -> Z19787@296355 digest 191e02d538d1964de4c9ada232f0699eb6d0cdf9621b9e5cea5688734ddac77a *)
 let body_Z19694_negate_rational_number : expr =
-  ECall 19706 [EValue (VRecord 19677 [({ key_owner = Some 19677; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16662)]); ({ key_owner = Some 19677; key_index = 2 }, VNat 1); ({ key_owner = Some 19677; key_index = 3 }, VNat 1)]); EArg 0]
+  ERecord 19677 [({ key_owner = Some 19677; key_index = 1 }, ECall 16676 [ECall 19717 [EArg 0]]); ({ key_owner = Some 19677; key_index = 2 }, ECall 19733 [EArg 0]); ({ key_owner = Some 19677; key_index = 3 }, ECall 19862 [EArg 0])]
 
 (* Z19699 subtract rational numbers | Z19699@237109 -> Z19700@257242 digest db75d057629b441fd8cdef1314ad79a990abde8a57f8d334860feee6f3e912dd *)
 let body_Z19699_subtract_rational_numbers : expr =
   ECall 19679 [EArg 0; ECall 19694 [EArg 1]]
 
+(* Z19706 multiply rational numbers | Z19706@237309 -> Z19795@137682 digest b82f67f4fdca6b30d54a4a5f30888b0a76743cad7a46b25d202934091a7e1a89 *)
+let body_Z19706_multiply_rational_numbers : expr =
+  ERecord 19677 [({ key_owner = Some 19677; key_index = 1 }, ECall 16728 [ECall 19717 [EArg 0]; ECall 19717 [EArg 1]]); ({ key_owner = Some 19677; key_index = 2 }, ECall 13539 [ECall 19722 [EArg 0]; ECall 19722 [EArg 1]]); ({ key_owner = Some 19677; key_index = 3 }, ECall 13539 [ECall 19724 [EArg 0]; ECall 19724 [EArg 1]])]
+
 (* Z19708 divide rational numbers | Z19708@184899 -> Z19709@137596 digest 47c437916d57f214008508e33c9ab692d92fd2dda03aa05414a7fb0ba516e1ca *)
 let body_Z19708_divide_rational_numbers : expr =
   ECall 19706 [EArg 0; ECall 19711 [EArg 1]]
 
-(* Z19711 multiplicative inverse of Rational number | Z19711@261256 -> Z19716@217692 digest 64494ea08db1c578a1e47271217ddbf3ea8a55f31ead5c81b5720d34c54d9533 *)
+(* Z19711 multiplicative inverse of Rational number | Z19711@261256 -> Z19743@275991 digest 0afae06ee62dd70d944a31d457cfa917de5cd8d7e6bd78cb83996eb47eb5f79e *)
 let body_Z19711_multiplicative_inverse_of_rational_number : expr =
-  ECall 19708 [EValue (VRecord 19677 [({ key_owner = Some 19677; key_index = 1 }, VFunc 16660); ({ key_owner = Some 19677; key_index = 2 }, VNat 1); ({ key_owner = Some 19677; key_index = 3 }, VNat 1)]); EArg 0]
+  ERecord 19677 [({ key_owner = Some 19677; key_index = 1 }, ECall 19717 [EArg 0]); ({ key_owner = Some 19677; key_index = 2 }, ECall 19724 [EArg 0]); ({ key_owner = Some 19677; key_index = 3 }, ECall 19722 [EArg 0])]
 
 (* Z19717 sign of rational number | Z19717@214367 -> Z19778@149267 digest 3c5fb0e191cbc1277a671d922e4c82dc4236523d3e6dcdd912ec2eec7a0a1c46 *)
 let body_Z19717_sign_of_rational_number : expr =
@@ -1510,9 +1558,9 @@ let body_Z19736_max_of_rational_numbers : expr =
 let body_Z19740_min_of_rational_numbers : expr =
   ECall 802 [ECall 19753 [EArg 0; EArg 1]; EArg 0; EArg 1]
 
-(* Z19744 Integer as Rational number | Z19744@194864 -> Z25437@194861 digest 6aa0a2b132d78c5238af9fe7f13557adb1a53a5c40e65c35ec01f1e20ce7adc6 *)
+(* Z19744 Integer as Rational number | Z19744@194864 -> Z19747@154917 digest 7a11530bbafb950dcdde9ab808d9ceaeccbf943cdf9f4baf9ce4014e66fc877b *)
 let body_Z19744_integer_as_rational_number : expr =
-  ECall 19854 [EArg 0; EValue (VNat 1)]
+  ERecord 19677 [({ key_owner = Some 19677; key_index = 1 }, ECall 17105 [EArg 0]); ({ key_owner = Some 19677; key_index = 2 }, ECall 17144 [EArg 0]); ({ key_owner = Some 19677; key_index = 3 }, EValue (VNat 1))]
 
 (* Z19751 Greater than (rational numbers) | Z19751@184886 -> Z24427@184876 digest 4523a04722fb0ede447ab39638d5905dadf860773b832d77552a4c9cab294c1c *)
 let body_Z19751_greater_than_rational_numbers : expr =
@@ -1542,6 +1590,10 @@ let body_Z19806_is_rational_number_an_integer : expr =
 let body_Z19814_nearest_rational_with_specified_denominator : expr =
   ECall 19854 [ECall 19841 [ECall 19826 [EArg 0; EArg 1]]; EArg 1]
 
+(* Z19826 multiply rational by natural number | Z19826@236473 -> Z19830@137801 digest 3ee111d360914c49ca910c1f6b510ef2e0b491ee816f7b7c728bcf921804ad68 *)
+let body_Z19826_multiply_rational_by_natural_number : expr =
+  ERecord 19677 [({ key_owner = Some 19677; key_index = 1 }, ECall 19717 [EArg 0]); ({ key_owner = Some 19677; key_index = 2 }, ECall 13539 [ECall 19722 [EArg 0]; EArg 1]); ({ key_owner = Some 19677; key_index = 3 }, ECall 19724 [EArg 0])]
+
 (* Z19827 Rational number to string | Z19827@296359 -> Z19865@296360 digest 65c48dde238c34e5ad62c68c2ceaf892b8cffd48b3bcadaef2c457720c69b41a *)
 let body_Z19827_rational_number_to_string : expr =
   ECall 19858 [ECall 19717 [EArg 0]; ECall 19733 [EArg 0]; ECall 19862 [EArg 0]]
@@ -1554,68 +1606,22 @@ let body_Z19833_average_of_two_rationals : expr =
 let body_Z19841_rational_to_nearest_integer_even_integer_tiebreak : expr =
   ECall 19682 [ECall 27705 [EArg 0; EValue (VRecord 16683 [({ key_owner = Some 16683; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16661)]); ({ key_owner = Some 16683; key_index = 2 }, VNat 0)])]]
 
-(* Z19858 format [sign, numerator, denominator] as string | Z19858@271980 -> Z34731@271979 digest 1fda1c1d9e3a84ee53c77bae339fc703f1272c40b8dfbfde720e6618dc6ca39b *)
-let body_Z19858_format_sign_numerator_denominator_as_string : expr =
-  ECall 21394 [ECall 810 [ECall 802 [ECall 16667 [EArg 0; EValue (VFunc 16662)]; EValue (VText [8722]); EValue (VText [])]; ECall 810 [ECall 13713 [EArg 1]; ECall 810 [EValue (VText [47]); ECall 810 [ECall 13713 [EArg 2]; EValue (VList [])]]]]]
+(* Z19848 rational from integer numerator and denominator | Z19848@271976 -> Z34729@271975 digest b6331c1d69c3bbe56ea8493b4ded8846f0252a3e6c1c52aa64e95182f8536bb1 *)
+let body_Z19848_rational_from_integer_numerator_and_denominator : expr =
+  ERecord 19677 [({ key_owner = Some 19677; key_index = 1 }, ECall 16728 [ECall 17105 [EArg 0]; ECall 17105 [EArg 1]]); ({ key_owner = Some 19677; key_index = 2 }, ECall 17144 [EArg 0]); ({ key_owner = Some 19677; key_index = 3 }, ECall 17144 [EArg 1])]
 
-(* Z19862 denominator of unsimplified rational number | Z19862@138924 -> Z19863@137878 digest b88ea1c3ee54c5d36358dfe9145d3e06da2c0086e9ba69e3f08f701bdf303be9 *)
-let body_Z19862_denominator_of_unsimplified_rational_number : expr =
-  ECall 803 [EValue (VRecord 39 [({ key_owner = Some 39; key_index = 1 }, VText [90; 49; 57; 54; 55; 55; 75; 51])]); EArg 0]
-
-(* Z19866 string to rational number | Z19866@261844 -> Z19899@138311 digest a245afa49021f7416fe95a6901c16190cf04392dca13c0791ce4a70442ad395d *)
-let body_Z19866_string_to_rational_number : expr =
-  ECall 19896 [ECall 19901 [EArg 0]; ECall 19886 [EArg 0]]
-
-(* Z19892 same Rational number object | Z19892@212163 -> Z27636@212162 digest 959755b2ec0e0edb2f3c73d3292eee9cdbd699e0ec419b4c45e269d48ceafec1 *)
-let body_Z19892_same_rational_number_object : expr =
-  ECall 802 [ECall 19108 [EArg 0; EValue (VRecord 39 [({ key_owner = Some 39; key_index = 1 }, VText [90; 49; 57; 54; 55; 55; 75; 49])]); EArg 1]; ECall 802 [ECall 19108 [EArg 0; EValue (VRecord 39 [({ key_owner = Some 39; key_index = 1 }, VText [90; 49; 57; 54; 55; 55; 75; 51])]); EArg 1]; ECall 19108 [EArg 0; EValue (VRecord 39 [({ key_owner = Some 39; key_index = 1 }, VText [90; 49; 57; 54; 55; 55; 75; 50])]); EArg 1]; EValue (VBool false)]; EValue (VBool false)]
-
-(* Z19901 sign of string representing rational number | Z19901@223144 -> Z19909@154695 digest afb2bc0cb851ab3125a0f2ed6419b4eee2a906701800df56deed7f3a4619cf80 *)
-let body_Z19901_sign_of_string_representing_rational_number : expr =
-  ECall 19565 [ECall 10184 [ECall 10070 [EArg 0; EValue (VText [45])]; ECall 10070 [EArg 0; EValue (VText [8722])]]; EValue (VFunc 16662); ECall 10615 [EArg 0; EValue (VText [48])]; EValue (VFunc 16661); EValue (VFunc 16660)]
-
-(* Z19914 Are rational numbers additive inverses? | Z19914@138351 -> Z19921@138345 digest 26c4bd2d07412582d99391b06ea3b686da5d4a7ca6c699d22eb529114ec4bfcb *)
-let body_Z19914_are_rational_numbers_additive_inverses : expr =
-  ECall 19922 [ECall 19679 [EArg 0; EArg 1]]
-
-(* Z19922 Is rational number 0 | Z19922@237015 -> Z19930@138342 digest 417881ef266c3becb59de684d369b876e848eeb44d57fa03335f82da45f18ca3 *)
-let body_Z19922_is_rational_number_0 : expr =
-  ECall 13522 [ECall 19733 [EArg 0]; EValue (VNat 0)]
-
-(* Z19931 Are rational numbers multiplicative inverse? | Z19931@242456 -> Z30685@236809 digest dda47b96ce20fff834ffe1781cf5522b69903b47417e643f9ef0af048c91c811 *)
-let body_Z19931_are_rational_numbers_multiplicative_inverse : expr =
-  ECall 25200 [ECall 19706 [EArg 0; EArg 1]]
-
-(* Z19952 Rational number as items of continued frac | Z19952@242448 -> Z31125@242447 digest 1aee5f35a67bf07e4e54b664f749c84aaefb9c69499e2dd5a30795d70668d3fd *)
-let body_Z19952_rational_number_as_items_of_continued_frac : expr =
-  ECall 19565 [ECall 21714 [EArg 0]; ECall 19952 [ECall 21692 [EArg 0]]; ECall 19806 [EArg 0]; ECall 810 [ECall 17144 [ECall 19682 [EArg 0]]; EValue (VList [])]; ECall 810 [ECall 17144 [ECall 19682 [EArg 0]]; ECall 19952 [ECall 19711 [ECall 19699 [EArg 0; ECall 19744 [ECall 19682 [EArg 0]]]]]]]
-
-(* Z19967 complementary probability | Z19967@237067 -> Z19968@138462 digest db67bae286ae4fbdd55d6b184fb245d10313ebc13207fd3d7fa4061d48f16e00 *)
-let body_Z19967_complementary_probability : expr =
-  ECall 19699 [EValue (VRecord 19677 [({ key_owner = Some 19677; key_index = 1 }, VFunc 16660); ({ key_owner = Some 19677; key_index = 2 }, VNat 1); ({ key_owner = Some 19677; key_index = 3 }, VNat 1)]); EArg 0]
-
-(* Z20000 Bayes' theorem conditional probability P(A|B) | Z20000@265916 -> Z20001@152585 digest ed8ea54d996a5dcc1a06b065c96e574bbdfe229207d3964a5c817f6abd12415f *)
-let body_Z20000_bayes_theorem_conditional_probability_p_a_b : expr =
-  ECall 19708 [ECall 19706 [EArg 0; EArg 1]; EArg 2]
-
-(* Z20006 rational modulo | Z20006@272141 -> Z34745@272140 digest bf28980b036a6c6cd9087599355cc265ae82da445dfe4b31e09984282ecbd103 *)
-let body_Z20006_rational_modulo : expr =
-  ECall 802 [ECall 16667 [ECall 19717 [EArg 0]; ECall 19717 [EArg 1]]; ECall 802 [ECall 19753 [ECall 21692 [EArg 0]; ECall 21692 [EArg 1]]; EArg 0; ECall 20006 [ECall 19699 [EArg 0; EArg 1]; EArg 1]]; ECall 19694 [ECall 20006 [EArg 0; ECall 19694 [EArg 1]]]]
-
-(* Z20020 sort rational numbers | Z20020@158677 -> Z34746@272143 digest f1320535cb2e5d6ee969829f759a31e7cd0f5b7e484d2b219a2a12f3d9eef2c0 *)
-let body_Z20020_sort_rational_numbers : expr =
-  ECall 27612 [EArg 0; EValue (VFunc 19753)]
-
-(* Z20032 floor of rational number | Z20032@277014 -> Z20050@138969 digest fb0fe65ef255aa6e5b7492d109c141e218accd5aeadc0a0195a164f8fe799743 *)
-let body_Z20032_floor_of_rational_number : expr =
-  ECall 13546 [ECall 19722 [EArg 0]; ECall 19724 [EArg 0]]
-
-(* Z20041 Wikidata item reference ID string | Z20041@185963 -> Z20043@138932 digest 26a41560a4a3aeb9500410600f0caac56b87e142e3bc104c141542da49232039 *)
-let body_Z20041_wikidata_item_reference_id_string : expr =
-  ECall 803 [EValue (VRecord 39 [({ key_owner = Some 39; key_index = 1 }, VText [90; 54; 48; 57; 49; 75; 49])]); EArg 0]
+(* Z19854 simplified rational from Z numerator, denominator | Z19854@271978 -> Z34730@271977 digest 2385e9c17976448ea02cc1a1bc7ca49f940d2cff19e8d693d618097a51e0f49a *)
+let body_Z19854_simplified_rational_from_z_numerator_denominator : expr =
+  ECall 20112 [ERecord 19677 [({ key_owner = Some 19677; key_index = 1 }, ECall 17105 [EArg 0]); ({ key_owner = Some 19677; key_index = 2 }, ECall 17144 [EArg 0]); ({ key_owner = Some 19677; key_index = 3 }, EArg 1)]]
 
 let part_policy (fid:zid) : Tot (option expr) =
   match fid with
+  | 15977 -> Some body_Z15977_return_grammatical_number_for_an_integer_and_language
+  | 15982 -> Some body_Z15982_grammatical_number_for_languages_with_only_singular_and_plur
+  | 15991 -> Some body_Z15991_code_point_prefix
+  | 15996 -> Some body_Z15996_first_n_code_points
+  | 16000 -> Some body_Z16000_igbo_month_name_in_igbo
+  | 16012 -> Some body_Z16012_grammatical_number_for_languages_with_singular_dual_and_plur
   | 16015 -> Some body_Z16015_grammatical_number_for_languages_with_singular_paucal_2_5_an
   | 16085 -> Some body_Z16085_croatian_cardinal
   | 16136 -> Some body_Z16136_following_month
@@ -1627,6 +1633,7 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 16255 -> Some body_Z16255_month_number_to_month
   | 16272 -> Some body_Z16272_twelve_months
   | 16273 -> Some body_Z16273_monolingual_text_in_specified_language_from_multilingual_tex
+  | 16277 -> Some body_Z16277_first_monolingual_text_in_specified_language
   | 16289 -> Some body_Z16289_month_is_in_list
   | 16293 -> Some body_Z16293_n_months_before_month
   | 16299 -> Some body_Z16299_previous_month
@@ -1704,6 +1711,7 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 17053 -> Some body_Z17053_boolean_to_sign
   | 17065 -> Some body_Z17065_boolean_to_natural_number
   | 17073 -> Some body_Z17073_vietnamese_cardinal
+  | 17101 -> Some body_Z17101_natural_number_to_integer
   | 17105 -> Some body_Z17105_sign_of_integer
   | 17111 -> Some body_Z17111_subtract_an_integer
   | 17120 -> Some body_Z17120_multiply_integers
@@ -1728,6 +1736,7 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 17254 -> Some body_Z17254_integers_have_the_same_absolute_magnitude
   | 17263 -> Some body_Z17263_natural_number_exponentiation_of_integers
   | 17267 -> Some body_Z17267_negate_natural_number_to_integer
+  | 17291 -> Some body_Z17291_floor_divide_integers
   | 17301 -> Some body_Z17301_ordered_pair_of_natural_numbers_representing_integer
   | 17307 -> Some body_Z17307_integer_represented_by_ordered_pair_of_natural_numbers
   | 17315 -> Some body_Z17315_subtract_natural_numbers_as_integer
@@ -1979,9 +1988,12 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 19654 -> Some body_Z19654_add_chars_every_n_chars
   | 19658 -> Some body_Z19658_convert_a_language_object_to_a_russian_adverb
   | 19661 -> Some body_Z19661_echo_string
+  | 19679 -> Some body_Z19679_add_rational_numbers
+  | 19682 -> Some body_Z19682_truncate_rational_number
   | 19686 -> Some body_Z19686_same_rational_number
   | 19694 -> Some body_Z19694_negate_rational_number
   | 19699 -> Some body_Z19699_subtract_rational_numbers
+  | 19706 -> Some body_Z19706_multiply_rational_numbers
   | 19708 -> Some body_Z19708_divide_rational_numbers
   | 19711 -> Some body_Z19711_multiplicative_inverse_of_rational_number
   | 19717 -> Some body_Z19717_sign_of_rational_number
@@ -1998,22 +2010,10 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 19800 -> Some body_Z19800_limit_denominator
   | 19806 -> Some body_Z19806_is_rational_number_an_integer
   | 19814 -> Some body_Z19814_nearest_rational_with_specified_denominator
+  | 19826 -> Some body_Z19826_multiply_rational_by_natural_number
   | 19827 -> Some body_Z19827_rational_number_to_string
   | 19833 -> Some body_Z19833_average_of_two_rationals
   | 19841 -> Some body_Z19841_rational_to_nearest_integer_even_integer_tiebreak
-  | 19858 -> Some body_Z19858_format_sign_numerator_denominator_as_string
-  | 19862 -> Some body_Z19862_denominator_of_unsimplified_rational_number
-  | 19866 -> Some body_Z19866_string_to_rational_number
-  | 19892 -> Some body_Z19892_same_rational_number_object
-  | 19901 -> Some body_Z19901_sign_of_string_representing_rational_number
-  | 19914 -> Some body_Z19914_are_rational_numbers_additive_inverses
-  | 19922 -> Some body_Z19922_is_rational_number_0
-  | 19931 -> Some body_Z19931_are_rational_numbers_multiplicative_inverse
-  | 19952 -> Some body_Z19952_rational_number_as_items_of_continued_frac
-  | 19967 -> Some body_Z19967_complementary_probability
-  | 20000 -> Some body_Z20000_bayes_theorem_conditional_probability_p_a_b
-  | 20006 -> Some body_Z20006_rational_modulo
-  | 20020 -> Some body_Z20020_sort_rational_numbers
-  | 20032 -> Some body_Z20032_floor_of_rational_number
-  | 20041 -> Some body_Z20041_wikidata_item_reference_id_string
+  | 19848 -> Some body_Z19848_rational_from_integer_numerator_and_denominator
+  | 19854 -> Some body_Z19854_simplified_rational_from_z_numerator_denominator
   | _ -> None

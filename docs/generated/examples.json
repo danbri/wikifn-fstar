@@ -1,7 +1,7 @@
 {
   "generated": "scripts/check-engine-testers.js --examples",
   "note": "Arguments taken from Wikifunctions' own Z20 testers. status says what this engine did with them, so 'error' means the example is real and the engine cannot yet run it.",
-  "functions": 998,
+  "functions": 1002,
   "examples": {
     "Z10012": [
       {
@@ -34,6 +34,78 @@
         ],
         "expected": "kayak",
         "tester": "Z11028",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "Q1"
+        ],
+        "expected": "1Q",
+        "tester": "Z11214",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "Хакатон"
+        ],
+        "expected": "нотакаХ",
+        "tester": "Z15951",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "ვიკიპედია"
+        ],
+        "expected": "აიდეპიკივ",
+        "tester": "Z16043",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "Z1"
+        ],
+        "expected": "1Z",
+        "tester": "Z16826",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "P1"
+        ],
+        "expected": "1P",
+        "tester": "Z18328",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "L1"
+        ],
+        "expected": "1L",
+        "tester": "Z18329",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "K1"
+        ],
+        "expected": "1K",
+        "tester": "Z18330",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "POOL"
+        ],
+        "expected": "LOOP",
+        "tester": "Z29701",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "🏳️‍🌈🇦🇺👈🏾👆"
+        ],
+        "expected": "👆🏾👈🇺🇦🌈‍️🏳",
+        "tester": "Z30032",
         "status": "pass"
       }
     ],
@@ -138,6 +210,31 @@
         "expected": true,
         "tester": "Z16040",
         "status": "pass"
+      },
+      {
+        "args": [
+          "🤯🤔🤔😨",
+          "🤔🤔"
+        ],
+        "expected": true,
+        "tester": "Z21457",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "Andiamo tutti a casa di Pippo",
+          "tti a cas"
+        ],
+        "tester": "Z19124",
+        "status": "error"
+      },
+      {
+        "args": [
+          "hello world",
+          "world"
+        ],
+        "tester": "Z23232",
+        "status": "error"
       }
     ],
     "Z10079": [
@@ -236,6 +333,30 @@
         "expected": true,
         "tester": "Z10547",
         "status": "pass"
+      },
+      {
+        "args": [
+          "👨‍👩‍👧‍👦"
+        ],
+        "expected": false,
+        "tester": "Z10556",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "javaj"
+        ],
+        "expected": true,
+        "tester": "Z22835",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "Straw? No, too stupid. I put soot on warts."
+        ],
+        "expected": true,
+        "tester": "Z10573",
+        "status": "fail"
       }
     ],
     "Z10108": [
@@ -541,6 +662,27 @@
         ],
         "tester": "Z10256",
         "status": "error"
+      },
+      {
+        "args": [
+          "the quick brown fox jumps over the lazy dog"
+        ],
+        "tester": "Z18774",
+        "status": "error"
+      },
+      {
+        "args": [
+          "mIxEd CaSe"
+        ],
+        "tester": "Z22986",
+        "status": "error"
+      },
+      {
+        "args": [
+          "TEST CASES"
+        ],
+        "tester": "Z22987",
+        "status": "error"
       }
     ],
     "Z10257": [
@@ -746,6 +888,13 @@
         ],
         "tester": "Z12277",
         "status": "error"
+      },
+      {
+        "args": [
+          ""
+        ],
+        "tester": "Z12278",
+        "status": "error"
       }
     ],
     "Z10298": [
@@ -875,6 +1024,27 @@
         ],
         "tester": "Z10328",
         "status": "error"
+      },
+      {
+        "args": [
+          "Hello_World"
+        ],
+        "tester": "Z12396",
+        "status": "error"
+      },
+      {
+        "args": [
+          "my_string"
+        ],
+        "tester": "Z12443",
+        "status": "error"
+      },
+      {
+        "args": [
+          "foo bar baz"
+        ],
+        "tester": "Z25746",
+        "status": "error"
       }
     ],
     "Z10329": [
@@ -943,6 +1113,41 @@
         ],
         "tester": "Z10342",
         "status": "error"
+      },
+      {
+        "args": [
+          ""
+        ],
+        "tester": "Z10343",
+        "status": "error"
+      },
+      {
+        "args": [
+          " "
+        ],
+        "tester": "Z11345",
+        "status": "error"
+      },
+      {
+        "args": [
+          "ХАКАТОН"
+        ],
+        "tester": "Z16035",
+        "status": "error"
+      },
+      {
+        "args": [
+          "ГАЛьМІВНИЙ"
+        ],
+        "tester": "Z16036",
+        "status": "error"
+      },
+      {
+        "args": [
+          "П'ЯТЬ ТИСЯЧ"
+        ],
+        "tester": "Z16037",
+        "status": "error"
       }
     ],
     "Z10346": [
@@ -972,6 +1177,27 @@
           "Paris"
         ],
         "tester": "Z10351",
+        "status": "error"
+      },
+      {
+        "args": [
+          "WIKIFUNCTIONS"
+        ],
+        "tester": "Z10353",
+        "status": "error"
+      },
+      {
+        "args": [
+          "!"
+        ],
+        "tester": "Z11381",
+        "status": "error"
+      },
+      {
+        "args": [
+          "п'ять тисяч"
+        ],
+        "tester": "Z16038",
         "status": "error"
       }
     ],
@@ -1040,6 +1266,20 @@
           "quiche lorraine"
         ],
         "tester": "Z10369",
+        "status": "error"
+      },
+      {
+        "args": [
+          "capital"
+        ],
+        "tester": "Z10370",
+        "status": "error"
+      },
+      {
+        "args": [
+          "Planet_Earth"
+        ],
+        "tester": "Z10371",
         "status": "error"
       }
     ],
@@ -1150,6 +1390,20 @@
         ],
         "tester": "Z10480",
         "status": "error"
+      },
+      {
+        "args": [
+          "0.0.0.0"
+        ],
+        "tester": "Z10481",
+        "status": "error"
+      },
+      {
+        "args": [
+          "::1"
+        ],
+        "tester": "Z14224",
+        "status": "error"
       }
     ],
     "Z10539": [
@@ -1183,6 +1437,14 @@
           "ZAŻÓŁĆ GĘŚLĄ JAŹŃ"
         ],
         "tester": "Z10740",
+        "status": "error"
+      },
+      {
+        "args": [
+          "П'ЯТЬ ТИСЯЧ",
+          "п'ять тисяч"
+        ],
+        "tester": "Z16039",
         "status": "error"
       }
     ],
@@ -1315,6 +1577,15 @@
         "expected": true,
         "tester": "Z16042",
         "status": "pass"
+      },
+      {
+        "args": [
+          "🏳️‍🌈👈🏾🇦🇺👆",
+          "🇦🇺👆"
+        ],
+        "expected": true,
+        "tester": "Z31792",
+        "status": "pass"
       }
     ],
     "Z10627": [
@@ -1415,6 +1686,78 @@
         "expected": "ҷодуро",
         "tester": "Z10649",
         "status": "pass"
+      },
+      {
+        "args": [
+          "инсон",
+          "он"
+        ],
+        "expected": "инсонон",
+        "tester": "Z10650",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "форсӣ",
+          "и"
+        ],
+        "expected": "форсии",
+        "tester": "Z10655",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "китобҳо",
+          "и"
+        ],
+        "expected": "китобҳои",
+        "tester": "Z10656",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "одамӣ",
+          "он"
+        ],
+        "expected": "одамиён",
+        "tester": "Z10651",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "ҷоду",
+          "он"
+        ],
+        "expected": "ҷодувон",
+        "tester": "Z10652",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "парранда",
+          "он"
+        ],
+        "expected": "паррандагон",
+        "tester": "Z10653",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "мо",
+          "он"
+        ],
+        "expected": "моён",
+        "tester": "Z10654",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "китобҳо",
+          "ат"
+        ],
+        "expected": "китобҳоят",
+        "tester": "Z10657",
+        "status": "fail"
       }
     ],
     "Z10673": [
@@ -1474,6 +1817,20 @@
           "12345"
         ],
         "tester": "Z10701",
+        "status": "error"
+      },
+      {
+        "args": [
+          "QQ1"
+        ],
+        "tester": "Z10707",
+        "status": "error"
+      },
+      {
+        "args": [
+          "Q50"
+        ],
+        "tester": "Z36539",
         "status": "error"
       }
     ],
@@ -1596,6 +1953,38 @@
         "expected": "1.11.1",
         "tester": "Z10760",
         "status": "pass"
+      },
+      {
+        "args": [
+          "¨"
+        ],
+        "expected": "¨¨",
+        "tester": "Z10763",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "🙃"
+        ],
+        "expected": "🙃🙃",
+        "tester": "Z13184",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "The title is ⁧مدخل إلى ⁦C++⁩⁩ in Arabic. "
+        ],
+        "expected": "The title is ⁧مدخل إلى ⁦C++⁩⁩ in Arabic. The title is ⁧مدخل إلى ⁦C++⁩⁩ in Arabic. ",
+        "tester": "Z13185",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "‮hello world"
+        ],
+        "expected": "‮hello world‮hello world",
+        "tester": "Z13189",
+        "status": "pass"
       }
     ],
     "Z10761": [
@@ -1656,6 +2045,20 @@
         ],
         "tester": "Z10792",
         "status": "error"
+      },
+      {
+        "args": [
+          "0242-6870"
+        ],
+        "tester": "Z10793",
+        "status": "error"
+      },
+      {
+        "args": [
+          "0150-391X"
+        ],
+        "tester": "Z10794",
+        "status": "error"
       }
     ],
     "Z10770": [
@@ -1696,6 +2099,20 @@
           "he is a Greek Australian."
         ],
         "tester": "Z22524",
+        "status": "error"
+      },
+      {
+        "args": [
+          "борщ — суп"
+        ],
+        "tester": "Z27444",
+        "status": "error"
+      },
+      {
+        "args": [
+          "ijsselmeer"
+        ],
+        "tester": "Z30783",
         "status": "error"
       }
     ],
@@ -1776,6 +2193,83 @@
         ],
         "tester": "Z10860",
         "status": "error"
+      },
+      {
+        "args": [
+          "1234:5678:::9abc"
+        ],
+        "tester": "Z10861",
+        "status": "error"
+      },
+      {
+        "args": [
+          "127.0.0.1"
+        ],
+        "tester": "Z14225",
+        "status": "error"
+      },
+      {
+        "args": [
+          "::"
+        ],
+        "tester": "Z14266",
+        "status": "error"
+      },
+      {
+        "args": [
+          "2001:0DB8:85A3:0000:0000:8A2E:0370:7334"
+        ],
+        "tester": "Z14267",
+        "status": "error"
+      },
+      {
+        "args": [
+          "2001:0dg8:85a3:0000:0000:8a2e:0370:7334"
+        ],
+        "tester": "Z14268",
+        "status": "error"
+      },
+      {
+        "args": [
+          "2001:10db8:85a3:0000:0000:8a2e:0370:7334"
+        ],
+        "tester": "Z14269",
+        "status": "error"
+      },
+      {
+        "args": [
+          "2001:0db8:85a3:85a3:0000:0000:8a2e:0370:7334"
+        ],
+        "tester": "Z14270",
+        "status": "error"
+      },
+      {
+        "args": [
+          "2001:0DB8:85A3::0000:0000:8A2E:0370:7334"
+        ],
+        "tester": "Z14271",
+        "status": "error"
+      },
+      {
+        "args": [
+          "2000::1000:1000::1000"
+        ],
+        "tester": "Z14272",
+        "status": "error"
+      },
+      {
+        "args": [
+          "2001:0DB8:85A3:0000:8A2E:0370:7334"
+        ],
+        "tester": "Z14273",
+        "status": "error"
+      },
+      {
+        "args": [
+          "2001:0db8:85a3:0000:0000:8a2e:0370:"
+        ],
+        "tester": "Z14274",
+        "status": "error"
       }
     ],
     "Z10802": [
@@ -1825,6 +2319,14 @@
           "test"
         ],
         "tester": "Z10840",
+        "status": "error"
+      },
+      {
+        "args": [
+          "a😊b",
+          ","
+        ],
+        "tester": "Z10841",
         "status": "error"
       }
     ],
@@ -1919,6 +2421,38 @@
           "-3"
         ],
         "tester": "Z12517",
+        "status": "error"
+      },
+      {
+        "args": [
+          "-2",
+          "3"
+        ],
+        "tester": "Z12518",
+        "status": "error"
+      },
+      {
+        "args": [
+          "-2",
+          "-3"
+        ],
+        "tester": "Z12519",
+        "status": "error"
+      },
+      {
+        "args": [
+          "0.25",
+          "4"
+        ],
+        "tester": "Z12521",
+        "status": "error"
+      },
+      {
+        "args": [
+          "3",
+          "2"
+        ],
+        "tester": "Z27995",
         "status": "error"
       }
     ],
@@ -2075,6 +2609,20 @@
         ],
         "tester": "Z10905",
         "status": "error"
+      },
+      {
+        "args": [
+          "aVeryLongTextWithLotsOfWords"
+        ],
+        "tester": "Z19456",
+        "status": "error"
+      },
+      {
+        "args": [
+          "thisIs ATest"
+        ],
+        "tester": "Z20414",
+        "status": "error"
       }
     ],
     "Z10908": [
@@ -2168,6 +2716,118 @@
         ],
         "tester": "Z10934",
         "status": "error"
+      },
+      {
+        "args": [
+          "㐭"
+        ],
+        "tester": "Z10935",
+        "status": "error"
+      },
+      {
+        "args": [
+          "𪚥"
+        ],
+        "tester": "Z14832",
+        "status": "error"
+      },
+      {
+        "args": [
+          "𪨊"
+        ],
+        "tester": "Z14833",
+        "status": "error"
+      },
+      {
+        "args": [
+          "𫞄"
+        ],
+        "tester": "Z14834",
+        "status": "error"
+      },
+      {
+        "args": [
+          "𬎆"
+        ],
+        "tester": "Z14835",
+        "status": "error"
+      },
+      {
+        "args": [
+          "𮀔"
+        ],
+        "tester": "Z14836",
+        "status": "error"
+      },
+      {
+        "args": [
+          "𰚼"
+        ],
+        "tester": "Z14837",
+        "status": "error"
+      },
+      {
+        "args": [
+          "𱎼"
+        ],
+        "tester": "Z14838",
+        "status": "error"
+      },
+      {
+        "args": [
+          "𮹝"
+        ],
+        "tester": "Z14839",
+        "status": "error"
+      },
+      {
+        "args": [
+          "㇆"
+        ],
+        "tester": "Z14840",
+        "status": "error"
+      },
+      {
+        "args": [
+          "。"
+        ],
+        "tester": "Z14841",
+        "status": "error"
+      },
+      {
+        "args": [
+          "언"
+        ],
+        "tester": "Z14842",
+        "status": "error"
+      },
+      {
+        "args": [
+          "鿫"
+        ],
+        "tester": "Z14843",
+        "status": "error"
+      },
+      {
+        "args": [
+          "﨑"
+        ],
+        "tester": "Z14844",
+        "status": "error"
+      },
+      {
+        "args": [
+          "〇"
+        ],
+        "tester": "Z14845",
+        "status": "error"
+      },
+      {
+        "args": [
+          "𪛞"
+        ],
+        "tester": "Z14846",
+        "status": "error"
       }
     ],
     "Z10944": [
@@ -2197,6 +2857,34 @@
           ".,:?'-–—/()\"“”=+×@"
         ],
         "tester": "Z10949",
+        "status": "error"
+      },
+      {
+        "args": [
+          "a¬©§£€ b🙂🏠🖥️🍽️🇼"
+        ],
+        "tester": "Z10950",
+        "status": "error"
+      },
+      {
+        "args": [
+          "more   spaces"
+        ],
+        "tester": "Z10951",
+        "status": "error"
+      },
+      {
+        "args": [
+          "ABCDEÉFGHIJKLMNOPQRSTUVWXYZ"
+        ],
+        "tester": "Z10969",
+        "status": "error"
+      },
+      {
+        "args": [
+          "E T"
+        ],
+        "tester": "Z31856",
         "status": "error"
       }
     ],
@@ -2335,6 +3023,63 @@
         "expected": false,
         "tester": "Z10980",
         "status": "pass"
+      },
+      {
+        "args": [
+          "aaabbc",
+          "abcaba"
+        ],
+        "expected": true,
+        "tester": "Z10981",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "𐖗𐖛",
+          "𐖛𐖗"
+        ],
+        "expected": true,
+        "tester": "Z17019",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "𬾸𬮷",
+          "𬮸𬾷"
+        ],
+        "expected": false,
+        "tester": "Z17020",
+        "status": "pass"
+      }
+    ],
+    "Z10996": [
+      {
+        "args": [
+          2000
+        ],
+        "tester": "Z10997",
+        "status": "error"
+      },
+      {
+        "args": [
+          2100
+        ],
+        "tester": "Z10999",
+        "status": "error"
+      },
+      {
+        "args": [
+          1980
+        ],
+        "tester": "Z11000",
+        "status": "error"
+      },
+      {
+        "args": [
+          1999
+        ],
+        "tester": "Z11001",
+        "status": "error"
       }
     ],
     "Z11003": [
@@ -2428,6 +3173,20 @@
         ],
         "tester": "Z11046",
         "status": "error"
+      },
+      {
+        "args": [
+          "https://google.com/#about#other"
+        ],
+        "tester": "Z11047",
+        "status": "error"
+      },
+      {
+        "args": [
+          "https://google.com#"
+        ],
+        "tester": "Z11067",
+        "status": "error"
       }
     ],
     "Z11053": [
@@ -2470,6 +3229,14 @@
         ],
         "expected": "é",
         "tester": "Z11848",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "👨‍👩‍👧‍👦"
+        ],
+        "expected": "👦",
+        "tester": "Z14254",
         "status": "pass"
       }
     ],
@@ -2541,6 +3308,230 @@
         "expected": "boys",
         "tester": "Z11126",
         "status": "pass"
+      },
+      {
+        "args": [
+          "religion"
+        ],
+        "expected": "religions",
+        "tester": "Z32120",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "woman"
+        ],
+        "expected": "women",
+        "tester": "Z11092",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "child"
+        ],
+        "expected": "children",
+        "tester": "Z11093",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "Candy"
+        ],
+        "expected": "Candies",
+        "tester": "Z11113",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "scratch"
+        ],
+        "expected": "scratches",
+        "tester": "Z11114",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "wolf"
+        ],
+        "expected": "wolves",
+        "tester": "Z11116",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "species"
+        ],
+        "expected": "species",
+        "tester": "Z11117",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "goose"
+        ],
+        "expected": "geese",
+        "tester": "Z11119",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "thesis"
+        ],
+        "expected": "theses",
+        "tester": "Z11120",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "tooth"
+        ],
+        "expected": "teeth",
+        "tester": "Z11121",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "knife"
+        ],
+        "expected": "knives",
+        "tester": "Z11123",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "tomato"
+        ],
+        "expected": "tomatoes",
+        "tester": "Z11124",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "taxon"
+        ],
+        "expected": "taxa",
+        "tester": "Z11125",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "son-in-law"
+        ],
+        "expected": "sons-in-law",
+        "tester": "Z11128",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "soliloquy"
+        ],
+        "expected": "soliloquies",
+        "tester": "Z11144",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "man"
+        ],
+        "expected": "men",
+        "tester": "Z11183",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "bacterium"
+        ],
+        "expected": "bacteria",
+        "tester": "Z11186",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "harmonia"
+        ],
+        "expected": "harmoniai",
+        "tester": "Z11188",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "rationale"
+        ],
+        "expected": "rationalia",
+        "tester": "Z11189",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "stroma"
+        ],
+        "expected": "stromata",
+        "tester": "Z11190",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "varix"
+        ],
+        "expected": "varices",
+        "tester": "Z11191",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "encephalitis"
+        ],
+        "expected": "encephalitides",
+        "tester": "Z11192",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "news"
+        ],
+        "expected": "news",
+        "tester": "Z12387",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "attorney general"
+        ],
+        "expected": "attorneys general",
+        "tester": "Z12407",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "penis"
+        ],
+        "expected": "penises",
+        "tester": "Z17712",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "aircraft"
+        ],
+        "expected": "aircraft",
+        "tester": "Z25920",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "criterion"
+        ],
+        "expected": "criteria",
+        "tester": "Z32121",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "virus"
+        ],
+        "expected": "viruses",
+        "tester": "Z37819",
+        "status": "fail"
       }
     ],
     "Z11094": [
@@ -2575,6 +3566,46 @@
           "Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday"
         ],
         "tester": "Z11100",
+        "status": "error"
+      },
+      {
+        "args": [
+          "000",
+          "global population,\"7,000,000,000\",\"March 12, 2012\""
+        ],
+        "tester": "Z11106",
+        "status": "error"
+      },
+      {
+        "args": [
+          "\"March 12, 2012\"",
+          "global population,\"7,000,000,000\",\"March 12, 2012\""
+        ],
+        "tester": "Z11107",
+        "status": "error"
+      },
+      {
+        "args": [
+          "Tuesday",
+          "Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday"
+        ],
+        "tester": "Z11108",
+        "status": "error"
+      },
+      {
+        "args": [
+          "\"Tuesday\"",
+          "Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday"
+        ],
+        "tester": "Z11109",
+        "status": "error"
+      },
+      {
+        "args": [
+          "March 12, 2012",
+          "global population,\"7,000,000,000\",\"March 12, 2012\""
+        ],
+        "tester": "Z11465",
         "status": "error"
       }
     ],
@@ -2631,6 +3662,62 @@
           "0"
         ],
         "tester": "Z11133",
+        "status": "error"
+      },
+      {
+        "args": [
+          "1.0"
+        ],
+        "tester": "Z11134",
+        "status": "error"
+      },
+      {
+        "args": [
+          "-0"
+        ],
+        "tester": "Z11136",
+        "status": "error"
+      },
+      {
+        "args": [
+          "¾"
+        ],
+        "tester": "Z11137",
+        "status": "error"
+      },
+      {
+        "args": [
+          "-5"
+        ],
+        "tester": "Z11138",
+        "status": "error"
+      },
+      {
+        "args": [
+          "0x123"
+        ],
+        "tester": "Z11255",
+        "status": "error"
+      },
+      {
+        "args": [
+          "0_1"
+        ],
+        "tester": "Z12275",
+        "status": "error"
+      },
+      {
+        "args": [
+          "-3"
+        ],
+        "tester": "Z13456",
+        "status": "error"
+      },
+      {
+        "args": [
+          "099"
+        ],
+        "tester": "Z13877",
         "status": "error"
       }
     ],
@@ -2782,6 +3869,23 @@
         "expected": "a ",
         "tester": "Z11174",
         "status": "pass"
+      },
+      {
+        "args": [
+          "asdf",
+          ""
+        ],
+        "expected": "asdf",
+        "tester": "Z12253",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "a",
+          "aa"
+        ],
+        "tester": "Z11176",
+        "status": "error"
       }
     ],
     "Z11178": [
@@ -2887,6 +3991,174 @@
           "CC[C@H](C)[C@H]1C(=O)N[C@H](C(=O)N[C@H](C(=O)N[C@@H](CSSC[C@@H](C(=O)N[C@H](C(=O)N1)CC2=CC=C(C=C2)O)N)C(=O)N3CCC[C@H]3C(=O)N[C@@H](CC(C)C)C(=O)NCC(=O)N)CC(=O)N)CCC(=O)N"
         ],
         "tester": "Z11212",
+        "status": "error"
+      },
+      {
+        "args": [
+          "CCC(C)C1C(=O)NC(C(=O)NC(C(=O)NC(CSSCC(C(=O)NC(C(=O)N1)CC2=CC=C(C=C2)O)N)C(=O)N3CCCC3C(=O)NC(CC(C)C)C(=O)NCC(=O)N)CC(=O)N)CCC(=O)N"
+        ],
+        "tester": "Z11213",
+        "status": "error"
+      },
+      {
+        "args": [
+          "[Ti++++]"
+        ],
+        "tester": "Z11801",
+        "status": "error"
+      },
+      {
+        "args": [
+          "CCC=(O)O"
+        ],
+        "tester": "Z11803",
+        "status": "error"
+      },
+      {
+        "args": [
+          "F\\C=CF"
+        ],
+        "tester": "Z11804",
+        "status": "error"
+      },
+      {
+        "args": [
+          "CC1CCC/C(C)=C1/C=C/C(C)=C/C=C/C(C)=C/C=C/C=C(C)/C=C/C=C(C)/C=C/C2=C(C)/CCCC2(C)C"
+        ],
+        "tester": "Z11805",
+        "status": "error"
+      },
+      {
+        "args": [
+          "[2H]C(Cl)(Cl)Cl"
+        ],
+        "tester": "Z11806",
+        "status": "error"
+      },
+      {
+        "args": [
+          "CC(C)(O1)C[C@@H](O)[C@@]1(O2)[C@@H](C)[C@@H]3CC=C4[C@]3(C2)C(=O)C[C@H]5[C@H]4CC[C@@H](C6)[C@]5(C)Cc(n7)c6nc(C[C@@]89(C))c7C[C@@H]8CC[C@@H]%10[C@@H]9C[C@@H](O)[C@@]%11(C)C%10=C[C@H](O%12)[C@]%11(O)[C@H](C)[C@]%12(O%13)[C@H](O)C[C@@]%13(C)CO"
+        ],
+        "tester": "Z11807",
+        "status": "error"
+      },
+      {
+        "args": [
+          "[Nc]"
+        ],
+        "tester": "Z11809",
+        "status": "error"
+      },
+      {
+        "args": [
+          "CC[C@H](O1)CC[C@@]12CCCO2"
+        ],
+        "tester": "Z11810",
+        "status": "error"
+      },
+      {
+        "args": [
+          "[O--]"
+        ],
+        "tester": "Z11820",
+        "status": "error"
+      },
+      {
+        "args": [
+          "C=1CC1"
+        ],
+        "tester": "Z11825",
+        "status": "error"
+      },
+      {
+        "args": [
+          "C=1CC=1"
+        ],
+        "tester": "Z11826",
+        "status": "error"
+      },
+      {
+        "args": [
+          "C=1CC-1"
+        ],
+        "tester": "Z11827",
+        "status": "error"
+      },
+      {
+        "args": [
+          "[Cl(H)]"
+        ],
+        "tester": "Z11912",
+        "status": "error"
+      },
+      {
+        "args": [
+          "[Cl(]H)"
+        ],
+        "tester": "Z11913",
+        "status": "error"
+      },
+      {
+        "args": [
+          "[Cl[H]]"
+        ],
+        "tester": "Z11914",
+        "status": "error"
+      },
+      {
+        "args": [
+          "ICONS"
+        ],
+        "tester": "Z11915",
+        "status": "error"
+      },
+      {
+        "args": [
+          "IKONS"
+        ],
+        "tester": "Z11916",
+        "status": "error"
+      },
+      {
+        "args": [
+          "C2CCCC1C2CCCC1"
+        ],
+        "tester": "Z11922",
+        "status": "error"
+      },
+      {
+        "args": [
+          "C1CCCC3C1CCCC3"
+        ],
+        "tester": "Z11923",
+        "status": "error"
+      },
+      {
+        "args": [
+          "OC(Cl)=[C@AL1]=C(C)F"
+        ],
+        "tester": "Z11924",
+        "status": "error"
+      },
+      {
+        "args": [
+          "O=C[As@TB20](F)(Cl)(Br)S"
+        ],
+        "tester": "Z11925",
+        "status": "error"
+      },
+      {
+        "args": [
+          "C0CCCCC0C0CCCCC0"
+        ],
+        "tester": "Z11928",
+        "status": "error"
+      },
+      {
+        "args": [
+          "c12c3c4c5c1c1c6c7c2c2c8c3c3c9c4c4c%10c5c5c1c1c6c6c%11c7c2c2c7c8c3c3c8c9c4c4c9c%10c5c5c1c1c6c6c%11c2c2c7c3c3c8c4c4c9c5c1c1c6c2c3c41"
+        ],
+        "tester": "Z11943",
         "status": "error"
       }
     ],
@@ -3201,6 +4473,30 @@
         "expected": "whose",
         "tester": "Z14721",
         "status": "pass"
+      },
+      {
+        "args": [
+          "her"
+        ],
+        "expected": "hers",
+        "tester": "Z14722",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "him"
+        ],
+        "expected": "his",
+        "tester": "Z14723",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "he"
+        ],
+        "expected": "his",
+        "tester": "Z14724",
+        "status": "pass"
       }
     ],
     "Z11306": [
@@ -3234,6 +4530,38 @@
         ],
         "expected": false,
         "tester": "Z16999",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "i"
+        ],
+        "expected": true,
+        "tester": "Z17000",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "a"
+        ],
+        "expected": true,
+        "tester": "Z17001",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "A"
+        ],
+        "expected": true,
+        "tester": "Z17002",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "U"
+        ],
+        "expected": true,
+        "tester": "Z17003",
         "status": "pass"
       }
     ],
@@ -3926,6 +5254,28 @@
         ],
         "tester": "Z11547",
         "status": "error"
+      },
+      {
+        "args": [
+          "aaaaaaaa",
+          "aa",
+          "L",
+          "I",
+          "R"
+        ],
+        "tester": "Z13135",
+        "status": "error"
+      },
+      {
+        "args": [
+          "aaabaaa",
+          "aa",
+          "L",
+          "I",
+          "R"
+        ],
+        "tester": "Z13136",
+        "status": "error"
       }
     ],
     "Z11501": [
@@ -3987,6 +5337,81 @@
           "ending"
         ],
         "tester": "Z11508",
+        "status": "error"
+      },
+      {
+        "args": [
+          "",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8"
+        ],
+        "tester": "Z13129",
+        "status": "error"
+      },
+      {
+        "args": [
+          "a_",
+          "a",
+          "_",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "tester": "Z13131",
+        "status": "error"
+      },
+      {
+        "args": [
+          "_a",
+          "a",
+          "_",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "tester": "Z13132",
+        "status": "error"
+      },
+      {
+        "args": [
+          "aaaaaaaa",
+          "aa",
+          "_",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "tester": "Z13133",
+        "status": "error"
+      },
+      {
+        "args": [
+          "aaaaa",
+          "aa",
+          "_",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "tester": "Z13134",
         "status": "error"
       }
     ],
@@ -4107,6 +5532,22 @@
         "status": "error"
       }
     ],
+    "Z11534": [
+      {
+        "args": [
+          65
+        ],
+        "tester": "Z11535",
+        "status": "error"
+      },
+      {
+        "args": [
+          128512
+        ],
+        "tester": "Z11537",
+        "status": "error"
+      }
+    ],
     "Z11538": [
       {
         "args": [
@@ -4199,6 +5640,14 @@
         ],
         "expected": true,
         "tester": "Z11562",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "ebeulion"
+        ],
+        "expected": true,
+        "tester": "Z11563",
         "status": "pass"
       }
     ],
@@ -4398,6 +5847,14 @@
         "expected": "usably",
         "tester": "Z13295",
         "status": "fail"
+      },
+      {
+        "args": [
+          "full"
+        ],
+        "expected": "fully",
+        "tester": "Z13296",
+        "status": "fail"
       }
     ],
     "Z11660": [
@@ -4445,6 +5902,34 @@
           "({)}"
         ],
         "tester": "Z11689",
+        "status": "error"
+      },
+      {
+        "args": [
+          "((){}{([])[][]}{})"
+        ],
+        "tester": "Z13475",
+        "status": "error"
+      },
+      {
+        "args": [
+          "([]{[})(){}]"
+        ],
+        "tester": "Z13476",
+        "status": "error"
+      },
+      {
+        "args": [
+          "({[(ab[c])<>]})"
+        ],
+        "tester": "Z14560",
+        "status": "error"
+      },
+      {
+        "args": [
+          ""
+        ],
+        "tester": "Z14561",
         "status": "error"
       }
     ],
@@ -4522,6 +6007,23 @@
         "expected": false,
         "tester": "Z11699",
         "status": "pass"
+      },
+      {
+        "args": [
+          "Hello, world!",
+          "abcdefghijklmnopqrstuvwxyz"
+        ],
+        "expected": false,
+        "tester": "Z13348",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "Да и Христиану Ивановичу затруднительно было б с ними изъясняться",
+          "абвгґдеєжзиіїйклмнопрстуфхцчшщьюяАБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯ'"
+        ],
+        "tester": "Z16045",
+        "status": "error"
       }
     ],
     "Z11729": [
@@ -4555,6 +6057,22 @@
         ],
         "expected": "Bodens",
         "tester": "Z11738",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "Hotel"
+        ],
+        "expected": "Hotels",
+        "tester": "Z11767",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "Euro"
+        ],
+        "expected": "Euros",
+        "tester": "Z11768",
         "status": "pass"
       }
     ],
@@ -4603,6 +6121,27 @@
           "Sohn"
         ],
         "tester": "Z11757",
+        "status": "error"
+      },
+      {
+        "args": [
+          "Frucht"
+        ],
+        "tester": "Z11758",
+        "status": "error"
+      },
+      {
+        "args": [
+          "Angst"
+        ],
+        "tester": "Z11759",
+        "status": "error"
+      },
+      {
+        "args": [
+          "Sau"
+        ],
+        "tester": "Z11760",
         "status": "error"
       }
     ],
@@ -4743,6 +6282,78 @@
         "expected": "speedier",
         "tester": "Z12202",
         "status": "fail"
+      },
+      {
+        "args": [
+          "big"
+        ],
+        "expected": "bigger",
+        "tester": "Z12213",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "hot"
+        ],
+        "expected": "hotter",
+        "tester": "Z12214",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "gooey"
+        ],
+        "expected": "gooier",
+        "tester": "Z19356",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "bluey"
+        ],
+        "expected": "bluier",
+        "tester": "Z19358",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "plaguy"
+        ],
+        "expected": "plaguier",
+        "tester": "Z19359",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "treey"
+        ],
+        "expected": "treeier",
+        "tester": "Z19362",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "chequy"
+        ],
+        "expected": "chequier",
+        "tester": "Z19367",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "horsey"
+        ],
+        "expected": "horsier",
+        "tester": "Z19390",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "roguey"
+        ],
+        "expected": "roguier",
+        "tester": "Z19392",
+        "status": "fail"
       }
     ],
     "Z11811": [
@@ -4840,6 +6451,30 @@
         "expected": "Pinguinen",
         "tester": "Z11837",
         "status": "pass"
+      },
+      {
+        "args": [
+          "Bauer"
+        ],
+        "expected": "Bauern",
+        "tester": "Z11735",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "Leben"
+        ],
+        "expected": "Leben",
+        "tester": "Z11769",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "Kürzel"
+        ],
+        "expected": "Kürzeln",
+        "tester": "Z11838",
+        "status": "fail"
       }
     ],
     "Z11839": [
@@ -4953,6 +6588,27 @@
         ],
         "tester": "Z11859",
         "status": "error"
+      },
+      {
+        "args": [
+          "carbon"
+        ],
+        "tester": "Z11860",
+        "status": "error"
+      },
+      {
+        "args": [
+          "CO"
+        ],
+        "tester": "Z12799",
+        "status": "error"
+      },
+      {
+        "args": [
+          "Co"
+        ],
+        "tester": "Z12800",
+        "status": "error"
       }
     ],
     "Z11863": [
@@ -4987,6 +6643,27 @@
         "expected": false,
         "tester": "Z11869",
         "status": "pass"
+      },
+      {
+        "args": [
+          "A"
+        ],
+        "tester": "Z11864",
+        "status": "error"
+      },
+      {
+        "args": [
+          "o"
+        ],
+        "tester": "Z11870",
+        "status": "error"
+      },
+      {
+        "args": [
+          "u"
+        ],
+        "tester": "Z11873",
+        "status": "error"
       }
     ],
     "Z11874": [
@@ -5069,6 +6746,27 @@
           "[Cu+2].[O-]S(=O)(=O)[O-]"
         ],
         "tester": "Z11898",
+        "status": "error"
+      },
+      {
+        "args": [
+          "[2H]"
+        ],
+        "tester": "Z11911",
+        "status": "error"
+      },
+      {
+        "args": [
+          "OC(Cl)=[C@AL1]=C(C)F"
+        ],
+        "tester": "Z11926",
+        "status": "error"
+      },
+      {
+        "args": [
+          "O=C[As@TB20](F)(Cl)(Br)S"
+        ],
+        "tester": "Z11927",
         "status": "error"
       }
     ],
@@ -5365,6 +7063,20 @@
         ],
         "tester": "Z12001",
         "status": "error"
+      },
+      {
+        "args": [
+          "Buch"
+        ],
+        "tester": "Z12002",
+        "status": "error"
+      },
+      {
+        "args": [
+          "Licht"
+        ],
+        "tester": "Z12003",
+        "status": "error"
       }
     ],
     "Z12004": [
@@ -5394,6 +7106,20 @@
           "Loch"
         ],
         "tester": "Z12008",
+        "status": "error"
+      },
+      {
+        "args": [
+          "Buch"
+        ],
+        "tester": "Z12009",
+        "status": "error"
+      },
+      {
+        "args": [
+          "Licht"
+        ],
+        "tester": "Z12010",
         "status": "error"
       }
     ],
@@ -5511,6 +7237,158 @@
         "expected": "sweetest",
         "tester": "Z30005",
         "status": "pass"
+      },
+      {
+        "args": [
+          "good"
+        ],
+        "expected": "best",
+        "tester": "Z12205",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "expensive"
+        ],
+        "expected": "most expensive",
+        "tester": "Z12206",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "speedy"
+        ],
+        "expected": "speediest",
+        "tester": "Z12207",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "witty"
+        ],
+        "expected": "wittiest",
+        "tester": "Z12208",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "hot"
+        ],
+        "expected": "hottest",
+        "tester": "Z12210",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "gooey"
+        ],
+        "expected": "gooiest",
+        "tester": "Z19363",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "bluey"
+        ],
+        "expected": "bluiest",
+        "tester": "Z19364",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "plaguy"
+        ],
+        "expected": "plaguiest",
+        "tester": "Z19365",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "treey"
+        ],
+        "expected": "treeiest",
+        "tester": "Z19366",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "chequy"
+        ],
+        "expected": "chequiest",
+        "tester": "Z19369",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "horsey"
+        ],
+        "expected": "horsiest",
+        "tester": "Z19391",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "roguey"
+        ],
+        "expected": "roguiest",
+        "tester": "Z19393",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "upset"
+        ],
+        "expected": "most upset",
+        "tester": "Z30003",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "inept"
+        ],
+        "expected": "most inept",
+        "tester": "Z30004",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "beautiful"
+        ],
+        "expected": "most beautiful",
+        "tester": "Z30006",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "artful"
+        ],
+        "expected": "most artful",
+        "tester": "Z30007",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "fruitless"
+        ],
+        "expected": "most fruitless",
+        "tester": "Z30008",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "sad"
+        ],
+        "expected": "saddest",
+        "tester": "Z31838",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "fulfilled"
+        ],
+        "expected": "most fulfilled",
+        "tester": "Z31839",
+        "status": "fail"
       }
     ],
     "Z12225": [
@@ -5873,6 +7751,20 @@
         ],
         "tester": "Z13041",
         "status": "error"
+      },
+      {
+        "args": [
+          "α𝉂"
+        ],
+        "tester": "Z21758",
+        "status": "error"
+      },
+      {
+        "args": [
+          "`'10^9'`"
+        ],
+        "tester": "Z21759",
+        "status": "error"
       }
     ],
     "Z12400": [
@@ -5926,6 +7818,83 @@
           65537
         ],
         "tester": "Z14092",
+        "status": "error"
+      },
+      {
+        "args": [
+          2147483647
+        ],
+        "tester": "Z14093",
+        "status": "error"
+      },
+      {
+        "args": [
+          4294967297
+        ],
+        "tester": "Z14094",
+        "status": "error"
+      },
+      {
+        "args": [
+          4611686014132420600
+        ],
+        "tester": "Z14095",
+        "status": "error"
+      },
+      {
+        "args": [
+          1.7014118346046923e+38
+        ],
+        "tester": "Z14097",
+        "status": "error"
+      },
+      {
+        "args": [
+          null
+        ],
+        "tester": "Z14098",
+        "status": "error"
+      },
+      {
+        "args": [
+          1.2530759607784497e+28
+        ],
+        "tester": "Z14682",
+        "status": "error"
+      },
+      {
+        "args": [
+          2.967449566868551e+130
+        ],
+        "tester": "Z14693",
+        "status": "error"
+      },
+      {
+        "args": [
+          6.987642282625114e+43
+        ],
+        "tester": "Z14701",
+        "status": "error"
+      },
+      {
+        "args": [
+          3.198893697139466e+32
+        ],
+        "tester": "Z14702",
+        "status": "error"
+      },
+      {
+        "args": [
+          17592186044471
+        ],
+        "tester": "Z21083",
+        "status": "error"
+      },
+      {
+        "args": [
+          2
+        ],
+        "tester": "Z28168",
         "status": "error"
       }
     ],
@@ -6181,6 +8150,22 @@
         "expected": "brz",
         "tester": "Z12582",
         "status": "pass"
+      },
+      {
+        "args": [
+          "dobar"
+        ],
+        "expected": "dobar",
+        "tester": "Z12583",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "crn"
+        ],
+        "expected": "crn",
+        "tester": "Z12584",
+        "status": "pass"
       }
     ],
     "Z12587": [
@@ -6263,6 +8248,30 @@
         ],
         "tester": "Z22070",
         "status": "error"
+      },
+      {
+        "args": [
+          "0.000000001",
+          "2"
+        ],
+        "tester": "Z22071",
+        "status": "error"
+      },
+      {
+        "args": [
+          "99",
+          "0"
+        ],
+        "tester": "Z22072",
+        "status": "error"
+      },
+      {
+        "args": [
+          "99",
+          "2"
+        ],
+        "tester": "Z22073",
+        "status": "error"
       }
     ],
     "Z12617": [
@@ -6343,6 +8352,20 @@
         ],
         "tester": "Z27998",
         "status": "error"
+      },
+      {
+        "args": [
+          "Portez ce vieux whisky au juge blond qui fume."
+        ],
+        "tester": "Z30589",
+        "status": "error"
+      },
+      {
+        "args": [
+          "Coquito is an adorable perrito."
+        ],
+        "tester": "Z34426",
+        "status": "error"
       }
     ],
     "Z12630": [
@@ -6376,6 +8399,14 @@
         ],
         "expected": "hundojn",
         "tester": "Z12635",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "eĥi"
+        ],
+        "expected": "eĥi",
+        "tester": "Z12680",
         "status": "pass"
       }
     ],
@@ -6436,6 +8467,16 @@
         "expected": false,
         "tester": "Z14718",
         "status": "pass"
+      },
+      {
+        "args": [
+          [
+            false
+          ]
+        ],
+        "expected": false,
+        "tester": "Z26234",
+        "status": "pass"
       }
     ],
     "Z12696": [
@@ -6489,6 +8530,17 @@
         "expected": true,
         "tester": "Z13757",
         "status": "pass"
+      },
+      {
+        "args": [
+          [
+            "False"
+          ],
+          false
+        ],
+        "expected": false,
+        "tester": "Z13761",
+        "status": "pass"
       }
     ],
     "Z12698": [
@@ -6532,6 +8584,27 @@
         ],
         "expected": true,
         "tester": "Z12702",
+        "status": "pass"
+      },
+      {
+        "args": [
+          [
+            false
+          ]
+        ],
+        "expected": false,
+        "tester": "Z12703",
+        "status": "pass"
+      },
+      {
+        "args": [
+          [
+            false,
+            true
+          ]
+        ],
+        "expected": true,
+        "tester": "Z12707",
         "status": "pass"
       }
     ],
@@ -6700,6 +8773,99 @@
         "expected": true,
         "tester": "Z12746",
         "status": "pass"
+      },
+      {
+        "args": [
+          [
+            "a",
+            "a",
+            "b"
+          ],
+          [
+            "b",
+            "b",
+            "a"
+          ]
+        ],
+        "expected": false,
+        "tester": "Z12747",
+        "status": "pass"
+      },
+      {
+        "args": [
+          [],
+          []
+        ],
+        "expected": true,
+        "tester": "Z13067",
+        "status": "pass"
+      },
+      {
+        "args": [
+          [
+            true,
+            true,
+            false
+          ],
+          [
+            false,
+            true,
+            true
+          ]
+        ],
+        "expected": true,
+        "tester": "Z13069",
+        "status": "pass"
+      },
+      {
+        "args": [
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            3,
+            2,
+            1
+          ]
+        ],
+        "expected": true,
+        "tester": "Z17765",
+        "status": "pass"
+      },
+      {
+        "args": [
+          [
+            [],
+            [
+              false
+            ],
+            [
+              true
+            ],
+            [
+              false,
+              true
+            ]
+          ],
+          [
+            [
+              false
+            ],
+            [
+              false,
+              true
+            ],
+            [],
+            [
+              true
+            ]
+          ]
+        ],
+        "expected": true,
+        "tester": "Z30729",
+        "status": "pass"
       }
     ],
     "Z12755": [
@@ -6837,6 +9003,24 @@
         "expected": "ABCxyz",
         "tester": "Z13479",
         "status": "pass"
+      },
+      {
+        "args": [
+          "Zxbpxo",
+          3
+        ],
+        "expected": "Caesar",
+        "tester": "Z21741",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "Test",
+          78
+        ],
+        "expected": "Test",
+        "tester": "Z29408",
+        "status": "pass"
       }
     ],
     "Z12815": [
@@ -6940,6 +9124,70 @@
         ],
         "expected": true,
         "tester": "Z12850",
+        "status": "pass"
+      },
+      {
+        "args": [
+          [
+            "aa",
+            "bb",
+            "cc"
+          ],
+          [
+            "aa",
+            "cc"
+          ]
+        ],
+        "expected": true,
+        "tester": "Z12873",
+        "status": "pass"
+      },
+      {
+        "args": [
+          [
+            true,
+            false
+          ],
+          [
+            false,
+            true
+          ]
+        ],
+        "expected": true,
+        "tester": "Z12874",
+        "status": "pass"
+      },
+      {
+        "args": [
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        "expected": true,
+        "tester": "Z18129",
+        "status": "pass"
+      },
+      {
+        "args": [
+          [
+            " : \"Z8K2 Z6\" ",
+            " : \"Z8K2 Z6\" OR \"Z8K2 Z1K1 Z7 Z7K1 Z881 Z881K1 Z6\" ",
+            " : \"Z8K2 Z6\" OR \"Z8K2 Z1K1 Z7 Z7K1 Z881 Z881K1 Z6\" OR \"Z17K1 Z6\" OR \"Z17K1 Z1K1 Z7 Z7K1 Z881 Z881K1 Z6\" ",
+            " : \"Z8K2 Z6\" Z8K3 Z8K4 Z8K5 !\"Z8K4 Z14 Z8K5\" !\"Z8K3 Z20 Z8K4\" "
+          ],
+          [
+            " : \"Z8K2 Z6\" ",
+            " : \"Z8K2 Z6\" OR \"Z8K2 Z1K1 Z7 Z7K1 Z881 Z881K1 Z6\" "
+          ]
+        ],
+        "expected": true,
+        "tester": "Z23090",
         "status": "pass"
       }
     ],
@@ -7303,6 +9551,182 @@
         "expected": "leaning",
         "tester": "Z13096",
         "status": "pass"
+      },
+      {
+        "args": [
+          "lead"
+        ],
+        "expected": "leading",
+        "tester": "Z13098",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "keep"
+        ],
+        "expected": "keeping",
+        "tester": "Z13101",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "climb"
+        ],
+        "expected": "climbing",
+        "tester": "Z13105",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "free"
+        ],
+        "expected": "freeing",
+        "tester": "Z13108",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "sauté"
+        ],
+        "expected": "sautéing",
+        "tester": "Z13114",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "cancel"
+        ],
+        "expected": "canceling",
+        "tester": "Z13162",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "toe"
+        ],
+        "expected": "toeing",
+        "tester": "Z13167",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "dye"
+        ],
+        "expected": "dyeing",
+        "tester": "Z13171",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "be"
+        ],
+        "expected": "being",
+        "tester": "Z19188",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "flee"
+        ],
+        "expected": "fleeing",
+        "tester": "Z19189",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "run"
+        ],
+        "expected": "running",
+        "tester": "Z13090",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "let"
+        ],
+        "expected": "letting",
+        "tester": "Z13093",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "bid"
+        ],
+        "expected": "bidding",
+        "tester": "Z13097",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "dig"
+        ],
+        "expected": "digging",
+        "tester": "Z13099",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "skip"
+        ],
+        "expected": "skipping",
+        "tester": "Z13100",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "lob"
+        ],
+        "expected": "lobbing",
+        "tester": "Z13102",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "trek"
+        ],
+        "expected": "trekking",
+        "tester": "Z13103",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "pace"
+        ],
+        "expected": "pacing",
+        "tester": "Z13104",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "lie"
+        ],
+        "expected": "lying",
+        "tester": "Z13107",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "true"
+        ],
+        "expected": "truing",
+        "tester": "Z13113",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "panic"
+        ],
+        "expected": "panicking",
+        "tester": "Z13115",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "ice"
+        ],
+        "expected": "icing",
+        "tester": "Z13165",
+        "status": "fail"
       }
     ],
     "Z13119": [
@@ -7396,6 +9820,55 @@
           "play"
         ],
         "tester": "Z13182",
+        "status": "error"
+      },
+      {
+        "args": [
+          "try"
+        ],
+        "tester": "Z13183",
+        "status": "error"
+      },
+      {
+        "args": [
+          "regret"
+        ],
+        "tester": "Z13187",
+        "status": "error"
+      },
+      {
+        "args": [
+          "panic"
+        ],
+        "tester": "Z13201",
+        "status": "error"
+      },
+      {
+        "args": [
+          "zinc"
+        ],
+        "tester": "Z13202",
+        "status": "error"
+      },
+      {
+        "args": [
+          "loop"
+        ],
+        "tester": "Z13203",
+        "status": "error"
+      },
+      {
+        "args": [
+          "box"
+        ],
+        "tester": "Z13204",
+        "status": "error"
+      },
+      {
+        "args": [
+          "quip"
+        ],
+        "tester": "Z17027",
         "status": "error"
       }
     ],
@@ -7495,6 +9968,34 @@
           "compose"
         ],
         "tester": "Z34053",
+        "status": "error"
+      },
+      {
+        "args": [
+          "create"
+        ],
+        "tester": "Z34054",
+        "status": "error"
+      },
+      {
+        "args": [
+          "adopt"
+        ],
+        "tester": "Z34055",
+        "status": "error"
+      },
+      {
+        "args": [
+          "confess"
+        ],
+        "tester": "Z34057",
+        "status": "error"
+      },
+      {
+        "args": [
+          "confuse"
+        ],
+        "tester": "Z34058",
         "status": "error"
       }
     ],
@@ -7742,6 +10243,13 @@
         ],
         "tester": "Z14088",
         "status": "error"
+      },
+      {
+        "args": [
+          ""
+        ],
+        "tester": "Z14089",
+        "status": "error"
       }
     ],
     "Z13489": [
@@ -7772,6 +10280,62 @@
           "0987654321"
         ],
         "tester": "Z13492",
+        "status": "error"
+      },
+      {
+        "args": [
+          "nine"
+        ],
+        "tester": "Z13494",
+        "status": "error"
+      },
+      {
+        "args": [
+          "-1"
+        ],
+        "tester": "Z13495",
+        "status": "error"
+      },
+      {
+        "args": [
+          "١٥"
+        ],
+        "tester": "Z13496",
+        "status": "error"
+      },
+      {
+        "args": [
+          "FFFFFF"
+        ],
+        "tester": "Z13497",
+        "status": "error"
+      },
+      {
+        "args": [
+          ""
+        ],
+        "tester": "Z13498",
+        "status": "error"
+      },
+      {
+        "args": [
+          "99,999"
+        ],
+        "tester": "Z13502",
+        "status": "error"
+      },
+      {
+        "args": [
+          "1.00"
+        ],
+        "tester": "Z13503",
+        "status": "error"
+      },
+      {
+        "args": [
+          "9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999"
+        ],
+        "tester": "Z13889",
         "status": "error"
       }
     ],
@@ -7881,6 +10445,25 @@
         "expected": 99,
         "tester": "Z17711",
         "status": "pass"
+      },
+      {
+        "args": [
+          [
+            2,
+            3,
+            5,
+            7,
+            11,
+            13,
+            17,
+            19,
+            23,
+            29
+          ]
+        ],
+        "expected": 6469693230,
+        "tester": "Z18910",
+        "status": "pass"
       }
     ],
     "Z13561": [
@@ -7947,6 +10530,32 @@
         "expected": 0,
         "tester": "Z13616",
         "status": "pass"
+      },
+      {
+        "args": [
+          18,
+          6
+        ],
+        "expected": 6,
+        "tester": "Z17662",
+        "status": "pass"
+      },
+      {
+        "args": [
+          18,
+          42
+        ],
+        "expected": 6,
+        "tester": "Z17663",
+        "status": "pass"
+      },
+      {
+        "args": [
+          null,
+          null
+        ],
+        "tester": "Z29082",
+        "status": "error"
       }
     ],
     "Z13636": [
@@ -8007,6 +10616,13 @@
           100000
         ],
         "tester": "Z20416",
+        "status": "error"
+      },
+      {
+        "args": [
+          150000
+        ],
+        "tester": "Z20418",
         "status": "error"
       }
     ],
@@ -8158,6 +10774,14 @@
         "expected": 2,
         "tester": "Z13866",
         "status": "pass"
+      },
+      {
+        "args": [
+          3
+        ],
+        "expected": 6,
+        "tester": "Z13867",
+        "status": "pass"
       }
     ],
     "Z13701": [
@@ -8195,6 +10819,15 @@
         ],
         "expected": true,
         "tester": "Z38811",
+        "status": "pass"
+      },
+      {
+        "args": [
+          1,
+          1
+        ],
+        "expected": true,
+        "tester": "Z38812",
         "status": "pass"
       }
     ],
@@ -8760,6 +11393,34 @@
         ],
         "tester": "Z13842",
         "status": "error"
+      },
+      {
+        "args": [
+          1000
+        ],
+        "tester": "Z15624",
+        "status": "error"
+      },
+      {
+        "args": [
+          16
+        ],
+        "tester": "Z17398",
+        "status": "error"
+      },
+      {
+        "args": [
+          78
+        ],
+        "tester": "Z34496",
+        "status": "error"
+      },
+      {
+        "args": [
+          79
+        ],
+        "tester": "Z34497",
+        "status": "error"
       }
     ],
     "Z13843": [
@@ -8991,6 +11652,20 @@
         ],
         "tester": "Z13946",
         "status": "error"
+      },
+      {
+        "args": [
+          "ga"
+        ],
+        "tester": "Z13947",
+        "status": "error"
+      },
+      {
+        "args": [
+          "zụ"
+        ],
+        "tester": "Z16073",
+        "status": "error"
       }
     ],
     "Z13928": [
@@ -9071,6 +11746,13 @@
           44497
         ],
         "tester": "Z24807",
+        "status": "error"
+      },
+      {
+        "args": [
+          132049
+        ],
+        "tester": "Z24808",
         "status": "error"
       }
     ],
@@ -9436,8 +12118,9 @@
         "args": [
           1
         ],
+        "expected": 0,
         "tester": "Z14915",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -9494,16 +12177,17 @@
     "Z13999": [
       {
         "args": [
-          4
+          1
         ],
-        "tester": "Z14076",
-        "status": "error"
+        "expected": 1,
+        "tester": "Z14077",
+        "status": "pass"
       },
       {
         "args": [
-          1
+          4
         ],
-        "tester": "Z14077",
+        "tester": "Z14076",
         "status": "error"
       },
       {
@@ -9591,6 +12275,27 @@
         "expected": 25,
         "tester": "Z17699",
         "status": "pass"
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": 0,
+        "tester": "Z17700",
+        "status": "pass"
+      },
+      {
+        "args": [
+          [
+            0,
+            1,
+            2,
+            3
+          ]
+        ],
+        "expected": 6,
+        "tester": "Z24864",
+        "status": "pass"
       }
     ],
     "Z14058": [
@@ -9625,6 +12330,21 @@
         "expected": 111,
         "tester": "Z14062",
         "status": "pass"
+      },
+      {
+        "args": [
+          0
+        ],
+        "expected": 0,
+        "tester": "Z14064",
+        "status": "pass"
+      },
+      {
+        "args": [
+          931386509544713500
+        ],
+        "tester": "Z14072",
+        "status": "error"
       }
     ],
     "Z14119": [
@@ -9706,6 +12426,41 @@
           0
         ],
         "tester": "Z14170",
+        "status": "error"
+      },
+      {
+        "args": [
+          3
+        ],
+        "tester": "Z14174",
+        "status": "error"
+      },
+      {
+        "args": [
+          1000
+        ],
+        "tester": "Z14193",
+        "status": "error"
+      },
+      {
+        "args": [
+          10000
+        ],
+        "tester": "Z14194",
+        "status": "error"
+      },
+      {
+        "args": [
+          33
+        ],
+        "tester": "Z21786",
+        "status": "error"
+      },
+      {
+        "args": [
+          49449
+        ],
+        "tester": "Z23847",
         "status": "error"
       }
     ],
@@ -9866,6 +12621,13 @@
         ],
         "tester": "Z14299",
         "status": "error"
+      },
+      {
+        "args": [
+          1111111
+        ],
+        "tester": "Z14300",
+        "status": "error"
       }
     ],
     "Z14304": [
@@ -9895,6 +12657,48 @@
           "007"
         ],
         "tester": "Z14360",
+        "status": "error"
+      },
+      {
+        "args": [
+          "700"
+        ],
+        "tester": "Z14361",
+        "status": "error"
+      },
+      {
+        "args": [
+          "99 999"
+        ],
+        "tester": "Z14372",
+        "status": "error"
+      },
+      {
+        "args": [
+          "99 999"
+        ],
+        "tester": "Z14373",
+        "status": "error"
+      },
+      {
+        "args": [
+          "99 999"
+        ],
+        "tester": "Z14441",
+        "status": "error"
+      },
+      {
+        "args": [
+          "99 999"
+        ],
+        "tester": "Z14442",
+        "status": "error"
+      },
+      {
+        "args": [
+          "30833838383838383839388338833838388338380302262886039337883790707070306060202309339979739930206060339399303066006939393030606"
+        ],
+        "tester": "Z28746",
         "status": "error"
       }
     ],
@@ -10014,6 +12818,55 @@
         ],
         "tester": "Z14425",
         "status": "error"
+      },
+      {
+        "args": [
+          "007"
+        ],
+        "tester": "Z14426",
+        "status": "error"
+      },
+      {
+        "args": [
+          "-0"
+        ],
+        "tester": "Z14428",
+        "status": "error"
+      },
+      {
+        "args": [
+          "99.999.999"
+        ],
+        "tester": "Z14430",
+        "status": "error"
+      },
+      {
+        "args": [
+          "99 999 999"
+        ],
+        "tester": "Z14432",
+        "status": "error"
+      },
+      {
+        "args": [
+          "1,23,45,678"
+        ],
+        "tester": "Z14433",
+        "status": "error"
+      },
+      {
+        "args": [
+          "9,999"
+        ],
+        "tester": "Z14468",
+        "status": "error"
+      },
+      {
+        "args": [
+          "+42,099"
+        ],
+        "tester": "Z14490",
+        "status": "error"
       }
     ],
     "Z14416": [
@@ -10119,6 +12972,30 @@
           "aa"
         ],
         "tester": "Z14455",
+        "status": "error"
+      },
+      {
+        "args": [
+          "Талалаївка",
+          "ла"
+        ],
+        "tester": "Z16041",
+        "status": "error"
+      },
+      {
+        "args": [
+          "[Ti++++]",
+          "+"
+        ],
+        "tester": "Z16726",
+        "status": "error"
+      },
+      {
+        "args": [
+          "strawberry",
+          "r"
+        ],
+        "tester": "Z19021",
         "status": "error"
       }
     ],
@@ -10262,6 +13139,20 @@
           14526
         ],
         "tester": "Z14584",
+        "status": "error"
+      },
+      {
+        "args": [
+          22
+        ],
+        "tester": "Z14586",
+        "status": "error"
+      },
+      {
+        "args": [
+          40
+        ],
+        "tester": "Z14725",
         "status": "error"
       }
     ],
@@ -10633,6 +13524,44 @@
         "expected": 8,
         "tester": "Z14737",
         "status": "pass"
+      },
+      {
+        "args": [
+          4,
+          2,
+          3
+        ],
+        "expected": 16,
+        "tester": "Z14738",
+        "status": "pass"
+      },
+      {
+        "args": [
+          3,
+          0,
+          3
+        ],
+        "expected": 0,
+        "tester": "Z33414",
+        "status": "pass"
+      },
+      {
+        "args": [
+          5,
+          2,
+          3
+        ],
+        "tester": "Z14739",
+        "status": "error"
+      },
+      {
+        "args": [
+          5,
+          3,
+          2
+        ],
+        "tester": "Z14741",
+        "status": "error"
       }
     ],
     "Z14742": [
@@ -10671,6 +13600,48 @@
         "expected": 3,
         "tester": "Z14748",
         "status": "pass"
+      },
+      {
+        "args": [
+          2,
+          2
+        ],
+        "expected": 7,
+        "tester": "Z14749",
+        "status": "pass"
+      },
+      {
+        "args": [
+          4,
+          0
+        ],
+        "expected": 13,
+        "tester": "Z14751",
+        "status": "pass"
+      },
+      {
+        "args": [
+          3,
+          3
+        ],
+        "tester": "Z14750",
+        "status": "error"
+      },
+      {
+        "args": [
+          4,
+          1
+        ],
+        "tester": "Z14752",
+        "status": "error"
+      },
+      {
+        "args": [
+          5,
+          0
+        ],
+        "tester": "Z14753",
+        "status": "error"
       }
     ],
     "Z14770": [
@@ -10731,6 +13702,30 @@
           2
         ],
         "tester": "Z14788",
+        "status": "error"
+      },
+      {
+        "args": [
+          91,
+          3
+        ],
+        "tester": "Z14789",
+        "status": "error"
+      },
+      {
+        "args": [
+          91,
+          4
+        ],
+        "tester": "Z14790",
+        "status": "error"
+      },
+      {
+        "args": [
+          4,
+          1
+        ],
+        "tester": "Z14791",
         "status": "error"
       }
     ],
@@ -11059,8 +14054,9 @@
         "args": [
           1
         ],
+        "expected": true,
         "tester": "Z14927",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -11081,6 +14077,13 @@
           140
         ],
         "tester": "Z14930",
+        "status": "error"
+      },
+      {
+        "args": [
+          1089270
+        ],
+        "tester": "Z14931",
         "status": "error"
       }
     ],
@@ -11303,6 +14306,13 @@
         ],
         "tester": "Z14997",
         "status": "error"
+      },
+      {
+        "args": [
+          836
+        ],
+        "tester": "Z14998",
+        "status": "error"
       }
     ],
     "Z14999": [
@@ -11332,6 +14342,13 @@
           2048
         ],
         "tester": "Z15004",
+        "status": "error"
+      },
+      {
+        "args": [
+          4096
+        ],
+        "tester": "Z15005",
         "status": "error"
       }
     ],
@@ -12079,6 +15096,13 @@
         ],
         "tester": "Z15375",
         "status": "error"
+      },
+      {
+        "args": [
+          1e+32
+        ],
+        "tester": "Z34527",
+        "status": "error"
       }
     ],
     "Z15195": [
@@ -12363,6 +15387,13 @@
         ],
         "tester": "Z15382",
         "status": "error"
+      },
+      {
+        "args": [
+          null
+        ],
+        "tester": "Z15383",
+        "status": "error"
       }
     ],
     "Z15251": [
@@ -12397,6 +15428,14 @@
         ],
         "tester": "Z15379",
         "status": "error"
+      },
+      {
+        "args": [
+          null,
+          4
+        ],
+        "tester": "Z15380",
+        "status": "error"
       }
     ],
     "Z15265": [
@@ -12426,6 +15465,20 @@
           729
         ],
         "tester": "Z15270",
+        "status": "error"
+      },
+      {
+        "args": [
+          null
+        ],
+        "tester": "Z25682",
+        "status": "error"
+      },
+      {
+        "args": [
+          5
+        ],
+        "tester": "Z35752",
         "status": "error"
       }
     ],
@@ -12472,6 +15525,13 @@
           0
         ],
         "tester": "Z34536",
+        "status": "error"
+      },
+      {
+        "args": [
+          1
+        ],
+        "tester": "Z34537",
         "status": "error"
       }
     ],
@@ -13366,6 +16426,27 @@
         ],
         "tester": "Z15628",
         "status": "error"
+      },
+      {
+        "args": [
+          "げふゑうずづきこくけあいえおかがきゃきゅきょぎぎゃぎゅぎょぐごさざししゃしゅしょじじゃじゅじょすせぜそぞただちちゃちゅちょぢぢゃぢゅぢょつてでとどなににゃにゅにょぬねのはばぱひひゃひゅひょびびゃびゅびょぴぴゃぴゅぴょぶぷへべぺほぼぽまみみゃみゅみょむめもやゆよらりりゃりゅりょるれろわゐを"
+        ],
+        "tester": "Z15629",
+        "status": "error"
+      },
+      {
+        "args": [
+          "おはようございます。"
+        ],
+        "tester": "Z15633",
+        "status": "error"
+      },
+      {
+        "args": [
+          "おはようABC"
+        ],
+        "tester": "Z15634",
+        "status": "error"
       }
     ],
     "Z15643": [
@@ -13488,6 +16569,20 @@
           0
         ],
         "tester": "Z15689",
+        "status": "error"
+      },
+      {
+        "args": [
+          true
+        ],
+        "tester": "Z15692",
+        "status": "error"
+      },
+      {
+        "args": [
+          false
+        ],
+        "tester": "Z15693",
         "status": "error"
       }
     ],
@@ -13620,6 +16715,14 @@
         ],
         "tester": "Z15746",
         "status": "error"
+      },
+      {
+        "args": [
+          505447028499293760,
+          11
+        ],
+        "tester": "Z15747",
+        "status": "error"
       }
     ],
     "Z15757": [
@@ -13726,6 +16829,24 @@
           2
         ],
         "tester": "Z15810",
+        "status": "error"
+      },
+      {
+        "args": [
+          true,
+          true
+        ],
+        "tester": "Z19074",
+        "status": "error"
+      },
+      {
+        "args": [
+          [
+            false
+          ],
+          []
+        ],
+        "tester": "Z19075",
         "status": "error"
       }
     ],
@@ -13985,6 +17106,48 @@
           295
         ],
         "tester": "Z16384",
+        "status": "error"
+      },
+      {
+        "args": [
+          12345678901234567000
+        ],
+        "tester": "Z16385",
+        "status": "error"
+      },
+      {
+        "args": [
+          1000
+        ],
+        "tester": "Z16386",
+        "status": "error"
+      },
+      {
+        "args": [
+          1001000
+        ],
+        "tester": "Z16388",
+        "status": "error"
+      },
+      {
+        "args": [
+          11000
+        ],
+        "tester": "Z16389",
+        "status": "error"
+      },
+      {
+        "args": [
+          21000
+        ],
+        "tester": "Z16390",
+        "status": "error"
+      },
+      {
+        "args": [
+          101000
+        ],
+        "tester": "Z16391",
         "status": "error"
       }
     ],
@@ -14317,6 +17480,41 @@
         ],
         "tester": "Z16529",
         "status": "error"
+      },
+      {
+        "args": [
+          "nye"
+        ],
+        "tester": "Z16530",
+        "status": "error"
+      },
+      {
+        "args": [
+          "bido"
+        ],
+        "tester": "Z16531",
+        "status": "error"
+      },
+      {
+        "args": [
+          "ri"
+        ],
+        "tester": "Z16532",
+        "status": "error"
+      },
+      {
+        "args": [
+          "rụ"
+        ],
+        "tester": "Z16533",
+        "status": "error"
+      },
+      {
+        "args": [
+          "gọ"
+        ],
+        "tester": "Z16534",
+        "status": "error"
       }
     ],
     "Z16711": [
@@ -14386,6 +17584,13 @@
         ],
         "tester": "Z16790",
         "status": "error"
+      },
+      {
+        "args": [
+          "ACGT"
+        ],
+        "tester": "Z16792",
+        "status": "error"
       }
     ],
     "Z16773": [
@@ -14427,6 +17632,16 @@
         ],
         "expected": true,
         "tester": "Z16778",
+        "status": "pass"
+      },
+      {
+        "args": [
+          42,
+          42,
+          42
+        ],
+        "expected": true,
+        "tester": "Z16779",
         "status": "pass"
       }
     ],
@@ -14504,6 +17719,20 @@
         ],
         "tester": "Z16847",
         "status": "error"
+      },
+      {
+        "args": [
+          "978 0 545 01022 1"
+        ],
+        "tester": "Z16848",
+        "status": "error"
+      },
+      {
+        "args": [
+          "4006381333931"
+        ],
+        "tester": "Z23559",
+        "status": "error"
       }
     ],
     "Z16855": [
@@ -14538,6 +17767,14 @@
         "expected": 0,
         "tester": "Z16860",
         "status": "pass"
+      },
+      {
+        "args": [
+          "twenty"
+        ],
+        "expected": 0,
+        "tester": "Z16861",
+        "status": "pass"
       }
     ],
     "Z16862": [
@@ -14567,6 +17804,20 @@
           "nine"
         ],
         "tester": "Z16866",
+        "status": "error"
+      },
+      {
+        "args": [
+          ""
+        ],
+        "tester": "Z16868",
+        "status": "error"
+      },
+      {
+        "args": [
+          "zero"
+        ],
+        "tester": "Z16951",
         "status": "error"
       }
     ],
@@ -14670,6 +17921,13 @@
           "𬾸𬮷"
         ],
         "tester": "Z17041",
+        "status": "error"
+      },
+      {
+        "args": [
+          "🤦🏼‍♂️"
+        ],
+        "tester": "Z17071",
         "status": "error"
       }
     ],
@@ -14845,6 +18103,38 @@
         ],
         "tester": "Z17577",
         "status": "error"
+      },
+      {
+        "args": [
+          "য়",
+          1
+        ],
+        "tester": "Z17626",
+        "status": "error"
+      },
+      {
+        "args": [
+          "হ",
+          1
+        ],
+        "tester": "Z17627",
+        "status": "error"
+      },
+      {
+        "args": [
+          "ক",
+          100
+        ],
+        "tester": "Z19071",
+        "status": "error"
+      },
+      {
+        "args": [
+          "একটি মুক্ত জ্ঞান ভান্ডার",
+          10
+        ],
+        "tester": "Z19072",
+        "status": "error"
       }
     ],
     "Z17628": [
@@ -14899,6 +18189,35 @@
         "expected": false,
         "tester": "Z17632",
         "status": "pass"
+      },
+      {
+        "args": [
+          [
+            27
+          ],
+          [
+            27
+          ]
+        ],
+        "expected": true,
+        "tester": "Z17633",
+        "status": "pass"
+      },
+      {
+        "args": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2,
+            3
+          ]
+        ],
+        "expected": false,
+        "tester": "Z17634",
+        "status": "pass"
       }
     ],
     "Z17639": [
@@ -14933,6 +18252,62 @@
         "expected": "cafés",
         "tester": "Z17644",
         "status": "pass"
+      },
+      {
+        "args": [
+          "pared"
+        ],
+        "expected": "paredes",
+        "tester": "Z17645",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "farol"
+        ],
+        "expected": "faroles",
+        "tester": "Z17646",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "arroz"
+        ],
+        "expected": "arroces",
+        "tester": "Z17647",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "canción"
+        ],
+        "expected": "canciones",
+        "tester": "Z17641",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "cactus"
+        ],
+        "expected": "cactus",
+        "tester": "Z17648",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "tórax"
+        ],
+        "expected": "tórax",
+        "tester": "Z17649",
+        "status": "fail"
+      },
+      {
+        "args": [
+          "autobús"
+        ],
+        "expected": "autobuses",
+        "tester": "Z17650",
+        "status": "fail"
       }
     ],
     "Z17651": [
@@ -14962,6 +18337,27 @@
           "base"
         ],
         "tester": "Z17862",
+        "status": "error"
+      },
+      {
+        "args": [
+          "volver"
+        ],
+        "tester": "Z17863",
+        "status": "error"
+      },
+      {
+        "args": [
+          "dominó"
+        ],
+        "tester": "Z17864",
+        "status": "error"
+      },
+      {
+        "args": [
+          "cántaro"
+        ],
+        "tester": "Z17865",
         "status": "error"
       }
     ],
@@ -16148,6 +19544,20 @@
         ],
         "tester": "Z25383",
         "status": "error"
+      },
+      {
+        "args": [
+          "#ffffff"
+        ],
+        "tester": "Z25384",
+        "status": "error"
+      },
+      {
+        "args": [
+          "#FFFFF"
+        ],
+        "tester": "Z25392",
+        "status": "error"
       }
     ],
     "Z18898": [
@@ -16267,6 +19677,15 @@
         ],
         "expected": 1,
         "tester": "Z19039",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "0000",
+          "1111"
+        ],
+        "expected": 4,
+        "tester": "Z19040",
         "status": "pass"
       }
     ],
@@ -16399,6 +19818,13 @@
         ],
         "tester": "Z19174",
         "status": "error"
+      },
+      {
+        "args": [
+          "Aardvark"
+        ],
+        "tester": "Z19176",
+        "status": "error"
       }
     ],
     "Z19177": [
@@ -16432,6 +19858,14 @@
           "Hello, world!"
         ],
         "tester": "Z19181",
+        "status": "error"
+      },
+      {
+        "args": [
+          "aa",
+          "a"
+        ],
+        "tester": "Z19183",
         "status": "error"
       }
     ],
@@ -16481,6 +19915,13 @@
         ],
         "tester": "Z19195",
         "status": "error"
+      },
+      {
+        "args": [
+          "pseudopseudohypoparathyroidism"
+        ],
+        "tester": "Z19196",
+        "status": "error"
       }
     ],
     "Z19343": [
@@ -16510,6 +19951,20 @@
           4
         ],
         "tester": "Z21079",
+        "status": "error"
+      },
+      {
+        "args": [
+          6
+        ],
+        "tester": "Z21081",
+        "status": "error"
+      },
+      {
+        "args": [
+          20
+        ],
+        "tester": "Z21085",
         "status": "error"
       }
     ],
@@ -16597,6 +20052,35 @@
         ],
         "expected": 2,
         "tester": "Z19521",
+        "status": "pass"
+      },
+      {
+        "args": [
+          [
+            2,
+            3
+          ]
+        ],
+        "expected": 2,
+        "tester": "Z19522",
+        "status": "pass"
+      },
+      {
+        "args": [
+          [
+            3,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            12302
+          ]
+        ],
+        "expected": 2,
+        "tester": "Z19523",
         "status": "pass"
       }
     ],
@@ -16729,6 +20213,48 @@
         ],
         "tester": "Z19576",
         "status": "error"
+      },
+      {
+        "args": [
+          "-3.21E-10"
+        ],
+        "tester": "Z19577",
+        "status": "error"
+      },
+      {
+        "args": [
+          "1+1"
+        ],
+        "tester": "Z19578",
+        "status": "error"
+      },
+      {
+        "args": [
+          ".999"
+        ],
+        "tester": "Z19579",
+        "status": "error"
+      },
+      {
+        "args": [
+          "1e6"
+        ],
+        "tester": "Z19580",
+        "status": "error"
+      },
+      {
+        "args": [
+          "1"
+        ],
+        "tester": "Z19581",
+        "status": "error"
+      },
+      {
+        "args": [
+          "0"
+        ],
+        "tester": "Z19582",
+        "status": "error"
       }
     ],
     "Z19601": [
@@ -16804,6 +20330,48 @@
           ]
         ],
         "tester": "Z20685",
+        "status": "error"
+      },
+      {
+        "args": [
+          [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            2
+          ]
+        ],
+        "tester": "Z20686",
+        "status": "error"
+      },
+      {
+        "args": [
+          [
+            false,
+            false,
+            true
+          ],
+          [
+            1,
+            2,
+            3,
+            4
+          ]
+        ],
+        "tester": "Z22185",
         "status": "error"
       }
     ],
@@ -16966,6 +20534,14 @@
         "expected": "()",
         "tester": "Z20604",
         "status": "pass"
+      },
+      {
+        "args": [
+          "()"
+        ],
+        "expected": "(())",
+        "tester": "Z20605",
+        "status": "pass"
       }
     ],
     "Z20653": [
@@ -17010,6 +20586,27 @@
         ],
         "tester": "Z20696",
         "status": "error"
+      },
+      {
+        "args": [
+          "pī1n0!33y12ī7n"
+        ],
+        "tester": "Z20697",
+        "status": "error"
+      },
+      {
+        "args": [
+          "jóyīn"
+        ],
+        "tester": "Z35042",
+        "status": "error"
+      },
+      {
+        "args": [
+          "pīnyóing"
+        ],
+        "tester": "Z35043",
+        "status": "error"
       }
     ],
     "Z21105": [
@@ -17039,6 +20636,34 @@
           "2"
         ],
         "tester": "Z21110",
+        "status": "error"
+      },
+      {
+        "args": [
+          "1/2"
+        ],
+        "tester": "Z21111",
+        "status": "error"
+      },
+      {
+        "args": [
+          "0"
+        ],
+        "tester": "Z21112",
+        "status": "error"
+      },
+      {
+        "args": [
+          "1.1"
+        ],
+        "tester": "Z21113",
+        "status": "error"
+      },
+      {
+        "args": [
+          ""
+        ],
+        "tester": "Z21120",
         "status": "error"
       }
     ],
@@ -17079,6 +20704,37 @@
         "expected": true,
         "tester": "Z21215",
         "status": "pass"
+      }
+    ],
+    "Z21240": [
+      {
+        "args": [
+          ""
+        ],
+        "expected": "",
+        "tester": "Z21243",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "en"
+        ],
+        "tester": "Z21241",
+        "status": "error"
+      },
+      {
+        "args": [
+          "dua"
+        ],
+        "tester": "Z21242",
+        "status": "error"
+      },
+      {
+        "args": [
+          "kv"
+        ],
+        "tester": "Z21244",
+        "status": "error"
       }
     ],
     "Z21366": [
@@ -17158,6 +20814,14 @@
         ],
         "tester": "Z21598",
         "status": "error"
+      },
+      {
+        "args": [
+          "The band made a stand on the land, hand in hand, near the grand sand strand.",
+          "and"
+        ],
+        "tester": "Z21627",
+        "status": "error"
       }
     ],
     "Z21613": [
@@ -17227,6 +20891,202 @@
           "university"
         ],
         "tester": "Z21859",
+        "status": "error"
+      },
+      {
+        "args": [
+          "use"
+        ],
+        "tester": "Z21876",
+        "status": "error"
+      },
+      {
+        "args": [
+          "apple"
+        ],
+        "tester": "Z21877",
+        "status": "error"
+      },
+      {
+        "args": [
+          "ewe"
+        ],
+        "tester": "Z21882",
+        "status": "error"
+      },
+      {
+        "args": [
+          "user"
+        ],
+        "tester": "Z21884",
+        "status": "error"
+      },
+      {
+        "args": [
+          "utility"
+        ],
+        "tester": "Z21885",
+        "status": "error"
+      },
+      {
+        "args": [
+          "unintended"
+        ],
+        "tester": "Z23760",
+        "status": "error"
+      },
+      {
+        "args": [
+          "FBI memo"
+        ],
+        "tester": "Z31053",
+        "status": "error"
+      },
+      {
+        "args": [
+          "hourly"
+        ],
+        "tester": "Z31054",
+        "status": "error"
+      },
+      {
+        "args": [
+          "NFL player"
+        ],
+        "tester": "Z31055",
+        "status": "error"
+      },
+      {
+        "args": [
+          "honest"
+        ],
+        "tester": "Z31056",
+        "status": "error"
+      },
+      {
+        "args": [
+          "one hundred dollar bill"
+        ],
+        "tester": "Z31057",
+        "status": "error"
+      },
+      {
+        "args": [
+          "united"
+        ],
+        "tester": "Z31058",
+        "status": "error"
+      },
+      {
+        "args": [
+          "unicorn"
+        ],
+        "tester": "Z31059",
+        "status": "error"
+      },
+      {
+        "args": [
+          "once"
+        ],
+        "tester": "Z31060",
+        "status": "error"
+      },
+      {
+        "args": [
+          "onesie"
+        ],
+        "tester": "Z31061",
+        "status": "error"
+      },
+      {
+        "args": [
+          "Ewe"
+        ],
+        "tester": "Z31062",
+        "status": "error"
+      },
+      {
+        "args": [
+          "onerous"
+        ],
+        "tester": "Z31063",
+        "status": "error"
+      },
+      {
+        "args": [
+          "NASA"
+        ],
+        "tester": "Z31064",
+        "status": "error"
+      },
+      {
+        "args": [
+          "1"
+        ],
+        "tester": "Z31068",
+        "status": "error"
+      },
+      {
+        "args": [
+          "8"
+        ],
+        "tester": "Z31069",
+        "status": "error"
+      },
+      {
+        "args": [
+          "12345"
+        ],
+        "tester": "Z31070",
+        "status": "error"
+      },
+      {
+        "args": [
+          "80"
+        ],
+        "tester": "Z31071",
+        "status": "error"
+      },
+      {
+        "args": [
+          "11"
+        ],
+        "tester": "Z31072",
+        "status": "error"
+      },
+      {
+        "args": [
+          "111"
+        ],
+        "tester": "Z31073",
+        "status": "error"
+      },
+      {
+        "args": [
+          "1111"
+        ],
+        "tester": "Z31074",
+        "status": "error"
+      },
+      {
+        "args": [
+          "11111"
+        ],
+        "tester": "Z31075",
+        "status": "error"
+      },
+      {
+        "args": [
+          "U.S. state"
+        ],
+        "tester": "Z32988",
+        "status": "error"
+      },
+      {
+        "args": [
+          "university teacher"
+        ],
+        "tester": "Z33493",
         "status": "error"
       }
     ],
@@ -17490,6 +21350,30 @@
         ],
         "tester": "Z22348",
         "status": "error"
+      },
+      {
+        "args": [
+          " àçé ",
+          2
+        ],
+        "tester": "Z22349",
+        "status": "error"
+      },
+      {
+        "args": [
+          "Lorem ipsum dolor sit amet",
+          40
+        ],
+        "tester": "Z22350",
+        "status": "error"
+      },
+      {
+        "args": [
+          "",
+          10
+        ],
+        "tester": "Z22352",
+        "status": "error"
       }
     ],
     "Z22504": [
@@ -17619,6 +21503,17 @@
           ]
         ],
         "tester": "Z35493",
+        "status": "error"
+      },
+      {
+        "args": [
+          [
+            " ",
+            "hello",
+            "world"
+          ]
+        ],
+        "tester": "Z35836",
         "status": "error"
       }
     ],
@@ -17917,6 +21812,41 @@
         ],
         "tester": "Z24001",
         "status": "error"
+      },
+      {
+        "args": [
+          "2025W163"
+        ],
+        "tester": "Z24002",
+        "status": "error"
+      },
+      {
+        "args": [
+          "2025-106"
+        ],
+        "tester": "Z24003",
+        "status": "error"
+      },
+      {
+        "args": [
+          "2025106T22:00:00"
+        ],
+        "tester": "Z24004",
+        "status": "error"
+      },
+      {
+        "args": [
+          "-2007-04-06T12:30-02:00"
+        ],
+        "tester": "Z24017",
+        "status": "error"
+      },
+      {
+        "args": [
+          "+200700-04-06T12:30-02:00"
+        ],
+        "tester": "Z24021",
+        "status": "error"
       }
     ],
     "Z24126": [
@@ -17982,6 +21912,27 @@
           1234
         ],
         "tester": "Z24623",
+        "status": "error"
+      },
+      {
+        "args": [
+          21012
+        ],
+        "tester": "Z24624",
+        "status": "error"
+      },
+      {
+        "args": [
+          0
+        ],
+        "tester": "Z24626",
+        "status": "error"
+      },
+      {
+        "args": [
+          987654321
+        ],
+        "tester": "Z24627",
         "status": "error"
       }
     ],
@@ -18113,6 +22064,13 @@
           "[≥−459.67; 0; ≤32] °F"
         ],
         "tester": "Z27172",
+        "status": "error"
+      },
+      {
+        "args": [
+          "3 m"
+        ],
+        "tester": "Z36689",
         "status": "error"
       }
     ],
@@ -18341,6 +22299,20 @@
           "[≥1,9; 2,5; ≤4,6] s"
         ],
         "tester": "Z27089",
+        "status": "error"
+      },
+      {
+        "args": [
+          "[≥−0.17; −0.13; ≤−0.07]"
+        ],
+        "tester": "Z27448",
+        "status": "error"
+      },
+      {
+        "args": [
+          "3 m"
+        ],
+        "tester": "Z36690",
         "status": "error"
       }
     ],
@@ -18593,6 +22565,14 @@
           3
         ],
         "tester": "Z27782",
+        "status": "error"
+      },
+      {
+        "args": [
+          12355,
+          4
+        ],
+        "tester": "Z27789",
         "status": "error"
       }
     ],
@@ -18885,6 +22865,15 @@
     "Z28986": [
       {
         "args": [
+          100,
+          1
+        ],
+        "expected": 0,
+        "tester": "Z28991",
+        "status": "pass"
+      },
+      {
+        "args": [
           5,
           100
         ],
@@ -18913,6 +22902,46 @@
           100
         ],
         "tester": "Z28990",
+        "status": "error"
+      },
+      {
+        "args": [
+          3,
+          12
+        ],
+        "tester": "Z28992",
+        "status": "error"
+      },
+      {
+        "args": [
+          4,
+          3
+        ],
+        "tester": "Z28993",
+        "status": "error"
+      },
+      {
+        "args": [
+          1000,
+          453
+        ],
+        "tester": "Z28994",
+        "status": "error"
+      },
+      {
+        "args": [
+          999,
+          453
+        ],
+        "tester": "Z28995",
+        "status": "error"
+      },
+      {
+        "args": [
+          1000,
+          3
+        ],
+        "tester": "Z28996",
         "status": "error"
       }
     ],
@@ -18980,6 +23009,13 @@
           "M512x516S14c20489x485"
         ],
         "tester": "Z29253",
+        "status": "error"
+      },
+      {
+        "args": [
+          "Wikipédia, enciclopédia"
+        ],
+        "tester": "Z29255",
         "status": "error"
       }
     ],
@@ -19325,6 +23361,13 @@
         ],
         "tester": "Z31330",
         "status": "error"
+      },
+      {
+        "args": [
+          1111101
+        ],
+        "tester": "Z33236",
+        "status": "error"
       }
     ],
     "Z30676": [
@@ -19451,6 +23494,16 @@
           ""
         ],
         "tester": "Z30728",
+        "status": "error"
+      },
+      {
+        "args": [
+          false,
+          false,
+          1,
+          "KB"
+        ],
+        "tester": "Z30740",
         "status": "error"
       }
     ],
@@ -19614,6 +23667,62 @@
         ],
         "tester": "Z30952",
         "status": "error"
+      },
+      {
+        "args": [
+          "376-72-2"
+        ],
+        "tester": "Z30953",
+        "status": "error"
+      },
+      {
+        "args": [
+          "7732-18-5-ext"
+        ],
+        "tester": "Z30965",
+        "status": "error"
+      },
+      {
+        "args": [
+          "773218-5"
+        ],
+        "tester": "Z30966",
+        "status": "error"
+      },
+      {
+        "args": [
+          "7-32-9"
+        ],
+        "tester": "Z30967",
+        "status": "error"
+      },
+      {
+        "args": [
+          "107-0-8"
+        ],
+        "tester": "Z30968",
+        "status": "error"
+      },
+      {
+        "args": [
+          "10-702-8"
+        ],
+        "tester": "Z30969",
+        "status": "error"
+      },
+      {
+        "args": [
+          "10-70-28"
+        ],
+        "tester": "Z30970",
+        "status": "error"
+      },
+      {
+        "args": [
+          "10000000-02-2"
+        ],
+        "tester": "Z30971",
+        "status": "error"
       }
     ],
     "Z31013": [
@@ -19745,6 +23854,36 @@
         "expected": false,
         "tester": "Z31300",
         "status": "pass"
+      },
+      {
+        "args": [
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            "1"
+          ]
+        ],
+        "expected": false,
+        "tester": "Z31301",
+        "status": "pass"
+      },
+      {
+        "args": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2,
+            3
+          ]
+        ],
+        "tester": "Z31306",
+        "status": "error"
       }
     ],
     "Z31471": [
@@ -20082,6 +24221,14 @@
         "expected": 5,
         "tester": "Z31831",
         "status": "pass"
+      },
+      {
+        "args": [
+          "Hello, world!",
+          "ld"
+        ],
+        "tester": "Z31828",
+        "status": "error"
       }
     ],
     "Z31832": [
@@ -20111,6 +24258,48 @@
           "w"
         ],
         "tester": "Z32479",
+        "status": "error"
+      },
+      {
+        "args": [
+          "h"
+        ],
+        "tester": "Z32480",
+        "status": "error"
+      },
+      {
+        "args": [
+          "m"
+        ],
+        "tester": "Z32481",
+        "status": "error"
+      },
+      {
+        "args": [
+          "n"
+        ],
+        "tester": "Z32482",
+        "status": "error"
+      },
+      {
+        "args": [
+          "p"
+        ],
+        "tester": "Z32483",
+        "status": "error"
+      },
+      {
+        "args": [
+          "t"
+        ],
+        "tester": "Z32484",
+        "status": "error"
+      },
+      {
+        "args": [
+          "ʀ"
+        ],
+        "tester": "Z32485",
         "status": "error"
       }
     ],
@@ -20182,6 +24371,15 @@
         "expected": "a string",
         "tester": "Z31961",
         "status": "pass"
+      },
+      {
+        "args": [
+          "",
+          "another"
+        ],
+        "expected": "",
+        "tester": "Z31962",
+        "status": "pass"
       }
     ],
     "Z32185": [
@@ -20215,6 +24413,14 @@
         ],
         "expected": "terpelik",
         "tester": "Z32490",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "kelakar"
+        ],
+        "expected": "terkelakar",
+        "tester": "Z32491",
         "status": "pass"
       }
     ],
@@ -20341,6 +24547,14 @@
         "expected": "paling kelakar",
         "tester": "Z32492",
         "status": "pass"
+      },
+      {
+        "args": [
+          "disanjungi"
+        ],
+        "expected": "paling disanjungi",
+        "tester": "Z32493",
+        "status": "pass"
       }
     ],
     "Z32506": [
@@ -20381,6 +24595,13 @@
         ],
         "tester": "Z32546",
         "status": "error"
+      },
+      {
+        "args": [
+          "sále"
+        ],
+        "tester": "Z32547",
+        "status": "error"
       }
     ],
     "Z32958": [
@@ -20408,6 +24629,15 @@
           true
         ],
         "tester": "Z32961",
+        "status": "error"
+      }
+    ],
+    "Z33281": [
+      {
+        "args": [
+          "lyon"
+        ],
+        "tester": "Z33282",
         "status": "error"
       }
     ],
@@ -20501,6 +24731,34 @@
         ],
         "tester": "Z34080",
         "status": "error"
+      },
+      {
+        "args": [
+          "града"
+        ],
+        "tester": "Z34081",
+        "status": "error"
+      },
+      {
+        "args": [
+          "София"
+        ],
+        "tester": "Z34082",
+        "status": "error"
+      },
+      {
+        "args": [
+          "Facebook"
+        ],
+        "tester": "Z34109",
+        "status": "error"
+      },
+      {
+        "args": [
+          "Viber"
+        ],
+        "tester": "Z34110",
+        "status": "error"
       }
     ],
     "Z34084": [
@@ -20530,6 +24788,27 @@
           "Зорница"
         ],
         "tester": "Z34114",
+        "status": "error"
+      },
+      {
+        "args": [
+          "Samsung"
+        ],
+        "tester": "Z34115",
+        "status": "error"
+      },
+      {
+        "args": [
+          "Zoom"
+        ],
+        "tester": "Z34116",
+        "status": "error"
+      },
+      {
+        "args": [
+          "него"
+        ],
+        "tester": "Z34117",
         "status": "error"
       }
     ],
@@ -20595,6 +24874,13 @@
           ]
         ],
         "tester": "Z34182",
+        "status": "error"
+      },
+      {
+        "args": [
+          []
+        ],
+        "tester": "Z34183",
         "status": "error"
       }
     ],
@@ -20694,6 +24980,54 @@
         "expected": false,
         "tester": "Z34301",
         "status": "pass"
+      },
+      {
+        "args": [
+          [
+            false
+          ],
+          false
+        ],
+        "expected": true,
+        "tester": "Z34304",
+        "status": "pass"
+      },
+      {
+        "args": [
+          [
+            false
+          ],
+          true
+        ],
+        "expected": false,
+        "tester": "Z34305",
+        "status": "pass"
+      },
+      {
+        "args": [
+          [
+            true,
+            true,
+            true
+          ],
+          true
+        ],
+        "expected": true,
+        "tester": "Z34306",
+        "status": "pass"
+      },
+      {
+        "args": [
+          [
+            true,
+            false,
+            true
+          ],
+          true
+        ],
+        "expected": false,
+        "tester": "Z34307",
+        "status": "pass"
       }
     ],
     "Z34353": [
@@ -20777,6 +25111,66 @@
         ],
         "expected": true,
         "tester": "Z34372",
+        "status": "pass"
+      },
+      {
+        "args": [
+          [
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          true
+        ],
+        "expected": false,
+        "tester": "Z34373",
+        "status": "pass"
+      },
+      {
+        "args": [
+          [
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          false
+        ],
+        "expected": true,
+        "tester": "Z34374",
+        "status": "pass"
+      },
+      {
+        "args": [
+          [
+            true,
+            false,
+            true,
+            false,
+            true
+          ],
+          true
+        ],
+        "expected": true,
+        "tester": "Z34376",
+        "status": "pass"
+      },
+      {
+        "args": [
+          [
+            true,
+            false,
+            true,
+            false,
+            true
+          ],
+          false
+        ],
+        "expected": true,
+        "tester": "Z34377",
         "status": "pass"
       }
     ],
@@ -21174,6 +25568,55 @@
         ],
         "tester": "Z36887",
         "status": "error"
+      },
+      {
+        "args": [
+          "https://doi.org/10.26321/%C3%81.GUTI%C3%89RREZ.ZARZA.02.2018.03"
+        ],
+        "tester": "Z36888",
+        "status": "error"
+      },
+      {
+        "args": [
+          "https://doi.org/10.1000/182"
+        ],
+        "tester": "Z36889",
+        "status": "error"
+      },
+      {
+        "args": [
+          "http://dx.doi.org/10.1000/182"
+        ],
+        "tester": "Z36890",
+        "status": "error"
+      },
+      {
+        "args": [
+          "https://hdl.handle.net/10.1000/182"
+        ],
+        "tester": "Z36891",
+        "status": "error"
+      },
+      {
+        "args": [
+          "https://doi.org/urn:doi:10.1000/182"
+        ],
+        "tester": "Z36892",
+        "status": "error"
+      },
+      {
+        "args": [
+          "https://www.doi.org/the-identifier/resources/handbook/"
+        ],
+        "tester": "Z36893",
+        "status": "error"
+      },
+      {
+        "args": [
+          "https://doi.org/10.1002/(SICI)1522-2594(199911)42:5%3C952::AID-MRM16%3E3.0.CO;2-S"
+        ],
+        "tester": "Z36894",
+        "status": "error"
       }
     ],
     "Z36903": [
@@ -21243,6 +25686,50 @@
           0
         ],
         "tester": "Z37185",
+        "status": "error"
+      },
+      {
+        "args": [
+          [
+            8,
+            16,
+            32
+          ],
+          15
+        ],
+        "tester": "Z37186",
+        "status": "error"
+      },
+      {
+        "args": [
+          [
+            8,
+            16,
+            32
+          ],
+          30
+        ],
+        "tester": "Z37187",
+        "status": "error"
+      },
+      {
+        "args": [
+          [
+            8,
+            16,
+            32
+          ],
+          45
+        ],
+        "tester": "Z37191",
+        "status": "error"
+      },
+      {
+        "args": [
+          [],
+          15
+        ],
+        "tester": "Z37192",
         "status": "error"
       }
     ],
@@ -21443,6 +25930,14 @@
           "mont Blanc"
         ],
         "tester": "Z38019",
+        "status": "error"
+      },
+      {
+        "args": [
+          "la",
+          "hauteur"
+        ],
+        "tester": "Z38107",
         "status": "error"
       }
     ],

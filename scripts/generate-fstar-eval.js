@@ -340,15 +340,26 @@ async function translate(term, context) {
     // make the whole thing a value.
     if (type && /^Z[1-9][0-9]*$/.test(type)) {
       const fields = [];
-      let literal = true;
+      let readable = true;
       for (const key of Object.keys(term)) {
         if (key === "Z1K1") continue;
-        if (!/^(Z[1-9][0-9]*)?K[1-9][0-9]*$/.test(key)) { literal = false; break; }
-        const translated = await translate(term[key], context);
-        if (!isLiteral(translated)) { literal = false; break; }
-        fields.push([key, translated]);
+        if (!/^(Z[1-9][0-9]*)?K[1-9][0-9]*$/.test(key)) { readable = false; break; }
+        fields.push([key, await translate(term[key], context)]);
       }
-      if (literal) return { kind: "record", type, fields };
+      if (readable) {
+        // All literals makes the whole thing a value. Otherwise it is a
+        // construction: a record built from arguments or calls.
+        //
+        // Refusing the second case was expensive. Z861's implementation Z27217
+        // is exactly that shape - {Z11K1: arg2, Z11K2: arg1, Z1K1: Z11} - so
+        // skipping it left only the implementation that defers to Z26107, which
+        // defers straight back. The pair looked like unbreakable mutual
+        // recursion when neither function recurses at all and the way out was a
+        // plain record.
+        return fields.every(([, v]) => isLiteral(v))
+          ? { kind: "record", type, fields }
+          : { kind: "record", type, fields, computed: true };
+      }
     }
     throw new Unsupported(`object of type ${type ?? "unknown"}`);
   }
@@ -397,6 +408,11 @@ function renderFstar(node) {
   if (node.kind === "arg") return `EArg ${node.index}`;
   if (node.kind === "call") {
     return `ECall ${node.zid.slice(1)} [${node.args.map(renderFstar).join("; ")}]`;
+  }
+  // A record whose fields are not all literals is built at evaluation time.
+  if (node.kind === "record" && node.computed) {
+    return `ERecord ${node.type.slice(1)} [${node.fields
+      .map(([key, v]) => `(${schemeKey(key)}, ${renderFstar(v)})`).join("; ")}]`;
   }
   return `EValue (${renderFstarValue(node)})`;
 }
@@ -971,10 +987,51 @@ async function main() {
     (zid) => (emittedIndex.get(zid)?.calls ?? []).filter((c) => emittedIndex.has(c))
   );
   const inCycle = new Set();
+  const groupOf = new Map();
   for (const group of finalGroups) {
-    if (group.length > 1) for (const zid of group) inCycle.add(zid);
+    if (group.length < 2) continue;
+    const sorted = [...group].sort((a, b) => Number(a.slice(1)) - Number(b.slice(1)));
+    for (const zid of group) { inCycle.add(zid); groupOf.set(zid, sorted); }
   }
   for (const entry of emitted) entry.mutuallyRecursive = inCycle.has(entry.zid);
+
+  // Reaching a cycle is the same as being in one, as far as a caller is
+  // concerned: evaluation goes in and does not come back with an answer.
+  //
+  // These used to be marked runnable, because runnable meant "every function it
+  // reaches is implemented" - which is true of a cycle, and useless. The
+  // catalogue was advertising functions that provably cannot terminate, and the
+  // only way to find out was to run one and read a depth limit. A caller is
+  // owed the difference between "nobody has implemented this yet" and "this is
+  // defined in a way that cannot produce an answer".
+  const reachesCycle = new Set(inCycle);
+  let spreading = true;
+  while (spreading) {
+    spreading = false;
+    for (const entry of emitted) {
+      if (reachesCycle.has(entry.zid)) continue;
+      if (entry.calls.some((callee) => reachesCycle.has(callee))) {
+        reachesCycle.add(entry.zid);
+        spreading = true;
+      }
+    }
+  }
+  for (const entry of emitted) {
+    entry.reachesCycle = reachesCycle.has(entry.zid);
+    entry.cycle = groupOf.get(entry.zid);
+    if (entry.reachesCycle) entry.runnable = false;
+  }
+
+  // Named at generation time, not left for whoever runs a tester to discover.
+  const cycleGroups = finalGroups.filter((group) => group.length > 1);
+  console.log(
+    `\n${cycleGroups.length} groups of compositions are defined through each other with no base` +
+    ` case, holding ${inCycle.size} functions and stranding ${reachesCycle.size} in total:`
+  );
+  for (const group of cycleGroups.sort((a, b) => b.length - a.length)) {
+    const sorted = [...group].sort((a, b) => Number(a.slice(1)) - Number(b.slice(1)));
+    console.log(`  ${sorted.map((zid) => `${zid} ${labels.get(zid) ?? ""}`.trim()).join("  <->  ")}`);
+  }
 
   const emittedByZid = new Map(emitted.map((entry) => [entry.zid, entry]));
   const usedClassics = new Map();
@@ -1015,6 +1072,11 @@ async function main() {
           label: entry.label,
           arity: entry.arity,
           runnable: entry.runnable,
+          // Reaching a group of compositions defined through each other with no
+          // base case. Such a call cannot produce an answer, so it is not the
+          // same as reaching a function nobody has written yet.
+          reachesCycle: entry.reachesCycle,
+          cycle: entry.cycle,
           mutuallyRecursive: entry.mutuallyRecursive,
           argumentKeys: entry.argKeys,
           // Declared, not checked. The engine has no type checker; these come

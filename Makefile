@@ -1,4 +1,4 @@
-.PHONY: test example fstar-generate-eval fstar-engine engine-testers closure fstar-check fstar-verify-functions fstar-ocaml fstar-generate-compositions fstar-js-demo fstar-call-js fstar-call-browser fstar-browser-demo setup-fstar doctor verify import-vendored-dump download-dump
+.PHONY: test example fstar-generate-eval fstar-engine engine-testers tester-report closure fstar-check fstar-verify-functions fstar-ocaml fstar-generate-compositions fstar-js-demo fstar-call-js fstar-call-browser fstar-browser-demo setup-fstar doctor verify import-vendored-dump download-dump
 
 test:
 	node --test
@@ -29,7 +29,12 @@ fstar-engine:
 	node scripts/export-all-scheme.js
 
 engine-testers:
-	node scripts/check-engine-testers.js
+	node scripts/check-engine-testers.js --json --examples docs/generated/examples.json --out build/tester-sweep.json
+
+# Every tester run against the extracted JavaScript, grouped by root cause
+# rather than by message, as a page and as JSON.
+tester-report:
+	node scripts/report-testers.js
 
 closure:
 	node scripts/analyze-closure.js --set engine

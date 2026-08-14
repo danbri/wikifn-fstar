@@ -223,6 +223,9 @@ async function main() {
     }
     const examples = {};
     for (const [zid, list] of byFunction) {
+      // Every distinct example, not a sample of them: a caller wanting to try
+      // this function wants the whole set its testers use, and the page shows
+      // them all.
       list.sort((a, b) => rank[a.status] - rank[b.status]);
       const seen = new Set();
       const picked = [];
@@ -236,7 +239,6 @@ async function main() {
           tester: entry.tester_zid,
           status: entry.status
         });
-        if (picked.length === 4) break;
       }
       if (picked.length) examples[zid] = picked;
     }

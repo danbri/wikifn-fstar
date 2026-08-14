@@ -19,6 +19,29 @@
       .arg-row label { min-width: 9rem; font-family: ui-monospace, monospace; font-size: 0.85em; }
       .arg-row input { flex: 1; }
       pre.sexpr { overflow-x: auto; }
+      /* A function that reaches a group of compositions defined through each
+         other with no base case. Calling it cannot produce an answer, so it is
+         marked everywhere it appears rather than only when it fails. */
+      .cycle-warn { background: #ffd9e4; color: #3d0d1c; }
+      @media (prefers-color-scheme: dark) { .cycle-warn { background: #5c2438; color: #ffdde6; } }
+      /* Repeated as .function-list button.cycle-warn: the rule above sets
+         background:none on every button in the list and would otherwise win on
+         specificity. */
+      .function-list button.cycle-warn { background: #ffd9e4; color: #3d0d1c; }
+      .function-list button.cycle-warn:hover { background: #ffc2d3; }
+      @media (prefers-color-scheme: dark) {
+        .function-list button.cycle-warn { background: #5c2438; color: #ffdde6; }
+        .function-list button.cycle-warn:hover { background: #6e2c44; }
+      }
+      .cycle-note { background: #ffd9e4; color: #3d0d1c; border-radius: 0.3rem;
+        padding: 0.5rem 0.7rem; margin: 0.4rem 0 0.8rem; font-size: 0.9em; }
+      @media (prefers-color-scheme: dark) { .cycle-note { background: #5c2438; color: #ffdde6; } }
+      .example-item { display: inline-flex; align-items: stretch; }
+      .examples button.example-copy { font: inherit; font-size: 0.75em; padding: 0.15rem 0.4rem;
+        margin-left: -1px; border: 1px solid rgba(128,128,128,0.45); border-radius: 0 0.8rem 0.8rem 0;
+        background: none; cursor: pointer; opacity: 0.75; }
+      .examples button.example-copy:hover { background: rgba(128,128,128,0.15); opacity: 1; }
+      .examples button.example { border-radius: 0.8rem 0 0 0.8rem; }
       .examples { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: baseline; margin-bottom: 0.6rem; }
       .examples button.example { font: inherit; font-size: 0.85em; font-family: ui-monospace, monospace;
         padding: 0.15rem 0.5rem; border: 1px solid rgba(128,128,128,0.45); border-radius: 0.8rem;
@@ -36,17 +59,23 @@
         <p class="eyebrow">wikifn-fstar</p>
         <h1>Wikifn Engine Browser</h1>
         <p>
-          3,676 real Wikifunctions compositions, mechanically translated into
+          3,823 real Wikifunctions compositions, mechanically translated into
           F*, checked by F*, extracted to OCaml, compiled to JavaScript, and
           running in this page. Search for a function, read its source as an
           s-expression, and run it.
         </p>
         <p>
-          Not all of them can run yet. A function is <strong>runnable</strong>
-          when every function it reaches is implemented; the rest are carried
-          because calls are by reference, so they start working as soon as the
-          gap is filled.
+          Not all of them can run yet, and there are two different reasons.
+          A function is <strong>runnable</strong> when every function it reaches
+          is implemented; the rest are carried because calls are by reference,
+          so they start working as soon as the gap is filled. Separately, some
+          reach compositions defined in terms of each other with no base case:
+          those cannot return an answer however long they run, and are
+          <span class="cycle-warn" style="padding:0 .25rem;border-radius:.2rem">marked
+          like this</span> rather than left for you to discover.
         </p>
+        <p><a href="./tester-report.html">What still fails</a> — every Wikifunctions
+          tester run against this engine, grouped by cause.</p>
         <p><a href="./demos.html">Demos menu</a> &middot; <a href="./engine.md">How it works</a></p>
       </header>
 
@@ -83,6 +112,7 @@
           <div>
             <h3 id="engine-title">Select a function</h3>
             <p class="provenance" id="engine-provenance"></p>
+            <div class="cycle-note" id="engine-cycle" hidden></div>
 
             <form id="engine-form" class="call-form" hidden>
               <div id="engine-args"></div>
@@ -181,6 +211,7 @@
         const argsEl = document.getElementById("engine-args");
         const fuelEl = document.getElementById("engine-fuel");
         const exampleEl = document.getElementById("engine-examples");
+        const cycleEl = document.getElementById("engine-cycle");
         const outputEl = document.querySelector("#engine-output code");
 
         // Puts one example into the argument boxes. A string goes in as itself
@@ -286,7 +317,16 @@
             zid.className = "zid";
             zid.textContent = entry.zid + " ";
             button.append(zid, document.createTextNode(entry.label || entry.name));
-            if (!entry.runnable) {
+            // Two different things, and the difference matters to a caller:
+            // nobody has implemented this yet, versus this is defined in a way
+            // that cannot produce an answer however long it runs.
+            if (entry.reachesCycle) {
+              button.classList.add("cycle-warn");
+              const note = document.createElement("span");
+              note.className = "zid";
+              note.textContent = "  (cannot terminate)";
+              button.append(note);
+            } else if (!entry.runnable) {
               const gap = document.createElement("span");
               gap.className = "zid";
               gap.textContent = "  (reaches a gap)";
@@ -322,6 +362,22 @@
             " &middot; from implementation <code>" + entry.implementation +
             "</code> revision " + entry.revision +
             "<br>digest <code>" + entry.digest + "</code>";
+
+          // Said before the reader spends time on it, not after the call comes
+          // back with a depth limit.
+          cycleEl.replaceChildren();
+          cycleEl.hidden = !entry.reachesCycle;
+          if (entry.reachesCycle) {
+            const cycle = entry.cycle
+              ? "It is itself part of that group: " + entry.cycle.join(" ↔ ") + "."
+              : "It reaches such a group through the functions it calls.";
+            cycleEl.textContent =
+              "This cannot return an answer. Somewhere below it, compositions are defined "
+              + "in terms of each other with no base case — true as equations, unproductive "
+              + "as definitions. " + cycle
+              + " Running it reports a depth limit. The engine browser marks these rather "
+              + "than letting you find out by waiting.";
+          }
           // Rendered by Wikifn.Print, the same checked module the evaluator
           // uses, rather than by this page.
           try {
@@ -364,25 +420,55 @@
           exampleEl.replaceChildren();
           if (sampled.length) {
             fill(sampled[0]);
-            const note = document.createElement("span");
+            const note = document.createElement("p");
             note.className = "count";
-            note.textContent = sampled.length === 1
-              ? "example from tester " + sampled[0].tester + ": "
-              : "examples from its testers: ";
+            note.textContent = sampled.length + " example" + (sampled.length === 1 ? "" : "s")
+              + " from this function's own Wikifunctions testers. Click to load one, or copy it.";
             exampleEl.append(note);
             for (const sample of sampled) {
+              const item = document.createElement("span");
+              item.className = "example-item";
+
               const button = document.createElement("button");
               button.type = "button";
               button.className = "example";
-              button.textContent = sample.args.map((a) => JSON.stringify(a)).join(", ");
-              // An example the engine cannot yet run is still a real example.
-              // Marking it is more useful than hiding it.
+              const text = sample.args.map((a) => JSON.stringify(a)).join(", ");
+              button.textContent = text;
+              // An example this engine cannot run is still a real example. It is
+              // marked rather than hidden, and the mark says which.
               if (sample.status !== "pass") {
-                button.title = "this engine currently reports " + sample.status + " for this input";
+                button.title = "tester " + sample.tester + " — this engine currently reports "
+                  + sample.status + " for this input";
                 button.classList.add("example-known-bad");
+              } else {
+                button.title = "tester " + sample.tester
+                  + (sample.expected === undefined
+                      ? "" : " — expects " + JSON.stringify(sample.expected));
               }
               button.addEventListener("click", () => fill(sample));
-              exampleEl.append(button);
+
+              // Copying the arguments as JSON, which is what the CLI and the
+              // JavaScript API both take.
+              const copy = document.createElement("button");
+              copy.type = "button";
+              copy.className = "example-copy";
+              copy.textContent = "copy";
+              copy.title = "copy these arguments as JSON";
+              copy.addEventListener("click", async () => {
+                const payload = JSON.stringify(sample.args);
+                try {
+                  await navigator.clipboard.writeText(payload);
+                  copy.textContent = "copied";
+                } catch (error) {
+                  // Clipboard access can be refused; selecting the text is
+                  // still something the reader can act on.
+                  copy.textContent = payload;
+                }
+                setTimeout(() => { copy.textContent = "copy"; }, 1200);
+              });
+
+              item.append(button, copy);
+              exampleEl.append(item);
             }
           }
           formEl.hidden = false;

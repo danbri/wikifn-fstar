@@ -10,9 +10,549 @@ open Wikifn.Eval
   Z14K2 composition; none of it is authored.
 
   part:      10 of 10
-  functions: 75
-  ZID range: Z38435 to Z38857
+  functions: 223
+  ZID range: Z37767 to Z38857
 *)
+
+(* Z37767 switch on number (s/p) | Z37767@291092 -> Z37768@291086 digest f059d4716bfc1dca6a345255ab4565dc1eca78e06bada3984a1c88a1d6a930e2 *)
+let body_Z37767_switch_on_number_s_p : expr =
+  ECall 802 [ECall 6894 [EArg 0; EValue (VRecord 26934 [({ key_owner = Some 26934; key_index = 1 }, VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 49; 48; 55; 56; 54])])])]; EArg 1; EArg 2]
+
+(* Z37772 item influenced by | Z37772@291119 -> Z37773@291115 digest 1d673db4d55f99b1b756c59f4b5de3810f88d9eca5085b519894d49080a431b9 *)
+let body_Z37772_item_influenced_by : expr =
+  ECall 873 [EValue (VFunc 19308); ECall 27610 [ECall 29691 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 55; 51; 55])])]]]
+
+(* Z37774 influenced by-sentence in English | Z37774@291122 -> Z37775@291123 digest 3f3470718b1f235aa0030a27946f2d05fa6389d7226f2047e72a3be90509b803 *)
+let body_Z37774_influenced_by_sentence_in_english : expr =
+  ECall 34669 [ECall 810 [ECall 34669 [ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 1); ({ key_owner = Some 11; key_index = 2 }, ECall 10771 [ECall 24766 [EArg 0; EArg 1]])]; ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 1); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [105; 115; 32; 105; 110; 102; 108; 117; 101; 110; 99; 101; 100; 32; 98; 121]))]; ECall 810 [ECall 34644 [ECall 33024 [ECall 37772 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList [VFunc 1360]); EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 55; 51; 55])]])]]; EArg 1]; EArg 1]; EValue (VList [])]]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 1); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [32]))]]; ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 1); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [46]))]; EValue (VList [])]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 1); ({ key_owner = Some 11; key_index = 2 }, EValue (VText []))]]
+
+(* Z37777 entity influenced by-sentence | Z37777@291129 -> Z37778@291126 digest 78ad6cd0d6df35ce4fd6530f37194f19a08ee81082482ce4c1dc0ed948f469f7 *)
+let body_Z37777_entity_influenced_by_sentence : expr =
+  ECall 31684 [ECall 14310 [EValue (VFunc 37776); EArg 1]; EArg 0; EArg 1]
+
+(* Z37782 infobox for row, date | Z37782@291174 -> Z37784@293093 digest 72229c04895620fead9ea5536ffce425098664570a664e9cdfe0f2600731b6e8 *)
+let body_Z37782_infobox_for_row_date : expr =
+  ECall 37640 [ECall 27299 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList [VFunc 1360]); ECall 810 [EArg 1; EValue (VList [])]]; EArg 1]; ECall 33319 [ECall 810 [ECall 33315 [ECall 34096 [ECall 24766 [ECall 35364 [ECall 35036 [EArg 1; EValue (VList [VFunc 6036]); EValue (VList []); EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 54; 50; 57])]])]]; EArg 2]; EArg 2]]; ECall 810 [ECall 33315 [ECall 35192 [ECall 23451 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList [VFunc 1360]); ECall 810 [EArg 1; EValue (VList [])]]; EArg 1]; EArg 2]]; EValue (VList [])]]]; EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])])]
+
+(* Z37791 Intro for species with hypernym in English | Z37791@292236 -> Z37793@292201 digest 76476d690558b183b5708fbdfe31eaeeaf3654bb78244d42cc9b2724de04a3ea *)
+let body_Z37791_intro_for_species_with_hypernym_in_english : expr =
+  ECall 27926 [ECall 810 [ECall 35766 [EValue (VList [VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [60; 98; 62; 60; 105; 62])]; VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [60; 47; 105; 62; 60; 47; 98; 62])]]); ECall 27868 [ECall 19308 [ECall 37836 [EArg 0]]]]; ECall 810 [ECall 802 [ECall 10216 [ECall 28676 [ECall 37821 [EArg 0; EArg 2]; EValue (VFunc 37463)]]; ECall 27926 [ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [44; 32; 97; 108; 115; 111; 32; 107; 110; 111; 119; 110; 32; 97; 115; 32; 116; 104; 101; 32])]); ECall 810 [ECall 28914 [ECall 37821 [EArg 0; EArg 2]]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [44; 32])]); EValue (VList [])]]]]; EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [60; 33; 45; 45; 32; 110; 111; 32; 99; 111; 109; 109; 111; 110; 32; 110; 97; 109; 101; 32; 45; 45; 62; 32])])]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [105; 115; 32; 97; 32; 115; 112; 101; 99; 105; 101; 115; 32])]); ECall 810 [ECall 802 [ECall 10174 [ECall 24331 [ECall 20041 [EArg 1]]; ECall 10216 [ECall 35811 [ECall 31676 [EArg 1; EValue (VFunc 1002)]]]]; ECall 27926 [ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [111; 102; 32])]); ECall 810 [ECall 27868 [ECall 14396 [ECall 31676 [EArg 1; EValue (VFunc 1002)]]]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [32])]); EValue (VList [])]]]]; EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])])]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [105; 110; 32; 116; 104; 101; 32; 102; 97; 109; 105; 108; 121; 32])]); ECall 810 [ECall 36489 [ECall 37725 [EArg 0]; ECall 23459 [ECall 30120 [ECall 37725 [EArg 0]; EValue (VList [VFunc 6036]); EValue (VList []); EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 50; 50; 53])]])]; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 50; 50; 53])])]]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [46; 32])]); ECall 810 [ECall 802 [ECall 37925 [ECall 811 [ECall 37808 [EArg 0; EArg 2]]]; ECall 27926 [ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [84; 104; 101; 32; 115; 112; 101; 99; 105; 101; 115; 32; 119; 97; 115; 32; 100; 101; 115; 99; 114; 105; 98; 101; 100; 32; 105; 110; 32])]); ECall 810 [ECall 27868 [ECall 811 [ECall 37808 [EArg 0; EArg 2]]]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [32; 98; 121; 32])]); ECall 810 [ECall 802 [ECall 23120 [ECall 16360 [ECall 37808 [EArg 0; EArg 2]]]; ECall 37927 [EArg 0; EArg 2]; EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])])]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [46])]); ECall 810 [ECall 32891 [ECall 36240 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 50; 50; 53])]); EArg 2]]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [32])]); EValue (VList [])]]]]]]]]; EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [60; 33; 45; 45; 32; 110; 111; 32; 100; 101; 115; 99; 114; 105; 98; 105; 110; 103; 32; 100; 97; 116; 101; 32; 97; 110; 100; 47; 111; 114; 32; 97; 117; 116; 104; 111; 114; 105; 116; 121; 32; 45; 45; 62])])]; ECall 810 [ECall 802 [ECall 10216 [ECall 28676 [ECall 37833 [EArg 0; EArg 2]; EValue (VFunc 28158)]]; ECall 27926 [ECall 810 [ECall 37441 [EArg 0]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [32; 104; 97; 115; 32; 98; 101; 101; 110; 32; 97; 115; 115; 101; 115; 115; 101; 100; 32; 97; 115; 32])]); ECall 810 [ECall 27868 [ECall 37833 [EArg 0; EArg 2]]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [32; 98; 121; 32; 116; 104; 101; 32])]); ECall 810 [ECall 32428 [EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 52; 56; 50; 54; 56])]); EArg 2]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [32; 40; 73; 85; 67; 78; 41; 46])]); ECall 810 [ECall 32891 [ECall 36240 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 52; 49])]); EArg 2]]; EValue (VList [])]]]]]]]]; EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [60; 33; 45; 45; 32; 78; 111; 116; 32; 97; 115; 115; 101; 115; 115; 101; 100; 32; 98; 121; 32; 73; 85; 67; 78; 32; 45; 45; 62])])]; EValue (VList [])]]]]]]]]]]
+
+(* Z37802 get element of language-keyed map | Z37802@291405 -> Z37810@292702 digest c565ca5f7fbf7414cfe8ffadcc2a8c49ba8042ae9c8978bfffc9d75f3789effd *)
+let body_Z37802_get_element_of_language_keyed_map : expr =
+  ECall 822 [ECall 13397 [ECall 803 [EValue (VRecord 39 [({ key_owner = Some 39; key_index = 1 }, VText [75; 49])]); EArg 0]; ECall 24649 [ECall 803 [EValue (VRecord 39 [({ key_owner = Some 39; key_index = 1 }, VText [75; 49])]); EArg 0]; EArg 1]]]
+
+(* Z37805 item developed in | Z37805@291487 -> Z37807@291425 digest 1fb54de53bacc7fd253f6d670856c55b5e357215b05ffbe88608c360dfa48d93 *)
+let body_Z37805_item_developed_in : expr =
+  ECall 873 [EValue (VFunc 19308); ECall 27610 [ECall 29691 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 50; 55; 55])])]]]
+
+(* Z37808 year and describing authority of taxon | Z37808@292109 -> Z37820@292041 digest e8d041a4a8f2f8a6a4fd2c0700afc9480aba8f836427d2d6ba964dfd4def38af *)
+let body_Z37808_year_and_describing_authority_of_taxon : expr =
+  ECall 18475 [ECall 810 [ECall 28818 [ECall 28773 [ECall 33579 [ECall 37836 [EArg 0]; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 53; 55; 52])])]]; EValue (VFunc 1002); EValue (VRecord 20159 [({ key_owner = Some 20159; key_index = 1 }, VRecord 17813 [({ key_owner = Some 17813; key_index = 1 }, VFunc 17814)]); ({ key_owner = Some 20159; key_index = 2 }, VNat 1)])]; ECall 810 [ECall 873 [EValue (VFunc 28297); ECall 28312 [ECall 37836 [EArg 0]; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 52; 48; 53])])]]; EValue (VList [])]]]
+
+(* Z37809 developed in-sentence in English | Z37809@291365 -> Z37811@291431 digest 30711a265abf630c96c3414a0fe9ff168772558c9f976d48dd9ee9fa270398af *)
+let body_Z37809_developed_in_sentence_in_english : expr =
+  ECall 34669 [ECall 810 [ECall 34669 [ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 1); ({ key_owner = Some 11; key_index = 2 }, ECall 10771 [ECall 24766 [EArg 0; EArg 1]])]; ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 1); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [105; 115; 32; 112; 114; 111; 103; 114; 97; 109; 109; 101; 100; 32; 105; 110]))]; ECall 810 [ECall 34644 [ECall 33024 [ECall 37805 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList [VFunc 1360]); EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 50; 55; 55])]])]]; EArg 1]; EArg 1]; EValue (VList [])]]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 1); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [32]))]]; ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 1); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [46]))]; EValue (VList [])]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 1); ({ key_owner = Some 11; key_index = 2 }, EValue (VText []))]]
+
+(* Z37821 Common name of taxon | Z37821@291446 -> Z37822@292678 digest 7d472dafb0da73abc78d957c80f618013393967d5043a25d4fc4fc3103b13bc4 *)
+let body_Z37821_common_name_of_taxon : expr =
+  ECall 14396 [ECall 19308 [ECall 22839 [ECall 37323 [ECall 22220 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); ECall 810 [EArg 1; EValue (VList [])]; EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 56; 52; 51])]])]]; ECall 810 [EArg 1; EValue (VList [])]]; ECall 851 [EValue (VFunc 37463); EValue (VList [])]]]]
+
+(* Z37827 infobox for a taxon | Z37827@292089 -> Z37828@291560 digest ccf95b15f83d0fd2d710c1a2a96cb144cc3e180c3115ea039deff1ce05b04c35 *)
+let body_Z37827_infobox_for_a_taxon : expr =
+  ECall 33328 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])]); EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])]); ECall 810 [ECall 37644 [EArg 0; EValue (VText [116; 97; 120; 111; 110]); EArg 1]; ECall 810 [ECall 37830 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 50; 50; 53])]); EArg 1]; ECall 810 [ECall 37623 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 48; 53])]); EArg 1]; ECall 810 [ECall 37623 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 55; 49])]); EArg 1]; EValue (VList [])]]]]]
+
+(* Z37830 infobox row, string | Z37830@294381 -> Z37832@291807 digest 61ec589c1c6bc7c595eb5a976b3bbf890dcac99cd42576cf517041f461b6dd08 *)
+let body_Z37830_infobox_row_string : expr =
+  ECall 37640 [ECall 27299 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList []); ECall 810 [EArg 1; EValue (VList [])]]; EArg 1]; ECall 33319 [ECall 810 [ECall 33315 [ECall 10771 [ECall 24766 [ECall 35364 [ECall 35036 [EArg 1; EValue (VList [VFunc 6036]); EValue (VList []); EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 54; 50; 57])]])]]; EArg 2]]]; ECall 810 [ECall 36357 [ECall 36209 [ECall 19308 [ECall 23680 [ECall 22220 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList []); ECall 810 [EArg 1; EValue (VList [])]]]]]; EArg 2]]; EValue (VList [])]]]; EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])])]
+
+(* Z37833 fetch IUCN conservation status string | Z37833@291592 -> Z37834@292675 digest be05c6ed9ff19cbadd28ccb855de4ef378b38336e88db8bc989bebe81415ec5b *)
+let body_Z37833_fetch_iucn_conservation_status_string : expr =
+  ECall 23468 [ECall 30120 [ECall 19308 [ECall 23451 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList []); EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 52; 49])]])]; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 52; 49])])]]; EValue (VList [VFunc 6033]); EValue (VList []); EValue (VList [])]; EArg 1]
+
+(* Z37836 Taxon name statements of QID | Z37836@293203 -> Z37837@292697 digest 79af44193946e484031619961030dc4cf045892bd75f74a2c2dba380c71f44e5 *)
+let body_Z37836_taxon_name_statements_of_qid : expr =
+  ECall 23451 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList []); EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 50; 50; 53])]])]; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 50; 50; 53])])]
+
+(* Z37838 Taxon authority as typed list (string) | Z37838@291855 -> Z37839@292696 digest f3fda290e7a1952e3ddb149e77702795f1e453dc53530e2ec67420046495683b *)
+let body_Z37838_taxon_authority_as_typed_list_string : expr =
+  ECall 873 [EValue (VFunc 28297); ECall 28312 [ECall 37836 [EArg 0]; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 52; 48; 53])])]]
+
+(* Z37840 list of Abstract Wikilinks | Z37840@294194 -> Z37841@291624 digest be4eec6a645d50ed7f86777a31bdcb973af2ea8e5efe7e828b83e2f140ca1c61 *)
+let body_Z37840_list_of_abstract_wikilinks : expr =
+  ECall 32179 [ECall 13464 [EValue (VFunc 32428); EArg 0; EArg 1]]
+
+(* Z37843 Fetch labels of Wikidata QID | Z37843@293207 -> Z37844@291637 digest b20c952799f48bc65bed03f1777e95b385863b51e7482fa08f4c124f46c71895 *)
+let body_Z37843_fetch_labels_of_wikidata_qid : expr =
+  ECall 30120 [EArg 0; EValue (VList [VFunc 6033]); EValue (VList []); EValue (VList [])]
+
+(* Z37847 first lexeme ref from item ref and language | Z37847@291728 -> Z37849@291742 digest 33eac3d05100806ed1da80d6041b7b8e7a0c34353d6687e2a56dd4e24cfcc4b6 *)
+let body_Z37847_first_lexeme_ref_from_item_ref_and_language : expr =
+  ECall 22839 [ECall 6830 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 53; 49; 51; 55])]); EArg 1]; ECall 851 [EValue (VFunc 28248); ECall 810 [ECall 20041 [EArg 0]; ECall 810 [EValue (VText [80; 53; 49; 51; 55]); ECall 810 [ECall 14329 [EArg 1]; EValue (VList [])]]]]]
+
+(* Z37851 place is located by a body of water in French | Z37851@291745 -> Z37854@291744 digest 85cf6c231bbe59afc6336e5811586fc6189f5049fb2b4de09e15aab924ba3586 *)
+let body_Z37851_place_is_located_by_a_body_of_water_in_french : expr =
+  ECall 26107 [EArg 2; ECall 12899 [ECall 810 [ECall 23753 [EArg 0; EArg 2]; ECall 810 [EValue (VText [101; 115; 116; 32; 115; 117; 114]); ECall 810 [ECall 32169 [EArg 1; EArg 2]; EValue (VList [])]]]; EValue (VText [32])]]
+
+(* Z37855 join Wikidata item property val (en, Oxford comma) | Z37855@294661 -> Z37856@291808 digest 220e0ea123c687042d794bfec2f44a10c38cc3b2e09dd6a194932f23ed9efbc6 *)
+let body_Z37855_join_wikidata_item_property_val_en_oxford_comma : expr =
+  ECall 34644 [ECall 33024 [ECall 873 [EValue (VFunc 19308); ECall 27610 [ECall 29691 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList [VFunc 1360]); ECall 810 [EArg 1; EValue (VList [])]]; EArg 1]]]; EArg 2]; EArg 2]
+
+(* Z37858 join Wikidata item property values, French | Z37858@291815 -> Z37863@291809 digest d2122b05ef097219af7ecfb093b5b093b21a672f02b36bcce40c5c38e71ca6f8 *)
+let body_Z37858_join_wikidata_item_property_values_french : expr =
+  ECall 37859 [ECall 33024 [ECall 873 [EValue (VFunc 19308); ECall 27610 [ECall 29691 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList [VFunc 1360]); ECall 810 [EArg 1; EValue (VList [])]]; EArg 1]]]; EArg 2]; EArg 2]
+
+(* Z37859 join list of monolingual texts with comma, French | Z37859@291770 -> Z37860@291763 digest 502ef27c0baa6bde3712d49121664f1a227752727695ac0c4ed2a9b99cf9c784 *)
+let body_Z37859_join_list_of_monolingual_texts_with_comma_french : expr =
+  ECall 802 [ECall 13522 [ECall 12681 [EArg 0]; EValue (VNat 0)]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 0); ({ key_owner = Some 11; key_index = 2 }, EValue (VText []))]; ECall 802 [ECall 13522 [ECall 12681 [EArg 0]; EValue (VNat 1)]; ECall 811 [EArg 0]; ECall 802 [ECall 13522 [ECall 12681 [EArg 0]; EValue (VNat 2)]; ECall 34669 [EArg 0; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 1); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [32; 101; 116; 32]))]]; ECall 34669 [ECall 810 [ECall 34669 [ECall 12967 [EArg 0]; EValue (VRecord 11 [({ key_owner = Some 11; key_index = 1 }, VFunc 1002); ({ key_owner = Some 11; key_index = 2 }, VText [44; 32])])]; ECall 810 [ECall 12964 [EArg 0]; EValue (VList [])]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 1); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [32; 101; 116; 32]))]]]]]
+
+(* Z37866 Infobox row property type | Z37866@291972 -> Z37868@291825 digest af2ffd5445d374cd20cf4619c662baba1c13122cf4eab719de0a8555aeb936bb *)
+let body_Z37866_infobox_row_property_type : expr =
+  ECall 17893 [ECall 19308 [ECall 23680 [ECall 22220 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); ECall 810 [EArg 2; EValue (VList [])]; ECall 810 [EArg 1; EValue (VList [])]]]]]]
+
+(* Z37870  join WD item property values  | Z37870@294939 -> Z37871@291824 digest 995ae35c6554acdd790f2368e414f0a4fd27241664a7457f2d021950f4f3b4d1 *)
+let body_Z37870_join_wd_item_property_values : expr =
+  ECall 21216 [ECall 14310 [EValue (VFunc 37869); EArg 2]; EArg 0; EArg 1; EArg 2]
+
+(* Z37873 entity programmed in-sentence  | Z37873@291835 -> Z37875@291832 digest cbae153a18078bb9bbe78c577324be8ee97a637b90be3d9100a7a3c3fc87d565 *)
+let body_Z37873_entity_programmed_in_sentence : expr =
+  ECall 31684 [ECall 14310 [EValue (VFunc 37874); EArg 1]; EArg 0; EArg 1]
+
+(* Z37877 specific property of subject is value, French | Z37877@293170 -> Z37878@293022 digest 8396a704e12fa8b7bcd8a2da5aff71fe638bd01b8850d4dc90bdb4d32ad80d49 *)
+let body_Z37877_specific_property_of_subject_is_value_french : expr =
+  ECall 802 [EValue (VBool false); EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [60; 33; 45; 45; 32; 84; 104; 105; 115; 32; 112; 114; 111; 112; 101; 114; 116; 121; 32; 99; 97; 110; 110; 111; 116; 32; 98; 101; 32; 101; 120; 112; 114; 101; 115; 115; 101; 100; 32; 105; 110; 32; 116; 104; 101; 32; 102; 111; 114; 109; 97; 116; 32; 111; 102; 32; 116; 104; 101; 32; 99; 111; 109; 112; 111; 115; 105; 116; 105; 111; 110; 46; 32; 84; 104; 101; 115; 101; 32; 115; 104; 111; 117; 108; 100; 32; 98; 101; 32; 100; 101; 116; 101; 99; 116; 101; 100; 32; 97; 116; 32; 116; 104; 105; 115; 32; 115; 116; 97; 103; 101; 32; 97; 110; 100; 32; 99; 111; 110; 100; 105; 116; 105; 111; 110; 97; 108; 108; 121; 32; 99; 97; 108; 108; 32; 109; 111; 114; 101; 32; 115; 112; 101; 99; 105; 102; 105; 99; 32; 102; 117; 110; 99; 116; 105; 111; 110; 115; 32; 102; 111; 114; 32; 105; 110; 100; 105; 118; 105; 100; 117; 97; 108; 32; 112; 114; 111; 112; 101; 114; 116; 105; 101; 115; 32; 111; 114; 32; 103; 114; 111; 117; 112; 115; 46; 32; 45; 45; 62])]); ECall 37970 [ECall 32234 [ECall 810 [ECall 10771 [ECall 32556 [ECall 38088 [ECall 35364 [ECall 35036 [EArg 1; EValue (VList [VFunc 6036]); EValue (VList []); EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 54; 50; 57])]])]]; ECall 802 [ECall 19352 [EArg 2; EValue (VFunc 6091)]; ECall 802 [ECall 26602 [EArg 2]; ECall 802 [ECall 38083 [EArg 2]; EValue (VList [VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 55; 55; 53; 52; 49; 53])]]); EValue (VList [VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 52; 57; 57; 51; 50; 55])]])]; EValue (VFunc 34268)]; EValue (VFunc 34268)]; EArg 3]; ECall 14396 [ECall 29825 [EArg 3; EArg 1]]]]; ECall 810 [EValue (VText [32; 100; 101; 32]); ECall 810 [ECall 37956 [EArg 0; EArg 3]; ECall 810 [EValue (VText [32; 101; 115; 116; 32]); ECall 810 [ECall 802 [ECall 19352 [EArg 2; EValue (VFunc 6091)]; ECall 37956 [EArg 2; EArg 3]; ECall 802 [ECall 19352 [EArg 2; EValue (VFunc 6010)]; ECall 27849 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [100; 101; 32])]); ECall 36209 [EArg 2; EArg 3]]; ECall 36209 [EArg 2; EArg 3]]]; ECall 810 [EValue (VText [46]); EValue (VList [])]]]]]]]]]
+
+(* Z37880 infobox value QID | Z37880@291879 -> Z37882@291878 digest 128875bf9e3060c13864d3853d829d55456a3bda082f1518102c00b09e34f9ef *)
+let body_Z37880_infobox_value_qid : expr =
+  ECall 10771 [ECall 24766 [ECall 21449 [EArg 1; ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList [VFunc 1360]); ECall 810 [EArg 1; EValue (VList [])]]]; EArg 2]]
+
+(* Z37883 infobox value string | Z37883@291888 -> Z37885@292301 digest 55ee3222b75c76679ec7d505c195c528eeb5cb6b1c552028b7d39f980e661de2 *)
+let body_Z37883_infobox_value_string : expr =
+  ECall 27854 [ECall 36209 [ECall 19308 [ECall 23680 [ECall 22220 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList []); ECall 810 [EArg 1; EValue (VList [])]]]]]; EArg 2]]
+
+(* Z37886 made from materials-sentence, English | Z37886@291896 -> Z37887@291893 digest 7923c11835256ed32bfa49b61a0c96d3a226d474b28495430f1c50bbc8879168 *)
+let body_Z37886_made_from_materials_sentence_english : expr =
+  ECall 34669 [ECall 810 [ECall 34669 [ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 1); ({ key_owner = Some 11; key_index = 2 }, ECall 10771 [ECall 24766 [EArg 0; EArg 1]])]; ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 1); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [105; 115; 32; 109; 97; 100; 101; 32; 102; 114; 111; 109]))]; ECall 810 [ECall 37870 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 56; 54])]); EArg 1]; EValue (VList [])]]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 1); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [32]))]]; ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 1); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [46]))]; EValue (VList [])]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 1); ({ key_owner = Some 11; key_index = 2 }, EValue (VText []))]]
+
+(* Z37890 entity made from-sentence | Z37890@291902 -> Z37891@291899 digest 3678919e6ad1c1e8fb6d0c8d91b3d658e52efb8850f921a8628da7ef13da7480 *)
+let body_Z37890_entity_made_from_sentence : expr =
+  ECall 31684 [ECall 14310 [EValue (VFunc 37889); EArg 1]; EArg 0; EArg 1]
+
+(* Z37895 noun (Lexeme) gender in French is female | Z37895@292280 -> Z37896@291911 digest 9f38b100c00c31552d50c1d088842f2e260f6d3544d3a7a236e610044b440ea0 *)
+let body_Z37895_noun_lexeme_gender_in_french_is_female : expr =
+  ECall 12696 [ECall 873 [EValue (VFunc 19308); ECall 28548 [ECall 19300 [EArg 0]; EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 53; 49; 56; 53])]])]]; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 55; 55; 53; 52; 49; 53])])]
+
+(* Z37900 string for lexeme with definite, French | Z37900@292274 -> Z37905@292287 digest eedf0e71deda4467586fcb83d25751761d40caab5d90e666c4044e15452fa694 *)
+let body_Z37900_string_for_lexeme_with_definite_french : expr =
+  ECall 802 [ECall 10184 [ECall 12696 [EArg 1; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 52; 54; 55; 56; 54])])]; ECall 37906 [EArg 0]]; ECall 15175 [EValue (VText [108; 101; 115]); ECall 11548 [ECall 27410 [EArg 0; EArg 1]]; EValue (VText [32])]; ECall 802 [ECall 37895 [EArg 0]; ECall 37912 [ECall 27410 [EArg 0; EArg 1]]; ECall 802 [ECall 37988 [EArg 0]; ECall 37916 [ECall 27410 [EArg 0; EArg 1]]; ECall 802 [ECall 37984 [EArg 0]; ECall 27410 [EArg 0; EValue (VList [])]; ECall 37916 [ECall 27410 [EArg 0; EArg 1]]]]]]
+
+(* Z37906 all forms of lexeme are plural? | Z37906@291967 -> Z37909@292110 digest 74c593739e834af7ca1a453a8c7ff68e0b193d46fd93359d1e03992cee9f4601 *)
+let body_Z37906_all_forms_of_lexeme_are_plural : expr =
+  ECall 802 [ECall 813 [ECall 19302 [EArg 0]]; EValue (VBool false); ECall 12684 [ECall 873 [EValue (VFunc 37940); ECall 19302 [EArg 0]]]]
+
+(* Z37912 definite article with feminine sing noun, French | Z37912@291963 -> Z37913@291949 digest 06519d003a6c89bb343b59514b0a24ef5583a5f9167ab3cffeecab7234748b21 *)
+let body_Z37912_definite_article_with_feminine_sing_noun_french : expr =
+  ECall 10000 [ECall 11542 [ECall 32201 [EArg 0]; EValue (VText [108; 39]); EValue (VText [108; 97; 32])]; EArg 0]
+
+(* Z37916 definite article with masculine sing noun, French | Z37916@291962 -> Z37919@291960 digest 33b93e4ac3c4fd8572ad89ad48e940d65d07a0d2affabd62e93008463ac9ae5f *)
+let body_Z37916_definite_article_with_masculine_sing_noun_french : expr =
+  ECall 10000 [ECall 11542 [ECall 32201 [EArg 0]; EValue (VText [108; 39]); EValue (VText [108; 101; 32])]; EArg 0]
+
+(* Z37921 intro for species with automatic hypernym at order | Z37921@295527 -> Z37933@293030 digest 4177c734539cb79e9da45afe27cb2e68c25559ae07f7381b4f9834082158959d *)
+let body_Z37921_intro_for_species_with_automatic_hypernym_at_order : expr =
+  ECall 13318 [ECall 14310 [EValue (VFunc 37975); EArg 1]; EArg 0; EArg 1]
+
+(* Z37922 intro for species with hypernym | Z37922@294008 -> Z37924@292668 digest 6ad778f882a9102120fd6f8db86208559b05662e11025be25615013ee1ed25c7 *)
+let body_Z37922_intro_for_species_with_hypernym : expr =
+  ECall 21216 [ECall 14310 [EValue (VFunc 37923); EArg 2]; EArg 0; EArg 1; EArg 2]
+
+(* Z37925 object is string and not empty | Z37925@292037 -> Z37926@292695 digest d86b314ec375ba72d9a7dcb6b46047b9129c2da1a8362174c0080af993c93598 *)
+let body_Z37925_object_is_string_and_not_empty : expr =
+  ECall 802 [ECall 10174 [ECall 15777 [EArg 0]; ECall 24331 [EArg 0]]; EValue (VBool true); EValue (VBool false)]
+
+(* Z37927 Wikilinked taxon author list in given language | Z37927@292049 -> Z37928@292693 digest dc2110c557e3d0ec75615b0cf3f9a32f6cb5ac8826cbe51b6c0f0cf499d592f3 *)
+let body_Z37927_wikilinked_taxon_author_list_in_given_language : expr =
+  ECall 27861 [ECall 32308 [ECall 873 [EValue (VFunc 27854); ECall 13464 [EValue (VFunc 32428); ECall 29446 [ECall 37808 [EArg 0; EArg 1]]; EArg 1]]; EArg 1]]
+
+(* Z37930 get superior taxon by taxon and rank | Z37930@292413 -> Z37982@292255 digest b5ce98de0eb43cf93e8afeda4d3bb03b6db74184a2d0d56bdf6dc6b0beb1e775 *)
+let body_Z37930_get_superior_taxon_by_taxon_and_rank : expr =
+  ECall 802 [ECall 32431 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 48; 53])]); EArg 1]; EArg 0; ECall 37930 [ECall 23459 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList []); EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 55; 49])]])]; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 55; 49])])]; EArg 1]]
+
+(* Z37934 intro for species with hypernym, Swedish | Z37934@292210 -> Z37935@292671 digest f2d8db88a8f70a4d7e54da4c723a794ad3a0e9a93cd046cebbe3e275901c0ad1 *)
+let body_Z37934_intro_for_species_with_hypernym_swedish : expr =
+  ECall 35766 [ECall 810 [ECall 27926 [ECall 810 [ECall 802 [ECall 28676 [ECall 37821 [EArg 0; EArg 2]; EValue (VFunc 37463)]; ECall 27926 [ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [60; 98; 62; 60; 105; 62])]); ECall 810 [ECall 27868 [ECall 19308 [ECall 37836 [EArg 0]]]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [60; 47; 105; 62; 60; 47; 98; 62])]); EValue (VList [])]]]]; ECall 27926 [ECall 810 [ECall 28914 [ECall 10771 [ECall 37821 [EArg 0; EArg 2]]]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [32; 40; 60; 105; 62])]); ECall 810 [ECall 27868 [ECall 19308 [ECall 37836 [EArg 0]]]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [60; 47; 105; 62; 41])]); EValue (VList [])]]]]]]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [32; 228; 114; 32; 101; 110; 32; 97; 114; 116; 32; 105; 32; 102; 97; 109; 105; 108; 106; 101; 110; 32])]); ECall 810 [ECall 36489 [ECall 37930 [EArg 0; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 51; 53; 52; 48; 57])])]; ECall 23753 [ECall 37930 [EArg 0; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 51; 53; 52; 48; 57])])]; EArg 2]]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [46])]); EValue (VList [])]]]]]; ECall 810 [ECall 802 [ECall 37925 [ECall 811 [ECall 37808 [EArg 0; EArg 2]]]; ECall 27926 [ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [65; 114; 116; 101; 110; 32; 98; 101; 115; 107; 114; 101; 118; 115; 32; 97; 118; 32])]); ECall 810 [ECall 802 [ECall 23120 [ECall 16360 [ECall 37808 [EArg 0; EArg 2]]]; ECall 37927 [EArg 0; EArg 2]; EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])])]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [32; 229; 114; 32])]); ECall 810 [ECall 27868 [ECall 811 [ECall 37808 [EArg 0; EArg 2]]]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [46])]); EValue (VList [])]]]]]]; EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])])]; ECall 810 [ECall 802 [ECall 28676 [ECall 37833 [EArg 0; EArg 2]; EValue (VFunc 28158)]; EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])]); ECall 27926 [ECall 810 [ECall 32428 [EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 52; 56; 50; 54; 56])]); EArg 2]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [32; 40; 73; 85; 67; 78; 41; 32; 107; 97; 116; 101; 103; 111; 114; 105; 115; 101; 114; 97; 114; 32; 97; 114; 116; 101; 110; 32; 115; 111; 109; 32])]); ECall 810 [ECall 27868 [ECall 37833 [EArg 0; EArg 2]]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [46])]); EValue (VList [])]]]]]]; EValue (VList [])]]]; EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [32])])]
+
+(* Z37936 final word separator in Swedish lists: " och " | Z37936@292085 -> Z37937@292082 digest dcb6b549e6247e86fc83c261939385d2e7f41c682326b42594006b9889e2046c *)
+let body_Z37936_final_word_separator_in_swedish_lists_och : expr =
+  EValue (VText [32; 111; 99; 104; 32])
+
+(* Z37939 Taxonomic lineage of QID | Z37939@292138 -> Z37954@292690 digest ac3c242041b6edb801b1a8b7ae381fb5b60422ed4e5b12477d9fbdb9998a65f5 *)
+let body_Z37939_taxonomic_lineage_of_qid : expr =
+  ECall 37941 [EArg 0; EValue (VList [])]
+
+(* Z37940 is individual lexeme form marked as plural? | Z37940@292105 -> Z37942@292100 digest 2fd2e987da7a4531e3957abf0f1b1237ed08ec9c412360356a4f208167cf705c *)
+let body_Z37940_is_individual_lexeme_form_marked_as_plural : expr =
+  ECall 12696 [ECall 22487 [EArg 0]; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 52; 54; 55; 56; 54])])]
+
+(* Z37941 Taxonomic lineage of QID helper | Z37941@292131 -> Z37947@292691 digest 82f2e5c28246b2acaeaf47f08230ca307ae6c696ca49191a976bb6eeffac7366 *)
+let body_Z37941_taxonomic_lineage_of_qid_helper : expr =
+  ECall 802 [ECall 12696 [EArg 1; EArg 0]; ECall 854 [ECall 851 [EValue (VFunc 507); ECall 810 [EArg 0; EValue (VList [])]]; EArg 0]; ECall 802 [ECall 10184 [ECall 32431 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 48; 53])]); EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 52; 54; 52; 56; 49])])]; ECall 10216 [ECall 27299 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList []); EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 55; 49])]])]; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 55; 49])])]]]; ECall 801 [ECall 12961 [EArg 0; EArg 1]]; ECall 854 [ECall 37941 [ECall 23459 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList []); EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 55; 49])]])]; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 55; 49])])]; ECall 12961 [EArg 0; EArg 1]]; EArg 0]]]
+
+(* Z37945 developed by-sentence in English  | Z37945@292123 -> Z37946@292120 digest ead0c0a2bec985234c97b9e0388ecb4ed0a08bd00b9037eb346dcc810c006476 *)
+let body_Z37945_developed_by_sentence_in_english : expr =
+  ECall 34669 [ECall 810 [ECall 34669 [ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 0); ({ key_owner = Some 11; key_index = 2 }, ECall 10771 [ECall 802 [EArg 1; EValue (VText [105; 116]); ECall 24766 [EArg 0; EArg 2]]])]; ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 2); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [105; 115; 32; 100; 101; 118; 101; 108; 111; 112; 101; 100; 32; 98; 121]))]; ECall 810 [ECall 37870 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 55; 56])]); EArg 2]; EValue (VList [])]]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 2); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [32]))]]; ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 2); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [46]))]; EValue (VList [])]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 2); ({ key_owner = Some 11; key_index = 2 }, EValue (VText []))]]
+
+(* Z37951 entity developed by-sentence | Z37951@292140 -> Z37952@292134 digest 2a75f374bb8f9f74a762722e6315b01744b2c68a6ca094c5787dafff6b6621a6 *)
+let body_Z37951_entity_developed_by_sentence : expr =
+  ECall 21216 [ECall 14310 [EValue (VFunc 37950); EArg 2]; EArg 0; EArg 1; EArg 2]
+
+(* Z37956 linked label of item with definite article, French | Z37956@292207 -> Z37957@292152 digest f8f52e9934e0d9c981df59a763820f66bd3579cfc32f0d45dad04a8804bf05a4 *)
+let body_Z37956_linked_label_of_item_with_definite_article_french : expr =
+  ECall 37661 [ECall 27868 [ECall 32169 [EArg 0; EArg 1]]; EArg 0; EArg 1]
+
+(* Z37959 created by-sentence in English | Z37959@292161 -> Z37960@292158 digest 6c29561f91be183048795dd7a9a5edf168a1ac7de24c68e3a127d609e07fcb25 *)
+let body_Z37959_created_by_sentence_in_english : expr =
+  ECall 34669 [ECall 810 [ECall 34669 [ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, ECall 10771 [ECall 802 [EArg 1; EValue (VText [105; 116]); ECall 24766 [EArg 0; EArg 3]]])]; ECall 810 [ECall 802 [ECall 19316 [EArg 2; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 57; 57; 52; 51; 48; 49])])]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [119; 97; 115; 32; 99; 114; 101; 97; 116; 101; 100; 32; 98; 121]))]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [105; 115; 32; 99; 114; 101; 97; 116; 101; 100; 32; 98; 121]))]]; ECall 810 [ECall 37870 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 55; 48])]); EArg 3]; EValue (VList [])]]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [32]))]]; ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [46]))]; EValue (VList [])]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText []))]]
+
+(* Z37963 entity created by-sentence | Z37963@292170 -> Z37964@292164 digest a228e332650d48d0e300a145b5c9aeee46fa6c989c0139ccda071b78cc25a171 *)
+let body_Z37963_entity_created_by_sentence : expr =
+  ECall 30438 [ECall 14310 [EValue (VFunc 37962); EArg 3]; EArg 0; EArg 1; EArg 2; EArg 3]
+
+(* Z37970 replace "de les":"des" and "de le":"du" for French | Z37970@292508 -> Z37973@292218 digest 0bbb2353ea12a51f8e0c57931bd438cd0ea9101a5877f275a3957eb1e2f20ae3 *)
+let body_Z37970_replace_de_les_des_and_de_le_du_for_french : expr =
+  ECall 27861 [ECall 10075 [ECall 10075 [ECall 27854 [EArg 0]; EValue (VText [100; 101; 32; 108; 101; 115]); EValue (VText [100; 101; 115])]; EValue (VText [100; 101; 32; 108; 101]); EValue (VText [100; 117])]]
+
+(* Z37977 Intro for species without hypernym in English | Z37977@292242 -> Z37978@292776 digest c811f5dfa381153b27ed1aadc78641796877ea78447ade40c8e1487b003ebcee *)
+let body_Z37977_intro_for_species_without_hypernym_in_english : expr =
+  ECall 37791 [EArg 0; ECall 37930 [EArg 0; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 51; 54; 54; 48; 50])])]; EArg 1]
+
+(* Z37979 Intro for species in Swedish | Z37979@292318 -> Z37981@292688 digest 20b549326f7e0d6d4173453cd2bed69b8c8d66f7d97de4bc75fa9067d5b92a50 *)
+let body_Z37979_intro_for_species_in_swedish : expr =
+  ECall 35766 [ECall 810 [ECall 27926 [ECall 810 [ECall 802 [ECall 28676 [ECall 37821 [EArg 0; EArg 1]; EValue (VFunc 37463)]; ECall 27926 [ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [60; 98; 62; 60; 105; 62])]); ECall 810 [ECall 27868 [ECall 19308 [ECall 37836 [EArg 0]]]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [60; 47; 105; 62; 60; 47; 98; 62])]); EValue (VList [])]]]]; ECall 27926 [ECall 810 [ECall 28914 [ECall 10771 [ECall 37821 [EArg 0; EArg 1]]]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [32; 40; 60; 105; 62])]); ECall 810 [ECall 27868 [ECall 19308 [ECall 37836 [EArg 0]]]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [60; 47; 105; 62; 41])]); EValue (VList [])]]]]]]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [32; 228; 114; 32; 101; 110; 32; 97; 114; 116; 32; 105; 32; 102; 97; 109; 105; 108; 106; 101; 110; 32])]); ECall 810 [ECall 36489 [ECall 37930 [EArg 0; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 51; 53; 52; 48; 57])])]; ECall 23753 [ECall 37930 [EArg 0; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 51; 53; 52; 48; 57])])]; EArg 1]]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [46])]); EValue (VList [])]]]]]; ECall 810 [ECall 802 [ECall 37925 [ECall 811 [ECall 37808 [EArg 0; EArg 1]]]; ECall 27926 [ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [65; 114; 116; 101; 110; 32; 98; 101; 115; 107; 114; 101; 118; 115; 32; 97; 118; 32])]); ECall 810 [ECall 802 [ECall 23120 [ECall 16360 [ECall 37808 [EArg 0; EArg 1]]]; ECall 37927 [EArg 0; EArg 1]; EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])])]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [32; 229; 114; 32])]); ECall 810 [ECall 27868 [ECall 811 [ECall 37808 [EArg 0; EArg 1]]]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [46])]); EValue (VList [])]]]]]]; EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])])]; ECall 810 [ECall 802 [ECall 28676 [ECall 37833 [EArg 0; EArg 1]; EValue (VFunc 28158)]; EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])]); ECall 27926 [ECall 810 [ECall 32428 [EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 52; 56; 50; 54; 56])]); EArg 1]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [32; 40; 73; 85; 67; 78; 41; 32; 107; 97; 116; 101; 103; 111; 114; 105; 115; 101; 114; 97; 114; 32; 97; 114; 116; 101; 110; 32; 115; 111; 109; 32])]); ECall 810 [ECall 27868 [ECall 37833 [EArg 0; EArg 1]]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [46])]); EValue (VList [])]]]]]]; EValue (VList [])]]]; EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [32])])]
+
+(* Z37984 is proper noun lexeme? | Z37984@292267 -> Z37986@292266 digest a2ad162694bf92978c2fccc281b64a3c0a073d5a94ff80af7e1f8d8cbea719e5 *)
+let body_Z37984_is_proper_noun_lexeme : expr =
+  ECall 19316 [ECall 19298 [EArg 0]; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 52; 55; 50; 55; 54])])]
+
+(* Z37988 noun (Lexeme) gender in French is male | Z37988@292286 -> Z37989@292277 digest b63d60d65677d78b4ad5bbc2c2e29989f7fd64a4540a7f5be7d88d20881fbf9b *)
+let body_Z37988_noun_lexeme_gender_in_french_is_male : expr =
+  ECall 12696 [ECall 873 [EValue (VFunc 19308); ECall 28548 [ECall 19300 [EArg 0]; EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 53; 49; 56; 53])]])]]; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 52; 57; 57; 51; 50; 55])])]
+
+(* Z37995 Superlative definition, in Japanese | Z37995@292370 -> Z37996@292686 digest 1037c1d8a480fd3f4e325d5bfdf8dc0d9cc037607a6f95ca70b45cc6ed2dde7b *)
+let body_Z37995_superlative_definition_in_japanese : expr =
+  ECall 26107 [EArg 4; ECall 21394 [ECall 810 [ECall 36270 [EArg 0; EArg 4]; ECall 810 [EValue (VText [12399]); ECall 810 [ECall 36270 [EArg 3; EArg 4]; ECall 810 [EValue (VText [12395; 12362; 12356; 12390; 26368; 12418]); ECall 810 [ECall 22839 [ECall 13464 [EValue (VFunc 27410); ECall 873 [EValue (VFunc 6825); ECall 23471 [EArg 1; EValue (VFunc 1830)]]; EValue (VList [VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 53; 51; 54; 48; 56; 57; 53; 51])]])]; ECall 36270 [EArg 1; EArg 4]]; ECall 810 [ECall 36270 [EArg 2; EArg 4]; ECall 810 [EValue (VText [12391; 12354; 12427; 12290]); EValue (VList [])]]]]]]]]]
+
+(* Z37999 French definite article (string) indicated by item | Z37999@292463 -> Z38001@292471 digest 476bfa54e05d6cc18b18de2e641aefc4ba58eed131548a06659192c874a2973c *)
+let body_Z37999_french_definite_article_string_indicated_by_item : expr =
+  ECall 802 [ECall 13752 [ECall 18755 [ECall 23543 [EArg 0]; ECall 38025 [EArg 0]]; EValue (VFunc 38002)]; EValue (VText [108; 101]); ECall 802 [ECall 13752 [ECall 18755 [ECall 23543 [EArg 0]; ECall 38025 [EArg 0]]; EValue (VFunc 38003)]; EValue (VText [108; 97]); EValue (VText [])]]
+
+(* Z38011 French definite article joined to noun (strings) | Z38011@293134 -> Z38020@292435 digest 9111bc5de9883dd4c838d7fa5576b9c5f6d512b87e40c800c6b662ccc30345e3 *)
+let body_Z38011_french_definite_article_joined_to_noun_strings : expr =
+  ECall 802 [ECall 10008 [EArg 0]; EArg 1; ECall 802 [ECall 32201 [EArg 1]; ECall 10000 [EValue (VText [108; 39]); EArg 1]; ECall 21394 [ECall 810 [EArg 0; ECall 810 [EValue (VText [32]); ECall 810 [EArg 1; EValue (VList [])]]]]]]
+
+(* Z38021 best classifier Lexeme from statements of Sense | Z38021@292451 -> Z38023@292449 digest 5348887c77f42af51214968919c71cbc161200c02e8607552175f47feb48da4b *)
+let body_Z38021_best_classifier_lexeme_from_statements_of_sense : expr =
+  ECall 19308 [ECall 23680 [ECall 28548 [ECall 23116 [EArg 0]; EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 53; 57; 55; 56])]])]]]
+
+(* Z38025 item (object) is subclass of these items [QIDs] | Z38025@292470 -> Z38026@292466 digest f2906f02336d9298dd760f97f1bf8e6a09cf3985b8f23d0a684e03c5a8845cdb *)
+let body_Z38025_item_object_is_subclass_of_these_items_qids : expr =
+  ECall 22978 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 50; 55; 57])])]
+
+(* Z38031 arithmetic mean of Natural numbers as Natural | Z38031@292532 -> Z38033@292530 digest d2481c159ddf2e530a6c01f87026e318bf07989435ae800753c6d048552cfaf2 *)
+let body_Z38031_arithmetic_mean_of_natural_numbers_as_natural : expr =
+  ECall 20391 [ECall 19841 [ECall 30840 [EArg 0]]]
+
+(* Z38034 infer syllable count of Form from P898/P5279 | Z38034@292541 -> Z38037@292540 digest 64e440fe30c055f3ca0396074f7052672d8f4123d625cb3ab87fc09289376cd7 *)
+let body_Z38034_infer_syllable_count_of_form_from_p898_p5279 : expr =
+  ECall 18475 [ECall 802 [ECall 813 [ECall 29957 [EArg 0]]; ECall 802 [ECall 813 [ECall 29688 [ECall 28548 [ECall 23118 [EArg 0]; EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 53; 50; 55; 57])]])]]]; EValue (VList []); ECall 873 [EValue (VFunc 13578); ECall 13464 [EValue (VFunc 14450); ECall 873 [EValue (VFunc 19308); ECall 29688 [ECall 28548 [ECall 23118 [EArg 0]; EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 53; 50; 55; 57])]])]]]; EValue (VText [8231])]]]; ECall 873 [EValue (VFunc 30837); ECall 873 [EValue (VFunc 14396); ECall 29957 [EArg 0]]]]]
+
+(* Z38039 geohack URL from Wikidata geo-coordinate | Z38039@294780 -> Z38468@294779 digest cf173c9f438abd6b8209b58c1230dd0265efc9b36e90de26e3b74db859d30393 *)
+let body_Z38039_geohack_url_from_wikidata_geo_coordinate : expr =
+  ECall 21394 [ECall 810 [EValue (VText [104; 116; 116; 112; 115; 58; 47; 47; 103; 101; 111; 104; 97; 99; 107; 46; 116; 111; 111; 108; 102; 111; 114; 103; 101; 46; 111; 114; 103; 47; 103; 101; 111; 104; 97; 99; 107; 46; 112; 104; 112; 63; 112; 97; 114; 97; 109; 115; 61]); ECall 810 [ECall 21100 [ECall 25880 [EArg 0]; ECall 17376 [EValue (VRecord 16683 [({ key_owner = Some 16683; key_index = 1 }, VFunc 16661); ({ key_owner = Some 16683; key_index = 2 }, VNat 0)]); ECall 17186 [ECall 20032 [ECall 21071 [ECall 21005 [ECall 20854 [ECall 25886 [EArg 0]]]]]]]]; ECall 810 [EValue (VText [95; 78; 95]); ECall 810 [ECall 21100 [ECall 25883 [EArg 0]; ECall 17376 [EValue (VRecord 16683 [({ key_owner = Some 16683; key_index = 1 }, VFunc 16661); ({ key_owner = Some 16683; key_index = 2 }, VNat 0)]); ECall 17186 [ECall 20032 [ECall 21071 [ECall 21005 [ECall 20854 [ECall 25886 [EArg 0]]]]]]]]; ECall 810 [EValue (VText [95; 69; 95; 103; 108; 111; 98; 101; 58; 101; 97; 114; 116; 104; 38; 108; 97; 110; 103; 117; 97; 103; 101; 61]); ECall 810 [ECall 14329 [EArg 1]; EValue (VList [])]]]]]]]
+
+(* Z38046 string starts with any of [aeiouyAEIOUY]? | Z38046@292601 -> Z38048@292595 digest 36f64afea0dc76c20765a494433654eb78ed498ab9b671687867051b73713a76 *)
+let body_Z38046_string_starts_with_any_of_aeiouyaeiouy : expr =
+  ECall 10196 [EArg 0; EValue (VText [94; 91; 97; 101; 105; 111; 117; 121; 65; 69; 73; 79; 85; 89; 93])]
+
+(* Z38053 image thumbnail with alt text set by QID | Z38053@292731 -> Z38055@292724 digest 79fb434e96ad92c6f33589e1dd02a97509f087b1d92eb58a840a395f85bbe76c *)
+let body_Z38053_image_thumbnail_with_alt_text_set_by_qid : expr =
+  ECall 36038 [EArg 0; ECall 36270 [EArg 1; EArg 2]]
+
+(* Z38057 intro for species with hypernym, Default | Z38057@292771 -> Z38059@292773 digest 6f4a328eba3e4675265a7e8b5e8136ce2e5a4602a44e16c45272817e5752438c *)
+let body_Z38057_intro_for_species_with_hypernym_default : expr =
+  ECall 36909 [ECall 27926 [ECall 810 [ECall 35766 [EValue (VList [VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [60; 98; 62; 60; 105; 62])]; VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [60; 47; 105; 62; 60; 47; 98; 62])]]); ECall 27868 [ECall 19308 [ECall 37836 [EArg 0]]]]; ECall 810 [ECall 802 [ECall 10216 [ECall 28676 [ECall 37821 [EArg 0; EArg 2]; EValue (VFunc 37463)]]; ECall 27926 [ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [44; 32; 40; 97; 108; 115; 111; 32; 107; 110; 111; 119; 110; 32; 97; 115; 32; 116; 104; 101; 41; 32])]); ECall 810 [ECall 28914 [ECall 37821 [EArg 0; EArg 2]]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [44; 32])]); EValue (VList [])]]]]; EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [60; 33; 45; 45; 32; 110; 111; 32; 99; 111; 109; 109; 111; 110; 32; 110; 97; 109; 101; 32; 45; 45; 62; 32])])]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [40; 105; 115; 32; 97; 32; 115; 112; 101; 99; 105; 101; 115; 41; 32])]); ECall 810 [ECall 802 [ECall 10174 [ECall 24331 [ECall 20041 [EArg 1]]; ECall 10216 [ECall 35811 [ECall 31676 [EArg 1; EArg 2]]]]; ECall 27926 [ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [40; 111; 102; 41; 32])]); ECall 810 [ECall 27868 [ECall 14396 [ECall 31676 [EArg 1; EArg 2]]]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [32])]); EValue (VList [])]]]]; EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])])]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [40; 105; 110; 32; 116; 104; 101; 32; 102; 97; 109; 105; 108; 121; 41; 32])]); ECall 810 [ECall 36489 [ECall 37725 [EArg 0]; ECall 23459 [ECall 30120 [ECall 37725 [EArg 0]; EValue (VList [VFunc 6036]); EValue (VList []); EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 50; 50; 53])]])]; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 50; 50; 53])])]]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [46; 32])]); ECall 810 [ECall 802 [ECall 37925 [ECall 811 [ECall 37808 [EArg 0; EArg 2]]]; ECall 27926 [ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [40; 84; 104; 101; 32; 115; 112; 101; 99; 105; 101; 115; 32; 119; 97; 115; 32; 100; 101; 115; 99; 114; 105; 98; 101; 100; 32; 105; 110; 41; 32])]); ECall 810 [ECall 27868 [ECall 811 [ECall 37808 [EArg 0; EArg 2]]]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [32; 40; 98; 121; 41; 32])]); ECall 810 [ECall 802 [ECall 23120 [ECall 16360 [ECall 37808 [EArg 0; EArg 2]]]; ECall 37927 [EArg 0; EArg 2]; EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])])]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [46])]); ECall 810 [ECall 32891 [ECall 36240 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 50; 50; 53])]); EArg 2]]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [32])]); EValue (VList [])]]]]]]]]; EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [60; 33; 45; 45; 32; 110; 111; 32; 100; 101; 115; 99; 114; 105; 98; 105; 110; 103; 32; 100; 97; 116; 101; 32; 97; 110; 100; 47; 111; 114; 32; 97; 117; 116; 104; 111; 114; 105; 116; 121; 32; 45; 45; 62])])]; ECall 810 [ECall 802 [ECall 10216 [ECall 28676 [ECall 37833 [EArg 0; EArg 2]; EValue (VFunc 28158)]]; ECall 27926 [ECall 810 [ECall 37441 [EArg 0]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [32; 40; 104; 97; 115; 32; 98; 101; 101; 110; 32; 97; 115; 115; 101; 115; 115; 101; 100; 32; 97; 115; 41; 32])]); ECall 810 [ECall 27868 [ECall 37833 [EArg 0; EArg 2]]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [32; 40; 98; 121; 32; 116; 104; 101; 41; 32])]); ECall 810 [ECall 32428 [EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 52; 56; 50; 54; 56])]); EArg 2]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [32; 40; 73; 85; 67; 78; 41; 46])]); ECall 810 [ECall 32891 [ECall 36240 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 52; 49])]); EArg 2]]; EValue (VList [])]]]]]]]]; EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [60; 33; 45; 45; 32; 78; 111; 116; 32; 97; 115; 115; 101; 115; 115; 101; 100; 32; 98; 121; 32; 73; 85; 67; 78; 32; 45; 45; 62])])]; EValue (VList [])]]]]]]]]]]]
+
+(* Z38060 Intro for species without hypernym, Default | Z38060@292782 -> Z38062@292781 digest e84fba6c3c5562199cbc0c7d60fabfbd692a57aeaa896713f58f5a68202a59a4 *)
+let body_Z38060_intro_for_species_without_hypernym_default : expr =
+  ECall 36909 [ECall 27926 [ECall 810 [ECall 35766 [EValue (VList [VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [60; 98; 62; 60; 105; 62])]; VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [60; 47; 105; 62; 60; 47; 98; 62])]]); ECall 27868 [ECall 19308 [ECall 37836 [EArg 0]]]]; ECall 810 [ECall 802 [ECall 10216 [ECall 28676 [ECall 37821 [EArg 0; EArg 1]; EValue (VFunc 37463)]]; ECall 27926 [ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [44; 32; 40; 97; 108; 115; 111; 32; 107; 110; 111; 119; 110; 32; 97; 115; 32; 116; 104; 101; 41; 32])]); ECall 810 [ECall 28914 [ECall 37821 [EArg 0; EArg 1]]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [44; 32])]); EValue (VList [])]]]]; EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [60; 33; 45; 45; 32; 110; 111; 32; 99; 111; 109; 109; 111; 110; 32; 110; 97; 109; 101; 32; 45; 45; 62; 32])])]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [40; 105; 115; 32; 97; 32; 115; 112; 101; 99; 105; 101; 115; 41; 32])]); ECall 810 [ECall 802 [ECall 10174 [ECall 24331 [ECall 20041 [EArg 0]]; ECall 10216 [ECall 35811 [ECall 31676 [EArg 0; EArg 1]]]]; ECall 27926 [ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [40; 111; 102; 41; 32])]); ECall 810 [ECall 27868 [ECall 14396 [ECall 31676 [EArg 0; EArg 1]]]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [32])]); EValue (VList [])]]]]; EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])])]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [40; 105; 110; 32; 116; 104; 101; 32; 102; 97; 109; 105; 108; 121; 41; 32])]); ECall 810 [ECall 36489 [ECall 37725 [EArg 0]; ECall 23459 [ECall 30120 [ECall 37725 [EArg 0]; EValue (VList [VFunc 6036]); EValue (VList []); EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 50; 50; 53])]])]; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 50; 50; 53])])]]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [46; 32])]); ECall 810 [ECall 802 [ECall 37925 [ECall 811 [ECall 37808 [EArg 0; EArg 1]]]; ECall 27926 [ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [40; 84; 104; 101; 32; 115; 112; 101; 99; 105; 101; 115; 32; 119; 97; 115; 32; 100; 101; 115; 99; 114; 105; 98; 101; 100; 32; 105; 110; 41; 32])]); ECall 810 [ECall 27868 [ECall 811 [ECall 37808 [EArg 0; EArg 1]]]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [32; 40; 98; 121; 41; 32])]); ECall 810 [ECall 802 [ECall 23120 [ECall 16360 [ECall 37808 [EArg 0; EArg 1]]]; ECall 37927 [EArg 0; EArg 1]; EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])])]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [46])]); ECall 810 [ECall 32891 [ECall 36240 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 50; 50; 53])]); EArg 1]]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [32])]); EValue (VList [])]]]]]]]]; EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [60; 33; 45; 45; 32; 110; 111; 32; 100; 101; 115; 99; 114; 105; 98; 105; 110; 103; 32; 100; 97; 116; 101; 32; 97; 110; 100; 47; 111; 114; 32; 97; 117; 116; 104; 111; 114; 105; 116; 121; 32; 45; 45; 62])])]; ECall 810 [ECall 802 [ECall 10216 [ECall 28676 [ECall 37833 [EArg 0; EArg 1]; EValue (VFunc 28158)]]; ECall 27926 [ECall 810 [ECall 37441 [EArg 0]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [32; 40; 104; 97; 115; 32; 98; 101; 101; 110; 32; 97; 115; 115; 101; 115; 115; 101; 100; 32; 97; 115; 41; 32])]); ECall 810 [ECall 27868 [ECall 37833 [EArg 0; EArg 1]]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [32; 40; 98; 121; 32; 116; 104; 101; 41; 32])]); ECall 810 [ECall 32428 [EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 52; 56; 50; 54; 56])]); EArg 1]; ECall 810 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [32; 40; 73; 85; 67; 78; 41; 46])]); ECall 810 [ECall 32891 [ECall 36240 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 52; 49])]); EArg 1]]; EValue (VList [])]]]]]]]]; EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [60; 33; 45; 45; 32; 78; 111; 116; 32; 97; 115; 115; 101; 115; 115; 101; 100; 32; 98; 121; 32; 73; 85; 67; 78; 32; 45; 45; 62])])]; EValue (VList [])]]]]]]]]]]]
+
+(* Z38078 abstract wikilink (string) w text (no fallback) | Z38078@292933 -> Z38079@292929 digest 6f9fed0366482692be2e0fbd75fde00a5fa7f02b370d334ea021b3e46f267a18 *)
+let body_Z38078_abstract_wikilink_string_w_text_no_fallback : expr =
+  ECall 19405 [EValue (VText [97]); EValue (VList [VText [104; 114; 101; 102]]); ECall 810 [ECall 10000 [EValue (VText [104; 116; 116; 112; 115; 58; 47; 47; 97; 98; 115; 116; 114; 97; 99; 116; 46; 119; 105; 107; 105; 112; 101; 100; 105; 97; 46; 111; 114; 103; 47; 119; 105; 107; 105; 47]); ECall 803 [EValue (VRecord 39 [({ key_owner = Some 39; key_index = 1 }, VText [90; 54; 48; 57; 49; 75; 49])]); EArg 0]]; EValue (VList [])]; EArg 1]
+
+(* Z38083 is item reference female? (QID) | Z38083@293119 -> Z38084@292964 digest 83b7b6cad6a50eece34e2183abfbceaef42f0a6099cf5705aa204c5a09ec51c8 *)
+let body_Z38083_is_item_reference_female_qid : expr =
+  ECall 32431 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 50; 49])]); EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 54; 53; 56; 49; 48; 55; 50])])]
+
+(* Z38086 infobox row, coordinate hyperlinked | Z38086@293435 -> Z38087@293427 digest 5b7bf7b6079f45283961476ddcf293a0fbaefc807cd2b4056aa1101ca058bc39 *)
+let body_Z38086_infobox_row_coordinate_hyperlinked : expr =
+  ECall 37640 [ECall 27299 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList [VFunc 1360]); EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 54; 50; 53])]])]; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 54; 50; 53])])]; ECall 33319 [ECall 810 [ECall 33315 [ECall 10771 [ECall 24766 [ECall 35364 [ECall 35036 [EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 54; 50; 53])]); EValue (VList [VFunc 6036]); EValue (VList []); EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 54; 50; 57])]])]]; EArg 1]]]; ECall 810 [ECall 35049 [ECall 27849 [ECall 27868 [ECall 38103 [ECall 23459 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList []); EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 54; 50; 53])]])]; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 54; 50; 53])])]]]; ECall 32891 [ECall 30016 [ECall 38039 [ECall 23459 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList []); EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 54; 50; 53])]])]; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 54; 50; 53])])]; EArg 1]; EValue (VText [71; 101; 111; 72; 97; 99; 107])]]]; EValue (VText [116; 100])]; EValue (VList [])]]]; EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])])]
+
+(* Z38088 label of item with def article + grammar, French | Z38088@293019 -> Z38091@293020 digest 05914010616198b5242e785e6280ed1cbc9f0eb9b9282b65afaf6b261041c14b *)
+let body_Z38088_label_of_item_with_def_article_grammar_french : expr =
+  ECall 32556 [ECall 37900 [ECall 27327 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 53; 49; 51; 55])]); EArg 2]; EValue (VList []); EArg 2]; ECall 38011 [ECall 802 [ECall 13752 [EArg 1; EValue (VList [VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 52; 57; 57; 51; 50; 55])]; VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 55; 55; 53; 52; 49; 53])]; VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 52; 54; 55; 56; 54])]])]; ECall 802 [ECall 12696 [EArg 1; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 52; 54; 55; 56; 54])])]; EValue (VText [108; 101; 115]); ECall 802 [ECall 12696 [EArg 1; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 55; 55; 53; 52; 49; 53])])]; EValue (VText [108; 97]); EValue (VText [108; 101])]]; ECall 37999 [ECall 30120 [EArg 0; EValue (VList [VFunc 6033; VFunc 6035; VFunc 6036]); EValue (VList []); EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 51; 49])]; VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 50; 55; 57])]])]]]; ECall 36270 [EArg 0; EArg 2]]]
+
+(* Z38095 Calculate A.C.E. over list of windspeeds | Z38095@293260 -> Z38124@293241 digest 2af3904005a81495dfde92e50bb16b0af402c159a886e29701c39cf82bae0be6 *)
+let body_Z38095_calculate_a_c_e_over_list_of_windspeeds : expr =
+  ECall 27232 [ECall 14038 [ECall 18475 [ECall 873 [EValue (VFunc 13663); ECall 28316 [EValue (VFunc 13676); ECall 13464 [EValue (VFunc 38119); EArg 0; EValue (VNat 5)]; EValue (VNat 34)]]]]; EValue (VNat 10000)]
+
+(* Z38114 replace "de les":"des" and "de le":"du" (string) | Z38114@293195 -> Z38115@293192 digest 82c3ed0335de17c07a53c3c83ef6e6f08cd8e2687ccf82587f321e027019ca42 *)
+let body_Z38114_replace_de_les_des_and_de_le_du_string : expr =
+  ECall 10075 [ECall 10075 [EArg 0; EValue (VText [100; 101; 32; 108; 101; 115]); EValue (VText [100; 101; 115])]; EValue (VText [100; 101; 32; 108; 101]); EValue (VText [100; 117])]
+
+(* Z38119 round Natural number to nearest n | Z38119@293253 -> Z38123@293239 digest eedea0cd63af3bd1fb68565af4f2d615956d4d91da119367c6d769286d89fa66 *)
+let body_Z38119_round_natural_number_to_nearest_n : expr =
+  ECall 20391 [ECall 35338 [ECall 17101 [EArg 0]; EArg 1]]
+
+(* Z38150 is +inf (float64) | Z38150@293453 -> Z38158@293373 digest 4279dc9836125129e69eca697e267dd2dfa97ffd9cd153f03f5494ce3e52c5f6 *)
+let body_Z38150_is_inf_float64 : expr =
+  ECall 802 [ECall 20924 [EArg 0; EValue (VRecord 20838 [({ key_owner = Some 20838; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16660)]); ({ key_owner = Some 20838; key_index = 2 }, VRecord 16683 [({ key_owner = Some 16683; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16660)]); ({ key_owner = Some 16683; key_index = 2 }, VNat 1024)]); ({ key_owner = Some 20838; key_index = 3 }, VNat 0); ({ key_owner = Some 20838; key_index = 4 }, VRecord 20825 [({ key_owner = Some 20825; key_index = 1 }, VFunc 20832)])])]; EValue (VBool true); EValue (VBool false)]
+
+(* Z38159 is -inf (float64) | Z38159@293455 -> Z38160@293376 digest a09a4a4d2bea36bdc735a58083c350e9f1c66d1282b0f16b29fc44119b88f660 *)
+let body_Z38159_is_inf_float64 : expr =
+  ECall 802 [ECall 20850 [EArg 0; EValue (VRecord 20838 [({ key_owner = Some 20838; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16662)]); ({ key_owner = Some 20838; key_index = 2 }, VRecord 16683 [({ key_owner = Some 16683; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16660)]); ({ key_owner = Some 16683; key_index = 2 }, VNat 1024)]); ({ key_owner = Some 20838; key_index = 3 }, VNat 0); ({ key_owner = Some 20838; key_index = 4 }, VRecord 20825 [({ key_owner = Some 20825; key_index = 1 }, VFunc 20833)])])]; EValue (VBool true); EValue (VBool false)]
+
+(* Z38168 is infinite (float64) | Z38168@294719 -> Z38169@293404 digest af4cfc2f0ede3bd305f851dadbdc50f52dce50b680a78241c1e772b32b7635c2 *)
+let body_Z38168_is_infinite_float64 : expr =
+  ECall 10184 [ECall 38150 [EArg 0]; ECall 38159 [EArg 0]]
+
+(* Z38178 Swedish article-ful instant sentence (monolingual) | Z38178@293442 -> Z38180@293446 digest 4e38c07d371aeb00c3e69c1e458d4b2208f381afedb77c101cf5e7e1b97fbf39 *)
+let body_Z38178_swedish_article_ful_instant_sentence_monolingual : expr =
+  ECall 26107 [EValue (VFunc 1592); ECall 30420 [EArg 0; EArg 1]]
+
+(* Z38181 specific property of subject NOT from Wikidata | Z38181@293467 -> Z38182@293463 digest 7649deb1cd72e9daa9d6774198b7ac6a8ad166838c5babcb200b34fa7482dc99 *)
+let body_Z38181_specific_property_of_subject_not_from_wikidata : expr =
+  ECall 30438 [ECall 14310 [EValue (VFunc 36219); EArg 3]; EArg 0; EArg 1; EArg 2; EArg 3]
+
+(* Z38185 Etymology, English | Z38185@293488 -> Z38187@293483 digest 7d5b88bc13512244cdc6360169d91980fca97fcd6f817d37d9e25f798c1a23a3 *)
+let body_Z38185_etymology_english : expr =
+  ECall 22511 [ECall 21394 [ECall 810 [ECall 23468 [EArg 0; EValue (VFunc 1002)]; ECall 810 [EValue (VText [32; 102; 114; 111; 109; 32]); ECall 810 [ECall 30043 [EArg 1; EValue (VFunc 1002)]; ECall 810 [EValue (VText [32]); ECall 810 [EArg 2; ECall 810 [EValue (VText [44; 32; 108; 105; 116; 46; 8201; 39]); ECall 810 [EArg 3; ECall 810 [EValue (VText [39]); EValue (VList [])]]]]]]]]]]
+
+(* Z38189 French short description for painting | Z38189@293502 -> Z38191@293501 digest afad122c62eb8d910f6cfb3efe70231f5118b3bc4f34c6bc4bf81cd195f625a2 *)
+let body_Z38189_french_short_description_for_painting : expr =
+  ECall 26107 [EArg 1; ECall 21394 [ECall 810 [ECall 23468 [ECall 6821 [EArg 0]; EArg 1]; ECall 810 [EValue (VText [44; 32; 112; 101; 105; 110; 116; 117; 114; 101; 32; 100; 101; 32]); ECall 810 [ECall 23753 [ECall 28787 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 55; 48])])]; EArg 1]; ECall 810 [EValue (VText [32; 100; 97; 116; 97; 110; 116; 32; 100; 101; 32]); ECall 810 [ECall 20241 [ECall 28777 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 53; 55; 49])])]; EArg 1]; EValue (VList [])]]]]]]]
+
+(* Z38197 best lexeme with reference string | Z38197@294292 -> Z38202@293569 digest 9990a67ddbf4ecedb6d5b0192a551ebc95869950a1b06537807fca9df267a77b *)
+let body_Z38197_best_lexeme_with_reference_string : expr =
+  ECall 38198 [ECall 6820 [ECall 17895 [ECall 32599 [EArg 0; EArg 1; EArg 2]]; EValue (VList []); EValue (VList []); EValue (VList [])]; ECall 24144 [EArg 2; EValue (VBool true); EValue (VBool true)]; ECall 850 [ECall 873 [EValue (VFunc 29649); ECall 24144 [EArg 2; EValue (VBool false); EValue (VBool true)]]; EValue (VFunc 36589); EValue (VList [])]; EArg 3; EArg 4; EArg 5; EArg 0]
+
+(* Z38203 population sentence, Ukrainian | Z38203@293856 -> Z38207@293852 digest 773b3df44964c4bdbc0329275763fc41feaa16742a944f8e7f1c89be9719ea3e *)
+let body_Z38203_population_sentence_ukrainian : expr =
+  ECall 27868 [ECall 28445 [ECall 30120 [EArg 0; EValue (VList [VFunc 6033; VFunc 6036]); EValue (VFunc 33034); EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 48; 56; 50])]])]; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 48; 56; 50])]); EArg 1]]
+
+(* Z38205 defining role sentence in Serbian | Z38205@293706 -> Z38208@293731 digest cf234886c40d31f6ad145ccd3931399ab51b1d11f1cb2846a6258b2272f0cc4f *)
+let body_Z38205_defining_role_sentence_in_serbian : expr =
+  ECall 26107 [EArg 3; ECall 22511 [ECall 21394 [ECall 810 [ECall 23753 [EArg 0; EArg 3]; ECall 810 [EValue (VText [32; 1112; 1077; 32]); ECall 810 [ECall 23753 [EArg 1; EArg 3]; ECall 810 [EValue (VText [32]); ECall 810 [ECall 38210 [EArg 2]; EValue (VList [])]]]]]]]]
+
+(* Z38210 Serbian genitive singular from item | Z38210@293704 -> Z38212@293636 digest ea733c56218a580ee93336f26996e390c49bc0257e4b00be14aeb3d9919d9518 *)
+let body_Z38210_serbian_genitive_singular_from_item : expr =
+  ECall 802 [ECall 813 [ECall 6830 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 53; 49; 51; 55])]); EValue (VFunc 1158)]]; ECall 38213 [ECall 23753 [EArg 0; EValue (VFunc 1158)]]; ECall 27410 [ECall 27327 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 53; 49; 51; 55])]); EValue (VFunc 1158)]; EValue (VList [VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 52; 54; 50; 51; 51])]; VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 49; 48; 55; 56; 54])]])]]
+
+(* Z38213 regular Serbian feminine genitive singular | Z38213@293738 -> Z38215@293625 digest 072ecf98512ba97342ec17c026a12e31855111d2cbe664e5e8d3ea4724f3e619 *)
+let body_Z38213_regular_serbian_feminine_genitive_singular : expr =
+  ECall 802 [ECall 10618 [EArg 0; EValue (VText [1072])]; ECall 11178 [EArg 0; EValue (VText [1072]); EValue (VText [1077])]; ECall 10000 [EArg 0; EValue (VText [1080])]]
+
+(* Z38216 infobox row best values | Z38216@293677 -> Z38225@293646 digest 1277e0ed788bb16d9c94dd1e084382d5460bc187a6d1c79d0fe83d9934b0d599 *)
+let body_Z38216_infobox_row_best_values : expr =
+  ECall 37640 [ECall 27299 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList [VFunc 1360]); ECall 810 [EArg 1; EValue (VList [])]]; EArg 1]; ECall 33319 [ECall 810 [ECall 33315 [ECall 10771 [ECall 24766 [ECall 35364 [ECall 35036 [EArg 1; EValue (VList [VFunc 6036]); EValue (VList []); EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 54; 50; 57])]])]]; EArg 2]]]; ECall 810 [ECall 33315 [ECall 10771 [ECall 12899 [ECall 13464 [EValue (VFunc 24766); ECall 32290 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList [VFunc 1360]); ECall 810 [EArg 1; EValue (VList [])]]; EArg 1]; EArg 2]; ECall 32276 [EArg 2]]]]; EValue (VList [])]]]; EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])])]
+
+(* Z38226 language count of Multilingual text | Z38226@293728 -> Z38227@293657 digest 3af4325bba41e1c02789c05b0c4e7741fa9c9e70537760960c68dbe4a777e76c *)
+let body_Z38226_language_count_of_multilingual_text : expr =
+  ECall 12681 [ECall 19279 [EArg 0]]
+
+(* Z38228 Gurmukhi Punjabi noun declension table | Z38228@293696 -> Z38238@293695 digest 0f726a74f289418759cb3737013c095811e00da6b7f3829e4d9bdc5023b03cca *)
+let body_Z38228_gurmukhi_punjabi_noun_declension_table : expr =
+  ECall 36341 [ECall 27878 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])]); ECall 810 [ECall 27885 [EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 50; 56; 50; 51; 52])]); EArg 1]; ECall 810 [ECall 27885 [EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 49; 48; 55; 56; 54])]); EArg 1]; ECall 810 [ECall 27885 [EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 52; 54; 55; 56; 54])]); EArg 1]; EValue (VList [])]]]; ECall 810 [ECall 27885 [EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 55; 53; 49; 56; 53; 53])]); EArg 1]; ECall 810 [ECall 27885 [EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 50; 51; 51; 49; 57; 55])]); EArg 1]; ECall 810 [ECall 27885 [EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 56; 53; 48; 55; 55])]); EArg 1]; ECall 810 [ECall 27885 [EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 53; 54; 57; 56; 54])]); EArg 1]; ECall 810 [ECall 27885 [EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 50; 48; 50; 49; 52; 50])]); EArg 1]; ECall 810 [ECall 27885 [EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 57; 50; 57; 57; 55])]); EArg 1]; EValue (VList [])]]]]]]; ECall 15142 [ECall 810 [ECall 37395 [EArg 0; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 55; 53; 49; 56; 53; 53])]); EValue (VList [VFunc 1657])]; ECall 810 [ECall 37395 [EArg 0; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 50; 51; 51; 49; 57; 55])]); EValue (VList [VFunc 1657])]; ECall 810 [ECall 37395 [EArg 0; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 56; 53; 48; 55; 55])]); EValue (VList [VFunc 1657])]; ECall 810 [ECall 37395 [EArg 0; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 53; 54; 57; 56; 54])]); EValue (VList [VFunc 1657])]; ECall 810 [ECall 37395 [EArg 0; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 50; 48; 50; 49; 52; 50])]); EValue (VList [VFunc 1657])]; ECall 810 [ECall 37395 [EArg 0; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 57; 50; 57; 57; 55])]); EValue (VList [VFunc 1657])]; EValue (VList [])]]]]]]]]]
+
+(* Z38229 count languages a Persistent ZObject has labels in | Z38229@293673 -> Z38230@293661 digest 26595feb355e03ae7ffcd6bf0af50a0cebf3ddf4f98ed15d4ed3fbc033d5478f *)
+let body_Z38229_count_languages_a_persistent_zobject_has_labels_in : expr =
+  ECall 38226 [ECall 20607 [EArg 0]]
+
+(* Z38240 birth sentence from Wikidata person, Dutch | Z38240@293742 -> Z38244@293741 digest c2a9ad0369614daaa0cab1648a918a040a14a665b69ca361b9d35b8e1dce35ff *)
+let body_Z38240_birth_sentence_from_wikidata_person_dutch : expr =
+  ECall 27868 [ECall 22511 [ECall 22504 [ECall 810 [ECall 23468 [ECall 30120 [EArg 0; EValue (VList [VFunc 6033; VFunc 6036]); ECall 810 [EArg 1; EValue (VList [])]; EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 53; 54; 57])]])]; EArg 1]; ECall 810 [EValue (VText [119; 101; 114; 100; 32; 111; 112]); ECall 810 [ECall 20780 [ECall 25601 [ECall 30120 [EArg 0; EValue (VList [VFunc 6033; VFunc 6036]); ECall 810 [EArg 1; EValue (VList [])]; EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 53; 54; 57])]])]]; EArg 1]; ECall 810 [EValue (VText [105; 110]); ECall 810 [ECall 23468 [ECall 30120 [ECall 28787 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 57])])]; EValue (VList [VFunc 6033]); ECall 810 [EArg 1; EValue (VList [])]; EValue (VList [])]; EArg 1]; ECall 810 [EValue (VText [103; 101; 98; 111; 114; 101; 110]); EValue (VList [])]]]]]]]]]
+
+(* Z38246 display Gregorian year in Dutch | Z38246@293754 -> Z38249@293753 digest ba2e6db5d2139e3f0d3522c294d092b1b7300d171f062fbba86252be1f71c2f2 *)
+let body_Z38246_display_gregorian_year_in_dutch : expr =
+  ECall 12899 [ECall 810 [ECall 13713 [ECall 20160 [EArg 0]]; ECall 810 [ECall 802 [ECall 18084 [ECall 20185 [EArg 0]]; EValue (VText []); EValue (VText [32; 118; 46; 67; 104; 114; 46])]; EValue (VList [])]]; EValue (VText [])]
+
+(* Z38255 State location using entity and class, Polish | Z38255@293820 -> Z38262@293845 digest 6749aefe1c9a08f4edc279212a7e6ec444eb3d60e0e13dc7e9da2139ceff5cac *)
+let body_Z38255_state_location_using_entity_and_class_polish : expr =
+  ECall 26107 [EValue (VFunc 1025); ECall 22511 [ECall 12899 [ECall 810 [ECall 23753 [EArg 0; EValue (VFunc 1025)]; ECall 810 [EValue (VText [32; 106; 101; 115; 116; 32]); ECall 810 [ECall 30374 [EArg 1; EValue (VList [VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 57; 50; 57; 57; 55])]; VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 49; 48; 55; 56; 54])]]); EValue (VFunc 1025)]; ECall 810 [EValue (VText [32]); ECall 810 [ECall 38250 [ECall 30374 [EArg 2; EValue (VList [VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 50; 48; 50; 49; 52; 50])]; VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 49; 48; 55; 56; 54])]]); EValue (VFunc 1025)]]; EValue (VList [])]]]]]; EValue (VText [])]]]
+
+(* Z38256 display day of year in Dutch | Z38256@293777 -> Z38261@293776 digest fadc3af570a7b5f68c7346995709cf3f0ed7b9e992148b10240da5e23d17ead1 *)
+let body_Z38256_display_day_of_year_in_dutch : expr =
+  ECall 11542 [ECall 17180 [ECall 20343 [EArg 0]]; EValue (VText [111; 110; 98; 101; 107; 101; 110; 100]); ECall 11542 [ECall 23883 [ECall 20388 [EArg 0]]; ECall 31217 [ECall 20343 [EArg 0]]; ECall 22504 [ECall 810 [ECall 13713 [ECall 20388 [EArg 0]]; ECall 810 [ECall 31217 [ECall 20343 [EArg 0]]; EValue (VList [])]]]]]
+
+(* Z38272 display year in Dutch without n.Chr. after 99 n.C. | Z38272@293854 -> Z38278@295035 digest 88606288978d77c7968f828b8d7c7c001c81634eaabd579df1d27568e7a6aa42 *)
+let body_Z38272_display_year_in_dutch_without_n_chr_after_99_n_c : expr =
+  ECall 28818 [EArg 0; EValue (VFunc 1157); EValue (VRecord 20159 [({ key_owner = Some 20159; key_index = 1 }, VRecord 17813 [({ key_owner = Some 17813; key_index = 1 }, VFunc 17814)]); ({ key_owner = Some 20159; key_index = 2 }, VNat 99)])]
+
+(* Z38274 birth sentence from Wikidata, French | Z38274@294002 -> Z38277@294005 digest 0748249a8a3f29c3883bed573018254a8fc1cf5b101a73a98e53a6a9b07589cf *)
+let body_Z38274_birth_sentence_from_wikidata_french : expr =
+  ECall 27868 [ECall 22511 [ECall 22504 [ECall 810 [ECall 24766 [EArg 0; EArg 1]; ECall 810 [ECall 802 [ECall 19316 [ECall 22839 [ECall 32290 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList [VFunc 1360]); EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 50; 49])]; VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 53; 54; 57])]])]; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 50; 49])])]; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 54; 53; 56; 49; 48; 57; 55])])]; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 54; 53; 56; 49; 48; 55; 50])])]; EValue (VText [101; 115; 116; 32; 110; 233; 101; 32; 108; 101]); EValue (VText [101; 115; 116; 32; 110; 233; 32; 108; 101])]; ECall 810 [ECall 20780 [ECall 25601 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList [VFunc 1360]); EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 50; 49])]; VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 53; 54; 57])]])]]; EArg 1]; ECall 810 [EValue (VText [224]); ECall 810 [ECall 24766 [ECall 28787 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 57])])]; EArg 1]; EValue (VList [])]]]]]]]]
+
+(* Z38280 Dutch short description for album | Z38280@293869 -> Z38283@295037 digest 2126bafa88398db8373a53019dc0d53a25b43bda80d438c4d41da714b50cf544 *)
+let body_Z38280_dutch_short_description_for_album : expr =
+  ECall 26107 [EArg 1; ECall 21394 [ECall 810 [EValue (VText [97; 108; 98; 117; 109; 32; 117; 105; 116; 32]); ECall 810 [ECall 38272 [ECall 28777 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 53; 55; 55])])]]; ECall 810 [EValue (VText [32; 118; 97; 110; 32]); ECall 810 [ECall 23753 [ECall 28787 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 55; 53])])]; EArg 1]; EValue (VList [])]]]]]]
+
+(* Z38285 final word separator in list, Dutch | Z38285@293877 -> Z38287@295038 digest 09deff2c0bd0ca236c005b81f51e5b34e5aff76a2d9e2f15a6356e52697f50a6 *)
+let body_Z38285_final_word_separator_in_list_dutch : expr =
+  EValue (VText [32; 101; 110; 32])
+
+(* Z38288 Dutch short description for painting  | Z38288@293892 -> Z38290@293891 digest 52824a3e0bfd653e859af1717b33069c11971d340b417a8623d3d48bb24e3adc *)
+let body_Z38288_dutch_short_description_for_painting : expr =
+  ECall 26107 [EArg 1; ECall 21394 [ECall 810 [EValue (VText [115; 99; 104; 105; 108; 100; 101; 114; 105; 106; 32; 117; 105; 116; 32]); ECall 810 [ECall 38272 [ECall 28777 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 53; 55; 49])])]]; ECall 810 [EValue (VText [32; 118; 97; 110; 32]); ECall 810 [ECall 23753 [ECall 28787 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 55; 48])])]; EArg 1]; EValue (VList [])]]]]]]
+
+(* Z38291 Classifying sentence in Polish | Z38291@293897 -> Z38299@293989 digest 58b8a0930f4d7fd870043f837602d6cd6b557e0023c90e8f05047c0c675a2f38 *)
+let body_Z38291_classifying_sentence_in_polish : expr =
+  ECall 22511 [ECall 21394 [ECall 810 [ECall 850 [ECall 27410 [ECall 27327 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 53; 49; 51; 55])]); EValue (VFunc 1025)]; EValue (VList [VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 49; 48; 55; 56; 54])]])]; EValue (VFunc 28248); ECall 24766 [EArg 0; EValue (VFunc 1025)]]; ECall 810 [EValue (VText [32; 106; 101; 115; 116; 32]); ECall 810 [ECall 850 [ECall 27410 [ECall 27327 [ECall 811 [ECall 23543 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList []); EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 51; 49])]])]]]; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 53; 49; 51; 55])]); EValue (VFunc 1025)]; EValue (VList [VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 49; 48; 55; 56; 54])]; VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 57; 50; 57; 57; 55])]])]; EValue (VFunc 28248); ECall 24766 [ECall 811 [ECall 23543 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList []); EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 51; 49])]])]]]; EValue (VFunc 1025)]]; EValue (VList [])]]]]]
+
+(* Z38306 Languages supported by function | Z38306@294797 -> Z38470@294796 digest effcaf020e8657471946d1afb48addc602358d5c1fbc9b86668d1b23e1ce2965 *)
+let body_Z38306_languages_supported_by_function : expr =
+  ECall 27665 [ECall 873 [EValue (VFunc 14317); ECall 14312 [EArg 0]]]
+
+(* Z38308 Languages supported by config, given lang | Z38308@294067 -> Z38310@294164 digest b10b0f767925b40af665766489f88247a472a3956f66e9e7c2d3dd7ee90afa3f *)
+let body_Z38308_languages_supported_by_config_given_lang : expr =
+  ECall 13464 [EValue (VFunc 30043); ECall 19202 [ECall 873 [EValue (VFunc 24097); ECall 38306 [EArg 0]]]; EArg 1]
+
+(* Z38317 infobox for Wikimania | Z38317@294721 -> Z38318@294105 digest 603805e5870f16cec7273f5ce9a8bef21180264ff3a3e67e3040113417f3b889 *)
+let body_Z38317_infobox_for_wikimania : expr =
+  ECall 33328 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])]); EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])]); ECall 810 [ECall 37644 [EArg 0; EValue (VText [100; 101; 102; 97; 117; 108; 116]); EArg 1]; ECall 810 [ECall 37623 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 51; 49])]); EArg 1]; ECall 810 [ECall 37623 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 55])]); EArg 1]; ECall 810 [ECall 37782 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 53; 56; 48])]); EArg 1]; ECall 810 [ECall 37782 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 53; 56; 50])]); EArg 1]; ECall 810 [ECall 38216 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 54; 54; 52])]); EArg 1]; EValue (VList [])]]]]]]]
+
+(* Z38323 HTML table for alphabet | Z38323@294328 -> Z38324@294349 digest cd124cc07db8866dde772babe643bdd43e25d0218508dd07dd9cc5f516cfc998 *)
+let body_Z38323_html_table_for_alphabet : expr =
+  ECall 33328 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])]); ECall 38325 [ECall 27885 [EArg 0; EArg 2]; ECall 11040 [EArg 1]]; ECall 810 [ECall 802 [ECall 10070 [EArg 1; EValue (VText [44])]; ECall 33319 [ECall 873 [EValue (VFunc 33315); ECall 25614 [EArg 1; EValue (VText [44])]]]; ECall 33319 [ECall 873 [EValue (VFunc 33315); ECall 25578 [EArg 1]]]]; EValue (VList [])]]
+
+(* Z38325 create HTML th fragment with colspan attr | Z38325@294213 -> Z38326@294211 digest 17d847dd5433766c631fa8cc70077a830a34362ae578c4d5e6e6af1380bd612a *)
+let body_Z38325_create_html_th_fragment_with_colspan_attr : expr =
+  ECall 27861 [ECall 19405 [EValue (VText [116; 104]); EValue (VList [VText [99; 111; 108; 115; 112; 97; 110]]); ECall 810 [ECall 13713 [EArg 1]; EValue (VList [])]; EArg 0]]
+
+(* Z38329 infobox for language | Z38329@294736 -> Z38330@294233 digest 70b2373e758e6ffc7accec1b4893c578cc18864114c0113158ecc48ccb5742ef *)
+let body_Z38329_infobox_for_language : expr =
+  ECall 33328 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])]); EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])]); ECall 810 [ECall 37644 [EArg 0; EValue (VText [100; 101; 102; 97; 117; 108; 116]); EArg 1]; ECall 810 [ECall 38216 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 55])]); EArg 1]; ECall 810 [ECall 38216 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 52; 49; 51; 50])]); EArg 1]; EValue (VList [])]]]]
+
+(* Z38334 Unordered list of languages supported by function | Z38334@294254 -> Z38335@294351 digest 62ee35c0aa10f789827103d84959444032c78c04c9285075b2e011039cfd5136 *)
+let body_Z38334_unordered_list_of_languages_supported_by_function : expr =
+  ECall 31331 [ECall 38308 [EArg 0; EArg 1]]
+
+(* Z38345 if value in list, throw error | Z38345@294342 -> Z38348@294357 digest ba71633803b3aaf289fc1fa32a429a96a93ad44572c6008ca9c69532db5d577b *)
+let body_Z38345_if_value_in_list_throw_error : expr =
+  ECall 802 [ECall 12696 [EArg 1; EArg 0]; ECall 851 [EArg 2; EArg 3]; EArg 0]
+
+(* Z38350 infobox for Wikimedia project | Z38350@294437 -> Z38351@294363 digest 8203f7dab4e6ecf5d900c5e35649de62ef4b338fccefbdad96f4ff9431d16b35 *)
+let body_Z38350_infobox_for_wikimedia_project : expr =
+  ECall 33328 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])]); EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])]); ECall 810 [ECall 37644 [EArg 0; EValue (VText [100; 101; 102; 97; 117; 108; 116]); EArg 1]; ECall 810 [ECall 38216 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 52; 48; 55])]); EArg 1]; ECall 810 [ECall 37782 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 53; 55; 49])]); EArg 1]; ECall 810 [ECall 37623 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 50; 56; 50])]); EArg 1]; EValue (VList [])]]]]]
+
+(* Z38355 infobox for chemical | Z38355@294455 -> Z38356@294451 digest a06261654765eb4aea9beb7bbf9abd43dadfef500eb22bfe682c8ff628776613 *)
+let body_Z38355_infobox_for_chemical : expr =
+  ECall 33328 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])]); EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])]); ECall 810 [ECall 37644 [EArg 0; EValue (VText [100; 101; 102; 97; 117; 108; 116]); EArg 1]; ECall 810 [ECall 38357 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 50; 48; 54; 55])]); EArg 1]; ECall 810 [ECall 38357 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 50; 48; 53; 52])]); EArg 1]; ECall 810 [ECall 37830 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 50; 55; 52])]); EArg 1]; EValue (VList [])]]]]]
+
+(* Z38357 infobox row for quantity | Z38357@294388 -> Z38359@294449 digest 13a40e918003d23f613fb096880f75acd9b55d4c666e23a0730e2223b718f9e5 *)
+let body_Z38357_infobox_row_for_quantity : expr =
+  ECall 37640 [ECall 27299 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList [VFunc 1360]); ECall 810 [EArg 1; EValue (VList [])]]; EArg 1]; ECall 33319 [ECall 810 [ECall 33315 [ECall 34096 [ECall 24766 [ECall 35364 [ECall 35036 [EArg 1; EValue (VList [VFunc 6036]); EValue (VList []); EValue (VList [VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 54; 50; 57])]])]]; EArg 2]; EArg 2]]; ECall 810 [ECall 27873 [ECall 36209 [ECall 19308 [ECall 23680 [ECall 22220 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList []); ECall 810 [EArg 1; EValue (VList [])]]]]]; EArg 2]; EValue (VText [116; 100]); EValue (VList []); EValue (VList [])]; EValue (VList [])]]]; EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])])]
+
+(* Z38364 infobox for planet | Z38364@294461 -> Z38365@294467 digest e373e13757c540d5fa710568af7581b853f763f6ad6fe8488b470821cd2f005a *)
+let body_Z38364_infobox_for_planet : expr =
+  ECall 33328 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])]); EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])]); ECall 810 [ECall 37644 [EArg 0; EValue (VText [100; 101; 102; 97; 117; 108; 116]); EArg 1]; ECall 810 [ECall 37623 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 50; 55; 54])]); EArg 1]; ECall 810 [ECall 38367 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 53; 55; 53])]); EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 50; 55; 55; 50; 56; 49; 57])]); EArg 1]; ECall 810 [ECall 37623 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 51; 57; 55])]); EArg 1]; EValue (VList [])]]]]]
+
+(* Z38367 infobox for row, date with column name | Z38367@294466 -> Z38368@294463 digest e86706d3649c57fbd1f3f8921e1c5bcbc5ee7539e570c779ea92f3e7384b3ac6 *)
+let body_Z38367_infobox_for_row_date_with_column_name : expr =
+  ECall 37640 [ECall 27299 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList [VFunc 1360]); ECall 810 [EArg 1; EValue (VList [])]]; EArg 1]; ECall 33319 [ECall 810 [ECall 33315 [ECall 34096 [ECall 24766 [EArg 2; EArg 3]; EArg 3]]; ECall 810 [ECall 33315 [ECall 35192 [ECall 23451 [ECall 30120 [EArg 0; EValue (VList [VFunc 6036]); EValue (VList [VFunc 1360]); ECall 810 [EArg 1; EValue (VList [])]]; EArg 1]; EArg 3]]; EValue (VList [])]]]; EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])])]
+
+(* Z38373 infobox for galaxy | Z38373@294491 -> Z38374@294488 digest 34f82780ff78b2eccdb75d5bc12a75f05720f7f1c163b5cd73c2db1111fb8f75 *)
+let body_Z38373_infobox_for_galaxy : expr =
+  ECall 33328 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])]); EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])]); ECall 810 [ECall 37644 [EArg 0; EValue (VText [100; 101; 102; 97; 117; 108; 116]); EArg 1]; ECall 810 [ECall 37623 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 51; 57; 55])]); EArg 1]; ECall 810 [ECall 38357 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 50; 49; 52; 55])]); EArg 1]; ECall 810 [ECall 38357 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 50; 48; 54; 55])]); EArg 1]; ECall 810 [ECall 38357 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 50; 49; 50; 48])]); EArg 1]; EValue (VList [])]]]]]]
+
+(* Z38376 infobox for constellation | Z38376@294603 -> Z38377@294495 digest 12574ae0efcbe5656813ff892f31cb8964c5093a123b11e36ffb2ded09c02810 *)
+let body_Z38376_infobox_for_constellation : expr =
+  ECall 33328 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])]); EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])]); ECall 810 [ECall 37644 [EArg 0; EValue (VText [100; 101; 102; 97; 117; 108; 116]); EArg 1]; ECall 810 [ECall 38357 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 50; 48; 52; 54])]); EArg 1]; ECall 810 [ECall 38216 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 52; 55])]); EArg 1]; EValue (VList [])]]]]
+
+(* Z38379 infobox for star | Z38379@294503 -> Z38380@294500 digest bd51770a2c40403ed347dff1b1701d20f4b42cd553ac221a154f88f41dc32f72 *)
+let body_Z38379_infobox_for_star : expr =
+  ECall 33328 [EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])]); EValue (VRecord 89 [({ key_owner = Some 89; key_index = 1 }, VText [])]); ECall 810 [ECall 37644 [EArg 0; EValue (VText [100; 101; 102; 97; 117; 108; 116]); EArg 1]; ECall 810 [ECall 38357 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 50; 48; 54; 55])]); EArg 1]; ECall 810 [ECall 38357 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 50; 48; 54; 48])]); EArg 1]; ECall 810 [ECall 37623 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 53; 57])]); EArg 1]; EValue (VList [])]]]]]
+
+(* Z38382 replace except last | Z38382@294549 -> Z38386@294546 digest 02da65f1450d43ed83c7a0d09e2a519408acb2eea1f7ea266a9d9ddefe543627 *)
+let body_Z38382_replace_except_last : expr =
+  ECall 802 [ECall 10070 [EArg 0; EArg 1]; ECall 10000 [ECall 10075 [EArg 0; EArg 1; EArg 2]; ECall 11422 [EArg 0; EArg 1]]; EArg 0]
+
+(* Z38383 string before last occurrence | Z38383@294541 -> Z38384@294544 digest fe64d22b262f5dd0dca663b63f0c04c88815aacc58a56bcb8a6f0b7bee2d7a62 *)
+let body_Z38383_string_before_last_occurrence : expr =
+  ECall 11170 [ECall 11416 [EArg 0; EArg 1]; EArg 1]
+
+(* Z38388 entity supports paradigms-sentence  | Z38388@294570 -> Z38393@294563 digest d33c431ec243ea764f66f64026fd7cb6584b0d5584094f05c4eb9a28fd5e40f0 *)
+let body_Z38388_entity_supports_paradigms_sentence : expr =
+  ECall 21216 [ECall 14310 [EValue (VFunc 38392); EArg 2]; EArg 0; EArg 1; EArg 2]
+
+(* Z38389 paradigms-sentence in English | Z38389@294595 -> Z38390@294555 digest 89732692be1b54cc1496e46e66ad59aa09b59feb3218aa1946a7f7a829dbb063 *)
+let body_Z38389_paradigms_sentence_in_english : expr =
+  ECall 34669 [ECall 810 [ECall 34669 [ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 2); ({ key_owner = Some 11; key_index = 2 }, ECall 10771 [ECall 802 [EArg 1; EValue (VText [105; 116]); ECall 24766 [EArg 0; EArg 2]]])]; ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 2); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [115; 117; 112; 112; 111; 114; 116; 115]))]; ECall 810 [ECall 26107 [EArg 2; ECall 38382 [ECall 14396 [ECall 37870 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 51; 57; 54; 54])]); EArg 2]]; EValue (VText [32; 112; 114; 111; 103; 114; 97; 109; 109; 105; 110; 103]); EValue (VText [])]]; EValue (VList [])]]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 2); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [32]))]]; ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 2); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [46]))]; EValue (VList [])]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 2); ({ key_owner = Some 11; key_index = 2 }, EValue (VText []))]]
+
+(* Z38395 is language written from right to left? | Z38395@294775 -> Z38466@294770 digest bcac61e47eb642de5058680e132ca93b6739fefb80c6add4e64de2af20750708 *)
+let body_Z38395_is_language_written_from_right_to_left : expr =
+  ECall 10216 [ECall 13752 [ECall 34993 [ECall 11410 [ECall 11420 [ECall 14329 [ECall 34854 [EArg 0]]; EValue (VText [45])]; EValue (VText [45])]]; EValue (VList [VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 55; 51; 50; 49; 56; 52; 52])]; VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 48; 53; 51; 57; 53; 48; 56; 53])]])]]
+
+(* Z38399 named after-sentence in English | Z38399@294609 -> Z38400@294607 digest 03759fcfca49e64fcdc0f0729b137e8463c6ba268b029239ba3f428a5bda2cc4 *)
+let body_Z38399_named_after_sentence_in_english : expr =
+  ECall 34669 [ECall 810 [ECall 34669 [ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, ECall 10771 [ECall 802 [EArg 1; EValue (VText [105; 116]); ECall 24766 [EArg 0; EArg 3]]])]; ECall 810 [ECall 802 [ECall 19316 [EArg 2; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 57; 57; 52; 51; 48; 49])])]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [119; 97; 115; 32; 110; 97; 109; 101; 100; 32; 97; 102; 116; 101; 114]))]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [105; 115; 32; 110; 97; 109; 101; 100; 32; 97; 102; 116; 101; 114]))]]; ECall 810 [ECall 37870 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 51; 56])]); EArg 3]; EValue (VList [])]]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [32]))]]; ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [46]))]; EValue (VList [])]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText []))]]
+
+(* Z38402 depicted by-sentence in English | Z38402@294741 -> Z38456@294738 digest 613a29802d4dd6046cb992b27e3bd7449f3e3e76911d4419004f53d8f71c1598 *)
+let body_Z38402_depicted_by_sentence_in_english : expr =
+  ECall 34669 [ECall 810 [ECall 34669 [ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, ECall 10771 [ECall 802 [EArg 1; EValue (VText [105; 116]); ECall 24766 [EArg 0; EArg 3]]])]; ECall 810 [ECall 802 [ECall 19316 [EArg 2; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 57; 57; 52; 51; 48; 49])])]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [119; 97; 115; 32; 100; 101; 112; 105; 99; 116; 101; 100; 32; 98; 121]))]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [105; 115; 32; 100; 101; 112; 105; 99; 116; 101; 100; 32; 98; 121]))]]; ECall 810 [ECall 37870 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 50; 57; 57])]); EArg 3]; EValue (VList [])]]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [32]))]]; ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [46]))]; EValue (VList [])]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText []))]]
+
+(* Z38403 main subject-sentence in English | Z38403@294938 -> Z38512@294934 digest 81e5d1763c32a23a5db35acc0bff99087b0753378495be2fc52613cc3f71eed8 *)
+let body_Z38403_main_subject_sentence_in_english : expr =
+  ECall 34669 [ECall 810 [ECall 34669 [ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, ECall 10771 [ECall 802 [EArg 1; EValue (VText [105; 116; 115; 32; 109; 97; 105; 110; 32; 115; 117; 98; 106; 101; 99; 116; 115]); ECall 15175 [EValue (VText [84; 104; 101; 32; 109; 97; 105; 110; 32; 115; 117; 98; 106; 101; 99; 116; 115; 32; 111; 102]); ECall 24766 [EArg 0; EArg 3]; EValue (VText [32])]]])]; ECall 810 [ECall 802 [ECall 19316 [EArg 2; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 57; 57; 52; 51; 48; 49])])]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [105; 110; 99; 108; 117; 100; 101; 100]))]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [105; 110; 99; 108; 117; 100; 101]))]]; ECall 810 [ECall 37870 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 57; 50; 49])]); EArg 3]; EValue (VList [])]]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [32]))]]; ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [46]))]; EValue (VList [])]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText []))]]
+
+(* Z38404 uses-sentence in English | Z38404@294726 -> Z38451@294724 digest 9fe4bc38fb05101b267dfa2860378b3a668f184ee98346ad3d4c5b3e1bbbffc8 *)
+let body_Z38404_uses_sentence_in_english : expr =
+  ECall 34669 [ECall 810 [ECall 34669 [ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, ECall 10771 [ECall 802 [EArg 1; EValue (VText [105; 116]); ECall 24766 [EArg 0; EArg 3]]])]; ECall 810 [ECall 802 [ECall 19316 [EArg 2; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 57; 57; 52; 51; 48; 49])])]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [117; 115; 101; 100]))]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [117; 115; 101; 115]))]]; ECall 810 [ECall 37870 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 50; 50; 56; 51])]); EArg 3]; EValue (VList [])]]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [32]))]]; ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [46]))]; EValue (VList [])]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText []))]]
+
+(* Z38405 has use-sentence in English | Z38405@294764 -> Z38465@294814 digest 2e64ba83c8592736c6fe3fe11d8ea35572c228ae062ef13eea1071f809643926 *)
+let body_Z38405_has_use_sentence_in_english : expr =
+  ECall 34669 [ECall 810 [ECall 34669 [ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, ECall 10771 [ECall 802 [EArg 1; EValue (VText [105; 116; 115; 32; 117; 115; 101; 115]); ECall 15175 [EValue (VText [84; 104; 101; 32; 117; 115; 101; 115; 32; 111; 102]); ECall 24766 [EArg 0; EArg 3]; EValue (VText [32])]]])]; ECall 810 [ECall 802 [ECall 19316 [EArg 2; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 57; 57; 52; 51; 48; 49])])]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [105; 110; 99; 108; 117; 100; 101; 100]))]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [105; 110; 99; 108; 117; 100; 101]))]]; ECall 810 [ECall 37870 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 51; 54; 54])]); EArg 3]; EValue (VList [])]]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [32]))]]; ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [46]))]; EValue (VList [])]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText []))]]
+
+(* Z38406 has characteristic-sentence in English | Z38406@294931 -> Z38507@294927 digest f89c178e849cbed70937365a3aee804c2d8c3e4135a42093609c7c8a98996396 *)
+let body_Z38406_has_characteristic_sentence_in_english : expr =
+  ECall 34669 [ECall 810 [ECall 34669 [ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, ECall 10771 [ECall 802 [EArg 1; EValue (VText [105; 116; 115; 32; 99; 104; 97; 114; 97; 99; 116; 101; 114; 105; 115; 116; 105; 99; 115]); ECall 15175 [EValue (VText [84; 104; 101; 32; 99; 104; 97; 114; 97; 99; 116; 101; 114; 105; 115; 116; 105; 99; 115; 32; 111; 102]); ECall 24766 [EArg 0; EArg 3]; EValue (VText [32])]]])]; ECall 810 [ECall 802 [ECall 19316 [EArg 2; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 57; 57; 52; 51; 48; 49])])]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [105; 110; 99; 108; 117; 100; 101; 100]))]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [105; 110; 99; 108; 117; 100; 101]))]]; ECall 810 [ECall 37870 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 53; 53; 50])]); EArg 3]; EValue (VList [])]]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [32]))]]; ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [46]))]; EValue (VList [])]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText []))]]
+
+(* Z38407 platform-sentence in English | Z38407@294711 -> Z38446@294706 digest 17b00930abdb6a674ec2f088d318ab2b633f136243d9755fa9162c2120d47590 *)
+let body_Z38407_platform_sentence_in_english : expr =
+  ECall 34669 [ECall 810 [ECall 34669 [ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, ECall 10771 [ECall 802 [EArg 1; EValue (VText [105; 116]); ECall 24766 [EArg 0; EArg 3]]])]; ECall 810 [ECall 802 [ECall 19316 [EArg 2; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 57; 57; 52; 51; 48; 49])])]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [119; 97; 115; 32; 97; 118; 97; 105; 108; 97; 98; 108; 101; 32; 111; 110]))]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [105; 115; 32; 97; 118; 97; 105; 108; 97; 98; 108; 101; 32; 111; 110]))]]; ECall 810 [ECall 37870 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 52; 48; 48])]); EArg 3]; EValue (VList [])]]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [32]))]]; ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [46]))]; EValue (VList [])]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText []))]]
+
+(* Z38408 characteristic of-sentence in English | Z38408@294689 -> Z38438@294686 digest 33ba981ea3d8a81eee668fda604fa6f80a6a4e04b8cb97b62c76db226e5b8a59 *)
+let body_Z38408_characteristic_of_sentence_in_english : expr =
+  ECall 34669 [ECall 810 [ECall 34669 [ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, ECall 10771 [ECall 802 [EArg 1; EValue (VText [105; 116]); ECall 24766 [EArg 0; EArg 3]]])]; ECall 810 [ECall 802 [ECall 19316 [EArg 2; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 57; 57; 52; 51; 48; 49])])]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [119; 97; 115; 32; 99; 104; 97; 114; 97; 99; 116; 101; 114; 105; 115; 116; 105; 99; 32; 111; 102]))]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [105; 115; 32; 99; 104; 97; 114; 97; 99; 116; 101; 114; 105; 115; 116; 105; 99; 32; 111; 102]))]]; ECall 810 [ECall 37870 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 51; 48; 52; 52])]); EArg 3]; EValue (VList [])]]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [32]))]]; ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [46]))]; EValue (VList [])]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText []))]]
+
+(* Z38409 depends on software-sentence in English | Z38409@294669 -> Z38433@294665 digest 14a66b5ec6656537e4ec50ebe39144d6b52ecfc10f2c5708bc96b357951bb956 *)
+let body_Z38409_depends_on_software_sentence_in_english : expr =
+  ECall 34669 [ECall 810 [ECall 34669 [ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, ECall 10771 [ECall 802 [EArg 1; EValue (VText [105; 116]); ECall 24766 [EArg 0; EArg 3]]])]; ECall 810 [ECall 802 [ECall 19316 [EArg 2; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 57; 57; 52; 51; 48; 49])])]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [100; 101; 112; 101; 110; 100; 101; 100; 32; 111; 110]))]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [100; 101; 112; 101; 110; 100; 115; 32; 111; 110]))]]; ECall 810 [ECall 37870 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 53; 52; 55])]); EArg 3]; EValue (VList [])]]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [32]))]]; ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [46]))]; EValue (VList [])]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText []))]]
+
+(* Z38410 symbolizes-sentence in English | Z38410@294658 -> Z38431@294655 digest 4ec8051b0db74c4269c6dce9240ec70bc1712b0fb5ae3e3e39994f5fb087d0af *)
+let body_Z38410_symbolizes_sentence_in_english : expr =
+  ECall 34669 [ECall 810 [ECall 34669 [ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, ECall 10771 [ECall 802 [EArg 1; EValue (VText [105; 116]); ECall 24766 [EArg 0; EArg 3]]])]; ECall 810 [ECall 802 [ECall 19316 [EArg 2; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 57; 57; 52; 51; 48; 49])])]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [115; 121; 109; 98; 111; 108; 105; 122; 101; 100]))]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [115; 121; 109; 98; 111; 108; 105; 122; 101; 115]))]]; ECall 810 [ECall 37870 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 52; 56; 55; 56])]); EArg 3]; EValue (VList [])]]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [32]))]]; ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [46]))]; EValue (VList [])]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText []))]]
+
+(* Z38411 shares border with-sentence in English | Z38411@294635 -> Z38412@294621 digest e0e643607a97028202444bee8e264c83d1d6da2e6e5e009c61563b01d73bd336 *)
+let body_Z38411_shares_border_with_sentence_in_english : expr =
+  ECall 34669 [ECall 810 [ECall 34669 [ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, ECall 10771 [ECall 802 [EArg 1; EValue (VText [105; 116]); ECall 24766 [EArg 0; EArg 3]]])]; ECall 810 [ECall 802 [ECall 19316 [EArg 2; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 57; 57; 52; 51; 48; 49])])]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [115; 104; 97; 114; 101; 100; 32; 98; 111; 114; 100; 101; 114; 32; 119; 105; 116; 104]))]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [115; 104; 97; 114; 101; 115; 32; 98; 111; 114; 100; 101; 114; 32; 119; 105; 116; 104]))]]; ECall 810 [ECall 37870 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 52; 55])]); EArg 3]; EValue (VList [])]]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [32]))]]; ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [46]))]; EValue (VList [])]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText []))]]
+
+(* Z38425 shares border with-sentence | Z38425@294640 -> Z38426@294637 digest cf218d506672985d5ee7be494206366a8a41ab83ea9ec4e291936bbea6f2e40d *)
+let body_Z38425_shares_border_with_sentence : expr =
+  ECall 30438 [ECall 14310 [EValue (VFunc 38424); EArg 3]; EArg 0; EArg 1; EArg 2; EArg 3]
+
+(* Z38428 symbolizes-sentence | Z38428@294653 -> Z38429@294659 digest b87a49d9a4e8b44ebda6b48e9a653b6fbe88a8fc723bff539ecba562132f88c9 *)
+let body_Z38428_symbolizes_sentence : expr =
+  ECall 30438 [ECall 14310 [EValue (VFunc 38423); EArg 3]; EArg 0; EArg 1; EArg 2; EArg 3]
 
 (* Z38435 depends on software-sentence | Z38435@294674 -> Z38436@294671 digest 8f2ef35e5e24bcfd0beccf76ec52d49224952ce8c0d7f2382442680d1783256b *)
 let body_Z38435_depends_on_software_sentence : expr =
@@ -58,6 +598,14 @@ let body_Z38482_switch_on_type_of_object : expr =
 let body_Z38488_has_use_sentence : expr =
   ECall 30438 [ECall 14310 [EValue (VFunc 38418); EArg 3]; EArg 0; EArg 1; EArg 2; EArg 3]
 
+(* Z38495 named after-sentence in Dutch | Z38495@294902 -> Z38497@295047 digest 49a2e3eac8ea0ca893a32f29fe88ce57f06896a31791341ac4d850a875bbab56 *)
+let body_Z38495_named_after_sentence_in_dutch : expr =
+  ECall 34669 [ECall 810 [ECall 34669 [ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, ECall 10771 [ECall 802 [EArg 1; EValue (VText [104; 101; 116]); ECall 24766 [EArg 0; EArg 3]]])]; ECall 810 [ECall 802 [ECall 19316 [EArg 2; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 57; 57; 52; 51; 48; 49])])]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [119; 97; 115; 32; 118; 101; 114; 110; 111; 101; 109; 100; 32; 110; 97; 97; 114]))]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [105; 115; 32; 118; 101; 114; 110; 111; 101; 109; 100; 32; 110; 97; 97; 114]))]]; ECall 810 [ECall 37870 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 49; 51; 56])]); EArg 3]; EValue (VList [])]]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [32]))]]; ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [46]))]; EValue (VList [])]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText []))]]
+
+(* Z38499 color-sentence in English | Z38499@294911 -> Z38501@294910 digest eb12f951b4a1965b6271ae72ed853c2044bcb26d4c38762be5ad5a3219bce7a5 *)
+let body_Z38499_color_sentence_in_english : expr =
+  ECall 34669 [ECall 810 [ECall 34669 [ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, ECall 10771 [ECall 802 [EArg 1; EValue (VText [105; 116; 115; 32; 99; 111; 108; 111; 114; 115]); ECall 15175 [EValue (VText [84; 104; 101; 32; 99; 111; 108; 111; 114; 115; 32; 111; 102]); ECall 24766 [EArg 0; EArg 3]; EValue (VText [32])]]])]; ECall 810 [ECall 802 [ECall 19316 [EArg 2; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 57; 57; 52; 51; 48; 49])])]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [105; 110; 99; 108; 117; 100; 101; 100]))]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [105; 110; 99; 108; 117; 100; 101]))]]; ECall 810 [ECall 37870 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 52; 54; 50])]); EArg 3]; EValue (VList [])]]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [32]))]]; ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [46]))]; EValue (VList [])]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText []))]]
+
 (* Z38503 color-sentence | Z38503@294920 -> Z38504@294918 digest 75d2e45378ac196037e59a8e93a2e9a878363e3f57f10468d5643c5576618205 *)
 let body_Z38503_color_sentence : expr =
   ECall 30438 [ECall 14310 [EValue (VFunc 38505); EArg 3]; EArg 0; EArg 1; EArg 2; EArg 3]
@@ -73,6 +621,14 @@ let body_Z38515_main_subject_sentence : expr =
 (* Z38520 auto-classifying sentence – entity subclass | Z38520@295001 -> Z38524@294998 digest 1b6a746dc5e9f16ef36668b8bc111fc21957a599ef53d17d534fae10e0f76482 *)
 let body_Z38520_auto_classifying_sentence_entity_subclass : expr =
   ECall 30438 [ECall 14310 [EValue (VFunc 38523); EArg 3]; EArg 0; EArg 1; EArg 2; EArg 3]
+
+(* Z38521 auto-classifying sentence – subclass, English | Z38521@295003 -> Z38522@294994 digest 99ffa5649764a4e0e1407230706c0b772482cf080a5375423e06bbd4f012d1fd *)
+let body_Z38521_auto_classifying_sentence_subclass_english : expr =
+  ECall 34669 [ECall 810 [ECall 34669 [ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, ECall 10771 [ECall 802 [EArg 1; EValue (VText [105; 116]); ECall 24766 [EArg 0; EArg 3]]])]; ECall 810 [ECall 802 [ECall 19316 [EArg 2; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 57; 57; 52; 51; 48; 49])])]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [119; 97; 115]))]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [105; 115]))]]; ECall 810 [ECall 26107 [EArg 3; ECall 21739 [ECall 14396 [ECall 37870 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 50; 55; 57])]); EArg 3]]]]; ECall 810 [ECall 37870 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 50; 55; 57])]); EArg 3]; EValue (VList [])]]]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [32]))]]; ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [46]))]; EValue (VList [])]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText []))]]
+
+(* Z38536 entity supports programming lang-sentence, English | Z38536@295181 -> Z38537@295179 digest 9092dad6020ef08ea52af1cb3ceb8540c6405977e41b7169138987a121022abb *)
+let body_Z38536_entity_supports_programming_lang_sentence_english : expr =
+  ECall 34669 [ECall 810 [ECall 34669 [ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, ECall 10771 [ECall 802 [EArg 1; EValue (VText [105; 116]); ECall 24766 [EArg 0; EArg 3]]])]; ECall 810 [ECall 802 [ECall 19316 [EArg 2; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 57; 57; 52; 51; 48; 49])])]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [115; 117; 112; 112; 111; 114; 116; 101; 100; 32; 112; 114; 111; 103; 114; 97; 109; 109; 105; 110; 103; 32; 108; 97; 110; 103; 117; 97; 103; 101]))]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [115; 117; 112; 112; 111; 114; 116; 115; 32; 112; 114; 111; 103; 114; 97; 109; 109; 105; 110; 103; 32; 108; 97; 110; 103; 117; 97; 103; 101]))]]; ECall 810 [ECall 37870 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 51; 57; 56; 53])]); EArg 3]; EValue (VList [])]]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [32]))]]; ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [46]))]; EValue (VList [])]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText []))]]
 
 (* Z38539 infobox for sculpture | Z38539@295196 -> Z38540@295189 digest b292a018e5ff8a3c788a4b5fd5a7033f28a4de0a4f617bf429c08d224b293a17 *)
 let body_Z38539_infobox_for_sculpture : expr =
@@ -126,6 +682,10 @@ let body_Z38590_evaluate_list_or_element_in_s_expression : expr =
 let body_Z38595_evaluate_anonymous_function : expr =
   ECall 38590 [ECall 38561 [EArg 0]]
 
+(* Z38598 bind value by identifier | Z38598@295538 -> Z38630@295472 digest 2fc2197191cfe6e6a2f840ec9a589ee3a25afe786b6a9dc29562cf0b11ab568d *)
+let body_Z38598_bind_value_by_identifier : expr =
+  ERecord 38546 [({ key_owner = Some 38546; key_index = 1 }, ECall 28316 [EValue (VFunc 38604); ECall 38552 [EArg 0]; EArg 1]); ({ key_owner = Some 38546; key_index = 2 }, ECall 38556 [EArg 0]); ({ key_owner = Some 38546; key_index = 3 }, ECall 38619 [ECall 38561 [EArg 0]; EArg 1; EArg 2])]
+
 (* Z38600 argument declaration has key | Z38600@295424 -> Z38603@295411 digest 773e2ffa644e1f8a25321eaceaf7433f955cde9824cfbe700029d36894d7b1a3 *)
 let body_Z38600_argument_declaration_has_key : expr =
   ECall 866 [ECall 38563 [EArg 0]; EArg 1]
@@ -153,6 +713,18 @@ let body_Z38620_is_argument_declaration_for_anonymous_function : expr =
 (* Z38625 is argument reference for anonymous function | Z38625@295466 -> Z38628@295465 digest ae2b02055b7763536ef3b66876e9c5a673c241b646e424eb5ee877e130f881a0 *)
 let body_Z38625_is_argument_reference_for_anonymous_function : expr =
   ECall 19352 [EArg 0; EValue (VFunc 38548)]
+
+(* Z38635 anonymous function from function | Z38635@295537 -> Z38637@295528 digest 66a35a03b641fa9c97aefc467a0d8728de22759a1543750ad37fc7ed72488695 *)
+let body_Z38635_anonymous_function_from_function : expr =
+  ERecord 38546 [({ key_owner = Some 38546; key_index = 1 }, ECall 31098 [EValue (VFunc 38638); ECall 13831 [EValue (VNat 1); ECall 12681 [ECall 21177 [EArg 0]]]; ECall 21177 [EArg 0]; EArg 1]); ({ key_owner = Some 38546; key_index = 2 }, ECall 10112 [EArg 0]); ({ key_owner = Some 38546; key_index = 3 }, ECall 810 [EArg 0; ECall 873 [EValue (VFunc 38641); ECall 13831 [EValue (VNat 1); ECall 12681 [ECall 21177 [EArg 0]]]]])]
+
+(* Z38638 argument declaration from number, type and meaning | Z38638@295515 -> Z38640@295514 digest 2a8db391412c67824ed505f9f73d0f77715a2aa6fd46da9f301a65af3b1b5b5e *)
+let body_Z38638_argument_declaration_from_number_type_and_meaning : expr =
+  ERecord 38545 [({ key_owner = Some 38545; key_index = 1 }, ECall 10000 [EValue (VText [75]); ECall 13713 [EArg 0]]); ({ key_owner = Some 38545; key_index = 2 }, ECall 21174 [EArg 1]); ({ key_owner = Some 38545; key_index = 3 }, EArg 2)]
+
+(* Z38641 argument reference from number | Z38641@295522 -> Z38643@295521 digest eef4a343a202000eecdb40d615d78ae86b36dd9c0f2f69f7c163197b70e1fef0 *)
+let body_Z38641_argument_reference_from_number : expr =
+  ERecord 38548 [({ key_owner = Some 38548; key_index = 1 }, ECall 10000 [EValue (VText [75]); ECall 13713 [EArg 0]])]
 
 (* Z38644 argument declaration by position | Z38644@295623 -> Z38651@295556 digest d8c903f52885fdfca2ec894ac3277a0c7ad8251a1e7779b63fae7a4d780f74a0 *)
 let body_Z38644_argument_declaration_by_position : expr =
@@ -294,17 +866,37 @@ let body_Z38782_join_occupation_list_of_person : expr =
 let body_Z38788_lexeme_for_qid_english : expr =
   ECall 811 [ECall 6830 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 53; 49; 51; 55])]); EValue (VFunc 1002)]]
 
+(* Z38797 notable works-sentence, English | Z38797@296179 -> Z38798@296181 digest d12e567dc679308d8d38c66d8b3c1c72786577ebea23fe5894564775b30b6677 *)
+let body_Z38797_notable_works_sentence_english : expr =
+  ECall 34669 [ECall 810 [ECall 34669 [ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, ECall 10771 [ECall 802 [EArg 1; ECall 19565 [ECall 19316 [ECall 38726 [EArg 0]; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 54; 53; 56; 49; 48; 55; 50])])]; EValue (VText [72; 101; 114; 32; 110; 111; 116; 97; 98; 108; 101; 32; 119; 111; 114; 107; 115]); ECall 19316 [ECall 38726 [EArg 0]; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 54; 53; 56; 49; 48; 57; 55])])]; EValue (VText [72; 105; 115; 32; 110; 111; 116; 97; 98; 108; 101; 32; 119; 111; 114; 107; 115]); EValue (VText [84; 104; 101; 105; 114; 32; 110; 111; 116; 97; 98; 108; 101; 32; 119; 111; 114; 107; 115])]; ECall 12899 [ECall 810 [EValue (VText [84; 104; 101; 32; 110; 111; 116; 97; 98; 108; 101; 32; 119; 111; 114; 107; 115; 32; 111; 102]); ECall 810 [ECall 24766 [EArg 0; EArg 3]; EValue (VList [])]]; EValue (VText [32])]]])]; ECall 810 [ECall 802 [ECall 19316 [EArg 2; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 57; 57; 52; 51; 48; 49])])]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [105; 110; 99; 108; 117; 100; 101; 100]))]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [105; 110; 99; 108; 117; 100; 101]))]]; ECall 810 [ECall 37870 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 56; 48; 48])]); EArg 3]; EValue (VList [])]]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [32]))]]; ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [46]))]; EValue (VList [])]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText []))]]
+
+(* Z38799 notable works-sentence, French | Z38799@296192 -> Z38800@296188 digest e9376b638a7089f89004b2daf5b4d65883c15e7f12bcd23ffb248a4633b7bb45 *)
+let body_Z38799_notable_works_sentence_french : expr =
+  ECall 34669 [ECall 810 [ECall 34669 [ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, ECall 10771 [ECall 802 [EArg 1; ECall 19565 [ECall 19316 [ECall 38726 [EArg 0]; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 54; 53; 56; 49; 48; 55; 50])])]; EValue (VText [69; 108; 108; 101]); ECall 19316 [ECall 38726 [EArg 0]; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 54; 53; 56; 49; 48; 57; 55])])]; EValue (VText [73; 108]); EValue (VText [73; 108])]; ECall 24766 [EArg 0; EArg 3]]])]; ECall 810 [ECall 802 [ECall 19316 [EArg 2; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 57; 57; 52; 51; 48; 49])])]; ECall 802 [ECall 19316 [ECall 38726 [EArg 0]; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 54; 53; 56; 49; 48; 57; 55])])]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [101; 115; 116; 32; 99; 111; 110; 110; 117; 32; 112; 111; 117; 114; 32; 115; 101; 115; 32; 339; 117; 118; 114; 101; 115; 32; 58]))]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [233; 116; 97; 105; 116; 32; 99; 111; 110; 110; 117; 101; 32; 112; 111; 117; 114; 32; 115; 101; 115; 32; 339; 117; 118; 114; 101; 115; 32; 58]))]]; ECall 802 [ECall 19316 [ECall 38726 [EArg 0]; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 54; 53; 56; 49; 48; 57; 55])])]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [101; 115; 116; 32; 99; 111; 110; 110; 117; 32; 112; 111; 117; 114; 32; 115; 101; 115; 32; 339; 117; 118; 114; 101; 115; 32; 58]))]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [101; 115; 116; 32; 99; 111; 110; 110; 117; 101; 32; 112; 111; 117; 114; 32; 115; 101; 115; 32; 339; 117; 118; 114; 101; 115; 32; 58]))]]]; ECall 810 [ECall 37870 [EArg 0; EValue (VRecord 6092 [({ key_owner = Some 6092; key_index = 1 }, VText [80; 56; 48; 48])]); EArg 3]; EValue (VList [])]]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [32]))]]; ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [46]))]; EValue (VList [])]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText []))]]
+
 (* Z38804 notable works-sentence | Z38804@296201 -> Z38805@296196 digest 049b22e133f8c46d651d33ef70274a42697a9342f59fb7014cb58ed2c8fc6f47 *)
 let body_Z38804_notable_works_sentence : expr =
   ECall 30438 [ECall 14310 [EValue (VFunc 38803); EArg 3]; EArg 0; EArg 1; EArg 2; EArg 3]
+
+(* Z38808 professions sentence, English | Z38808@296214 -> Z38809@296211 digest 85e1d6d03e578d40079c71936d8151da5ea497f4a6151b7a7afb59daf1a11edd *)
+let body_Z38808_professions_sentence_english : expr =
+  ECall 34669 [ECall 810 [ECall 34669 [ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, ECall 10771 [ECall 802 [EArg 1; ECall 19565 [ECall 19316 [ECall 38726 [EArg 0]; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 54; 53; 56; 49; 48; 55; 50])])]; EValue (VText [83; 104; 101]); ECall 19316 [ECall 38726 [EArg 0]; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 54; 53; 56; 49; 48; 57; 55])])]; EValue (VText [72; 101]); EValue (VText [84; 104; 101; 121])]; ECall 24766 [EArg 0; EArg 3]]])]; ECall 810 [ECall 802 [ECall 19316 [EArg 2; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 57; 57; 52; 51; 48; 49])])]; ECall 19565 [ECall 19316 [ECall 38726 [EArg 0]; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 54; 53; 56; 49; 48; 55; 50])])]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [119; 97; 115]))]; ECall 19316 [ECall 38726 [EArg 0]; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 54; 53; 56; 49; 48; 57; 55])])]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [119; 97; 115]))]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [119; 101; 114; 101]))]]; ECall 19565 [ECall 19316 [ECall 38726 [EArg 0]; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 54; 53; 56; 49; 48; 55; 50])])]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [105; 115]))]; ECall 19316 [ECall 38726 [EArg 0]; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 54; 53; 56; 49; 48; 57; 55])])]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [105; 115]))]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [97; 114; 101]))]]]; ECall 810 [ECall 26107 [EArg 3; ECall 21739 [ECall 14396 [ECall 38782 [EArg 0; EArg 3]]]]; ECall 810 [ECall 38782 [EArg 0; EArg 3]; EValue (VList [])]]]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [32]))]]; ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [46]))]; EValue (VList [])]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText []))]]
 
 (* Z38814 prefix with indefinite article, English | Z38814@296257 -> Z38815@296252 digest d5cffd24182455e4cc9c3a8efb33f5ed7636d7ed7fa81ba550268e8d2fd73b1a *)
 let body_Z38814_prefix_with_indefinite_article_english : expr =
   ECall 15175 [ECall 21739 [EArg 0]; EArg 0; EValue (VText [32])]
 
+(* Z38829 professions sentence, French | Z38829@296304 -> Z38830@296306 digest ce79fe1cdadbcece7ba32c92b9b9ac82f50190d790cda23e218e8107fab8eb96 *)
+let body_Z38829_professions_sentence_french : expr =
+  ECall 34669 [ECall 810 [ECall 34669 [ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, ECall 10771 [ECall 802 [EArg 1; ECall 19565 [ECall 19316 [ECall 38726 [EArg 0]; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 54; 53; 56; 49; 48; 55; 50])])]; EValue (VText [69; 108; 108; 101]); ECall 19316 [ECall 38726 [EArg 0]; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 54; 53; 56; 49; 48; 57; 55])])]; EValue (VText [73; 108]); EValue (VText [73; 108])]; ECall 24766 [EArg 0; EArg 3]]])]; ECall 810 [ECall 802 [ECall 19316 [EArg 2; EValue (VRecord 6091 [({ key_owner = Some 6091; key_index = 1 }, VText [81; 49; 57; 57; 52; 51; 48; 49])])]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [233; 116; 97; 105; 116]))]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [101; 115; 116]))]]; ECall 810 [ECall 38782 [EArg 0; EArg 3]; EValue (VList [])]]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [32]))]]; ECall 810 [ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [46]))]; EValue (VList [])]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 3); ({ key_owner = Some 11; key_index = 2 }, EValue (VText []))]]
+
 (* Z38833 professions sentence | Z38833@296319 -> Z38834@296315 digest e33623ac75faf3ce645fce01a60498f336cd417db3d9e04b50ca81c375df55b4 *)
 let body_Z38833_professions_sentence : expr =
   ECall 30438 [ECall 14310 [EValue (VFunc 38832); EArg 3]; EArg 0; EArg 1; EArg 2; EArg 3]
+
+(* Z38839 join lists-monolingual texts without Oxford comma | Z38839@296392 -> Z38840@296385 digest e5acb85f5c353b7c60b17d50f2a2576aa8650a1acb73b338b7848c4fa5ec26ad *)
+let body_Z38839_join_lists_monolingual_texts_without_oxford_comma : expr =
+  ECall 802 [ECall 13522 [ECall 12681 [EArg 0]; EValue (VNat 0)]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 1); ({ key_owner = Some 11; key_index = 2 }, EValue (VText []))]; ECall 802 [ECall 13522 [ECall 12681 [EArg 0]; EValue (VNat 1)]; ECall 811 [EArg 0]; ECall 802 [ECall 13522 [ECall 12681 [EArg 0]; EValue (VNat 2)]; ECall 34669 [EArg 0; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 1); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [32; 97; 110; 100; 32]))]]; ECall 34669 [ECall 810 [ECall 34669 [ECall 12967 [EArg 0]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 1); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [44; 32]))]]; ECall 810 [ECall 12964 [EArg 0]; EValue (VList [])]]; ERecord 11 [({ key_owner = Some 11; key_index = 1 }, EArg 1); ({ key_owner = Some 11; key_index = 2 }, EValue (VText [32; 97; 110; 100; 32]))]]]]]
 
 (* Z38844 join WD item property val (en, w/o Oxford comma) | Z38844@296397 -> Z38845@296394 digest 43eff63a991406ef6cbfeced0268894ea05dff530e42f02201ca84a2802b3a79 *)
 let body_Z38844_join_wd_item_property_val_en_w_o_oxford_comma : expr =
@@ -316,6 +908,141 @@ let body_Z38857_apply_a_5_param_fn_to_a_list_of_firsts_same_2_5 : expr =
 
 let part_policy (fid:zid) : Tot (option expr) =
   match fid with
+  | 37767 -> Some body_Z37767_switch_on_number_s_p
+  | 37772 -> Some body_Z37772_item_influenced_by
+  | 37774 -> Some body_Z37774_influenced_by_sentence_in_english
+  | 37777 -> Some body_Z37777_entity_influenced_by_sentence
+  | 37782 -> Some body_Z37782_infobox_for_row_date
+  | 37791 -> Some body_Z37791_intro_for_species_with_hypernym_in_english
+  | 37802 -> Some body_Z37802_get_element_of_language_keyed_map
+  | 37805 -> Some body_Z37805_item_developed_in
+  | 37808 -> Some body_Z37808_year_and_describing_authority_of_taxon
+  | 37809 -> Some body_Z37809_developed_in_sentence_in_english
+  | 37821 -> Some body_Z37821_common_name_of_taxon
+  | 37827 -> Some body_Z37827_infobox_for_a_taxon
+  | 37830 -> Some body_Z37830_infobox_row_string
+  | 37833 -> Some body_Z37833_fetch_iucn_conservation_status_string
+  | 37836 -> Some body_Z37836_taxon_name_statements_of_qid
+  | 37838 -> Some body_Z37838_taxon_authority_as_typed_list_string
+  | 37840 -> Some body_Z37840_list_of_abstract_wikilinks
+  | 37843 -> Some body_Z37843_fetch_labels_of_wikidata_qid
+  | 37847 -> Some body_Z37847_first_lexeme_ref_from_item_ref_and_language
+  | 37851 -> Some body_Z37851_place_is_located_by_a_body_of_water_in_french
+  | 37855 -> Some body_Z37855_join_wikidata_item_property_val_en_oxford_comma
+  | 37858 -> Some body_Z37858_join_wikidata_item_property_values_french
+  | 37859 -> Some body_Z37859_join_list_of_monolingual_texts_with_comma_french
+  | 37866 -> Some body_Z37866_infobox_row_property_type
+  | 37870 -> Some body_Z37870_join_wd_item_property_values
+  | 37873 -> Some body_Z37873_entity_programmed_in_sentence
+  | 37877 -> Some body_Z37877_specific_property_of_subject_is_value_french
+  | 37880 -> Some body_Z37880_infobox_value_qid
+  | 37883 -> Some body_Z37883_infobox_value_string
+  | 37886 -> Some body_Z37886_made_from_materials_sentence_english
+  | 37890 -> Some body_Z37890_entity_made_from_sentence
+  | 37895 -> Some body_Z37895_noun_lexeme_gender_in_french_is_female
+  | 37900 -> Some body_Z37900_string_for_lexeme_with_definite_french
+  | 37906 -> Some body_Z37906_all_forms_of_lexeme_are_plural
+  | 37912 -> Some body_Z37912_definite_article_with_feminine_sing_noun_french
+  | 37916 -> Some body_Z37916_definite_article_with_masculine_sing_noun_french
+  | 37921 -> Some body_Z37921_intro_for_species_with_automatic_hypernym_at_order
+  | 37922 -> Some body_Z37922_intro_for_species_with_hypernym
+  | 37925 -> Some body_Z37925_object_is_string_and_not_empty
+  | 37927 -> Some body_Z37927_wikilinked_taxon_author_list_in_given_language
+  | 37930 -> Some body_Z37930_get_superior_taxon_by_taxon_and_rank
+  | 37934 -> Some body_Z37934_intro_for_species_with_hypernym_swedish
+  | 37936 -> Some body_Z37936_final_word_separator_in_swedish_lists_och
+  | 37939 -> Some body_Z37939_taxonomic_lineage_of_qid
+  | 37940 -> Some body_Z37940_is_individual_lexeme_form_marked_as_plural
+  | 37941 -> Some body_Z37941_taxonomic_lineage_of_qid_helper
+  | 37945 -> Some body_Z37945_developed_by_sentence_in_english
+  | 37951 -> Some body_Z37951_entity_developed_by_sentence
+  | 37956 -> Some body_Z37956_linked_label_of_item_with_definite_article_french
+  | 37959 -> Some body_Z37959_created_by_sentence_in_english
+  | 37963 -> Some body_Z37963_entity_created_by_sentence
+  | 37970 -> Some body_Z37970_replace_de_les_des_and_de_le_du_for_french
+  | 37977 -> Some body_Z37977_intro_for_species_without_hypernym_in_english
+  | 37979 -> Some body_Z37979_intro_for_species_in_swedish
+  | 37984 -> Some body_Z37984_is_proper_noun_lexeme
+  | 37988 -> Some body_Z37988_noun_lexeme_gender_in_french_is_male
+  | 37995 -> Some body_Z37995_superlative_definition_in_japanese
+  | 37999 -> Some body_Z37999_french_definite_article_string_indicated_by_item
+  | 38011 -> Some body_Z38011_french_definite_article_joined_to_noun_strings
+  | 38021 -> Some body_Z38021_best_classifier_lexeme_from_statements_of_sense
+  | 38025 -> Some body_Z38025_item_object_is_subclass_of_these_items_qids
+  | 38031 -> Some body_Z38031_arithmetic_mean_of_natural_numbers_as_natural
+  | 38034 -> Some body_Z38034_infer_syllable_count_of_form_from_p898_p5279
+  | 38039 -> Some body_Z38039_geohack_url_from_wikidata_geo_coordinate
+  | 38046 -> Some body_Z38046_string_starts_with_any_of_aeiouyaeiouy
+  | 38053 -> Some body_Z38053_image_thumbnail_with_alt_text_set_by_qid
+  | 38057 -> Some body_Z38057_intro_for_species_with_hypernym_default
+  | 38060 -> Some body_Z38060_intro_for_species_without_hypernym_default
+  | 38078 -> Some body_Z38078_abstract_wikilink_string_w_text_no_fallback
+  | 38083 -> Some body_Z38083_is_item_reference_female_qid
+  | 38086 -> Some body_Z38086_infobox_row_coordinate_hyperlinked
+  | 38088 -> Some body_Z38088_label_of_item_with_def_article_grammar_french
+  | 38095 -> Some body_Z38095_calculate_a_c_e_over_list_of_windspeeds
+  | 38114 -> Some body_Z38114_replace_de_les_des_and_de_le_du_string
+  | 38119 -> Some body_Z38119_round_natural_number_to_nearest_n
+  | 38150 -> Some body_Z38150_is_inf_float64
+  | 38159 -> Some body_Z38159_is_inf_float64
+  | 38168 -> Some body_Z38168_is_infinite_float64
+  | 38178 -> Some body_Z38178_swedish_article_ful_instant_sentence_monolingual
+  | 38181 -> Some body_Z38181_specific_property_of_subject_not_from_wikidata
+  | 38185 -> Some body_Z38185_etymology_english
+  | 38189 -> Some body_Z38189_french_short_description_for_painting
+  | 38197 -> Some body_Z38197_best_lexeme_with_reference_string
+  | 38203 -> Some body_Z38203_population_sentence_ukrainian
+  | 38205 -> Some body_Z38205_defining_role_sentence_in_serbian
+  | 38210 -> Some body_Z38210_serbian_genitive_singular_from_item
+  | 38213 -> Some body_Z38213_regular_serbian_feminine_genitive_singular
+  | 38216 -> Some body_Z38216_infobox_row_best_values
+  | 38226 -> Some body_Z38226_language_count_of_multilingual_text
+  | 38228 -> Some body_Z38228_gurmukhi_punjabi_noun_declension_table
+  | 38229 -> Some body_Z38229_count_languages_a_persistent_zobject_has_labels_in
+  | 38240 -> Some body_Z38240_birth_sentence_from_wikidata_person_dutch
+  | 38246 -> Some body_Z38246_display_gregorian_year_in_dutch
+  | 38255 -> Some body_Z38255_state_location_using_entity_and_class_polish
+  | 38256 -> Some body_Z38256_display_day_of_year_in_dutch
+  | 38272 -> Some body_Z38272_display_year_in_dutch_without_n_chr_after_99_n_c
+  | 38274 -> Some body_Z38274_birth_sentence_from_wikidata_french
+  | 38280 -> Some body_Z38280_dutch_short_description_for_album
+  | 38285 -> Some body_Z38285_final_word_separator_in_list_dutch
+  | 38288 -> Some body_Z38288_dutch_short_description_for_painting
+  | 38291 -> Some body_Z38291_classifying_sentence_in_polish
+  | 38306 -> Some body_Z38306_languages_supported_by_function
+  | 38308 -> Some body_Z38308_languages_supported_by_config_given_lang
+  | 38317 -> Some body_Z38317_infobox_for_wikimania
+  | 38323 -> Some body_Z38323_html_table_for_alphabet
+  | 38325 -> Some body_Z38325_create_html_th_fragment_with_colspan_attr
+  | 38329 -> Some body_Z38329_infobox_for_language
+  | 38334 -> Some body_Z38334_unordered_list_of_languages_supported_by_function
+  | 38345 -> Some body_Z38345_if_value_in_list_throw_error
+  | 38350 -> Some body_Z38350_infobox_for_wikimedia_project
+  | 38355 -> Some body_Z38355_infobox_for_chemical
+  | 38357 -> Some body_Z38357_infobox_row_for_quantity
+  | 38364 -> Some body_Z38364_infobox_for_planet
+  | 38367 -> Some body_Z38367_infobox_for_row_date_with_column_name
+  | 38373 -> Some body_Z38373_infobox_for_galaxy
+  | 38376 -> Some body_Z38376_infobox_for_constellation
+  | 38379 -> Some body_Z38379_infobox_for_star
+  | 38382 -> Some body_Z38382_replace_except_last
+  | 38383 -> Some body_Z38383_string_before_last_occurrence
+  | 38388 -> Some body_Z38388_entity_supports_paradigms_sentence
+  | 38389 -> Some body_Z38389_paradigms_sentence_in_english
+  | 38395 -> Some body_Z38395_is_language_written_from_right_to_left
+  | 38399 -> Some body_Z38399_named_after_sentence_in_english
+  | 38402 -> Some body_Z38402_depicted_by_sentence_in_english
+  | 38403 -> Some body_Z38403_main_subject_sentence_in_english
+  | 38404 -> Some body_Z38404_uses_sentence_in_english
+  | 38405 -> Some body_Z38405_has_use_sentence_in_english
+  | 38406 -> Some body_Z38406_has_characteristic_sentence_in_english
+  | 38407 -> Some body_Z38407_platform_sentence_in_english
+  | 38408 -> Some body_Z38408_characteristic_of_sentence_in_english
+  | 38409 -> Some body_Z38409_depends_on_software_sentence_in_english
+  | 38410 -> Some body_Z38410_symbolizes_sentence_in_english
+  | 38411 -> Some body_Z38411_shares_border_with_sentence_in_english
+  | 38425 -> Some body_Z38425_shares_border_with_sentence
+  | 38428 -> Some body_Z38428_symbolizes_sentence
   | 38435 -> Some body_Z38435_depends_on_software_sentence
   | 38440 -> Some body_Z38440_characteristic_of_sentence
   | 38443 -> Some body_Z38443_named_after_sentence
@@ -327,10 +1054,14 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 38477 -> Some body_Z38477_switch_on_type
   | 38482 -> Some body_Z38482_switch_on_type_of_object
   | 38488 -> Some body_Z38488_has_use_sentence
+  | 38495 -> Some body_Z38495_named_after_sentence_in_dutch
+  | 38499 -> Some body_Z38499_color_sentence_in_english
   | 38503 -> Some body_Z38503_color_sentence
   | 38508 -> Some body_Z38508_has_characteristic_sentence
   | 38515 -> Some body_Z38515_main_subject_sentence
   | 38520 -> Some body_Z38520_auto_classifying_sentence_entity_subclass
+  | 38521 -> Some body_Z38521_auto_classifying_sentence_subclass_english
+  | 38536 -> Some body_Z38536_entity_supports_programming_lang_sentence_english
   | 38539 -> Some body_Z38539_infobox_for_sculpture
   | 38542 -> Some body_Z38542_simple_cite_from_url_qids_and_date
   | 38552 -> Some body_Z38552_arguments_of_an_anonymous_function
@@ -344,6 +1075,7 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 38586 -> Some body_Z38586_all_arguments_bound
   | 38590 -> Some body_Z38590_evaluate_list_or_element_in_s_expression
   | 38595 -> Some body_Z38595_evaluate_anonymous_function
+  | 38598 -> Some body_Z38598_bind_value_by_identifier
   | 38600 -> Some body_Z38600_argument_declaration_has_key
   | 38604 -> Some body_Z38604_argument_declaration_has_not_key
   | 38610 -> Some body_Z38610_argument_reference_has_key
@@ -351,6 +1083,9 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 38619 -> Some body_Z38619_substitute_reference_in_s_expression
   | 38620 -> Some body_Z38620_is_argument_declaration_for_anonymous_function
   | 38625 -> Some body_Z38625_is_argument_reference_for_anonymous_function
+  | 38635 -> Some body_Z38635_anonymous_function_from_function
+  | 38638 -> Some body_Z38638_argument_declaration_from_number_type_and_meaning
+  | 38641 -> Some body_Z38641_argument_reference_from_number
   | 38644 -> Some body_Z38644_argument_declaration_by_position
   | 38645 -> Some body_Z38645_identical_argument_declaration_for_anon_function
   | 38652 -> Some body_Z38652_equivalent_argument_declaration_for_anon_function
@@ -386,9 +1121,14 @@ let part_policy (fid:zid) : Tot (option expr) =
   | 38778 -> Some body_Z38778_join_occupation_list_of_person_english
   | 38782 -> Some body_Z38782_join_occupation_list_of_person
   | 38788 -> Some body_Z38788_lexeme_for_qid_english
+  | 38797 -> Some body_Z38797_notable_works_sentence_english
+  | 38799 -> Some body_Z38799_notable_works_sentence_french
   | 38804 -> Some body_Z38804_notable_works_sentence
+  | 38808 -> Some body_Z38808_professions_sentence_english
   | 38814 -> Some body_Z38814_prefix_with_indefinite_article_english
+  | 38829 -> Some body_Z38829_professions_sentence_french
   | 38833 -> Some body_Z38833_professions_sentence
+  | 38839 -> Some body_Z38839_join_lists_monolingual_texts_without_oxford_comma
   | 38844 -> Some body_Z38844_join_wd_item_property_val_en_w_o_oxford_comma
   | 38857 -> Some body_Z38857_apply_a_5_param_fn_to_a_list_of_firsts_same_2_5
   | _ -> None
