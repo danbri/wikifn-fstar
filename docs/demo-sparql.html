@@ -244,7 +244,7 @@ SELECT ?name ?country ?joins ?phrase WHERE {
 PREFIX :   <https://example.org/waterway#>
 PREFIX fn: <${PREFIX}>
 
-SELECT ?name ?letters ?rot13 ?palindrome WHERE {
+SELECT ?phrase ?name ?letters ?rot13 ?palindrome WHERE {
   ?w :name ?name ; :phrase ?phrase .
   BIND(fn:Z11040(fn:Z10052(?phrase)) AS ?letters)
   BIND(fn:Z10627(?name)              AS ?rot13)
