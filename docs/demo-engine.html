@@ -22,30 +22,35 @@
       /* A function that reaches a group of compositions defined through each
          other with no base case. Calling it cannot produce an answer, so it is
          marked everywhere it appears rather than only when it fails. */
-      .cycle-warn { background: #ffd9e4; color: #3d0d1c; }
-      @media (prefers-color-scheme: dark) { .cycle-warn { background: #5c2438; color: #ffdde6; } }
+      /* Both colours come from the stylesheet's variables, which is where light
+         and dark are decided. A component that carries its own dark rules paints
+         dark colours onto a light page whenever the two disagree. */
+      .cycle-warn { background: var(--warn-bg); color: var(--warn-text); }
       /* Repeated as .function-list button.cycle-warn: the rule above sets
          background:none on every button in the list and would otherwise win on
          specificity. */
-      .function-list button.cycle-warn { background: #ffd9e4; color: #3d0d1c; }
-      .function-list button.cycle-warn:hover { background: #ffc2d3; }
-      @media (prefers-color-scheme: dark) {
-        .function-list button.cycle-warn { background: #5c2438; color: #ffdde6; }
-        .function-list button.cycle-warn:hover { background: #6e2c44; }
-      }
-      .cycle-note { background: #ffd9e4; color: #3d0d1c; border-radius: 0.3rem;
+      .function-list button.cycle-warn { background: var(--warn-bg); color: var(--warn-text); }
+      .function-list button.cycle-warn:hover { filter: brightness(0.95); }
+      .cycle-note { background: var(--warn-bg); color: var(--warn-text); border-radius: 0.3rem;
         padding: 0.5rem 0.7rem; margin: 0.4rem 0 0.8rem; font-size: 0.9em; }
-      @media (prefers-color-scheme: dark) { .cycle-note { background: #5c2438; color: #ffdde6; } }
       .example-item { display: inline-flex; align-items: stretch; }
       .examples button.example-copy { font: inherit; font-size: 0.75em; padding: 0.15rem 0.4rem;
-        margin-left: -1px; border: 1px solid rgba(128,128,128,0.45); border-radius: 0 0.8rem 0.8rem 0;
-        background: none; cursor: pointer; opacity: 0.75; }
+        margin-left: -1px; border: 1px solid var(--border); border-radius: 0 0.8rem 0.8rem 0;
+        cursor: pointer; opacity: 0.85; }
       .examples button.example-copy:hover { background: rgba(128,128,128,0.15); opacity: 1; }
       .examples button.example { border-radius: 0.8rem 0 0 0.8rem; }
       .examples { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: baseline; margin-bottom: 0.6rem; }
+      /* These sit inside .call-form, and styles.css gives every button in there
+         a solid accent background with white text. Overriding the background
+         but not the colour left white on white, which is how they shipped.
+         Both are set here, and the colour is the page's own text colour so it
+         follows light and dark alike. */
+      .examples button.example, .examples button.example-copy {
+        color: var(--text); background: var(--surface); font-weight: 400;
+      }
       .examples button.example { font: inherit; font-size: 0.85em; font-family: ui-monospace, monospace;
-        padding: 0.15rem 0.5rem; border: 1px solid rgba(128,128,128,0.45); border-radius: 0.8rem;
-        background: none; cursor: pointer; max-width: 22rem; overflow: hidden; text-overflow: ellipsis;
+        padding: 0.15rem 0.5rem; border: 1px solid var(--border); border-radius: 0.8rem;
+        cursor: pointer; max-width: 22rem; overflow: hidden; text-overflow: ellipsis;
         white-space: nowrap; }
       .examples button.example:hover { background: rgba(128,128,128,0.12); }
       .examples button.example-known-bad { border-style: dashed; opacity: 0.7; }

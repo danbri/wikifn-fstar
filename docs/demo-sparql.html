@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Wikifunctions as SPARQL extension functions</title>
+    <link rel="stylesheet" href="./styles.css">
+    <style>
+      textarea { width: 100%; min-height: 13rem; font-family: ui-monospace, monospace;
+        font-size: 0.85rem; padding: 0.6rem; box-sizing: border-box; }
+      .results { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.9em; }
+      .results th, .results td { border: 1px solid rgba(128,128,128,0.35); padding: 0.3rem 0.6rem;
+        text-align: left; vertical-align: top; }
+      .results th { background: rgba(128,128,128,0.12); }
+      .results td.yes { background: rgba(90, 170, 110, 0.18); }
+      .results td.no { background: rgba(200, 90, 110, 0.14); }
+      .queries { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.6rem; }
+      .queries button { font: inherit; font-size: 0.85em; padding: 0.25rem 0.7rem;
+        border: 1px solid rgba(128,128,128,0.45); border-radius: 0.8rem; background: none;
+        cursor: pointer; }
+      .queries button:hover { background: rgba(128,128,128,0.12); }
+      .queries button[aria-pressed="true"] { background: rgba(90,140,220,0.18); font-weight: 600; }
+      pre.data { max-height: 18rem; overflow: auto; font-size: 0.8rem;
+        background: rgba(128,128,128,0.1); padding: 0.7rem; border-radius: 0.3rem; }
+      .timing { font-size: 0.85em; opacity: 0.75; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <p class="eyebrow">wikifn-fstar</p>
+        <h1>Wikifunctions as SPARQL extension functions</h1>
+        <p>
+          A SPARQL 1.1 engine (<a href="https://comunica.dev/">Comunica</a>, loaded
+          from a CDN) querying a small local dataset, where the functions in the
+          <code>FILTER</code> and <code>BIND</code> clauses are real
+          Wikifunctions. Both engines run in this page. Nothing is sent
+          anywhere.
+        </p>
+        <p>
+          The Wikifunctions side is <strong>8 KB</strong>, not the 1.2 MB
+          engine: <a href="./generated/js/Z10096-Z10052-Z10627.js"><code>Z10096-Z10052-Z10627.js</code></a>
+          is just these three functions and their transitive closure &mdash;
+          fifteen translated definitions and the primitives they reach. It is a
+          plain ES module, so this page <code>import</code>s it and nothing else.
+        </p>
+        <p>
+          Those bodies are mechanical translations of the same s-expressions the
+          checked F* printer produces, and every one is checked against the
+          F*-extracted engine on its own Wikifunctions testers before shipping
+          (<code>node scripts/export-js.js Z10096 --check</code>). The primitives
+          underneath are written in JavaScript rather than extracted &mdash; the
+          same second-implementation trade the Scheme export already makes, and
+          the reason the check exists.
+        </p>
+        <p>
+          <a href="./demo-engine.html">Engine browser</a> &middot;
+          <a href="./tester-report.html">What still fails</a> &middot;
+          <a href="./engine.html">How it works</a>
+        </p>
+      </header>
+
+      <section>
+        <h2>Why canals</h2>
+        <p>
+          A canal is a passage you can transit in either direction and arrive at
+          the same canal. A palindrome is a string you can read in either
+          direction and arrive at the same string. The Panama Canal is the one
+          place where those two facts meet, because of Leigh Mercer's
+          <em>A man, a plan, a canal: Panama</em> &mdash; which is a palindrome
+          only once you throw away the spaces and punctuation.
+        </p>
+        <p>
+          So the dataset below is waterways, each with a phrase, and the query
+          asks which phrases are palindromes after their spaces are removed.
+          That is two Wikifunctions composed inside a <code>FILTER</code>:
+          <code>Z10052</code> remove regular spaces, then <code>Z10096</code> is
+          a palindrome. Neither was written here; both come from the corpus with
+          a revision and a digest.
+        </p>
+      </section>
+
+      <section>
+        <h2>Run it</h2>
+        <div id="status" class="demo-status" role="status" aria-live="polite">Starting…</div>
+
+        <div class="queries" id="query-buttons"></div>
+        <textarea id="query" spellcheck="false"></textarea>
+        <p>
+          <button id="run" class="demo-action" type="button" disabled>Run query</button>
+          <span class="timing" id="timing"></span>
+        </p>
+        <div id="results"></div>
+      </section>
+
+      <section>
+        <h2>How the binding works</h2>
+        <p>
+          Comunica takes an <code>extensionFunctionCreator</code>: given the IRI
+          of an unknown function, return something callable or
+          <code>undefined</code>. That is the whole integration, and it is why
+          every ZID works rather than a chosen few.
+        </p>
+        <pre><code>import * as wikifn from "./generated/js/Z10096-Z10052-Z10627.js";
+
+const engine = new Comunica.QueryEngine();
+
+await engine.queryBindings(query, {
+  sources: [{ type: "serialized", value: turtle, mediaType: "text/turtle" }],
+
+  // Any &lt;.../fn#Znnnn&gt; the module exports becomes callable from SPARQL.
+  extensionFunctionCreator: (iri) =&gt; {
+    const zid = /#(Z[1-9][0-9]*)$/.exec(iri.value)?.[1];
+    const fn = zid &amp;&amp; wikifn[zid];
+    if (!fn) return undefined;
+    return (args) =&gt; toTerm(fn(...args.map(fromTerm)));
+  }
+});</code></pre>
+        <p>
+          The two conversions are the only real work: SPARQL passes RDF terms
+          and the engine takes JSON literals, so a
+          <code>xsd:string</code> becomes a string, an <code>xsd:integer</code> a
+          natural number, <code>xsd:boolean</code> a boolean, and the result
+          envelope (<code>Z6</code> text, <code>Z40</code> boolean,
+          <code>Z13518</code> natural number) converts back. Anything else is
+          refused rather than guessed at.
+        </p>
+      </section>
+
+      <section>
+        <h2>What this is and is not</h2>
+        <ul>
+          <li>
+            The Wikifunctions side is the same artifact the engine browser runs,
+            checked by F* and measured against Wikifunctions' own testers. The
+            SPARQL side is stock Comunica; nothing about it is modified.
+          </li>
+          <li>
+            A function that is not runnable, or that reaches a group of
+            compositions defined through each other with no base case, will
+            report that rather than return a value. The error surfaces as a
+            SPARQL error, not as a wrong answer.
+          </li>
+          <li>
+            Only strings, natural numbers and booleans cross the boundary today.
+            Lists and records exist in the engine but have no obvious RDF term,
+            so they are refused.
+          </li>
+          <li>
+            This is a demonstration that the extraction is usable from an
+            unrelated host, not a proposal for how Wikidata should call
+            Wikifunctions.
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>The dataset</h2>
+        <p>Six waterways and a phrase each, as Turtle. Editable is not the point; it is here so the query is readable.</p>
+        <pre class="data" id="data"></pre>
+      </section>
+    </main>
+
+    <script type="module">
+      (async function () {
+        const status = document.getElementById("status");
+        const runButton = document.getElementById("run");
+        const queryEl = document.getElementById("query");
+        const resultsEl = document.getElementById("results");
+        const timingEl = document.getElementById("timing");
+        const buttonsEl = document.getElementById("query-buttons");
+
+        const PREFIX = "https://wikifunctions.org/fn#";
+
+        // Six waterways. The phrases are the point: one of them is Leigh
+        // Mercer's palindrome, the rest are not, and the query has to find out
+        // rather than be told.
+        const turtle = `
+@prefix : <https://example.org/waterway#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:panama  :name "Panama Canal"   ; :country "Panama"  ; :opened 1914 ;
+         :joins "Atlantic and Pacific" ;
+         :phrase "a man a plan a canal panama" .
+
+:suez    :name "Suez Canal"     ; :country "Egypt"   ; :opened 1869 ;
+         :joins "Mediterranean and Red Sea" ;
+         :phrase "a man a plan a canal suez" .
+
+:corinth :name "Corinth Canal"  ; :country "Greece"  ; :opened 1893 ;
+         :joins "Ionian and Aegean" ;
+         :phrase "no devil lived on" .
+
+:kiel    :name "Kiel Canal"     ; :country "Germany" ; :opened 1895 ;
+         :joins "North Sea and Baltic" ;
+         :phrase "never odd or even" .
+
+:erie    :name "Erie Canal"     ; :country "United States" ; :opened 1825 ;
+         :joins "Hudson and Lake Erie" ;
+         :phrase "erie canal" .
+
+:grand   :name "Grand Canal"    ; :country "China"   ; :opened 609 ;
+         :joins "Yellow and Yangtze" ;
+         :phrase "was it a rat i saw" .
+`.trim();
+
+        document.getElementById("data").textContent = turtle;
+
+        const QUERIES = [
+          {
+            label: "Palindrome canals",
+            text: `# Which phrases read the same in both directions, like the
+# canal they name? Two Wikifunctions, composed:
+#   Z10052  remove regular spaces
+#   Z10096  is a palindrome
+PREFIX :   <https://example.org/waterway#>
+PREFIX fn: <${PREFIX}>
+
+SELECT ?name ?phrase ?palindrome WHERE {
+  ?w :name ?name ; :phrase ?phrase .
+  BIND(fn:Z10096(fn:Z10052(?phrase)) AS ?palindrome)
+}
+ORDER BY DESC(?palindrome) ?name`
+          },
+          {
+            label: "Filter to just those",
+            text: `# The same test as a FILTER, so only the canals whose phrase
+# survives reading backwards come back at all.
+PREFIX :   <https://example.org/waterway#>
+PREFIX fn: <${PREFIX}>
+
+SELECT ?name ?country ?joins ?phrase WHERE {
+  ?w :name ?name ; :country ?country ; :joins ?joins ; :phrase ?phrase .
+  FILTER(fn:Z10096(fn:Z10052(?phrase)))
+}`
+          },
+          {
+            label: "Any ZID you like",
+            text: `# Nothing is special-cased. Z11040 is string length and
+# Z10627 is ROT13; both are ordinary corpus functions, reached
+# by ZID, in the same query as the palindrome test.
+PREFIX :   <https://example.org/waterway#>
+PREFIX fn: <${PREFIX}>
+
+SELECT ?name ?letters ?rot13 ?palindrome WHERE {
+  ?w :name ?name ; :phrase ?phrase .
+  BIND(fn:Z11040(fn:Z10052(?phrase)) AS ?letters)
+  BIND(fn:Z10627(?name)              AS ?rot13)
+  BIND(fn:Z10096(fn:Z10052(?phrase)) AS ?palindrome)
+}
+ORDER BY DESC(?letters)`
+          },
+          {
+            label: "Mixed with plain SPARQL",
+            text: `# Wikifunctions sit alongside SPARQL's own operators; the
+# engine does not care which is which.
+PREFIX :   <https://example.org/waterway#>
+PREFIX fn: <${PREFIX}>
+
+SELECT ?name ?opened ?age ?shouted WHERE {
+  ?w :name ?name ; :opened ?opened ; :phrase ?phrase .
+  FILTER(?opened > 1800 && fn:Z10096(fn:Z10052(?phrase)))
+  BIND(2026 - ?opened AS ?age)
+  BIND(UCASE(?phrase) AS ?shouted)
+}
+ORDER BY ?opened`
+          }
+        ];
+
+        let engine = null;
+
+        // The whole Wikifunctions side: three functions and their closure.
+        const wikifn = await import("./generated/js/Z10096-Z10052-Z10627.js");
+
+        // SPARQL passes RDF terms; the exported module takes plain values.
+        // Only the three types that have an obvious counterpart cross over.
+        const XSD = "http://www.w3.org/2001/XMLSchema#";
+        function termToArgument(term) {
+          if (term.termType !== "Literal") {
+            throw new Error(`only literals cross into Wikifunctions, got ${term.termType}`);
+          }
+          const type = term.datatype ? term.datatype.value : "";
+          if (type === XSD + "boolean") return term.value === "true";
+          if (/#(integer|int|long|nonNegativeInteger|positiveInteger)$/.test(type)) {
+            return Number(term.value);
+          }
+          return term.value;
+        }
+
+        function resultToTerm(value, zid) {
+          if (typeof value === "string") return DF.literal(value, DF.namedNode(XSD + "string"));
+          if (typeof value === "boolean") {
+            return DF.literal(String(value), DF.namedNode(XSD + "boolean"));
+          }
+          if (typeof value === "number" && Number.isInteger(value)) {
+            return DF.literal(String(value), DF.namedNode(XSD + "integer"));
+          }
+          // A list or a record has no obvious RDF term. Refused, not guessed at.
+          throw new Error(`${zid} returned ${typeof value}, which has no RDF term`);
+        }
+
+        function load(url) {
+          return new Promise((resolve, reject) => {
+            const script = document.createElement("script");
+            script.src = url;
+            script.onload = resolve;
+            script.onerror = () => reject(new Error(`could not load ${url}`));
+            document.head.appendChild(script);
+          });
+        }
+
+        async function boot() {
+          try {
+            status.textContent = "Fetching Comunica from the CDN…";
+            await load("https://rdf.js.org/comunica-browser/versions/latest/engines/query-sparql/comunica-browser.js");
+            if (typeof globalThis.Comunica === "undefined") {
+              throw new Error("Comunica did not load");
+            }
+            engine = new globalThis.Comunica.QueryEngine();
+
+            const exported = Object.keys(wikifn).filter((k) => /^Z[1-9][0-9]*$/.test(k));
+            status.textContent =
+              `Ready. Comunica plus ${exported.length} Wikifunctions (${exported.join(", ")}), ` +
+              "both running in this page.";
+            runButton.disabled = false;
+            run();
+          } catch (error) {
+            status.textContent = "Failed: " + error.message;
+          }
+        }
+
+        async function run() {
+          if (!engine) return;
+          runButton.disabled = true;
+          resultsEl.replaceChildren();
+          timingEl.textContent = "";
+          const started = performance.now();
+          try {
+            const bindings = await engine.queryBindings(queryEl.value, {
+              sources: [{ type: "serialized", value: turtle, mediaType: "text/turtle",
+                          baseIRI: "https://example.org/" }],
+              // Any <...fn#Znnnn> resolves to a call into the extracted engine.
+              // No allow-list: the catalogue is the allow-list.
+              // Whatever the module exports, SPARQL can call. A ZID it does
+              // not export returns undefined, and Comunica reports an unknown
+              // function rather than this page inventing an answer.
+              extensionFunctionCreator: (iri) => {
+                const zid = /#(Z[1-9][0-9]*)$/.exec(iri.value)?.[1];
+                const fn = zid && wikifn[zid];
+                if (!fn) return undefined;
+                return (args) => resultToTerm(fn(...args.map(termToArgument)), zid);
+              }
+            });
+
+            const rows = await bindings.toArray();
+            timingEl.textContent =
+              `${rows.length} row${rows.length === 1 ? "" : "s"} in ` +
+              `${Math.round(performance.now() - started)} ms`;
+            render(rows);
+          } catch (error) {
+            const message = document.createElement("p");
+            message.className = "demo-status";
+            message.textContent = "Query failed: " + (error.message ?? String(error));
+            resultsEl.append(message);
+            timingEl.textContent = "";
+          }
+          runButton.disabled = false;
+        }
+
+        // The browser bundle exports QueryEngine and nothing else - no data
+        // factory - so the two term shapes this needs are built here, to the
+        // RDF/JS interface Comunica reads: termType, value, datatype, language,
+        // and equals.
+        const DF = {
+          namedNode: (value) => ({
+            termType: "NamedNode", value,
+            equals: (other) => !!other && other.termType === "NamedNode" && other.value === value
+          }),
+          literal: (value, datatype) => ({
+            termType: "Literal", value, datatype, language: "",
+            equals: (other) => !!other && other.termType === "Literal" &&
+              other.value === value && other.datatype.value === datatype.value
+          })
+        };
+
+        function render(rows) {
+          if (rows.length === 0) {
+            const empty = document.createElement("p");
+            empty.className = "count";
+            empty.textContent = "No rows. The query ran; nothing matched.";
+            resultsEl.append(empty);
+            return;
+          }
+          const columns = [...rows[0].keys()].map((k) => k.value);
+          const table = document.createElement("table");
+          table.className = "results";
+          const head = document.createElement("tr");
+          for (const column of columns) {
+            const th = document.createElement("th");
+            th.textContent = column;
+            head.append(th);
+          }
+          table.append(head);
+          for (const row of rows) {
+            const tr = document.createElement("tr");
+            for (const column of columns) {
+              const td = document.createElement("td");
+              const term = row.get(column);
+              const value = term ? term.value : "";
+              td.textContent = value;
+              // A boolean answer is the point of most of these queries, so it
+              // is worth seeing without reading.
+              if (value === "true") td.className = "yes";
+              if (value === "false") td.className = "no";
+              tr.append(td);
+            }
+            table.append(tr);
+          }
+          resultsEl.append(table);
+        }
+
+        QUERIES.forEach((query, index) => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.textContent = query.label;
+          button.setAttribute("aria-pressed", String(index === 0));
+          button.addEventListener("click", () => {
+            queryEl.value = query.text;
+            for (const other of buttonsEl.children) other.setAttribute("aria-pressed", "false");
+            button.setAttribute("aria-pressed", "true");
+            run();
+          });
+          buttonsEl.append(button);
+        });
+        queryEl.value = QUERIES[0].text;
+
+        runButton.addEventListener("click", run);
+        boot();
+      })();
+    </script>
+  </body>
+</html>
