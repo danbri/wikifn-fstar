@@ -107,6 +107,13 @@ export const PRELUDE = new Map([
   // s-expression that a Scheme can read and evaluate.
   ["Z16829", (n) => `;; A record is (record TYPE (KEY value) ...); its type is the second item.\n(define (${n} object) (cadr object))`],
   ["Z803", (n) => `(define (${n} key object)\n  (let loop ((fields (cddr object)))\n    (cond ((null? fields) #f)\n          ((eq? (car (car fields)) key) (car (cdr (car fields))))\n          (else (loop (cdr fields))))))`],
+  // Errors as values. A Wikifunctions error is a record carrying its errortype
+  // and parameters; raising one is a Scheme error carrying that record, and
+  // catching is a guard on it. Written with the R7RS exception system, which
+  // every Scheme this listing targets has.
+  ["Z851", (n) => `(define (${n} errortype parameters)\n  (raise (list 'wikifn-error errortype parameters)))`],
+  ["Z853", (n) => `(define (${n} thunk)\n  ;; Whether a call threw, and what. The argument is a value here rather\n  ;; than a computation, so a caller that wants the lazy form writes\n  ;; (${n} (guard ...)) itself - Scheme has no way to un-evaluate it.\n  (list #f thunk))`],
+  ["Z850", (n) => `(define (${n} attempted errortype handler)\n  ;; Strict, unlike the evaluator's form: by the time this is called the\n  ;; attempt has already been made. wikifn-hints.scm has a macro form that\n  ;; keeps the handler lazy.\n  attempted)`],
   ["Z1000000001", (n) => `;; The first private-use character not already in the input. Not a\n;; Wikifunctions function: the helper the generator emits for an idiom the\n;; corpus writes as a range scan.\n(define (${n} s)\n  (let ((used (string->list s)))\n    (let loop ((code 60928))\n      (cond ((> code 63487) "")\n            ((memv (integer->char code) used) (loop (+ code 1)))\n            (else (string (integer->char code)))))))`]
 ]);
 

@@ -119,6 +119,9 @@ let describe_error (e : Wikifn_Eval.eval_error) =
       Printf.sprintf "no implementation for Z%s" (Z.to_string z)
   | Wikifn_Eval.EDivisionByZero z ->
       Printf.sprintf "division by zero in Z%s" (Z.to_string z)
+  (* An error the composition raised itself, rather than one evaluation hit.
+     The Z5 is shown, because a caller that asked for it wants to see it. *)
+  | Wikifn_Eval.EThrown v -> "error raised by the composition: " ^ encode_value v
   | Wikifn_Eval.EPrimitiveError k -> (
       match k with
       | Wikifn_Primitive_Kernel.KTypeMismatch -> "primitive type mismatch"

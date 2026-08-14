@@ -323,6 +323,38 @@ of something that can also be computed: a `Z13518` whose value is a call, a reco
 type is `Z882(Z6, Z6)`, a call whose function is an argument, and a list whose elements
 are not constants.
 
+## Errors as values
+
+`Z5` is a type in Wikifunctions: a composition can raise an error, catch one of a
+named type, and ask whether a call threw. Until recently this engine had no such value —
+an error could only stop evaluation, which is a different thing — so `Z851` throw, `Z850`
+try-catch and `Z853` get-error were three of the largest blockers in the closure.
+
+A raised error travels as `EThrown` carrying the `Z5` it was given, so it can be caught,
+inspected and returned. All three are *forms* rather than primitives in the interpreter,
+because `Z850` and `Z853` have to see whether their argument produced an error rather than
+have it propagate past them, and `Z850`'s handler must not run unless it is needed.
+
+In compiled code only `Z850` needs that treatment, and the reason is a property of the
+representation rather than a convenience: a compiled function threads `eval_result`, so an
+argument that raised is already an `EErr` in hand — which is exactly what try-catch wants
+to look at.
+
+Closure over the primitives went from 936 functions without recursion to **959**, and from
+1,168 with recursion to **1,208**.
+
+## The tester harness was measuring itself
+
+A `Z20` tester's validator is a call with one argument left empty: fill it with the result
+and the validator must return true. This harness did not do that. It matched three
+validators by name — `Z866`, `Z844`, `Z13522` — pulled the other argument out as a
+literal, and compared; every other validator was reported unsupported. That counted 3,445
+cases as skipped for a reason about the harness rather than about the engine.
+
+The validator is now *run*, because it is an ordinary function and the engine can call it.
+Passing testers went from 1,249 to **1,290**, functions passing every readable tester from
+450 to **459**, and functions with at least one pass from 544 to **565**.
+
 ## Known limits
 
 - No references. Arguments are literal values; the engine has no object store, and a

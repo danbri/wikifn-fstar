@@ -152,6 +152,42 @@ let rec zip_direct (f:value -> value -> Tot (eval_result value))
           | EOk (VList others) -> EOk (VList (combined :: others))
           | EOk _ -> EErr (ETypeMismatch fid_zip_with)
 
+(*
+  Errors as values, compiled.
+
+  These need no special evaluation order here, and that is a property of the
+  representation rather than a convenience. A compiled function threads
+  eval_result, so an argument that raised an error is already an EErr in hand
+  rather than a computation that aborted - which is exactly what try-catch needs
+  to look at. The interpreter has to treat these as special forms because it
+  would otherwise propagate the error before Z850 could see it.
+
+  The handler is the one thing that must stay lazy, so the generator emits it as
+  a branch rather than passing it here.
+*)
+let throw_error (errortype:eval_result value) (parameters:eval_result value)
+  : Tot (eval_result value)
+=
+  match errortype, parameters with
+  | EErr e, _ -> EErr e
+  | _, EErr e -> EErr e
+  | EOk t, EOk ps -> EErr (EThrown (VRecord type_z5 [(key_z5k1, t); (key_z5k2, ps)]))
+
+(* Whether a call threw, and what. An error is an answer here, not a failure. *)
+let get_error (attempted:eval_result value) : Tot (eval_result value) =
+  match attempted with
+  | EErr (EThrown thrown) -> EOk (VPair (VBool true) thrown)
+  | EErr e -> EErr e
+  | EOk value -> EOk (VPair (VBool false) value)
+
+(* Whether a try-catch should run its handler: the call threw, and what it threw
+   has the errortype that was asked for. Anything else passes through, so a
+   catch cannot swallow what it was not asked to catch. *)
+let caught (attempted:eval_result value) (errortype:eval_result value) : Tot bool =
+  match attempted, errortype with
+  | EErr (EThrown thrown), EOk wanted -> thrown_matches thrown wanted
+  | _, _ -> false
+
 (* A list argument, for the higher-order forms above. *)
 let as_items (fid:zid) (r:eval_result value) : Tot (eval_result (list value)) =
   match r with

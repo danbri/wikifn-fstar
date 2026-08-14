@@ -19,6 +19,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const cacheDir = process.env.WIKIFN_CACHE_DIR ?? path.join(root, "cache", "wikifunctions");
 
 const objectCache = new Map();
+const validatorKeyCache = new Map();
 
 async function loadCanonical(zid) {
   if (objectCache.has(zid)) return objectCache.get(zid);
@@ -34,6 +35,22 @@ async function loadCanonical(zid) {
   }
   objectCache.set(zid, result);
   return result;
+}
+
+// A validator's declared argument keys, in order, so the empty one can be found.
+async function validatorKeys(zid) {
+  if (validatorKeyCache.has(zid)) return validatorKeyCache.get(zid);
+  const object = await loadCanonical(zid);
+  const z8 = object?.canonical?.Z2K2;
+  let keys;
+  if (z8?.Z1K1 === "Z8" && Array.isArray(z8.Z8K1)) {
+    keys = z8.Z8K1.slice(1)
+      .map((decl) => (typeof decl?.Z17K2 === "string" ? decl.Z17K2 : decl?.Z17K2?.Z6K1))
+      .filter(Boolean);
+    if (keys.length !== z8.Z8K1.length - 1) keys = undefined;
+  }
+  validatorKeyCache.set(zid, keys);
+  return keys;
 }
 
 const refZid = (value) => {
@@ -88,24 +105,68 @@ function callArguments(call) {
     .map((key) => call[key]);
 }
 
-// Reads what the tester expects. The validator is a call with one argument
-// left empty for the result under test.
-async function expectationOf(validator) {
+// Reads what the tester expects.
+//
+// A Z20 tester's validator is a call with one argument left empty: fill it with
+// the result under test and the validator must return true. That is the whole
+// definition, and for a long time this harness did not implement it. It matched
+// three validators by name - Z866 string equality, Z844 boolean equality,
+// Z13522 natural equality - pulled the other argument out as a literal, and
+// compared. Every other validator was reported as unsupported, which counted
+// 3,445 tester cases as "skipped" for a reason that was about this file rather
+// than about the engine.
+//
+// Now the validator is *run*. It is an ordinary function and the engine can
+// call it, so the tester is checked the way Wikifunctions defines it. The
+// literal comparison is kept for the three named validators because it gives a
+// better failure message - what was expected, not just "the validator said no".
+async function expectationOf(validator, validatorKeys) {
   const validatorZid = refZid(validator?.Z7K1);
-  const supplied = Object.keys(validator ?? {})
-    .filter((key) => key !== "Z1K1" && key !== "Z7K1")
-    .map((key) => validator[key]);
-  if (supplied.length !== 1) {
-    return { kind: "unsupported", reason: `${validatorZid ?? "?"} with ${supplied.length} supplied arguments` };
+  if (!validatorZid) return { kind: "unsupported", reason: "validator is a computed function" };
+  const supplied = Object.keys(validator ?? {}).filter((key) => key !== "Z1K1" && key !== "Z7K1");
+
+  // The comparison validators, read as a value so a failure can say what was
+  // wanted rather than only that something was refused.
+  if (supplied.length === 1 &&
+      (validatorZid === "Z866" || validatorZid === "Z844" || validatorZid === "Z13522")) {
+    const expected = await toArgument(validator[supplied[0]]);
+    if (expected !== undefined) return { kind: "equals", expected };
   }
-  if (validatorZid !== "Z866" && validatorZid !== "Z844" && validatorZid !== "Z13522") {
-    return { kind: "unsupported", reason: `validator ${validatorZid ?? "?"}` };
+
+  // Otherwise: whichever declared argument the tester left empty is where the
+  // result goes, and the validator is called.
+  const keys = await validatorKeys(validatorZid);
+  if (!keys) return { kind: "unsupported", reason: `validator ${validatorZid} has no readable arguments` };
+  const missing = keys.filter((key) => !supplied.includes(key));
+  if (missing.length !== 1) {
+    return {
+      kind: "unsupported",
+      reason: `${validatorZid} with ${supplied.length} of ${keys.length} arguments supplied`
+    };
   }
-  const expected = await toArgument(supplied[0]);
-  if (expected === undefined) {
-    return { kind: "unsupported", reason: `${validatorZid} expected value is not readable` };
+  const others = [];
+  for (const key of keys) {
+    if (key === missing[0]) { others.push(undefined); continue; }
+    const value = await toArgument(validator[key]);
+    if (value === undefined) {
+      return { kind: "unsupported", reason: `${validatorZid} argument ${key} is not readable` };
+    }
+    others.push(value);
   }
-  return { kind: "equals", expected };
+  return { kind: "validate", zid: validatorZid, slot: keys.indexOf(missing[0]), others };
+}
+
+// A result envelope as a plain value, so it can be passed to a validator.
+function plainOf(result) {
+  if (!result) return undefined;
+  if (result.type === "Z6") return result.text;
+  if (result.type === "Z40") return result.value;
+  if (result.type === "Z13518") return Number(result.value);
+  if (result.type === "Z881") {
+    const items = result.items.map(plainOf);
+    return items.some((item) => item === undefined) ? undefined : items;
+  }
+  return undefined;
 }
 
 // Compares an engine result envelope against an expected plain value.
@@ -155,7 +216,7 @@ async function main() {
       cases.push({ ...row, status: "skipped", reason: "tester object unreadable" });
       continue;
     }
-    const expectation = await expectationOf(body.Z20K3);
+    const expectation = await expectationOf(body.Z20K3, validatorKeys);
     if (expectation.kind === "unsupported") {
       cases.push({ ...row, status: "skipped", reason: expectation.reason });
       continue;
@@ -193,7 +254,37 @@ async function main() {
       cases.push({ ...row, status: "error", reason: response.message ?? "evaluation failed", input: converted });
       continue;
     }
-    const ok = matches(response.result, expectation.expected);
+    let ok;
+    if (expectation.kind === "validate") {
+      // The result goes into the argument the tester left empty, and the
+      // validator is called. Anything but a Z40 true is a failure, including a
+      // validator that could not run - which is reported as a failure of the
+      // case rather than hidden as a skip.
+      const args = expectation.others.slice();
+      args[expectation.slot] = plainOf(response.result);
+      if (args.some((value) => value === undefined)) {
+        cases.push({ ...row, status: "error", reason: "result is not a readable literal", input: converted });
+        continue;
+      }
+      let verdict;
+      try {
+        verdict = JSON.parse(
+          globalThis.wikifnEngineCall(expectation.zid, fuel, JSON.stringify(args)));
+      } catch (error) {
+        verdict = { ok: false, message: String(error.message ?? error) };
+      }
+      if (!verdict.ok) {
+        cases.push({ ...row, status: "error", reason: `validator ${expectation.zid}: ${verdict.message}`, input: converted });
+        continue;
+      }
+      ok = verdict.result?.type === "Z40" && verdict.result.value === true;
+      cases.push({
+        ...row, status: ok ? "pass" : "fail", input: converted,
+        expected: `${expectation.zid} to hold`, actual: response.result
+      });
+      continue;
+    }
+    ok = matches(response.result, expectation.expected);
     cases.push({
       ...row,
       status: ok ? "pass" : "fail",

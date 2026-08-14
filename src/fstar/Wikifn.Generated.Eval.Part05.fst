@@ -1078,9 +1078,9 @@ let body_Z28650_display_rgba_color : expr =
 let body_Z28670_german_article : expr =
   ECall 12899 [ECall 810 [ECall 20041 [ECall 6895 [EArg 0]]; ECall 810 [ECall 20041 [ECall 6895 [EArg 1]]; ECall 810 [ECall 20041 [ECall 6895 [EArg 2]]; ECall 810 [ECall 20041 [ECall 6895 [EArg 3]]; EValue (VList [])]]]]; EValue (VText [44; 32])]
 
-(* Z28676 throws error type? | Z28676@245638 -> Z28680@260521 digest 70408049355d0f6fffee37b78331b2d7434d84c09652595936b64e3ea470a0dc *)
+(* Z28676 throws error type? | Z28676@245638 -> Z28684@222291 digest 4d31cf6c6cf84b34627f5375f248594426c2f8fb2eed70a5cfaf0bd6c179b74f *)
 let body_Z28676_throws_error_type : expr =
-  ECall 852 [ECall 822 [ECall 853 [EArg 0]]; EArg 1]
+  ECall 850 [EArg 0; EArg 1; ECall 801 [EValue (VBool true)]]
 
 (* Z28681 false identity | Z28681@222289 -> Z28682@222288 digest da948b3b8edf5771524870a59380935e7ee6e670ee02e73c4627d92d906dccd6 *)
 let body_Z28681_false_identity : expr =

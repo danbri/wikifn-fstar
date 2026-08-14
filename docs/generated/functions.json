@@ -3943,7 +3943,10 @@
     "Z30438": "Z30438_apply_four_argument_function",
     "Z14779": "Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l",
     "Z803": "Z803_value_by_key",
-    "Z16829": "Z16829_type_of_object"
+    "Z16829": "Z16829_type_of_object",
+    "Z851": "Z851_throw_error",
+    "Z850": "Z850_try_catch_function",
+    "Z853": "Z853_get_error_thrown_by_function_call"
   },
   "primitives": [
     {
@@ -20400,9 +20403,9 @@
       "name": "Z15777_is_string",
       "label": "is String",
       "arity": 1,
-      "runnable": false,
+      "runnable": true,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z15777K1"
@@ -20411,9 +20414,9 @@
         "Object"
       ],
       "returnType": "Boolean",
-      "implementation": "Z15964",
-      "revision": 202794,
-      "digest": "74315acb84b6d8eb86afaeb2fbaa305b24926946a8b057fc86a6698269134f62"
+      "implementation": "Z32049",
+      "revision": 257381,
+      "digest": "490995b3bc321ec3a73c94ae30fe5b82a413d68f74d0a21deea5a60747efe1d6"
     },
     {
       "zid": "Z15801",
@@ -38426,9 +38429,9 @@
       "name": "Z23513_statement_has_value_type_string",
       "label": "statement has value type string?",
       "arity": 1,
-      "runnable": false,
+      "runnable": true,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z23513K1"
@@ -41432,9 +41435,9 @@
       "name": "Z24660_display_typed_pair",
       "label": "display typed pair",
       "arity": 2,
-      "runnable": false,
+      "runnable": true,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z24660K1",
@@ -52099,9 +52102,9 @@
       "name": "Z28676_throws_error_type",
       "label": "throws error type?",
       "arity": 2,
-      "runnable": false,
+      "runnable": true,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z28676K1",
@@ -52112,9 +52115,9 @@
         "Error type"
       ],
       "returnType": "Boolean",
-      "implementation": "Z28680",
-      "revision": 260521,
-      "digest": "70408049355d0f6fffee37b78331b2d7434d84c09652595936b64e3ea470a0dc"
+      "implementation": "Z28684",
+      "revision": 222291,
+      "digest": "4d31cf6c6cf84b34627f5375f248594426c2f8fb2eed70a5cfaf0bd6c179b74f"
     },
     {
       "zid": "Z28681",
@@ -59587,9 +59590,9 @@
       "name": "Z30928_throws_error_if_unquoted",
       "label": "throws error if unquoted",
       "arity": 1,
-      "runnable": false,
+      "runnable": true,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z30928K1"
@@ -60473,9 +60476,9 @@
       "name": "Z31186_error_value_of_thrown_error",
       "label": "error value of thrown error",
       "arity": 1,
-      "runnable": false,
+      "runnable": true,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z31186K1"
@@ -64889,9 +64892,9 @@
       "name": "Z32556_fallback_string_if_error_empty_or_not_a_string",
       "label": "fallback string if error, empty or not a string",
       "arity": 2,
-      "runnable": false,
+      "runnable": true,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z32556K1",
@@ -84071,9 +84074,9 @@
       "name": "Z37925_object_is_string_and_not_empty",
       "label": "object is string and not empty",
       "arity": 1,
-      "runnable": false,
+      "runnable": true,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z37925K1"
@@ -85625,9 +85628,9 @@
       "name": "Z38345_if_value_in_list_throw_error",
       "label": "if value in list, throw error",
       "arity": 4,
-      "runnable": false,
+      "runnable": true,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "mutuallyRecursive": false,
       "argumentKeys": [
         "Z38345K1",

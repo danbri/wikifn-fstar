@@ -1,0 +1,120 @@
+- main [ref=f1e2]:
+  - generic [ref=f1e3]:
+    - paragraph [ref=f1e4]: wikifn-fstar
+    - heading "Wikifunctions as SPARQL extension functions" [level=1] [ref=f1e5]
+    - paragraph [ref=f1e6]:
+      - text: A SPARQL 1.1 engine (
+      - link "Comunica" [ref=f1e7] [cursor=pointer]:
+        - /url: https://comunica.dev/
+      - text: ", loaded from a CDN) querying a small local dataset, where the functions in the"
+      - code [ref=f1e8]: FILTER
+      - text: and
+      - code [ref=f1e9]: BIND
+      - text: clauses are real Wikifunctions. Both engines run in this page. Nothing is sent anywhere.
+    - paragraph [ref=f1e10]: "The Wikifunctions side is the F*-extracted engine: translated from the pinned corpus into F*, checked by F*, extracted to OCaml, compiled to JavaScript. Every function it can run is available here, addressed by ZID."
+    - paragraph [ref=f1e11]:
+      - text: A SPARQL extension function here is a
+      - strong [ref=f1e12]: compiled F* function
+      - text: ", not a tree walk. Each of 1,369 compositions is an F* definition that F* checks and that extracts to an OCaml function and then a JavaScript one, so"
+      - code [ref=f1e13]: fn:Z10096(...)
+      - text: in a query below is a function call. Where a ZID has no compiled function the page falls back to the interpreter and says so in the result, rather than quietly answering from a different path.
+    - paragraph [ref=f1e14]:
+      - link "Engine browser" [ref=f1e15] [cursor=pointer]:
+        - /url: ./demo-engine.html
+      - text: ·
+      - link "What still fails" [ref=f1e16] [cursor=pointer]:
+        - /url: ./tester-report.html
+      - text: ·
+      - link "How it works" [ref=f1e17] [cursor=pointer]:
+        - /url: ./engine.html
+  - generic [ref=f1e18]:
+    - heading "Why canals" [level=2] [ref=f1e19]
+    - paragraph [ref=f1e20]:
+      - text: A canal is a passage you can transit in either direction and arrive at the same canal. A palindrome is a string you can read in either direction and arrive at the same string. The Panama Canal is the one place where those two facts meet, because of Leigh Mercer's
+      - emphasis [ref=f1e21]: "A man, a plan, a canal: Panama"
+      - text: — which is a palindrome only once you throw away the spaces and punctuation.
+    - paragraph [ref=f1e22]:
+      - text: So the dataset below is waterways, each with a phrase, and the query asks which phrases are palindromes after their spaces are removed. That is two Wikifunctions composed inside a
+      - code [ref=f1e23]: FILTER
+      - text: ":"
+      - code [ref=f1e24]: Z10052
+      - text: remove regular spaces, then
+      - code [ref=f1e25]: Z10096
+      - text: is a palindrome. Neither was written here; both come from the corpus with a revision and a digest.
+  - generic [ref=f1e26]:
+    - heading "Run it" [level=2] [ref=f1e27]
+    - status [ref=f1e28]: Ready. Both engines are running in this page.
+    - generic [ref=f1e29]:
+      - button "Palindrome canals" [pressed] [ref=f1e30] [cursor=pointer]
+      - button "Filter to just those" [ref=f1e31] [cursor=pointer]
+      - button "Any ZID you like" [ref=f1e32] [cursor=pointer]
+      - button "Word list inline (VALUES)" [ref=f1e33] [cursor=pointer]
+      - button "Mixed with plain SPARQL" [ref=f1e34] [cursor=pointer]
+    - textbox [ref=f1e35]: "# Which phrases read the same in both directions, like the # canal they name? Two Wikifunctions, composed: # Z10052 remove regular spaces # Z10096 is a palindrome PREFIX : <https://example.org/waterway#> PREFIX fn: <https://wikifunctions.org/fn#> SELECT ?name ?phrase ?palindrome WHERE { ?w :name ?name ; :phrase ?phrase . BIND(fn:Z10096(fn:Z10052(?phrase)) AS ?palindrome) } ORDER BY DESC(?palindrome) ?name"
+    - paragraph [ref=f1e36]:
+      - button "Run query" [ref=f1e37] [cursor=pointer]
+      - text: 6 rows in 46 ms — Z10052, Z10096 compiled
+    - table [ref=f1e39]:
+      - row [ref=f1e40]:
+        - columnheader "name" [ref=f1e41]
+        - columnheader "palindrome" [ref=f1e42]
+        - columnheader "phrase" [ref=f1e43]
+      - row [ref=f1e44]:
+        - cell "Corinth Canal" [ref=f1e45]
+        - cell "true" [ref=f1e46]
+        - cell "no devil lived on" [ref=f1e47]
+      - row [ref=f1e48]:
+        - cell "Grand Canal" [ref=f1e49]
+        - cell "true" [ref=f1e50]
+        - cell "was it a rat i saw" [ref=f1e51]
+      - row [ref=f1e52]:
+        - cell "Kiel Canal" [ref=f1e53]
+        - cell "true" [ref=f1e54]
+        - cell "never odd or even" [ref=f1e55]
+      - row [ref=f1e56]:
+        - cell "Panama Canal" [ref=f1e57]
+        - cell "true" [ref=f1e58]
+        - cell "a man a plan a canal panama" [ref=f1e59]
+      - row [ref=f1e60]:
+        - cell "Erie Canal" [ref=f1e61]
+        - cell "false" [ref=f1e62]
+        - cell "erie canal" [ref=f1e63]
+      - row [ref=f1e64]:
+        - cell "Suez Canal" [ref=f1e65]
+        - cell "false" [ref=f1e66]
+        - cell "a man a plan a canal suez" [ref=f1e67]
+  - generic [ref=f1e68]:
+    - heading "How the binding works" [level=2] [ref=f1e69]
+    - paragraph [ref=f1e70]:
+      - text: Comunica takes an
+      - code [ref=f1e71]: extensionFunctionCreator
+      - text: ": given the IRI of an unknown function, return something callable or"
+      - code [ref=f1e72]: undefined
+      - text: . That is the whole integration, and it is why every ZID works rather than a chosen few.
+    - code [ref=f1e74]: "const engine = new Comunica.QueryEngine(); await engine.queryBindings(query, { sources: [{ type: \"serialized\", value: turtle, mediaType: \"text/turtle\" }], // Any <.../fn#Znnnn> becomes a call to the compiled F* function for it. extensionFunctionCreator: (iri) => { const zid = /#(Z[1-9][0-9]*)$/.exec(iri.value)?.[1]; if (!zid) return undefined; return (args) => toTerm(JSON.parse(globalThis.wikifnCompiledCall( zid, JSON.stringify(args.map(fromTerm))))); } });"
+    - paragraph [ref=f1e75]:
+      - text: "The two conversions are the only real work: SPARQL passes RDF terms and the engine takes JSON literals, so a"
+      - code [ref=f1e76]: xsd:string
+      - text: becomes a string, an
+      - code [ref=f1e77]: xsd:integer
+      - text: a natural number,
+      - code [ref=f1e78]: xsd:boolean
+      - text: a boolean, and the result envelope (
+      - code [ref=f1e79]: Z6
+      - text: text,
+      - code [ref=f1e80]: Z40
+      - text: boolean,
+      - code [ref=f1e81]: Z13518
+      - text: natural number) converts back. Anything else is refused rather than guessed at.
+  - generic [ref=f1e82]:
+    - heading "What this is and is not" [level=2] [ref=f1e83]
+    - list [ref=f1e84]:
+      - listitem [ref=f1e85]: The Wikifunctions side is the same artifact the engine browser runs, checked by F* and measured against Wikifunctions' own testers. The SPARQL side is stock Comunica; nothing about it is modified.
+      - listitem [ref=f1e86]: Compiled and interpreted must give the same answer, and a test requires it on every argument the corpus's own testers supply. The compiled path is not a faster approximation of the other one.
+      - listitem [ref=f1e87]: A function that is not runnable, or that reaches a group of compositions defined through each other with no base case, will report that rather than return a value. The error surfaces as a SPARQL error, not as a wrong answer.
+      - listitem [ref=f1e88]: Only strings, natural numbers and booleans cross the boundary today. Lists and records exist in the engine but have no obvious RDF term, so they are refused.
+      - listitem [ref=f1e89]: This is a demonstration that the extraction is usable from an unrelated host, not a proposal for how Wikidata should call Wikifunctions.
+  - generic [ref=f1e90]:
+    - heading "The dataset" [level=2] [ref=f1e91]
+    - paragraph [ref=f1e92]: Six waterways and a phrase each, as Turtle. Editable is not the point; it is here so the query is readable.
+    - generic [ref=f1e93]: "@prefix : <https://example.org/waterway#> . @prefix xsd: <http://www.w3.org/2001/XMLSchema#> . :panama :name \"Panama Canal\" ; :country \"Panama\" ; :opened 1914 ; :joins \"Atlantic and Pacific\" ; :phrase \"a man a plan a canal panama\" . :suez :name \"Suez Canal\" ; :country \"Egypt\" ; :opened 1869 ; :joins \"Mediterranean and Red Sea\" ; :phrase \"a man a plan a canal suez\" . :corinth :name \"Corinth Canal\" ; :country \"Greece\" ; :opened 1893 ; :joins \"Ionian and Aegean\" ; :phrase \"no devil lived on\" . :kiel :name \"Kiel Canal\" ; :country \"Germany\" ; :opened 1895 ; :joins \"North Sea and Baltic\" ; :phrase \"never odd or even\" . :erie :name \"Erie Canal\" ; :country \"United States\" ; :opened 1825 ; :joins \"Hudson and Lake Erie\" ; :phrase \"erie canal\" . :grand :name \"Grand Canal\" ; :country \"China\" ; :opened 609 ; :joins \"Yellow and Yangtze\" ; :phrase \"was it a rat i saw\" ."

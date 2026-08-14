@@ -4740,7 +4740,7 @@
             (Z13831_natural_number_range 1 a1)
             a0)
           a1)))
-    (Z851 Z516 (list "Z13822K1" a0))))
+    (Z851_throw_error Z516 (list "Z13822K1" a0))))
 (define Z13822 Z13822_modular_multiplicative_inverse)
 
 ;; Z13825 n mod 2
@@ -5576,7 +5576,7 @@
       (Z14244_get_nth_character_of_a_string
         a0
         (Z13569_subtract_natural_numbers_with_floor_of_0 (add1 (Z11040_string_length a0)) a1)))
-    (Z851 Z28171 (list "Z14463K2" a1))
+    (Z851_throw_error Z28171 (list "Z14463K2" a1))
     (Z14244_get_nth_character_of_a_string
       a0
       (Z13569_subtract_natural_numbers_with_floor_of_0 (add1 (Z11040_string_length a0)) a1))))
@@ -7167,9 +7167,11 @@
     (Z13779_natural_number_to_binary_string_without_prefix a0)))
 (define Z15771 Z15771_nth_binary_number_in_decimal)
 
-;; Z15777 is String  [reaches an unimplemented function]
+;; Z15777 is String
 ;;   Z15777K1: Object -> Boolean   [declared, not checked]
-(define (Z15777_is_string a0) (string=? "Z6" (Z15969_reified_z1k1_object_for_key_reference a0)))
+(define
+  (Z15777_is_string a0)
+  (if (fst (Z853_get_error_thrown_by_function_call (string=? a0 ""))) #f #t))
 (define Z15777 Z15777_is_string)
 
 ;; Z15801 object type equality
@@ -7282,7 +7284,7 @@
 ;;   Z15946K1: String, Z15946K2: String -> Boolean   [declared, not checked]
 (define
   (Z15946_are_two_numeric_strings_in_descending_order a0 a1)
-  (Z850
+  (Z850_try_catch_function
     (Z17132_greater_than_integer (Z16705_read_integer a0 Z1002) (Z16705_read_integer a1 Z1002))
     Z500
     #f))
@@ -8547,7 +8549,7 @@
   (Z17291_floor_divide_integers a0 a1)
   (Z19565_triple_if
     (Z17239_is_zero_integer a1)
-    (Z851 Z28194 (list "Z17291K2" a1))
+    (Z851_throw_error Z28194 (list "Z17291K2" a1))
     (Z17239_is_zero_integer a0)
     (record Z16683 (Z16683K1 Z16661) (Z16683K2 0))
     (record
@@ -9398,7 +9400,7 @@
     Z17814
     (Z16667_same_sign a0 Z16662)
     Z17815
-    (Z851 Z516 (list "Z18080K1" a0))))
+    (Z851_throw_error Z516 (list "Z18080K1" a0))))
 (define Z18080 Z18080_sign_to_gregorian_era)
 
 ;; Z18084 Gregorian era is AD  [reaches an unimplemented function]
@@ -10005,7 +10007,7 @@
     "Z881"
     (Z35428_value_by_key_or_else
       (record Z39 (Z39K1 "Z6K1"))
-      (Z850
+      (Z850_try_catch_function
         (snd
           (Z29446_second_element_performance
             (snd (Z29446_second_element_performance (snd (car (Z805 a0)))))))
@@ -10612,7 +10614,7 @@
   (Z19530_first_text_of_lexeme_matching_grammatical_features a0 a1)
   (Z22839_first_object_or_default
     (Z24240_select_representations_from_forms_by_language a0 a1 (list))
-    (Z851 Z28290 (list "Z19530K1" a0))))
+    (Z851_throw_error Z28290 (list "Z19530K1" a0))))
 (define Z19530 Z19530_first_text_of_lexeme_matching_grammatical_features)
 
 ;; Z19536 index of element on list with metric value
@@ -12418,7 +12420,7 @@
               (Z14636_remove_first_n_characters_of_string
                 (Z21158_display_float64_as_binary_string a0)
                 12))))))
-    (Z851 Z516 (list "Z21071K1" a0))))
+    (Z851_throw_error Z516 (list "Z21071K1" a0))))
 (define Z21071 Z21071_float_as_rational)
 
 ;; Z21105 is string 1  [reaches an unimplemented function]
@@ -12582,7 +12584,7 @@
   (Z21236_throw_if_not_of_lang_run_otherwise a0 a1 a2)
   (if
     (Z14326_same_language (Z19295_language_of_lexeme a0) a1)
-    (Z851 Z500 (list "Lexeme not of correct language"))
+    (Z851_throw_error Z500 (list "Lexeme not of correct language"))
     a2))
 (define Z21236 Z21236_throw_if_not_of_lang_run_otherwise)
 
@@ -13276,7 +13278,7 @@
   (Z21848_quadratic_equation_solver_float64 a0 a1 a2)
   (if
     (Z22636_is_zero_float64 a0)
-    (Z851 Z516 (list "Z21848K1" a0))
+    (Z851_throw_error Z516 (list "Z21848K1" a0))
     (list
       (Z21033_divide_float64
         (Z21033_divide_float64
@@ -13602,8 +13604,8 @@
             (Z13397_get_the_nth_element_of_a_list a1 3)
             (Z13397_get_the_nth_element_of_a_list a1 4)
             (Z13397_get_the_nth_element_of_a_list a1 5))
-          (Z851 Z516 (list "Z22074K1" a0)))))
-    (Z851 Z505 (list "Z22074K2" a1))))
+          (Z851_throw_error Z516 (list "Z22074K1" a0)))))
+    (Z851_throw_error Z505 (list "Z22074K2" a1))))
 (define Z22074 Z22074_apply_n_argument_function_to_list_of_arguments)
 
 ;; Z22097 Breton verb form
@@ -15017,7 +15019,7 @@
       (Z19733_numerator_of_unsimplified_rational_number a0)
       (Z19862_denominator_of_unsimplified_rational_number a0))
     a0
-    (Z851 Z516 (list "Invalid Rational number"))))
+    (Z851_throw_error Z516 (list "Invalid Rational number"))))
 (define Z23275 Z23275_validate_rational_number)
 
 ;; Z23291 compose Italian preposition  [reaches an unimplemented function]
@@ -15439,7 +15441,7 @@
         (Z19279_multilingual_text_to_list_of_monolingual_texts
           (Z803_value_by_key (record Z39 (Z39K1 "Z6001K2")) a0))
         a1)
-      (Z851 Z28281 (list "Z23468K1" (Z14329_language_to_language_tag a1))))))
+      (Z851_throw_error Z28281 (list "Z23468K1" (Z14329_language_to_language_tag a1))))))
 (define Z23468 Z23468_text_from_wikidata_item_label_for_given_language)
 
 ;; Z23471 Lexeme references from Wikidata item reference  [reaches an unimplemented function]
@@ -15519,7 +15521,7 @@
   (filter Z23499_does_wikidata_statement_have_non_deprecated_rank a0))
 (define Z23502 Z23502_filter_list_of_statements_for_undeprecated_ones)
 
-;; Z23513 statement has value type string?  [reaches an unimplemented function]
+;; Z23513 statement has value type string?
 ;;   Z23513K1: Wikidata statement -> Boolean   [declared, not checked]
 (define
   (Z23513_statement_has_value_type_string a0)
@@ -15635,7 +15637,7 @@
 ;;   Z23592K1: Wikidata item reference -> Boolean   [declared, not checked]
 (define
   (Z23592_is_wikidata_reference_to_roman_day a0)
-  (Z850
+  (Z850_try_catch_function
     (Z12696_contains
       (list
         (record Z6091 (Z6091K1 "Q108"))
@@ -16907,7 +16909,7 @@
   (Z24649_index_first_of_typed_pair_list_with_matching_head a0 a1)
   (if
     (null? a0)
-    (Z851 Z36590 (list a1 ""))
+    (Z851_throw_error Z36590 (list a1 ""))
     (if
       (Z13052_object_equality a1 (fst (car a0)))
       1
@@ -16921,7 +16923,7 @@
   (if (Z12696_contains a0 a1) a0 (Z18597_append_element_to_untyped_list a1 a0)))
 (define Z24655 Z24655_list_with_added_element_unless_already_present)
 
-;; Z24660 display typed pair  [reaches an unimplemented function]
+;; Z24660 display typed pair
 ;;   Z24660K1: Typed pair(Object, Object), Z24660K2: Natural language -> String   [declared, not checked]
 (define
   (Z24660_display_typed_pair a0 a1)
@@ -16997,7 +16999,7 @@
   (Z24709_next_byte_error_on_overflow a0)
   (if
     (Z22373_byte_equality a0 (record Z80 (Z80K1 255)))
-    (Z851 Z24708 (list "Z24709K1" a0))
+    (Z851_throw_error Z24708 (list "Z24709K1" a0))
     (Z22380_next_byte a0)))
 (define Z24709 Z24709_next_byte_error_on_overflow)
 
@@ -19582,14 +19584,14 @@
   (Z22511_capitalise_first_letter_and_add_full_stop
     (Z21394_concatenate_many_strings
       (list
-        (Z850
+        (Z850_try_catch_function
           (Z27410_better_matching_representation_string_from_lexeme
             (Z27327_best_lexeme_for_wikidata_item a0 (record Z6092 (Z6092K1 "P5137")) Z1403)
             (list (record Z6091 (Z6091K1 "Q110786")) (record Z6091 (Z6091K1 "Q131105"))))
           Z28248
           (Z24766_label_text_for_item_in_given_language_or_fallback a0 Z1403))
         " "
-        (Z850
+        (Z850_try_catch_function
           (Z27410_better_matching_representation_string_from_lexeme
             (Z27327_best_lexeme_for_wikidata_item a1 (record Z6092 (Z6092K1 "P5137")) Z1403)
             (list (record Z6091 (Z6091K1 "Q110786")) (record Z6091 (Z6091K1 "Q131105"))))
@@ -20411,11 +20413,11 @@
               (list)
               (list Z1787 Z1002 Z1360)
               (list (record Z6092 (Z6092K1 "P31")) (record Z6092 (Z6092K1 "P735"))))
-            (Z850
+            (Z850_try_catch_function
               (Z27327_best_lexeme_for_wikidata_item a0 (record Z6092 (Z6092K1 "P5137")) Z1787)
               Z28248
               Z24))
-          (Z850
+          (Z850_try_catch_function
             (Z27107_italian_indefinite_noun_phrase
               (Z27327_best_lexeme_for_wikidata_item a1 (record Z6092 (Z6092K1 "P5137")) Z1787))
             Z28248
@@ -20592,7 +20594,7 @@
               (record Z6092 (Z6092K1 "P9970"))
               (record Z6092 (Z6092K1 "P6271")))))
         a1))
-    (Z851
+    (Z851_throw_error
       Z28258
       (list
         (Z19310_wikidata_lexeme_reference_to_string (Z19285_lexeme_reference_of_lexeme a0))
@@ -22123,7 +22125,7 @@
 ;;   Z28154K1: String, Z28154K2: Typed list(String) -> Unit   [declared, not checked]
 (define
   (Z28154_throw_error a0 a1)
-  (Z851 (Z150 (identity (Z29102_reference_from_zid_string a0))) a1))
+  (Z851_throw_error (Z150 (identity (Z29102_reference_from_zid_string a0))) a1))
 (define Z28154 Z28154_throw_error)
 
 ;; Z28159 first element, otherwise throw error  [reaches an unimplemented function]
@@ -22192,7 +22194,9 @@
               (list Z1360)
               (list (record Z6092 (Z6092K1 "P8000"))))
             (record Z6092 (Z6092K1 "P8000"))))))
-    (Z851 Z28158 (list (Z20041_wikidata_item_reference_id_string (Z6895 a0)) "P8000"))))
+    (Z851_throw_error
+      Z28158
+      (list (Z20041_wikidata_item_reference_id_string (Z6895 a0)) "P8000"))))
 (define Z28180 Z28180_full_electron_configuration_of_element)
 
 ;; Z28182 contains square brackets
@@ -22228,7 +22232,7 @@
     (if
       (= a0 184)
       (record Z27951 (Z27951K1 (record Z6091 (Z6091K1 "Q116976565"))))
-      (Z851 Z28216 (list "Z28197K1" a0)))))
+      (Z851_throw_error Z28216 (list "Z28197K1" a0)))))
 (define Z28197 Z28197_chemical_element_from_atomic_number)
 
 ;; Z28201 chemical symbol from atomic number  [reaches an unimplemented function]
@@ -22387,7 +22391,7 @@
 ;;   Z28249K1: Function, Z28249K2: Object, Z28249K3: Error type, Z28249K4: Typed list(Object) -> Object   [declared, not checked]
 (define
   (Z28249_apply_unless_throw_error a0 a1 a2 a3)
-  (if (Z14562 a0 Z851) (Z851 a2 a3) (Z13036_apply a0 a1)))
+  (if (Z14562 a0 Z851_throw_error) (Z851_throw_error a2 a3) (Z13036_apply a0 a1)))
 (define Z28249 Z28249_apply_unless_throw_error)
 
 ;; Z28254 header from item in plural  [reaches an unimplemented function]
@@ -23158,9 +23162,9 @@
     ", "))
 (define Z28670 Z28670_german_article)
 
-;; Z28676 throws error type?  [reaches an unimplemented function]
+;; Z28676 throws error type?
 ;;   Z28676K1: Object, Z28676K2: Error type -> Boolean   [declared, not checked]
-(define (Z28676_throws_error_type a0 a1) (Z852 (snd (Z853 a0)) a1))
+(define (Z28676_throws_error_type a0 a1) (Z850_try_catch_function a0 a1 (identity #t)))
 (define Z28676 Z28676_throws_error_type)
 
 ;; Z28681 false identity
@@ -24852,12 +24856,12 @@
 ;;   Z29649K1: Natural language -> Wikidata item reference   [declared, not checked]
 (define
   (Z29649_wikidata_reference_from_wikifunctions_language_obj a0)
-  (Z850
+  (Z850_try_catch_function
     (Z24606_get_element_of_string_keyed_map
       (Z24646_make_string_keyed_map Z33920)
       (Z14329_language_to_language_tag a0))
     Z36590
-    (Z851 Z36589 (list (Z14329_language_to_language_tag a0) "Z33920"))))
+    (Z851_throw_error Z36589 (list (Z14329_language_to_language_tag a0) "Z33920"))))
 (define Z29649 Z29649_wikidata_reference_from_wikifunctions_language_obj)
 
 ;; Z29654 does language use NAdj order?  [reaches an unimplemented function]
@@ -26288,7 +26292,10 @@
 (define
   (Z30107_articleplaceholder_format_wd_item_prop_reference a0 a1)
   (if
-    (not (fst (Z853 (Z29588_link_wikidata_label_to_wikipedia_article a0 a1))))
+    (not
+      (fst
+        (Z853_get_error_thrown_by_function_call
+          (Z29588_link_wikidata_label_to_wikipedia_article a0 a1))))
     (Z29588_link_wikidata_label_to_wikipedia_article a0 a1)
     (if
       (Z22431_multilingual_text_contains_element_for_language
@@ -27583,7 +27590,7 @@
   (Z30759_quiet_or_verbose_or_empty_string a0 a1)
   (Z11542_if_string_output
     (bool-and a0 a1)
-    (Z851 Z30762 (list))
+    (Z851_throw_error Z30762 (list))
     (Z11542_if_string_output (Z10231_nor a0 a1) "" (Z11542_if_string_output a0 "-q" "-v"))))
 (define Z30759 Z30759_quiet_or_verbose_or_empty_string)
 
@@ -27680,11 +27687,11 @@
 ;;   Z30811K1: Object -> Object   [declared, not checked]
 (define
   (Z30811_value_after_type a0)
-  (Z850
+  (Z850_try_catch_function
     (snd
       (Z29446_second_element_performance (snd (Z29446_second_element_performance (Z805 a0)))))
     Z516
-    (Z850
+    (Z850_try_catch_function
       (snd (Z29446_second_element_performance (Z805 a0)))
       Z507
       (Z30805_note "may be a void object (not a reference)" "uncaught error in Z30817"))))
@@ -27713,7 +27720,9 @@
 ;;   Z30824K1: Quote -> Typed pair(Boolean, Object)   [declared, not checked]
 (define
   (Z30824_get_result_or_error_of_quoted_function_call a0)
-  (Z30414_make_typed_pair (not (fst (Z853 a0))) (snd (Z853 a0))))
+  (Z30414_make_typed_pair
+    (not (fst (Z853_get_error_thrown_by_function_call a0)))
+    (snd (Z853_get_error_thrown_by_function_call a0))))
 (define Z30824 Z30824_get_result_or_error_of_quoted_function_call)
 
 ;; Z30833 list of Keys defined for Type
@@ -27779,7 +27788,7 @@
                 (Z19293_lemmas_of_lexeme a1)
                 Z1430))
             "in"))
-        (Z851 Z503 (list)))
+        (Z851_throw_error Z503 (list)))
       ".")))
 (define Z30857 Z30857)
 
@@ -27824,7 +27833,7 @@
                 (Z19293_lemmas_of_lexeme a1)
                 Z1146))
             "sche"))
-        (Z851 Z503 (list)))
+        (Z851_throw_error Z503 (list)))
       ".")))
 (define Z30868 Z30868)
 
@@ -27936,9 +27945,9 @@
       (list))))
 (define Z30916 Z30916_native_languages_of_wikidata_item)
 
-;; Z30928 throws error if unquoted  [reaches an unimplemented function]
+;; Z30928 throws error if unquoted
 ;;   Z30928K1: Quote -> Boolean   [declared, not checked]
-(define (Z30928_throws_error_if_unquoted a0) (fst (Z853 a0)))
+(define (Z30928_throws_error_if_unquoted a0) (fst (Z853_get_error_thrown_by_function_call a0)))
 (define Z30928 Z30928_throws_error_if_unquoted)
 
 ;; Z30931 endonymic Lexeme Senses for Wikidata Item  [reaches an unimplemented function]
@@ -28132,7 +28141,7 @@
   (Z30977_length_of_common_prefix_of_many_lists a0)
   (Z19565_triple_if
     (Z23883_is_zero_natural_number (length a0))
-    (Z851 Z28170 (list "Z30977K1" a0))
+    (Z851_throw_error Z28170 (list "Z30977K1" a0))
     (bool-and
       (Z12735_all_meet_criteria a0 Z23120_is_non_empty_list)
       (Z12684_are_all_true
@@ -28150,7 +28159,7 @@
   (Z30978_length_of_common_suffix_of_many_lists a0)
   (Z19565_triple_if
     (Z23883_is_zero_natural_number (length a0))
-    (Z851 Z28170 (list "Z30978K1" a0))
+    (Z851_throw_error Z28170 (list "Z30978K1" a0))
     (bool-and
       (Z12735_all_meet_criteria a0 Z23120_is_non_empty_list)
       (Z12684_are_all_true
@@ -28488,7 +28497,7 @@
 ;;   Z31109K1: Object, Z31109K2: Error type, Z31109K3: Typed list(Object), Z31109K4: String -> Unit   [declared, not checked]
 (define
   (Z31109_fail_with_context a0 a1 a2 a3)
-  (Z851
+  (Z851_throw_error
     a1
     (Z12961_append_element_to_typed_list
       "Z31109: Z31203: Z851"
@@ -28531,7 +28540,7 @@
 ;;   Z31120K1: Object -> String   [declared, not checked]
 (define
   (Z31120_string_from_object a0)
-  (Z850
+  (Z850_try_catch_function
     (Z28231_zid_of_a_function a0)
     Z506
     (Z31065_pass_object_if_predicate_is_true Z15777_is_string a0 Z533 "Z31120K1")))
@@ -28601,11 +28610,13 @@
                   (Z20936_natural_number_to_float64 a1))))))))))
 (define Z31177 Z31177_list_of_digits_in_base_n)
 
-;; Z31186 error value of thrown error  [reaches an unimplemented function]
+;; Z31186 error value of thrown error
 ;;   Z31186K1: Object -> Object   [declared, not checked]
 (define
   (Z31186_error_value_of_thrown_error a0)
-  (Z803_value_by_key (record Z39 (Z39K1 "Z5K2")) (snd (Z853 a0))))
+  (Z803_value_by_key
+    (record Z39 (Z39K1 "Z5K2"))
+    (snd (Z853_get_error_thrown_by_function_call a0))))
 (define Z31186 Z31186_error_value_of_thrown_error)
 
 ;; Z31188 days until next Meyboom  [reaches an unimplemented function]
@@ -28801,7 +28812,7 @@
             (Z13369_remove_first_n_elements_of_list
               (Z17895_untype_a_list a0)
               (Z13582_decrement_natural_number_by_one a1))))))
-    (Z851 Z28171 (list "Z31340K2" a1))))
+    (Z851_throw_error Z28171 (list "Z31340K2" a1))))
 (define Z31340 Z31340_splice_elements_into_list_at_index_1_n_1)
 
 ;; Z31345 insert element into list at index (1..=N+1)
@@ -29771,7 +29782,7 @@
         (record Z6091 (Z6091K1 "Q110786"))
         (record Z6091 (Z6091K1 "Q682111"))
         (record Z6091 (Z6091K1 "Q625420"))))
-    (Z850
+    (Z850_try_catch_function
       (Z14046_element_to_list
         (Z19241_first_matching_representation_string_from_lexeme
           a0
@@ -29864,7 +29875,7 @@
   (if
     (Z22120_kleenean_identity Z22113 a0)
     #t
-    (if (Z22120_kleenean_identity Z22115 a0) #f (Z851 Z516 (list a0)))))
+    (if (Z22120_kleenean_identity Z22115 a0) #f (Z851_throw_error Z516 (list a0)))))
 (define Z32068 Z32068_kleenean_as_boolean)
 
 ;; Z32085 enumerate adjacent-key typos for digit string  [reaches an unimplemented function]
@@ -30570,7 +30581,7 @@
         " are "
         (Z32606_plural_from_wikidata_item_in_language_w_features a1 a3 (list))
         " of "
-        (Z850
+        (Z850_try_catch_function
           (Z21806_lemma_string_from_lexeme_and_lang
             (Z27327_best_lexeme_for_wikidata_item a2 (record Z6092 (Z6092K1 "P5137")) a3)
             a3)
@@ -31298,7 +31309,7 @@
       Z22114)))
 (define Z32550 Z32550_grammatical_features_indicate_indefinite_article)
 
-;; Z32556 fallback string if error, empty or not a string  [reaches an unimplemented function]
+;; Z32556 fallback string if error, empty or not a string
 ;;   Z32556K1: Object, Z32556K2: String -> String   [declared, not checked]
 (define
   (Z32556_fallback_string_if_error_empty_or_not_a_string a0 a1)
@@ -31451,7 +31462,7 @@
 ;;   Z32606K1: Wikidata item reference, Z32606K2: Natural language, Z32606K3: Typed list(Wikidata item reference) -> String   [declared, not checked]
 (define
   (Z32606_plural_from_wikidata_item_in_language_w_features a0 a1 a2)
-  (Z850
+  (Z850_try_catch_function
     (Z27410_better_matching_representation_string_from_lexeme
       (Z27327_best_lexeme_for_wikidata_item a0 (record Z6092 (Z6092K1 "P5137")) a1)
       (cons (record Z6091 (Z6091K1 "Q146786")) a2))
@@ -31483,7 +31494,7 @@
             a3
             (list (record Z6091 (Z6091K1 "Q146078"))))
           " "
-          (Z850
+          (Z850_try_catch_function
             (Z27410_better_matching_representation_string_from_lexeme
               (Z27327_best_lexeme_for_wikidata_item a2 (record Z6092 (Z6092K1 "P5137")) a3)
               (list (record Z6091 (Z6091K1 "Q146233")) (record Z6091 (Z6091K1 "Q110786"))))
@@ -31746,7 +31757,7 @@
           (if
             a3
             (Z32606_plural_from_wikidata_item_in_language_w_features a0 a5 (list))
-            (Z850
+            (Z850_try_catch_function
               (Z27410_better_matching_representation_string_from_lexeme
                 (Z27327_best_lexeme_for_wikidata_item a0 (record Z6092 (Z6092K1 "P5137")) a5)
                 (list (record Z6091 (Z6091K1 "Q110786"))))
@@ -31762,7 +31773,7 @@
           (if
             a4
             (Z32606_plural_from_wikidata_item_in_language_w_features a1 a5 (list))
-            (Z850
+            (Z850_try_catch_function
               (Z27410_better_matching_representation_string_from_lexeme
                 (Z27327_best_lexeme_for_wikidata_item a1 (record Z6092 (Z6092K1 "P5137")) a5)
                 (list (record Z6091 (Z6091K1 "Q110786"))))
@@ -31819,7 +31830,7 @@
       Z19384_wrap_with_html_tag
       (Z32806_transform_elements_of_list_of_lists Z27854_html_fragment_as_string a0)
       a1)
-    (Z851 Z516 (list "Z32734K2" a1))))
+    (Z851_throw_error Z516 (list "Z32734K2" a1))))
 (define Z32734 Z32734_table_cell_elements_from_contents_isheader_flags)
 
 ;; Z32739 State location using entity and class, Dutch  [reaches an unimplemented function]
@@ -32099,7 +32110,7 @@
             Z1403
             (list (record Z6091 (Z6091K1 "Q110786")) (record Z6091 (Z6091K1 "Q131105"))))
           " "
-          (Z850
+          (Z850_try_catch_function
             (Z27410_better_matching_representation_string_from_lexeme
               (Z27327_best_lexeme_for_wikidata_item a2 (record Z6092 (Z6092K1 "P5137")) Z1403)
               (list (record Z6091 (Z6091K1 "Q110786")) (record Z6091 (Z6091K1 "Q146233"))))
@@ -33204,35 +33215,35 @@
       (Z15142_list_identity
         (list
           (list
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 (Z6825 a0)
                 (list (record Z6091 (Z6091K1 "Q131105"))))
               Z28290
               ""))
           (list
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 (Z6825 a0)
                 (list (record Z6091 (Z6091K1 "Q146233"))))
               Z28290
               ""))
           (list
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 (Z6825 a0)
                 (list (record Z6091 (Z6091K1 "Q146078"))))
               Z28290
               ""))
           (list
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 (Z6825 a0)
                 (list (record Z6091 (Z6091K1 "Q202142"))))
               Z28290
               ""))
           (list
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 (Z6825 a0)
                 (list (record Z6091 (Z6091K1 "Q145599"))))
@@ -34818,7 +34829,7 @@
   (Z33933_arithmetic_mean_of_rational_numbers a0)
   (if
     (null? a0)
-    (Z851 Z28170 (list "Z33833K1"))
+    (Z851_throw_error Z28170 (list "Z33833K1"))
     (Z19708_divide_rational_numbers
       (Z20080_sum_the_elements_of_a_list_of_rational_numbers a0)
       (Z21653_natural_number_as_rational_number (length a0)))))
@@ -34983,91 +34994,91 @@
       (Z15142_list_identity
         (list
           (list
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 (Z6825 a0)
                 (list (record Z6091 (Z6091K1 "Q131105")) (record Z6091 (Z6091K1 "Q110786"))))
               Z28290
               "")
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 (Z6825 a0)
                 (list (record Z6091 (Z6091K1 "Q131105")) (record Z6091 (Z6091K1 "Q146786"))))
               Z28290
               ""))
           (list
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 (Z6825 a0)
                 (list (record Z6091 (Z6091K1 "Q146233")) (record Z6091 (Z6091K1 "Q110786"))))
               Z28290
               "")
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 (Z6825 a0)
                 (list (record Z6091 (Z6091K1 "Q146233")) (record Z6091 (Z6091K1 "Q146786"))))
               Z28290
               ""))
           (list
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 (Z6825 a0)
                 (list (record Z6091 (Z6091K1 "Q146078")) (record Z6091 (Z6091K1 "Q110786"))))
               Z28290
               "")
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 (Z6825 a0)
                 (list (record Z6091 (Z6091K1 "Q146078")) (record Z6091 (Z6091K1 "Q146786"))))
               Z28290
               ""))
           (list
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 (Z6825 a0)
                 (list (record Z6091 (Z6091K1 "Q202142")) (record Z6091 (Z6091K1 "Q110786"))))
               Z28290
               "")
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 (Z6825 a0)
                 (list (record Z6091 (Z6091K1 "Q202142")) (record Z6091 (Z6091K1 "Q146786"))))
               Z28290
               ""))
           (list
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 (Z6825 a0)
                 (list (record Z6091 (Z6091K1 "Q145599")) (record Z6091 (Z6091K1 "Q110786"))))
               Z28290
               "")
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 (Z6825 a0)
                 (list (record Z6091 (Z6091K1 "Q145599")) (record Z6091 (Z6091K1 "Q146786"))))
               Z28290
               ""))
           (list
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 (Z6825 a0)
                 (list (record Z6091 (Z6091K1 "Q185077")) (record Z6091 (Z6091K1 "Q110786"))))
               Z28290
               "")
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 (Z6825 a0)
                 (list (record Z6091 (Z6091K1 "Q185077")) (record Z6091 (Z6091K1 "Q146786"))))
               Z28290
               ""))
           (list
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 (Z6825 a0)
                 (list (record Z6091 (Z6091K1 "Q192997")) (record Z6091 (Z6091K1 "Q110786"))))
               Z28290
               "")
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 (Z6825 a0)
                 (list (record Z6091 (Z6091K1 "Q192997")) (record Z6091 (Z6091K1 "Q146786"))))
@@ -35364,7 +35375,7 @@
     (Z22511_capitalise_first_letter_and_add_full_stop
       (Z21394_concatenate_many_strings
         (list
-          (Z850
+          (Z850_try_catch_function
             (if
               (Z10008_is_empty_string
                 (if
@@ -35402,7 +35413,7 @@
               (record Z6091 (Z6091K1 "Q110786"))
               (record Z6091 (Z6091K1 "Q3910936"))))
           " "
-          (Z850
+          (Z850_try_catch_function
             (Z19565_triple_if
               (Z34394_is_probably_proper_noun a1 a3)
               (if (Z34204_es_subject_uses_personal_a a1) "a" " ")
@@ -35423,7 +35434,7 @@
               "al"
               "el"))
           " "
-          (Z850
+          (Z850_try_catch_function
             (if
               (Z10008_is_empty_string
                 (if
@@ -36718,7 +36729,7 @@
 ;;   Z35158K1: Wikidata item reference -> String   [declared, not checked]
 (define
   (Z35158_dutch_nominative_def_article_noun_from_item a0)
-  (Z850
+  (Z850_try_catch_function
     (Z22504_join_list_of_strings_with_spaces
       (list
         (if
@@ -37003,7 +37014,7 @@
           (Z14520_remove_all_characters_in_second_string a0 " -")
           9))
       "-")
-    (Z851 Z516 (list "Z35256K1" a0))))
+    (Z851_throw_error Z516 (list "Z35256K1" a0))))
 (define Z35256 Z35256_format_isbn_10)
 
 ;; Z35261 format ISBN-13  [reaches an unimplemented function]
@@ -37020,7 +37031,7 @@
         (Z28630_substring_by_index_0_indexed (Z10742_remove_all_non_digits a0) 7 12)
         (Z14636_remove_first_n_characters_of_string (Z10742_remove_all_non_digits a0) 12))
       "-")
-    (Z851 Z516 (list "Z35261K1" a0))))
+    (Z851_throw_error Z516 (list "Z35261K1" a0))))
 (define Z35261 Z35261_format_isbn_13)
 
 ;; Z35265 bold first instance of Wikidata item label  [reaches an unimplemented function]
@@ -37587,7 +37598,7 @@
 ;;   Z35405K1: String -> String   [declared, not checked]
 (define
   (Z35405_convert_fsw_prefixes_to_swu a0)
-  (Z850
+  (Z850_try_catch_function
     (Z10000_join_two_strings
       "𝠀"
       (Z22074_apply_n_argument_function_to_list_of_arguments
@@ -37618,7 +37629,7 @@
 ;;   Z35411K1: String -> String   [declared, not checked]
 (define
   (Z35411_convert_prefix_in_fsw_string_to_swu a0)
-  (Z850
+  (Z850_try_catch_function
     (Z21394_concatenate_many_strings
       (Z18475_return_typed_list
         (Z35421_apply3_common_2nd_list_1st_and_3rd
@@ -37636,8 +37647,8 @@
 ;;   Z35413K1: String -> String   [declared, not checked]
 (define
   (Z35413_convert_fsw_signboxes_to_swu a0)
-  (Z850
-    (Z850
+  (Z850_try_catch_function
+    (Z850_try_catch_function
       (Z21394_concatenate_many_strings
         (list
           (Z35390 (Z10901_get_first_character_of_string a0))
@@ -37653,7 +37664,7 @@
 ;;   Z35415K1: String -> String   [declared, not checked]
 (define
   (Z35415_convert_fsw_spatials_to_swu a0)
-  (Z850
+  (Z850_try_catch_function
     (Z10000_join_two_strings
       (Z35395 (Z14592_first_n_characters_of_string a0 6))
       (Z35407_integer_list_of_coordinates_to_swu_characters
@@ -37714,7 +37725,9 @@
 
 ;; Z35428 value by key or else  [reaches an unimplemented function]
 ;;   Z35428K1: Key reference, Z35428K2: Object, Z35428K3: Object -> Object   [declared, not checked]
-(define (Z35428_value_by_key_or_else a0 a1 a2) (Z850 (Z803_value_by_key a0 a1) Z511 a2))
+(define
+  (Z35428_value_by_key_or_else a0 a1 a2)
+  (Z850_try_catch_function (Z803_value_by_key a0 a1) Z511 a2))
 (define Z35428 Z35428_value_by_key_or_else)
 
 ;; Z35433 best equality function for Type  [reaches an unimplemented function]
@@ -37920,7 +37933,7 @@
           (Z35568_priority_of_unit_of_measurement a1))
         a0
         a1))
-    (Z851 Z35566 (list a0 a1))))
+    (Z851_throw_error Z35566 (list a0 a1))))
 (define Z35557 Z35557_select_shared_target_unit_for_unit_conversion)
 
 ;; Z35568 priority of unit of measurement  [reaches an unimplemented function]
@@ -38011,7 +38024,7 @@
   (Z35585_determinant_of_square_matrix_rational_numbers a0)
   (Z19565_triple_if
     (not (Z35587_is_a_square_matrix a0))
-    (Z851 Z516 (list "Z35585K1" a0))
+    (Z851_throw_error Z516 (list "Z35585K1" a0))
     (= (length a0) 2)
     (Z19699_subtract_rational_numbers
       (Z19706_multiply_rational_numbers
@@ -38413,7 +38426,7 @@
         (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16661))) (Z19677K2 0) (Z19677K3 1))
         (record Z19677 (Z19677K1 (record Z16659 (Z16659K1 Z16660))) (Z19677K2 1) (Z19677K3 1))))
     (record Z28579 (Z28579K1 a0) (Z28579K2 a1) (Z28579K3 a2) (Z28579K4 a3))
-    (Z851
+    (Z851_throw_error
       Z516
       (Z13397_get_the_nth_element_of_a_list
         (list
@@ -40257,7 +40270,7 @@
           (Z19298_lexical_category_of_lexeme a0)
           (record Z6091 (Z6091K1 "Q147276")))))
     (Z33243_bengali_noun_and_pronoun_declension_table (Z19285_lexeme_reference_of_lexeme a0) a1)
-    (Z851
+    (Z851_throw_error
       Z36391
       (list
         (Z20041_wikidata_item_reference_id_string (Z19298_lexical_category_of_lexeme a0))
@@ -40269,7 +40282,10 @@
 ;;   Z36395K1: Function, Z36395K2: Object, Z36395K3: Object, Z36395K4: Error type, Z36395K5: Typed list(Object) -> Object   [declared, not checked]
 (define
   (Z36395_apply_2_arguments_if_not_throw_error a0 a1 a2 a3 a4)
-  (if (Z14562 a0 Z851) (Z851 a3 a4) (Z13318_apply_two_argument_function a0 a1 a2)))
+  (if
+    (Z14562 a0 Z851_throw_error)
+    (Z851_throw_error a3 a4)
+    (Z13318_apply_two_argument_function a0 a1 a2)))
 (define Z36395 Z36395_apply_2_arguments_if_not_throw_error)
 
 ;; Z36403 cojugation table of Italian lexeme  [reaches an unimplemented function]
@@ -40301,7 +40317,7 @@
               (Z19298_lexical_category_of_lexeme a0)
               (record Z6091 (Z6091K1 "Q576670")))
             (Z37426_partitive_article_conjugation_table a1)
-            (Z851
+            (Z851_throw_error
               Z36391
               (list
                 (Z20041_wikidata_item_reference_id_string
@@ -40424,7 +40440,7 @@
       (Z19285_lexeme_reference_of_lexeme a0)
       a1
       (Z19295_language_of_lexeme a0))
-    (Z851
+    (Z851_throw_error
       Z36399
       (list
         (Z14329_language_to_language_tag (Z19295_language_of_lexeme a0))
@@ -40490,7 +40506,7 @@
   (if
     (Z19330_is_noun_lexeme a0)
     (Z28602_german_noun_declension_table (Z19285_lexeme_reference_of_lexeme a0) a1)
-    (Z851
+    (Z851_throw_error
       Z36391
       (list
         (Z20041_wikidata_item_reference_id_string (Z19298_lexical_category_of_lexeme a0))
@@ -40651,7 +40667,7 @@
   (if
     (Z19330_is_noun_lexeme a0)
     (Z27410_better_matching_representation_string_from_lexeme a0 (list (Z6895 a1)))
-    (Z851 Z525 (list "not a noun lexeme"))))
+    (Z851_throw_error Z525 (list "not a noun lexeme"))))
 (define Z36470 Z36470_inflection_of_french_noun)
 
 ;; Z36474 (!) Arabic verb conjugation table  [reaches an unimplemented function]
@@ -40665,7 +40681,7 @@
         (record Z6091 (Z6091K1 "Q72249355"))
         (record Z6091 (Z6091K1 "Q72249544"))))
     (list
-      (Z850
+      (Z850_try_catch_function
         (Z12899_join_list_of_strings_with_delimiter
           (map
             Z14396_string_of_monolingual_text
@@ -40676,13 +40692,13 @@
           "")
         Z28290
         "?")
-      (Z850
+      (Z850_try_catch_function
         (Z19241_first_matching_representation_string_from_lexeme
           a0
           (list (record Z6091 (Z6091K1 "Q72249355"))))
         Z28290
         "?")
-      (Z850
+      (Z850_try_catch_function
         (Z19241_first_matching_representation_string_from_lexeme
           a0
           (list (record Z6091 (Z6091K1 "Q72249544"))))
@@ -40831,7 +40847,7 @@
   (if
     (Z20231_is_verb_lexeme a0)
     (Z27410_better_matching_representation_string_from_lexeme a0 a1)
-    (Z851 Z525 (list "not a verb lexeme"))))
+    (Z851_throw_error Z525 (list "not a verb lexeme"))))
 (define Z36530 Z36530_french_verb_conjugation)
 
 ;; Z36536 X exists in N Ys, French  [reaches an unimplemented function]
@@ -40890,7 +40906,7 @@
   (Z36542_is_pid_in_use a0)
   (bool-and
     (Z10615_string_starts_with a0 "P")
-    (Z850
+    (Z850_try_catch_function
       (Z20305_unless_exception
         #t
         (null?
@@ -40908,7 +40924,7 @@
   (Z36548_is_lid_in_use a0)
   (bool-and
     (Z10615_string_starts_with a0 "L")
-    (Z850
+    (Z850_try_catch_function
       (Z20305_unless_exception
         #t
         (null?
@@ -43143,104 +43159,104 @@
       (Z15142_list_identity
         (list
           (list
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 a0
                 (list (record Z6091 (Z6091K1 "Q131105")) (record Z6091 (Z6091K1 "Q110786"))))
               Z28290
               "")
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 a0
                 (list (record Z6091 (Z6091K1 "Q131105")) (record Z6091 (Z6091K1 "Q146786"))))
               Z28290
               ""))
           (list
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 a0
                 (list (record Z6091 (Z6091K1 "Q146233")) (record Z6091 (Z6091K1 "Q110786"))))
               Z28290
               "")
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 a0
                 (list (record Z6091 (Z6091K1 "Q146233")) (record Z6091 (Z6091K1 "Q146786"))))
               Z28290
               ""))
           (list
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 a0
                 (list (record Z6091 (Z6091K1 "Q146078")) (record Z6091 (Z6091K1 "Q110786"))))
               Z28290
               "")
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 a0
                 (list (record Z6091 (Z6091K1 "Q146078")) (record Z6091 (Z6091K1 "Q146786"))))
               Z28290
               ""))
           (list
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 a0
                 (list (record Z6091 (Z6091K1 "Q202142")) (record Z6091 (Z6091K1 "Q110786"))))
               Z28290
               "")
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 a0
                 (list (record Z6091 (Z6091K1 "Q202142")) (record Z6091 (Z6091K1 "Q146786"))))
               Z28290
               ""))
           (list
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 a0
                 (list (record Z6091 (Z6091K1 "Q145599")) (record Z6091 (Z6091K1 "Q110786"))))
               Z28290
               "")
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 a0
                 (list (record Z6091 (Z6091K1 "Q145599")) (record Z6091 (Z6091K1 "Q146786"))))
               Z28290
               ""))
           (list
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 a0
                 (list (record Z6091 (Z6091K1 "Q185077")) (record Z6091 (Z6091K1 "Q110786"))))
               Z28290
               "")
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 a0
                 (list (record Z6091 (Z6091K1 "Q185077")) (record Z6091 (Z6091K1 "Q146786"))))
               Z28290
               ""))
           (list
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 a0
                 (list (record Z6091 (Z6091K1 "Q192997")) (record Z6091 (Z6091K1 "Q110786"))))
               Z28290
               "")
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 a0
                 (list (record Z6091 (Z6091K1 "Q192997")) (record Z6091 (Z6091K1 "Q146786"))))
               Z28290
               ""))
           (list
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 a0
                 (list (record Z6091 (Z6091K1 "Q3773161")) (record Z6091 (Z6091K1 "Q110786"))))
               Z28290
               "")
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 a0
                 (list (record Z6091 (Z6091K1 "Q3773161")) (record Z6091 (Z6091K1 "Q146786"))))
@@ -43400,7 +43416,7 @@
       (Z19298_lexical_category_of_lexeme a0)
       (record Z6091 (Z6091K1 "Q1084")))
     (Z37188_malayalam_noun_declension_table a0 a1)
-    (Z851
+    (Z851_throw_error
       Z36391
       (list
         (Z20041_wikidata_item_reference_id_string (Z19298_lexical_category_of_lexeme a0))
@@ -43428,56 +43444,56 @@
       (Z15142_list_identity
         (list
           (list
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 a0
                 (list (record Z6091 (Z6091K1 "Q332734"))))
               Z28290
               ""))
           (list
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 a0
                 (list (record Z6091 (Z6091K1 "Q146233"))))
               Z28290
               ""))
           (list
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 a0
                 (list (record Z6091 (Z6091K1 "Q146078"))))
               Z28290
               ""))
           (list
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 a0
                 (list (record Z6091 (Z6091K1 "Q202142"))))
               Z28290
               ""))
           (list
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 a0
                 (list (record Z6091 (Z6091K1 "Q145599"))))
               Z28290
               ""))
           (list
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 a0
                 (list (record Z6091 (Z6091K1 "Q192997"))))
               Z28290
               ""))
           (list
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 a0
                 (list (record Z6091 (Z6091K1 "Q324305"))))
               Z28290
               ""))
           (list
-            (Z850
+            (Z850_try_catch_function
               (Z19241_first_matching_representation_string_from_lexeme
                 a0
                 (list (record Z6091 (Z6091K1 "Q747019"))))
@@ -43703,7 +43719,7 @@
       (Z19298_lexical_category_of_lexeme a0)
       (record Z6091 (Z6091K1 "Q1084")))
     (Z37219_assamese_noun_declension_table a0 a1)
-    (Z851
+    (Z851_throw_error
       Z36391
       (list
         (Z20041_wikidata_item_reference_id_string (Z19298_lexical_category_of_lexeme a0))
@@ -44214,14 +44230,14 @@
       (Z15142_list_identity
         (list
           (list
-            (Z850
+            (Z850_try_catch_function
               (Z37338_matching_representation_string_from_lexeme_for_lan
                 a0
                 (list (record Z6091 (Z6091K1 "Q1751855")) (record Z6091 (Z6091K1 "Q110786")))
                 (list Z1820))
               Z28290
               "")
-            (Z850
+            (Z850_try_catch_function
               (Z37338_matching_representation_string_from_lexeme_for_lan
                 a0
                 (list (record Z6091 (Z6091K1 "Q1751855")) (record Z6091 (Z6091K1 "Q146786")))
@@ -44229,14 +44245,14 @@
               Z28290
               ""))
           (list
-            (Z850
+            (Z850_try_catch_function
               (Z37338_matching_representation_string_from_lexeme_for_lan
                 a0
                 (list (record Z6091 (Z6091K1 "Q1233197")) (record Z6091 (Z6091K1 "Q110786")))
                 (list Z1820))
               Z28290
               "")
-            (Z850
+            (Z850_try_catch_function
               (Z37338_matching_representation_string_from_lexeme_for_lan
                 a0
                 (list (record Z6091 (Z6091K1 "Q1233197")) (record Z6091 (Z6091K1 "Q146786")))
@@ -44244,14 +44260,14 @@
               Z28290
               ""))
           (list
-            (Z850
+            (Z850_try_catch_function
               (Z37338_matching_representation_string_from_lexeme_for_lan
                 a0
                 (list (record Z6091 (Z6091K1 "Q185077")) (record Z6091 (Z6091K1 "Q110786")))
                 (list Z1820))
               Z28290
               "")
-            (Z850
+            (Z850_try_catch_function
               (Z37338_matching_representation_string_from_lexeme_for_lan
                 a0
                 (list (record Z6091 (Z6091K1 "Q185077")) (record Z6091 (Z6091K1 "Q146786")))
@@ -44286,14 +44302,14 @@
       (Z15142_list_identity
         (list
           (list
-            (Z850
+            (Z850_try_catch_function
               (Z37338_matching_representation_string_from_lexeme_for_lan
                 a0
                 (list (record Z6091 (Z6091K1 "Q1751855")) (record Z6091 (Z6091K1 "Q110786")))
                 (list Z1717))
               Z28290
               "")
-            (Z850
+            (Z850_try_catch_function
               (Z37338_matching_representation_string_from_lexeme_for_lan
                 a0
                 (list (record Z6091 (Z6091K1 "Q1751855")) (record Z6091 (Z6091K1 "Q146786")))
@@ -44301,14 +44317,14 @@
               Z28290
               ""))
           (list
-            (Z850
+            (Z850_try_catch_function
               (Z37338_matching_representation_string_from_lexeme_for_lan
                 a0
                 (list (record Z6091 (Z6091K1 "Q1233197")) (record Z6091 (Z6091K1 "Q110786")))
                 (list Z1717))
               Z28290
               "")
-            (Z850
+            (Z850_try_catch_function
               (Z37338_matching_representation_string_from_lexeme_for_lan
                 a0
                 (list (record Z6091 (Z6091K1 "Q1233197")) (record Z6091 (Z6091K1 "Q146786")))
@@ -44316,14 +44332,14 @@
               Z28290
               ""))
           (list
-            (Z850
+            (Z850_try_catch_function
               (Z37338_matching_representation_string_from_lexeme_for_lan
                 a0
                 (list (record Z6091 (Z6091K1 "Q185077")) (record Z6091 (Z6091K1 "Q110786")))
                 (list Z1717))
               Z28290
               "")
-            (Z850
+            (Z850_try_catch_function
               (Z37338_matching_representation_string_from_lexeme_for_lan
                 a0
                 (list (record Z6091 (Z6091K1 "Q185077")) (record Z6091 (Z6091K1 "Q146786")))
@@ -44474,7 +44490,7 @@
           (list Z6091 Z6092 Z6095 Z6096 Z6094)
           (Z16829_type_of_object (Z6895 a0)))
         (Z6895 a0)
-        (Z851 Z516 (list "Z37375K1" a0))))))
+        (Z851_throw_error Z516 (list "Z37375K1" a0))))))
 (define Z37375 Z37375_coerce_to_wikidata_reference_object_qid_pid_etc)
 
 ;; Z37387 Hindi lexeme inflection table  [reaches an unimplemented function]
@@ -44486,7 +44502,7 @@
       (Z19298_lexical_category_of_lexeme a0)
       (record Z6091 (Z6091K1 "Q1084")))
     (Z37337_hindi_noun_declension_table a0 a1)
-    (Z851
+    (Z851_throw_error
       Z36391
       (list
         (Z20041_wikidata_item_reference_id_string (Z19298_lexical_category_of_lexeme a0))
@@ -44503,7 +44519,7 @@
       (Z19298_lexical_category_of_lexeme a0)
       (record Z6091 (Z6091K1 "Q1084")))
     (Z37346_urdu_noun_declension_table a0 a1)
-    (Z851
+    (Z851_throw_error
       Z36391
       (list
         (Z20041_wikidata_item_reference_id_string (Z19298_lexical_category_of_lexeme a0))
@@ -44580,14 +44596,14 @@
 (define
   (Z37395_matching_repr_number_str_from_lexeme_for_lang a0 a1 a2)
   (list
-    (Z850
+    (Z850_try_catch_function
       (Z37338_matching_representation_string_from_lexeme_for_lan
         a0
         (list a1 (record Z6091 (Z6091K1 "Q110786")))
         a2)
       Z28290
       "")
-    (Z850
+    (Z850_try_catch_function
       (Z37338_matching_representation_string_from_lexeme_for_lan
         a0
         (list a1 (record Z6091 (Z6091K1 "Q146786")))
@@ -44739,7 +44755,9 @@
             (list)
             (list (record Z6092 (Z6092K1 "P225"))))
           (record Z6092 (Z6092K1 "P225"))))
-      (Z851 Z37463 (list (Z20041_wikidata_item_reference_id_string a0) "P31" "Q16521")))))
+      (Z851_throw_error
+        Z37463
+        (list (Z20041_wikidata_item_reference_id_string a0) "P31" "Q16521")))))
 (define Z37441 Z37441_short_name_of_species_from_single_qid)
 
 ;; Z37450 monolingual text as HTML with colour span  [reaches an unimplemented function]
@@ -45704,7 +45722,7 @@
               (list a1)
               (list (record Z6092 (Z6092K1 "P1843")))))
           (list a1))
-        (Z851 Z37463 (list))))))
+        (Z851_throw_error Z37463 (list))))))
 (define Z37821 Z37821_common_name_of_taxon)
 
 ;; Z37827 infobox for a taxon  [reaches an unimplemented function]
@@ -45819,7 +45837,7 @@
   (Z37847_first_lexeme_ref_from_item_ref_and_language a0 a1)
   (Z22839_first_object_or_default
     (Z6830 a0 (record Z6092 (Z6092K1 "P5137")) a1)
-    (Z851
+    (Z851_throw_error
       Z28248
       (list
         (Z20041_wikidata_item_reference_id_string a0)
@@ -46127,7 +46145,7 @@
     a2))
 (define Z37922 Z37922_intro_for_species_with_hypernym)
 
-;; Z37925 object is string and not empty  [reaches an unimplemented function]
+;; Z37925 object is string and not empty
 ;;   Z37925K1: Object -> Boolean   [declared, not checked]
 (define
   (Z37925_object_is_string_and_not_empty a0)
@@ -46257,7 +46275,7 @@
   (Z37941_taxonomic_lineage_of_qid_helper a0 a1)
   (if
     (Z12696_contains a1 a0)
-    (Z854 (Z851 Z507 (list a0)) a0)
+    (Z854 (Z851_throw_error Z507 (list a0)) a0)
     (if
       (bool-or
         (Z32431_item_qid_has_statement_with_value_for_property
@@ -47074,7 +47092,7 @@
       (list)
       (list))
     (Z24144_fallback_languages a2 #t #t)
-    (Z850
+    (Z850_try_catch_function
       (map
         Z29649_wikidata_reference_from_wikifunctions_language_obj
         (Z24144_fallback_languages a2 #f #t))
@@ -47412,14 +47430,14 @@
   (Z22511_capitalise_first_letter_and_add_full_stop
     (Z21394_concatenate_many_strings
       (list
-        (Z850
+        (Z850_try_catch_function
           (Z27410_better_matching_representation_string_from_lexeme
             (Z27327_best_lexeme_for_wikidata_item a0 (record Z6092 (Z6092K1 "P5137")) Z1025)
             (list (record Z6091 (Z6091K1 "Q110786"))))
           Z28248
           (Z24766_label_text_for_item_in_given_language_or_fallback a0 Z1025))
         " jest "
-        (Z850
+        (Z850_try_catch_function
           (Z27410_better_matching_representation_string_from_lexeme
             (Z27327_best_lexeme_for_wikidata_item
               (car
@@ -47531,11 +47549,11 @@
   (Z31331_html_unordered_list (Z38308_languages_supported_by_config_given_lang a0 a1)))
 (define Z38334 Z38334_unordered_list_of_languages_supported_by_function)
 
-;; Z38345 if value in list, throw error  [reaches an unimplemented function]
+;; Z38345 if value in list, throw error
 ;;   Z38345K1: Object, Z38345K2: Typed list(Object), Z38345K3: Error type, Z38345K4: Typed list(Object) -> Object   [declared, not checked]
 (define
   (Z38345_if_value_in_list_throw_error a0 a1 a2 a3)
-  (if (Z12696_contains a1 a0) (Z851 a2 a3) a0))
+  (if (Z12696_contains a1 a0) (Z851_throw_error a2 a3) a0))
 (define Z38345 Z38345_if_value_in_list_throw_error)
 
 ;; Z38350 infobox for Wikimedia project  [reaches an unimplemented function]
@@ -48716,14 +48734,14 @@
 (define
   (Z38705_first_repr_number_str_from_lexeme_with_given_feat a0 a1)
   (list
-    (Z850
+    (Z850_try_catch_function
       (Z14396_string_of_monolingual_text
         (Z19530_first_text_of_lexeme_matching_grammatical_features
           a0
           (list a1 (record Z6091 (Z6091K1 "Q110786")))))
       Z28290
       "")
-    (Z850
+    (Z850_try_catch_function
       (Z14396_string_of_monolingual_text
         (Z19530_first_text_of_lexeme_matching_grammatical_features
           a0

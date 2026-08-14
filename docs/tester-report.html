@@ -46,12 +46,12 @@
       </header>
 
       <div class="totals">
-        <div><span class="n">1,247</span><span class="k">testers pass</span></div>
-        <div><span class="n">102</span><span class="k">disagree</span></div>
-        <div><span class="n">1,637</span><span class="k">error</span></div>
-        <div><span class="n">7,295</span><span class="k">skipped</span></div>
-        <div><span class="n">450</span><span class="k">functions pass every tester read</span></div>
-        <div><span class="n">561</span><span class="k">functions with a failure</span></div>
+        <div><span class="n">1,290</span><span class="k">testers pass</span></div>
+        <div><span class="n">105</span><span class="k">disagree</span></div>
+        <div><span class="n">1,721</span><span class="k">error</span></div>
+        <div><span class="n">7,165</span><span class="k">skipped</span></div>
+        <div><span class="n">459</span><span class="k">functions pass every tester read</span></div>
+        <div><span class="n">601</span><span class="k">functions with a failure</span></div>
       </div>
 
       <section>
@@ -62,10 +62,11 @@
         </p>
         <details class="cause kind-fuel">
           <summary>runs out of fuel
-            <span class="meta"> &middot; 76 functions, 155 tester cases</span>
+            <span class="meta"> &middot; 77 functions, 184 tester cases</span>
           </summary>
           <table>
             <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
+            <tr><td><span class="zid">Z11089</span> English plural</td><td>5</td><td>28</td><td>1</td><td class="diff">["woman"] &rarr; "womans", wanted "women"<br>["child"] &rarr; "childs", wanted "children"<br>["Candy"] &rarr; "Candys", wanted "Candies"</td></tr>
             <tr><td><span class="zid">Z11094</span> string is element of CSV</td><td>1</td><td>0</td><td>8</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z11854</span> is a chemical element symbol</td><td>0</td><td>0</td><td>7</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z22344</span> str left</td><td>0</td><td>0</td><td>7</td><td class="diff"></td></tr>
@@ -105,17 +106,16 @@
             <tr><td><span class="zid">Z15411</span> nth Hexanacci number</td><td>0</td><td>1</td><td>1</td><td class="diff">[10] &rarr; 4, wanted 16</td></tr>
             <tr><td><span class="zid">Z15415</span> nth Heptanacci number</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z15735</span> is power of 2</td><td>2</td><td>0</td><td>2</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z16878</span> English number &lt;1000 to natural number</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
           </table>
-          <p class="count">and 36 more.</p>
+          <p class="count">and 37 more.</p>
         </details>
         <details class="cause kind-other">
           <summary>type mismatch in Z803
-            <span class="meta"> &middot; 53 functions, 154 tester cases</span>
+            <span class="meta"> &middot; 55 functions, 158 tester cases</span>
           </summary>
           <table>
             <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
-            <tr><td><span class="zid">Z11129</span> is valid positive integer</td><td>0</td><td>0</td><td>12</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z11129</span> is valid positive integer</td><td>0</td><td>0</td><td>13</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z10862</span> (!) multiply two numeric strings (full stop input/output format)</td><td>0</td><td>0</td><td>9</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z28986</span> dp from unsimplified numerator and denominator</td><td>1</td><td>0</td><td>9</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z14295</span> add commas between triples if more than four digits</td><td>0</td><td>0</td><td>5</td><td class="diff"></td></tr>
@@ -124,11 +124,11 @@
             <tr><td><span class="zid">Z27778</span> round natural to significant figures</td><td>0</td><td>0</td><td>5</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z30721</span> GNU line/byte count option snippet</td><td>0</td><td>0</td><td>5</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z10761</span> URI percent encode</td><td>0</td><td>0</td><td>4</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z11515</span> unicode of first character</td><td>0</td><td>0</td><td>4</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z11523</span> first letter of strings: codepoints in ascending order</td><td>0</td><td>0</td><td>4</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z15050</span> is palindromic number</td><td>0</td><td>0</td><td>4</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z15195</span> is strobogrammatic number</td><td>0</td><td>0</td><td>4</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z11289</span> sort letters of a string</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z11515</span> unicode of first character</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z11531</span> remove characters in character range</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z11538</span> successor of Code point (as String)</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z13713</span> natural number to digit string</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
@@ -154,17 +154,17 @@
             <tr><td><span class="zid">Z16493</span> is leap year (revised Julian calendar)</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z18364</span> (!) carbon dioxide emissions of MK1 petrol car journey</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z35269</span> display ratio</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z11528</span> in codepoint order (three characters)</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z10785</span> Unicode code point encode hex</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
           </table>
-          <p class="count">and 13 more.</p>
+          <p class="count">and 15 more.</p>
         </details>
         <details class="cause kind-cycle">
           <summary>Z13728 prime divisors  ↔  Z13735 largest prime divisor  ↔  Z13745 n/(largest prime dividing n)
-            <span class="meta"> &middot; 48 functions, 158 tester cases</span>
+            <span class="meta"> &middot; 49 functions, 161 tester cases</span>
           </summary>
           <table>
             <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
-            <tr><td><span class="zid">Z12427</span> is prime</td><td>1</td><td>0</td><td>17</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z12427</span> is prime</td><td>2</td><td>0</td><td>17</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z14783</span> is Fermat pseudoprime</td><td>1</td><td>0</td><td>6</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z15251</span> is perfect kth power</td><td>0</td><td>0</td><td>6</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z15265</span> is perfect power</td><td>0</td><td>0</td><td>6</td><td class="diff"></td></tr>
@@ -182,6 +182,7 @@
             <tr><td><span class="zid">Z15218</span> is k-smooth number</td><td>0</td><td>0</td><td>4</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z15241</span> is k-rough number</td><td>0</td><td>0</td><td>4</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z25318</span> has no prime factors other than 2 or 5</td><td>0</td><td>0</td><td>4</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z13728</span> prime divisors</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z13735</span> largest prime divisor</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z13773</span> sum of prime divisors</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z13984</span> sum of odd divisors</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
@@ -203,13 +204,58 @@
             <tr><td><span class="zid">Z15228</span> is unusual number</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z15272</span> product of unique prime divisors of Natural number</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z15282</span> is Lucas–Carmichael number</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z15617</span> is Fibonacci number</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
           </table>
-          <p class="count">and 8 more.</p>
+          <p class="count">and 9 more.</p>
+        </details>
+        <details class="cause kind-other">
+          <summary>type mismatch in Z16829
+            <span class="meta"> &middot; 37 functions, 79 tester cases</span>
+          </summary>
+          <table>
+            <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
+            <tr><td><span class="zid">Z15801</span> object type equality</td><td>0</td><td>0</td><td>6</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z13652</span> bitwise or</td><td>0</td><td>0</td><td>4</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z15068</span> nth number in Baum–Sweet sequence</td><td>0</td><td>0</td><td>4</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z15386</span> Wedderburn–Etherington number</td><td>0</td><td>0</td><td>4</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z17687</span> convert [R,G,B] to hex colour</td><td>0</td><td>0</td><td>4</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z13651</span> bitwise and</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z13781</span> natural number to hexadecimal (lowercase, without prefix)</td><td>1</td><td>0</td><td>3</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z13860</span> binary weight of n</td><td>1</td><td>0</td><td>3</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z15121</span> is odious number</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z15127</span> is evil number</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z17879</span> is this list untyped?</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z31177</span> List of digits in base n</td><td>1</td><td>0</td><td>3</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z12636</span> is Armstrong number</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z13220</span> are all elements of the list the same type</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z13653</span> bitwise xor</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z15134</span> nth number in lower Wythoff sequence</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z15138</span> nth number in upper Wythoff sequence</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z15433</span> is harshad number</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z15671</span> natural number to base n</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z17900</span> is this list typed?</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z21868</span> is narcissistic number</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z25520</span> list of decimal digits in a number</td><td>1</td><td>0</td><td>2</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z34273</span> Equality of hereditary sets</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z13779</span> natural number to binary string (without prefix)</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z13780</span> natural number to octal (without prefix)</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z13782</span> natural number to binary (with prefix)</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z13783</span> natural number to octal (with prefix)</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z13784</span> natural number to hexadecimal (lowercase, with prefix)</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z14005</span> 1-2 Thue-Morse sequence</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z14376</span> sum of decimal digits</td><td>1</td><td>0</td><td>1</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z15771</span> nth binary number in decimal</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z17893</span> ZID of object type</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z19467</span> light year to parsec</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z23630</span> (#) add two numbers</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z24849</span> filter list for natural numbers</td><td>1</td><td>0</td><td>1</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z31682</span> validated equality</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z38031</span> arithmetic mean of Natural numbers as Natural</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
+          </table>
+
         </details>
         <details class="cause kind-other">
           <summary>type mismatch in Z811
-            <span class="meta"> &middot; 33 functions, 82 tester cases</span>
+            <span class="meta"> &middot; 35 functions, 89 tester cases</span>
           </summary>
           <table>
             <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
@@ -219,13 +265,14 @@
             <tr><td><span class="zid">Z10831</span> string intersperse</td><td>0</td><td>0</td><td>5</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z19177</span> is subword of string</td><td>0</td><td>0</td><td>5</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z22514</span> sentence from list of words (English conventions)</td><td>0</td><td>0</td><td>5</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z26184</span> solfege to sargam</td><td>0</td><td>0</td><td>5</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z22504</span> join list of strings with spaces</td><td>0</td><td>0</td><td>4</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z26830</span> Get SSHWS category from sustained winds (English)</td><td>0</td><td>0</td><td>4</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z37201</span> binary search (mapped value, Natural numbers)</td><td>0</td><td>0</td><td>4</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z10911</span> duplicate string N times</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z12899</span> join list of strings with delimiter</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z35797</span> Get EF rating from estimated max winds (English)</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z10393</span> Levenshtein distance</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z10911</span> duplicate string N times</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z13173</span> get value string from key string</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z37647</span> infobox color scheme</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z38472</span> switch on String</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
@@ -233,6 +280,7 @@
             <tr><td><span class="zid">Z11170</span> String without suffix</td><td>5</td><td>0</td><td>1</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z18151</span> add suffix "dde" if string does not already end with "dde"</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z18531</span> Byzantine to Arabic numeral</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z18556</span> get middle character or characters of a string</td><td>4</td><td>0</td><td>1</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z18845</span> English declarative sentence - subject verb</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z18871</span> English imperative sentence - verb</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z18874</span> English imperative sentence - verb + adverb</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
@@ -249,59 +297,18 @@
           </table>
 
         </details>
-        <details class="cause kind-other">
-          <summary>type mismatch in Z16829
-            <span class="meta"> &middot; 32 functions, 70 tester cases</span>
-          </summary>
-          <table>
-            <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
-            <tr><td><span class="zid">Z15801</span> object type equality</td><td>0</td><td>0</td><td>6</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z13652</span> bitwise or</td><td>0</td><td>0</td><td>4</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z15068</span> nth number in Baum–Sweet sequence</td><td>0</td><td>0</td><td>4</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z15386</span> Wedderburn–Etherington number</td><td>0</td><td>0</td><td>4</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z17687</span> convert [R,G,B] to hex colour</td><td>0</td><td>0</td><td>4</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z13651</span> bitwise and</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z13781</span> natural number to hexadecimal (lowercase, without prefix)</td><td>1</td><td>0</td><td>3</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z13860</span> binary weight of n</td><td>1</td><td>0</td><td>3</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z15121</span> is odious number</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z15127</span> is evil number</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z17879</span> is this list untyped?</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z13220</span> are all elements of the list the same type</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z13653</span> bitwise xor</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z15134</span> nth number in lower Wythoff sequence</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z15138</span> nth number in upper Wythoff sequence</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z15433</span> is harshad number</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z15671</span> natural number to base n</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z17900</span> is this list typed?</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z21868</span> is narcissistic number</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z34273</span> Equality of hereditary sets</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z12636</span> is Armstrong number</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z13779</span> natural number to binary string (without prefix)</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z13780</span> natural number to octal (without prefix)</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z13782</span> natural number to binary (with prefix)</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z13783</span> natural number to octal (with prefix)</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z13784</span> natural number to hexadecimal (lowercase, with prefix)</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z14005</span> 1-2 Thue-Morse sequence</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z14376</span> sum of decimal digits</td><td>1</td><td>0</td><td>1</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z15771</span> nth binary number in decimal</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z17893</span> ZID of object type</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z31682</span> validated equality</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z38031</span> arithmetic mean of Natural numbers as Natural</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
-          </table>
-
-        </details>
         <details class="cause kind-missing">
           <summary>Z12316 Z12316 is not implemented
-            <span class="meta"> &middot; 30 functions, 94 tester cases</span>
+            <span class="meta"> &middot; 31 functions, 98 tester cases</span>
           </summary>
           <table>
             <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
             <tr><td><span class="zid">Z14304</span> read natural numbers leniently</td><td>0</td><td>0</td><td>10</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z11891</span> correct bracketed atoms in SMILES</td><td>0</td><td>0</td><td>7</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z25800</span> unit string from quantity string</td><td>0</td><td>0</td><td>7</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z10363</span> is pascal case</td><td>0</td><td>0</td><td>6</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z10290</span> to PascalCase</td><td>0</td><td>0</td><td>5</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z21593</span> Word frequency</td><td>0</td><td>0</td><td>5</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z25800</span> unit string from quantity string</td><td>0</td><td>0</td><td>5</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z10673</span> get URI scheme</td><td>0</td><td>0</td><td>4</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z13473</span> format digit strings with commas</td><td>0</td><td>0</td><td>4</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z14643</span> is Forsyth–Edwards Notation</td><td>0</td><td>0</td><td>4</td><td class="diff"></td></tr>
@@ -319,6 +326,7 @@
             <tr><td><span class="zid">Z14494</span> remove all characters except Arabic numerals</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z22271</span> read Malayam natural numbers leniently</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z29088</span> Croatian Genitive of a male name</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z32085</span> enumerate adjacent-key typos for digit string</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z10193</span> replace all (regex, case sensitive)</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z12815</span> remove html tags</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z12905</span> Decimal to ASCII</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
@@ -331,15 +339,15 @@
         </details>
         <details class="cause kind-other">
           <summary>argument is not a readable literal
-            <span class="meta"> &middot; 24 functions, 36 tester cases</span>
+            <span class="meta"> &middot; 27 functions, 37 tester cases</span>
           </summary>
           <table>
             <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
             <tr><td><span class="zid">Z15717</span> is Boolean</td><td>0</td><td>0</td><td>4</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z15777</span> is String</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z15818</span> is Natural number</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z16885</span> has generic Type</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z15777</span> is String</td><td>1</td><td>0</td><td>2</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z15824</span> is integer equivalent</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z16885</span> has generic Type</td><td>1</td><td>0</td><td>2</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z26474</span> is typed pair</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z31592</span> depth of list of lists up to jaggedness</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z11693</span> string only has characters from alphabet</td><td>5</td><td>0</td><td>1</td><td class="diff"></td></tr>
@@ -347,14 +355,17 @@
             <tr><td><span class="zid">Z16487</span> Celsius to Fahrenheit</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z18569</span> type of list (as string)</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z18683</span> strict object equality</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z20165</span> value by key index</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z24126</span> is Gregorian calendar date?</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z24130</span> is Day of roman year</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z28724</span> Type has custom converters to code</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z28755</span> index of match in list</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z31013</span> Levenshtein distance between two lists</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z31120</span> string from object</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z34263</span> Successor of von Neumann ordinal</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z34378</span> Is element of an hereditary set</td><td>1</td><td>0</td><td>1</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z34380</span> is subset of a set</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z37712</span> object or evaluation with default not error</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z38590</span> evaluate list or element in s-expression</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z38619</span> substitute reference in s-expression</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z38620</span> is argument declaration for anonymous function</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
@@ -364,7 +375,7 @@
         </details>
         <details class="cause kind-missing">
           <summary>Z10196 Z10196 is not implemented
-            <span class="meta"> &middot; 21 functions, 94 tester cases</span>
+            <span class="meta"> &middot; 22 functions, 97 tester cases</span>
           </summary>
           <table>
             <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
@@ -380,6 +391,7 @@
             <tr><td><span class="zid">Z11903</span> all bonds in SMILES string have atoms in between</td><td>0</td><td>0</td><td>4</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z32201</span> elide French article before this word?</td><td>0</td><td>0</td><td>4</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z38011</span> French definite article joined to noun (strings)</td><td>1</td><td>0</td><td>4</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z35352</span> get basic English phrase category</td><td>1</td><td>0</td><td>3</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z38046</span> string starts with any of [aeiouyAEIOUY]?</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z10641</span> is alphanumeric</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z10715</span> is numeric</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
@@ -394,11 +406,11 @@
         </details>
         <details class="cause kind-cycle">
           <summary>reaches a depth limit with no group identified
-            <span class="meta"> &middot; 17 functions, 48 tester cases</span>
+            <span class="meta"> &middot; 18 functions, 55 tester cases</span>
           </summary>
           <table>
             <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
-            <tr><td><span class="zid">Z13489</span> is decimal natural number string of Arabic numerals</td><td>1</td><td>0</td><td>12</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z13489</span> is decimal natural number string of Arabic numerals</td><td>1</td><td>0</td><td>17</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z15684</span> is truthy</td><td>0</td><td>0</td><td>6</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z12624</span> Replicate string n-times</td><td>0</td><td>0</td><td>4</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z14864</span> central Delannoy number</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
@@ -409,6 +421,7 @@
             <tr><td><span class="zid">Z14859</span> Delannoy number</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z14876</span> Schröder number</td><td>1</td><td>0</td><td>2</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z15651</span> nth Belphegor number</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z15811</span> if is Boolean</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z24517</span> 10^n (natural number)</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z10108</span> string end padding</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z13822</span> modular multiplicative inverse</td><td>1</td><td>0</td><td>1</td><td class="diff"></td></tr>
@@ -446,25 +459,45 @@
         </details>
         <details class="cause kind-disagree">
           <summary>runs, and disagrees with its tester
-            <span class="meta"> &middot; 15 functions, 93 tester cases</span>
+            <span class="meta"> &middot; 14 functions, 68 tester cases</span>
           </summary>
           <table>
             <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
-            <tr><td><span class="zid">Z11089</span> English plural</td><td>5</td><td>27</td><td>0</td><td class="diff">["woman"] &rarr; "womans", wanted "women"<br>["child"] &rarr; "childs", wanted "children"<br>["Candy"] &rarr; "Candys", wanted "Candies"</td></tr>
             <tr><td><span class="zid">Z12203</span> English regular superlative form</td><td>4</td><td>19</td><td>0</td><td class="diff">["good"] &rarr; "goodest", wanted "best"<br>["expensive"] &rarr; "expensivest", wanted "most expensive"<br>["speedy"] &rarr; "speedyest", wanted "speediest"</td></tr>
-            <tr><td><span class="zid">Z13087</span> English -ing form</td><td>14</td><td>12</td><td>0</td><td class="diff">["run"] &rarr; "runing", wanted "running"<br>["let"] &rarr; "leting", wanted "letting"<br>["bid"] &rarr; "biding", wanted "bidding"</td></tr>
+            <tr><td><span class="zid">Z13087</span> English -ing form</td><td>15</td><td>12</td><td>0</td><td class="diff">["run"] &rarr; "runing", wanted "running"<br>["let"] &rarr; "leting", wanted "letting"<br>["bid"] &rarr; "biding", wanted "bidding"</td></tr>
             <tr><td><span class="zid">Z11795</span> English comparative adjective</td><td>3</td><td>10</td><td>0</td><td class="diff">["speedy"] &rarr; "speedyer", wanted "speedier"<br>["big"] &rarr; "biger", wanted "bigger"<br>["hot"] &rarr; "hoter", wanted "hotter"</td></tr>
             <tr><td><span class="zid">Z10645</span> Tajik morpheme join</td><td>7</td><td>5</td><td>0</td><td class="diff">["одамӣ","он"] &rarr; "одамион", wanted "одамиён"<br>["ҷоду","он"] &rarr; "ҷодуон", wanted "ҷодувон"<br>["парранда","он"] &rarr; "паррандаон", wanted "паррандагон"</td></tr>
             <tr><td><span class="zid">Z17639</span> Spanish plural</td><td>7</td><td>4</td><td>0</td><td class="diff">["canción"] &rarr; "canciónes", wanted "canciones"<br>["cactus"] &rarr; "cactuses", wanted "cactus"<br>["tórax"] &rarr; "tóraxs", wanted "tórax"</td></tr>
             <tr><td><span class="zid">Z11646</span> English adjective to adverb</td><td>2</td><td>3</td><td>0</td><td class="diff">["fast"] &rarr; "fastly", wanted "fast"<br>["usable"] &rarr; "usablely", wanted "usably"<br>["full"] &rarr; "fullly", wanted "fully"</td></tr>
             <tr><td><span class="zid">Z11834</span> German noun, -(e)n declension</td><td>4</td><td>3</td><td>0</td><td class="diff">["Bauer"] &rarr; "Baueren", wanted "Bauern"<br>["Leben"] &rarr; "Lebenen", wanted "Leben"<br>["Kürzel"] &rarr; "Kürzelen", wanted "Kürzeln"</td></tr>
             <tr><td><span class="zid">Z13262</span> English -er form</td><td>1</td><td>3</td><td>0</td><td class="diff">["take"] &rarr; "takeer", wanted "taker"<br>["run"] &rarr; "runer", wanted "runner"<br>["amplify"] &rarr; "amplifyer", wanted "amplifier"</td></tr>
+            <tr><td><span class="zid">Z19125</span> English plural possessive</td><td>2</td><td>3</td><td>0</td><td class="diff">["fish"] &rarr; "fishs'", wanted "Z13381 to hold"<br>["Matrix"] &rarr; "Matrixs'", wanted "Z13381 to hold"<br>["kiss"] &rarr; "kisss'", wanted "kisses'"</td></tr>
             <tr><td><span class="zid">Z22725</span> to Scream Cipher</td><td>0</td><td>2</td><td>0</td><td class="diff">["HI"] &rarr; "A̮", wanted "A̰Ả"<br>["HELLO"] &rarr; "AAAAA", wanted "A̰ÁĂĂÅ"</td></tr>
             <tr><td><span class="zid">Z10096</span> is a palindrome</td><td>6</td><td>1</td><td>0</td><td class="diff">["Straw? No, too stupid. I put soot on warts."] &rarr; false, wanted true</td></tr>
             <tr><td><span class="zid">Z10919</span> csv record to wikitable row</td><td>3</td><td>1</td><td>0</td><td class="diff">["global population,\"7,000,000,000\",\"March 12, 2012\""] &rarr; "global population||\"7||000||000||000\"||\"March 12|| 2012\"", wanted "global population||7,000,000,000||March 12, 2012"</td></tr>
             <tr><td><span class="zid">Z12326</span> Breton conjugation present 3rd person singular</td><td>1</td><td>1</td><td>0</td><td class="diff">["kistin"] &rarr; "kistin", wanted "kistina"</td></tr>
             <tr><td><span class="zid">Z15907</span> limited Natural number</td><td>3</td><td>1</td><td>0</td><td class="diff">[1,7,2] &rarr; 7, wanted 1</td></tr>
-            <tr><td><span class="zid">Z19125</span> English plural possessive</td><td>2</td><td>1</td><td>0</td><td class="diff">["kiss"] &rarr; "kisss'", wanted "kisses'"</td></tr>
+          </table>
+
+        </details>
+        <details class="cause kind-missing">
+          <summary>Z10018 Z10018 is not implemented
+            <span class="meta"> &middot; 12 functions, 48 tester cases</span>
+          </summary>
+          <table>
+            <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
+            <tr><td><span class="zid">Z10336</span> is uppercase</td><td>0</td><td>0</td><td>9</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z10346</span> is lowercase</td><td>0</td><td>0</td><td>7</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z10897</span> is camel case</td><td>0</td><td>0</td><td>6</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z10771</span> sentence case</td><td>2</td><td>0</td><td>5</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z11349</span> has and is uppercase</td><td>0</td><td>0</td><td>4</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z11383</span> has and is lowercase</td><td>0</td><td>0</td><td>4</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z16714</span> DNA sequence complement</td><td>1</td><td>0</td><td>4</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z22511</span> capitalise first letter and add full stop</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z30404</span> Armenian capitalise first letter and add full stop</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z10725</span> join booleans</td><td>1</td><td>0</td><td>1</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z10730</span> boolean to string</td><td>2</td><td>0</td><td>1</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z33281</span> normalize city name</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
           </table>
 
         </details>
@@ -489,25 +522,6 @@
 
         </details>
         <details class="cause kind-missing">
-          <summary>Z10018 Z10018 is not implemented
-            <span class="meta"> &middot; 10 functions, 46 tester cases</span>
-          </summary>
-          <table>
-            <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
-            <tr><td><span class="zid">Z10336</span> is uppercase</td><td>0</td><td>0</td><td>9</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z10346</span> is lowercase</td><td>0</td><td>0</td><td>7</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z10897</span> is camel case</td><td>0</td><td>0</td><td>6</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z10771</span> sentence case</td><td>2</td><td>0</td><td>5</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z11349</span> has and is uppercase</td><td>0</td><td>0</td><td>4</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z11383</span> has and is lowercase</td><td>0</td><td>0</td><td>4</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z16714</span> DNA sequence complement</td><td>1</td><td>0</td><td>4</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z22511</span> capitalise first letter and add full stop</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z30404</span> Armenian capitalise first letter and add full stop</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z33281</span> normalize city name</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
-          </table>
-
-        </details>
-        <details class="cause kind-missing">
           <summary>Z19886 Z19886 is not implemented
             <span class="meta"> &middot; 9 functions, 29 tester cases</span>
           </summary>
@@ -525,18 +539,52 @@
           </table>
 
         </details>
-        <details class="cause kind-cycle">
-          <summary>Z11414 discard from start of last substring  ↔  Z11416 discard from end of last substring
-            <span class="meta"> &middot; 6 functions, 20 tester cases</span>
+        <details class="cause kind-other">
+          <summary>Z889 argument Z889K3 is not readable
+            <span class="meta"> &middot; 9 functions, 9 tester cases</span>
           </summary>
           <table>
             <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
-            <tr><td><span class="zid">Z16862</span> English number &lt;100 to natural number</td><td>0</td><td>0</td><td>6</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z13155</span> interleave lists</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z13247</span> faro out-shuffle</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z13366</span> get the first n elements of an untyped list</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z13402</span> words from string</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z13407</span> tokenize on white space</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z13726</span> divisors</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z13730</span> unique prime divisors</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z18284</span> list without last element (natural numbers)</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z24307</span> fallback language codes (strings)</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
+          </table>
+
+        </details>
+        <details class="cause kind-cycle">
+          <summary>Z11414 discard from start of last substring  ↔  Z11416 discard from end of last substring
+            <span class="meta"> &middot; 7 functions, 42 tester cases</span>
+          </summary>
+          <table>
+            <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
+            <tr><td><span class="zid">Z14413</span> parse unambiguous numbers leniently assuming English conventions where ambiguous</td><td>0</td><td>0</td><td>21</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z16862</span> English number &lt;100 to natural number</td><td>0</td><td>0</td><td>7</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z14450</span> count substrings</td><td>2</td><td>0</td><td>5</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z16502</span> (!) count decimal places</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z11414</span> discard from start of last substring</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z11416</span> discard from end of last substring</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z11420</span> discard until end of first substring</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
+          </table>
+
+        </details>
+        <details class="cause kind-other">
+          <summary>type mismatch in Z812
+            <span class="meta"> &middot; 6 functions, 12 tester cases</span>
+          </summary>
+          <table>
+            <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
+            <tr><td><span class="zid">Z13932</span> nth Mersenne exponent</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z19549</span> Mass replace given 2 lists</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z13950</span> nth Mersenne prime</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z14244</span> get Nth character of a string</td><td>3</td><td>0</td><td>2</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z11879</span> remove last character</td><td>2</td><td>0</td><td>1</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z14636</span> remove first N characters of string</td><td>3</td><td>0</td><td>1</td><td class="diff"></td></tr>
           </table>
 
         </details>
@@ -565,6 +613,20 @@
             <tr><td><span class="zid">Z24618</span> Serbian cardinal</td><td>0</td><td>0</td><td>7</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z15953</span> Ukrainian cardinal</td><td>0</td><td>0</td><td>4</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z16085</span> Croatian cardinal</td><td>0</td><td>0</td><td>4</td><td class="diff"></td></tr>
+          </table>
+
+        </details>
+        <details class="cause kind-missing">
+          <summary>Z805 Z805 is not implemented
+            <span class="meta"> &middot; 5 functions, 12 tester cases</span>
+          </summary>
+          <table>
+            <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
+            <tr><td><span class="zid">Z19020</span> is a Typed list</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z19121</span> to s-expression</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z27685</span> wrap in list unless list</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z30811</span> value after Type</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z15969</span> reified Z1K1 (object for Key reference)</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
           </table>
 
         </details>
@@ -633,41 +695,15 @@
           </table>
 
         </details>
-        <details class="cause kind-other">
-          <summary>type mismatch in Z812
-            <span class="meta"> &middot; 4 functions, 9 tester cases</span>
-          </summary>
-          <table>
-            <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
-            <tr><td><span class="zid">Z13932</span> nth Mersenne exponent</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z19549</span> Mass replace given 2 lists</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z13950</span> nth Mersenne prime</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z11879</span> remove last character</td><td>2</td><td>0</td><td>1</td><td class="diff"></td></tr>
-          </table>
-
-        </details>
-        <details class="cause kind-missing">
-          <summary>Z805 Z805 is not implemented
-            <span class="meta"> &middot; 4 functions, 8 tester cases</span>
-          </summary>
-          <table>
-            <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
-            <tr><td><span class="zid">Z19020</span> is a Typed list</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z19121</span> to s-expression</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z15969</span> reified Z1K1 (object for Key reference)</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z30811</span> value after Type</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
-          </table>
-
-        </details>
         <details class="cause kind-cycle">
           <summary>Z10366 string to hex (UTF-8)  ↔  Z11003 Base16 Encode
-            <span class="meta"> &middot; 3 functions, 8 tester cases</span>
+            <span class="meta"> &middot; 3 functions, 9 tester cases</span>
           </summary>
           <table>
             <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
             <tr><td><span class="zid">Z17036</span> string length in UTF-8 code units</td><td>0</td><td>0</td><td>5</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z10366</span> string to hex (UTF-8)</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z11003</span> Base16 Encode</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z10366</span> string to hex (UTF-8)</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
           </table>
 
         </details>
@@ -804,6 +840,18 @@
 
         </details>
         <details class="cause kind-missing">
+          <summary>Z29267 Z29267 is not implemented
+            <span class="meta"> &middot; 3 functions, 7 tester cases</span>
+          </summary>
+          <table>
+            <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
+            <tr><td><span class="zid">Z38229</span> count languages a Persistent ZObject has labels in</td><td>0</td><td>0</td><td>5</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z21132</span> (!) vararg apply</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z29554</span> id of Persistent object</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
+          </table>
+
+        </details>
+        <details class="cause kind-missing">
           <summary>Z32314 Z32314 is not implemented
             <span class="meta"> &middot; 3 functions, 38 tester cases</span>
           </summary>
@@ -812,6 +860,30 @@
             <tr><td><span class="zid">Z21739</span> an or a? (English)</td><td>0</td><td>0</td><td>32</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z32319</span> add indefinite article in English</td><td>0</td><td>0</td><td>4</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z38814</span> prefix with indefinite article, English</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
+          </table>
+
+        </details>
+        <details class="cause kind-missing">
+          <summary>Z808 Z808 is not implemented
+            <span class="meta"> &middot; 3 functions, 5 tester cases</span>
+          </summary>
+          <table>
+            <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
+            <tr><td><span class="zid">Z31471</span> escape HTML</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z28154</span> (!) throw error</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z29102</span> Reference from ZID string</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
+          </table>
+
+        </details>
+        <details class="cause kind-other">
+          <summary>validator Z34273: type mismatch in Z16829
+            <span class="meta"> &middot; 3 functions, 4 tester cases</span>
+          </summary>
+          <table>
+            <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
+            <tr><td><span class="zid">Z34519</span> Append element to hereditary set</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z34409</span> Predecessor of von Neumann ordinal</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z34538</span> Union of hereditary sets</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
           </table>
 
         </details>
@@ -937,17 +1009,6 @@
 
         </details>
         <details class="cause kind-missing">
-          <summary>Z29267 Z29267 is not implemented
-            <span class="meta"> &middot; 2 functions, 2 tester cases</span>
-          </summary>
-          <table>
-            <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
-            <tr><td><span class="zid">Z21132</span> (!) vararg apply</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z29554</span> id of Persistent object</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
-          </table>
-
-        </details>
-        <details class="cause kind-missing">
           <summary>Z23283 Z23283 is not implemented
             <span class="meta"> &middot; 2 functions, 3 tester cases</span>
           </summary>
@@ -959,6 +1020,17 @@
 
         </details>
         <details class="cause kind-other">
+          <summary>result is not a readable literal
+            <span class="meta"> &middot; 2 functions, 2 tester cases</span>
+          </summary>
+          <table>
+            <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
+            <tr><td><span class="zid">Z26199</span> nullary void</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z26750</span> first element if list not empty, else void</td><td>1</td><td>0</td><td>1</td><td class="diff"></td></tr>
+          </table>
+
+        </details>
+        <details class="cause kind-other">
           <summary>type mismatch in Z13633
             <span class="meta"> &middot; 2 functions, 5 tester cases</span>
           </summary>
@@ -966,17 +1038,6 @@
             <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
             <tr><td><span class="zid">Z28925</span> is Pythagorean triple</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
             <tr><td><span class="zid">Z28973</span> is primitive pythagorean triple</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
-          </table>
-
-        </details>
-        <details class="cause kind-missing">
-          <summary>Z808 Z808 is not implemented
-            <span class="meta"> &middot; 2 functions, 4 tester cases</span>
-          </summary>
-          <table>
-            <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
-            <tr><td><span class="zid">Z31471</span> escape HTML</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
-            <tr><td><span class="zid">Z29102</span> Reference from ZID string</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
           </table>
 
         </details>
@@ -1064,7 +1125,7 @@
 
         </details>
         <details class="cause kind-other">
-          <summary>Z866 expected value is not readable
+          <summary>Z866 argument Z866K2 is not readable
             <span class="meta"> &middot; 1 function, 1 tester case</span>
           </summary>
           <table>
@@ -1154,22 +1215,12 @@
 
         </details>
         <details class="cause kind-other">
-          <summary>Z13522 expected value is not readable
+          <summary>Z13522 argument Z13522K2 is not readable
             <span class="meta"> &middot; 1 function, 1 tester case</span>
           </summary>
           <table>
             <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
             <tr><td><span class="zid">Z13612</span> greatest common divisor</td><td>6</td><td>0</td><td>1</td><td class="diff"></td></tr>
-          </table>
-
-        </details>
-        <details class="cause kind-other">
-          <summary>validator Z14416
-            <span class="meta"> &middot; 1 function, 11 tester cases</span>
-          </summary>
-          <table>
-            <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
-            <tr><td><span class="zid">Z14413</span> parse unambiguous numbers leniently assuming English conventions where ambiguous</td><td>0</td><td>0</td><td>11</td><td class="diff"></td></tr>
           </table>
 
         </details>
@@ -1184,12 +1235,12 @@
 
         </details>
         <details class="cause kind-other">
-          <summary>validator Z13052
+          <summary>Z16137 argument Z16137K2 is not readable
             <span class="meta"> &middot; 1 function, 1 tester case</span>
           </summary>
           <table>
             <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
-            <tr><td><span class="zid">Z15811</span> if is Boolean</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
+            <tr><td><span class="zid">Z16255</span> month number to month</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
           </table>
 
         </details>
@@ -1223,6 +1274,16 @@
           </table>
 
         </details>
+        <details class="cause kind-other">
+          <summary>validator Z17879: type mismatch in Z16829
+            <span class="meta"> &middot; 1 function, 1 tester case</span>
+          </summary>
+          <table>
+            <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
+            <tr><td><span class="zid">Z17895</span> untype a list</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
+          </table>
+
+        </details>
         <details class="cause kind-missing">
           <summary>Z17966 Z17966 is not implemented
             <span class="meta"> &middot; 1 function, 2 tester cases</span>
@@ -1250,6 +1311,16 @@
           <table>
             <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
             <tr><td><span class="zid">Z18582</span> Is same Bengali month days</td><td>0</td><td>0</td><td>3</td><td class="diff"></td></tr>
+          </table>
+
+        </details>
+        <details class="cause kind-missing">
+          <summary>Z10812 Z10812 is not implemented
+            <span class="meta"> &middot; 1 function, 2 tester cases</span>
+          </summary>
+          <table>
+            <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
+            <tr><td><span class="zid">Z18716</span> get words containing non-standard Kurdish letters</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
           </table>
 
         </details>
@@ -1313,6 +1384,16 @@
           </table>
 
         </details>
+        <details class="cause kind-other">
+          <summary>Z24171 argument Z24171K2 is not readable
+            <span class="meta"> &middot; 1 function, 1 tester case</span>
+          </summary>
+          <table>
+            <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
+            <tr><td><span class="zid">Z24291</span> given object within list within list</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
+          </table>
+
+        </details>
         <details class="cause kind-missing">
           <summary>Z6825 Z6825 is not implemented
             <span class="meta"> &middot; 1 function, 1 tester case</span>
@@ -1330,16 +1411,6 @@
           <table>
             <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
             <tr><td><span class="zid">Z24876</span> Gregorian date as string to Dagbani calendar date</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
-          </table>
-
-        </details>
-        <details class="cause kind-other">
-          <summary>validator Z10539
-            <span class="meta"> &middot; 1 function, 2 tester cases</span>
-          </summary>
-          <table>
-            <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
-            <tr><td><span class="zid">Z26184</span> solfege to sargam</td><td>0</td><td>0</td><td>2</td><td class="diff"></td></tr>
           </table>
 
         </details>
@@ -1374,12 +1445,22 @@
 
         </details>
         <details class="cause kind-other">
-          <summary>validator Z16688
+          <summary>Z16688 argument Z16688K2 is not readable
             <span class="meta"> &middot; 1 function, 1 tester case</span>
           </summary>
           <table>
             <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
             <tr><td><span class="zid">Z29409</span> most common element on list</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
+          </table>
+
+        </details>
+        <details class="cause kind-other">
+          <summary>Z30239 argument Z30239K2 is not readable
+            <span class="meta"> &middot; 1 function, 1 tester case</span>
+          </summary>
+          <table>
+            <tr><th>function</th><th>pass</th><th>fail</th><th>error</th><th></th></tr>
+            <tr><td><span class="zid">Z30248</span> fetch Wikidata items</td><td>0</td><td>0</td><td>1</td><td class="diff"></td></tr>
           </table>
 
         </details>
@@ -1403,8 +1484,8 @@
           </table>
 
         </details>
-        <details class="cause kind-missing">
-          <summary>Z851 Z851 is not implemented
+        <details class="cause kind-other">
+          <summary>error raised by the composition: {"type":"Z5","fields":{"Z5K1":{"type":"Z8","zid":"Z30762"},"Z5K2":{"type":"Z881","items":[]}}}
             <span class="meta"> &middot; 1 function, 3 tester cases</span>
           </summary>
           <table>
@@ -1480,7 +1561,7 @@
         <ul>
           <li>
             A tester counts as passing only when both its call and its expected
-            value were readable. 7,295 were not, and are
+            value were readable. 7,165 were not, and are
             skipped with a stated reason rather than counted either way.
           </li>
           <li>

@@ -51,6 +51,12 @@ type eval_error =
      right type and the answer still does not exist. Wikifunctions' own Python
      for Z13546 raises Z28194 here. *)
   | EDivisionByZero : zid -> eval_error
+  (* An error the composition itself raised, carrying the Z5 it was given.
+     Wikifunctions has errors as values: Z851 throws one, Z850 catches one of a
+     named type, and Z853 reports whether a call threw. That makes an error part
+     of the data model rather than only a way for evaluation to stop, so it
+     travels as a value and can be caught, inspected and returned. *)
+  | EThrown : value -> eval_error
   | EPrimitiveError : kernel_error -> eval_error
 
 type eval_result (a:Type0) =
@@ -150,6 +156,17 @@ let fid_apply2 : zid = 13318   // Z13318 apply two-argument function
 let fid_apply3 : zid = 21216   // Z21216 apply three-argument function
 let fid_apply4 : zid = 30438   // Z30438 apply four-argument function
 let fid_zip_with : zid = 14779 // Z14779 apply pairwise to two lists
+
+// Errors as values. These three are special forms rather than primitives: Z850
+// and Z853 have to see whether their argument produced an error, which means
+// they are handed the result rather than the value, and Z850's handler must not
+// run unless it is needed.
+let fid_throw : zid = 851          // Z851 Throw Error
+let fid_try_catch : zid = 850      // Z850 Try-Catch Function
+let fid_get_error : zid = 853      // Z853 Get error thrown by function call
+let type_z5 : zid = 5              // Z5 Error
+let key_z5k1 : zkey = global_key 5 1   // the errortype
+let key_z5k2 : zkey = global_key 5 2   // its parameters
 
 // Text and codepoint lists are the same data in two shapes. These conversions
 // bridge the string primitives and the list primitives, which is why they gate
@@ -549,6 +566,14 @@ let apply_primitive (fid:zid) (args:list value) : Tot (option (eval_result value
       else None
   | _ -> None
 
+(* Does a thrown error have the errortype a try-catch asked for? An errortype is
+   named by reference, so this compares identifiers rather than structure. *)
+let thrown_matches (thrown:value) (wanted:value) : Tot bool =
+  match thrown, wanted with
+  | VRecord _ ((_, VFunc raised) :: _), VFunc asked -> raised = asked
+  | VRecord _ ((_, VRecord raised _) :: _), VFunc asked -> raised = asked
+  | _, _ -> false
+
 (* Fuel is a budget for total work, not a limit on nesting depth.
 
    Passing the same fuel down every branch bounds how deep evaluation goes but
@@ -591,7 +616,50 @@ let rec eval (p:policy) (fuel:nat) (depth:nat) (env:list value) (e:expr)
       else
         let next : nat = fuel - 1 in
         let deeper : nat = depth + 1 in
-        if fid = fid_if || fid = fid_if_nat then
+        if fid = fid_throw then
+          (* An error is built and raised. Both parts are ordinary values, so
+             they are evaluated first; it is the raising that is special. *)
+          match eval_list p next deeper env args with
+          | (EErr err, after) -> (EErr err, after)
+          | (EOk [errortype; parameters], after) ->
+              (EErr (EThrown (VRecord type_z5 [(key_z5k1, errortype); (key_z5k2, parameters)])), after)
+          | (EOk _, after) -> (EErr (EArityMismatch fid), after)
+        else if fid = fid_get_error then
+          (* Whether a call threw, and what. The call is evaluated and its
+             result inspected rather than propagated, which is the whole point:
+             an error here is an answer, not a failure. *)
+          (match args with
+           | [call] ->
+               let (attempted, after) = eval p next deeper env call in
+               begin match attempted with
+               | EErr (EThrown thrown) -> (EOk (VPair (VBool true) thrown), after)
+               | EErr err -> (EErr err, after)
+               | EOk value -> (EOk (VPair (VBool false) value), after)
+               end
+           | _ -> (EErr (EArityMismatch fid), next))
+        else if fid = fid_try_catch then
+          (* The handler runs only if the call threw an error of the named type.
+             Anything else - a different error type, or no error - passes
+             through untouched, so a try-catch cannot swallow what it was not
+             asked to catch. *)
+          (match args with
+           | [call; errortype; handler] ->
+               let (attempted, after) = eval p next deeper env call in
+               begin match attempted with
+               | EErr (EThrown thrown) ->
+                   let (asked, later) = eval p after deeper env errortype in
+                   begin match asked with
+                   | EErr err -> (EErr err, later)
+                   | EOk wanted ->
+                       if thrown_matches thrown wanted then
+                         let (handled, left) = eval p later deeper env handler in
+                         (handled, left)
+                       else (EErr (EThrown thrown), later)
+                   end
+               | _ -> (attempted, after)
+               end
+           | _ -> (EErr (EArityMismatch fid), next))
+        else if fid = fid_if || fid = fid_if_nat then
           match args with
           | [condition; then_branch; else_branch] -> begin
               match eval p next deeper env condition with

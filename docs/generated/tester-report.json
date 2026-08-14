@@ -5,73 +5,73 @@
     "functionsInEngine": 3890,
     "testersConsidered": 10281,
     "counts": {
-      "pass": 1247,
-      "fail": 102,
-      "error": 1637,
-      "skipped": 7295
+      "pass": 1290,
+      "fail": 105,
+      "error": 1721,
+      "skipped": 7165
     },
-    "functionsWithAtLeastOnePass": 544,
-    "functionsFullyPassing": 450,
+    "functionsWithAtLeastOnePass": 565,
+    "functionsFullyPassing": 459,
     "topReasons": [
       {
         "reason": "argument is not a readable literal",
-        "count": 2977
+        "count": 3145
       },
       {
-        "reason": "validator Z14392",
+        "reason": "Z14392 argument Z14392K2 is not readable",
         "count": 548
       },
       {
-        "reason": "Z889 with 2 supplied arguments",
-        "count": 521
-      },
-      {
-        "reason": "validator Z877",
+        "reason": "Z877 argument Z877K2 is not readable",
         "count": 429
       },
       {
-        "reason": "validator Z19686",
+        "reason": "Z19686 argument Z19686K2 is not readable",
         "count": 362
       },
       {
         "reason": "nesting depth limit reached; this composition may be defined in terms of itself without a base case",
-        "count": 264
+        "count": 283
       },
       {
-        "reason": "validator Z20850",
+        "reason": "Z889 argument Z889K3 is not readable",
+        "count": 277
+      },
+      {
+        "reason": "Z889 argument Z889K2 is not readable",
+        "count": 244
+      },
+      {
+        "reason": "Z20850 argument Z20850K2 is not readable",
         "count": 236
       },
       {
-        "reason": "validator Z16688",
+        "reason": "Z16688 argument Z16688K2 is not readable",
         "count": 233
       },
       {
         "reason": "type mismatch in Z803",
-        "count": 156
+        "count": 158
       },
       {
         "reason": "fuel exhausted",
-        "count": 134
+        "count": 135
       },
       {
-        "reason": "validator Z22120",
+        "reason": "Z22120 argument Z22120K2 is not readable",
         "count": 132
       },
       {
-        "reason": "validator Z19316",
+        "reason": "Z19316 argument Z19316K2 is not readable",
         "count": 118
       },
       {
         "reason": "no implementation for Z12316",
-        "count": 102
-      },
-      {
-        "reason": "no implementation for Z10196",
-        "count": 94
+        "count": 108
       },
       {
         "reason": "type mismatch in Z16829",
-        "count": 89
+        "count": 98
       }
     ],
     "failures": [
@@ -628,8 +628,8 @@
     ]
   },
   "functionsWithTesters": 3551,
-  "functionsFullyPassing": 450,
-  "functionsFailing": 561,
+  "functionsFullyPassing": 459,
+  "functionsFailing": 601,
   "unproductiveGroups": 26,
   "functionsInsideAGroup": 68,
   "causes": [
@@ -637,9 +637,48 @@
       "kind": "fuel",
       "title": "runs out of fuel",
       "members": [],
-      "functions": 76,
-      "cases": 155,
+      "functions": 77,
+      "cases": 184,
       "examples": [
+        {
+          "zid": "Z11089",
+          "label": "English plural",
+          "pass": 5,
+          "fail": 28,
+          "error": 1,
+          "disagreements": [
+            {
+              "input": [
+                "woman"
+              ],
+              "expected": "women",
+              "actual": {
+                "type": "Z6",
+                "text": "womans"
+              }
+            },
+            {
+              "input": [
+                "child"
+              ],
+              "expected": "children",
+              "actual": {
+                "type": "Z6",
+                "text": "childs"
+              }
+            },
+            {
+              "input": [
+                "Candy"
+              ],
+              "expected": "Candies",
+              "actual": {
+                "type": "Z6",
+                "text": "Candys"
+              }
+            }
+          ]
+        },
         {
           "zid": "Z11094",
           "label": "string is element of CSV",
@@ -1051,14 +1090,6 @@
           "fail": 0,
           "error": 2,
           "disagreements": []
-        },
-        {
-          "zid": "Z16878",
-          "label": "English number <1000 to natural number",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
         }
       ]
     },
@@ -1066,15 +1097,15 @@
       "kind": "other",
       "title": "type mismatch in Z803",
       "members": [],
-      "functions": 53,
-      "cases": 154,
+      "functions": 55,
+      "cases": 158,
       "examples": [
         {
           "zid": "Z11129",
           "label": "is valid positive integer",
           "pass": 0,
           "fail": 0,
-          "error": 12,
+          "error": 13,
           "disagreements": []
         },
         {
@@ -1142,6 +1173,14 @@
           "disagreements": []
         },
         {
+          "zid": "Z11515",
+          "label": "unicode of first character",
+          "pass": 0,
+          "fail": 0,
+          "error": 4,
+          "disagreements": []
+        },
+        {
           "zid": "Z11523",
           "label": "first letter of strings: codepoints in ascending order",
           "pass": 0,
@@ -1168,14 +1207,6 @@
         {
           "zid": "Z11289",
           "label": "sort letters of a string",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z11515",
-          "label": "unicode of first character",
           "pass": 0,
           "fail": 0,
           "error": 3,
@@ -1382,8 +1413,8 @@
           "disagreements": []
         },
         {
-          "zid": "Z11528",
-          "label": "in codepoint order (three characters)",
+          "zid": "Z10785",
+          "label": "Unicode code point encode hex",
           "pass": 0,
           "fail": 0,
           "error": 1,
@@ -1399,13 +1430,13 @@
         "Z13735",
         "Z13745"
       ],
-      "functions": 48,
-      "cases": 158,
+      "functions": 49,
+      "cases": 161,
       "examples": [
         {
           "zid": "Z12427",
           "label": "is prime",
-          "pass": 1,
+          "pass": 2,
           "fail": 0,
           "error": 17,
           "disagreements": []
@@ -1544,6 +1575,14 @@
           "pass": 0,
           "fail": 0,
           "error": 4,
+          "disagreements": []
+        },
+        {
+          "zid": "Z13728",
+          "label": "prime divisors",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
           "disagreements": []
         },
         {
@@ -1713,13 +1752,310 @@
           "fail": 0,
           "error": 2,
           "disagreements": []
+        }
+      ]
+    },
+    {
+      "kind": "other",
+      "title": "type mismatch in Z16829",
+      "members": [],
+      "functions": 37,
+      "cases": 79,
+      "examples": [
+        {
+          "zid": "Z15801",
+          "label": "object type equality",
+          "pass": 0,
+          "fail": 0,
+          "error": 6,
+          "disagreements": []
         },
         {
-          "zid": "Z15617",
-          "label": "is Fibonacci number",
+          "zid": "Z13652",
+          "label": "bitwise or",
+          "pass": 0,
+          "fail": 0,
+          "error": 4,
+          "disagreements": []
+        },
+        {
+          "zid": "Z15068",
+          "label": "nth number in Baum–Sweet sequence",
+          "pass": 0,
+          "fail": 0,
+          "error": 4,
+          "disagreements": []
+        },
+        {
+          "zid": "Z15386",
+          "label": "Wedderburn–Etherington number",
+          "pass": 0,
+          "fail": 0,
+          "error": 4,
+          "disagreements": []
+        },
+        {
+          "zid": "Z17687",
+          "label": "convert [R,G,B] to hex colour",
+          "pass": 0,
+          "fail": 0,
+          "error": 4,
+          "disagreements": []
+        },
+        {
+          "zid": "Z13651",
+          "label": "bitwise and",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z13781",
+          "label": "natural number to hexadecimal (lowercase, without prefix)",
+          "pass": 1,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z13860",
+          "label": "binary weight of n",
+          "pass": 1,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z15121",
+          "label": "is odious number",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z15127",
+          "label": "is evil number",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z17879",
+          "label": "is this list untyped?",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z31177",
+          "label": "List of digits in base n",
+          "pass": 1,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z12636",
+          "label": "is Armstrong number",
           "pass": 0,
           "fail": 0,
           "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z13220",
+          "label": "are all elements of the list the same type",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z13653",
+          "label": "bitwise xor",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z15134",
+          "label": "nth number in lower Wythoff sequence",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z15138",
+          "label": "nth number in upper Wythoff sequence",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z15433",
+          "label": "is harshad number",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z15671",
+          "label": "natural number to base n",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z17900",
+          "label": "is this list typed?",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z21868",
+          "label": "is narcissistic number",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z25520",
+          "label": "list of decimal digits in a number",
+          "pass": 1,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z34273",
+          "label": "Equality of hereditary sets",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z13779",
+          "label": "natural number to binary string (without prefix)",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z13780",
+          "label": "natural number to octal (without prefix)",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z13782",
+          "label": "natural number to binary (with prefix)",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z13783",
+          "label": "natural number to octal (with prefix)",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z13784",
+          "label": "natural number to hexadecimal (lowercase, with prefix)",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z14005",
+          "label": "1-2 Thue-Morse sequence",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z14376",
+          "label": "sum of decimal digits",
+          "pass": 1,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z15771",
+          "label": "nth binary number in decimal",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z17893",
+          "label": "ZID of object type",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z19467",
+          "label": "light year to parsec",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z23630",
+          "label": "(#) add two numbers",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z24849",
+          "label": "filter list for natural numbers",
+          "pass": 1,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z31682",
+          "label": "validated equality",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z38031",
+          "label": "arithmetic mean of Natural numbers as Natural",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
           "disagreements": []
         }
       ]
@@ -1728,8 +2064,8 @@
       "kind": "other",
       "title": "type mismatch in Z811",
       "members": [],
-      "functions": 33,
-      "cases": 82,
+      "functions": 35,
+      "cases": 89,
       "examples": [
         {
           "zid": "Z13280",
@@ -1780,6 +2116,14 @@
           "disagreements": []
         },
         {
+          "zid": "Z26184",
+          "label": "solfege to sargam",
+          "pass": 0,
+          "fail": 0,
+          "error": 5,
+          "disagreements": []
+        },
+        {
           "zid": "Z22504",
           "label": "join list of strings with spaces",
           "pass": 0,
@@ -1804,6 +2148,14 @@
           "disagreements": []
         },
         {
+          "zid": "Z10911",
+          "label": "duplicate string N times",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
           "zid": "Z12899",
           "label": "join list of strings with delimiter",
           "pass": 0,
@@ -1822,14 +2174,6 @@
         {
           "zid": "Z10393",
           "label": "Levenshtein distance",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z10911",
-          "label": "duplicate string N times",
           "pass": 0,
           "fail": 0,
           "error": 2,
@@ -1887,6 +2231,14 @@
           "zid": "Z18531",
           "label": "Byzantine to Arabic numeral",
           "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z18556",
+          "label": "get middle character or characters of a string",
+          "pass": 4,
           "fail": 0,
           "error": 1,
           "disagreements": []
@@ -1998,276 +2350,11 @@
       ]
     },
     {
-      "kind": "other",
-      "title": "type mismatch in Z16829",
-      "members": [],
-      "functions": 32,
-      "cases": 70,
-      "examples": [
-        {
-          "zid": "Z15801",
-          "label": "object type equality",
-          "pass": 0,
-          "fail": 0,
-          "error": 6,
-          "disagreements": []
-        },
-        {
-          "zid": "Z13652",
-          "label": "bitwise or",
-          "pass": 0,
-          "fail": 0,
-          "error": 4,
-          "disagreements": []
-        },
-        {
-          "zid": "Z15068",
-          "label": "nth number in Baum–Sweet sequence",
-          "pass": 0,
-          "fail": 0,
-          "error": 4,
-          "disagreements": []
-        },
-        {
-          "zid": "Z15386",
-          "label": "Wedderburn–Etherington number",
-          "pass": 0,
-          "fail": 0,
-          "error": 4,
-          "disagreements": []
-        },
-        {
-          "zid": "Z17687",
-          "label": "convert [R,G,B] to hex colour",
-          "pass": 0,
-          "fail": 0,
-          "error": 4,
-          "disagreements": []
-        },
-        {
-          "zid": "Z13651",
-          "label": "bitwise and",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z13781",
-          "label": "natural number to hexadecimal (lowercase, without prefix)",
-          "pass": 1,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z13860",
-          "label": "binary weight of n",
-          "pass": 1,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z15121",
-          "label": "is odious number",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z15127",
-          "label": "is evil number",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z17879",
-          "label": "is this list untyped?",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z13220",
-          "label": "are all elements of the list the same type",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z13653",
-          "label": "bitwise xor",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z15134",
-          "label": "nth number in lower Wythoff sequence",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z15138",
-          "label": "nth number in upper Wythoff sequence",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z15433",
-          "label": "is harshad number",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z15671",
-          "label": "natural number to base n",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z17900",
-          "label": "is this list typed?",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z21868",
-          "label": "is narcissistic number",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z34273",
-          "label": "Equality of hereditary sets",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z12636",
-          "label": "is Armstrong number",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z13779",
-          "label": "natural number to binary string (without prefix)",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z13780",
-          "label": "natural number to octal (without prefix)",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z13782",
-          "label": "natural number to binary (with prefix)",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z13783",
-          "label": "natural number to octal (with prefix)",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z13784",
-          "label": "natural number to hexadecimal (lowercase, with prefix)",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z14005",
-          "label": "1-2 Thue-Morse sequence",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z14376",
-          "label": "sum of decimal digits",
-          "pass": 1,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z15771",
-          "label": "nth binary number in decimal",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z17893",
-          "label": "ZID of object type",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z31682",
-          "label": "validated equality",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z38031",
-          "label": "arithmetic mean of Natural numbers as Natural",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        }
-      ]
-    },
-    {
       "kind": "missing",
       "title": "Z12316 Z12316 is not implemented",
       "members": [],
-      "functions": 30,
-      "cases": 94,
+      "functions": 31,
+      "cases": 98,
       "examples": [
         {
           "zid": "Z14304",
@@ -2280,6 +2367,14 @@
         {
           "zid": "Z11891",
           "label": "correct bracketed atoms in SMILES",
+          "pass": 0,
+          "fail": 0,
+          "error": 7,
+          "disagreements": []
+        },
+        {
+          "zid": "Z25800",
+          "label": "unit string from quantity string",
           "pass": 0,
           "fail": 0,
           "error": 7,
@@ -2304,14 +2399,6 @@
         {
           "zid": "Z21593",
           "label": "Word frequency",
-          "pass": 0,
-          "fail": 0,
-          "error": 5,
-          "disagreements": []
-        },
-        {
-          "zid": "Z25800",
-          "label": "unit string from quantity string",
           "pass": 0,
           "fail": 0,
           "error": 5,
@@ -2454,6 +2541,14 @@
           "disagreements": []
         },
         {
+          "zid": "Z32085",
+          "label": "enumerate adjacent-key typos for digit string",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
           "zid": "Z10193",
           "label": "replace all (regex, case sensitive)",
           "pass": 0,
@@ -2515,8 +2610,8 @@
       "kind": "other",
       "title": "argument is not a readable literal",
       "members": [],
-      "functions": 24,
-      "cases": 36,
+      "functions": 27,
+      "cases": 37,
       "examples": [
         {
           "zid": "Z15717",
@@ -2524,14 +2619,6 @@
           "pass": 0,
           "fail": 0,
           "error": 4,
-          "disagreements": []
-        },
-        {
-          "zid": "Z15777",
-          "label": "is String",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
           "disagreements": []
         },
         {
@@ -2543,17 +2630,25 @@
           "disagreements": []
         },
         {
-          "zid": "Z16885",
-          "label": "has generic Type",
-          "pass": 0,
+          "zid": "Z15777",
+          "label": "is String",
+          "pass": 1,
           "fail": 0,
-          "error": 3,
+          "error": 2,
           "disagreements": []
         },
         {
           "zid": "Z15824",
           "label": "is integer equivalent",
           "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z16885",
+          "label": "has generic Type",
+          "pass": 1,
           "fail": 0,
           "error": 2,
           "disagreements": []
@@ -2615,6 +2710,14 @@
           "disagreements": []
         },
         {
+          "zid": "Z20165",
+          "label": "value by key index",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
           "zid": "Z24126",
           "label": "is Gregorian calendar date?",
           "pass": 0,
@@ -2663,6 +2766,14 @@
           "disagreements": []
         },
         {
+          "zid": "Z34263",
+          "label": "Successor of von Neumann ordinal",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
           "zid": "Z34378",
           "label": "Is element of an hereditary set",
           "pass": 1,
@@ -2673,6 +2784,14 @@
         {
           "zid": "Z34380",
           "label": "is subset of a set",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z37712",
+          "label": "object or evaluation with default not error",
           "pass": 0,
           "fail": 0,
           "error": 1,
@@ -2716,8 +2835,8 @@
       "kind": "missing",
       "title": "Z10196 Z10196 is not implemented",
       "members": [],
-      "functions": 21,
-      "cases": 94,
+      "functions": 22,
+      "cases": 97,
       "examples": [
         {
           "zid": "Z10786",
@@ -2816,6 +2935,14 @@
           "disagreements": []
         },
         {
+          "zid": "Z35352",
+          "label": "get basic English phrase category",
+          "pass": 1,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
           "zid": "Z38046",
           "label": "string starts with any of [aeiouyAEIOUY]?",
           "pass": 0,
@@ -2893,15 +3020,15 @@
       "kind": "cycle",
       "title": "reaches a depth limit with no group identified",
       "members": [],
-      "functions": 17,
-      "cases": 48,
+      "functions": 18,
+      "cases": 55,
       "examples": [
         {
           "zid": "Z13489",
           "label": "is decimal natural number string of Arabic numerals",
           "pass": 1,
           "fail": 0,
-          "error": 12,
+          "error": 17,
           "disagreements": []
         },
         {
@@ -2979,6 +3106,14 @@
         {
           "zid": "Z15651",
           "label": "nth Belphegor number",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z15811",
+          "label": "if is Boolean",
           "pass": 0,
           "fail": 0,
           "error": 2,
@@ -3183,48 +3318,9 @@
       "kind": "disagree",
       "title": "runs, and disagrees with its tester",
       "members": [],
-      "functions": 15,
-      "cases": 93,
+      "functions": 14,
+      "cases": 68,
       "examples": [
-        {
-          "zid": "Z11089",
-          "label": "English plural",
-          "pass": 5,
-          "fail": 27,
-          "error": 0,
-          "disagreements": [
-            {
-              "input": [
-                "woman"
-              ],
-              "expected": "women",
-              "actual": {
-                "type": "Z6",
-                "text": "womans"
-              }
-            },
-            {
-              "input": [
-                "child"
-              ],
-              "expected": "children",
-              "actual": {
-                "type": "Z6",
-                "text": "childs"
-              }
-            },
-            {
-              "input": [
-                "Candy"
-              ],
-              "expected": "Candies",
-              "actual": {
-                "type": "Z6",
-                "text": "Candys"
-              }
-            }
-          ]
-        },
         {
           "zid": "Z12203",
           "label": "English regular superlative form",
@@ -3267,7 +3363,7 @@
         {
           "zid": "Z13087",
           "label": "English -ing form",
-          "pass": 14,
+          "pass": 15,
           "fail": 12,
           "error": 0,
           "disagreements": [
@@ -3541,6 +3637,45 @@
           ]
         },
         {
+          "zid": "Z19125",
+          "label": "English plural possessive",
+          "pass": 2,
+          "fail": 3,
+          "error": 0,
+          "disagreements": [
+            {
+              "input": [
+                "fish"
+              ],
+              "expected": "Z13381 to hold",
+              "actual": {
+                "type": "Z6",
+                "text": "fishs'"
+              }
+            },
+            {
+              "input": [
+                "Matrix"
+              ],
+              "expected": "Z13381 to hold",
+              "actual": {
+                "type": "Z6",
+                "text": "Matrixs'"
+              }
+            },
+            {
+              "input": [
+                "kiss"
+              ],
+              "expected": "kisses'",
+              "actual": {
+                "type": "Z6",
+                "text": "kisss'"
+              }
+            }
+          ]
+        },
+        {
           "zid": "Z22725",
           "label": "to Scream Cipher",
           "pass": 0,
@@ -3646,25 +3781,111 @@
               }
             }
           ]
+        }
+      ]
+    },
+    {
+      "kind": "missing",
+      "title": "Z10018 Z10018 is not implemented",
+      "members": [],
+      "functions": 12,
+      "cases": 48,
+      "examples": [
+        {
+          "zid": "Z10336",
+          "label": "is uppercase",
+          "pass": 0,
+          "fail": 0,
+          "error": 9,
+          "disagreements": []
         },
         {
-          "zid": "Z19125",
-          "label": "English plural possessive",
+          "zid": "Z10346",
+          "label": "is lowercase",
+          "pass": 0,
+          "fail": 0,
+          "error": 7,
+          "disagreements": []
+        },
+        {
+          "zid": "Z10897",
+          "label": "is camel case",
+          "pass": 0,
+          "fail": 0,
+          "error": 6,
+          "disagreements": []
+        },
+        {
+          "zid": "Z10771",
+          "label": "sentence case",
           "pass": 2,
-          "fail": 1,
-          "error": 0,
-          "disagreements": [
-            {
-              "input": [
-                "kiss"
-              ],
-              "expected": "kisses'",
-              "actual": {
-                "type": "Z6",
-                "text": "kisss'"
-              }
-            }
-          ]
+          "fail": 0,
+          "error": 5,
+          "disagreements": []
+        },
+        {
+          "zid": "Z11349",
+          "label": "has and is uppercase",
+          "pass": 0,
+          "fail": 0,
+          "error": 4,
+          "disagreements": []
+        },
+        {
+          "zid": "Z11383",
+          "label": "has and is lowercase",
+          "pass": 0,
+          "fail": 0,
+          "error": 4,
+          "disagreements": []
+        },
+        {
+          "zid": "Z16714",
+          "label": "DNA sequence complement",
+          "pass": 1,
+          "fail": 0,
+          "error": 4,
+          "disagreements": []
+        },
+        {
+          "zid": "Z22511",
+          "label": "capitalise first letter and add full stop",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z30404",
+          "label": "Armenian capitalise first letter and add full stop",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z10725",
+          "label": "join booleans",
+          "pass": 1,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z10730",
+          "label": "boolean to string",
+          "pass": 2,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z33281",
+          "label": "normalize city name",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
         }
       ]
     },
@@ -3767,95 +3988,6 @@
     },
     {
       "kind": "missing",
-      "title": "Z10018 Z10018 is not implemented",
-      "members": [],
-      "functions": 10,
-      "cases": 46,
-      "examples": [
-        {
-          "zid": "Z10336",
-          "label": "is uppercase",
-          "pass": 0,
-          "fail": 0,
-          "error": 9,
-          "disagreements": []
-        },
-        {
-          "zid": "Z10346",
-          "label": "is lowercase",
-          "pass": 0,
-          "fail": 0,
-          "error": 7,
-          "disagreements": []
-        },
-        {
-          "zid": "Z10897",
-          "label": "is camel case",
-          "pass": 0,
-          "fail": 0,
-          "error": 6,
-          "disagreements": []
-        },
-        {
-          "zid": "Z10771",
-          "label": "sentence case",
-          "pass": 2,
-          "fail": 0,
-          "error": 5,
-          "disagreements": []
-        },
-        {
-          "zid": "Z11349",
-          "label": "has and is uppercase",
-          "pass": 0,
-          "fail": 0,
-          "error": 4,
-          "disagreements": []
-        },
-        {
-          "zid": "Z11383",
-          "label": "has and is lowercase",
-          "pass": 0,
-          "fail": 0,
-          "error": 4,
-          "disagreements": []
-        },
-        {
-          "zid": "Z16714",
-          "label": "DNA sequence complement",
-          "pass": 1,
-          "fail": 0,
-          "error": 4,
-          "disagreements": []
-        },
-        {
-          "zid": "Z22511",
-          "label": "capitalise first letter and add full stop",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z30404",
-          "label": "Armenian capitalise first letter and add full stop",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z33281",
-          "label": "normalize city name",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        }
-      ]
-    },
-    {
-      "kind": "missing",
       "title": "Z19886 Z19886 is not implemented",
       "members": [],
       "functions": 9,
@@ -3936,21 +4068,110 @@
       ]
     },
     {
+      "kind": "other",
+      "title": "Z889 argument Z889K3 is not readable",
+      "members": [],
+      "functions": 9,
+      "cases": 9,
+      "examples": [
+        {
+          "zid": "Z13155",
+          "label": "interleave lists",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z13247",
+          "label": "faro out-shuffle",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z13366",
+          "label": "get the first n elements of an untyped list",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z13402",
+          "label": "words from string",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z13407",
+          "label": "tokenize on white space",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z13726",
+          "label": "divisors",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z13730",
+          "label": "unique prime divisors",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z18284",
+          "label": "list without last element (natural numbers)",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z24307",
+          "label": "fallback language codes (strings)",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        }
+      ]
+    },
+    {
       "kind": "cycle",
       "title": "Z11414 discard from start of last substring  ↔  Z11416 discard from end of last substring",
       "members": [
         "Z11414",
         "Z11416"
       ],
-      "functions": 6,
-      "cases": 20,
+      "functions": 7,
+      "cases": 42,
       "examples": [
+        {
+          "zid": "Z14413",
+          "label": "parse unambiguous numbers leniently assuming English conventions where ambiguous",
+          "pass": 0,
+          "fail": 0,
+          "error": 21,
+          "disagreements": []
+        },
         {
           "zid": "Z16862",
           "label": "English number <100 to natural number",
           "pass": 0,
           "fail": 0,
-          "error": 6,
+          "error": 7,
           "disagreements": []
         },
         {
@@ -3991,6 +4212,63 @@
           "pass": 0,
           "fail": 0,
           "error": 2,
+          "disagreements": []
+        }
+      ]
+    },
+    {
+      "kind": "other",
+      "title": "type mismatch in Z812",
+      "members": [],
+      "functions": 6,
+      "cases": 12,
+      "examples": [
+        {
+          "zid": "Z13932",
+          "label": "nth Mersenne exponent",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z19549",
+          "label": "Mass replace given 2 lists",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z13950",
+          "label": "nth Mersenne prime",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z14244",
+          "label": "get Nth character of a string",
+          "pass": 3,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z11879",
+          "label": "remove last character",
+          "pass": 2,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z14636",
+          "label": "remove first N characters of string",
+          "pass": 3,
+          "fail": 0,
+          "error": 1,
           "disagreements": []
         }
       ]
@@ -4089,6 +4367,55 @@
           "pass": 0,
           "fail": 0,
           "error": 4,
+          "disagreements": []
+        }
+      ]
+    },
+    {
+      "kind": "missing",
+      "title": "Z805 Z805 is not implemented",
+      "members": [],
+      "functions": 5,
+      "cases": 12,
+      "examples": [
+        {
+          "zid": "Z19020",
+          "label": "is a Typed list",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z19121",
+          "label": "to s-expression",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z27685",
+          "label": "wrap in list unless list",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z30811",
+          "label": "value after Type",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z15969",
+          "label": "reified Z1K1 (object for Key reference)",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
           "disagreements": []
         }
       ]
@@ -4299,88 +4626,6 @@
       ]
     },
     {
-      "kind": "other",
-      "title": "type mismatch in Z812",
-      "members": [],
-      "functions": 4,
-      "cases": 9,
-      "examples": [
-        {
-          "zid": "Z13932",
-          "label": "nth Mersenne exponent",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z19549",
-          "label": "Mass replace given 2 lists",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z13950",
-          "label": "nth Mersenne prime",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z11879",
-          "label": "remove last character",
-          "pass": 2,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        }
-      ]
-    },
-    {
-      "kind": "missing",
-      "title": "Z805 Z805 is not implemented",
-      "members": [],
-      "functions": 4,
-      "cases": 8,
-      "examples": [
-        {
-          "zid": "Z19020",
-          "label": "is a Typed list",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z19121",
-          "label": "to s-expression",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z15969",
-          "label": "reified Z1K1 (object for Key reference)",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z30811",
-          "label": "value after Type",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        }
-      ]
-    },
-    {
       "kind": "cycle",
       "title": "Z10366 string to hex (UTF-8)  ↔  Z11003 Base16 Encode",
       "members": [
@@ -4388,7 +4633,7 @@
         "Z11003"
       ],
       "functions": 3,
-      "cases": 8,
+      "cases": 9,
       "examples": [
         {
           "zid": "Z17036",
@@ -4399,19 +4644,19 @@
           "disagreements": []
         },
         {
-          "zid": "Z11003",
-          "label": "Base16 Encode",
+          "zid": "Z10366",
+          "label": "string to hex (UTF-8)",
           "pass": 0,
           "fail": 0,
           "error": 2,
           "disagreements": []
         },
         {
-          "zid": "Z10366",
-          "label": "string to hex (UTF-8)",
+          "zid": "Z11003",
+          "label": "Base16 Encode",
           "pass": 0,
           "fail": 0,
-          "error": 1,
+          "error": 2,
           "disagreements": []
         }
       ]
@@ -4787,6 +5032,39 @@
     },
     {
       "kind": "missing",
+      "title": "Z29267 Z29267 is not implemented",
+      "members": [],
+      "functions": 3,
+      "cases": 7,
+      "examples": [
+        {
+          "zid": "Z38229",
+          "label": "count languages a Persistent ZObject has labels in",
+          "pass": 0,
+          "fail": 0,
+          "error": 5,
+          "disagreements": []
+        },
+        {
+          "zid": "Z21132",
+          "label": "(!) vararg apply",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z29554",
+          "label": "id of Persistent object",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        }
+      ]
+    },
+    {
+      "kind": "missing",
       "title": "Z32314 Z32314 is not implemented",
       "members": [],
       "functions": 3,
@@ -4814,6 +5092,72 @@
           "pass": 0,
           "fail": 0,
           "error": 2,
+          "disagreements": []
+        }
+      ]
+    },
+    {
+      "kind": "missing",
+      "title": "Z808 Z808 is not implemented",
+      "members": [],
+      "functions": 3,
+      "cases": 5,
+      "examples": [
+        {
+          "zid": "Z31471",
+          "label": "escape HTML",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z28154",
+          "label": "(!) throw error",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z29102",
+          "label": "Reference from ZID string",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        }
+      ]
+    },
+    {
+      "kind": "other",
+      "title": "validator Z34273: type mismatch in Z16829",
+      "members": [],
+      "functions": 3,
+      "cases": 4,
+      "examples": [
+        {
+          "zid": "Z34519",
+          "label": "Append element to hereditary set",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z34409",
+          "label": "Predecessor of von Neumann ordinal",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z34538",
+          "label": "Union of hereditary sets",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
           "disagreements": []
         }
       ]
@@ -5101,31 +5445,6 @@
     },
     {
       "kind": "missing",
-      "title": "Z29267 Z29267 is not implemented",
-      "members": [],
-      "functions": 2,
-      "cases": 2,
-      "examples": [
-        {
-          "zid": "Z21132",
-          "label": "(!) vararg apply",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z29554",
-          "label": "id of Persistent object",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        }
-      ]
-    },
-    {
-      "kind": "missing",
       "title": "Z23283 Z23283 is not implemented",
       "members": [],
       "functions": 2,
@@ -5143,6 +5462,31 @@
           "zid": "Z23344",
           "label": "Natural numbers in Devanagari script",
           "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        }
+      ]
+    },
+    {
+      "kind": "other",
+      "title": "result is not a readable literal",
+      "members": [],
+      "functions": 2,
+      "cases": 2,
+      "examples": [
+        {
+          "zid": "Z26199",
+          "label": "nullary void",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z26750",
+          "label": "first element if list not empty, else void",
+          "pass": 1,
           "fail": 0,
           "error": 1,
           "disagreements": []
@@ -5170,31 +5514,6 @@
           "pass": 0,
           "fail": 0,
           "error": 2,
-          "disagreements": []
-        }
-      ]
-    },
-    {
-      "kind": "missing",
-      "title": "Z808 Z808 is not implemented",
-      "members": [],
-      "functions": 2,
-      "cases": 4,
-      "examples": [
-        {
-          "zid": "Z31471",
-          "label": "escape HTML",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z29102",
-          "label": "Reference from ZID string",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
           "disagreements": []
         }
       ]
@@ -5364,7 +5683,7 @@
     },
     {
       "kind": "other",
-      "title": "Z866 expected value is not readable",
+      "title": "Z866 argument Z866K2 is not readable",
       "members": [],
       "functions": 1,
       "cases": 1,
@@ -5517,7 +5836,7 @@
     },
     {
       "kind": "other",
-      "title": "Z13522 expected value is not readable",
+      "title": "Z13522 argument Z13522K2 is not readable",
       "members": [],
       "functions": 1,
       "cases": 1,
@@ -5528,23 +5847,6 @@
           "pass": 6,
           "fail": 0,
           "error": 1,
-          "disagreements": []
-        }
-      ]
-    },
-    {
-      "kind": "other",
-      "title": "validator Z14416",
-      "members": [],
-      "functions": 1,
-      "cases": 11,
-      "examples": [
-        {
-          "zid": "Z14413",
-          "label": "parse unambiguous numbers leniently assuming English conventions where ambiguous",
-          "pass": 0,
-          "fail": 0,
-          "error": 11,
           "disagreements": []
         }
       ]
@@ -5568,14 +5870,14 @@
     },
     {
       "kind": "other",
-      "title": "validator Z13052",
+      "title": "Z16137 argument Z16137K2 is not readable",
       "members": [],
       "functions": 1,
       "cases": 1,
       "examples": [
         {
-          "zid": "Z15811",
-          "label": "if is Boolean",
+          "zid": "Z16255",
+          "label": "month number to month",
           "pass": 0,
           "fail": 0,
           "error": 1,
@@ -5635,6 +5937,23 @@
       ]
     },
     {
+      "kind": "other",
+      "title": "validator Z17879: type mismatch in Z16829",
+      "members": [],
+      "functions": 1,
+      "cases": 1,
+      "examples": [
+        {
+          "zid": "Z17895",
+          "label": "untype a list",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        }
+      ]
+    },
+    {
       "kind": "missing",
       "title": "Z17966 Z17966 is not implemented",
       "members": [],
@@ -5684,6 +6003,23 @@
           "pass": 0,
           "fail": 0,
           "error": 3,
+          "disagreements": []
+        }
+      ]
+    },
+    {
+      "kind": "missing",
+      "title": "Z10812 Z10812 is not implemented",
+      "members": [],
+      "functions": 1,
+      "cases": 2,
+      "examples": [
+        {
+          "zid": "Z18716",
+          "label": "get words containing non-standard Kurdish letters",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
           "disagreements": []
         }
       ]
@@ -5791,6 +6127,23 @@
       ]
     },
     {
+      "kind": "other",
+      "title": "Z24171 argument Z24171K2 is not readable",
+      "members": [],
+      "functions": 1,
+      "cases": 1,
+      "examples": [
+        {
+          "zid": "Z24291",
+          "label": "given object within list within list",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        }
+      ]
+    },
+    {
       "kind": "missing",
       "title": "Z6825 Z6825 is not implemented",
       "members": [],
@@ -5820,23 +6173,6 @@
           "pass": 0,
           "fail": 0,
           "error": 1,
-          "disagreements": []
-        }
-      ]
-    },
-    {
-      "kind": "other",
-      "title": "validator Z10539",
-      "members": [],
-      "functions": 1,
-      "cases": 2,
-      "examples": [
-        {
-          "zid": "Z26184",
-          "label": "solfege to sargam",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
           "disagreements": []
         }
       ]
@@ -5897,7 +6233,7 @@
     },
     {
       "kind": "other",
-      "title": "validator Z16688",
+      "title": "Z16688 argument Z16688K2 is not readable",
       "members": [],
       "functions": 1,
       "cases": 1,
@@ -5905,6 +6241,23 @@
         {
           "zid": "Z29409",
           "label": "most common element on list",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        }
+      ]
+    },
+    {
+      "kind": "other",
+      "title": "Z30239 argument Z30239K2 is not readable",
+      "members": [],
+      "functions": 1,
+      "cases": 1,
+      "examples": [
+        {
+          "zid": "Z30248",
+          "label": "fetch Wikidata items",
           "pass": 0,
           "fail": 0,
           "error": 1,
@@ -5947,8 +6300,8 @@
       ]
     },
     {
-      "kind": "missing",
-      "title": "Z851 Z851 is not implemented",
+      "kind": "other",
+      "title": "error raised by the composition: {\"type\":\"Z5\",\"fields\":{\"Z5K1\":{\"type\":\"Z8\",\"zid\":\"Z30762\"},\"Z5K2\":{\"type\":\"Z881\",\"items\":[]}}}",
       "members": [],
       "functions": 1,
       "cases": 3,

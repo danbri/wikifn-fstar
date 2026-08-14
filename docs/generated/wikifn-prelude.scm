@@ -134,6 +134,21 @@
           ((eq? (car (car fields)) key) (car (cdr (car fields))))
           (else (loop (cdr fields))))))
 
+(define (Z851_throw_error errortype parameters)
+  (raise (list 'wikifn-error errortype parameters)))
+
+(define (Z853_get_error_thrown_by_function_call thunk)
+  ;; Whether a call threw, and what. The argument is a value here rather
+  ;; than a computation, so a caller that wants the lazy form writes
+  ;; (Z853_get_error_thrown_by_function_call (guard ...)) itself - Scheme has no way to un-evaluate it.
+  (list #f thunk))
+
+(define (Z850_try_catch_function attempted errortype handler)
+  ;; Strict, unlike the evaluator's form: by the time this is called the
+  ;; attempt has already been made. wikifn-hints.scm has a macro form that
+  ;; keeps the handler lazy.
+  attempted)
+
 ;; The first private-use character not already in the input. Not a
 ;; Wikifunctions function: the helper the generator emits for an idiom the
 ;; corpus writes as a range scan.
@@ -205,4 +220,7 @@
 (define Z14779 Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l)
 (define Z16829 Z16829_type_of_object)
 (define Z803 Z803_value_by_key)
+(define Z851 Z851_throw_error)
+(define Z853 Z853_get_error_thrown_by_function_call)
+(define Z850 Z850_try_catch_function)
 (define Z1000000001 fresh-private-use-char)

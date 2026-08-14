@@ -87,7 +87,11 @@ const PRIMITIVES = new Set([
   // Higher-order application, which is how the corpus writes higher-order code.
   "Z13318", "Z21216", "Z30438", "Z14779",
   // Records as values make these possible.
-  "Z803", "Z16829"
+  "Z803", "Z16829",
+  // Errors as values: throw, try-catch and get-error. Z5 is a type in
+  // Wikifunctions, so an error is data a composition can raise, catch and
+  // return - not only a way for evaluation to stop.
+  "Z851", "Z850", "Z853"
 ]);
 
 const INTERNAL_FRESH_PRIVATE_USE = "1000000001";
@@ -1141,6 +1145,35 @@ async function main() {
             `   | EErr e -> EErr e\n` +
             `   | EOk b -> if b then ${consequentCode}\n` +
             `              else ${alternativeCode})`;
+        }
+        // Errors as values. Z851 and Z853 are ordinary calls in compiled code
+        // because eval_result already carries the error; Z850 is a form,
+        // because its handler must not run unless the call actually threw.
+        if (node.zid === "Z851" && node.args.length === 2) {
+          return `(throw_error ${renderDirect(node.args[0], context)} ` +
+            `${renderDirect(node.args[1], context)})`;
+        }
+        if (node.zid === "Z853" && node.args.length === 1) {
+          return `(get_error ${renderDirect(node.args[0], context)})`;
+        }
+        if (node.zid === "Z850" && node.args.length === 3) {
+          context.conditions += 1;
+          const attempted = `tried_${context.conditions}`;
+          const wanted = `wanted_${context.conditions}`;
+          const branch = (child) => {
+            const outer = context.bindings;
+            context.bindings = [];
+            const code = renderDirect(child, context);
+            const local = context.bindings;
+            context.bindings = outer;
+            return local.length ? `(${local.join(" ")} ${code})` : code;
+          };
+          const call = renderDirect(node.args[0], context);
+          const errortype = renderDirect(node.args[1], context);
+          const handler = branch(node.args[2]);
+          return `(let ${attempted} = ${call} in\n` +
+            `   let ${wanted} = ${errortype} in\n` +
+            `   if caught ${attempted} ${wanted} then ${handler} else ${attempted})`;
         }
         const target = higherOrderTarget(node);
         if (HIGHER_ORDER.has(node.zid)) {

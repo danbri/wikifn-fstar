@@ -17,7 +17,7 @@ open Wikifn.Direct
   subset: a value is a string, a natural, a boolean, a typed list, a pair, a
   record or a function.
 
-  compiled: 1369
+  compiled: 1378
   emitted for the interpreter: 3890
 *)
 
@@ -3100,6 +3100,14 @@ let compiled_Z15767_reverse_decimal_digits (a0:eval_result value) : Tot (eval_re
 let compiled_Z15769_repunit_number (a0:eval_result value) : Tot (eval_result value) =
   (compiled_Z14283_string_of_digits_as_natural_number (compiled_Z12624_replicate_string_n_times default_fuel (EOk (VText [49])) a0))
 
+(* Z15777 is String | Z15777@257385 -> Z32049@257381 *)
+let compiled_Z15777_is_string (a0:eval_result value) : Tot (eval_result value) =
+  (let cond_1 : eval_result bool = condition_of 802 (call_primitive 821 [(get_error (call_primitive 866 [a0; (EOk (VText []))]))]) in
+   match cond_1 with
+   | EErr e -> EErr e
+   | EOk b -> if b then (EOk (VBool false))
+              else (EOk (VBool true)))
+
 (* Z15811 if is Boolean | Z15811@219480 -> Z15813@198931 *)
 let compiled_Z15811_if_is_boolean (a0:eval_result value) (a1:eval_result value) (a2:eval_result value) : Tot (eval_result value) =
   (compiled_Z15728_iffy a0 a1 a1 a2)
@@ -4771,6 +4779,10 @@ let compiled_Z23489_translation_claims_of_lexeme_sense (a0:eval_result value) : 
   (with_items 872 (compiled_Z23116_claims_of_lexeme_sense a0) (fun items ->
      filter_direct (fun x -> compiled_Z23490_predicate_is_p5972 (EOk x)) items))
 
+(* Z23513 statement has value type string? | Z23513@175668 -> Z23552@175666 *)
+let compiled_Z23513_statement_has_value_type_string (a0:eval_result value) : Tot (eval_result value) =
+  (compiled_Z15777_is_string (compiled_Z19308_value_of_wikidata_statement a0))
+
 (* Z23516 value type of statement | Z23516@291278 -> Z23517@175654 *)
 let compiled_Z23516_value_type_of_statement (a0:eval_result value) : Tot (eval_result value) =
   (call_primitive 16829 [(compiled_Z19308_value_of_wikidata_statement a0)])
@@ -4958,6 +4970,20 @@ let compiled_Z24609_is_string_keyed_map_empty (a0:eval_result value) : Tot (eval
 (* Z24646 make string-keyed map | Z24646@186724 -> Z24647@186722 *)
 let compiled_Z24646_make_string_keyed_map (a0:eval_result value) : Tot (eval_result value) =
   (make_record 883 [({ key_owner = None; key_index = 1 }, a0)])
+
+(* Z24660 display typed pair | Z24660@187091 -> Z24661@187090 *)
+let compiled_Z24660_display_typed_pair (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
+  let part_1 = (let cond_2 : eval_result bool = condition_of 802 (compiled_Z15777_is_string (call_primitive 822 [a0])) in
+   match cond_2 with
+   | EErr e -> EErr e
+   | EOk b -> if b then (compiled_Z21394_concatenate_many_strings (call_primitive 810 [(EOk (VText [34])); (call_primitive 810 [(call_primitive 822 [a0]); (call_primitive 810 [(EOk (VText [34])); (EOk (VList []))])])]))
+              else (call_primitive 13318 [(call_primitive 803 [(make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 52; 75; 53])))]); (call_primitive 16829 [(call_primitive 822 [a0])])]); (call_primitive 822 [a0]); a1])) in
+  let part_2 = (let cond_1 : eval_result bool = condition_of 802 (compiled_Z15777_is_string (call_primitive 821 [a0])) in
+   match cond_1 with
+   | EErr e -> EErr e
+   | EOk b -> if b then (compiled_Z21394_concatenate_many_strings (call_primitive 810 [(EOk (VText [34])); (call_primitive 810 [(call_primitive 821 [a0]); (call_primitive 810 [(EOk (VText [34])); (EOk (VList []))])])]))
+              else (call_primitive 13318 [(call_primitive 803 [(make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 52; 75; 53])))]); (call_primitive 16829 [(call_primitive 821 [a0])])]); (call_primitive 821 [a0]); a1])) in
+  (compiled_Z21394_concatenate_many_strings (call_primitive 810 [(EOk (VText [40])); (call_primitive 810 [part_2; (call_primitive 810 [(EOk (VText [44; 32])); (call_primitive 810 [part_1; (call_primitive 810 [(EOk (VText [41])); (EOk (VList []))])])])])]))
 
 (* Z24669 previous byte | Z24669@273361 -> Z34988@273360 *)
 let compiled_Z24669_previous_byte (a0:eval_result value) : Tot (eval_result value) =
@@ -5582,6 +5608,12 @@ let compiled_Z28630_substring_by_index_0_indexed (a0:eval_result value) (a1:eval
 let compiled_Z28642_alpha_of_rgba_color (a0:eval_result value) : Tot (eval_result value) =
   (call_primitive 803 [(make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 50; 56; 53; 55; 57; 75; 52])))]); a0])
 
+(* Z28676 throws error type? | Z28676@245638 -> Z28684@222291 *)
+let compiled_Z28676_throws_error_type (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
+  (let tried_1 = a0 in
+   let wanted_1 = a1 in
+   if caught tried_1 wanted_1 then (call_primitive 801 [(EOk (VBool true))]) else tried_1)
+
 (* Z28681 false identity | Z28681@222289 -> Z28682@222288 *)
 let compiled_Z28681_false_identity (a0:eval_result value) : Tot (eval_result value) =
   (call_primitive 801 [(EOk (VBool false))])
@@ -5951,6 +5983,10 @@ let compiled_Z30875_list_of_key_id_strings_for_key_list (a0:eval_result value) :
 let compiled_Z30890_validator_function_by_type (a0:eval_result value) : Tot (eval_result value) =
   (call_primitive 803 [(make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 52; 75; 51])))]); a0])
 
+(* Z30928 throws error if unquoted | Z30928@257868 -> Z30930@239414 *)
+let compiled_Z30928_throws_error_if_unquoted (a0:eval_result value) : Tot (eval_result value) =
+  (call_primitive 821 [(get_error a0)])
+
 (* Z30972 multilingual text includes string | Z30972@240374 -> Z30974@240373 *)
 let compiled_Z30972_multilingual_text_includes_string (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
   (compiled_Z12696_contains default_fuel (with_items 873 (compiled_Z19279_multilingual_text_to_list_of_monolingual_texts a0) (fun items ->
@@ -5975,6 +6011,10 @@ let rec compiled_Z31098_apply_three_parameter_function_pairwise_to_3_lists (fuel
    | EErr e -> EErr e
    | EOk b -> if b then (EOk (VList []))
               else (call_primitive 810 [(call_primitive 21216 [a0; (call_primitive 811 [a1]); (call_primitive 811 [a2]); (call_primitive 811 [a3])]); (compiled_Z31098_apply_three_parameter_function_pairwise_to_3_lists next_fuel a0 (call_primitive 812 [a1]) (call_primitive 812 [a2]) (call_primitive 812 [a3]))]))
+
+(* Z31186 error value of thrown error | Z31186@243106 -> Z31187@243100 *)
+let compiled_Z31186_error_value_of_thrown_error (a0:eval_result value) : Tot (eval_result value) =
+  (call_primitive 803 [(make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 53; 75; 50])))]); (call_primitive 822 [(get_error a0)])])
 
 (* Z31286  | Z31286@246440 -> Z31287@246441 *)
 let compiled_Z31286 (a0:eval_result value) : Tot (eval_result value) =
@@ -6122,6 +6162,14 @@ let compiled_Z32506_grammatical_features_indicate_plural_broadly (a0:eval_result
 (* Z32516 grammatical features indicate definite article, En | Z32516@262567 -> Z32518@260630 *)
 let compiled_Z32516_grammatical_features_indicate_definite_article_en (a0:eval_result value) : Tot (eval_result value) =
   (compiled_Z13752_is_there_a_common_element_on_these_lists a0 literal_21)
+
+(* Z32556 fallback string if error, empty or not a string | Z32556@277782 -> Z32560@291865 *)
+let compiled_Z32556_fallback_string_if_error_empty_or_not_a_string (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
+  (let cond_1 : eval_result bool = condition_of 802 (call_primitive 10174 [(compiled_Z15777_is_string a0); (compiled_Z24331_is_not_empty_string a0)]) in
+   match cond_1 with
+   | EErr e -> EErr e
+   | EOk b -> if b then a0
+              else a1)
 
 (* Z32626 join list of places (default format) | Z32626@288321 -> Z32627@288313 *)
 let compiled_Z32626_join_list_of_places_default_format (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
@@ -6828,6 +6876,14 @@ let compiled_Z37906_all_forms_of_lexeme_are_plural (a0:eval_result value) : Tot 
               else (compiled_Z12684_are_all_true (with_items 873 (compiled_Z19302_lexeme_forms_from_lexeme a0) (fun items ->
      map_direct (fun x -> compiled_Z37940_is_individual_lexeme_form_marked_as_plural (EOk x)) items))))
 
+(* Z37925 object is string and not empty | Z37925@292037 -> Z37926@292695 *)
+let compiled_Z37925_object_is_string_and_not_empty (a0:eval_result value) : Tot (eval_result value) =
+  (let cond_1 : eval_result bool = condition_of 802 (call_primitive 10174 [(compiled_Z15777_is_string a0); (compiled_Z24331_is_not_empty_string a0)]) in
+   match cond_1 with
+   | EErr e -> EErr e
+   | EOk b -> if b then (EOk (VBool true))
+              else (EOk (VBool false)))
+
 (* Z37936 final word separator in Swedish lists: " och " | Z37936@292085 -> Z37937@292082 *)
 let compiled_Z37936_final_word_separator_in_swedish_lists_och (a0:eval_result value) : Tot (eval_result value) =
   (EOk (VText [32; 111; 99; 104; 32]))
@@ -6870,6 +6926,14 @@ let compiled_Z38226_language_count_of_multilingual_text (a0:eval_result value) :
 (* Z38285 final word separator in list, Dutch | Z38285@293877 -> Z38287@295038 *)
 let compiled_Z38285_final_word_separator_in_list_dutch (a0:eval_result value) : Tot (eval_result value) =
   (EOk (VText [32; 101; 110; 32]))
+
+(* Z38345 if value in list, throw error | Z38345@294342 -> Z38348@294357 *)
+let compiled_Z38345_if_value_in_list_throw_error (a0:eval_result value) (a1:eval_result value) (a2:eval_result value) (a3:eval_result value) : Tot (eval_result value) =
+  (let cond_1 : eval_result bool = condition_of 802 (compiled_Z12696_contains default_fuel a1 a0) in
+   match cond_1 with
+   | EErr e -> EErr e
+   | EOk b -> if b then (throw_error a2 a3)
+              else a0)
 
 (* Z38382 replace except last | Z38382@294549 -> Z38386@294546 *)
 let compiled_Z38382_replace_except_last (a0:eval_result value) (a1:eval_result value) (a2:eval_result value) : Tot (eval_result value) =
@@ -7566,6 +7630,7 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 15757, [a0] -> Some (compiled_Z15757_is_cunningham_number a0)
   | 15767, [a0] -> Some (compiled_Z15767_reverse_decimal_digits a0)
   | 15769, [a0] -> Some (compiled_Z15769_repunit_number a0)
+  | 15777, [a0] -> Some (compiled_Z15777_is_string a0)
   | 15801, [a0; a1] -> Some (compiled_Z15801_object_type_equality a0 a1)
   | 15811, [a0; a1; a2] -> Some (compiled_Z15811_if_is_boolean a0 a1 a2)
   | 15838, [a0] -> Some (compiled_Z15838_ascii_braille_encode a0)
@@ -7922,6 +7987,7 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 23486, [a0] -> Some (compiled_Z23486_count_lexeme_senses_in_lexeme a0)
   | 23489, [a0] -> Some (compiled_Z23489_translation_claims_of_lexeme_sense a0)
   | 23490, [a0] -> Some (compiled_Z23490_predicate_is_p5972 a0)
+  | 23513, [a0] -> Some (compiled_Z23513_statement_has_value_type_string a0)
   | 23516, [a0] -> Some (compiled_Z23516_value_type_of_statement a0)
   | 23540, [a0] -> Some (compiled_Z23540_predicate_is_p31 a0)
   | 23543, [a0] -> Some (compiled_Z23543_item_is_instance_of_these_items_references a0)
@@ -7961,6 +8027,7 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 24609, [a0] -> Some (compiled_Z24609_is_string_keyed_map_empty a0)
   | 24646, [a0] -> Some (compiled_Z24646_make_string_keyed_map a0)
   | 24655, [a0; a1] -> Some (compiled_Z24655_list_with_added_element_unless_already_present a0 a1)
+  | 24660, [a0; a1] -> Some (compiled_Z24660_display_typed_pair a0 a1)
   | 24669, [a0] -> Some (compiled_Z24669_previous_byte a0)
   | 24713, [a0] -> Some (compiled_Z24713_clamped_next_byte a0)
   | 24736, [a0] -> Some (compiled_Z24736_plane_of_code_point a0)
@@ -8089,6 +8156,7 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 28595, [a0; a1] -> Some (compiled_Z28595_gregorian_dates_are_same_day_of_month a0 a1)
   | 28630, [a0; a1; a2] -> Some (compiled_Z28630_substring_by_index_0_indexed a0 a1 a2)
   | 28642, [a0] -> Some (compiled_Z28642_alpha_of_rgba_color a0)
+  | 28676, [a0; a1] -> Some (compiled_Z28676_throws_error_type a0 a1)
   | 28681, [a0] -> Some (compiled_Z28681_false_identity a0)
   | 28711, [a0; a1] -> Some (compiled_Z28711_nth_element_by_recursion_helper default_fuel a0 a1)
   | 28715, [a0; a1] -> Some (compiled_Z28715_index_of_first_sub_list_start default_fuel a0 a1)
@@ -8170,6 +8238,7 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 30871, [a0; a1] -> Some (compiled_Z30871_left_associative_running_reduce a0 a1)
   | 30875, [a0] -> Some (compiled_Z30875_list_of_key_id_strings_for_key_list a0)
   | 30890, [a0] -> Some (compiled_Z30890_validator_function_by_type a0)
+  | 30928, [a0] -> Some (compiled_Z30928_throws_error_if_unquoted a0)
   | 30972, [a0; a1] -> Some (compiled_Z30972_multilingual_text_includes_string a0 a1)
   | 31010, [a0; a1; a2; a3] -> Some (compiled_Z31010_set_i_j_th_element_on_list_of_lists a0 a1 a2 a3)
   | 31013, [a0; a1] -> Some (compiled_Z31013_levenshtein_distance_between_two_lists default_fuel a0 a1)
@@ -8177,6 +8246,7 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 31032, [a0; a1; a2] -> Some (compiled_Z31032_index_of_first_mismatching_element default_fuel a0 a1 a2)
   | 31095, [a0; a1; a2; a3] -> Some (compiled_Z31095_apply_with_n_1st_and_2nd_args_and_common_3rd_arg default_fuel a0 a1 a2 a3)
   | 31098, [a0; a1; a2; a3] -> Some (compiled_Z31098_apply_three_parameter_function_pairwise_to_3_lists default_fuel a0 a1 a2 a3)
+  | 31186, [a0] -> Some (compiled_Z31186_error_value_of_thrown_error a0)
   | 31262, [a0; a1; a2; a3] -> Some (compiled_Z31262_apply_with_common_1st_and_3rd_args_and_n_2nd_args default_fuel a0 a1 a2 a3)
   | 31268, [a0; a1] -> Some (compiled_Z31268_first_index_1_n_of_character_in_string a0 a1)
   | 31286, [a0] -> Some (compiled_Z31286 a0)
@@ -8222,6 +8292,7 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 32406, [a0] -> Some (compiled_Z32406_malay_second_superlative_form_paling a0)
   | 32506, [a0] -> Some (compiled_Z32506_grammatical_features_indicate_plural_broadly a0)
   | 32516, [a0] -> Some (compiled_Z32516_grammatical_features_indicate_definite_article_en a0)
+  | 32556, [a0; a1] -> Some (compiled_Z32556_fallback_string_if_error_empty_or_not_a_string a0 a1)
   | 32626, [a0; a1] -> Some (compiled_Z32626_join_list_of_places_default_format a0 a1)
   | 32631, [a0; a1] -> Some (compiled_Z32631_join_list_of_places_sinitic_langs_hns_hnt_script a0 a1)
   | 32663, [a0] -> Some (compiled_Z32663_item_represents_a_person_object a0)
@@ -8377,6 +8448,7 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 37647, [a0] -> Some (compiled_Z37647_infobox_color_scheme a0)
   | 37895, [a0] -> Some (compiled_Z37895_noun_lexeme_gender_in_french_is_female a0)
   | 37906, [a0] -> Some (compiled_Z37906_all_forms_of_lexeme_are_plural a0)
+  | 37925, [a0] -> Some (compiled_Z37925_object_is_string_and_not_empty a0)
   | 37936, [a0] -> Some (compiled_Z37936_final_word_separator_in_swedish_lists_och a0)
   | 37940, [a0] -> Some (compiled_Z37940_is_individual_lexeme_form_marked_as_plural a0)
   | 37984, [a0] -> Some (compiled_Z37984_is_proper_noun_lexeme a0)
@@ -8387,6 +8459,7 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 38213, [a0] -> Some (compiled_Z38213_regular_serbian_feminine_genitive_singular a0)
   | 38226, [a0] -> Some (compiled_Z38226_language_count_of_multilingual_text a0)
   | 38285, [a0] -> Some (compiled_Z38285_final_word_separator_in_list_dutch a0)
+  | 38345, [a0; a1; a2; a3] -> Some (compiled_Z38345_if_value_in_list_throw_error a0 a1 a2 a3)
   | 38382, [a0; a1; a2] -> Some (compiled_Z38382_replace_except_last a0 a1 a2)
   | 38383, [a0; a1] -> Some (compiled_Z38383_string_before_last_occurrence a0 a1)
   | 38472, [a0; a1; a2] -> Some (compiled_Z38472_switch_on_string a0 a1 a2)

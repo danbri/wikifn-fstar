@@ -1550,9 +1550,9 @@ let body_Z15769_repunit_number : expr =
 let body_Z15771_nth_binary_number_in_decimal : expr =
   ECall 14283 [ECall 13779 [EArg 0]]
 
-(* Z15777 is String | Z15777@257385 -> Z15964@202794 digest 74315acb84b6d8eb86afaeb2fbaa305b24926946a8b057fc86a6698269134f62 *)
+(* Z15777 is String | Z15777@257385 -> Z32049@257381 digest 490995b3bc321ec3a73c94ae30fe5b82a413d68f74d0a21deea5a60747efe1d6 *)
 let body_Z15777_is_string : expr =
-  ECall 866 [EValue (VText [90; 54]); ECall 15969 [EArg 0]]
+  ECall 802 [ECall 821 [ECall 853 [ECall 866 [EArg 0; EValue (VText [])]]]; EValue (VBool false); EValue (VBool true)]
 
 (* Z15801 object type equality | Z15801@280942 -> Z19093@280469 digest bd30ae359c43b82a0574a06389e2a6e53b50cd6057408bc66387bd8f1cb24fbf *)
 let body_Z15801_object_type_equality : expr =
