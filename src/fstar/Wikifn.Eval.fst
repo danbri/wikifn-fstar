@@ -35,6 +35,10 @@ type value =
   | VList : list value -> value
   | VPair : value -> value -> value
   | VFunc : zid -> value
+  (* A typed object: its type and its fields. Wikidata references, monolingual
+     text, rationals and floats are all written this way in compositions, and
+     without it those literals cannot be expressed at all. *)
+  | VRecord : zid -> list (zkey & value) -> value
 
 type eval_error =
   | EFuelExhausted
@@ -43,6 +47,10 @@ type eval_error =
   | EArityMismatch : zid -> eval_error
   | ETypeMismatch : zid -> eval_error
   | ENoImplementation : zid -> eval_error
+  (* Its own error rather than a type mismatch, because the arguments were the
+     right type and the answer still does not exist. Wikifunctions' own Python
+     for Z13546 raises Z28194 here. *)
+  | EDivisionByZero : zid -> eval_error
   | EPrimitiveError : kernel_error -> eval_error
 
 type eval_result (a:Type0) =
@@ -93,6 +101,18 @@ let fid_and : zid = 10174           // Z10174 and
 let fid_or : zid = 10184            // Z10184 or
 let fid_length : zid = 12681        // Z12681 length of a list
 
+// Reversing and appending, grounded for the same reason the arithmetic below
+// is. The corpus defines these in terms of each other with no base case:
+// Z12668 reverse is cdr(Z17763), Z17763 is cons("", Z18759), and Z18759 goes
+// back to Z12668 or to Z18479, which is itself Z12668 over a mapped list.
+// Following that never bottoms out. The wiki does not hit it because its own
+// evaluator prefers the code implementations - Z12668 has five and Z12961 has
+// two - so grounding them here restores what the wiki computes rather than
+// changing it. With these two grounded the rest of the group (Z18479, Z18759,
+// Z17763) evaluates through its compositions as written.
+let fid_reverse_list : zid = 12668  // Z12668 reverse untyped list
+let fid_append_last : zid = 12961   // Z12961 append element to Typed list
+
 // Natural-number arithmetic. Wikifunctions also defines these as Peano-style
 // compositions, but those definitions are mutually circular: increment is
 // defined as add(n, 1), and add is defined in terms of increment, so add(n, 1)
@@ -105,13 +125,32 @@ let fid_increment : zid = 13578     // Z13578 increment natural number
 let fid_max : zid = 13630           // Z13630 greater of two natural numbers
 let fid_min : zid = 13633           // Z13633 lesser of two natural numbers
 let fid_expt : zid = 13647          // Z13647 exponentiation of natural numbers
+// Floor division, erroring on a zero divisor, which is what Wikifunctions' own
+// Python implementation of Z13546 does.
+let fid_nat_divide : zid = 13546    // Z13546 divide natural numbers
 let fid_if_nat : zid = 13846        // Z13846 if natural number output
+
+// Applying a function value to arguments. These are how the corpus writes
+// higher-order code, so they gate a lot of it.
+let fid_value_by_key : zid = 803   // Z803 Value by key
+let fid_type_of : zid = 16829      // Z16829 type of object
+let fid_apply2 : zid = 13318   // Z13318 apply two-argument function
+let fid_apply3 : zid = 21216   // Z21216 apply three-argument function
+let fid_apply4 : zid = 30438   // Z30438 apply four-argument function
+let fid_zip_with : zid = 14779 // Z14779 apply pairwise to two lists
 
 // Text and codepoint lists are the same data in two shapes. These conversions
 // bridge the string primitives and the list primitives, which is why they gate
 // so much of the corpus.
 let fid_string_to_codepoints : zid = 22717  // Z22717 String to codepoint list
 let fid_codepoints_to_string : zid = 22693  // Z22693 Codepoint list to string
+// Z868 is Z22717 under an older name - same one string argument, same list of
+// Z86 codepoints out - and the corpus still calls it. The wiki marks it
+// deprecated and points at Z22717; treating it as the same function is what
+// that deprecation means.
+let fid_z868_string_to_codepoints : zid = 868
+// And Z886 is Z22693 the same way: same list of Z86 in, same string out.
+let fid_z886_codepoints_to_string : zid = 886
 
 // No classical equivalent; these keep their Wikifunctions spelling.
 let fid_z10008_is_empty_string : zid = 10008
@@ -149,6 +188,20 @@ let rec values_as_codepoints (items:list value) : Tot (option text) =
     end
   | _ -> None
 
+(* Reversing with an accumulator: one pass, and no repeated list append, which
+   would make it quadratic. *)
+let rec value_rev_onto (items:list value) (acc:list value) : Tot (list value) (decreases items) =
+  match items with
+  | [] -> acc
+  | head :: tail -> value_rev_onto tail (head :: acc)
+
+let value_reverse (items:list value) : Tot (list value) = value_rev_onto items []
+
+(* items followed by one more element: reverse onto a singleton, so the whole
+   thing is two passes and no intermediate append. *)
+let value_append_last (items:list value) (x:value) : Tot (list value) =
+  value_rev_onto (value_reverse items) [x]
+
 let rec value_count (items:list value) : Tot nat =
   match items with
   | [] -> 0
@@ -173,6 +226,23 @@ let as_nat (fid:zid) (v:value) : Tot (eval_result nat) =
   match v with
   | VNat n -> EOk n
   | _ -> EErr (ETypeMismatch fid)
+
+(* Z39 is a key reference: a record whose single field holds the key's spelling.
+   Reading it is what makes value-by-key usable. *)
+let rec field_of (k:zkey) (fields:list (zkey & value)) : Tot (option value) =
+  match fields with
+  | [] -> None
+  | (key, v) :: rest -> if zkey_eq key k then Some v else field_of k rest
+
+let key_reference (v:value) : Tot (option zkey) =
+  match v with
+  | VText spelling -> parse_zkey spelling
+  | VRecord _ fields -> begin
+      match fields with
+      | (_, VText spelling) :: _ -> parse_zkey spelling
+      | _ -> None
+    end
+  | _ -> None
 
 let as_list (fid:zid) (v:value) : Tot (eval_result (list value)) =
   match v with
@@ -234,6 +304,10 @@ let apply_primitive (fid:zid) (args:list value) : Tot (option (eval_result value
         Some (match as_list fid a with
               | EOk items -> EOk (VNat (value_count items))
               | EErr e -> EErr e)
+      else if fid = fid_reverse_list then
+        Some (match as_list fid a with
+              | EOk items -> EOk (VList (value_reverse items))
+              | EErr e -> EErr e)
       else if fid = fid_fst then
         Some (match a with
               | VPair l _ -> EOk l
@@ -242,11 +316,15 @@ let apply_primitive (fid:zid) (args:list value) : Tot (option (eval_result value
         Some (match a with
               | VPair _ r -> EOk r
               | _ -> EErr (ETypeMismatch fid))
-      else if fid = fid_string_to_codepoints then
+      else if fid = fid_type_of then
+        Some (match a with
+              | VRecord t _ -> EOk (VFunc t)
+              | _ -> EErr (ETypeMismatch fid))
+      else if fid = fid_string_to_codepoints || fid = fid_z868_string_to_codepoints then
         Some (match as_text fid a with
               | EOk t -> EOk (VList (codepoints_as_values t))
               | EErr e -> EErr e)
-      else if fid = fid_codepoints_to_string then
+      else if fid = fid_codepoints_to_string || fid = fid_z886_codepoints_to_string then
         Some (match as_list fid a with
               | EOk items -> begin
                   match values_as_codepoints items with
@@ -358,9 +436,30 @@ let apply_primitive (fid:zid) (args:list value) : Tot (option (eval_result value
                 end
               | EErr e, _ -> EErr e
               | _, EErr e -> EErr e)
+      else if fid = fid_nat_divide then
+        Some (match as_nat fid a, as_nat fid b with
+              | EOk l, EOk r -> if r = 0 then EErr (EDivisionByZero fid) else EOk (VNat (l / r))
+              | EErr e, _ -> EErr e
+              | _, EErr e -> EErr e)
+      else if fid = fid_value_by_key then
+        (* Z803 declares Z803K1 key, Z803K2 object: the key comes first. *)
+        Some (match key_reference a, b with
+              | Some k, VRecord _ fields -> begin
+                  match field_of k fields with
+                  | Some found -> EOk found
+                  | None -> EErr (ETypeMismatch fid)
+                end
+              | _, _ -> EErr (ETypeMismatch fid))
       else if fid = fid_cons then
         Some (match as_list fid b with
               | EOk items -> EOk (VList (a :: items))
+              | EErr e -> EErr e)
+      else if fid = fid_append_last then
+        (* Z12961 takes the element first and the list second, the opposite of
+           the order the name suggests. Its own composition is
+           reverse(cons(x, reverse(list))), so this matches it exactly. *)
+        Some (match as_list fid b with
+              | EOk items -> EOk (VList (value_append_last items a))
               | EErr e -> EErr e)
       else None
   | [a; b; c] ->
@@ -456,15 +555,43 @@ and eval_list (p:policy) (fuel:nat) (depth:nat) (env:list value) (es:list expr)
 and higher_order (p:policy) (fuel:nat) (depth:nat) (fid:zid) (args:list value)
   : Tot (option (eval_result value & (remaining:nat{remaining <= fuel}))) (decreases %[fuel; 3; 0])
 =
-  match args with
-  | [VFunc f; VList items] ->
-      if fid = fid_map then Some (map_values p fuel depth f items)
-      else if fid = fid_filter then Some (filter_values p fuel depth f items)
-      else None
-  | [VFunc f; seed; VList items] ->
-      if fid = fid_fold then Some (reduce_values p fuel depth f seed items)
-      else None
-  | _ -> None
+  (* Which function first, argument shape second.
+     Matching on shape first is wrong here, because the shapes overlap: a
+     pattern for three arguments headed by a function matches every call of
+     apply-two, fold and zip-with alike, so whichever is written first silently
+     answers for all of them and the rest report no implementation. *)
+  if fid = fid_map then
+    (match args with
+     | [VFunc f; VList items] -> Some (map_values p fuel depth f items)
+     | _ -> None)
+  else if fid = fid_filter then
+    (match args with
+     | [VFunc f; VList items] -> Some (filter_values p fuel depth f items)
+     | _ -> None)
+  else if fid = fid_fold then
+    (* Z876 declares Z876K1 function, Z876K2 iterable, Z876K3 initial object:
+       the list is the second argument and the seed is the third. *)
+    (match args with
+     | [VFunc f; VList items; seed] -> Some (reduce_values p fuel depth f seed items)
+     | _ -> None)
+  else if fid = fid_zip_with then
+    (match args with
+     | [VFunc f; VList left; VList right] -> Some (zip_with_values p fuel depth f left right)
+     | _ -> None)
+  else if fid = fid_apply2 then
+    (match args with
+     | [VFunc f; a; b] -> Some (eval p fuel depth [] (ECall f [EValue a; EValue b]))
+     | _ -> None)
+  else if fid = fid_apply3 then
+    (match args with
+     | [VFunc f; a; b; c] -> Some (eval p fuel depth [] (ECall f [EValue a; EValue b; EValue c]))
+     | _ -> None)
+  else if fid = fid_apply4 then
+    (match args with
+     | [VFunc f; a; b; c; d] ->
+         Some (eval p fuel depth [] (ECall f [EValue a; EValue b; EValue c; EValue d]))
+     | _ -> None)
+  else None
 
 and map_values (p:policy) (fuel:nat) (depth:nat) (f:zid) (items:list value)
   : Tot (eval_result value & (remaining:nat{remaining <= fuel})) (decreases %[fuel; 2; items])
@@ -497,6 +624,23 @@ and filter_values (p:policy) (fuel:nat) (depth:nat) (f:zid) (items:list value)
           | (EOk _, left) -> (EErr (ETypeMismatch f), left)
         end
       | (EOk _, after) -> (EErr (ETypeMismatch f), after)
+    end
+
+and zip_with_values (p:policy) (fuel:nat) (depth:nat) (f:zid) (left:list value) (right:list value)
+  : Tot (eval_result value & (remaining:nat{remaining <= fuel})) (decreases %[fuel; 2; left])
+=
+  match left, right with
+  | [], _ -> (EOk (VList []), fuel)
+  | _, [] -> (EOk (VList []), fuel)
+  | l :: ltail, r :: rtail -> begin
+      match eval p fuel depth [] (ECall f [EValue l; EValue r]) with
+      | (EErr err, after) -> (EErr err, after)
+      | (EOk combined, after) -> begin
+          match zip_with_values p after depth f ltail rtail with
+          | (EErr err, left_over) -> (EErr err, left_over)
+          | (EOk (VList others), left_over) -> (EOk (VList (combined :: others)), left_over)
+          | (EOk _, left_over) -> (EErr (ETypeMismatch f), left_over)
+        end
     end
 
 and reduce_values (p:policy) (fuel:nat) (depth:nat) (f:zid) (acc:value) (items:list value)

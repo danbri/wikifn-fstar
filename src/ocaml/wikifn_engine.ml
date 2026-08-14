@@ -70,6 +70,14 @@ let json_escape text =
 
 let quote text = "\"" ^ json_escape text ^ "\""
 
+(* A key is Z10627K1 when it names its owner and K1 when it does not. Both
+   spellings occur, so both are rendered rather than normalised. *)
+let encode_zkey (k : Wikifn_Zid.zkey) =
+  let index = Z.to_string k.Wikifn_Zid.key_index in
+  match k.Wikifn_Zid.key_owner with
+  | FStar_Pervasives_Native.Some owner -> Printf.sprintf "Z%sK%s" (Z.to_string owner) index
+  | FStar_Pervasives_Native.None -> "K" ^ index
+
 let rec encode_value (v : Wikifn_Eval.value) =
   match v with
   | Wikifn_Eval.VText codepoints ->
@@ -86,6 +94,17 @@ let rec encode_value (v : Wikifn_Eval.value) =
         (encode_value l) (encode_value r)
   | Wikifn_Eval.VFunc z ->
       Printf.sprintf "{\"type\":\"Z8\",\"zid\":\"Z%s\"}" (Z.to_string z)
+  (* Records are how the corpus writes Wikidata references, monolingual text,
+     rationals and floats. Without this case a function that returns one raised
+     Match_failure out of the runner and took the host process with it, which
+     is a crash rather than an answer and so worse than any error the evaluator
+     could have reported. *)
+  | Wikifn_Eval.VRecord (t, fields) ->
+      let field (k, v) =
+        Printf.sprintf "%s:%s" (quote (encode_zkey k)) (encode_value v)
+      in
+      Printf.sprintf "{\"type\":\"Z%s\",\"fields\":{%s}}"
+        (Z.to_string t) (String.concat "," (List.map field fields))
 
 let describe_error (e : Wikifn_Eval.eval_error) =
   match e with
@@ -98,6 +117,8 @@ let describe_error (e : Wikifn_Eval.eval_error) =
   | Wikifn_Eval.ETypeMismatch z -> Printf.sprintf "type mismatch in Z%s" (Z.to_string z)
   | Wikifn_Eval.ENoImplementation z ->
       Printf.sprintf "no implementation for Z%s" (Z.to_string z)
+  | Wikifn_Eval.EDivisionByZero z ->
+      Printf.sprintf "division by zero in Z%s" (Z.to_string z)
   | Wikifn_Eval.EPrimitiveError k -> (
       match k with
       | Wikifn_Primitive_Kernel.KTypeMismatch -> "primitive type mismatch"

@@ -33,15 +33,36 @@ js_of_ocaml_run() {
 
 mkdir -p "$ocaml_out" "$(dirname "$bytecode")" "$(dirname "$js_out")"
 
+# The generated bodies live in part modules; a single module holding all of
+# them cannot be checked. Sorted, so the OCaml link order below is the
+# dependency order.
+generated_parts=()
+while IFS= read -r part; do
+  generated_parts+=("$part")
+done < <(find "$root/src/fstar" -name 'Wikifn.Generated.Eval.Part*.fst' | sort)
+
+if [[ ${#generated_parts[@]} -eq 0 ]]; then
+  echo "No Wikifn.Generated.Eval.Part*.fst found; run make fstar-generate-eval first." >&2
+  exit 1
+fi
+
 fstar \
   --codegen OCaml \
-  --extract 'Wikifn.Primitive.Kernel Wikifn.Zid Wikifn.Eval Wikifn.Print Wikifn.Generated.Eval' \
+  --extract 'Wikifn.Primitive.Kernel Wikifn.Zid Wikifn.Eval Wikifn.Print Wikifn.Generated.Eval Wikifn.Generated.Eval.*' \
+  --include "$root/src/fstar" \
   --odir "$ocaml_out" \
   "$root/src/fstar/Wikifn.Primitive.Kernel.fst" \
   "$root/src/fstar/Wikifn.Zid.fst" \
   "$root/src/fstar/Wikifn.Eval.fst" \
   "$root/src/fstar/Wikifn.Print.fst" \
+  "${generated_parts[@]}" \
   "$root/src/fstar/Wikifn.Generated.Eval.fst"
+
+generated_part_ml=()
+for part in "${generated_parts[@]}"; do
+  name="$(basename "$part" .fst)"
+  generated_part_ml+=("$ocaml_out/${name//./_}.ml")
+done
 
 ocaml_root="$(fstar --locate_ocaml)"
 prims_dir=""
@@ -67,6 +88,7 @@ ocamlfind_run ocamlc \
   "$ocaml_out/Wikifn_Zid.ml" \
   "$ocaml_out/Wikifn_Eval.ml" \
   "$ocaml_out/Wikifn_Print.ml" \
+  "${generated_part_ml[@]}" \
   "$ocaml_out/Wikifn_Generated_Eval.ml" \
   "$root/src/ocaml/wikifn_engine.ml" \
   "$root/src/ocaml/wikifn_engine_browser.ml" \

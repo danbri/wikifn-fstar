@@ -29,7 +29,7 @@
         <p class="eyebrow">wikifn-fstar</p>
         <h1>Wikifn Engine Browser</h1>
         <p>
-          2,430 real Wikifunctions compositions, mechanically translated into
+          3,676 real Wikifunctions compositions, mechanically translated into
           F*, checked by F*, extracted to OCaml, compiled to JavaScript, and
           running in this page. Search for a function, read its source as an
           s-expression, and run it.
@@ -122,11 +122,20 @@
           </li>
           <li>
             Some compositions are defined in terms of each other with no base
-            case — <code>Z844</code> boolean equality is
+            case. <code>Z844</code> boolean equality is
             <code>not(inequality)</code> while inequality is
-            <code>not(equality)</code>. Those are marked runnable because every
-            function they call exists, but they report a depth limit rather than
-            returning an answer.
+            <code>not(equality)</code>; reversing a list is defined through
+            appending to one, which is defined through reversing. Where another
+            implementation escapes the cycle the generator picks it, and where
+            the wiki's own evaluator escapes by preferring a code implementation
+            the function is grounded in the kernel instead. What is left reports
+            a depth limit rather than returning an answer.
+          </li>
+          <li>
+            Each function shows its declared argument and return types. Those
+            come from the pinned <code>Z8</code> and are <em>not</em> checked:
+            the engine has no type checker, so they say what the function was
+            declared to want, not what it enforces.
           </li>
           <li>
             Fuel is a budget for total evaluation steps, not a depth limit.
@@ -141,6 +150,7 @@
           <a href="./generated/wikifn-bundle.scm">everything as one loadable Scheme file</a>,
           <a href="./generated/wikifn.scm">the definitions alone</a>,
           <a href="./generated/wikifn-prelude.scm">the prelude alone</a>,
+          <a href="./generated/wikifn-hints.scm">name hints</a>,
           <a href="./generated/wikifn-compositions.json">all back as canonical Wikifunctions compositions</a>.
         </p>
       </section>
@@ -160,6 +170,11 @@
         const fuelEl = document.getElementById("engine-fuel");
         const outputEl = document.querySelector("#engine-output code");
         const sexprEl = document.querySelector("#engine-sexpr code");
+
+        // Type names come from the pinned corpus, so they are data rather than
+        // markup and are escaped before going anywhere near innerHTML.
+        const escapeHtml = (text) =>
+          String(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
         let functions = [];
         let nameTable = "{}";
@@ -233,7 +248,17 @@
         function select(entry, query) {
           selected = entry;
           titleEl.textContent = entry.zid + " " + (entry.label || entry.name);
+          // Declared argument and return types, straight from the pinned Z8.
+          // The engine does not check them - there is no type checker - so they
+          // say what the function was declared to want, not what it enforces.
+          const types = entry.argumentTypes || [];
+          const keys = entry.argumentKeys || [];
+          const signature = keys.length
+            ? keys.map((key, i) => key + ": " + (types[i] || "?")).join(", ")
+            : "no arguments";
           provenanceEl.innerHTML =
+            "<code>" + escapeHtml(signature) + " &rarr; " +
+            escapeHtml(entry.returnType || "?") + "</code> (declared, not checked)<br>" +
             "generated name <code>" + entry.name + "</code> &middot; arity " + entry.arity +
             " &middot; " + (entry.runnable ? "runnable" : "reaches an unimplemented function") +
             " &middot; from implementation <code>" + entry.implementation +

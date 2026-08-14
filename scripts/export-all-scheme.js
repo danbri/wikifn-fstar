@@ -10,7 +10,7 @@
 //   node scripts/export-all-scheme.js
 
 import { createRequire } from "node:module";
-import { writeFile } from "node:fs/promises";
+import { copyFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -46,6 +46,17 @@ const lines = [
   ";; language while mapping back to a plain identifier by taking the first",
   ";; token. Labels come from the pinned snapshot and are therefore stable.",
   ";;",
+  ";; Only the ZID is the identity. Everything after the underscore is a hint",
+  ";; for whoever is reading, and each definition is also bound to its bare ZID,",
+  ";; so (Z10627 \"Hello\") and (Z10627_rot13_latin_alphabet \"Hello\") are the",
+  ";; same call. To write a hint of your own - shorter, longer, in another",
+  ";; language - load wikifn-hints.scm and wrap the code in (wikifn ...), which",
+  ";; rewrites every Znnnn_... name down to Znnnn before it is compiled.",
+  ";;",
+  ";; Each definition carries its declared argument and return types as a",
+  ";; comment. Those are read from the pinned Z8 and are not checked by the",
+  ";; evaluator; they say what the function was declared to want.",
+  ";;",
   ";; This file is a reference listing, not a runnable program: the primitives",
   ";; it calls are implemented in F*, not here, and not every function's callees",
   ";; are present. For something you can run, export one function with its",
@@ -63,18 +74,52 @@ const lines = [
   ""
 ];
 
+// Declared types, printed as a comment above each definition.
+//
+// Wikifunctions is typed and this listing was not saying so, which left no way
+// to see that an argument wants a pair rather than a string until the evaluator
+// refused it. These come from the pinned Z8 and are documentation only: the
+// engine does not check them, so a wrong one is a wrong comment, not a wrong
+// answer.
+function signatureComment(entry) {
+  const keys = entry.argumentKeys || [];
+  const types = entry.argumentTypes || [];
+  const args = keys.length
+    ? keys.map((key, index) => `${key}: ${types[index] ?? "?"}`).join(", ")
+    : "no arguments";
+  return `${args} -> ${entry.returnType ?? "?"}   [declared, not checked]`;
+}
+
 let rendered = 0;
 let failed = 0;
+const unrenderable = [];
 for (const entry of catalog.functions) {
-  const result = JSON.parse(
-    globalThis.wikifnEngineSource(entry.zid, String(entry.arity), nameTable));
-  if (!result.ok) { failed += 1; continue; }
+  // The printer recurses over the body, so a body deep enough exhausts the
+  // JavaScript stack before it exhausts anything in F*. That is a limit of the
+  // host, not of the composition, so it is counted and named rather than
+  // allowed to end the run and lose the other few thousand listings.
+  let result;
+  try {
+    result = JSON.parse(
+      globalThis.wikifnEngineSource(entry.zid, String(entry.arity), nameTable));
+  } catch (error) {
+    failed += 1;
+    unrenderable.push(`${entry.zid} ${entry.label}: ${error.message}`);
+    continue;
+  }
+  if (!result.ok) { failed += 1; unrenderable.push(`${entry.zid} ${entry.label}: ${result.message ?? "not rendered"}`); continue; }
   rendered += 1;
   const notes = [];
   if (!entry.runnable) notes.push("reaches an unimplemented function");
   if (entry.mutuallyRecursive) notes.push("mutually recursive: may not terminate");
   lines.push(`;; ${entry.zid} ${entry.label}${notes.length ? "  [" + notes.join("; ") + "]" : ""}`);
+  lines.push(`;;   ${signatureComment(entry)}`);
   lines.push(result.source);
+  // The ZID alone is the identity; everything after the underscore is a hint
+  // for the reader. Binding the bare ZID too means a caller can write either,
+  // and a program written with one spelling of the hint keeps working when the
+  // label changes.
+  lines.push(`(define ${entry.zid} ${entry.name})`);
   lines.push("");
 }
 
@@ -110,6 +155,7 @@ await writeFile(
 const out = path.join(root, "docs", "generated", "wikifn.scm");
 await writeFile(out, lines.join("\n"), "utf8");
 console.log(`${rendered} definitions written${failed ? `, ${failed} could not be rendered` : ""}`);
+for (const line of unrenderable.slice(0, 20)) console.log(`  ${line}`);
 console.log(out);
 // One file that can be loaded from a single URL: prelude first, then every
 // definition. This is what a Scheme editor wants.
@@ -121,6 +167,15 @@ const bundle = [
   ";;",
   ";;   (Z10627_rot13_latin_alphabet \"Hello, Wikifunctions!\")",
   ";;   (Z22294_devanagari_numerals_to_arabic_numerals \"१२३४५\")",
+  ";;",
+  ";; Only the ZID identifies the function; the rest of the name is a hint for",
+  ";; the reader. Each definition is bound to its bare ZID as well, so",
+  ";; (Z10627 \"Hello\") is the same call. Load wikifn-hints.scm and wrap code in",
+  ";; (wikifn ...) to use a hint of your own instead.",
+  ";;",
+  ";; Each definition carries its declared argument and return types as a",
+  ";; comment. They come from the pinned Z8 and the evaluator does not check",
+  ";; them.",
   ";;",
   ";; Not every definition here can run. Some reach functions nobody has",
   ";; implemented. Others are defined in terms of each other with no base case,",
@@ -135,5 +190,11 @@ const bundle = [
 const bundlePath = path.join(root, "docs", "generated", "wikifn-bundle.scm");
 await writeFile(bundlePath, bundle, "utf8");
 
+// Authored, not generated, so it is copied rather than built: it is the same
+// file whatever the corpus says.
+const hintsPath = path.join(root, "docs", "generated", "wikifn-hints.scm");
+await copyFile(path.join(root, "scripts", "wikifn-hints.scm"), hintsPath);
+
 console.log(path.join(root, "docs", "generated", "wikifn-prelude.scm"));
 console.log(bundlePath);
+console.log(hintsPath);

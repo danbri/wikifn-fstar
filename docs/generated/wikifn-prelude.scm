@@ -12,12 +12,25 @@
 ;;   (load "wikifn.scm")
 ;;   (Z10627_rot13_latin_alphabet "Hello!")
 
+;; A record prints as (record TYPE (KEY value) ...) - a Wikidata reference,
+;; a monolingual string, a rational. The type and the keys are names, not
+;; values, so this quotes them and evaluates only the values. That keeps the
+;; printed form a plain s-expression a Scheme can read.
+(define-syntax record
+  (syntax-rules ()
+    ((_ type (key value) ...) (list 'record 'type (list 'key value) ...))))
+
 (define (identity x) x)
 
 (define (add1 n) (+ n 1))
 
-(define (fold f seed items)
-  (if (null? items) seed (fold f (f seed (car items)) (cdr items))))
+;; Argument order is Wikifunctions' own, not SRFI-1's: Z876 declares
+;; Z876K1 function, Z876K2 iterable, Z876K3 initial object, so the list comes
+;; second and the seed third. Written the SRFI way this silently folded over
+;; the wrong argument and handed the combining function an element where a
+;; list was wanted.
+(define (fold f items seed)
+  (if (null? items) seed (fold f (cdr items) (f seed (car items)))))
 
 (define (filter pred items)
   (cond ((null? items) '())
@@ -55,7 +68,21 @@
 
 (define (Z13582_decrement_natural_number_by_one k) (if (= k 0) 0 (- k 1)))
 
+(define (Z12668_reverse_untyped_list items) (reverse items))
+
+;; Element first, list second - the order Z12961 declares.
+(define (Z12961_append_element_to_typed_list x items) (append items (list x)))
+
 (define (Z22717_string_to_codepoint_list s) (map char->integer (string->list s)))
+
+(define (Z868_deprecated_z22717 s) (map char->integer (string->list s)))
+
+(define (Z886_deprecated_z22693 cs) (list->string (map integer->char cs)))
+
+(define (Z13546_divide_natural_numbers a b)
+  (if (= b 0)
+      (error "Z13546 divide natural numbers" "division by zero")
+      (quotient a b)))
 
 (define (Z22693_codepoint_list_to_string cs) (list->string (map integer->char cs)))
 
@@ -78,6 +105,28 @@
                 ((string=? (substring s i (+ i m)) pattern)
                  (loop (+ i m) (string-append acc replacement)))
                 (else (loop (+ i 1) (string-append acc (substring s i (+ i 1))))))))))
+
+(define (Z13318_apply_two_argument_function f a b) (f a b))
+
+(define (Z21216_apply_three_argument_function f a b c) (f a b c))
+
+(define (Z30438_apply_four_argument_function f a b c d) (f a b c d))
+
+(define (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l f xs ys)
+  (if (null? xs)
+      '()
+      (if (null? ys)
+          '()
+          (cons (f (car xs) (car ys)) (Z14779_apply_a_two_parameter_function_pairwise_to_elements_of_two_l f (cdr xs) (cdr ys))))))
+
+;; A record is (record TYPE (KEY value) ...); its type is the second item.
+(define (Z16829_type_of_object object) (cadr object))
+
+(define (Z803_value_by_key key object)
+  (let loop ((fields (cddr object)))
+    (cond ((null? fields) #f)
+          ((eq? (car (car fields)) key) (car (cdr (car fields))))
+          (else (loop (cdr fields))))))
 
 ;; The first private-use character not already in the input. Not a
 ;; Wikifunctions function: the helper the generator emits for an idiom the

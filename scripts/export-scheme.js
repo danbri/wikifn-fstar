@@ -67,11 +67,38 @@ export const PRELUDE = new Map([
   ["Z866", (n) => `(define (${n} a b) (string=? a b))`],
   ["Z13569", (n) => `(define (${n} a b) (if (< a b) 0 (- a b)))`],
   ["Z13582", (n) => `(define (${n} k) (if (= k 0) 0 (- k 1)))`],
+  // Reverse and append are primitives here for the same reason they are in the
+  // F* evaluator: the corpus defines them through each other with no base case.
+  ["Z12668", (n) => `(define (${n} items) (reverse items))`],
+  ["Z12961", (n) => `;; Element first, list second - the order Z12961 declares.\n(define (${n} x items) (append items (list x)))`],
   ["Z22717", (n) => `(define (${n} s) (map char->integer (string->list s)))`],
+  // Z868 is Z22717 under a name the wiki marks deprecated.
+  ["Z868", (n) => `(define (${n} s) (map char->integer (string->list s)))`],
+  // Z886 is Z22693 the same way.
+  ["Z886", (n) => `(define (${n} cs) (list->string (map integer->char cs)))`],
+  // Floor division. Wikifunctions' own Python raises on a zero divisor rather
+  // than answering, so this does too.
+  // Two arguments to error, not one: R7RS wants a message and irritants, and a
+  // one-argument call makes Chez warn about the arity.
+  ["Z13546", (n) => `(define (${n} a b)\n  (if (= b 0)\n      (error "Z13546 divide natural numbers" "division by zero")\n      (quotient a b)))`],
   ["Z22693", (n) => `(define (${n} cs) (list->string (map integer->char cs)))`],
   ["Z14520", (n) => `(define (${n} s chars)\n  (list->string\n    (filter (lambda (c) (not (memv c (string->list chars)))) (string->list s))))`],
   ["Z14124", (n) => `(define (${n} first last)\n  (let loop ((i first) (acc '()))\n    (if (> i last)\n        (list->string (reverse acc))\n        (loop (+ i 1) (cons (integer->char i) acc)))))`],
   ["Z10075", (n) => `(define (${n} s pattern replacement)\n  (if (string=? pattern "")\n      s\n      (let ((len (string-length s)) (m (string-length pattern)))\n        (let loop ((i 0) (acc ""))\n          (cond ((> (+ i m) len) (string-append acc (substring s i len)))\n                ((string=? (substring s i (+ i m)) pattern)\n                 (loop (+ i m) (string-append acc replacement)))\n                (else (loop (+ i 1) (string-append acc (substring s i (+ i 1))))))))))`],
+  // Applying a function value. In Scheme a function value is just a procedure,
+  // so these are one line each; they exist because Wikifunctions spells
+  // application as a function call rather than as syntax.
+  ["Z13318", (n) => `(define (${n} f a b) (f a b))`],
+  ["Z21216", (n) => `(define (${n} f a b c) (f a b c))`],
+  ["Z30438", (n) => `(define (${n} f a b c d) (f a b c d))`],
+  // Stops at the shorter list, as the evaluator does, rather than erroring.
+  // Nested if rather than or, so nothing here relies on a syntactic keyword.
+  ["Z14779", (n) => `(define (${n} f xs ys)\n  (if (null? xs)\n      '()\n      (if (null? ys)\n          '()\n          (cons (f (car xs) (car ys)) (${n} f (cdr xs) (cdr ys))))))`],
+  // A record prints as (record TYPE (KEY value) ...). record and the key names
+  // are procedures rather than quoted data, so the printed form stays a plain
+  // s-expression that a Scheme can read and evaluate.
+  ["Z16829", (n) => `;; A record is (record TYPE (KEY value) ...); its type is the second item.\n(define (${n} object) (cadr object))`],
+  ["Z803", (n) => `(define (${n} key object)\n  (let loop ((fields (cddr object)))\n    (cond ((null? fields) #f)\n          ((eq? (car (car fields)) key) (car (cdr (car fields))))\n          (else (loop (cdr fields))))))`],
   ["Z1000000001", (n) => `;; The first private-use character not already in the input. Not a\n;; Wikifunctions function: the helper the generator emits for an idiom the\n;; corpus writes as a range scan.\n(define (${n} s)\n  (let ((used (string->list s)))\n    (let loop ((code 60928))\n      (cond ((> code 63487) "")\n            ((memv (integer->char code) used) (loop (+ code 1)))\n            (else (string (integer->char code)))))))`]
 ]);
 
@@ -84,12 +111,25 @@ for (const zid of PRELUDE.keys()) {
 }
 
 // Shims for names not in R7RS-small, so the output runs unmodified anywhere.
-export const SHIMS = `(define (identity x) x)
+export const SHIMS = `;; A record prints as (record TYPE (KEY value) ...) - a Wikidata reference,
+;; a monolingual string, a rational. The type and the keys are names, not
+;; values, so this quotes them and evaluates only the values. That keeps the
+;; printed form a plain s-expression a Scheme can read.
+(define-syntax record
+  (syntax-rules ()
+    ((_ type (key value) ...) (list 'record 'type (list 'key value) ...))))
+
+(define (identity x) x)
 
 (define (add1 n) (+ n 1))
 
-(define (fold f seed items)
-  (if (null? items) seed (fold f (f seed (car items)) (cdr items))))
+;; Argument order is Wikifunctions' own, not SRFI-1's: Z876 declares
+;; Z876K1 function, Z876K2 iterable, Z876K3 initial object, so the list comes
+;; second and the seed third. Written the SRFI way this silently folded over
+;; the wrong argument and handed the combining function an element where a
+;; list was wanted.
+(define (fold f items seed)
+  (if (null? items) seed (fold f (cdr items) (f seed (car items)))))
 `;
 
 export const HAS_FILTER_SHIM = `(define (filter pred items)

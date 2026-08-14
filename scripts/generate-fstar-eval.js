@@ -14,7 +14,7 @@
 //   node scripts/generate-fstar-eval.js [--limit N] [--report FILE]
 
 import { execFile } from "node:child_process";
-import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { promisify } from "node:util";
 import { fileURLToPath } from "node:url";
@@ -24,6 +24,35 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const cacheDir = process.env.WIKIFN_CACHE_DIR ?? path.join(root, "cache", "wikifunctions");
 const outPath = path.join(root, "src", "fstar", "Wikifn.Generated.Eval.fst");
 const catalogPath = path.join(root, "docs", "generated", "functions.json");
+
+// How many composition bodies go in one F* module. Measured on the current
+// corpus: 400 bodies verify in 4.9 s using 300 MB, while all 3,679 in a single
+// module reach 66 GB and are killed. Verification cost is superlinear in module
+// size, so this number bounds the worst case rather than the average.
+const PART_SIZE = 400;
+
+// A single body F* cannot check at all, regardless of what else is in its
+// module. Z24460 is Extended_Pictographic codepoint carries the whole Unicode
+// Extended_Pictographic table inline as a codepoint list, which renders to
+// 164 KB in one term: on its own, in its own module, it reaches 7.95 GB and is
+// killed, while a 32 KB body in the same shape verifies in 2.5 seconds. The
+// limit is the size of one term, not the size of the module, so splitting
+// modules does not help and only skipping does. A literal that large wants a
+// different representation - an F* string literal decoded at load time rather
+// than a list of forty thousand numbers - which is a change to the value model,
+// not to this generator.
+const MAX_BODY_BYTES = 65536;
+
+// Bodies per part, and bytes per part. Both matter: verification cost grows
+// with the number of definitions and with the size of the terms in them, and a
+// handful of large bodies can make a part of ordinary length expensive.
+const PART_BYTES = 262144;
+const partPath = (index) =>
+  path.join(root, "src", "fstar", `Wikifn.Generated.Eval.Part${String(index).padStart(2, "0")}.fst`);
+
+// One module per function, for verification. Under build/ because it is
+// derived: the same bodies as the parts, rendered again in the same pass.
+const functionDir = path.join(root, "build", "fstar", "fn");
 
 // Must match apply_primitive and higher_order in src/fstar/Wikifn.Eval.fst.
 const PRIMITIVES = new Set([
@@ -36,8 +65,19 @@ const PRIMITIVES = new Set([
   // compositions for these are mutually circular (increment is add(n,1) and add
   // is defined via increment), so unfolding them does not terminate.
   "Z13521", "Z13539", "Z13578", "Z13630", "Z13633", "Z13647", "Z13846",
+  // Reverse and append, grounded for the same reason: the corpus defines them
+  // through each other with no base case, and the wiki uses their code
+  // implementations rather than following the compositions.
+  "Z12668", "Z12961",
+  // Z13546 natural division, and Z868 and Z886, which are Z22717 and Z22693
+  // under names the wiki marks deprecated.
+  "Z13546", "Z868", "Z886",
   // Text and codepoint lists are the same data in two shapes.
-  "Z22693", "Z22717"
+  "Z22693", "Z22717",
+  // Higher-order application, which is how the corpus writes higher-order code.
+  "Z13318", "Z21216", "Z30438", "Z14779",
+  // Records as values make these possible.
+  "Z803", "Z16829"
 ]);
 
 const INTERNAL_FRESH_PRIVATE_USE = "1000000001";
@@ -118,6 +158,82 @@ async function argumentKeys(zid) {
   return keys;
 }
 
+// Declared types, read from the same Z8 the argument keys come from.
+//
+// The engine does not check these - Wikifn.Model.has_type is still assumed - so
+// they are documentation rather than a guarantee. They are worth carrying
+// anyway: without them a listing gives no way to tell that an argument wants a
+// pair rather than a string, which is the single most common way a call written
+// by hand goes wrong.
+//
+// A type is a ZID, or a Z7 call applying a generic type to arguments, as
+// Z881(Z6) is a list of strings. Rendered here as an applicative form so the
+// nesting stays visible.
+function renderType(node, labelOf, depth = 0) {
+  if (depth > 4 || node === undefined || node === null) return "?";
+  const direct = refZid(node);
+  if (direct) return labelOf(direct);
+  if (typeof node === "string") return node;
+  if (Array.isArray(node)) return "?";
+  if (refZid(node.Z1K1) === "Z7") {
+    const head = refZid(node.Z7K1);
+    if (!head) return "?";
+    const args = Object.keys(node)
+      .filter((key) => key !== "Z1K1" && key !== "Z7K1")
+      .sort()
+      .map((key) => renderType(node[key], labelOf, depth + 1));
+    return args.length ? `${labelOf(head)}(${args.join(", ")})` : labelOf(head);
+  }
+  return refZid(node.Z1K1) ? labelOf(refZid(node.Z1K1)) : "?";
+}
+
+const signatureCache = new Map();
+
+async function signature(zid, labelOf) {
+  if (signatureCache.has(zid)) return signatureCache.get(zid);
+  const object = await loadObject(zid);
+  const z8 = object?.canonical?.Z2K2;
+  let result;
+  if (z8?.Z1K1 === "Z8") {
+    const items = zListItems(z8.Z8K1) ?? [];
+    result = {
+      argumentTypes: items.map((decl) => renderType(decl?.Z17K1, labelOf)),
+      returnType: renderType(z8.Z8K2, labelOf)
+    };
+  }
+  signatureCache.set(zid, result);
+  return result;
+}
+
+// A reference to a persistent object holding a plain value, resolved from the
+// cache. Returns undefined for functions and for anything the value model
+// cannot hold, so those stay references.
+const valueReferenceCache = new Map();
+
+async function resolveValueReference(zid) {
+  if (valueReferenceCache.has(zid)) return valueReferenceCache.get(zid);
+  let result;
+  const object = await loadObject(zid);
+  const body = object?.canonical?.Z2K2;
+  if (body !== undefined) {
+    const type = refZid(body?.Z1K1);
+    if (typeof body === "string" && !/^Z[1-9][0-9]*$/.test(body)) {
+      result = { kind: "text", value: body };
+    } else if (type === "Z6" && typeof stringOf(body) === "string") {
+      result = { kind: "text", value: stringOf(body) };
+    } else if (type === "Z40") {
+      const identity = refZid(body.Z40K1);
+      if (identity === "Z41") result = { kind: "bool", value: true };
+      if (identity === "Z42") result = { kind: "bool", value: false };
+    } else if (type === "Z13518" || type === "Z10") {
+      const raw = stringOf(body.Z13518K1 ?? body.Z10K1);
+      if (/^[0-9]+$/.test(raw ?? "")) result = { kind: "nat", value: raw };
+    }
+  }
+  valueReferenceCache.set(zid, result);
+  return result;
+}
+
 class Unsupported extends Error {
   constructor(reason) {
     super(reason);
@@ -155,7 +271,15 @@ async function translate(term, context) {
     // Z41 and Z42 are the boolean values, not references to functions.
     if (zid === "Z41") return { kind: "bool", value: true };
     if (zid === "Z42") return { kind: "bool", value: false };
-    if (zid) return { kind: "func", zid };
+    if (zid) {
+      // A reference can point at a function or at data. Data is resolved from
+      // the pinned cache and inlined, which is mechanical and keeps the value
+      // pinned to the same snapshot as everything else. Z11853 is the empty
+      // string; without this it became a call to a function nobody implements.
+      const value = await resolveValueReference(zid);
+      if (value) return value;
+      return { kind: "func", zid };
+    }
     return { kind: "text", value: term };
   }
 
@@ -163,12 +287,14 @@ async function translate(term, context) {
     const items = zListItems(term);
     if (!items) throw new Unsupported("malformed typed list literal");
     const translated = [];
-    for (const item of items) {
-      const value = await translate(item, context);
-      if (!isLiteral(value)) throw new Unsupported("non-literal element in list");
-      translated.push(value);
-    }
-    return { kind: "list", items: translated };
+    for (const item of items) translated.push(await translate(item, context));
+    // A list of literals is a value. A list containing expressions is built
+    // with cons, which is a primitive, so nothing new is needed to express it.
+    if (translated.every(isLiteral)) return { kind: "list", items: translated };
+    return translated.reduceRight(
+      (rest, head) => ({ kind: "call", zid: "Z810", args: [head, rest], calleeKeys: ["Z810K1", "Z810K2"] }),
+      { kind: "list", items: [] }
+    );
   }
 
   if (!term || typeof term !== "object") throw new Unsupported("unsupported term");
@@ -205,7 +331,24 @@ async function translate(term, context) {
     return { kind: "func", zid: target };
   }
 
-  if (type !== "Z7") throw new Unsupported(`object of type ${type ?? "unknown"}`);
+  if (type !== "Z7") {
+    // A typed object literal: Wikidata references, monolingual text, rationals
+    // and floats are all written this way. Fields that are themselves literals
+    // make the whole thing a value.
+    if (type && /^Z[1-9][0-9]*$/.test(type)) {
+      const fields = [];
+      let literal = true;
+      for (const key of Object.keys(term)) {
+        if (key === "Z1K1") continue;
+        if (!/^(Z[1-9][0-9]*)?K[1-9][0-9]*$/.test(key)) { literal = false; break; }
+        const translated = await translate(term[key], context);
+        if (!isLiteral(translated)) { literal = false; break; }
+        fields.push([key, translated]);
+      }
+      if (literal) return { kind: "record", type, fields };
+    }
+    throw new Unsupported(`object of type ${type ?? "unknown"}`);
+  }
 
   const functionZid = refZid(term.Z7K1);
   if (!functionZid) throw new Unsupported("call to a computed function reference");
@@ -222,9 +365,16 @@ async function translate(term, context) {
 }
 
 const isLiteral = (node) =>
-  ["text", "nat", "bool", "func", "list"].includes(node.kind);
+  ["text", "nat", "bool", "func", "list", "record"].includes(node.kind);
 
 // --- renderers -------------------------------------------------------------
+
+// A key as an F* zkey record: Z10627K1 is (owner 10627, index 1); K1 is local.
+function schemeKey(key) {
+  const match = /^(Z([1-9][0-9]*))?K([1-9][0-9]*)$/.exec(key);
+  const owner = match[2] ? `Some ${match[2]}` : "None";
+  return `{ key_owner = ${owner}; key_index = ${match[3]} }`;
+}
 
 function renderFstarValue(node) {
   switch (node.kind) {
@@ -233,6 +383,9 @@ function renderFstarValue(node) {
     case "bool": return `VBool ${node.value}`;
     case "func": return `VFunc ${node.zid.slice(1)}`;
     case "list": return `VList [${node.items.map(renderFstarValue).join("; ")}]`;
+    case "record":
+      return `VRecord ${node.type.slice(1)} [${node.fields
+        .map(([key, v]) => `(${schemeKey(key)}, ${renderFstarValue(v)})`).join("; ")}]`;
     default: throw new Unsupported(`not a value: ${node.kind}`);
   }
 }
@@ -265,6 +418,11 @@ function renderZ14K2(node, argKeys) {
       return node.zid;
     case "list":
       return ["Z1", ...node.items.map((item) => renderZ14K2(item, argKeys))];
+    case "record": {
+      const out = { Z1K1: node.type };
+      for (const [key, v] of node.fields) out[key] = renderZ14K2(v, argKeys);
+      return out;
+    }
     case "call": {
       if (node.zid === `Z${INTERNAL_FRESH_PRIVATE_USE}`) {
         // The marker helper is an optimisation, not a Wikifunctions function.
@@ -310,6 +468,9 @@ function renderSexpr(node, names, argNames) {
     case "bool": return node.value ? "#t" : "#f";
     case "func": return names(node.zid);
     case "list": return `(list ${node.items.map((i) => renderSexpr(i, names, argNames)).join(" ")})`;
+    case "record":
+      return `(record ${names(node.type)} ${node.fields
+        .map(([key, v]) => `(${key} ${renderSexpr(v, names, argNames)})`).join(" ")})`;
     case "call": {
       const parts = node.args.map((a) => renderSexpr(a, names, argNames));
       const head = names(node.zid);
@@ -336,6 +497,8 @@ function collectCalls(node, acc = []) {
     for (const item of node.items) collectCalls(item, acc);
   } else if (node.kind === "func") {
     acc.push(node.zid);
+  } else if (node.kind === "record") {
+    for (const [, v] of node.fields) collectCalls(v, acc);
   }
   return acc;
 }
@@ -471,7 +634,14 @@ async function main() {
       if (!body) { failure = "implementation has no composition body in cache"; continue; }
       try {
         const tree = await translate(body, { argIndex });
-        renderFstar(tree);
+        const rendered = renderFstar(tree);
+        // Checked per candidate, not once for the one chosen first, because the
+        // choice can still change below and every candidate has to be one F*
+        // could accept.
+        if (rendered.length > MAX_BODY_BYTES) {
+          failure = `body renders to ${rendered.length} bytes, over the ${MAX_BODY_BYTES} F* can check`;
+          continue;
+        }
         translations.push({
           zid: implZid,
           revision: implementation.revision,
@@ -488,6 +658,21 @@ async function main() {
       skipped.push({ zid: functionZid, reason: failure ?? "no usable implementation" });
       continue;
     }
+
+    // Smallest body first, so every choice below - the initial one and each
+    // improvement - takes the cheapest candidate that qualifies rather than
+    // whichever the database happened to return first.
+    //
+    // Size is a proxy for cost and a rough one, but the alternative was no
+    // criterion at all, and that has a concrete failure: ROT13 has an
+    // implementation written as thirteen nested rot1 calls. It is correct and
+    // it is thirteen times the work, and as soon as rot1 became reachable it
+    // won the race by being first in the table, which put ROT13 over its fuel
+    // budget. The real criterion is which candidate agrees with the function's
+    // own testers; the corpus has that evidence and this generator does not
+    // use it yet.
+    const cost = new Map(translations.map((t) => [t, renderFstar(t.tree).length]));
+    translations.sort((left, right) => cost.get(left) - cost.get(right));
 
     const chosen = translations[0];
     const translated = chosen.tree;
@@ -506,9 +691,14 @@ async function main() {
     }
 
     const functionObject = await loadObject(functionZid);
+    // Declared types, for the listing and the catalogue. Labelled where a label
+    // exists, so "Z882(Z6, Z6)" reads as "Typed pair(String, String)".
+    const types = await signature(functionZid, (zid) => labels.get(zid) ?? zid);
     emitted.push({
       roundTrip,
       zid: functionZid,
+      argTypes: types?.argumentTypes ?? [],
+      returnType: types?.returnType ?? "?",
       number: functionZid.slice(1),
       name: sanitize(labels.get(functionZid), functionZid, used),
       label: labels.get(functionZid) ?? "",
@@ -593,44 +783,160 @@ async function main() {
   }
 
 
-  const lines = [
+  // One module per PART_SIZE bodies, not one module for all of them.
+  // Verification cost is sharply superlinear in module size: 400 bodies take
+  // 4.9 s and 300 MB, while 3,679 in a single module climb to 66 GB and are
+  // killed. Splitting also means a regeneration only re-verifies the parts that
+  // actually changed, because F* caches per module.
+  const parts = [];
+  let current = [];
+  let currentBytes = 0;
+  for (const entry of emitted) {
+    const size = renderFstar(entry.tree).length;
+    if (current.length && (current.length >= PART_SIZE || currentBytes + size > PART_BYTES)) {
+      parts.push(current);
+      current = [];
+      currentBytes = 0;
+    }
+    current.push(entry);
+    currentBytes += size;
+  }
+  if (current.length) parts.push(current);
+
+  const partName = (index) => `Wikifn.Generated.Eval.Part${String(index).padStart(2, "0")}`;
+
+  for (const [index, part] of parts.entries()) {
+    const lines = [
+      `module ${partName(index)}`,
+      "",
+      "open Wikifn.Primitive.Kernel",
+      "open Wikifn.Zid",
+      "open Wikifn.Eval",
+      "",
+      "(*",
+      "  Generated by scripts/generate-fstar-eval.js from pinned cache objects.",
+      "  Do not edit. Every body below is a mechanical translation of a pinned",
+      "  Z14K2 composition; none of it is authored.",
+      "",
+      `  part:      ${index + 1} of ${parts.length}`,
+      `  functions: ${part.length}`,
+      `  ZID range: ${part[0].zid} to ${part[part.length - 1].zid}`,
+      "*)",
+      ""
+    ];
+
+    for (const entry of part) {
+      lines.push(
+        `(* ${entry.zid} ${entry.label} | ${entry.zid}@${entry.functionRevision}` +
+        ` -> ${entry.implementation.zid}@${entry.implementation.revision}` +
+        ` digest ${entry.implementation.digest} *)`
+      );
+      lines.push(`let body_${entry.name} : expr =`);
+      lines.push(`  ${renderFstar(entry.tree)}`);
+      lines.push("");
+    }
+
+    lines.push("let part_policy (fid:zid) : Tot (option expr) =");
+    lines.push("  match fid with");
+    for (const entry of part) {
+      lines.push(`  | ${entry.number} -> Some body_${entry.name}`);
+    }
+    lines.push("  | _ -> None");
+    lines.push("");
+
+    await writeFile(partPath(index), lines.join("\n"), "utf8");
+  }
+
+  // The same bodies again, one module per function, under build/.
+  //
+  // These are not a second copy to keep in step: both layouts are rendered from
+  // the same tree by the same renderer in the same pass, so they cannot drift.
+  // The part modules above are what extracts to OCaml, because linking 3,676
+  // tiny OCaml modules is far slower than linking ten. The per-function modules
+  // are what verifies, because a body F* cannot check fails on its own there
+  // instead of taking four hundred others down with it, because a regeneration
+  // only re-checks the functions that actually changed, and because there are
+  // no dependencies between them at all - a call is a ZID number the evaluator
+  // resolves at run time, not a module reference - so they can be checked in
+  // any order, on any number of machines.
+  await mkdir(functionDir, { recursive: true });
+  const wanted = new Set();
+  for (const entry of emitted) {
+    const moduleName = `Wikifn.Fn.${entry.zid}`;
+    wanted.add(`${moduleName}.fst`);
+    await writeFile(
+      path.join(functionDir, `${moduleName}.fst`),
+      [
+        `module ${moduleName}`,
+        "",
+        "open Wikifn.Primitive.Kernel",
+        "open Wikifn.Zid",
+        "open Wikifn.Eval",
+        "",
+        `(* ${entry.zid} ${entry.label} | ${entry.zid}@${entry.functionRevision}` +
+        ` -> ${entry.implementation.zid}@${entry.implementation.revision}` +
+        ` digest ${entry.implementation.digest} *)`,
+        "let body : expr =",
+        `  ${renderFstar(entry.tree)}`,
+        ""
+      ].join("\n"),
+      "utf8"
+    );
+  }
+  // A function that is no longer emitted must not leave a module behind that
+  // still verifies and still looks current.
+  for (const stale of await readdir(functionDir)) {
+    if (!/^Wikifn\.Fn\.Z\d+\.fst(\.checked)?$/.test(stale)) continue;
+    if (wanted.has(stale.replace(/\.checked$/, ""))) continue;
+    await rm(path.join(functionDir, stale), { force: true });
+  }
+
+  // The top module only dispatches. Bodies are emitted in ascending ZID order,
+  // so each part covers a contiguous range and the dispatch is a short chain of
+  // comparisons over an integer rather than a search.
+  const top = [
     "module Wikifn.Generated.Eval",
     "",
-    "open Wikifn.Primitive.Kernel",
     "open Wikifn.Zid",
     "open Wikifn.Eval",
     "",
     "(*",
-    "  Generated by scripts/generate-fstar-eval.js from pinned cache objects.",
-    "  Do not edit. Every body below is a mechanical translation of a pinned",
-    "  Z14K2 composition; none of it is authored.",
+    "  Generated by scripts/generate-fstar-eval.js. Do not edit.",
     "",
-    `  functions: ${emitted.length}`,
+    "  This module holds no bodies. It dispatches to the part modules, which is",
+    "  what keeps each one small enough for F* to check: a single module holding",
+    "  all of them needs tens of gigabytes, while a part of a few hundred takes",
+    "  seconds.",
+    "",
+    `  functions: ${emitted.length} across ${parts.length} parts`,
     `  skipped:   ${skipped.length}`,
     "*)",
     ""
   ];
-
-  for (const entry of emitted) {
-    lines.push(
-      `(* ${entry.zid} ${entry.label} | ${entry.zid}@${entry.functionRevision}` +
-      ` -> ${entry.implementation.zid}@${entry.implementation.revision}` +
-      ` digest ${entry.implementation.digest} *)`
-    );
-    lines.push(`let body_${entry.name} : expr =`);
-    lines.push(`  ${renderFstar(entry.tree)}`);
-    lines.push("");
+  for (const [index] of parts.entries()) {
+    top.push(`module P${String(index).padStart(2, "0")} = ${partName(index)}`);
   }
+  top.push("");
+  top.push("let generated_policy (fid:zid) : Tot (option expr) =");
+  parts.forEach((part, index) => {
+    const alias = `P${String(index).padStart(2, "0")}`;
+    const last = index === parts.length - 1;
+    const guard = last ? "" : `if fid <= ${part[part.length - 1].number} then `;
+    const keyword = index === 0 ? "  " : "  else ";
+    top.push(`${keyword}${guard}${alias}.part_policy fid`);
+  });
+  top.push("");
 
-  lines.push("let generated_policy (fid:zid) : Tot (option expr) =");
-  lines.push("  match fid with");
-  for (const entry of emitted) {
-    lines.push(`  | ${entry.number} -> Some body_${entry.name}`);
+  await writeFile(outPath, top.join("\n"), "utf8");
+
+  // Remove parts left over from a run that emitted more of them, so a stale
+  // module cannot be picked up by the wildcard the build scripts use.
+  for (const stale of await readdir(path.dirname(outPath))) {
+    const match = /^Wikifn\.Generated\.Eval\.Part(\d+)\.fst(\.checked)?$/.exec(stale);
+    if (match && Number(match[1]) >= parts.length) {
+      await rm(path.join(path.dirname(outPath), stale), { force: true });
+    }
   }
-  lines.push("  | _ -> None");
-  lines.push("");
-
-  await writeFile(outPath, lines.join("\n"), "utf8");
 
   // A function is runnable when every function reachable from its body is
   // either a primitive or itself emitted. Cycles are fine: the interpreter is
@@ -708,6 +1014,11 @@ async function main() {
           runnable: entry.runnable,
           mutuallyRecursive: entry.mutuallyRecursive,
           argumentKeys: entry.argKeys,
+          // Declared, not checked. The engine has no type checker; these come
+          // straight from the pinned Z8 so a caller can see what an argument is
+          // supposed to be before passing a string where a pair is wanted.
+          argumentTypes: entry.argTypes,
+          returnType: entry.returnType,
 
           implementation: entry.implementation.zid,
           revision: entry.implementation.revision,

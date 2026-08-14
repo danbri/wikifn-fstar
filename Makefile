@@ -1,4 +1,4 @@
-.PHONY: test example fstar-generate-eval fstar-engine engine-testers closure fstar-check fstar-ocaml fstar-generate-compositions fstar-js-demo fstar-call-js fstar-call-browser fstar-browser-demo setup-fstar doctor verify import-vendored-dump download-dump
+.PHONY: test example fstar-generate-eval fstar-engine engine-testers closure fstar-check fstar-verify-functions fstar-ocaml fstar-generate-compositions fstar-js-demo fstar-call-js fstar-call-browser fstar-browser-demo setup-fstar doctor verify import-vendored-dump download-dump
 
 test:
 	node --test
@@ -8,6 +8,12 @@ example:
 
 fstar-check:
 	./scripts/fstar-check.sh
+
+# Every composition body as its own F* module, checked in parallel. The part
+# modules under src/fstar are what extracts; these are what isolates a failure
+# to one function, and what makes a regeneration re-check only what changed.
+fstar-verify-functions:
+	node scripts/verify-fstar-functions.js
 
 fstar-ocaml:
 	./scripts/extract-fstar-ocaml.sh

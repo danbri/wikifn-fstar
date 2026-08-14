@@ -12,6 +12,8 @@
     "example": "node ./bin/wikifn.js eval-example",
     "example:trace": "node ./bin/wikifn.js eval-example --trace --profile",
     "analyze:demo": "node ./bin/wikifn.js analyze-demo",
+    "engine": "node ./examples/node-engine.js",
+    "engine:demo": "node ./examples/node-engine.js Z10627 \"Hello, Wikifunctions!\"",
     "fstar:demo": "node ./bin/wikifn.js fstar-demo",
     "fstar:check": "make fstar-check",
     "fstar:ocaml": "make fstar-ocaml",

@@ -173,11 +173,24 @@ let rec print_value (lookup:name_lookup) (v:value) : Tot text (decreases v) =
   | VList items ->
       parenthesise (join_with [cp_space]
         ([108; 105; 115; 116] :: print_values lookup items))
+  | VRecord t fields ->
+      (* (record Z11 (Z11K1 . value) ...) - readable, and the type stays visible *)
+      parenthesise (join_with [cp_space]
+        ([114; 101; 99; 111; 114; 100] :: name_of lookup t :: print_fields lookup fields))
 
 and print_values (lookup:name_lookup) (items:list value) : Tot (list text) (decreases items) =
   match items with
   | [] -> []
   | head :: tail -> print_value lookup head :: print_values lookup tail
+
+and print_fields (lookup:name_lookup) (fields:list (zkey & value))
+  : Tot (list text) (decreases fields)
+=
+  match fields with
+  | [] -> []
+  | (k, v) :: tail ->
+      parenthesise (join_with [cp_space] [render_zkey k; print_value lookup v])
+      :: print_fields lookup tail
 
 let rec print_expr (lookup:name_lookup) (names:list text) (e:expr)
   : Tot text (decreases e)
