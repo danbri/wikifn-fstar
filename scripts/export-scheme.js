@@ -57,6 +57,8 @@ export const PRELUDE = new Map([
   ["Z14456", (n) => `(define (${n} s)\n  (if (string=? s "") "" (substring s 1 (string-length s))))`],
   ["Z10615", (n) => `(define (${n} s prefix)\n  (let ((k (string-length prefix)))\n    (and (>= (string-length s) k) (string=? (substring s 0 k) prefix))))`],
   ["Z11040", (n) => `(define (${n} s) (string-length s))`],
+  ["Z10000", (n) => `(define (${n} a b) (string-append a b))`],
+  ["Z866", (n) => `(define (${n} a b) (string=? a b))`],
   ["Z13569", (n) => `(define (${n} a b) (if (< a b) 0 (- a b)))`],
   ["Z13582", (n) => `(define (${n} k) (if (= k 0) 0 (- k 1)))`],
   ["Z22717", (n) => `(define (${n} s) (map char->integer (string->list s)))`],

@@ -39,6 +39,10 @@
 
 (define (Z11040_string_length s) (string-length s))
 
+(define (Z10000_join_two_strings a b) (string-append a b))
+
+(define (Z866_string_equality a b) (string=? a b))
+
 (define (Z13569_subtract_natural_numbers_with_floor_of_0 a b) (if (< a b) 0 (- a b)))
 
 (define (Z13582_decrement_natural_number_by_one k) (if (= k 0) 0 (- k 1)))
