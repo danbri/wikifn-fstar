@@ -70,7 +70,10 @@ for (const entry of catalog.functions) {
     globalThis.wikifnEngineSource(entry.zid, String(entry.arity), nameTable));
   if (!result.ok) { failed += 1; continue; }
   rendered += 1;
-  lines.push(`;; ${entry.zid} ${entry.label}${entry.runnable ? "" : "  [reaches an unimplemented function]"}`);
+  const notes = [];
+  if (!entry.runnable) notes.push("reaches an unimplemented function");
+  if (entry.mutuallyRecursive) notes.push("mutually recursive: may not terminate");
+  lines.push(`;; ${entry.zid} ${entry.label}${notes.length ? "  [" + notes.join("; ") + "]" : ""}`);
   lines.push(result.source);
   lines.push("");
 }
@@ -119,9 +122,11 @@ const bundle = [
   ";;   (Z10627_rot13_latin_alphabet \"Hello, Wikifunctions!\")",
   ";;   (Z22294_devanagari_numerals_to_arabic_numerals \"१२३४५\")",
   ";;",
-  ";; Not every definition here can run: some reach functions nobody has",
-  ";; implemented, and a few are defined in terms of each other with no base",
-  ";; case. Those are marked in the comment above them.",
+  ";; Not every definition here can run. Some reach functions nobody has",
+  ";; implemented. Others are defined in terms of each other with no base case,",
+  ";; which is true as an equation and unproductive as a definition; Scheme has",
+  ";; no depth guard, so those overflow the stack rather than returning. Both",
+  ";; are marked in the comment above the definition.",
   "",
   ...preludeLines.slice(preludeLines.indexOf("")),
   "",

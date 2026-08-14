@@ -340,6 +340,47 @@ function collectCalls(node, acc = []) {
   return acc;
 }
 
+// Tarjan's algorithm, iterative so a deep graph cannot overflow the stack.
+function stronglyConnected(nodes, edgesOf) {
+  const index = new Map(), low = new Map(), onStack = new Set();
+  const stack = [], components = [];
+  let counter = 0;
+  for (const start of nodes) {
+    if (index.has(start)) continue;
+    const work = [{ node: start, edges: edgesOf(start), position: 0 }];
+    index.set(start, counter); low.set(start, counter); counter += 1;
+    stack.push(start); onStack.add(start);
+    while (work.length > 0) {
+      const frame = work[work.length - 1];
+      if (frame.position < frame.edges.length) {
+        const next = frame.edges[frame.position];
+        frame.position += 1;
+        if (!index.has(next)) {
+          index.set(next, counter); low.set(next, counter); counter += 1;
+          stack.push(next); onStack.add(next);
+          work.push({ node: next, edges: edgesOf(next), position: 0 });
+        } else if (onStack.has(next)) {
+          low.set(frame.node, Math.min(low.get(frame.node), index.get(next)));
+        }
+      } else {
+        work.pop();
+        if (work.length > 0) {
+          const parent = work[work.length - 1].node;
+          low.set(parent, Math.min(low.get(parent), low.get(frame.node)));
+        }
+        if (low.get(frame.node) === index.get(frame.node)) {
+          const component = [];
+          let member;
+          do { member = stack.pop(); onStack.delete(member); component.push(member); }
+          while (member !== frame.node);
+          components.push(component);
+        }
+      }
+    }
+  }
+  return components;
+}
+
 function sanitize(label, zid, used) {
   let base = (label ?? "")
     .toLowerCase()
@@ -518,6 +559,37 @@ async function main() {
         improved = true;
       }
     }
+
+    // Break mutual recursion where an implementation exists that avoids it.
+    // Two functions defined in terms of each other with no base case are true
+    // as equations and unproductive as definitions: Z844 boolean equality is
+    // not(inequality) while Z10237 inequality is not(equality). Z844 also has
+    // an implementation that is nested ifs over booleans, and that one works.
+    // Self-recursion is left alone; it is ordinary and usually has a guard.
+    const memberOf = new Map();
+    const groups = stronglyConnected(
+      [...emittedIndex.keys()],
+      (zid) => (emittedIndex.get(zid)?.calls ?? []).filter((c) => emittedIndex.has(c))
+    );
+    for (const group of groups) {
+      if (group.length < 2) continue;
+      for (const zid of group) memberOf.set(zid, new Set(group));
+    }
+    for (const entry of emitted) {
+      const group = memberOf.get(entry.zid);
+      if (!group) continue;
+      // Escaping a cycle must not cost reachability: only switch to a
+      // candidate that still reaches something implemented.
+      const escapes = entry.translations.find((candidate) =>
+        candidate.calls.every((callee) => callee === entry.zid || !group.has(callee)) &&
+        reaches(candidate.calls, ok, entry.zid));
+      if (escapes && escapes.zid !== entry.implementation.zid) {
+        entry.tree = escapes.tree;
+        entry.calls = escapes.calls;
+        entry.implementation = { zid: escapes.zid, revision: escapes.revision, digest: escapes.digest };
+        improved = true;
+      }
+    }
   }
 
 
@@ -582,6 +654,19 @@ async function main() {
   }
   for (const entry of emitted) entry.runnable = runnable.has(entry.zid);
 
+  // Functions left in a mutual-recursion cycle after implementation choice.
+  // These may be unproductive, and a Scheme has no depth guard to catch it, so
+  // the listing marks them.
+  const finalGroups = stronglyConnected(
+    [...emittedIndex.keys()],
+    (zid) => (emittedIndex.get(zid)?.calls ?? []).filter((c) => emittedIndex.has(c))
+  );
+  const inCycle = new Set();
+  for (const group of finalGroups) {
+    if (group.length > 1) for (const zid of group) inCycle.add(zid);
+  }
+  for (const entry of emitted) entry.mutuallyRecursive = inCycle.has(entry.zid);
+
   const emittedByZid = new Map(emitted.map((entry) => [entry.zid, entry]));
   const usedClassics = new Map();
   const nameOf = (zid) => {
@@ -621,6 +706,7 @@ async function main() {
           label: entry.label,
           arity: entry.arity,
           runnable: entry.runnable,
+          mutuallyRecursive: entry.mutuallyRecursive,
           argumentKeys: entry.argKeys,
 
           implementation: entry.implementation.zid,

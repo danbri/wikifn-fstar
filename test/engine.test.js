@@ -139,12 +139,46 @@ test("no function in the catalogue can crash the host", { skip }, () => {
   assert.deepEqual(problems.slice(0, 10), [], `${problems.length} functions misbehaved`);
 });
 
-test("a non-productive definition reports depth rather than hanging", { skip }, () => {
+test("a non-productive definition reports a limit rather than hanging", { skip }, () => {
+  const { call, catalog } = engine();
+  // Some mutual cycles have no implementation that escapes them: Z12429 is odd
+  // and Z12480 is even are defined in terms of each other. Evaluation must stop
+  // and say so rather than run until the host gives out.
+  const stuck = catalog.functions.filter((entry) => entry.mutuallyRecursive && entry.runnable);
+  assert.ok(stuck.length > 0, "expected some functions to remain in a cycle");
+  let reported = 0;
+  for (const entry of stuck) {
+    const response = call(entry.zid, Array.from({ length: entry.arity }, () => "ab"), { fuel: 100000 });
+    if (!response.ok && /depth|fuel/.test(response.message)) reported += 1;
+  }
+  assert.ok(reported > 0, "no cycle reported a depth or fuel limit");
+});
+
+// Z844 boolean equality had an implementation defined as not(inequality) while
+// Z10237 inequality was defined as not(equality). Both are valid equations and
+// neither computes. Both functions also have implementations that do compute,
+// and the generator is expected to prefer those.
+test("mutual recursion is avoided when an implementation escapes it", { skip }, () => {
   const { call } = engine();
-  // Z844 and Z10237 are defined in terms of each other with no base case.
-  for (const zid of ["Z844", "Z10237"]) {
-    const response = call(zid, [true, false], { fuel: 100000 });
-    assert.equal(response.ok, false, `${zid} should not claim success`);
-    assert.match(response.message, /depth|fuel/, `${zid} gave: ${response.message}`);
+  const cases = [
+    ["Z844", [true, true], true],
+    ["Z844", [true, false], false],
+    ["Z10237", [true, false], true],
+    ["Z10237", [false, false], false]
+  ];
+  for (const [zid, args, expected] of cases) {
+    const response = call(zid, args, { fuel: 100000 });
+    assert.ok(response.ok, `${zid}${JSON.stringify(args)} failed: ${response.message}`);
+    assert.equal(response.result.value, expected, `${zid}${JSON.stringify(args)}`);
+  }
+});
+
+test("functions left in a mutual cycle are marked in the catalogue", { skip }, () => {
+  const { catalog } = engine();
+  const marked = catalog.functions.filter((entry) => entry.mutuallyRecursive);
+  // Scheme has no depth guard, so the listing must warn about these.
+  assert.ok(marked.length > 0, "no function is marked, which is suspicious");
+  for (const entry of marked) {
+    assert.equal(typeof entry.runnable, "boolean", `${entry.zid} has no runnable flag`);
   }
 });

@@ -6,9 +6,11 @@
 ;;   (Z10627_rot13_latin_alphabet "Hello, Wikifunctions!")
 ;;   (Z22294_devanagari_numerals_to_arabic_numerals "१२३४५")
 ;;
-;; Not every definition here can run: some reach functions nobody has
-;; implemented, and a few are defined in terms of each other with no base
-;; case. Those are marked in the comment above them.
+;; Not every definition here can run. Some reach functions nobody has
+;; implemented. Others are defined in terms of each other with no base case,
+;; which is true as an equation and unproductive as a definition; Scheme has
+;; no depth guard, so those overflow the stack rather than returning. Both
+;; are marked in the comment above the definition.
 
 
 (define (identity x) x)
@@ -91,9 +93,9 @@
 
 
 ;; Z844 Boolean equality
-(define (Z844_boolean_equality a0 a1) (not (Z10237_boolean_inequality a0 a1)))
+(define (Z844_boolean_equality a0 a1) (Z10243_nand (Z10243_nand a0 a1) (Z10243_nand (Z10243_nand a0 a0) (Z10243_nand a1 a1))))
 
-;; Z861 Monolingual text from String and Natural language
+;; Z861 Monolingual text from String and Natural language  [mutually recursive: may not terminate]
 (define (Z861_monolingual_text_from_string_and_natural_language a0 a1) (Z26107_monolingual_text_from_language_and_string a1 a0))
 
 ;; Z889 List equality  [reaches an unimplemented function]
@@ -129,10 +131,10 @@
 ;; Z10083 is string blank
 (define (Z10083_is_string_blank a0) (Z10008_is_empty_string (Z10079_trim_string a0)))
 
-;; Z10084 remove leading spaces
+;; Z10084 remove leading spaces  [mutually recursive: may not terminate]
 (define (Z10084_remove_leading_spaces a0) (Z10012_reverse_string (Z10095_remove_trailing_spaces (Z10012_reverse_string a0))))
 
-;; Z10095 Remove trailing spaces
+;; Z10095 Remove trailing spaces  [mutually recursive: may not terminate]
 (define (Z10095_remove_trailing_spaces a0) (Z10012_reverse_string (Z10084_remove_leading_spaces (Z10012_reverse_string a0))))
 
 ;; Z10096 is a palindrome
@@ -144,7 +146,7 @@
 ;; Z10119 Sandbox-Function (Z8)
 (define (Z10119_sandbox_function_z8 a0) (Z10000_join_two_strings "hm" "m"))
 
-;; Z10137 MD5  [reaches an unimplemented function]
+;; Z10137 MD5  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z10137_md5 a0) (Z15553_md5_from_hex_string (Z10366_string_to_hex_utf_8 a0)))
 
 ;; Z10140 BLAKE2b-160  [reaches an unimplemented function]
@@ -199,7 +201,7 @@
 (define (Z10231_nor a0 a1) (not (bool-or a0 a1)))
 
 ;; Z10237 Boolean inequality
-(define (Z10237_boolean_inequality a0 a1) (not (Z844_boolean_equality a0 a1)))
+(define (Z10237_boolean_inequality a0 a1) (if a0 (if a1 #f #t) (if a1 #t #f)))
 
 ;; Z10243 nand
 (define (Z10243_nand a0 a1) (not (bool-and a0 a1)))
@@ -252,7 +254,7 @@
 ;; Z10363 is pascal case  [reaches an unimplemented function]
 (define (Z10363_is_pascal_case a0) (string=? a0 (Z10290_to_pascalcase a0)))
 
-;; Z10366 string to hex (UTF-8)  [reaches an unimplemented function]
+;; Z10366 string to hex (UTF-8)  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z10366_string_to_hex_utf_8 a0) (Z10047 (Z11003_base16_encode a0)))
 
 ;; Z10375 is title case  [reaches an unimplemented function]
@@ -405,7 +407,7 @@
 ;; Z10993 Hebrew convert to Maqaf / En dash  [reaches an unimplemented function]
 (define (Z10993_hebrew_convert_to_maqaf_en_dash a0) (Z10193_replace_all_regex_case_sensitive (Z10193_replace_all_regex_case_sensitive (Z10894 a0) "((^|[^\\u05D0-\\u05EA])([משהוכלב]{1,4})?(אי|אין|אל|בין|בלתי|ב[ןרת]|בתר|דו|חד|חוץ|חצי|טרום|יתר|כלל?|כמו|לא|מ[יא]?קרו|מט[אה]|מסב|מעין|מצד|מ?תוך|על|פנים|פסא?ודו|קדם|רב|תלת|תת))\\-(?=[\\u05D0-\\u05EA])" "\\1־") "(?<=[\\u05D0-\\u05EA])\\-(?=(אחר|ות|יחד|י|י?ים|למחצה|מדומה|נגד|על)([^\\u05D0-\\u05EA]|$))" "־"))
 
-;; Z11003 Base16 Encode  [reaches an unimplemented function]
+;; Z11003 Base16 Encode  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z11003_base16_encode a0) (Z10018 (Z10366_string_to_hex_utf_8 a0)))
 
 ;; Z11007 Base16 Decode  [reaches an unimplemented function]
@@ -456,10 +458,10 @@
 ;; Z11165 regular Croatian feminine genitive singular  [reaches an unimplemented function]
 (define (Z11165_regular_croatian_feminine_genitive_singular a0) (if (Z10618_string_ends_with a0 "a") (Z11178_replace_at_end a0 "a" "e") (Z10000_join_two_strings a0 "i")))
 
-;; Z11170 String without suffix  [reaches an unimplemented function]
+;; Z11170 String without suffix  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z11170_string_without_suffix a0 a1) (Z11178_replace_at_end a0 a1 ""))
 
-;; Z11178 replace at end  [reaches an unimplemented function]
+;; Z11178 replace at end  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z11178_replace_at_end a0 a1 a2) (if (Z10618_string_ends_with a0 a1) (Z10000_join_two_strings (Z11170_string_without_suffix a0 a1) a2) a0))
 
 ;; Z11199 regular Croatian feminine dative singular  [reaches an unimplemented function]
@@ -558,16 +560,16 @@
 ;; Z11383 has and is lowercase  [reaches an unimplemented function]
 (define (Z11383_has_and_is_lowercase a0) (Z10962_not_boolean_implication (Z10346_is_lowercase a0) (Z10336_is_uppercase a0)))
 
-;; Z11410 discard from start of first substring  [reaches an unimplemented function]
+;; Z11410 discard from start of first substring  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z11410_discard_from_start_of_first_substring a0 a1) (Z11414_discard_from_start_of_last_substring (Z11412_discard_from_end_of_first_substring a0 a1) a1))
 
-;; Z11412 discard from end of first substring  [reaches an unimplemented function]
+;; Z11412 discard from end of first substring  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z11412_discard_from_end_of_first_substring a0 a1) (Z10000_join_two_strings (Z11410_discard_from_start_of_first_substring a0 a1) (Z11542_if_string_output (Z10070_has_substring a0 a1) a1 "")))
 
-;; Z11414 discard from start of last substring  [reaches an unimplemented function]
+;; Z11414 discard from start of last substring  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z11414_discard_from_start_of_last_substring a0 a1) (Z11170_string_without_suffix (Z11416_discard_from_end_of_last_substring a0 a1) a1))
 
-;; Z11416 discard from end of last substring  [reaches an unimplemented function]
+;; Z11416 discard from end of last substring  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z11416_discard_from_end_of_last_substring a0 a1) (Z10000_join_two_strings (Z11414_discard_from_start_of_last_substring a0 a1) (Z11542_if_string_output (Z10070_has_substring a0 a1) a1 Z11853)))
 
 ;; Z11418 discard until start of first substring  [reaches an unimplemented function]
@@ -576,10 +578,10 @@
 ;; Z11420 discard until end of first substring  [reaches an unimplemented function]
 (define (Z11420_discard_until_end_of_first_substring a0 a1) (Z10012_reverse_string (Z11414_discard_from_start_of_last_substring (Z10012_reverse_string a0) (Z10012_reverse_string a1))))
 
-;; Z11422 discard until start of last substring  [reaches an unimplemented function]
+;; Z11422 discard until start of last substring  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z11422_discard_until_start_of_last_substring a0 a1) (Z10000_join_two_strings (Z11542_if_string_output (Z10070_has_substring a0 a1) a1 Z11853) (Z11424_discard_until_end_of_last_substring a0 a1)))
 
-;; Z11424 discard until end of last substring  [reaches an unimplemented function]
+;; Z11424 discard until end of last substring  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z11424_discard_until_end_of_last_substring a0 a1) (Z11420_discard_until_end_of_first_substring (Z11422_discard_until_start_of_last_substring a0 a1) a1))
 
 ;; Z11441 regular Croatian masculine vocative singular
@@ -1011,7 +1013,7 @@
 ;; Z12427 is prime  [reaches an unimplemented function]
 (define (Z12427_is_prime a0) (Z14946_is_k_almost_prime a0 1))
 
-;; Z12429 is odd (integer)
+;; Z12429 is odd (integer)  [mutually recursive: may not terminate]
 (define (Z12429_is_odd_integer a0) (not (Z12480_is_even_integer a0)))
 
 ;; Z12448 Breton conjugation preterite 1st person singular (-is)
@@ -1038,7 +1040,7 @@
 ;; Z12469 Breton conjugation preterite person 0
 (define (Z12469_breton_conjugation_preterite_person_0 a0) (Z10000_join_two_strings a0 "jod"))
 
-;; Z12480 is even (integer)
+;; Z12480 is even (integer)  [mutually recursive: may not terminate]
 (define (Z12480_is_even_integer a0) (not (Z12429_is_odd_integer a0)))
 
 ;; Z12526 Body Mass Index (metric, float64)  [reaches an unimplemented function]
@@ -1116,7 +1118,7 @@
 ;; Z12636 is Armstrong number  [reaches an unimplemented function]
 (define (Z12636_is_armstrong_number a0) (= (Z14038_sum_the_elements_of_a_list_of_natural_numbers (Z18475_return_typed_list (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments expt (Z25520_list_of_decimal_digits_in_a_number a0) (length (Z25520_list_of_decimal_digits_in_a_number a0))))) a0))
 
-;; Z12668 reverse untyped list
+;; Z12668 reverse untyped list  [mutually recursive: may not terminate]
 (define (Z12668_reverse_untyped_list a0) (if (null? a0) (list) (Z12961_append_element_to_typed_list (car a0) (Z12668_reverse_untyped_list (cdr a0)))))
 
 ;; Z12671 sort a list by string length  [reaches an unimplemented function]
@@ -1128,7 +1130,7 @@
 ;; Z12684 are all true?
 (define (Z12684_are_all_true a0) (if (null? a0) #t (if (Z15684_is_truthy (car a0)) (Z12684_are_all_true (cdr a0)) #f)))
 
-;; Z12696 contains  [reaches an unimplemented function]
+;; Z12696 contains  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z12696_contains a0 a1) (if (Z23883_is_zero_natural_number (Z13708_index_of_first_listing_1_n_note_limitation a1 a0)) #f #t))
 
 ;; Z12698 is any true
@@ -1227,7 +1229,7 @@
 ;; Z12941 debug  [reaches an unimplemented function]
 (define (Z12941_debug a0) (Z820 "executorDebugLogs" a0))
 
-;; Z12961 append element to Typed list
+;; Z12961 append element to Typed list  [mutually recursive: may not terminate]
 (define (Z12961_append_element_to_typed_list a0 a1) (Z18479_reverse_typed_list (cons a0 (Z18479_reverse_typed_list a1))))
 
 ;; Z12964 last element
@@ -1416,7 +1418,7 @@
 ;; Z13701 are coprime (natural numbers)  [reaches an unimplemented function]
 (define (Z13701_are_coprime_natural_numbers a0 a1) (= (Z13612_greatest_common_divisor a0 a1) 1))
 
-;; Z13708 index of first listing (1...N) – note limitation  [reaches an unimplemented function]
+;; Z13708 index of first listing (1...N) – note limitation  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z13708_index_of_first_listing_1_n_note_limitation a0 a1) (if (not (Z12696_contains a1 a0)) 0 (if (Z13052_object_equality a0 (car a1)) 1 (add1 (Z13708_index_of_first_listing_1_n_note_limitation a0 (cdr a1))))))
 
 ;; Z13713 natural number to digit string  [reaches an unimplemented function]
@@ -1428,7 +1430,7 @@
 ;; Z13726 divisors  [reaches an unimplemented function]
 (define (Z13726_divisors a0) (if (Z23883_is_zero_natural_number a0) (list) (Z17873_sort_list_ascending_natural_numbers (Z19202_remove_duplicates_from_typed_list (map Z13558_product_of_list_natural_numbers (Z18475_return_typed_list (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z30075_return_list_if_non_empty_else_backup (Z18194_powerset (Z17895_untype_a_list (Z13728_prime_divisors a0))) (list 1))))))))
 
-;; Z13728 prime divisors  [reaches an unimplemented function]
+;; Z13728 prime divisors  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z13728_prime_divisors a0) (if (<= a0 1) (list) (Z12961_append_element_to_typed_list (Z13735_largest_prime_divisor a0) (Z13728_prime_divisors (Z13745_n_largest_prime_dividing_n a0)))))
 
 ;; Z13730 unique prime divisors  [reaches an unimplemented function]
@@ -1437,13 +1439,13 @@
 ;; Z13732 smallest prime divisor  [reaches an unimplemented function]
 (define (Z13732_smallest_prime_divisor a0) (Z19509_minimum_of_natural_number_list (Z13728_prime_divisors a0)))
 
-;; Z13735 largest prime divisor  [reaches an unimplemented function]
+;; Z13735 largest prime divisor  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z13735_largest_prime_divisor a0) (Z12964_last_element (Z13728_prime_divisors a0)))
 
 ;; Z13740 is natural number divisible  [reaches an unimplemented function]
 (define (Z13740_is_natural_number_divisible a0 a1) (if (= a1 0) #f (= (Z13551_remainder_of_natural_number_division a0 a1) 0)))
 
-;; Z13745 n/(largest prime dividing n)  [reaches an unimplemented function]
+;; Z13745 n/(largest prime dividing n)  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z13745_n_largest_prime_dividing_n a0) (Z13546 a0 (Z13735_largest_prime_divisor a0)))
 
 ;; Z13752 is there a common element on these lists?  [reaches an unimplemented function]
@@ -1680,10 +1682,10 @@
 ;; Z14154 remove language tag code points  [reaches an unimplemented function]
 (define (Z14154_remove_language_tag_code_points a0) (Z14119_remove_characters_in_unicode_range a0 917504 917631))
 
-;; Z14166 nth digit of π
+;; Z14166 nth digit of π  [mutually recursive: may not terminate]
 (define (Z14166_nth_digit_of a0) (Z14175_nth_decimal_place_of (Z13582_decrement_natural_number_by_one a0)))
 
-;; Z14175 nth decimal place of π
+;; Z14175 nth decimal place of π  [mutually recursive: may not terminate]
 (define (Z14175_nth_decimal_place_of a0) (Z14166_nth_digit_of (add1 a0)))
 
 ;; Z14180 pi string up to the nth digit  [reaches an unimplemented function]
@@ -2070,10 +2072,10 @@
 ;; Z15282 is Lucas–Carmichael number  [reaches an unimplemented function]
 (define (Z15282_is_lucas_carmichael_number a0) (bool-and (bool-and (Z34353_is_natural_number_odd a0) (Z15276_is_square_free_integer a0)) (Z12684_are_all_true (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an Z13740_is_natural_number_divisible (add1 a0) (map add1 (Z13728_prime_divisors a0))))))
 
-;; Z15287 primorial p(n)#  [reaches an unimplemented function]
+;; Z15287 primorial p(n)#  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z15287_primorial_p_n a0) (Z15291_primorial_of_natural_number (Z15362 a0)))
 
-;; Z15291 primorial of natural number  [reaches an unimplemented function]
+;; Z15291 primorial of natural number  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z15291_primorial_of_natural_number a0) (Z15287_primorial_p_n (Z13986_number_of_primes_n a0)))
 
 ;; Z15299 compositorial of natural number  [reaches an unimplemented function]
@@ -2220,7 +2222,7 @@
 ;; Z15550 nth centered icosahedral number  [reaches an unimplemented function]
 (define (Z15550_nth_centered_icosahedral_number a0) (Z13546 (* (Z15108_2_n_1 a0) (+ (* 5 (+ (Z13663_n_2_natural_number a0) a0)) 3)) 3))
 
-;; Z15553 MD5 from hex (string)  [reaches an unimplemented function]
+;; Z15553 MD5 from hex (string)  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z15553_md5_from_hex_string a0) (Z10137_md5 (Z10373 a0)))
 
 ;; Z15593 is valid hex string  [reaches an unimplemented function]
@@ -2385,10 +2387,10 @@
 ;; Z16289 month is in list  [reaches an unimplemented function]
 (define (Z16289_month_is_in_list a0 a1) (Z12696_contains a1 a0))
 
-;; Z16293 N months before month
+;; Z16293 N months before month  [mutually recursive: may not terminate]
 (define (Z16293_n_months_before_month a0 a1) (Z17958_run_unary_endofunction_n_times Z16299_previous_month a0 a1))
 
-;; Z16299 previous month
+;; Z16299 previous month  [mutually recursive: may not terminate]
 (define (Z16299_previous_month a0) (Z16293_n_months_before_month a0 1))
 
 ;; Z16307 N months after month
@@ -2481,7 +2483,7 @@
 ;; Z16688 same Integer  [reaches an unimplemented function]
 (define (Z16688_same_integer a0 a1) (bool-and (Z17249_integers_have_the_same_sign a0 a1) (Z17254_integers_have_the_same_absolute_magnitude a0 a1)))
 
-;; Z16693 add Integers  [reaches an unimplemented function]
+;; Z16693 add Integers  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z16693_add_integers a0 a1) (Z17307_integer_represented_by_ordered_pair_of_natural_numbers (Z17340 (Z17301 a0) (Z17301 a1))))
 
 ;; Z16705 read Integer  [reaches an unimplemented function]
@@ -2541,7 +2543,7 @@
 ;; Z16888 reference String
 (define (Z16888_reference_string a0) (snd (Z16360_second_element_error_handling a0)))
 
-;; Z16914 get weekday number (starting Sunday=1) from date  [reaches an unimplemented function]
+;; Z16914 get weekday number (starting Sunday=1) from date  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z16914_get_weekday_number_starting_sunday_1_from_date a0 a1 a2) (Z17485_day_to_day_number_starting_sunday_1 (Z17540_get_day_of_the_week_from_numerical_date a2 (Z16230_month_to_month_number a1) a0)))
 
 ;; Z16945 same Igbo month  [reaches an unimplemented function]
@@ -2568,7 +2570,7 @@
 ;; Z17073 Vietnamese cardinal  [reaches an unimplemented function]
 (define (Z17073_vietnamese_cardinal a0) (Z17081 a0))
 
-;; Z17111 subtract an Integer  [reaches an unimplemented function]
+;; Z17111 subtract an Integer  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z17111_subtract_an_integer a0 a1) (Z16693_add_integers a0 (Z17186_negate_integer a1)))
 
 ;; Z17120 multiply Integers  [reaches an unimplemented function]
@@ -2595,7 +2597,7 @@
 ;; Z17180 is void  [reaches an unimplemented function]
 (define (Z17180_is_void a0) (Z18683_strict_object_equality a0 Z24))
 
-;; Z17186 negate integer  [reaches an unimplemented function]
+;; Z17186 negate integer  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z17186_negate_integer a0) (Z17307_integer_represented_by_ordered_pair_of_natural_numbers (Z17326_negate_ordered_pair_of_natural_numbers_representing_integer (Z17301 a0))))
 
 ;; Z17192 if (integer output)
@@ -2628,10 +2630,10 @@
 ;; Z17267 negate natural number to integer  [reaches an unimplemented function]
 (define (Z17267_negate_natural_number_to_integer a0) (Z17186_negate_integer (Z17101 a0)))
 
-;; Z17307 integer represented by ordered pair of natural numbers  [reaches an unimplemented function]
+;; Z17307 integer represented by ordered pair of natural numbers  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z17307_integer_represented_by_ordered_pair_of_natural_numbers a0) (Z17315_subtract_natural_numbers_as_integer (car a0) (Z12964_last_element a0)))
 
-;; Z17315 subtract natural numbers as integer  [reaches an unimplemented function]
+;; Z17315 subtract natural numbers as integer  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z17315_subtract_natural_numbers_as_integer a0 a1) (Z17111_subtract_an_integer (Z17101 a0) (Z17101 a1)))
 
 ;; Z17321 are equivalent ordered pairs representing integers
@@ -2697,7 +2699,7 @@
 ;; Z17536 total occurrences of day in year  [reaches an unimplemented function]
 (define (Z17536_total_occurrences_of_day_in_year a0 a1) (Z31490_if_either (Z17414_same_day_of_the_week a1 (Z17540_get_day_of_the_week_from_numerical_date 1 1 a0)) (bool-and (Z10996 a0) (Z17414_same_day_of_the_week a1 (Z17540_get_day_of_the_week_from_numerical_date 2 1 a0))) 53 52))
 
-;; Z17540 get day of the week from numerical date  [reaches an unimplemented function]
+;; Z17540 get day of the week from numerical date  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z17540_get_day_of_the_week_from_numerical_date a0 a1 a2) (Z17478_day_number_to_day_starting_1_sunday (Z16914_get_weekday_number_starting_sunday_1_from_date a2 (Z16255_month_number_to_month a1) a0)))
 
 ;; Z17549 get nth date of a given day in month as string  [reaches an unimplemented function]
@@ -2994,7 +2996,7 @@
 ;; Z18475 return Typed list
 (define (Z18475_return_typed_list a0) (Z12767_concatenate_two_untyped_lists (list) a0))
 
-;; Z18479 reverse Typed list
+;; Z18479 reverse Typed list  [mutually recursive: may not terminate]
 (define (Z18479_reverse_typed_list a0) (Z12668_reverse_untyped_list (map identity a0)))
 
 ;; Z18531 Byzantine to Arabic numeral  [reaches an unimplemented function]
@@ -3120,7 +3122,7 @@
 ;; Z19241 first matching representation string from lexeme  [reaches an unimplemented function]
 (define (Z19241_first_matching_representation_string_from_lexeme a0 a1) (Z14396 (Z19530 a0 a1)))
 
-;; Z19243 select lexeme forms from lexeme  [reaches an unimplemented function]
+;; Z19243 select lexeme forms from lexeme  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z19243_select_lexeme_forms_from_lexeme a0 a1) (Z22820_compress_list (Z19302_lexeme_forms_from_lexeme a0) (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments Z12846_contains_all_of_list (map Z22638_all_grammatical_features_of_lexeme_form (Z19302_lexeme_forms_from_lexeme a0)) a1)))
 
 ;; Z19248 number of forms in lexeme  [reaches an unimplemented function]
@@ -3147,7 +3149,7 @@
 ;; Z19287 same lexeme reference  [reaches an unimplemented function]
 (define (Z19287_same_lexeme_reference a0 a1) (string=? (Z19310 a0) (Z19310 a1)))
 
-;; Z19302 lexeme forms from lexeme  [reaches an unimplemented function]
+;; Z19302 lexeme forms from lexeme  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z19302_lexeme_forms_from_lexeme a0) (Z19243_select_lexeme_forms_from_lexeme a0 (list)))
 
 ;; Z19312 same multilingual text  [reaches an unimplemented function]
@@ -3324,7 +3326,7 @@
 ;; Z20166 same Gregorian year  [reaches an unimplemented function]
 (define (Z20166_same_gregorian_year a0 a1) (Z18683_strict_object_equality a0 a1))
 
-;; Z20181 is Gregorian year leap year?  [reaches an unimplemented function]
+;; Z20181 is Gregorian year leap year?  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z20181_is_gregorian_year_leap_year a0) (Z17414_same_day_of_the_week (Z20302_day_of_the_week_this_year_ends_with a0) (Z17420 (Z20290_starts_on a0))))
 
 ;; Z20212 Does statement have predicate?  [reaches an unimplemented function]
@@ -3345,10 +3347,10 @@
 ;; Z20266 is integer divisible  [reaches an unimplemented function]
 (define (Z20266_is_integer_divisible a0 a1) (Z13740_is_natural_number_divisible (Z17144 a0) (Z17144 a1)))
 
-;; Z20290 starts on  [reaches an unimplemented function]
+;; Z20290 starts on  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z20290_starts_on a0) (Z17420 (Z20302_day_of_the_week_this_year_ends_with (Z20314 a0))))
 
-;; Z20302 day of the week this year ends with  [reaches an unimplemented function]
+;; Z20302 day of the week this year ends with  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z20302_day_of_the_week_this_year_ends_with a0) (Z20305_unless_exception (Z20290_starts_on a0) (Z20181_is_gregorian_year_leap_year a0) (Z17420 (Z20290_starts_on a0))))
 
 ;; Z20305 unless exception
@@ -3471,16 +3473,16 @@
 ;; Z21001 float64 exponentiation base e  [reaches an unimplemented function]
 (define (Z21001_float64_exponentiation_base_e a0) (Z21028 Z20890 a0))
 
-;; Z21003 natural logarithm (float64)  [reaches an unimplemented function]
+;; Z21003 natural logarithm (float64)  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z21003_natural_logarithm_float64 a0) (Z21037_logarithm_with_arbitrary_base_float64 a0 Z20890))
 
-;; Z21032 multiply (float64)  [reaches an unimplemented function]
+;; Z21032 multiply (float64)  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z21032_multiply_float64 a0 a1) (Z21033_divide_float64 a0 (Z22605_multiplicative_inverse_of_float64 a1)))
 
-;; Z21033 divide (float64)  [reaches an unimplemented function]
+;; Z21033 divide (float64)  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z21033_divide_float64 a0 a1) (Z21032_multiply_float64 a0 (Z22605_multiplicative_inverse_of_float64 a1)))
 
-;; Z21037 logarithm with arbitrary base (float64)  [reaches an unimplemented function]
+;; Z21037 logarithm with arbitrary base (float64)  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z21037_logarithm_with_arbitrary_base_float64 a0 a1) (Z21033_divide_float64 (Z21003_natural_logarithm_float64 a0) (Z21003_natural_logarithm_float64 a1)))
 
 ;; Z21041 absolute value (float64)  [reaches an unimplemented function]
@@ -3594,7 +3596,7 @@
 ;; Z21642 read floating point number leniently  [reaches an unimplemented function]
 (define (Z21642_read_floating_point_number_leniently a0) (Z19565_triple_if (Z21980_string_includes_or a0) (Z20854 (Z19866_string_to_rational_number a0)) (Z21987_string_includes_na_or_nf a0) (Z21750 (Z10047 a0)) (Z20915 (Z21679_convert_decimal_string_from_comma_to_point (Z21682 a0)))))
 
-;; Z21653 natural number as rational number  [reaches an unimplemented function]
+;; Z21653 natural number as rational number  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z21653_natural_number_as_rational_number a0) (Z23668_number_as_rational_number a0))
 
 ;; Z21679 convert decimal string from comma to point
@@ -3807,7 +3809,7 @@
 ;; Z22600 nth root of float64  [reaches an unimplemented function]
 (define (Z22600_nth_root_of_float64 a0 a1) (Z21028 a0 (Z22605_multiplicative_inverse_of_float64 (Z20936_natural_number_to_float64 a1))))
 
-;; Z22605 multiplicative inverse of float64  [reaches an unimplemented function]
+;; Z22605 multiplicative inverse of float64  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z22605_multiplicative_inverse_of_float64 a0) (Z21001_float64_exponentiation_base_e (Z21775 (Z21003_natural_logarithm_float64 a0))))
 
 ;; Z22610 harmonic mean of float64 list  [reaches an unimplemented function]
@@ -3927,7 +3929,7 @@
 ;; Z23275 (?) validate Rational number  [reaches an unimplemented function]
 (define (Z23275_validate_rational_number a0) (if (Z19583 (Z19717 a0) (Z19733 a0) (Z19862 a0)) a0 (Z851 Z516 (list "Invalid Rational number"))))
 
-;; Z23293 Multiplication table  [reaches an unimplemented function]
+;; Z23293 Multiplication table  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z23293_multiplication_table a0 a1) (Z27861 (Z28219_multiplication_table_code a0 a1)))
 
 ;; Z23330 equal Wikidata statement rank  [reaches an unimplemented function]
@@ -4044,7 +4046,7 @@
 ;; Z23660 Rational number as simplest type  [reaches an unimplemented function]
 (define (Z23660_rational_number_as_simplest_type a0) (if (Z19806_is_rational_number_an_integer a0) (if (Z21714_is_negative_rational_number a0) (Z19841 a0) (Z19722_numerator_of_simplified_rational_number a0)) a0))
 
-;; Z23668 number as Rational number  [reaches an unimplemented function]
+;; Z23668 number as Rational number  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z23668_number_as_rational_number a0) (if (Z23672_is_float64 a0) (Z21071 a0) (if (Z23645_is_integer_type a0) (Z19744_integer_as_rational_number a0) (if (Z15818_is_natural_number a0) (Z21653_natural_number_as_rational_number a0) a0))))
 
 ;; Z23672 is float64?  [reaches an unimplemented function]
@@ -4242,7 +4244,7 @@
 ;; Z24436 multiply rational and matrix  [reaches an unimplemented function]
 (define (Z24436_multiply_rational_and_matrix a0 a1) (Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an Z24060_rational_times_vector a0 a1))
 
-;; Z24453 String to grapheme list  [reaches an unimplemented function]
+;; Z24453 String to grapheme list  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z24453_string_to_grapheme_list a0) (if (Z10008_is_empty_string a0) (list) (cons (Z31145_first_grapheme_cluster_of_string a0) (Z24453_string_to_grapheme_list (Z14636_remove_first_n_characters_of_string (Z10384 a0) (Z11040_string_length (Z31145_first_grapheme_cluster_of_string a0)))))))
 
 ;; Z24472 get Nth code point of String  [reaches an unimplemented function]
@@ -4566,7 +4568,7 @@
 ;; Z26103 German nom indef article + noun from Item  [reaches an unimplemented function]
 (define (Z26103_german_nom_indef_article_noun_from_item a0) (Z26070 (Z22696 (Z23756 a0) Z1430)))
 
-;; Z26107 monolingual text from language and string
+;; Z26107 monolingual text from language and string  [mutually recursive: may not terminate]
 (define (Z26107_monolingual_text_from_language_and_string a0 a1) (Z861_monolingual_text_from_string_and_natural_language a1 a0))
 
 ;; Z26166 month of Day of Roman year unknown  [reaches an unimplemented function]
@@ -4986,7 +4988,7 @@
 ;; Z28209 expand condensed electron configuration
 (define (Z28209_expand_condensed_electron_configuration a0) (Z10075_replace_all_substrings (Z10075_replace_all_substrings (Z10075_replace_all_substrings (Z10075_replace_all_substrings (Z10075_replace_all_substrings (Z10075_replace_all_substrings (Z10075_replace_all_substrings a0 "[Og]" "1s² 2s² 2p⁶ 3s² 3p⁶ 4s² 3d¹⁰ 4p⁶ 5s² 4d¹⁰ 5p⁶ 6s² 4f¹⁴ 5d¹⁰ 6p⁶ 7s² 5f¹⁴ 6d¹⁰ 7p⁶") "[Rn]" "1s² 2s² 2p⁶ 3s² 3p⁶ 4s² 3d¹⁰ 4p⁶ 5s² 4d¹⁰ 5p⁶ 6s² 4f¹⁴ 5d¹⁰ 6p⁶") "[Xe]" "1s² 2s² 2p⁶ 3s² 3p⁶ 4s² 3d¹⁰ 4p⁶ 5s² 4d¹⁰ 5p⁶") "[Kr]" "1s² 2s² 2p⁶ 3s² 3p⁶ 4s² 3d¹⁰ 4p⁶") "[Ar]" "1s² 2s² 2p⁶ 3s² 3p⁶") "[Ne]" "1s² 2s² 2p⁶") "[He]" "1s²"))
 
-;; Z28219 Multiplication table (code)  [reaches an unimplemented function]
+;; Z28219 Multiplication table (code)  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z28219_multiplication_table_code a0 a1) (Z27854 (Z23293_multiplication_table a0 a1)))
 
 ;; Z28222 number of arguments of a function  [reaches an unimplemented function]
@@ -5115,7 +5117,7 @@
 ;; Z28711 nth element by recursion (helper)
 (define (Z28711_nth_element_by_recursion_helper a0 a1) (if (= a1 1) (car a0) (Z28711_nth_element_by_recursion_helper (cdr a0) (Z13582_decrement_natural_number_by_one a1))))
 
-;; Z28715 index of first sub-list (start)
+;; Z28715 index of first sub-list (start)  [mutually recursive: may not terminate]
 (define (Z28715_index_of_first_sub_list_start a0 a1) (if (Z12851_is_longer_list a1 a0) 0 (if (Z31294_list_starts_with a0 a1) 1 (if (Z23883_is_zero_natural_number (Z28715_index_of_first_sub_list_start (cdr a0) a1)) 0 (add1 (Z28715_index_of_first_sub_list_start (cdr a0) a1))))))
 
 ;; Z28729 age today  [reaches an unimplemented function]
@@ -5694,13 +5696,13 @@
 ;; Z31135 square of float64  [reaches an unimplemented function]
 (define (Z31135_square_of_float64 a0) (Z21032_multiply_float64 a0 a0))
 
-;; Z31145 first grapheme cluster of String  [reaches an unimplemented function]
+;; Z31145 first grapheme cluster of String  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z31145_first_grapheme_cluster_of_string a0) (car (Z24453_string_to_grapheme_list a0)))
 
 ;; Z31173 Euler characteristic of polyhedron  [reaches an unimplemented function]
 (define (Z31173_euler_characteristic_of_polyhedron a0 a1 a2) (Z17315_subtract_natural_numbers_as_integer (+ a0 a2) a1))
 
-;; Z31177 List of digits in base n  [reaches an unimplemented function]
+;; Z31177 List of digits in base n  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z31177_list_of_digits_in_base_n a0 a1) (if (Z23883_is_zero_natural_number a0) (list 0) (Z18475_return_typed_list (Z29370_apply3_to_a_common_1st_and_2nd_arg_and_list_of_3rd Z31859_value_of_k_th_place_digit_in_base_b_digit_string a1 a0 (Z18759_reverse_list_preserving_list_typing_untyping (Z13831_natural_number_range 0 (Z20391_integer_to_exact_natural_number_or_0 (Z20841 (Z21037_logarithm_with_arbitrary_base_float64 (Z20936_natural_number_to_float64 a0) (Z20936_natural_number_to_float64 a1))))))))))
 
 ;; Z31205 Template:0 (multi-wiki)  [reaches an unimplemented function]
@@ -5724,7 +5726,7 @@
 ;; Z31268 first index (1..=N) of character in String  [reaches an unimplemented function]
 (define (Z31268_first_index_1_n_of_character_in_string a0 a1) (Z13708_index_of_first_listing_1_n_note_limitation a0 (Z22717_string_to_codepoint_list a1)))
 
-;; Z31294 list starts with
+;; Z31294 list starts with  [mutually recursive: may not terminate]
 (define (Z31294_list_starts_with a0 a1) (Z31547_is_natural_number_1 (Z28715_index_of_first_sub_list_start a0 a1)))
 
 ;; Z31331 HTML unordered list  [reaches an unimplemented function]
@@ -5871,7 +5873,7 @@
 ;; Z31845 get last Code point of String
 (define (Z31845_get_last_code_point_of_string a0) (Z12964_last_element (Z22717_string_to_codepoint_list a0)))
 
-;; Z31859 value of k-th place digit in base-b digit string  [reaches an unimplemented function]
+;; Z31859 value of k-th place digit in base-b digit string  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z31859_value_of_k_th_place_digit_in_base_b_digit_string a0 a1 a2) (Z22839_first_object_or_default (Z13369_remove_first_n_elements_of_list (Z17895_untype_a_list (Z18759_reverse_list_preserving_list_typing_untyping (Z31177_list_of_digits_in_base_n a1 a0))) a2) 0))
 
 ;; Z31874 trim element from start of list  [reaches an unimplemented function]
@@ -6366,7 +6368,7 @@
 ;; Z34271 Set of set contains  [reaches an unimplemented function]
 (define (Z34271_set_of_set_contains a0 a1) (if (null? a1) #f (if (Z889_list_equality a0 (car a1) Z889_list_equality) #t (Z34271_set_of_set_contains a0 (cdr a1)))))
 
-;; Z34273 Equality of hereditary sets
+;; Z34273 Equality of hereditary sets  [mutually recursive: may not terminate]
 (define (Z34273_equality_of_hereditary_sets a0 a1) (if (Z34380_is_subset_of_a_set a0 a1) (if (Z34380_is_subset_of_a_set a1 a0) #t #f) #f))
 
 ;; Z34282 auto-classifying sentence – entity (monolingual)  [reaches an unimplemented function]
@@ -6381,10 +6383,10 @@
 ;; Z34367 any boolean equal to
 (define (Z34367_any_boolean_equal_to a0 a1) (if (null? a0) #f (if (Z844_boolean_equality (car a0) a1) #t (Z34367_any_boolean_equal_to (cdr a0) a1))))
 
-;; Z34378 Is element of an hereditary set
+;; Z34378 Is element of an hereditary set  [mutually recursive: may not terminate]
 (define (Z34378_is_element_of_an_hereditary_set a0 a1) (if (null? a0) #f (if (Z34273_equality_of_hereditary_sets a1 (car a0)) #t (Z34378_is_element_of_an_hereditary_set (cdr a0) a1))))
 
-;; Z34380 is subset of a set
+;; Z34380 is subset of a set  [mutually recursive: may not terminate]
 (define (Z34380_is_subset_of_a_set a0 a1) (if (null? a0) #t (if (Z34378_is_element_of_an_hereditary_set a1 (car a0)) (Z34380_is_subset_of_a_set (cdr a0) a1) #f)))
 
 ;; Z34409 Predecessor of von Neumann ordinal  [reaches an unimplemented function]
@@ -6453,7 +6455,7 @@
 ;; Z34943 better matching multilingual text form from lexeme  [reaches an unimplemented function]
 (define (Z34943_better_matching_multilingual_text_form_from_lexeme a0 a1) (Z22399 (Z38338 a0 a1)))
 
-;; Z34947 best monolingual text of multilingual per [lang]  [reaches an unimplemented function]
+;; Z34947 best monolingual text of multilingual per [lang]  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z34947_best_monolingual_text_of_multilingual_per_lang a0 a1) (Z35809_monolingual_text_from_list_w_highest_listed_lang (Z19279 a0) a1))
 
 ;; Z34953 monolingual text from multilingual with fallback  [reaches an unimplemented function]
@@ -6696,7 +6698,7 @@
 ;; Z35806 labels of Wikidata item (Typed List [monolingual])  [reaches an unimplemented function]
 (define (Z35806_labels_of_wikidata_item_typed_list_monolingual a0) (Z19279 (Z22853 a0)))
 
-;; Z35809 monolingual text from list w highest listed lang  [reaches an unimplemented function]
+;; Z35809 monolingual text from list w highest listed lang  [reaches an unimplemented function; mutually recursive: may not terminate]
 (define (Z35809_monolingual_text_from_list_w_highest_listed_lang a0 a1) (Z34947_best_monolingual_text_of_multilingual_per_lang (Z35828_multilingual_text_from_list_of_monolingual_texts a0) a1))
 
 ;; Z35811 is monolingual text blank?  [reaches an unimplemented function]

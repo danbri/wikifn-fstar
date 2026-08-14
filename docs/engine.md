@@ -70,15 +70,15 @@ value this harness can read:
 | | count |
 |---|---|
 | testers considered | 7,123 |
-| pass | 557 |
+| pass | 577 |
 | fail | 57 |
-| error | 2,147 |
+| error | 2,127 |
 | skipped, with reasons | 4,362 |
 
 | | count |
 |---|---|
-| functions with at least one passing tester | 261 |
-| functions passing every tester that could be read | **207** |
+| functions with at least one passing tester | 263 |
+| functions passing every tester that could be read | **211** |
 
 A tester is only counted as passing when both its call and its expected value were
 readable. Everything else is skipped with a stated reason, never counted as a pass.
@@ -158,8 +158,12 @@ const out = globalThis.wikifnEngineCall("Z22294", "5000", JSON.stringify(["резре
 - Implementation choice matters. A function can have several composition
   implementations and they are not interchangeable for a tool that follows them
   transitively: ROT13 has one written as thirteen nested rot1 calls that does not
-  evaluate here. The generator now picks whichever choice makes the most
-  functions run.
+  evaluate here, and Z844 boolean equality has one defined as not(inequality)
+  while Z10237 inequality is defined as not(equality). The generator translates
+  every candidate and prefers the choice that runs and that stays out of a
+  mutual-recursion cycle. 64 functions are still left in one; the catalogue and
+  the Scheme listing mark them, because a Scheme has no depth guard and will
+  overflow rather than report.
 - Deep recursion exhausts fuel before it produces an answer. The evaluator is not
   tail-recursive after extraction.
 - `Wikifn.Model.has_type` is still assumed. Typing rules are not written.

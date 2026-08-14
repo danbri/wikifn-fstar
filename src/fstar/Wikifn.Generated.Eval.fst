@@ -13,9 +13,9 @@ open Wikifn.Eval
   skipped:   1476
 *)
 
-(* Z844 Boolean equality | Z844@246880 -> Z31483@253938 digest 6c8a5356b12c350b9f56b91870e1c1c03cebfc968e22c16e71a98f004cc22ad1 *)
+(* Z844 Boolean equality | Z844@246880 -> Z31484@250336 digest 43f679fde596bb2a4e912c545cdd4f039632c929773a3eb02c726fa34311beb6 *)
 let body_Z844_boolean_equality : expr =
-  ECall 10216 [ECall 10237 [EArg 0; EArg 1]]
+  ECall 10243 [ECall 10243 [EArg 0; EArg 1]; ECall 10243 [ECall 10243 [EArg 0; EArg 0]; ECall 10243 [EArg 1; EArg 1]]]
 
 (* Z861 Monolingual text from String and Natural language | Z861@271582 -> Z27215@209227 digest 33ac3cacc0341e9e24d65238b50c45c32b43b3171f29fb5f2d30f8289f984680 *)
 let body_Z861_monolingual_text_from_string_and_natural_language : expr =
@@ -157,9 +157,9 @@ let body_Z10217_unary_true : expr =
 let body_Z10231_nor : expr =
   ECall 10216 [ECall 10184 [EArg 0; EArg 1]]
 
-(* Z10237 Boolean inequality | Z10237@250338 -> Z10242@245314 digest 0b48a661319dd6d25300216d0d4f43af20a9c8aaef8f7c8b1ff3127ff5265d2c *)
+(* Z10237 Boolean inequality | Z10237@250338 -> Z15931@245316 digest 2e14aed69530c8a48376cf557feda09a51da4ac130ee9db2dba7f52a6ae16120 *)
 let body_Z10237_boolean_inequality : expr =
-  ECall 10216 [ECall 844 [EArg 0; EArg 1]]
+  ECall 802 [EArg 0; ECall 802 [EArg 1; EValue (VBool false); EValue (VBool true)]; ECall 802 [EArg 1; EValue (VBool true); EValue (VBool false)]]
 
 (* Z10243 nand | Z10243@216616 -> Z10244@128325 digest a4774d8e8843c097033eebfbb961ae2d3e15c21e9ba0ff12272745589cd57ed5 *)
 let body_Z10243_nand : expr =
