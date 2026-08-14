@@ -253,6 +253,28 @@ SELECT ?name ?letters ?rot13 ?palindrome WHERE {
 ORDER BY DESC(?letters)`
           },
           {
+            label: "Word list inline (VALUES)",
+            text: `# No dataset needed: VALUES carries its own word list, so this
+# query is self-contained. Paste your own candidates over these.
+PREFIX fn: <${PREFIX}>
+
+SELECT ?phrase ?stripped ?palindrome WHERE {
+  VALUES ?phrase {
+    "a man a plan a canal panama"
+    "a man a plan a canal suez"
+    "was it a car or a cat i saw"
+    "no lemon no melon"
+    "step on no pets"
+    "the quick brown fox"
+    "rats live on no evil star"
+    "doc note i dissent a fast never prevents a fatness i diet on cod"
+  }
+  BIND(fn:Z10052(?phrase)              AS ?stripped)
+  BIND(fn:Z10096(?stripped)            AS ?palindrome)
+}
+ORDER BY DESC(?palindrome) ?phrase`
+          },
+          {
             label: "Mixed with plain SPARQL",
             text: `# Wikifunctions sit alongside SPARQL's own operators; the
 # engine does not care which is which.
