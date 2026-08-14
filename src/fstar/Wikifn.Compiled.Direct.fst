@@ -17,7 +17,7 @@ open Wikifn.Direct
   subset: a value is a string, a natural, a boolean, a typed list, a pair, a
   record or a function.
 
-  compiled: 1429
+  compiled: 1439
   emitted for the interpreter: 3891
 *)
 
@@ -1856,25 +1856,18 @@ let rec compiled_Z13173_get_value_string_from_key_string (fuel:nat) (a0:eval_res
   let next_fuel : nat = fuel - 1 in
   (compiled_Z11542_if_string_output (call_primitive 813 [a0]) a2 (compiled_Z11542_if_string_output (call_primitive 866 [a1; (call_primitive 811 [(call_primitive 811 [a0])])]) (compiled_Z12964_last_element (call_primitive 811 [a0])) (compiled_Z13173_get_value_string_from_key_string next_fuel (call_primitive 812 [a0]) a1 a2)))
 
-(* Z19077 Type identity | Z19077@280126 -> Z29452@260735 *)
-let compiled_Z19077_type_identity (a0:eval_result value) : Tot (eval_result value) =
-  (call_primitive 801 [a0])
+(* Z18626 type of Typed list | Z18626@266662 -> Z26663@205463 *)
+let compiled_Z18626_type_of_typed_list (a0:eval_result value) : Tot (eval_result value) =
+  let part_1 = (call_primitive 803 [(make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 51; 75; 49])))]); (call_primitive 811 [(call_primitive 803 [(make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 52; 75; 50])))]); (call_primitive 803 [(make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 49; 75; 49])))]); a0])])])]) in
+  (call_primitive 803 [(make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 52; 75; 49])))]); part_1])
 
-(* Z19084 same Type | Z19084@294395 -> Z19101@280908 *)
-let compiled_Z19084_same_type (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
-  (call_primitive 13052 [(compiled_Z19077_type_identity a0); (compiled_Z19077_type_identity a1)])
+(* Z18569 type of list (as string) | Z18569@264751 -> Z22770@169522 *)
+let compiled_Z18569_type_of_list_as_string (a0:eval_result value) : Tot (eval_result value) =
+  (call_primitive 22764 [(compiled_Z18626_type_of_typed_list a0)])
 
-(* Z15801 object type equality | Z15801@280942 -> Z19093@280469 *)
-let compiled_Z15801_object_type_equality (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
-  (compiled_Z19084_same_type (call_primitive 16829 [a0]) (call_primitive 16829 [a1]))
-
-(* Z17879 is this list untyped? | Z17879@247310 -> Z17892@247996 *)
-let compiled_Z17879_is_this_list_untyped (a0:eval_result value) : Tot (eval_result value) =
-  (compiled_Z15801_object_type_equality a0 (EOk (VList [])))
-
-(* Z17900 is this list typed? | Z17900@248004 -> Z17901@248005 *)
+(* Z17900 is this list typed? | Z17900@248004 -> Z18581@265631 *)
 let compiled_Z17900_is_this_list_typed (a0:eval_result value) : Tot (eval_result value) =
-  (call_primitive 10216 [(compiled_Z17879_is_this_list_untyped a0)])
+  (compiled_Z10379_string_inequality (compiled_Z18569_type_of_list_as_string a0) (EOk (VText [90; 49])))
 
 (* Z18475 return Typed list | Z18475@262785 -> Z21310@158659 *)
 let compiled_Z18475_return_typed_list (a0:eval_result value) : Tot (eval_result value) =
@@ -3218,6 +3211,18 @@ let compiled_Z15777_is_string (a0:eval_result value) : Tot (eval_result value) =
    | EOk b -> if b then (EOk (VBool false))
               else (EOk (VBool true)))
 
+(* Z19077 Type identity | Z19077@280126 -> Z29452@260735 *)
+let compiled_Z19077_type_identity (a0:eval_result value) : Tot (eval_result value) =
+  (call_primitive 801 [a0])
+
+(* Z19084 same Type | Z19084@294395 -> Z19101@280908 *)
+let compiled_Z19084_same_type (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
+  (call_primitive 13052 [(compiled_Z19077_type_identity a0); (compiled_Z19077_type_identity a1)])
+
+(* Z15801 object type equality | Z15801@280942 -> Z19093@280469 *)
+let compiled_Z15801_object_type_equality (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
+  (compiled_Z19084_same_type (call_primitive 16829 [a0]) (call_primitive 16829 [a1]))
+
 (* Z15811 if is Boolean | Z15811@219480 -> Z15813@198931 *)
 let compiled_Z15811_if_is_boolean (a0:eval_result value) (a1:eval_result value) (a2:eval_result value) : Tot (eval_result value) =
   (compiled_Z15728_iffy a0 a1 a1 a2)
@@ -3480,22 +3485,13 @@ let rec compiled_Z16629_is_function_symmetric_relation_over_elements_of_list (fu
    | EOk b -> if b then (compiled_Z16629_is_function_symmetric_relation_over_elements_of_list next_fuel a0 (call_primitive 812 [a1]))
               else (EOk (VBool false))))
 
-(* Z29446 second element (performance) | Z29446@284079 -> Z29447@228725 *)
-let compiled_Z29446_second_element_performance (a0:eval_result value) : Tot (eval_result value) =
-  (call_primitive 811 [(call_primitive 812 [a0])])
+(* Z17464 ⚠️ same Reference object | Z17464@271360 -> Z23384@174206 *)
+let compiled_Z17464_same_reference_object (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
+  (call_primitive 866 [(call_primitive 22764 [a0]); (call_primitive 22764 [a1])])
 
-(* Z23443 reference string from Key reference | Z23443@174787 -> Z23444@174507 *)
-let compiled_Z23443_reference_string_from_key_reference (a0:eval_result value) : Tot (eval_result value) =
-  (call_primitive 803 [(make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 51; 57; 75; 49])))]); a0])
-
-(* Z30617 reified value after Type | Z30617@265881 -> Z30619@236261 *)
-let compiled_Z30617_reified_value_after_type (a0:eval_result value) : Tot (eval_result value) =
-  let part_1 = (call_primitive 810 [(make_record 882 [({ key_owner = None; key_index = 1 }, (make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 49; 75; 49])))])); ({ key_owner = None; key_index = 2 }, (EOk (VText [90; 57])))]); (call_primitive 810 [(make_record 882 [({ key_owner = None; key_index = 1 }, (make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 57; 75; 49])))])); ({ key_owner = None; key_index = 2 }, (compiled_Z23443_reference_string_from_key_reference a0))]); (EOk (VList []))])]) in
-  (call_primitive 801 [part_1])
-
-(* Z16667 same sign | Z16667@266742 -> Z33752@266740 *)
+(* Z16667 same sign | Z16667@266742 -> Z17607@239715 *)
 let compiled_Z16667_same_sign (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
-  (call_primitive 866 [(call_primitive 822 [(compiled_Z29446_second_element_performance (compiled_Z30617_reified_value_after_type a0))]); (call_primitive 822 [(compiled_Z29446_second_element_performance (compiled_Z30617_reified_value_after_type a1))])])
+  (compiled_Z17464_same_reference_object a0 a1)
 
 (* Z17105 sign of integer | Z17105@225359 -> Z17213@231195 *)
 let compiled_Z17105_sign_of_integer (a0:eval_result value) : Tot (eval_result value) =
@@ -3627,6 +3623,10 @@ let compiled_Z17352_apply_natural_number_function_to_positive_integer (a0:eval_r
 let compiled_Z17359_key_index_as_string (a0:eval_result value) : Tot (eval_result value) =
   (compiled_Z11424_discard_until_end_of_last_substring (compiled_Z22475_value_by_key_safer (make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 51; 57; 75; 49])))]) a0) (EOk (VText [75])))
 
+(* Z17414 same day of the week | Z17414@236008 -> Z18605@265660 *)
+let compiled_Z17414_same_day_of_the_week (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
+  (compiled_Z17464_same_reference_object a0 a1)
+
 (* Z17469 subtract integers (represented by an ordered pair of natural numbers) | Z17469@279341 -> Z17475@279340 *)
 let compiled_Z17469_subtract_integers_represented_by_an_ordered_pair_of_natural (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
   (call_primitive 810 [(call_primitive 13521 [(call_primitive 811 [a0]); (compiled_Z12964_last_element a1)]); (call_primitive 810 [(call_primitive 13521 [(compiled_Z12964_last_element a0); (call_primitive 811 [a1])]); (EOk (VList []))])])
@@ -3710,6 +3710,10 @@ let compiled_Z17778_reverse_list_of_days_of_the_week (a0:eval_result value) : To
 let compiled_Z17783_swedish_noun_sixth_declension_indefinite_plural_same_as_sing (a0:eval_result value) : Tot (eval_result value) =
   (compiled_Z11602_string_identity a0)
 
+(* Z17817 same Gregorian era | Z17817@294079 -> Z17856@246926 *)
+let compiled_Z17817_same_gregorian_era (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
+  (compiled_Z17464_same_reference_object a0 a1)
+
 (* Z17827 replace suffix "a" with "on" | Z17827@246436 -> Z17994@251502 *)
 let compiled_Z17827_replace_suffix_a_with_on (a0:eval_result value) : Tot (eval_result value) =
   (compiled_Z11178_replace_at_end a0 (EOk (VText [97])) (EOk (VText [111; 110])))
@@ -3729,6 +3733,14 @@ let compiled_Z17845_pad_string_with_leading_0_until_it_is_two_characters_long (a
 (* Z17853 Swedish noun, fourth declension, singular definite, -n | Z17853@246923 -> Z17855@246925 *)
 let compiled_Z17853_swedish_noun_fourth_declension_singular_definite_n (a0:eval_result value) : Tot (eval_result value) =
   (compiled_Z17791_add_suffix_n_to_string_if_it_does_not_already_end_with_n a0)
+
+(* Z17879 is this list untyped? | Z17879@247310 -> Z18588@265638 *)
+let compiled_Z17879_is_this_list_untyped (a0:eval_result value) : Tot (eval_result value) =
+  (call_primitive 866 [(compiled_Z18569_type_of_list_as_string a0); (EOk (VText [90; 49]))])
+
+(* Z17893 ZID of object type | Z17893@247997 -> Z22768@243728 *)
+let compiled_Z17893_zid_of_object_type (a0:eval_result value) : Tot (eval_result value) =
+  (call_primitive 22764 [(call_primitive 16829 [a0])])
 
 (* Z17904 add suffix "t" to string if it does not end with "t" | Z17904@248008 -> Z17993@251501 *)
 let compiled_Z17904_add_suffix_t_to_string_if_it_does_not_end_with_t (a0:eval_result value) : Tot (eval_result value) =
@@ -3952,11 +3964,6 @@ let compiled_Z18556_get_middle_character_or_characters_of_a_string (a0:eval_resu
    | EErr e -> EErr e
    | EOk b -> if b then (compiled_Z14592_first_n_characters_of_string (compiled_Z14636_remove_first_n_characters_of_string a0 (call_primitive 13582 [(compiled_Z15111_floor_n_2 (call_primitive 11040 [a0]))])) (EOk (VNat 2)))
               else (call_primitive 10901 [(compiled_Z14636_remove_first_n_characters_of_string a0 (compiled_Z15111_floor_n_2 (call_primitive 11040 [a0])))]))
-
-(* Z18626 type of Typed list | Z18626@266662 -> Z26663@205463 *)
-let compiled_Z18626_type_of_typed_list (a0:eval_result value) : Tot (eval_result value) =
-  let part_1 = (call_primitive 803 [(make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 51; 75; 49])))]); (call_primitive 811 [(call_primitive 803 [(make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 52; 75; 50])))]); (call_primitive 803 [(make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 49; 75; 49])))]); a0])])])]) in
-  (call_primitive 803 [(make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 52; 75; 49])))]); part_1])
 
 (* Z18636 Typed list has the same Object for its Type | Z18636@266848 -> Z18638@266850 *)
 let compiled_Z18636_typed_list_has_the_same_object_for_its_type (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
@@ -4501,6 +4508,14 @@ let compiled_Z21373_freak_pay_or_mouse_pay (a0:eval_result value) : Tot (eval_re
    | EOk b -> if b then (EOk (VText [77; 111; 117; 115; 101; 32; 112; 97; 121]))
               else (EOk (VText [70; 114; 101; 97; 107; 32; 112; 97; 121])))
 
+(* Z21381 Typed list with length | Z21381@154943 -> Z21382@154942 *)
+let compiled_Z21381_typed_list_with_length (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
+  (call_primitive 881 [a0])
+
+(* Z21383 Create typed list of length | Z21383@154944 -> Z21384@154946 *)
+let compiled_Z21383_create_typed_list_of_length (a0:eval_result value) (a1:eval_result value) (a2:eval_result value) : Tot (eval_result value) =
+  (compiled_Z21381_typed_list_with_length a0 a1)
+
 (* Z21414 Article constructor | Z21414@155315 -> Z21415@155316 *)
 let compiled_Z21414_article_constructor (a0:eval_result value) (a1:eval_result value) : Tot (eval_result value) =
   (compiled_Z12899_join_list_of_strings_with_delimiter default_fuel a1 (EOk (VText [92; 110])))
@@ -4987,6 +5002,10 @@ let compiled_Z23439_values_from_object (a0:eval_result value) : Tot (eval_result
   let part_1 = (with_items 873 (compiled_Z13436_apply_a_two_parameter_function_to_a_common_first_argument_an default_fuel (EOk (VFunc 803)) (make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 51; 75; 50])))]) (call_primitive 803 [(make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 52; 75; 50])))]); (call_primitive 16829 [a0])])) (fun items ->
      map_direct (fun x -> compiled_Z22549_key_reference_from_string (EOk x)) items)) in
   (compiled_Z18475_return_typed_list (compiled_Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments default_fuel (EOk (VFunc 803)) part_1 a0))
+
+(* Z23443 reference string from Key reference | Z23443@174787 -> Z23444@174507 *)
+let compiled_Z23443_reference_string_from_key_reference (a0:eval_result value) : Tot (eval_result value) =
+  (call_primitive 803 [(make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 51; 57; 75; 49])))]); a0])
 
 (* Z23486 count lexeme senses in lexeme | Z23486@180817 -> Z23488@175148 *)
 let compiled_Z23486_count_lexeme_senses_in_lexeme (a0:eval_result value) : Tot (eval_result value) =
@@ -5475,6 +5494,10 @@ let compiled_Z26414_remove_first_and_last_character (a0:eval_result value) : Tot
 let compiled_Z26457_convert_string_according_to_type_and_language (a0:eval_result value) (a1:eval_result value) (a2:eval_result value) (a3:eval_result value) : Tot (eval_result value) =
   (call_primitive 13318 [(call_primitive 803 [(make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 52; 75; 53])))]); a2]); (call_primitive 13318 [(call_primitive 803 [(make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 52; 75; 54])))]); a2]); a0; a1]); a3])
 
+(* Z26474 is typed pair | Z26474@279751 -> Z35932@279750 *)
+let compiled_Z26474_is_typed_pair (a0:eval_result value) : Tot (eval_result value) =
+  (call_primitive 10615 [(call_primitive 22764 [(call_primitive 16829 [a0])]); (EOk (VText [90; 56; 56; 50; 32; 40]))])
+
 (* Z26504 month from date | Z26504@219600 -> Z26506@204661 *)
 let compiled_Z26504_month_from_date (a0:eval_result value) : Tot (eval_result value) =
   (compiled_Z20343_month_from_day_of_the_roman_year (compiled_Z24936_day_of_year_from_calendar_date a0))
@@ -5733,6 +5756,10 @@ let compiled_Z28222_number_of_arguments_of_a_function (a0:eval_result value) : T
 (* Z28227 type for a function’s first argument | Z28227@229257 -> Z29525@260731 *)
 let compiled_Z28227_type_for_a_function_s_first_argument (a0:eval_result value) : Tot (eval_result value) =
   (compiled_Z21174_type_declared_for_argument (call_primitive 811 [(compiled_Z21177_get_list_of_argument_declarations a0)]))
+
+(* Z29446 second element (performance) | Z29446@284079 -> Z29447@228725 *)
+let compiled_Z29446_second_element_performance (a0:eval_result value) : Tot (eval_result value) =
+  (call_primitive 811 [(call_primitive 812 [a0])])
 
 (* Z28243 type for a function’s second argument | Z28243@228738 -> Z29450@260724 *)
 let compiled_Z28243_type_for_a_function_s_second_argument (a0:eval_result value) : Tot (eval_result value) =
@@ -6138,6 +6165,11 @@ let compiled_Z30590_lexeme_reference_from_lexeme_sense_reference (a0:eval_result
 let compiled_Z30591_lexeme_reference_from_lexeme_form_reference (a0:eval_result value) : Tot (eval_result value) =
   (compiled_Z22249_wikidata_lexeme_reference_from_lid_string (compiled_Z11410_discard_from_start_of_first_substring (call_primitive 803 [(make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 54; 48; 57; 52; 75; 49])))]); a0]) (EOk (VText [45]))))
 
+(* Z30617 reified value after Type | Z30617@265881 -> Z30619@236261 *)
+let compiled_Z30617_reified_value_after_type (a0:eval_result value) : Tot (eval_result value) =
+  let part_1 = (call_primitive 810 [(make_record 882 [({ key_owner = None; key_index = 1 }, (make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 49; 75; 49])))])); ({ key_owner = None; key_index = 2 }, (EOk (VText [90; 57])))]); (call_primitive 810 [(make_record 882 [({ key_owner = None; key_index = 1 }, (make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 57; 75; 49])))])); ({ key_owner = None; key_index = 2 }, (compiled_Z23443_reference_string_from_key_reference a0))]); (EOk (VList []))])]) in
+  (call_primitive 801 [part_1])
+
 (* Z30631 reference of Wikidata property | Z30631@242321 -> Z30633@236312 *)
 let compiled_Z30631_reference_of_wikidata_property (a0:eval_result value) : Tot (eval_result value) =
   (call_primitive 803 [(make_record 39 [({ key_owner = Some 39; key_index = 1 }, (EOk (VText [90; 54; 48; 48; 50; 75; 49])))]); a0])
@@ -6245,6 +6277,19 @@ let compiled_Z30972_multilingual_text_includes_string (a0:eval_result value) (a1
 (* Z31010 set (i,j)th element on list of lists | Z31010@249322 -> Z31375@249318 *)
 let compiled_Z31010_set_i_j_th_element_on_list_of_lists (a0:eval_result value) (a1:eval_result value) (a2:eval_result value) (a3:eval_result value) : Tot (eval_result value) =
   (compiled_Z31369_set_i_th_element_on_list_1_n a0 a1 (compiled_Z31369_set_i_th_element_on_list_1_n (compiled_Z13397_get_the_nth_element_of_a_list default_fuel a0 a1) a2 a3))
+
+(* Z31109 fail with context | Z31109@253857 -> Z31203@243851 *)
+let compiled_Z31109_fail_with_context (a0:eval_result value) (a1:eval_result value) (a2:eval_result value) (a3:eval_result value) : Tot (eval_result value) =
+  let part_1 = (call_primitive 12961 [(compiled_Z27385_enclose_string (EOk (VText [90; 51; 49; 49; 48; 57; 75; 52; 58; 32])) a3 (EOk (VText []))); (call_primitive 12961 [(compiled_Z27385_enclose_string (EOk (VText [90; 51; 49; 49; 48; 57; 75; 49; 58; 32])) (compiled_Z17893_zid_of_object_type a0) (EOk (VText [32; 91; 90; 52; 93]))); a2])]) in
+  (throw_error a1 (call_primitive 12961 [(EOk (VText [90; 51; 49; 49; 48; 57; 58; 32; 90; 51; 49; 50; 48; 51; 58; 32; 90; 56; 53; 49])); part_1]))
+
+(* Z31065 pass object if predicate is true | Z31065@254087 -> Z31119@243115 *)
+let compiled_Z31065_pass_object_if_predicate_is_true (a0:eval_result value) (a1:eval_result value) (a2:eval_result value) (a3:eval_result value) : Tot (eval_result value) =
+  (let cond_1 : eval_result bool = condition_of 802 (call_primitive 1000000002 [a1; a0]) in
+   match cond_1 with
+   | EErr e -> EErr e
+   | EOk b -> if b then a0
+              else (compiled_Z31109_fail_with_context a0 a2 (call_primitive 810 [(compiled_Z27385_enclose_string (EOk (VText [75; 49; 58; 32])) (EOk (VText [90; 51; 49; 48; 54; 53; 58; 32; 90; 51; 49; 49; 48; 57])) (EOk (VText [32; 91; 90; 56; 93]))); (EOk (VList []))]) a3))
 
 (* Z31095 apply with N 1st and 2nd args and common 3rd arg | Z31095@250428 -> Z31096@250420 *)
 let rec compiled_Z31095_apply_with_n_1st_and_2nd_args_and_common_3rd_arg (fuel:nat) (a0:eval_result value) (a1:eval_result value) (a2:eval_result value) (a3:eval_result value) : Tot (eval_result value) (decreases fuel) =
@@ -7246,19 +7291,10 @@ let compiled_Z38383_string_before_last_occurrence (a0:eval_result value) (a1:eva
 let compiled_Z38472_switch_on_string (a0:eval_result value) (a1:eval_result value) (a2:eval_result value) : Tot (eval_result value) =
   (compiled_Z22193_switch default_fuel a0 (compiled_Z17895_untype_a_list a1) (compiled_Z17895_untype_a_list a2))
 
-(* Z38477 switch on Type | Z38477@294854 -> Z38486@294852 *)
-let rec compiled_Z38477_switch_on_type (fuel:nat) (a0:eval_result value) (a1:eval_result value) (a2:eval_result value) : Tot (eval_result value) (decreases fuel) =
-  if fuel = 0 then EErr EFuelExhausted else
-  let next_fuel : nat = fuel - 1 in
-  (let cond_1 : eval_result bool = condition_of 802 (call_primitive 813 [a1]) in
-   match cond_1 with
-   | EErr e -> EErr e
-   | EOk b -> if b then (call_primitive 811 [a2])
-              else (let cond_2 : eval_result bool = condition_of 802 (compiled_Z19084_same_type a0 (call_primitive 811 [a1])) in
-   match cond_2 with
-   | EErr e -> EErr e
-   | EOk b -> if b then (call_primitive 811 [a2])
-              else (compiled_Z38477_switch_on_type next_fuel a0 (call_primitive 812 [a1]) (call_primitive 812 [a2]))))
+(* Z38477 switch on Type | Z38477@294854 -> Z38481@294841 *)
+let compiled_Z38477_switch_on_type (a0:eval_result value) (a1:eval_result value) (a2:eval_result value) : Tot (eval_result value) =
+  (compiled_Z38472_switch_on_string (call_primitive 22764 [a0]) (with_items 873 a1 (fun items ->
+     map_direct (fun x -> call_primitive 22764 [EOk x]) items)) a2)
 
 (* Z38478 Get parent taxon | Z38478@294858 -> Z38487@295755 *)
 let compiled_Z38478_get_parent_taxon (a0:eval_result value) : Tot (eval_result value) =
@@ -7266,7 +7302,7 @@ let compiled_Z38478_get_parent_taxon (a0:eval_result value) : Tot (eval_result v
 
 (* Z38482 switch on Type of Object | Z38482@294849 -> Z38485@294846 *)
 let compiled_Z38482_switch_on_type_of_object (a0:eval_result value) (a1:eval_result value) (a2:eval_result value) : Tot (eval_result value) =
-  (compiled_Z38477_switch_on_type default_fuel (call_primitive 16829 [a0]) a1 a2)
+  (compiled_Z38477_switch_on_type (call_primitive 16829 [a0]) a1 a2)
 
 (* Z38552 arguments of an anonymous function | Z38552@295530 -> Z38555@295304 *)
 let compiled_Z38552_arguments_of_an_anonymous_function (a0:eval_result value) : Tot (eval_result value) =
@@ -8010,6 +8046,8 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 17345, [a0; a1] -> Some (compiled_Z17345_multiply_integers_represented_by_an_ordered_pair_of_natural a0 a1)
   | 17352, [a0; a1] -> Some (compiled_Z17352_apply_natural_number_function_to_positive_integer a0 a1)
   | 17359, [a0] -> Some (compiled_Z17359_key_index_as_string a0)
+  | 17414, [a0; a1] -> Some (compiled_Z17414_same_day_of_the_week a0 a1)
+  | 17464, [a0; a1] -> Some (compiled_Z17464_same_reference_object a0 a1)
   | 17469, [a0; a1] -> Some (compiled_Z17469_subtract_integers_represented_by_an_ordered_pair_of_natural a0 a1)
   | 17534, [a0; a1] -> Some (compiled_Z17534_make_untyped_pair a0 a1)
   | 17628, [a0; a1] -> Some (compiled_Z17628_same_list_of_natural_numbers a0 a1)
@@ -8027,11 +8065,13 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 17778, [a0] -> Some (compiled_Z17778_reverse_list_of_days_of_the_week a0)
   | 17783, [a0] -> Some (compiled_Z17783_swedish_noun_sixth_declension_indefinite_plural_same_as_sing a0)
   | 17791, [a0] -> Some (compiled_Z17791_add_suffix_n_to_string_if_it_does_not_already_end_with_n a0)
+  | 17817, [a0; a1] -> Some (compiled_Z17817_same_gregorian_era a0 a1)
   | 17827, [a0] -> Some (compiled_Z17827_replace_suffix_a_with_on a0)
   | 17832, [a0] -> Some (compiled_Z17832_swedish_noun_ninth_declension_indefinite_plural_en a0)
   | 17845, [a0] -> Some (compiled_Z17845_pad_string_with_leading_0_until_it_is_two_characters_long a0)
   | 17853, [a0] -> Some (compiled_Z17853_swedish_noun_fourth_declension_singular_definite_n a0)
   | 17879, [a0] -> Some (compiled_Z17879_is_this_list_untyped a0)
+  | 17893, [a0] -> Some (compiled_Z17893_zid_of_object_type a0)
   | 17895, [a0] -> Some (compiled_Z17895_untype_a_list a0)
   | 17900, [a0] -> Some (compiled_Z17900_is_this_list_typed a0)
   | 17904, [a0] -> Some (compiled_Z17904_add_suffix_t_to_string_if_it_does_not_end_with_t a0)
@@ -8084,6 +8124,7 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 18504, [a0] -> Some (compiled_Z18504_indo_arabic_to_arabic_numerals a0)
   | 18531, [a0] -> Some (compiled_Z18531_byzantine_to_arabic_numeral a0)
   | 18556, [a0] -> Some (compiled_Z18556_get_middle_character_or_characters_of_a_string a0)
+  | 18569, [a0] -> Some (compiled_Z18569_type_of_list_as_string a0)
   | 18597, [a0; a1] -> Some (compiled_Z18597_append_element_to_untyped_list a0 a1)
   | 18626, [a0] -> Some (compiled_Z18626_type_of_typed_list a0)
   | 18636, [a0; a1] -> Some (compiled_Z18636_typed_list_has_the_same_object_for_its_type a0 a1)
@@ -8207,6 +8248,8 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 21356, [a0; a1] -> Some (compiled_Z21356_apply_function_and_forward_input a0 a1)
   | 21366, [a0] -> Some (compiled_Z21366_lowercase_first_word a0)
   | 21373, [a0] -> Some (compiled_Z21373_freak_pay_or_mouse_pay a0)
+  | 21381, [a0; a1] -> Some (compiled_Z21381_typed_list_with_length a0 a1)
+  | 21383, [a0; a1; a2] -> Some (compiled_Z21383_create_typed_list_of_length a0 a1 a2)
   | 21389, [a0; a1] -> Some (compiled_Z21389_replicate_object_n_times default_fuel a0 a1)
   | 21394, [a0] -> Some (compiled_Z21394_concatenate_many_strings a0)
   | 21414, [a0; a1] -> Some (compiled_Z21414_article_constructor a0 a1)
@@ -8417,6 +8460,7 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 26410, [a0; a1] -> Some (compiled_Z26410_replace_globe_in_wikidata_geo_coordinate a0 a1)
   | 26414, [a0] -> Some (compiled_Z26414_remove_first_and_last_character a0)
   | 26457, [a0; a1; a2; a3] -> Some (compiled_Z26457_convert_string_according_to_type_and_language a0 a1 a2 a3)
+  | 26474, [a0] -> Some (compiled_Z26474_is_typed_pair a0)
   | 26504, [a0] -> Some (compiled_Z26504_month_from_date a0)
   | 26527, [a0] -> Some (compiled_Z26527_conversions_to_si_units_of_an_item a0)
   | 26556, [a0; a1; a2] -> Some (compiled_Z26556_take_sub_sequence_of_list a0 a1 a2)
@@ -8584,8 +8628,10 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 31013, [a0; a1] -> Some (compiled_Z31013_levenshtein_distance_between_two_lists default_fuel a0 a1)
   | 31026, [a0; a1] -> Some (compiled_Z31026_hamming_distance a0 a1)
   | 31032, [a0; a1; a2] -> Some (compiled_Z31032_index_of_first_mismatching_element default_fuel a0 a1 a2)
+  | 31065, [a0; a1; a2; a3] -> Some (compiled_Z31065_pass_object_if_predicate_is_true a0 a1 a2 a3)
   | 31095, [a0; a1; a2; a3] -> Some (compiled_Z31095_apply_with_n_1st_and_2nd_args_and_common_3rd_arg default_fuel a0 a1 a2 a3)
   | 31098, [a0; a1; a2; a3] -> Some (compiled_Z31098_apply_three_parameter_function_pairwise_to_3_lists default_fuel a0 a1 a2 a3)
+  | 31109, [a0; a1; a2; a3] -> Some (compiled_Z31109_fail_with_context a0 a1 a2 a3)
   | 31186, [a0] -> Some (compiled_Z31186_error_value_of_thrown_error a0)
   | 31262, [a0; a1; a2; a3] -> Some (compiled_Z31262_apply_with_common_1st_and_3rd_args_and_n_2nd_args default_fuel a0 a1 a2 a3)
   | 31268, [a0; a1] -> Some (compiled_Z31268_first_index_1_n_of_character_in_string a0 a1)
@@ -8809,7 +8855,7 @@ let compiled_by_zid (fid:zid) (args:list (eval_result value))
   | 38382, [a0; a1; a2] -> Some (compiled_Z38382_replace_except_last a0 a1 a2)
   | 38383, [a0; a1] -> Some (compiled_Z38383_string_before_last_occurrence a0 a1)
   | 38472, [a0; a1; a2] -> Some (compiled_Z38472_switch_on_string a0 a1 a2)
-  | 38477, [a0; a1; a2] -> Some (compiled_Z38477_switch_on_type default_fuel a0 a1 a2)
+  | 38477, [a0; a1; a2] -> Some (compiled_Z38477_switch_on_type a0 a1 a2)
   | 38478, [a0] -> Some (compiled_Z38478_get_parent_taxon a0)
   | 38482, [a0; a1; a2] -> Some (compiled_Z38482_switch_on_type_of_object a0 a1 a2)
   | 38552, [a0] -> Some (compiled_Z38552_arguments_of_an_anonymous_function a0)

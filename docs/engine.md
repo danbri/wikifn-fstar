@@ -133,15 +133,15 @@ value this harness can read:
 | | count |
 |---|---|
 | testers considered | 10,281 |
-| pass | **1,391** |
+| pass | **1,414** |
 | fail | 111 |
-| error | 1,617 |
+| error | 1,594 |
 | skipped, with reasons | 7,165 |
 
 | | count |
 |---|---|
-| functions with at least one passing tester | 589 |
-| functions passing every tester that could be read | **481** |
+| functions with at least one passing tester | 600 |
+| functions passing every tester that could be read | **493** |
 
 A tester is only counted as passing when both its call and its expected value were
 readable. Everything else is skipped with a stated reason, never counted as a pass.
@@ -360,6 +360,31 @@ The validator is now *run*, because it is an ordinary function and the engine ca
 Passing testers went from 1,249 to **1,291**, functions passing every readable tester from
 450 to **460**, and functions with at least one pass from 544 to **565**.
 
+## Types are values
+
+`Z4` is a type in Wikifunctions and a type is a value, so a composition can ask what type
+something has, build a type to compare against, and render one as text. None of that
+worked here: `Z16829` type-of answered only for records, and the generic constructors
+`Z881`, `Z882` and `Z883` had no implementation at all, so `Z881(Z6)` — the type "list of
+strings" — stopped the evaluation that mentioned it.
+
+Applying a type constructor now yields a record of that type holding its parameters, which
+is the shape the corpus writes, and `Z22764` renders it back. The spelling is not a choice:
+these are the strings its own testers demand, brackets and nesting included.
+
+```
+Z16829("abc")                            -> Z6
+Z881(Z40)              rendered          -> "Z881 (Z40)"
+Z882(Z6, Z16683)       rendered          -> "Z882 (Z6, Z16683)"
+Z882(Z99, Z883(Z6, Z881(Z6)))            -> "Z882 (Z99, Z883 (Z6, Z881 (Z6)))"
+```
+
+One limit is real and is the value model's, not this code's: a `VList` and a `VPair` carry
+no element type, so the best that can be said of a list of strings is that it is a list.
+The corpus writes that parameter and `Z22764`'s testers ask for it back. Carrying type
+parameters on lists and pairs is what would close it, and it is also what `Z805` reify
+needs — reify's whole job is to expose the encoding those parameters live in.
+
 ## Counting what a missing primitive blocks
 
 For a long time this page ranked the remaining primitives by how many functions each one
@@ -373,7 +398,7 @@ difference. It is roughly thirty times smaller and it reorders the list.
 
 | | marginal unlock | used to claim |
 |---|---|---|
-| `Z22764` String from Type | **+49** | blocks 1,455 |
+| `Z22764` String from Type | **+49**, done | blocks 1,455 |
 | `Z10047`/`Z10018` case conversion | **+41**, done | blocks 1,301 |
 | quoting — `Z99`, `Z805`, `Z899`, `Z29267` | **+39** | blocks 1,392 |
 | `Z828` fetch persistent object | +8 | blocks 1,446 |

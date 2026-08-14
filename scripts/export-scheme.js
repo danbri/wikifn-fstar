@@ -77,6 +77,12 @@ export const PRELUDE = new Map([
   // verified one, which is a different oracle from the F* module.
   ["Z10047", (n) => `(define (${n} s) (string-downcase s))`],
   ["Z10018", (n) => `(define (${n} s) (string-upcase s))`],
+  // A type is a value: a plain one is its identifier, a generic one is a record
+  // of its identifier and parameters, printed the way Z22764's testers spell it.
+  ["Z881", (n) => `(define (${n} a) (list 'record 'Z881 (list 'Z881K1 a)))`],
+  ["Z882", (n) => `(define (${n} a b) (list 'record 'Z882 (list 'Z882K1 a) (list 'Z882K2 b)))`],
+  ["Z883", (n) => `(define (${n} a b) (list 'record 'Z883 (list 'Z883K1 a) (list 'Z883K2 b)))`],
+  ["Z22764", (n) => `(define (${n} t)\n  (if (pair? t)\n      (string-append (symbol->string (cadr t)) " ("\n        (apply string-append\n          (let loop ((f (cddr t)))\n            (cond ((null? f) (list))\n                  ((null? (cdr f)) (list (${n} (cadr (car f)))))\n                  (else (cons (${n} (cadr (car f))) (cons ", " (loop (cdr f))))))))\n        ")")\n      (symbol->string t)))`],
   // A Z882 pair prints as (cons left right), so its accessors are car and cdr.
   // These were used by the listing and defined nowhere, which made every body
   // mentioning a pair fail to run.

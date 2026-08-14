@@ -68,9 +68,26 @@
 
 (define (Z29294_object_equivalence a b) (equal? a b))
 
-(define (Z10047 s) (string-downcase s))
+(define (Z10047_to_lowercase s) (string-downcase s))
 
-(define (Z10018 s) (string-upcase s))
+(define (Z10018_to_uppercase s) (string-upcase s))
+
+(define (Z881_typed_list a) (list 'record 'Z881 (list 'Z881K1 a)))
+
+(define (Z882_typed_pair a b) (list 'record 'Z882 (list 'Z882K1 a) (list 'Z882K2 b)))
+
+(define (Z883_typed_map a b) (list 'record 'Z883 (list 'Z883K1 a) (list 'Z883K2 b)))
+
+(define (Z22764_string_from_type t)
+  (if (pair? t)
+      (string-append (symbol->string (cadr t)) " ("
+        (apply string-append
+          (let loop ((f (cddr t)))
+            (cond ((null? f) (list))
+                  ((null? (cdr f)) (list (Z22764_string_from_type (cadr (car f)))))
+                  (else (cons (Z22764_string_from_type (cadr (car f))) (cons ", " (loop (cdr f))))))))
+        ")")
+      (symbol->string t)))
 
 (define (fst p) (car p))
 
@@ -209,8 +226,12 @@
 (define Z10000 Z10000_join_two_strings)
 (define Z13052 Z13052_object_equality)
 (define Z29294 Z29294_object_equivalence)
-(define Z10047 Z10047)
-(define Z10018 Z10018)
+(define Z10047 Z10047_to_lowercase)
+(define Z10018 Z10018_to_uppercase)
+(define Z881 Z881_typed_list)
+(define Z882 Z882_typed_pair)
+(define Z883 Z883_typed_map)
+(define Z22764 Z22764_string_from_type)
 (define Z13569 Z13569_subtract_natural_numbers_with_floor_of_0)
 (define Z13582 Z13582_decrement_natural_number_by_one)
 (define Z12668 Z12668_reverse_untyped_list)

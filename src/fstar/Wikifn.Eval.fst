@@ -208,6 +208,19 @@ let fid_z14520_remove_characters : zid = 14520
 let fid_z10047_to_lowercase : zid = 10047
 let fid_z10018_to_uppercase : zid = 10018
 
+// Types as values.
+//
+// A type is a value in Wikifunctions - Z4 - and the generic ones are written as
+// a call: Z881(Z6) is the type "list of strings". Those calls had no
+// implementation here, so a composition that asked what type something was, or
+// built a type to compare against, stopped. Applying a type constructor now
+// yields a record of that type holding its parameters, which is the same shape
+// the corpus writes it in, and Z22764 renders it back to text.
+let fid_typed_list : zid = 881      // Z881 Typed list
+let fid_typed_pair : zid = 882      // Z882 Typed pair
+let fid_typed_map : zid = 883       // Z883 Typed map
+let fid_string_from_type : zid = 22764  // Z22764 String from Type
+
 (* An internal helper the generator emits for the private-use marker idiom.
    Numbered outside the Wikifunctions range so it cannot collide. *)
 let internal_fresh_private_use : zid = 1000000001
@@ -281,6 +294,49 @@ and field_list_eq (left:list (zkey & value)) (right:list (zkey & value))
   | (lk, lv) :: lt, (rk, rv) :: rt ->
       if zkey_eq lk rk then (if value_eq lv rv then field_list_eq lt rt else false) else false
   | _, _ -> false
+
+(* What type a value has. Every shape answers, which is what Z16829 promises.
+ 
+   Two of them answer less than they should, and the reason is the value model
+   rather than this function: a list and a pair carry no parameter, so the best
+   that can be said of a list of strings is that it is a list. The corpus writes
+   that parameter and Z22764's own testers ask for it back, so this is a real
+   limit and not a rounding. *)
+let type_of_value (v:value) : Tot value =
+  match v with
+  | VText _ -> VFunc 6
+  | VBool _ -> VFunc 40
+  | VNat _ -> VFunc 13518
+  | VList _ -> VFunc fid_typed_list
+  | VPair _ _ -> VFunc fid_typed_pair
+  | VFunc _ -> VFunc 8
+  | VRecord t _ -> VFunc t
+
+(* A type as text. A plain type is its identifier; a generic is its identifier
+   and its parameters in brackets, which is the spelling Z22764's testers use:
+   Z882 (Z99, Z883 (Z6, Z881 (Z6))). *)
+let rec render_type (v:value) : Tot (option text) (decreases v) =
+  match v with
+  | VFunc t -> Some (render_zid t)
+  | VRecord t fields -> begin
+      match render_type_arguments fields with
+      | None -> None
+      | Some [] -> Some (render_zid t)
+      | Some rendered ->
+          Some (text_concat (render_zid t)
+                 (text_concat [32; 40] (text_concat rendered [41])))
+    end
+  | _ -> None
+
+and render_type_arguments (fields:list (zkey & value)) : Tot (option text) (decreases fields) =
+  match fields with
+  | [] -> Some []
+  | (_, v) :: [] -> render_type v
+  | (_, v) :: rest -> begin
+      match render_type v, render_type_arguments rest with
+      | Some head, Some tail -> Some (text_concat head (text_concat [44; 32] tail))
+      | _, _ -> None
+    end
 
 let rec value_count (items:list value) : Tot nat =
   match items with
@@ -417,9 +473,15 @@ let apply_primitive (fid:zid) (args:list value) : Tot (option (eval_result value
               | VRecord _ (_ :: (_, r) :: _) -> EOk r
               | _ -> EErr (ETypeMismatch fid))
       else if fid = fid_type_of then
-        Some (match a with
-              | VRecord t _ -> EOk (VFunc t)
-              | _ -> EErr (ETypeMismatch fid))
+        (* Every value has a type, so this answers for every value rather than
+           only for records, which is what it used to do. *)
+        Some (EOk (type_of_value a))
+      else if fid = fid_string_from_type then
+        Some (match render_type a with
+              | Some rendered -> EOk (VText rendered)
+              | None -> EErr (ETypeMismatch fid))
+      else if fid = fid_typed_list then
+        Some (EOk (VRecord fid_typed_list [(global_key fid_typed_list 1, a)]))
       else if fid = fid_z10047_to_lowercase then
         Some (match as_text fid a with
               | EOk t -> EOk (VText (z10047_to_lowercase t))
@@ -544,6 +606,12 @@ let apply_primitive (fid:zid) (args:list value) : Tot (option (eval_result value
                 end
               | EErr e, _ -> EErr e
               | _, EErr e -> EErr e)
+      else if fid = fid_typed_pair then
+        Some (EOk (VRecord fid_typed_pair
+                    [(global_key fid_typed_pair 1, a); (global_key fid_typed_pair 2, b)]))
+      else if fid = fid_typed_map then
+        Some (EOk (VRecord fid_typed_map
+                    [(global_key fid_typed_map 1, a); (global_key fid_typed_map 2, b)]))
       else if fid = fid_object_eq || fid = fid_object_equiv then
         Some (EOk (VBool (value_eq a b)))
       else if fid = fid_nat_divide then

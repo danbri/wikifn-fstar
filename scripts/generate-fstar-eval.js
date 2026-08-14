@@ -111,6 +111,8 @@ const PRIMITIVES = new Set([
   "Z13052", "Z29294",
   // Unicode case conversion, root locale, from Wikifn.Unicode.Case.
   "Z10047", "Z10018",
+  // Types as values: the generic type constructors, and rendering a type.
+  "Z881", "Z882", "Z883", "Z22764",
   // Text and codepoint lists are the same data in two shapes.
   "Z22693", "Z22717",
   // Higher-order application, which is how the corpus writes higher-order code.

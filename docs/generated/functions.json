@@ -3940,6 +3940,10 @@
     "Z29294": "Z29294_object_equivalence",
     "Z10047": "Z10047_to_lowercase",
     "Z10018": "Z10018_to_uppercase",
+    "Z881": "Z881_typed_list",
+    "Z882": "Z882_typed_pair",
+    "Z883": "Z883_typed_map",
+    "Z22764": "Z22764_string_from_type",
     "Z22693": "Z22693_codepoint_list_to_string",
     "Z22717": "Z22717_string_to_codepoint_list",
     "Z13318": "Z13318_apply_two_argument_function",
@@ -22949,9 +22953,9 @@
         "Sign"
       ],
       "returnType": "Boolean",
-      "implementation": "Z33752",
-      "revision": 266740,
-      "digest": "3856b9b497d8cfc69f7e2d029e3fa45446391416d58e7dd4d83f201420071f64"
+      "implementation": "Z17607",
+      "revision": 239715,
+      "digest": "70c4dc20df835588e15587feaba433d6aa904ba5ad294206e2080e638aec179d"
     },
     {
       "zid": "Z16676",
@@ -24746,9 +24750,9 @@
       "name": "Z17414_same_day_of_the_week",
       "label": "same day of the week",
       "arity": 2,
-      "runnable": false,
+      "runnable": true,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "authored": false,
       "mutuallyRecursive": false,
       "argumentKeys": [
@@ -24888,9 +24892,9 @@
       "name": "Z17464_same_reference_object",
       "label": "⚠️ same Reference object",
       "arity": 2,
-      "runnable": false,
+      "runnable": true,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "authored": false,
       "mutuallyRecursive": false,
       "argumentKeys": [
@@ -25653,9 +25657,9 @@
       "name": "Z17817_same_gregorian_era",
       "label": "same Gregorian era",
       "arity": 2,
-      "runnable": false,
+      "runnable": true,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "authored": false,
       "mutuallyRecursive": false,
       "argumentKeys": [
@@ -25814,18 +25818,18 @@
         "Typed list(Object)"
       ],
       "returnType": "Boolean",
-      "implementation": "Z17892",
-      "revision": 247996,
-      "digest": "8611a4312fe2bdb6783b8a6c76ee3eef4b219c9f9760c9ce3182aa8d8d2023c8"
+      "implementation": "Z18588",
+      "revision": 265638,
+      "digest": "e7479a4352ceb5fb5dd6060935838e9c0998b48f4a76f5e1e40302397595db02"
     },
     {
       "zid": "Z17893",
       "name": "Z17893_zid_of_object_type",
       "label": "ZID of object type",
       "arity": 1,
-      "runnable": false,
+      "runnable": true,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "authored": false,
       "mutuallyRecursive": false,
       "argumentKeys": [
@@ -25877,9 +25881,9 @@
         "Typed list(Object)"
       ],
       "returnType": "Boolean",
-      "implementation": "Z17901",
-      "revision": 248005,
-      "digest": "426ca2c0b9346b7dfce29808173b13bcfcffa7d6fb3e94e42fd9d2bdc621be2c"
+      "implementation": "Z18581",
+      "revision": 265631,
+      "digest": "95e7a2f03c8a86c61a03bb571ee1bbbfad07c7878c485bf6a03f7a9dc95dea78"
     },
     {
       "zid": "Z17904",
@@ -27669,9 +27673,9 @@
       "name": "Z18569_type_of_list_as_string",
       "label": "type of list (as string)",
       "arity": 1,
-      "runnable": false,
+      "runnable": true,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "authored": false,
       "mutuallyRecursive": false,
       "argumentKeys": [
@@ -34374,9 +34378,9 @@
       "name": "Z21381_typed_list_with_length",
       "label": "Typed list with length",
       "arity": 2,
-      "runnable": false,
+      "runnable": true,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "authored": false,
       "mutuallyRecursive": false,
       "argumentKeys": [
@@ -34397,9 +34401,9 @@
       "name": "Z21383_create_typed_list_of_length",
       "label": "Create typed list of length",
       "arity": 3,
-      "runnable": false,
+      "runnable": true,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "authored": false,
       "mutuallyRecursive": false,
       "argumentKeys": [
@@ -47544,9 +47548,9 @@
       "name": "Z26474_is_typed_pair",
       "label": "is typed pair",
       "arity": 1,
-      "runnable": false,
+      "runnable": true,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "authored": false,
       "mutuallyRecursive": false,
       "argumentKeys": [
@@ -62689,7 +62693,7 @@
       "arity": 4,
       "runnable": false,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "authored": false,
       "mutuallyRecursive": false,
       "argumentKeys": [
@@ -62912,9 +62916,9 @@
       "name": "Z31109_fail_with_context",
       "label": "fail with context",
       "arity": 4,
-      "runnable": false,
+      "runnable": true,
       "reachesCycle": false,
-      "compiled": false,
+      "compiled": true,
       "authored": false,
       "mutuallyRecursive": false,
       "argumentKeys": [
@@ -90342,9 +90346,9 @@
         "Typed list(Object)"
       ],
       "returnType": "Object",
-      "implementation": "Z38486",
-      "revision": 294852,
-      "digest": "61e807f474198d3d77f498de3ea0f2b6b455cb5405527d6dc4d443674f7bc350"
+      "implementation": "Z38481",
+      "revision": 294841,
+      "digest": "6ff724d74c567c2c0478cff2bac76f694a03f88fd80dd19123fd4e63880cb184"
     },
     {
       "zid": "Z38478",

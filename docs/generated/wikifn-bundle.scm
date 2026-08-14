@@ -78,9 +78,26 @@
 
 (define (Z29294_object_equivalence a b) (equal? a b))
 
-(define (Z10047 s) (string-downcase s))
+(define (Z10047_to_lowercase s) (string-downcase s))
 
-(define (Z10018 s) (string-upcase s))
+(define (Z10018_to_uppercase s) (string-upcase s))
+
+(define (Z881_typed_list a) (list 'record 'Z881 (list 'Z881K1 a)))
+
+(define (Z882_typed_pair a b) (list 'record 'Z882 (list 'Z882K1 a) (list 'Z882K2 b)))
+
+(define (Z883_typed_map a b) (list 'record 'Z883 (list 'Z883K1 a) (list 'Z883K2 b)))
+
+(define (Z22764_string_from_type t)
+  (if (pair? t)
+      (string-append (symbol->string (cadr t)) " ("
+        (apply string-append
+          (let loop ((f (cddr t)))
+            (cond ((null? f) (list))
+                  ((null? (cdr f)) (list (Z22764_string_from_type (cadr (car f)))))
+                  (else (cons (Z22764_string_from_type (cadr (car f))) (cons ", " (loop (cdr f))))))))
+        ")")
+      (symbol->string t)))
 
 (define (fst p) (car p))
 
@@ -219,8 +236,12 @@
 (define Z10000 Z10000_join_two_strings)
 (define Z13052 Z13052_object_equality)
 (define Z29294 Z29294_object_equivalence)
-(define Z10047 Z10047)
-(define Z10018 Z10018)
+(define Z10047 Z10047_to_lowercase)
+(define Z10018 Z10018_to_uppercase)
+(define Z881 Z881_typed_list)
+(define Z882 Z882_typed_pair)
+(define Z883 Z883_typed_map)
+(define Z22764 Z22764_string_from_type)
 (define Z13569 Z13569_subtract_natural_numbers_with_floor_of_0)
 (define Z13582 Z13582_decrement_natural_number_by_one)
 (define Z12668 Z12668_reverse_untyped_list)
@@ -548,7 +569,7 @@
 (define
   (Z10251_to_title_case a0)
   (Z12899_join_list_of_strings_with_delimiter
-    (map Z10771_sentence_case (Z13407_tokenize_on_white_space (Z10047 a0)))
+    (map Z10771_sentence_case (Z13407_tokenize_on_white_space (Z10047_to_lowercase a0)))
     " "))
 (define Z10251 Z10251_to_title_case)
 
@@ -567,9 +588,11 @@
 (define (Z10272_boolean_not_left a0 a1) (not (Z10265_boolean_left a0 a1)))
 (define Z10272 Z10272_boolean_not_left)
 
-;; Z10281 to snake_case  [reaches an unimplemented function]
+;; Z10281 to snake_case
 ;;   Z10281K1: String -> String   [declared, not checked]
-(define (Z10281_to_snake_case a0) (Z10075_replace_all_substrings (Z10047 a0) " " "_"))
+(define
+  (Z10281_to_snake_case a0)
+  (Z10075_replace_all_substrings (Z10047_to_lowercase a0) " " "_"))
 (define Z10281 Z10281_to_snake_case)
 
 ;; Z10287 binary true
@@ -604,7 +627,7 @@
   (Z10193_replace_all_regex_case_sensitive a0 "\\s+" " "))
 (define Z10313 Z10313_replace_all_kind_of_whitespaces_with_a_single_u_0020_space)
 
-;; Z10324 is snake case  [reaches an unimplemented function]
+;; Z10324 is snake case
 ;;   Z10324K1: String -> Boolean   [declared, not checked]
 (define (Z10324_is_snake_case a0) (string=? a0 (Z10281_to_snake_case a0)))
 (define Z10324 Z10324_is_snake_case)
@@ -614,12 +637,12 @@
 (define (Z10329_boolean_implication a0 a1) (bool-or (not a0) a1))
 (define Z10329 Z10329_boolean_implication)
 
-;; Z10336 is uppercase  [reaches an unimplemented function]
+;; Z10336 is uppercase
 ;;   Z10336K1: String -> Boolean   [declared, not checked]
-(define (Z10336_is_uppercase a0) (string=? a0 (Z10018 a0)))
+(define (Z10336_is_uppercase a0) (string=? a0 (Z10018_to_uppercase a0)))
 (define Z10336 Z10336_is_uppercase)
 
-;; Z10346 is lowercase  [reaches an unimplemented function]
+;; Z10346 is lowercase
 ;;   Z10346K1: String -> Boolean   [declared, not checked]
 (define (Z10346_is_lowercase a0) (not (Z10336_is_uppercase a0)))
 (define Z10346 Z10346_is_lowercase)
@@ -636,7 +659,7 @@
 
 ;; Z10366 string to hex (UTF-8)  [reaches an unimplemented function; mutually recursive: may not terminate]
 ;;   Z10366K1: String -> String   [declared, not checked]
-(define (Z10366_string_to_hex_utf_8 a0) (Z10047 (Z11003_base16_encode a0)))
+(define (Z10366_string_to_hex_utf_8 a0) (Z10047_to_lowercase (Z11003_base16_encode a0)))
 (define Z10366 Z10366_string_to_hex_utf_8)
 
 ;; Z10375 is title case  [reaches an unimplemented function]
@@ -676,9 +699,11 @@
     "^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\\.){1,3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])$"))
 (define Z10476 Z10476_is_ipv4)
 
-;; Z10539 case-insensitive string equality  [reaches an unimplemented function]
+;; Z10539 case-insensitive string equality
 ;;   Z10539K1: String, Z10539K2: String -> Boolean   [declared, not checked]
-(define (Z10539_case_insensitive_string_equality a0 a1) (string=? (Z10047 a0) (Z10047 a1)))
+(define
+  (Z10539_case_insensitive_string_equality a0 a1)
+  (string=? (Z10047_to_lowercase a0) (Z10047_to_lowercase a1)))
 (define Z10539 Z10539_case_insensitive_string_equality)
 
 ;; Z10548 reverse string (grapheme level)  [reaches an unimplemented function]
@@ -864,7 +889,8 @@
         (Z10000_join_two_strings
           "%"
           (Z19654_add_chars_every_n_chars
-            (Z10018 (Z10366_string_to_hex_utf_8 (Z10901_get_first_character_of_string a0)))
+            (Z10018_to_uppercase
+              (Z10366_string_to_hex_utf_8 (Z10901_get_first_character_of_string a0)))
             2
             "%"))
         (Z10070_has_substring " \"%<>[\\]^`{|}" (Z10901_get_first_character_of_string a0))
@@ -903,12 +929,15 @@
   (Z10000_join_two_strings a0 (Z10000_join_two_strings " " a0)))
 (define Z10770 Z10770_duplication_with_space)
 
-;; Z10771 sentence case  [reaches an unimplemented function]
+;; Z10771 sentence case
 ;;   Z10771K1: String -> String   [declared, not checked]
 (define
   (Z10771_sentence_case a0)
   (Z10000_join_two_strings
-    (if (> (Z11040_string_length a0) 0) (Z10018 (Z10901_get_first_character_of_string a0)) "")
+    (if
+      (> (Z11040_string_length a0) 0)
+      (Z10018_to_uppercase (Z10901_get_first_character_of_string a0))
+      "")
     (if (> (Z11040_string_length a0) 1) (Z14636_remove_first_n_characters_of_string a0 1) "")))
 (define Z10771 Z10771_sentence_case)
 
@@ -982,7 +1011,7 @@
 ;;   Z10785K1: String -> String   [declared, not checked]
 (define
   (Z10785_unicode_code_point_encode_hex a0)
-  (Z10018
+  (Z10018_to_uppercase
     (Z22504_join_list_of_strings_with_spaces
       (map
         Z13781_natural_number_to_hexadecimal_lowercase_without_prefix
@@ -1081,7 +1110,7 @@
   (Z14613_replace_character_set a0 "ךםןףץ" "כמנפצ"))
 (define Z10891 Z10891_final_to_normal_form_hebrew)
 
-;; Z10897 is camel case  [reaches an unimplemented function]
+;; Z10897 is camel case
 ;;   Z10897K1: String -> Boolean   [declared, not checked]
 (define
   (Z10897_is_camel_case a0)
@@ -1197,7 +1226,7 @@
                 Z17895_untype_a_list
                 (map
                   Z22717_string_to_codepoint_list
-                  (Z13407_tokenize_on_white_space (Z10047 a0))))
+                  (Z13407_tokenize_on_white_space (Z10047_to_lowercase a0))))
               "eisv3h54ufé?2arl\"+.wp@j1'tndb6-=x/kcy()mgz7,qo8:90")
             0))))
     " / "))
@@ -1316,7 +1345,7 @@
 
 ;; Z11003 Base16 Encode  [reaches an unimplemented function; mutually recursive: may not terminate]
 ;;   Z11003K1: String -> String   [declared, not checked]
-(define (Z11003_base16_encode a0) (Z10018 (Z10366_string_to_hex_utf_8 a0)))
+(define (Z11003_base16_encode a0) (Z10018_to_uppercase (Z10366_string_to_hex_utf_8 a0)))
 (define Z11003 Z11003_base16_encode)
 
 ;; Z11007 Base16 Decode  [reaches an unimplemented function]
@@ -1759,7 +1788,7 @@
   (Z11693_string_only_has_characters_from_alphabet a0 " ACGT"))
 (define Z11342 Z11342_is_dna_nucleic_acid_notation)
 
-;; Z11349 has and is uppercase  [reaches an unimplemented function]
+;; Z11349 has and is uppercase
 ;;   Z11349K1: String -> Boolean   [declared, not checked]
 (define
   (Z11349_has_and_is_uppercase a0)
@@ -1797,7 +1826,7 @@
   (Z11355_croatian_masculine_noun_declension a0 "u"))
 (define Z11370 Z11370_regular_croatian_masculine_locative_singular)
 
-;; Z11383 has and is lowercase  [reaches an unimplemented function]
+;; Z11383 has and is lowercase
 ;;   Z11383K1: String -> Boolean   [declared, not checked]
 (define
   (Z11383_has_and_is_lowercase a0)
@@ -2089,7 +2118,10 @@
     (Z11040_string_length
       (Z10193_replace_all_regex_case_sensitive
         (Z11102_remove_duplicate_characters
-          (Z10193_replace_all_regex_case_sensitive (Z10047 a0) "(([^\\s])[^\\s]*)*" "$2"))
+          (Z10193_replace_all_regex_case_sensitive
+            (Z10047_to_lowercase a0)
+            "(([^\\s])[^\\s]*)*"
+            "$2"))
         "\\s"
         ""))))
 (define Z11577 Z11577_is_tautogram)
@@ -3309,7 +3341,7 @@
       (Z12624_replicate_string_n_times a0 (Z13582_decrement_natural_number_by_one a1)))))
 (define Z12624 Z12624_replicate_string_n_times)
 
-;; Z12626 is pangram (Latin alphabet)  [reaches an unimplemented function]
+;; Z12626 is pangram (Latin alphabet)
 ;;   Z12626K1: String -> Boolean   [declared, not checked]
 (define
   (Z12626_is_pangram_latin_alphabet a0)
@@ -3704,7 +3736,7 @@
   (Z21394_concatenate_many_strings
     (list
       "Hexadecimal: "
-      (Z10018
+      (Z10018_to_uppercase
         (Z13781_natural_number_to_hexadecimal_lowercase_without_prefix
           (Z13797_binary_string_to_natural_number a0)))
       " (Decimal: "
@@ -4167,11 +4199,13 @@
 (define (Z13087_english_ing_form a0) (Z10000_join_two_strings a0 "ing"))
 (define Z13087 Z13087_english_ing_form)
 
-;; Z13119 is pangram of alphabet  [reaches an unimplemented function]
+;; Z13119 is pangram of alphabet
 ;;   Z13119K1: String, Z13119K2: String -> Boolean   [declared, not checked]
 (define
   (Z13119_is_pangram_of_alphabet a0 a1)
-  (Z12846_contains_all_of_list (Z868_deprecated_z22717 (Z10047 a0)) (Z868_deprecated_z22717 a1)))
+  (Z12846_contains_all_of_list
+    (Z868_deprecated_z22717 (Z10047_to_lowercase a0))
+    (Z868_deprecated_z22717 a1)))
 (define Z13119 Z13119_is_pangram_of_alphabet)
 
 ;; Z13155 interleave lists
@@ -4421,7 +4455,7 @@
 (define
   (Z13415_distinct_lowercased_words_from_string a0)
   (Z13078_remove_duplicates_from_untyped_list
-    (Z13407_tokenize_on_white_space (Z11193 (Z10047 a0)))))
+    (Z13407_tokenize_on_white_space (Z11193 (Z10047_to_lowercase a0)))))
 (define Z13415 Z13415_distinct_lowercased_words_from_string)
 
 ;; Z13419 is identity relation over elements of list
@@ -5056,14 +5090,17 @@
 (define (Z13922_is_heavy_vowel_udaar a0) (Z14483_common_codepoints_in_strings a0 "eiouEIOU"))
 (define Z13922 Z13922_is_heavy_vowel_udaar)
 
-;; Z13927 Igbo infinitive form of verb  [reaches an unimplemented function]
+;; Z13927 Igbo infinitive form of verb
 ;;   Z13927K1: String -> String   [declared, not checked]
 (define
   (Z13927_igbo_infinitive_form_of_verb a0)
   (if
     (Z13916_is_light_vowel_damfe_in_igbo a0)
-    (Z10000_join_two_strings "ị" (Z10047 a0))
-    (if (Z13922_is_heavy_vowel_udaar a0) (Z10000_join_two_strings "i" (Z10047 a0)) "")))
+    (Z10000_join_two_strings "ị" (Z10047_to_lowercase a0))
+    (if
+      (Z13922_is_heavy_vowel_udaar a0)
+      (Z10000_join_two_strings "i" (Z10047_to_lowercase a0))
+      "")))
 (define Z13927 Z13927_igbo_infinitive_form_of_verb)
 
 ;; Z13928 length of binary representation
@@ -8048,16 +8085,16 @@
       (Z13713_natural_number_to_digit_string (+ 10000 a0)))))
 (define Z16515 Z16515_holocene_calendar_conversion_numbers_and_strings)
 
-;; Z16524 Suffix a verb to get it negative imperative form (Igbo)  [reaches an unimplemented function]
+;; Z16524 Suffix a verb to get it negative imperative form (Igbo)
 ;;   Z16524K1: String -> String   [declared, not checked]
 (define
   (Z16524_suffix_a_verb_to_get_it_negative_imperative_form_igbo a0)
   (if
     (Z13916_is_light_vowel_damfe_in_igbo a0)
-    (Z15991_code_point_prefix "a" (Z10047 (Z10000_join_two_strings a0 "la")))
+    (Z15991_code_point_prefix "a" (Z10047_to_lowercase (Z10000_join_two_strings a0 "la")))
     (if
       (Z13922_is_heavy_vowel_udaar a0)
-      (Z15991_code_point_prefix "e" (Z10047 (Z10000_join_two_strings a0 "la")))
+      (Z15991_code_point_prefix "e" (Z10047_to_lowercase (Z10000_join_two_strings a0 "la")))
       "")))
 (define Z16524 Z16524_suffix_a_verb_to_get_it_negative_imperative_form_igbo)
 
@@ -8182,11 +8219,7 @@
 
 ;; Z16667 same sign
 ;;   Z16667K1: Sign, Z16667K2: Sign -> Boolean   [declared, not checked]
-(define
-  (Z16667_same_sign a0 a1)
-  (string=?
-    (snd (Z29446_second_element_performance (Z30617_reified_value_after_type a0)))
-    (snd (Z29446_second_element_performance (Z30617_reified_value_after_type a1)))))
+(define (Z16667_same_sign a0 a1) (Z17464_same_reference_object a0 a1))
 (define Z16667 Z16667_same_sign)
 
 ;; Z16676 invert sign  [reaches an unimplemented function]
@@ -8248,13 +8281,13 @@
   (not (Z23883_is_zero_natural_number (Z28715_index_of_first_sub_list_start a0 a1))))
 (define Z16711 Z16711_subsequence_exists)
 
-;; Z16714 DNA sequence complement  [reaches an unimplemented function]
+;; Z16714 DNA sequence complement
 ;;   Z16714K1: String -> String   [declared, not checked]
 (define
   (Z16714_dna_sequence_complement a0)
   (if
     (Z11693_string_only_has_characters_from_alphabet a0 "ACGTacgt")
-    (Z14613_replace_character_set (Z10018 a0) "ACGT" "TGCA")
+    (Z14613_replace_character_set (Z10018_to_uppercase a0) "ACGT" "TGCA")
     "invalid DNA sequence"))
 (define Z16714 Z16714_dna_sequence_complement)
 
@@ -8922,7 +8955,7 @@
           (Z13569_subtract_natural_numbers_with_floor_of_0 a2 2))))))
 (define Z17394 Z17394_lucas_sequence_v_n_p_q)
 
-;; Z17414 same day of the week  [reaches an unimplemented function]
+;; Z17414 same day of the week
 ;;   Z17414K1: Day of the week, Z17414K2: Day of the week -> Boolean   [declared, not checked]
 (define (Z17414_same_day_of_the_week a0 a1) (Z17464_same_reference_object a0 a1))
 (define Z17414 Z17414_same_day_of_the_week)
@@ -8965,9 +8998,11 @@
 (define (Z17452_total_occurrences_of_day_in_month a0 a1 a2) (length (Z17516 a0 a1 a2)))
 (define Z17452 Z17452_total_occurrences_of_day_in_month)
 
-;; Z17464 ⚠️ same Reference object  [reaches an unimplemented function]
+;; Z17464 ⚠️ same Reference object
 ;;   Z17464K1: Object, Z17464K2: Object -> Boolean   [declared, not checked]
-(define (Z17464_same_reference_object a0 a1) (string=? (Z22764 a0) (Z22764 a1)))
+(define
+  (Z17464_same_reference_object a0 a1)
+  (string=? (Z22764_string_from_type a0) (Z22764_string_from_type a1)))
 (define Z17464 Z17464_same_reference_object)
 
 ;; Z17469 subtract integers (represented by an ordered pair of natural numbers)
@@ -9033,7 +9068,7 @@
 
 ;; Z17534 make untyped pair
 ;;   Z17534K1: Object, Z17534K2: Object -> Typed pair(Object, Object)   [declared, not checked]
-(define (Z17534_make_untyped_pair a0 a1) (record Z882 (K1 a0) (K2 a1)))
+(define (Z17534_make_untyped_pair a0 a1) (record Z882_typed_pair (K1 a0) (K2 a1)))
 (define Z17534 Z17534_make_untyped_pair)
 
 ;; Z17536 total occurrences of day in year  [reaches an unimplemented function]
@@ -9243,7 +9278,7 @@
 (define (Z17794_signed_bitwise_not a0) (Z17160_decrement_integer (Z17186_negate_integer a0)))
 (define Z17794 Z17794_signed_bitwise_not)
 
-;; Z17817 same Gregorian era  [reaches an unimplemented function]
+;; Z17817 same Gregorian era
 ;;   Z17817K1: Gregorian era, Z17817K2: Gregorian era -> Boolean   [declared, not checked]
 (define (Z17817_same_gregorian_era a0 a1) (Z17464_same_reference_object a0 a1))
 (define Z17817 Z17817_same_gregorian_era)
@@ -9293,12 +9328,12 @@
 
 ;; Z17879 is this list untyped?
 ;;   Z17879K1: Typed list(Object) -> Boolean   [declared, not checked]
-(define (Z17879_is_this_list_untyped a0) (Z15801_object_type_equality a0 (list)))
+(define (Z17879_is_this_list_untyped a0) (string=? (Z18569_type_of_list_as_string a0) "Z1"))
 (define Z17879 Z17879_is_this_list_untyped)
 
-;; Z17893 ZID of object type  [reaches an unimplemented function]
+;; Z17893 ZID of object type
 ;;   Z17893K1: Object -> String   [declared, not checked]
-(define (Z17893_zid_of_object_type a0) (Z22764 (Z16829_type_of_object a0)))
+(define (Z17893_zid_of_object_type a0) (Z22764_string_from_type (Z16829_type_of_object a0)))
 (define Z17893 Z17893_zid_of_object_type)
 
 ;; Z17895 untype a list
@@ -9308,7 +9343,9 @@
 
 ;; Z17900 is this list typed?
 ;;   Z17900K1: Typed list(Object) -> Boolean   [declared, not checked]
-(define (Z17900_is_this_list_typed a0) (not (Z17879_is_this_list_untyped a0)))
+(define
+  (Z17900_is_this_list_typed a0)
+  (Z10379_string_inequality (Z18569_type_of_list_as_string a0) "Z1"))
 (define Z17900 Z17900_is_this_list_typed)
 
 ;; Z17904 add suffix "t" to string if it does not end with "t"
@@ -10030,9 +10067,11 @@
         (Z15111_floor_n_2 (Z11040_string_length a0))))))
 (define Z18556 Z18556_get_middle_character_or_characters_of_a_string)
 
-;; Z18569 type of list (as string)  [reaches an unimplemented function]
+;; Z18569 type of list (as string)
 ;;   Z18569K1: Typed list(Object) -> String   [declared, not checked]
-(define (Z18569_type_of_list_as_string a0) (Z22764 (Z18626_type_of_typed_list a0)))
+(define
+  (Z18569_type_of_list_as_string a0)
+  (Z22764_string_from_type (Z18626_type_of_typed_list a0)))
 (define Z18569 Z18569_type_of_list_as_string)
 
 ;; Z18582 Is same Bengali month days  [reaches an unimplemented function]
@@ -10144,7 +10183,7 @@
 (define (Z18804_english_antonym_using_prefix a0 a1) (Z18796 a0 a1))
 (define Z18804 Z18804_english_antonym_using_prefix)
 
-;; Z18845 English declarative sentence - subject verb  [reaches an unimplemented function]
+;; Z18845 English declarative sentence - subject verb
 ;;   Z18845K1: String, Z18845K2: String -> String   [declared, not checked]
 (define
   (Z18845_english_declarative_sentence_subject_verb a0 a1)
@@ -10159,14 +10198,14 @@
   (filter Z10336_is_uppercase (Z13402_words_from_string a0)))
 (define Z18859 Z18859_filter_shouting_words)
 
-;; Z18871 English imperative sentence - verb  [reaches an unimplemented function]
+;; Z18871 English imperative sentence - verb
 ;;   Z18871K1: String -> String   [declared, not checked]
 (define
   (Z18871_english_imperative_sentence_verb a0)
   (Z10771_sentence_case (Z12899_join_list_of_strings_with_delimiter (list a0 "!") "")))
 (define Z18871 Z18871_english_imperative_sentence_verb)
 
-;; Z18874 English imperative sentence - verb + adverb  [reaches an unimplemented function]
+;; Z18874 English imperative sentence - verb + adverb
 ;;   Z18874K1: String, Z18874K2: String -> String   [declared, not checked]
 (define
   (Z18874_english_imperative_sentence_verb_adverb a0 a1)
@@ -10174,7 +10213,7 @@
     (Z10000_join_two_strings (Z12899_join_list_of_strings_with_delimiter (list a0 a1) " ") "!")))
 (define Z18874 Z18874_english_imperative_sentence_verb_adverb)
 
-;; Z18886 English imperative sentence - verb + object  [reaches an unimplemented function]
+;; Z18886 English imperative sentence - verb + object
 ;;   Z18886K1: String, Z18886K2: String -> String   [declared, not checked]
 (define
   (Z18886_english_imperative_sentence_verb_object a0 a1)
@@ -10672,7 +10711,7 @@
 ;;   Z19384K1: String, Z19384K2: String -> HTML fragment   [declared, not checked]
 (define
   (Z19384_wrap_with_html_tag a0 a1)
-  (Z33470_wrap_text_as_html_element a0 a1 (record Z883 (K1 (list)))))
+  (Z33470_wrap_text_as_html_element a0 a1 (record Z883_typed_map (K1 (list)))))
 (define Z19384 Z19384_wrap_with_html_tag)
 
 ;; Z19403 wrap with XML tag and attributes
@@ -12996,7 +13035,7 @@
 (define
   (Z21366_lowercase_first_word a0)
   (Z10000_join_two_strings
-    (Z10047 (Z11410_discard_from_start_of_first_substring a0 " "))
+    (Z10047_to_lowercase (Z11410_discard_from_start_of_first_substring a0 " "))
     (Z11418_discard_until_start_of_first_substring a0 " ")))
 (define Z21366 Z21366_lowercase_first_word)
 
@@ -13005,12 +13044,12 @@
 (define (Z21373_freak_pay_or_mouse_pay a0) (if a0 "Mouse pay" "Freak pay"))
 (define Z21373 Z21373_freak_pay_or_mouse_pay)
 
-;; Z21381 Typed list with length  [reaches an unimplemented function]
+;; Z21381 Typed list with length
 ;;   Z21381K1: Type, Z21381K2: Natural number -> Type   [declared, not checked]
-(define (Z21381_typed_list_with_length a0 a1) (Z881 a0))
+(define (Z21381_typed_list_with_length a0 a1) (Z881_typed_list a0))
 (define Z21381 Z21381_typed_list_with_length)
 
-;; Z21383 Create typed list of length  [reaches an unimplemented function]
+;; Z21383 Create typed list of length
 ;;   Z21383K1: Type, Z21383K2: Natural number, Z21383K3: Typed list(Object) -> Object   [declared, not checked]
 (define (Z21383_create_typed_list_of_length a0 a1 a2) (Z21381_typed_list_with_length a0 a1))
 (define Z21383 Z21383_create_typed_list_of_length)
@@ -13166,8 +13205,8 @@
 (define
   (Z21593_word_frequency a0 a1)
   (Z25847
-    (Z10047 (Z12316 "[^\\w\\s-]|_" "" a0 "g"))
-    (Z15175_join_two_strings_with_separator "\\b" "\\b(?![-\\w])" (Z10047 a1))
+    (Z10047_to_lowercase (Z12316 "[^\\w\\s-]|_" "" a0 "g"))
+    (Z15175_join_two_strings_with_separator "\\b" "\\b(?![-\\w])" (Z10047_to_lowercase a1))
     "g"))
 (define Z21593 Z21593_word_frequency)
 
@@ -13186,7 +13225,7 @@
     (Z21980_string_includes_or a0)
     (Z20854 (Z19866_string_to_rational_number a0))
     (Z21987_string_includes_na_or_nf a0)
-    (Z21750_read_special_value_floating_point_from_string (Z10047 a0))
+    (Z21750_read_special_value_floating_point_from_string (Z10047_to_lowercase a0))
     (Z20915 (Z21679_convert_decimal_string_from_comma_to_point (Z21682 a0)))))
 (define Z21642 Z21642_read_floating_point_number_leniently)
 
@@ -13729,11 +13768,13 @@
   (bool-or (Z10070_has_substring a0 "/") (Z10070_has_substring a0 "%")))
 (define Z21980 Z21980_string_includes_or)
 
-;; Z21987 string includes "na" or "nf"  [reaches an unimplemented function]
+;; Z21987 string includes "na" or "nf"
 ;;   Z21987K1: String -> Boolean   [declared, not checked]
 (define
   (Z21987_string_includes_na_or_nf a0)
-  (bool-or (Z10070_has_substring (Z10047 a0) "na") (Z10070_has_substring (Z10047 a0) "nf")))
+  (bool-or
+    (Z10070_has_substring (Z10047_to_lowercase a0) "na")
+    (Z10070_has_substring (Z10047_to_lowercase a0) "nf")))
 (define Z21987 Z21987_string_includes_na_or_nf)
 
 ;; Z22015 "[name], a [place] in [location]," in English  [reaches an unimplemented function]
@@ -14292,7 +14333,7 @@
   (Z10075_replace_all_substrings a0 "  " " "))
 (define Z22507 Z22507_replace_multiple_spaces_with_single_spaces)
 
-;; Z22511 capitalise first letter and add full stop  [reaches an unimplemented function]
+;; Z22511 capitalise first letter and add full stop
 ;;   Z22511K1: String -> String   [declared, not checked]
 (define
   (Z22511_capitalise_first_letter_and_add_full_stop a0)
@@ -14629,11 +14670,14 @@
     (Z28755_index_of_match_in_list a1 (map Z19298_lexical_category_of_lexeme a0))))
 (define Z22807 Z22807_first_item_of_lexeme_list_with_lexical_category)
 
-;; Z22812 has substring (optional case-sensitivity)  [reaches an unimplemented function]
+;; Z22812 has substring (optional case-sensitivity)
 ;;   Z22812K1: String, Z22812K2: String, Z22812K3: Boolean -> Boolean   [declared, not checked]
 (define
   (Z22812_has_substring_optional_case_sensitivity a0 a1 a2)
-  (if a2 (Z10070_has_substring a0 a1) (Z10070_has_substring (Z10047 a0) (Z10047 a1))))
+  (if
+    a2
+    (Z10070_has_substring a0 a1)
+    (Z10070_has_substring (Z10047_to_lowercase a0) (Z10047_to_lowercase a1))))
 (define Z22812 Z22812_has_substring_optional_case_sensitivity)
 
 ;; Z22820 compress list
@@ -14723,7 +14767,7 @@
 ;;   Z22883K1: Byte -> String   [declared, not checked]
 (define
   (Z22883_byte_as_prefixed_hexadecimal_string a0)
-  (Z10000_join_two_strings "0x" (Z10018 (Z15702_byte_as_hex_string a0))))
+  (Z10000_join_two_strings "0x" (Z10018_to_uppercase (Z15702_byte_as_hex_string a0))))
 (define Z22883 Z22883_byte_as_prefixed_hexadecimal_string)
 
 ;; Z22887 display Byte  [reaches an unimplemented function]
@@ -14811,7 +14855,15 @@
 ;;   Z22973K1: Type, Z22973K2: Typed list(Type) -> String   [declared, not checked]
 (define
   (Z22973_string_for_function_signature_search a0 a1)
-  (car (Z22849 (Z22764 a0) (list) (map Z22764 a1) (list) "" (list) (list))))
+  (car
+    (Z22849
+      (Z22764_string_from_type a0)
+      (list)
+      (map Z22764_string_from_type a1)
+      (list)
+      ""
+      (list)
+      (list))))
 (define Z22973 Z22973_string_for_function_signature_search)
 
 ;; Z22978 values (unqualified) from Wikidata item statements
@@ -14864,7 +14916,7 @@
   (Z23022_natural_number_to_codepoint (Z14283_string_of_digits_as_natural_number a0)))
 (define Z23028 Z23028_digit_string_to_codepoint)
 
-;; Z23031 codepoint from string leniently  [reaches an unimplemented function]
+;; Z23031 codepoint from string leniently
 ;;   Z23031K1: String -> Unicode code point   [declared, not checked]
 (define
   (Z23031_codepoint_from_string_leniently a0)
@@ -14873,14 +14925,14 @@
     (Z23028_digit_string_to_codepoint a0)
     (if
       (bool-or
-        (Z10615_string_starts_with (Z10047 a0) "u+")
-        (Z10615_string_starts_with (Z10047 a0) "\\u"))
+        (Z10615_string_starts_with (Z10047_to_lowercase a0) "u+")
+        (Z10615_string_starts_with (Z10047_to_lowercase a0) "\\u"))
       (Z23022_natural_number_to_codepoint
         (Z13799_hexadecimal_to_natural_number (Z14636_remove_first_n_characters_of_string a0 2)))
       (car (Z22717_string_to_codepoint_list a0)))))
 (define Z23031 Z23031_codepoint_from_string_leniently)
 
-;; Z23041 read code point  [reaches an unimplemented function]
+;; Z23041 read code point
 ;;   Z23041K1: String, Z23041K2: Natural language -> Unicode code point   [declared, not checked]
 (define (Z23041_read_code_point a0 a1) (Z23031_codepoint_from_string_leniently a0))
 (define Z23041 Z23041_read_code_point)
@@ -14910,7 +14962,7 @@
   (Z10000_join_two_strings
     "U+"
     (Z14770_pad_string_with_leading_characters_to_specified_length
-      (Z10018
+      (Z10018_to_uppercase
         (Z13781_natural_number_to_hexadecimal_lowercase_without_prefix
           (Z23063_code_point_to_natural_number a0)))
       4
@@ -14944,7 +14996,14 @@
 ;;   Z23072K1: Type, Z23072K2: Boolean -> Typed list(String)   [declared, not checked]
 (define
   (Z23072_function_searches_from_type a0 a1)
-  (Z22849 (Z22764 a0) (list) (list) (list) (if a1 (Z22764 a0) "") (list) (list)))
+  (Z22849
+    (Z22764_string_from_type a0)
+    (list)
+    (list)
+    (list)
+    (if a1 (Z22764_string_from_type a0) "")
+    (list)
+    (list)))
 (define Z23072 Z23072_function_searches_from_type)
 
 ;; Z23076 descriptions of Wikidata item
@@ -17110,7 +17169,7 @@
 
 ;; Z24646 make string-keyed map
 ;;   Z24646K1: Typed list(Typed pair(String, Object)) -> Typed map(String, Object)   [declared, not checked]
-(define (Z24646_make_string_keyed_map a0) (record Z883 (K1 a0)))
+(define (Z24646_make_string_keyed_map a0) (record Z883_typed_map (K1 a0)))
 (define Z24646 Z24646_make_string_keyed_map)
 
 ;; Z24649 index first of typed pair list with matching head  [reaches an unimplemented function]
@@ -18146,7 +18205,8 @@
 ;;   Z25608K1: String -> String   [declared, not checked]
 (define
   (Z25608_f1_driver_code a0)
-  (Z10018 (Z22344_str_left (Z12964_last_element (Z25614_split_string_to_list a0 " ")) 3)))
+  (Z10018_to_uppercase
+    (Z22344_str_left (Z12964_last_element (Z25614_split_string_to_list a0 " ")) 3)))
 (define Z25608 Z25608_f1_driver_code)
 
 ;; Z25614 split string to list
@@ -18306,11 +18366,11 @@
     ":"))
 (define Z25701 Z25701_time_of_day_as_24_hour_hh_mm_ss_string)
 
-;; Z25705 time as 12-hour clock with am/pm  [reaches an unimplemented function]
+;; Z25705 time as 12-hour clock with am/pm
 ;;   Z25705K1: Time of day -> String   [declared, not checked]
 (define
   (Z25705_time_as_12_hour_clock_with_am_pm a0)
-  (Z10047 (Z25102_time_as_12_hour_clock_with_am_pm a0)))
+  (Z10047_to_lowercase (Z25102_time_as_12_hour_clock_with_am_pm a0)))
 (define Z25705 Z25705_time_as_12_hour_clock_with_am_pm)
 
 ;; Z25711 time of day from Wikidata datetime
@@ -18831,7 +18891,7 @@
           (Z13407_tokenize_on_white_space (Z24618_serbian_cardinal a0)))
         (list
           (Z24606_get_element_of_string_keyed_map
-            (Z883 Z6 Z1)
+            (Z883_typed_map Z6 Z1)
             (Z12964_last_element (Z13407_tokenize_on_white_space (Z24618_serbian_cardinal a0)))))))))
 (define Z26121 Z26121_serbian_ordinal)
 
@@ -19039,13 +19099,13 @@
       (list
         (Z13713_natural_number_to_digit_string (Z20388_day_of_month_from_date a0))
         ". "
-        (Z10047
+        (Z10047_to_lowercase
           (Z23753_label_of_item_reference_in_language_or_to_mul
             (Z22240_gregorian_calendar_month_to_wikidata_reference
               (Z20343_month_from_day_of_the_roman_year a0))
             Z1181)))
       "")
-    (Z10047
+    (Z10047_to_lowercase
       (Z23753_label_of_item_reference_in_language_or_to_mul
         (Z22240_gregorian_calendar_month_to_wikidata_reference
           (Z20343_month_from_day_of_the_roman_year a0))
@@ -19386,11 +19446,11 @@
   (Z21692_absolute_value_of_rational_number (Z19699_subtract_rational_numbers a0 a1)))
 (define Z26463 Z26463_absolute_value_of_difference_of_rationals)
 
-;; Z26474 is typed pair  [reaches an unimplemented function]
+;; Z26474 is typed pair
 ;;   Z26474K1: Object -> Boolean   [declared, not checked]
 (define
   (Z26474_is_typed_pair a0)
-  (Z10615_string_starts_with (Z22764 (Z16829_type_of_object a0)) "Z882 ("))
+  (Z10615_string_starts_with (Z22764_string_from_type (Z16829_type_of_object a0)) "Z882 ("))
 (define Z26474 Z26474_is_typed_pair)
 
 ;; Z26504 month from date
@@ -19894,8 +19954,11 @@
   (Z26779_wikidata_reference_in_enumeration_instance a0 a1)
   (Z808
     (list
-      (record Z882 (K1 (record Z39 (Z39K1 "Z1K1"))) (K2 (Z805 a0)))
-      (record Z882 (K1 (Z35652_key_reference_for_nth_key_in_type a0 1)) (K2 (Z805 a1))))))
+      (record Z882_typed_pair (K1 (record Z39 (Z39K1 "Z1K1"))) (K2 (Z805 a0)))
+      (record
+        Z882_typed_pair
+        (K1 (Z35652_key_reference_for_nth_key_in_type a0 1))
+        (K2 (Z805 a1))))))
 (define Z26779 Z26779_wikidata_reference_in_enumeration_instance)
 
 ;; Z26791 Swedish indefinite noun phrase, lex  [reaches an unimplemented function]
@@ -21718,19 +21781,19 @@
   (Z808
     (list
       (record
-        Z882
+        Z882_typed_pair
         (K1 (record Z39 (Z39K1 "Z1K1")))
         (K2
           (list
-            (record Z882 (K1 (record Z39 (Z39K1 "Z1K1"))) (K2 "Z9"))
-            (record Z882 (K1 (record Z39 (Z39K1 "Z9K1"))) (K2 "Z89")))))
+            (record Z882_typed_pair (K1 (record Z39 (Z39K1 "Z1K1"))) (K2 "Z9"))
+            (record Z882_typed_pair (K1 (record Z39 (Z39K1 "Z9K1"))) (K2 "Z89")))))
       (record
-        Z882
+        Z882_typed_pair
         (K1 (record Z39 (Z39K1 "Z89K1")))
         (K2
           (list
-            (record Z882 (K1 (record Z39 (Z39K1 "Z1K1"))) (K2 "Z6"))
-            (record Z882 (K1 (record Z39 (Z39K1 "Z6K1"))) (K2 a0))))))))
+            (record Z882_typed_pair (K1 (record Z39 (Z39K1 "Z1K1"))) (K2 "Z6"))
+            (record Z882_typed_pair (K1 (record Z39 (Z39K1 "Z6K1"))) (K2 a0))))))))
 (define Z27868 Z27868_string_to_html_fragment)
 
 ;; Z27873 wrap an HTML fragment in a tag  [reaches an unimplemented function]
@@ -22424,7 +22487,7 @@
     (if
       (= (Z11040_string_length a0) 3)
       (Z14283_string_of_digits_as_natural_number
-        (Z14613_replace_character_set (Z10047 a0) "nubtqphsoe" "0123456789"))
+        (Z14613_replace_character_set (Z10047_to_lowercase a0) "nubtqphsoe" "0123456789"))
       (Z13708_index_of_first_listing_1_n_note_limitation
         a0
         (Z25614_split_string_to_list
@@ -23348,7 +23411,7 @@
 (define
   (Z28645_fraction_as_hex_2_digit_uppercase a0)
   (Z17845_pad_string_with_leading_0_until_it_is_two_characters_long
-    (Z10018
+    (Z10018_to_uppercase
       (Z13781_natural_number_to_hexadecimal_lowercase_without_prefix
         (Z20391_integer_to_exact_natural_number_or_0
           (Z19682_truncate_rational_number (Z19826_multiply_rational_by_natural_number a0 255)))))))
@@ -24089,8 +24152,8 @@
   (Z29102_reference_from_zid_string a0)
   (Z808
     (list
-      (record Z882 (K1 (record Z39 (Z39K1 "Z1K1"))) (K2 "Z9"))
-      (record Z882 (K1 (record Z39 (Z39K1 "Z9K1"))) (K2 a0)))))
+      (record Z882_typed_pair (K1 (record Z39 (Z39K1 "Z1K1"))) (K2 "Z9"))
+      (record Z882_typed_pair (K1 (record Z39 (Z39K1 "Z9K1"))) (K2 a0)))))
 (define Z29102 Z29102_reference_from_zid_string)
 
 ;; Z29113 quoted reference from ZID string  [reaches an unimplemented function]
@@ -24408,7 +24471,9 @@
 
 ;; Z29341 QID is valid value of Enum Type  [reaches an unimplemented function]
 ;;   Z29341K1: Wikidata item reference, Z29341K2: Type -> Boolean   [declared, not checked]
-(define (Z29341_qid_is_valid_value_of_enum_type a0 a1) (Z12696_contains (Z6896 (Z22764 a1)) a0))
+(define
+  (Z29341_qid_is_valid_value_of_enum_type a0 a1)
+  (Z12696_contains (Z6896 (Z22764_string_from_type a1)) a0))
 (define Z29341 Z29341_qid_is_valid_value_of_enum_type)
 
 ;; Z29346 Italian positive adjective conjugation table  [reaches an unimplemented function]
@@ -24619,7 +24684,7 @@
 (define
   (Z29453_best_instance_of_p31_qid_of_first_enum_instance a0)
   (Z28787_item_from_item_and_property_references
-    (car (Z6896 (Z22764 a0)))
+    (car (Z6896 (Z22764_string_from_type a0)))
     (record Z6092 (Z6092K1 "P31"))))
 (define Z29453 Z29453_best_instance_of_p31_qid_of_first_enum_instance)
 
@@ -24703,8 +24768,8 @@
     (record Z89 (Z89K1 ""))
     (Z29453_best_instance_of_p31_qid_of_first_enum_instance
       (Z28243_type_for_a_function_s_second_argument a0))
-    (Z6896 (Z22764 (Z28243_type_for_a_function_s_second_argument a0)))
-    (Z6896 (Z22764 (Z29484_type_for_a_function_s_third_argument a0)))
+    (Z6896 (Z22764_string_from_type (Z28243_type_for_a_function_s_second_argument a0)))
+    (Z6896 (Z22764_string_from_type (Z29484_type_for_a_function_s_third_argument a0)))
     a0
     (Z6825 a1)
     a2))
@@ -24712,7 +24777,7 @@
 
 ;; Z29493 enumeration reference values from type  [reaches an unimplemented function]
 ;;   Z29493K1: Type -> Typed list(Object)   [declared, not checked]
-(define (Z29493_enumeration_reference_values_from_type a0) (Z6896 (Z22764 a0)))
+(define (Z29493_enumeration_reference_values_from_type a0) (Z6896 (Z22764_string_from_type a0)))
 (define Z29493 Z29493_enumeration_reference_values_from_type)
 
 ;; Z29506 replace Nth character with substitution
@@ -24891,13 +24956,13 @@
   (Z10070_has_substring (Z27854_html_fragment_as_string a0) (Z27854_html_fragment_as_string a1)))
 (define Z29572 Z29572_html_fragment_contains_second_fragment)
 
-;; Z29576 HTML fragment contains fragment, case insensitive  [reaches an unimplemented function]
+;; Z29576 HTML fragment contains fragment, case insensitive
 ;;   Z29576K1: HTML fragment, Z29576K2: HTML fragment -> Boolean   [declared, not checked]
 (define
   (Z29576_html_fragment_contains_fragment_case_insensitive a0 a1)
   (Z10070_has_substring
-    (Z10047 (Z27854_html_fragment_as_string a0))
-    (Z10047 (Z27854_html_fragment_as_string a1))))
+    (Z10047_to_lowercase (Z27854_html_fragment_as_string a0))
+    (Z10047_to_lowercase (Z27854_html_fragment_as_string a1))))
 (define Z29576 Z29576_html_fragment_contains_fragment_case_insensitive)
 
 ;; Z29580 add caption to table without one  [reaches an unimplemented function]
@@ -26735,7 +26800,7 @@
               (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16660))) (Z16683K2 1))
               (record Z16683 (Z16683K1 (record Z16659 (Z16659K1 Z16660))) (Z16683K2 6)))
             #t))
-        (Z6896 (Z22764 a0))))))
+        (Z6896 (Z22764_string_from_type a0))))))
 (define Z30201 Z30201_select_from_grammatical_number_enum)
 
 ;; Z30216 Portuguese past participle String from Lexeme  [reaches an unimplemented function]
@@ -27102,7 +27167,7 @@
       " ")))
 (define Z30400 Z30400_armenian_instantiating_sentence)
 
-;; Z30404 Armenian capitalise first letter and add full stop  [reaches an unimplemented function]
+;; Z30404 Armenian capitalise first letter and add full stop
 ;;   Z30404K1: String -> String   [declared, not checked]
 (define
   (Z30404_armenian_capitalise_first_letter_and_add_full_stop a0)
@@ -27561,7 +27626,7 @@
           (Z13464_apply_a_two_parameter_function_to_a_list_of_first_arguments
             Z27410_better_matching_representation_string_from_lexeme
             (Z23616_lexemes_from_wikidata_item_reference a1 a3)
-            (Z881 Z6091))
+            (Z881_typed_list Z6091))
           (Z23753_label_of_item_reference_in_language_or_to_mul a1 a3))
         " "
         (Z23753_label_of_item_reference_in_language_or_to_mul a2 a3)
@@ -27575,9 +27640,9 @@
   (Z30617_reified_value_after_type a0)
   (identity
     (list
-      (record Z882 (K1 (record Z39 (Z39K1 "Z1K1"))) (K2 "Z9"))
+      (record Z882_typed_pair (K1 (record Z39 (Z39K1 "Z1K1"))) (K2 "Z9"))
       (record
-        Z882
+        Z882_typed_pair
         (K1 (record Z39 (Z39K1 "Z9K1")))
         (K2 (Z23443_reference_string_from_key_reference a0))))))
 (define Z30617 Z30617_reified_value_after_type)
@@ -27701,11 +27766,11 @@
           ".")))))
 (define Z30671 Z30671_defining_role_sentence_in_low_german)
 
-;; Z30676 is pangram (Danish alphabet)  [reaches an unimplemented function]
+;; Z30676 is pangram (Danish alphabet)
 ;;   Z30676K1: String -> Boolean   [declared, not checked]
 (define
   (Z30676_is_pangram_danish_alphabet a0)
-  (Z13119_is_pangram_of_alphabet (Z10047 a0) "abcdefghijklmnopqrstuvwxyzæøå"))
+  (Z13119_is_pangram_of_alphabet (Z10047_to_lowercase a0) "abcdefghijklmnopqrstuvwxyzæøå"))
 (define Z30676 Z30676_is_pangram_danish_alphabet)
 
 ;; Z30683 fetch statements of Wikidata Lexeme  [reaches an unimplemented function]
@@ -28703,7 +28768,7 @@
         (record Z6091 (Z6091K1 "Q7380503"))))))
 (define Z31108 Z31108_western_musical_scale_degree_to_svara)
 
-;; Z31109 fail with context  [reaches an unimplemented function]
+;; Z31109 fail with context
 ;;   Z31109K1: Object, Z31109K2: Error type, Z31109K3: Typed list(Object), Z31109K4: String -> Unit   [declared, not checked]
 (define
   (Z31109_fail_with_context a0 a1 a2 a3)
@@ -29399,7 +29464,7 @@
     (null? (fst a0))
     a0
     (Z31580_prepend_reversed_first_list_to_second_list
-      (record Z882 (K1 (cdr (fst a0))) (K2 (cons (car (fst a0)) (snd a0)))))))
+      (record Z882_typed_pair (K1 (cdr (fst a0))) (K2 (cons (car (fst a0)) (snd a0)))))))
 (define Z31580 Z31580_prepend_reversed_first_list_to_second_list)
 
 ;; Z31583 length and offsets of longest common sublist  [reaches an unimplemented function]
@@ -30461,7 +30526,7 @@
   (if
     (Z38046_string_starts_with_any_of_aeiouyaeiouy a0)
     #t
-    (if (Z10615_string_starts_with (Z10047 a0) "h") (not (Z38042 a0)) #f)))
+    (if (Z10615_string_starts_with (Z10047_to_lowercase a0) "h") (not (Z38042 a0)) #f)))
 (define Z32201 Z32201_elide_french_article_before_this_word)
 
 ;; Z32204 default cross-lingual fragment shown in  [reaches an unimplemented function]
@@ -30610,11 +30675,11 @@
         (identity
           (list
             (Z13717_replace_elements_of_list_according_to_key_value_lookup_lists
-              (map Z22764 (map Z16829_type_of_object a0))
+              (map Z22764_string_from_type (map Z16829_type_of_object a0))
               (list "Z6" "Z11" "Z89")
               (list identity Z33457_monolingual_text_as_html_with_language_span identity))
             (Z13717_replace_elements_of_list_according_to_key_value_lookup_lists
-              (map Z22764 (map Z16829_type_of_object a0))
+              (map Z22764_string_from_type (map Z16829_type_of_object a0))
               (list "Z6" "Z11" "Z89")
               (list Z27861 identity identity)))))
       a0)))
@@ -30675,43 +30740,43 @@
 (define
   (Z32240_multiplex_test_of_chinese_defining_role_sentence a0 a1 a2)
   (record
-    Z883
+    Z883_typed_map
     (K1
       (list
         (record
-          Z882
+          Z882_typed_pair
           (K1 Z1006)
           (K2 (Z32212_defining_role_sentence_in_s_t_chinese a0 a1 a2 Z1006)))
         (record
-          Z882
+          Z882_typed_pair
           (K1 Z1645)
           (K2 (Z32212_defining_role_sentence_in_s_t_chinese a0 a1 a2 Z1645)))
         (record
-          Z882
+          Z882_typed_pair
           (K1 Z1672)
           (K2 (Z32212_defining_role_sentence_in_s_t_chinese a0 a1 a2 Z1672)))
         (record
-          Z882
+          Z882_typed_pair
           (K1 Z1411)
           (K2 (Z32212_defining_role_sentence_in_s_t_chinese a0 a1 a2 Z1411)))
         (record
-          Z882
+          Z882_typed_pair
           (K1 Z1589)
           (K2 (Z32212_defining_role_sentence_in_s_t_chinese a0 a1 a2 Z1589)))
         (record
-          Z882
+          Z882_typed_pair
           (K1 Z1406)
           (K2 (Z32212_defining_role_sentence_in_s_t_chinese a0 a1 a2 Z1406)))
         (record
-          Z882
+          Z882_typed_pair
           (K1 Z1591)
           (K2 (Z32212_defining_role_sentence_in_s_t_chinese a0 a1 a2 Z1591)))
         (record
-          Z882
+          Z882_typed_pair
           (K1 Z1504)
           (K2 (Z32212_defining_role_sentence_in_s_t_chinese a0 a1 a2 Z1504)))
         (record
-          Z882
+          Z882_typed_pair
           (K1 Z1107)
           (K2 (Z32212_defining_role_sentence_in_s_t_chinese a0 a1 a2 Z1107)))))))
 (define Z32240 Z32240_multiplex_test_of_chinese_defining_role_sentence)
@@ -32053,11 +32118,11 @@
   (Z32749_english_item_label_has_equivalent_alias_with_the a0)
   (Z12696_contains
     (map
-      Z10047
+      Z10047_to_lowercase
       (Z32772_list_of_strings_from_multilingual_stringset_lang
         (Z23080_aliases_of_wikidata_item a0)
         Z1002))
-    (Z10047
+    (Z10047_to_lowercase
       (Z10000_join_two_strings
         "the "
         (Z14396_string_of_monolingual_text
@@ -32408,11 +32473,11 @@
       ": ")
     "a"
     (record
-      Z883
+      Z883_typed_map
       (K1
         (list
           (record
-            Z882
+            Z882_typed_pair
             (K1 "href")
             (K2
               (list
@@ -35318,17 +35383,17 @@
         " "))))
 (define Z34070 Z34070_state_location_using_entity_and_class_bulgarian)
 
-;; Z34072 във or в? (Bulgarian)  [reaches an unimplemented function]
+;; Z34072 във or в? (Bulgarian)
 ;;   Z34072K1: String -> String   [declared, not checked]
 (define
   (Z34072_or_bulgarian a0)
   (if
     (Z12698_is_any_true
       (list
-        (Z10615_string_starts_with (Z10047 a0) "в")
-        (Z10615_string_starts_with (Z10047 a0) "ф")
-        (Z10615_string_starts_with (Z10047 a0) "f")
-        (Z10615_string_starts_with (Z10047 a0) "v")))
+        (Z10615_string_starts_with (Z10047_to_lowercase a0) "в")
+        (Z10615_string_starts_with (Z10047_to_lowercase a0) "ф")
+        (Z10615_string_starts_with (Z10047_to_lowercase a0) "f")
+        (Z10615_string_starts_with (Z10047_to_lowercase a0) "v")))
     "във"
     "в"))
 (define Z34072 Z34072_or_bulgarian)
@@ -35355,17 +35420,17 @@
         (Z33848_abstract_wikilink_sentence_case (Z12964_last_element a0) a3)))))
 (define Z34077 Z34077_main_articles_dutch)
 
-;; Z34084 със or с? (Bulgarian)  [reaches an unimplemented function]
+;; Z34084 със or с? (Bulgarian)
 ;;   Z34084K1: String -> String   [declared, not checked]
 (define
   (Z34084_or_bulgarian a0)
   (if
     (Z12698_is_any_true
       (list
-        (Z10615_string_starts_with (Z10047 a0) "с")
-        (Z10615_string_starts_with (Z10047 a0) "з")
-        (Z10615_string_starts_with (Z10047 a0) "s")
-        (Z10615_string_starts_with (Z10047 a0) "z")))
+        (Z10615_string_starts_with (Z10047_to_lowercase a0) "с")
+        (Z10615_string_starts_with (Z10047_to_lowercase a0) "з")
+        (Z10615_string_starts_with (Z10047_to_lowercase a0) "s")
+        (Z10615_string_starts_with (Z10047_to_lowercase a0) "z")))
     "със"
     "с"))
 (define Z34084 Z34084_or_bulgarian)
@@ -36327,9 +36392,9 @@
   (Z34804_short_form_of_label_for_type_english a0 a1)
   (Z19601_n_ifs
     (list
-      (Z10615_string_starts_with (Z22764 a1) "Z881 ")
-      (string=? (Z22764 a1) "Z86")
-      (string=? (Z22764 a1) "Z33198"))
+      (Z10615_string_starts_with (Z22764_string_from_type a1) "Z881 ")
+      (string=? (Z22764_string_from_type a1) "Z86")
+      (string=? (Z22764_string_from_type a1) "Z33198"))
     (list
       (record Z11 (Z11K1 Z1002) (Z11K2 "list"))
       (record Z11 (Z11K1 Z1002) (Z11K2 "Codepoint"))
@@ -36576,7 +36641,7 @@
     #f
     a1
     1
-    (record Z883 (K1 (list)))))
+    (record Z883_typed_map (K1 (list)))))
 (define Z35029 Z35029_abstractwiki_periodic_table_cell)
 
 ;; Z35031 abstractwiki 18-col periodic table to nth period  [reaches an unimplemented function]
@@ -36628,7 +36693,7 @@
             #f
             15
             1
-            (record Z883 (K1 (list))))
+            (record Z883_typed_map (K1 (list))))
           (Z35029_abstractwiki_periodic_table_cell
             (Z29446_second_element_performance
               (Z30172_list_of_values_from_a_typed_map
@@ -36667,7 +36732,7 @@
               #f
               10
               1
-              (record Z883 (K1 (list))))))
+              (record Z883_typed_map (K1 (list))))))
         (if
           (< a0 3)
           Z24
@@ -36694,7 +36759,7 @@
               #f
               10
               1
-              (record Z883 (K1 (list))))))
+              (record Z883_typed_map (K1 (list))))))
         (if
           (< a0 4)
           Z24
@@ -36740,13 +36805,13 @@
         #t
         1
         1
-        (record Z883 (K1 (list))))
+        (record Z883_typed_map (K1 (list))))
       (Z35017_wrap_html_fragment_in_cell_td_th_element
         (Z29717_articleplaceholder_render_main_wikidata_statement a0 a1)
         #f
         1
         1
-        (record Z883 (K1 (list)))))
+        (record Z883_typed_map (K1 (list)))))
     "tr"
     (list)
     (list)))
@@ -37039,7 +37104,7 @@
 (define
   (Z35188_wikidata_statement_pair a0 a1 a2)
   (record
-    Z882
+    Z882_typed_pair
     (K1 (Z35362_name_for_table_header_from_property a1 a2))
     (K2 (Z23451_wikidata_statement_with_highest_rank a0 a1))))
 (define Z35188 Z35188_wikidata_statement_pair)
@@ -37048,7 +37113,10 @@
 ;;   Z35190K1: Typed pair(Object, Object), Z35190K2: Function, Z35190K3: Natural language -> Typed pair(Object, Object)   [declared, not checked]
 (define
   (Z35190_apply_fn_to_2nd_element_of_pair_optional_language a0 a1 a2)
-  (record Z882 (K1 (fst a0)) (K2 (Z29390_apply_the_needed_arguments a1 (list (snd a0) a2)))))
+  (record
+    Z882_typed_pair
+    (K1 (fst a0))
+    (K2 (Z29390_apply_the_needed_arguments a1 (list (snd a0) a2)))))
 (define Z35190 Z35190_apply_fn_to_2nd_element_of_pair_optional_language)
 
 ;; Z35192 display Wikidata date from statement  [reaches an unimplemented function]
@@ -38046,7 +38114,7 @@
     a2))
 (define Z35505 Z35505_article_less_instantiating_sentence_simple)
 
-;; Z35524 first letter uppercase for Turkish  [reaches an unimplemented function]
+;; Z35524 first letter uppercase for Turkish
 ;;   Z35524K1: Monolingual text -> Monolingual text   [declared, not checked]
 (define
   (Z35524_first_letter_uppercase_for_turkish a0)
@@ -39156,11 +39224,11 @@
             Z36011_list_of_strings_from_multilingual_text
             (map Z22853_labels_of_wikidata_item_multilingual_text a1))
           (Z32806_transform_elements_of_list_of_lists
-            Z10018
+            Z10018_to_uppercase
             (map
               Z36011_list_of_strings_from_multilingual_text
               (map Z22853_labels_of_wikidata_item_multilingual_text a1))))
-        (Z27068_if_true_pass_input_through_function a0 Z10018 (not a3))))
+        (Z27068_if_true_pass_input_through_function a0 Z10018_to_uppercase (not a3))))
     a2))
 (define Z36007 Z36007_select_wikidata_item_with_matching_label)
 
@@ -39853,11 +39921,11 @@
         ")"))
     "a"
     (record
-      Z883
+      Z883_typed_map
       (K1
         (list
           (record
-            Z882
+            Z882_typed_pair
             (K1 "href")
             (K2
               (list
@@ -40947,11 +41015,11 @@
     a1
     "a"
     (record
-      Z883
+      Z883_typed_map
       (K1
         (list
           (record
-            Z882
+            Z882_typed_pair
             (K1 "href")
             (K2
               (list
@@ -44962,11 +45030,11 @@
       (Z14396_string_of_monolingual_text a0)
       "span"
       (record
-        Z883
+        Z883_typed_map
         (K1
           (list
             (record
-              Z882
+              Z882_typed_pair
               (K1 "style")
               (K2
                 (Z21394_concatenate_many_strings
@@ -44984,15 +45052,15 @@
       (Z14396_string_of_monolingual_text a0)
       "span"
       (record
-        Z883
+        Z883_typed_map
         (K1
           (list
             (record
-              Z882
+              Z882_typed_pair
               (K1 "lang")
               (K2 (Z14329_language_to_language_tag (Z14404_language_of_monolingual_text a0))))
             (record
-              Z882
+              Z882_typed_pair
               (K1 "style")
               (K2
                 (Z21394_concatenate_many_strings
@@ -45045,8 +45113,13 @@
     a1
     "a"
     (record
-      Z883
-      (K1 (list (record Z882 (K1 "href") (K2 (list "https://www.wikifunctions.org/wiki/" a0))))))))
+      Z883_typed_map
+      (K1
+        (list
+          (record
+            Z882_typed_pair
+            (K1 "href")
+            (K2 (list "https://www.wikifunctions.org/wiki/" a0))))))))
 (define Z37465 Z37465_wikifunctions_link_for_zid_with_specified_text)
 
 ;; Z37481 does Wikidata property have data type URL?  [reaches an unimplemented function]
@@ -45787,11 +45860,11 @@
   (Z27908
     (Z37802_get_element_of_language_keyed_map
       (record
-        Z883
+        Z883_typed_map
         (K1
           (list
-            (record Z882 (K1 Z1002) (K2 "<b>$1</b> is a city located in $2. "))
-            (record Z882 (K1 Z1006) (K2 "<b>$1</b>是一个位于$2的城市。")))))
+            (record Z882_typed_pair (K1 Z1002) (K2 "<b>$1</b> is a city located in $2. "))
+            (record Z882_typed_pair (K1 Z1006) (K2 "<b>$1</b>是一个位于$2的城市。")))))
       a0)
     (list a1 a2)))
 (define Z37801 Z37801_xxx_is_a_city_located_in_yyy_builder_approach)
@@ -45875,11 +45948,14 @@
   (Z27908
     (Z37802_get_element_of_language_keyed_map
       (record
-        Z883
+        Z883_typed_map
         (K1
           (list
-            (record Z882 (K1 Z1002) (K2 "As of $1, the city had a total population of $2. "))
-            (record Z882 (K1 Z1006) (K2 "$1年，此城市人口为$2。")))))
+            (record
+              Z882_typed_pair
+              (K1 Z1002)
+              (K2 "As of $1, the city had a total population of $2. "))
+            (record Z882_typed_pair (K1 Z1006) (K2 "$1年，此城市人口为$2。")))))
       a0)
     (list a1 a2)))
 (define Z37815 Z37815_as_of_xxx_the_city_had_a_total_population_of_yyy)
@@ -45890,11 +45966,11 @@
   (Z37817_section_header_geography_builder_approach a0)
   (Z37802_get_element_of_language_keyed_map
     (record
-      Z883
+      Z883_typed_map
       (K1
         (list
-          (record Z882 (K1 Z1002) (K2 (record Z89 (Z89K1 "<h2>Geography</h2>"))))
-          (record Z882 (K1 Z1006) (K2 (record Z89 (Z89K1 "<h2>地理</h2>")))))))
+          (record Z882_typed_pair (K1 Z1002) (K2 (record Z89 (Z89K1 "<h2>Geography</h2>"))))
+          (record Z882_typed_pair (K1 Z1006) (K2 (record Z89 (Z89K1 "<h2>地理</h2>")))))))
     a0))
 (define Z37817 Z37817_section_header_geography_builder_approach)
 
@@ -48363,10 +48439,7 @@
 ;;   Z38477K1: Type, Z38477K2: Typed list(Type), Z38477K3: Typed list(Object) -> Object   [declared, not checked]
 (define
   (Z38477_switch_on_type a0 a1 a2)
-  (if
-    (null? a1)
-    (car a2)
-    (if (Z19084_same_type a0 (car a1)) (car a2) (Z38477_switch_on_type a0 (cdr a1) (cdr a2)))))
+  (Z38472_switch_on_string (Z22764_string_from_type a0) (map Z22764_string_from_type a1) a2))
 (define Z38477 Z38477_switch_on_type)
 
 ;; Z38478 Get parent taxon  [reaches an unimplemented function]

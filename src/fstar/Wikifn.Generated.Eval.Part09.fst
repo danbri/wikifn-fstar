@@ -854,9 +854,9 @@ let body_Z38462_count_of_wikidata_item_property_values : expr =
 let body_Z38472_switch_on_string : expr =
   ECall 22193 [EArg 0; ECall 17895 [EArg 1]; ECall 17895 [EArg 2]]
 
-(* Z38477 switch on Type | Z38477@294854 -> Z38486@294852 digest 61e807f474198d3d77f498de3ea0f2b6b455cb5405527d6dc4d443674f7bc350 *)
+(* Z38477 switch on Type | Z38477@294854 -> Z38481@294841 digest 6ff724d74c567c2c0478cff2bac76f694a03f88fd80dd19123fd4e63880cb184 *)
 let body_Z38477_switch_on_type : expr =
-  ECall 802 [ECall 813 [EArg 1]; ECall 811 [EArg 2]; ECall 802 [ECall 19084 [EArg 0; ECall 811 [EArg 1]]; ECall 811 [EArg 2]; ECall 38477 [EArg 0; ECall 812 [EArg 1]; ECall 812 [EArg 2]]]]
+  ECall 38472 [ECall 22764 [EArg 0]; ECall 873 [EValue (VFunc 22764); EArg 1]; EArg 2]
 
 (* Z38478 Get parent taxon | Z38478@294858 -> Z38487@295755 digest bc80766d5870fa79e5eb6e49080afd685be3b73a78a10c409b5bb2571aabc62d *)
 let body_Z38478_get_parent_taxon : expr =

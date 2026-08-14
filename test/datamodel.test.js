@@ -129,6 +129,54 @@ for (const zid of EQUALITY) {
   });
 }
 
+// A type is a value, and a generic type carries its parameters.
+//
+// Z16829 answers what type a value has; Z881/Z882/Z883 build the generic types;
+// Z22764 renders one back to text. The spelling is not ours to choose - these
+// are the strings Z22764's own testers demand, nested brackets and all.
+test("every value has a type, and a type is a value", skip, () => {
+  const { call } = engine();
+  const typeOf = (v) => call("Z16829", [v]);
+  const shapes = [
+    ["abc", "Z6", "a string"],
+    [true, "Z40", "a boolean"],
+    [7, "Z13518", "a natural number"],
+    [[1, 2], "Z881", "a list"]
+  ];
+  for (const [v, want, what] of shapes) {
+    const r = typeOf(v);
+    assert.ok(r.ok, `type of ${what} did not evaluate: ${r.message}`);
+    const rendered = call("Z22764", [r.result]);
+    assert.ok(rendered.ok, `rendering the type of ${what} failed: ${rendered.message}`);
+    assert.equal(rendered.result.text, want, `type of ${what}`);
+  }
+});
+
+test("a generic type renders with its parameters, nested", skip, () => {
+  const { call } = engine();
+  const t = (zid) => call("Z16829", [zid]).result;
+  // Built the way the corpus writes them: a type constructor applied to types.
+  const list = (a) => call("Z881", [a]).result;
+  const pair = (a, b) => call("Z882", [a, b]).result;
+  const map = (a, b) => call("Z883", [a, b]).result;
+  const render = (v) => {
+    const r = call("Z22764", [v]);
+    assert.ok(r.ok, `Z22764 failed: ${r.message}`);
+    return r.result.text;
+  };
+  const Z = (n) => ({ type: "Z8", zid: n });
+
+  assert.equal(render(Z("Z40")), "Z40", "a plain type is its identifier");
+  assert.equal(render(list(Z("Z40"))), "Z881 (Z40)", "tester Z22963");
+  assert.equal(render(pair(Z("Z6"), Z("Z16683"))), "Z882 (Z6, Z16683)", "tester Z28971");
+  // Tester Z31202: generics nest, and the rendering nests with them.
+  assert.equal(
+    render(pair(Z("Z99"), map(Z("Z6"), list(Z("Z6"))))),
+    "Z882 (Z99, Z883 (Z6, Z881 (Z6)))",
+    "tester Z31202"
+  );
+});
+
 // What is not represented, as counts rather than prose. Lower these by adding
 // the shape; never raise one without saying why.
 const NOT_REPRESENTED = [

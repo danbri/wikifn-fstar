@@ -290,7 +290,11 @@ and parse_object s i : Wikifn_Eval.value * int =
        | Some (Wikifn_Eval.VNat k) -> (Wikifn_Eval.VNat k, next)
        | Some v -> (Wikifn_Eval.VNat (Z.of_string (text_of v)), next)
        | None -> raise (Bad_argument "Z13518 needs a value"))
-  | Some t when text_of t = "Z881" ->
+  (* Z881 names two different things and the key says which: a list *value*
+     prints as {"type":"Z881","items":[...]}, while the *type* "list of X" is a
+     record and prints its parameter under "fields". Reading the type as a
+     malformed list is what "Z881 needs items" used to mean. *)
+  | Some t when text_of t = "Z881" && find "items" <> None ->
       (match find "items" with
        | Some (Wikifn_Eval.VList items) -> (Wikifn_Eval.VList items, next)
        | _ -> raise (Bad_argument "Z881 needs items"))

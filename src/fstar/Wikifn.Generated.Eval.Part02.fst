@@ -262,9 +262,9 @@ let body_Z16634_is_function_commutative_for_this_first_argument_with_all_arg : e
 let body_Z16648_is_later_month_in_the_year : expr =
   ECall 16542 [EArg 1; EArg 0]
 
-(* Z16667 same sign | Z16667@266742 -> Z33752@266740 digest 3856b9b497d8cfc69f7e2d029e3fa45446391416d58e7dd4d83f201420071f64 *)
+(* Z16667 same sign | Z16667@266742 -> Z17607@239715 digest 70c4dc20df835588e15587feaba433d6aa904ba5ad294206e2080e638aec179d *)
 let body_Z16667_same_sign : expr =
-  ECall 866 [ECall 822 [ECall 29446 [ECall 30617 [EArg 0]]]; ECall 822 [ECall 29446 [ECall 30617 [EArg 1]]]]
+  ECall 17464 [EArg 0; EArg 1]
 
 (* Z16676 invert sign | Z16676@207238 -> Z16682@221655 digest a697cd767bc7f6ba35186680ccf222dbd473ed3eb1c980be355c763166cb5a9d *)
 let body_Z16676_invert_sign : expr =
@@ -770,9 +770,9 @@ let body_Z17869_sort_list_ascending_integers : expr =
 let body_Z17873_sort_list_ascending_natural_numbers : expr =
   ECall 873 [EValue (VFunc 17144); ECall 17869 [ECall 801 [ECall 18475 [ECall 873 [EValue (VFunc 17101); EArg 0]]]]]
 
-(* Z17879 is this list untyped? | Z17879@247310 -> Z17892@247996 digest 8611a4312fe2bdb6783b8a6c76ee3eef4b219c9f9760c9ce3182aa8d8d2023c8 *)
+(* Z17879 is this list untyped? | Z17879@247310 -> Z18588@265638 digest e7479a4352ceb5fb5dd6060935838e9c0998b48f4a76f5e1e40302397595db02 *)
 let body_Z17879_is_this_list_untyped : expr =
-  ECall 15801 [EArg 0; EValue (VList [])]
+  ECall 866 [ECall 18569 [EArg 0]; EValue (VText [90; 49])]
 
 (* Z17893 ZID of object type | Z17893@247997 -> Z22768@243728 digest 1f13d32ebf6bef3a94f404fb243503acf9dd1e96d5c997773a7e5c339d98cd88 *)
 let body_Z17893_zid_of_object_type : expr =
@@ -782,9 +782,9 @@ let body_Z17893_zid_of_object_type : expr =
 let body_Z17895_untype_a_list : expr =
   ECall 873 [EValue (VFunc 801); EArg 0]
 
-(* Z17900 is this list typed? | Z17900@248004 -> Z17901@248005 digest 426ca2c0b9346b7dfce29808173b13bcfcffa7d6fb3e94e42fd9d2bdc621be2c *)
+(* Z17900 is this list typed? | Z17900@248004 -> Z18581@265631 digest 95e7a2f03c8a86c61a03bb571ee1bbbfad07c7878c485bf6a03f7a9dc95dea78 *)
 let body_Z17900_is_this_list_typed : expr =
-  ECall 10216 [ECall 17879 [EArg 0]]
+  ECall 10379 [ECall 18569 [EArg 0]; EValue (VText [90; 49])]
 
 (* Z17904 add suffix "t" to string if it does not end with "t" | Z17904@248008 -> Z17993@251501 digest 348363488af0dc569d42db9102fe4b74f66df4474a836d8bc3a340314937b74c *)
 let body_Z17904_add_suffix_t_to_string_if_it_does_not_end_with_t : expr =
