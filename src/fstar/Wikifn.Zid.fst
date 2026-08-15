@@ -54,6 +54,20 @@ let starts_with_zero (s:text) : Tot bool =
   | head :: _ -> head = cp_zero
   | [] -> false
 
+(* A decimal natural. Wikifunctions writes a Z13518 natural as the string of its
+   digits, so reading one back is what Z808 Abstract needs. Leading zeros are
+   refused for the same reason parse_zid refuses them: two spellings for one
+   value would make the round trip below untrue. *)
+let parse_nat (s:text) : Tot (option nat) =
+  match s with
+  | [] -> None
+  | [only] -> if is_digit only then Some (digit_value only) else None
+  | _ ->
+      if starts_with_zero s then None
+      else
+        let (value, count, remainder) = take_digits s 0 0 in
+        if count > 0 && Nil? remainder then Some value else None
+
 let parse_zid (s:text) : Tot (option zid) =
   match s with
   | [] -> None

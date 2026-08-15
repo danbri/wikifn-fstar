@@ -53,6 +53,14 @@ const SHAPES = [
     type: "Z11", what: "a record, here monolingual text",
     zid: "Z861", args: ["hello", "Z1002"],
     read: (r) => r.fields !== undefined && Object.keys(r.fields).length === 2
+  },
+  {
+    // A quote holds an expression rather than a value, which is why the value
+    // and expression types are one mutually recursive family. Z29113 is the
+    // corpus's own quoted reference from ZID string.
+    type: "Z99", what: "a quote",
+    zid: "Z29113", args: ["Z6"],
+    read: (r) => r.type === "Z99" && typeof r.quoted === "string"
   }
 ];
 
@@ -204,6 +212,89 @@ test("what the value model does not hold is counted, not described", skip, () =>
     "a type the value model does not represent grew its share of the corpus.\n" +
     "  These are declared positions, not failures; the number is here so that\n" +
     "  adding the shape shows up as the budget going to zero."
+  );
+});
+
+// Quoting is not just a container: the point of a quote is that what it holds
+// can be run later, in the environment the unquote sits in.
+test("quoting is no longer what stands in the way", skip, () => {
+  const { call } = engine();
+  // Z24307 fallback language codes reads a table stored on the wiki as a Z99
+  // and unquotes it. Before quoting existed, the reference to that table became
+  // a call to a function nobody implements and the answer was silently wrong.
+  //
+  // It still does not evaluate, because Z33399 - the function the table is
+  // handed to - has no implementation here. That is a different gap, and the
+  // point of this test is that quoting is no longer the one in the way: the
+  // failure must not be about Z899, Z99 or the stored object itself.
+  const response = call("Z24307", ["de", "fr", "en"]);
+  if (!response.ok) {
+    assert.doesNotMatch(
+      response.message, /Z899|Z99\b|Z33395/,
+      `Z24307 still fails on quoting: ${response.message}`
+    );
+  }
+  // What can be checked end to end: a quoted reference is a quote, and the
+  // thing it holds is what was asked for.
+  const quoted = call("Z29113", ["Z6"]);
+  assert.ok(quoted.ok, `Z29113 did not evaluate: ${quoted.message}`);
+  assert.equal(quoted.result.type, "Z99", "a quoted reference should be a quote");
+  assert.match(
+    String(quoted.result.quoted), /Z6/,
+    `the quote should hold the reference it was given, got ${JSON.stringify(quoted.result)}`
+  );
+});
+
+// Reify turns any object into the list of key-value pairs it is made of, which
+// is how the corpus asks what something is without a type system. Z15818 is
+// natural number is written as car(reify(x)) = car(reify(0)).
+test("reify exposes an object as its key-value pairs", skip, () => {
+  const { call } = engine();
+  const reified = call("Z805", ["abc"]);
+  assert.ok(reified.ok, `Z805 did not evaluate: ${reified.message}`);
+  assert.ok(Array.isArray(reified.result.items), "reify should return a list");
+  assert.ok(reified.result.items.length >= 2, "a string reifies to its type and its value");
+  for (const [value, want, what] of [[7, true, "a natural number"], ["7", false, "the string 7"]]) {
+    const answer = call("Z15818", [value]);
+    assert.ok(answer.ok, `Z15818 on ${what} did not evaluate: ${answer.message}`);
+    assert.equal(answer.result.value, want, `Z15818 on ${what}`);
+  }
+});
+
+// Z808 Abstract is the inverse of Z805 Reify, which is proved in F* over the
+// value type (Wikifn.Roundtrip). This runs the same claim through the extracted
+// engine, so the two paths cannot drift: the proof is about the F* functions,
+// this is about what actually ships.
+test("reify and abstract are inverses in the built engine too", skip, () => {
+  const { call } = engine();
+  const cases = [
+    ["a string", "abc", (r) => r.text === "abc"],
+    ["the empty string", "", (r) => r.text === ""],
+    ["a boolean", true, (r) => r.value === true],
+    ["a natural number", 7, (r) => Number(r.value) === 7],
+    ["zero", 0, (r) => Number(r.value) === 0]
+  ];
+  for (const [what, value, holds] of cases) {
+    const reified = call("Z805", [value]);
+    assert.ok(reified.ok, `reifying ${what} failed: ${reified.message}`);
+    const back = call("Z808", [reified.result]);
+    assert.ok(back.ok, `abstracting ${what} failed: ${back.message}`);
+    assert.ok(
+      holds(back.result),
+      `${what} did not survive the round trip: ${JSON.stringify(back.result)}`
+    );
+  }
+  // A record, which is the case the proof needs a side condition for: its own
+  // fields must not include Z1K1, and its type must not be a scalar's.
+  const record = call("Z861", ["hello", "Z1002"]);
+  assert.ok(record.ok, `Z861 failed: ${record.message}`);
+  const reified = call("Z805", [record.result]);
+  assert.ok(reified.ok, `reifying a record failed: ${reified.message}`);
+  const back = call("Z808", [reified.result]);
+  assert.ok(back.ok, `abstracting a record failed: ${back.message}`);
+  assert.deepEqual(
+    back.result, record.result,
+    "a record did not survive reify then abstract"
   );
 });
 

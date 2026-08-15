@@ -11,17 +11,26 @@ while IFS= read -r part; do
   generated_parts+=("$part")
 done < <(find "$root/src/fstar" -name 'Wikifn.Generated.Eval.Part*.fst' | sort)
 
+# Literal values too large to sit inside a body, lifted out and shared. The
+# parts open these, so they are checked first.
+generated_values=()
+while IFS= read -r part; do
+  generated_values+=("$part")
+done < <(find "$root/src/fstar" -name 'Wikifn.Generated.Eval.Values*.fst' | sort)
+
 files=(
   "$root/src/fstar/Wikifn.Primitive.Kernel.fst"
   "$root/src/fstar/Wikifn.Unicode.Case.fst"
   "$root/src/fstar/Wikifn.Zid.fst"
+  "$root/src/fstar/Wikifn.Zid.Laws.fst"
   "$root/src/fstar/Wikifn.Model.fst"
   "$root/src/fstar/Wikifn.Canonical.fst"
   "$root/src/fstar/Wikifn.Eval.fst"
   "$root/src/fstar/Wikifn.Print.fst"
+  "$root/src/fstar/Wikifn.Roundtrip.fst"
+  "${generated_values[@]}"
   "${generated_parts[@]}"
   "$root/src/fstar/Wikifn.Generated.Eval.fst"
-  "$root/src/fstar/Wikifn.Fuel.fst"
   "$root/src/fstar/Wikifn.Fuel.fst"
   "$root/src/fstar/Wikifn.Direct.fst"
   "$root/src/fstar/Wikifn.Compiled.Direct.fst"

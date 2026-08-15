@@ -78,6 +78,59 @@ test("every open proof obligation is one that is written down", () => {
   );
 });
 
+// A module that is never checked is a module that proves nothing, and adding
+// one is easy to forget: the file sits in src/fstar looking like the rest.
+test("every F* module is actually checked", () => {
+  const order = readFileSync(path.resolve("scripts/fstar-check.sh"), "utf8");
+  const generated = /Generated\.Eval\.(Part|Values)/;
+  const missing = readdirSync(fstarDir)
+    .filter((name) => name.endsWith(".fst"))
+    // The generated parts and their shared values are found by a glob rather
+    // than listed, because there are dozens and the count changes.
+    .filter((name) => !generated.test(name))
+    .filter((name) => !order.includes(name));
+  assert.deepEqual(
+    missing, [],
+    "an F* module is not in scripts/fstar-check.sh, so nothing verifies it"
+  );
+});
+
+// The laws that other work rests on. Naming them here means removing one is a
+// deliberate act rather than something that quietly stops being true.
+const PROVED = [
+  {
+    file: "Wikifn.Zid.Laws.fst",
+    lemmas: ["parse_render_nat", "parse_render_zid", "parse_render_zkey"],
+    why: "Identifiers, keys and numbers are text in Wikifunctions. Reify writes "
+       + "those spellings and Abstract reads them, so the two are inverses only "
+       + "if writing and reading agree."
+  },
+  {
+    file: "Wikifn.Roundtrip.fst",
+    lemmas: ["reify_abstract", "reify_then_abstract", "reify_answers_for"],
+    why: "Z805 Reify and Z808 Abstract are inverses, for every shape Reify "
+       + "answers for. The corpus asks and answers type questions with the "
+       + "pair - Z15818 is Natural number is car(reify(x)) = car(reify(0)) - "
+       + "so if they disagreed those answers would be wrong silently."
+  }
+];
+
+test("the laws other work rests on are still proved", () => {
+  for (const row of PROVED) {
+    const source = readFileSync(path.join(fstarDir, row.file), "utf8");
+    for (const lemma of row.lemmas) {
+      assert.match(
+        source, new RegExp(`^let (rec )?${lemma}\\b`, "m"),
+        `${row.file} no longer proves ${lemma}. ${row.why}`
+      );
+    }
+    assert.equal(
+      obligationsIn(source.replace(/\(\*[\s\S]*?\*\)/g, "")), 0,
+      `${row.file} carries an open obligation, so what it states is not proved`
+    );
+  }
+});
+
 test("nothing claims to be proved that rests on an admit", () => {
   const fuel = readFileSync(path.join(fstarDir, "Wikifn.Fuel.fst"), "utf8");
   // The two theorems a caller would cite must say so in the file itself, so the

@@ -157,7 +157,13 @@ let rec nth_text (index:nat) (names:list text) : Tot text (decreases names) =
   | _, _ :: tail -> nth_text (index - 1) tail
   | _, [] -> [97; 114; 103]   (* arg, when the caller gave too few names *)
 
-let rec print_value (lookup:name_lookup) (v:value) : Tot text (decreases v) =
+(* Values and expressions print in one mutual group, because a quote is a value
+   that holds an expression. Splitting them meant a quote could only be printed
+   as a marker; printed properly it is a thunk, which is what it is: the body
+   runs when the quote is opened, not where it is written. *)
+let rec print_value (lookup:name_lookup) (names:list text) (v:value)
+  : Tot text (decreases v)
+=
   match v with
   | VText s -> quoted s
   | VBool b -> boolean_text b
@@ -169,34 +175,43 @@ let rec print_value (lookup:name_lookup) (v:value) : Tot text (decreases v) =
     end
   | VPair left right ->
       parenthesise (join_with [cp_space]
-        [[99; 111; 110; 115]; print_value lookup left; print_value lookup right])
+        [[99; 111; 110; 115]; print_value lookup names left; print_value lookup names right])
   | VList items ->
       parenthesise (join_with [cp_space]
-        ([108; 105; 115; 116] :: print_values lookup items))
+        ([108; 105; 115; 116] :: print_values lookup names items))
   | VRecord t fields ->
       (* (record Z11 (Z11K1 . value) ...) - readable, and the type stays visible *)
       parenthesise (join_with [cp_space]
-        ([114; 101; 99; 111; 114; 100] :: name_of lookup t :: print_fields lookup fields))
+        ([114; 101; 99; 111; 114; 100] :: name_of lookup t :: print_fields lookup names fields))
+  | VQuote body ->
+      (* A thunk, not Scheme's quote. Scheme's (quote x) is a datum and opening
+         it again would need eval; Wikifunctions' unquote evaluates the body in
+         the environment the unquote sits in. A procedure of no arguments is
+         exactly that, and unquote in the prelude just calls it. *)
+      parenthesise (join_with [cp_space]
+        [lambda_word; parenthesise []; print_expr lookup names body])
 
-and print_values (lookup:name_lookup) (items:list value) : Tot (list text) (decreases items) =
+and print_values (lookup:name_lookup) (names:list text) (items:list value)
+  : Tot (list text) (decreases items)
+=
   match items with
   | [] -> []
-  | head :: tail -> print_value lookup head :: print_values lookup tail
+  | head :: tail -> print_value lookup names head :: print_values lookup names tail
 
-and print_fields (lookup:name_lookup) (fields:list (zkey & value))
+and print_fields (lookup:name_lookup) (names:list text) (fields:list (zkey & value))
   : Tot (list text) (decreases fields)
 =
   match fields with
   | [] -> []
   | (k, v) :: tail ->
-      parenthesise (join_with [cp_space] [render_zkey k; print_value lookup v])
-      :: print_fields lookup tail
+      parenthesise (join_with [cp_space] [render_zkey k; print_value lookup names v])
+      :: print_fields lookup names tail
 
-let rec print_expr (lookup:name_lookup) (names:list text) (e:expr)
+and print_expr (lookup:name_lookup) (names:list text) (e:expr)
   : Tot text (decreases e)
 =
   match e with
-  | EValue v -> print_value lookup v
+  | EValue v -> print_value lookup names v
   | EArg index -> nth_text index names
   | ECall f args ->
       parenthesise (join_with [cp_space] (name_of lookup f :: print_args lookup names args))
@@ -261,16 +276,16 @@ let escaping_a_quote_example () :
 
 let boolean_and_is_a_procedure_not_syntax () :
   Lemma (
-    print_value no_names (VFunc 10174) == [98; 111; 111; 108; 45; 97; 110; 100]
+    print_value no_names [] (VFunc 10174) == [98; 111; 111; 108; 45; 97; 110; 100]
   )
-  = assert_norm (print_value no_names (VFunc 10174) == [98; 111; 111; 108; 45; 97; 110; 100])
+  = assert_norm (print_value no_names [] (VFunc 10174) == [98; 111; 111; 108; 45; 97; 110; 100])
 
 let if_in_value_position_is_wrapped () :
   Lemma (
-    print_value no_names (VFunc 802) == [40; 108; 97; 109; 98; 100; 97; 32; 40; 99; 32; 116; 32; 101; 41; 32; 40; 105; 102; 32; 99; 32; 116; 32; 101; 41; 41]
+    print_value no_names [] (VFunc 802) == [40; 108; 97; 109; 98; 100; 97; 32; 40; 99; 32; 116; 32; 101; 41; 32; 40; 105; 102; 32; 99; 32; 116; 32; 101; 41; 41]
   )
   = assert_norm (
-      print_value no_names (VFunc 802) == [40; 108; 97; 109; 98; 100; 97; 32; 40; 99; 32; 116; 32; 101; 41; 32; 40; 105; 102; 32; 99; 32; 116; 32; 101; 41; 41]
+      print_value no_names [] (VFunc 802) == [40; 108; 97; 109; 98; 100; 97; 32; 40; 99; 32; 116; 32; 101; 41; 32; 40; 105; 102; 32; 99; 32; 116; 32; 101; 41; 41]
     )
 
 let if_in_operator_position_is_not_wrapped () :

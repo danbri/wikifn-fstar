@@ -105,6 +105,13 @@ let rec encode_value (v : Wikifn_Eval.value) =
       in
       Printf.sprintf "{\"type\":\"Z%s\",\"fields\":{%s}}"
         (Z.to_string t) (String.concat "," (List.map field fields))
+  (* A quote holds an unevaluated expression, so there is no value to encode.
+     What is shown instead is the expression itself, printed by the same F*
+     printer the source listing uses - which is the honest answer to "what is
+     in this quote". *)
+  | Wikifn_Eval.VQuote body ->
+      Printf.sprintf "{\"type\":\"Z99\",\"quoted\":%s}"
+        (quote (encode_utf8 (Wikifn_Print.print_expr Wikifn_Print.no_names [] body)))
 
 let describe_error (e : Wikifn_Eval.eval_error) =
   match e with

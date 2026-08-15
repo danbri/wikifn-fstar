@@ -104,6 +104,19 @@ export const PRELUDE = new Map([
   // Two arguments to error, not one: R7RS wants a message and irritants, and a
   // one-argument call makes Chez warn about the arity.
   ["Z13546", (n) => `(define (${n} a b)\n  (if (= b 0)\n      (error "Z13546 divide natural numbers" "division by zero")\n      (quotient a b)))`],
+  // Quoting. A quote prints as a thunk, so unquoting is calling it; anything
+  // that is not a quote comes back as it stands, which is what the evaluator
+  // does with one.
+  ["Z899", (n) => `(define (${n} q) (if (procedure? q) (q) q))`],
+  // Z29267 declares a list and names its first item as the subject.
+  ["Z29267", (n) => `(define (${n} xs)\n  (let ((x (if (pair? xs) (car xs) xs)))\n    (lambda () x)))`],
+  // Reify: an object as the list of key-value pairs it is made of. The corpus
+  // uses it to ask what something is - Z15818 is natural number is written as
+  // car(reify(x)) = car(reify(0)) - so the first pair carrying the type is the
+  // part that has to be right.
+  ["Z805", (n) => `(define (${n} v)\n  (cond ((string? v) (list (list 'Z1K1 'Z6) (list 'Z6K1 v)))\n        ((boolean? v) (list (list 'Z1K1 'Z40) (list 'Z40K1 (if v 'Z41 'Z42))))\n        ((number? v) (list (list 'Z1K1 'Z13518) (list 'Z13518K1 (number->string v))))\n        ((pair? v)\n         (if (eq? (car v) 'record)\n             (cons (list 'Z1K1 (cadr v)) (cddr v))\n             (list (list 'Z1K1 'Z1))))\n        (else (list (list 'Z1K1 'Z1)))))`],
+  // Z808 Abstract, the inverse of Z805: the pairs back into the object.
+  ["Z808", (n) => `(define (${n} pairs)\n  (let ((t (cadr (assq 'Z1K1 pairs))))\n    (cond ((eq? t 'Z6) (cadr (assq 'Z6K1 pairs)))\n          ((eq? t 'Z40) (eq? (cadr (assq 'Z40K1 pairs)) 'Z41))\n          ((eq? t 'Z13518) (string->number (cadr (assq 'Z13518K1 pairs))))\n          (else (cons 'record (cons t (filter (lambda (p) (not (eq? (car p) 'Z1K1))) pairs)))))))`],
   ["Z22693", (n) => `(define (${n} cs) (list->string (map integer->char cs)))`],
   ["Z14520", (n) => `(define (${n} s chars)\n  (list->string\n    (filter (lambda (c) (not (memv c (string->list chars)))) (string->list s))))`],
   ["Z14124", (n) => `(define (${n} first last)\n  (let loop ((i first) (acc '()))\n    (if (> i last)\n        (list->string (reverse acc))\n        (loop (+ i 1) (cons (integer->char i) acc)))))`],

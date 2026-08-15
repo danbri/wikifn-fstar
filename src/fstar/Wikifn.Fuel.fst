@@ -151,7 +151,16 @@ let rec eval_extra (p:policy) (fuel:nat) (extra:nat) (depth:nat) (env:list value
       if depth >= max_depth then () else
       let next : nat = fuel - 1 in
       let deeper : nat = depth + 1 in
-      if fid = fid_throw then eval_list_extra p next extra deeper env args
+      if fid = fid_unquote then
+        (* Unquoting evaluates the quoted body, so the body's run has to agree
+           too. Its budget is what the argument run left, which is no larger
+           than the fuel this call started with, so the measure still falls. *)
+        (eval_list_extra p next extra deeper env args;
+         let (values, after) = eval_list p next deeper env args in
+         match values with
+         | EOk [VQuote inner] -> eval_extra p after extra deeper env inner
+         | _ -> ())
+      else if fid = fid_throw then eval_list_extra p next extra deeper env args
       else if fid = fid_get_error then
         (match args with
          | [call] -> eval_extra p next extra deeper env call

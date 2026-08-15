@@ -40,6 +40,27 @@ type value =
      text, rationals and floats are all written this way in compositions, and
      without it those literals cannot be expressed at all. *)
   | VRecord : zid -> list (zkey & value) -> value
+  (* A Z99: a piece of composition held as data rather than run.
+ 
+     Z99 is a *type*, not a function - the corpus writes a quote as the literal
+     object {Z1K1: Z99, Z99K1: x}, and there is no call to Z99 anywhere in the
+     dump. So a quote is always a value, even when what it holds is computed,
+     and it never needs an expression form of its own.
+ 
+     What it holds is an expr rather than a value, and that is the whole point.
+     Z899 unquote is not "take the wrapper off": Z13036 apply a function to a
+     value is written as Z899(Z31754(f, [v])) - build a call as data, then run
+     it - and that cannot be said if the payload has already been evaluated. *)
+  | VQuote : expr -> value
+
+and expr =
+  | EValue : value -> expr
+  | EArg : nat -> expr
+  | ECall : zid -> list expr -> expr
+  (* Building a record from fields that are not yet values. A record whose
+     fields are all literals is an EValue; this is for the other case, where a
+     field is an argument or a call. *)
+  | ERecord : zid -> list (zkey & expr) -> expr
 
 type eval_error =
   | EFuelExhausted
@@ -63,22 +84,6 @@ type eval_error =
 type eval_result (a:Type0) =
   | EOk : a -> eval_result a
   | EErr : eval_error -> eval_result a
-
-type expr =
-  | EValue : value -> expr
-  | EArg : nat -> expr
-  | ECall : zid -> list expr -> expr
-  (* Building a record from fields that are not yet values. A record whose
-     fields are all literals is an EValue; this is for the other case, where a
-     field is an argument or a call.
-
-     Without it, an implementation like Z27217 - which is nothing but
-     {Z11K1: arg2, Z11K2: arg1, Z1K1: Z11} - could not be expressed, so it was
-     skipped, and the only surviving implementation of Z861 was the one that
-     defers to Z26107, which defers straight back. The pair looked like
-     unbreakable mutual recursion when in fact neither function recurses at all
-     and the way out was a plain record. *)
-  | ERecord : zid -> list (zkey & expr) -> expr
 
 (* A policy maps a function ZID to a body written against argument indices. *)
 type policy = zid -> Tot (option expr)
@@ -221,6 +226,15 @@ let fid_typed_pair : zid = 882      // Z882 Typed pair
 let fid_typed_map : zid = 883       // Z883 Typed map
 let fid_string_from_type : zid = 22764  // Z22764 String from Type
 
+// Quoting. Z99 is a type, so a quote is written as a literal object and never
+// called; what needs a form is Z899, because unquoting is evaluating.
+let type_z99 : zid = 99            // Z99 Quote
+let key_z99k1 : zkey = global_key 99 1
+let fid_unquote : zid = 899        // Z899 Unquote
+let fid_quoted_reference : zid = 29267  // Z29267 quoted reference
+let fid_reify : zid = 805          // Z805 Reify
+let fid_abstract : zid = 808       // Z808 Abstract, the inverse of Z805
+
 (* An internal helper the generator emits for the private-use marker idiom.
    Numbered outside the Wikifunctions range so it cannot collide. *)
 let internal_fresh_private_use : zid = 1000000001
@@ -311,6 +325,190 @@ let type_of_value (v:value) : Tot value =
   | VPair _ _ -> VFunc fid_typed_pair
   | VFunc _ -> VFunc 8
   | VRecord t _ -> VFunc t
+  | VQuote _ -> VFunc type_z99
+
+(* Z39 is a key reference: a record holding the key's spelling. *)
+let key_reference_value (k:zkey) : Tot value =
+  VRecord 39 [(global_key 39 1, VText (render_zkey k))]
+
+(* A reference, in the normal form the corpus writes: an object whose type is Z9
+   and whose one field is the identifier being referred to. *)
+(* Z805 Reify: an object as the list of its key-value pairs, recursively.
+ 
+   This is honest about what it cannot do. A list and a pair carry no element
+   type here, and reify's whole job is to expose the encoding that parameter
+   lives in - the corpus uses it for exactly that, in "type of list (as string)"
+   and "is a Typed list". So those two shapes are refused rather than answered
+   with something that would read as a type-free list and be wrong. Records and
+   scalars, which carry everything they need, are answered. *)
+(* Z805 Reify: an object as the list of key-value pairs it is made of.
+   
+   Shallow, which is what Wikifunctions means by it: the value under a key is
+   the object itself, not that object reified in turn. It also has to be
+   shallow for Z808 Abstract to be its inverse, which is proved in
+   Wikifn.Roundtrip - reifying the fields as well would mean abstract handed
+   back the reified forms rather than the object.
+   
+   A type is a value here, exactly as Z16829 returns it, so the entry under
+   Z1K1 is the type itself rather than a reference object standing for it. *)
+(* A record whose own fields include Z1K1 cannot be reified faithfully: the
+   type entry and the field would collide, and putting it back together would
+   have to guess which was which. Nothing in the corpus writes one - the type
+   of a record lives outside its fields - and refusing is the only answer that
+   keeps Reify and Abstract inverses. *)
+let rec fields_avoid_type_key (fields:list (zkey & value)) : Tot bool (decreases fields) =
+  match fields with
+  | [] -> true
+  | (k, _) :: rest -> not (zkey_eq k key_z1k1) && fields_avoid_type_key rest
+
+(* Nor can a record claim to be a string, a boolean, a natural or a reference.
+   Abstract reads Z1K1 to decide what to build, so a record wearing a scalar's
+   type would come back as that scalar with its fields dropped. Refused for the
+   same reason as above: the encoding has to be reversible. The translator
+   never builds one - a Z6 literal becomes text, not a record - so this rules
+   out a shape that only hand-built values could reach. *)
+let record_type_is_a_record (t:zid) : Tot bool =
+  t <> 6 && t <> 40 && t <> 13518 && t <> 9
+
+let rec reify_fields (fields:list (zkey & value)) : Tot (list value) (decreases fields) =
+  match fields with
+  | [] -> []
+  | (k, v) :: rest -> VPair (key_reference_value k) v :: reify_fields rest
+
+let reify_value (v:value) : Tot (option value) =
+  match v with
+  | VText t ->
+      Some (VList [ VPair (key_reference_value key_z1k1) (VFunc 6)
+                  ; VPair (key_reference_value key_z6k1) (VText t) ])
+  | VBool b ->
+      Some (VList [ VPair (key_reference_value key_z1k1) (VFunc 40)
+                  ; VPair (key_reference_value (global_key 40 1))
+                          (VFunc (if b then 41 else 42)) ])
+  | VNat n ->
+      Some (VList [ VPair (key_reference_value key_z1k1) (VFunc 13518)
+                  ; VPair (key_reference_value (global_key 13518 1)) (VText (if n = 0 then [48] else render_nat n [])) ])
+  | VFunc f ->
+      Some (VList [ VPair (key_reference_value key_z1k1) (VFunc 9)
+                  ; VPair (key_reference_value (global_key 9 1)) (VFunc f) ])
+  | VRecord t fields ->
+      if record_type_is_a_record t && fields_avoid_type_key fields
+      then Some (VList (VPair (key_reference_value key_z1k1) (VFunc t) :: reify_fields fields))
+      else None
+  (* A list and a pair carry no element type, and reify's whole job is to say
+     what something is made of. Refused rather than answered wrongly. *)
+  | _ -> None
+
+(* Z29267 quoted reference: the identifier a value stands for, wrapped in a
+   quote. A reference gives its target; a record of one field whose value is a
+   reference gives that; a string is read as an identifier. *)
+(* Z808 Abstract: the inverse of Z805 Reify.
+   
+   Reify says what an object is made of; Abstract puts it back together. The
+   corpus uses the pair the way a language with no type system asks and answers
+   questions about types - Z15818 is Natural number is car(reify(x)) compared
+   against car(reify(0)) - so the two have to agree exactly, which is why the
+   round trip is proved below rather than asserted here.
+   
+   A reified object is a list of pairs. Each pair is a Z39 key reference and the
+   value under it, and the Z1K1 entry carries the type. *)
+let rec pairs_lookup (k:zkey) (items:list value) : Tot (option value) (decreases items) =
+  match items with
+  | [] -> None
+  | VPair (VRecord _ [(_, VText spelling)]) v :: rest -> begin
+      (* Read the key and compare keys, rather than comparing the two
+         spellings. Same answer, and it is the direction the round trip is
+         proved in: Wikifn.Zid.Laws says a key written out reads back as
+         itself, which settles this without also having to know that distinct
+         keys never share a spelling. *)
+      match parse_zkey spelling with
+      | Some found -> if zkey_eq found k then Some v else pairs_lookup k rest
+      | None -> pairs_lookup k rest
+    end
+  | _ :: rest -> pairs_lookup k rest
+
+(* A reference, however it is spelled. Reify writes one as a two-entry list -
+   the Z9 type and the target - but a bare function value or the identifier as
+   text mean the same thing and the corpus writes both. *)
+let zid_of_reference (v:value) : Tot (option zid) =
+  match v with
+  | VFunc f -> Some f
+  | VText spelling -> parse_zid spelling
+  | VList items -> begin
+      match pairs_lookup (global_key 9 1) items with
+      | Some (VText spelling) -> parse_zid spelling
+      | Some (VFunc f) -> Some f
+      | _ -> None
+    end
+  | _ -> None
+
+(* Everything except the Z1K1 entry, as record fields. A pair whose key cannot
+   be read back is refused rather than dropped: silently losing a field would
+   make abstract answer with an object that is not the one it was given. *)
+let rec pairs_fields (items:list value) : Tot (option (list (zkey & value))) (decreases items) =
+  match items with
+  | [] -> Some []
+  | VPair (VRecord _ [(_, VText spelling)]) v :: rest -> begin
+      match parse_zkey spelling, pairs_fields rest with
+      | Some k, Some tail -> if zkey_eq k key_z1k1 then Some tail else Some ((k, v) :: tail)
+      | _, _ -> None
+    end
+  | _ :: _ -> None
+
+let abstract_value (items:list value) : Tot (option value) =
+  match pairs_lookup key_z1k1 items with
+  | None -> None
+  | Some declared ->
+      match zid_of_reference declared with
+      | None -> None
+      | Some t ->
+          if t = 6 then
+            (match pairs_lookup key_z6k1 items with
+             | Some (VText s) -> Some (VText s)
+             | _ -> None)
+          else if t = 40 then
+            (match pairs_lookup (global_key 40 1) items with
+             | Some r -> begin
+                 match zid_of_reference r with
+                 | Some 41 -> Some (VBool true)
+                 | Some 42 -> Some (VBool false)
+                 | _ -> None
+               end
+             | _ -> None)
+          else if t = 13518 then
+            (match pairs_lookup (global_key 13518 1) items with
+             | Some (VText s) -> begin
+                 match parse_nat s with
+                 | Some n -> Some (VNat n)
+                 | None -> None
+               end
+             | _ -> None)
+          else if t = 9 then
+            (* A reference. Reify writes the target as the value it stands for,
+               and the corpus writes it as the identifier in text; both are
+               read here. *)
+            (match pairs_lookup (global_key 9 1) items with
+             | Some r -> begin
+                 match zid_of_reference r with
+                 | Some f -> Some (VFunc f)
+                 | None -> None
+               end
+             | _ -> None)
+          else
+            (match pairs_fields items with
+             | Some fields -> Some (VRecord t fields)
+             | None -> None)
+
+let quoted_reference (v:value) : Tot (option value) =
+  match v with
+  | VQuote _ -> Some v
+  | VFunc f -> Some (VQuote (EValue (VFunc f)))
+  | VRecord _ ((_, VFunc f) :: _) -> Some (VQuote (EValue (VFunc f)))
+  | VText spelling -> begin
+      match parse_zid spelling with
+      | Some target -> Some (VQuote (EValue (VFunc target)))
+      | None -> None
+    end
+  | _ -> None
 
 (* A type as text. A plain type is its identifier; a generic is its identifier
    and its parameters in brackets, which is the spelling Z22764's testers use:
@@ -476,6 +674,30 @@ let apply_primitive (fid:zid) (args:list value) : Tot (option (eval_result value
         (* Every value has a type, so this answers for every value rather than
            only for records, which is what it used to do. *)
         Some (EOk (type_of_value a))
+      else if fid = fid_reify then
+        Some (match reify_value a with
+              | Some reified -> EOk reified
+              | None -> EErr (ETypeMismatch fid))
+      else if fid = fid_abstract then
+        Some (match a with
+              | VList items -> begin
+                  match abstract_value items with
+                  | Some built -> EOk built
+                  | None -> EErr (ETypeMismatch fid)
+                end
+              | _ -> EErr (ETypeMismatch fid))
+      else if fid = fid_quoted_reference then
+        Some (match a with
+              | VList (first :: _) -> begin
+                  match quoted_reference first with
+                  | Some q -> EOk q
+                  | None -> EErr (ETypeMismatch fid)
+                end
+              | _ -> begin
+                  match quoted_reference a with
+                  | Some q -> EOk q
+                  | None -> EErr (ETypeMismatch fid)
+                end)
       else if fid = fid_string_from_type then
         Some (match render_type a with
               | Some rendered -> EOk (VText rendered)
@@ -702,7 +924,18 @@ let rec eval (p:policy) (fuel:nat) (depth:nat) (env:list value) (e:expr)
       else
         let next : nat = fuel - 1 in
         let deeper : nat = depth + 1 in
-        if fid = fid_throw then
+        if fid = fid_unquote then
+          (* Unquoting is evaluating, not unwrapping. The quoted body runs in
+             the environment the unquote sits in. A payload that is not a quote
+             comes back as it stands, which is what the wiki does with one. *)
+          (match eval_list p next deeper env args with
+           | (EErr err, after) -> (EErr err, after)
+           | (EOk [VQuote inner], after) ->
+               let (result, left) = eval p after deeper env inner in
+               (result, left)
+           | (EOk [other], after) -> (EOk other, after)
+           | (EOk _, after) -> (EErr (EArityMismatch fid), after))
+        else if fid = fid_throw then
           (* An error is built and raised. Both parts are ordinary values, so
              they are evaluated first; it is the raising that is special. *)
           match eval_list p next deeper env args with
