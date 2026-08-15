@@ -77,7 +77,7 @@ function measure() {
 
 // Lower this as fidelity improves; never raise it. Raising it means something
 // that used to come back exactly no longer does.
-const DIFFERENT_BUDGET = 1074;
+const DIFFERENT_BUDGET = 963;
 
 test("every emitted composition is carried back with its pinned original available", skip, () => {
   const { identical, different } = measure();

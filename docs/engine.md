@@ -1,7 +1,7 @@
 # The Wikifn Engine
 
-1,369 real Wikifunctions compositions compiled into F* functions, checked by F*, and
-extracted to OCaml and then JavaScript — plus an interpreter over 3,890 of them, which is
+1,637 real Wikifunctions compositions compiled into F* functions, checked by F*, and
+extracted to OCaml and then JavaScript — plus an interpreter over 3,893 of them, which is
 how the rest are reached and how the compiled ones are checked against something.
 
 ## What is generated and what is authored
@@ -98,8 +98,8 @@ Measured with `make closure` (a fixpoint over the call graph, not a per-seed wal
 | | count |
 |---|---|
 | functions in the corpus | 4,970 |
-| **compiled into F\* functions, checked by F\*** | **1,369** |
-| carried as data for the interpreter | 3,890 |
+| **compiled into F\* functions, checked by F\*** | **1,637** |
+| carried as data for the interpreter | 3,893 |
 | skipped by the translator, with reasons recorded | 7 |
 
 The first two rows are different things and the difference is the point. A
@@ -119,7 +119,7 @@ moment the gap is filled.
 Recursion was long assumed to be what kept compositions from being compiled into
 standalone F* functions, since each recursive one needs a termination measure. Measured
 against the implementations actually selected, that assumption was wrong by an order of
-magnitude: **217 of 3,890 bodies are recursive at all**, 5.7%, and they take the same fuel
+magnitude: **217 of 3,890 bodies were recursive at all**, 5.7%, and they take the same fuel
 parameter the interpreter already uses. The other 94.3% are plain non-recursive
 definitions. What had actually blocked the old direct compiler was that it typed every
 parameter and return as `text`, gated recursion on the literal string `"Z14613"`, and
@@ -130,29 +130,50 @@ refused lists, records and function values.
 `make engine-testers` runs every Wikifunctions tester (`Z20`) whose call and expected
 value this harness can read:
 
-| | count |
-|---|---|
-| testers considered | 10,281 |
-| pass | **1,414** |
-| fail | 111 |
-| error | 1,594 |
-| skipped, with reasons | 7,165 |
+| | count | was |
+|---|---|---|
+| testers considered | 10,287 | 10,281 |
+| pass | **2,326** | 1,414 |
+| fail | 190 | 111 |
+| error | 6,066 | 1,594 |
+| skipped, with reasons | 1,705 | 7,165 |
 
-| | count |
-|---|---|
-| functions with at least one passing tester | 600 |
-| functions passing every tester that could be read | **493** |
+| | count | was |
+|---|---|---|
+| functions with at least one passing tester | 986 | 600 |
+| functions passing every tester that could be read | **742** | 493 |
 
 A tester is only counted as passing when both its call and its expected value were
 readable. Everything else is skipped with a stated reason, never counted as a pass.
 
+Read the error column carefully. It quadrupled in the same change that raised passes from
+1,414 to 2,326, and that is not a regression — it is the same cases, differently
+classified. The harness learned three things it could not read before, all of them about
+arguments rather than about the engine:
+
+- **a record.** The engine prints one as `{"type":…,"fields":{…}}` and parses that form
+  back, so a record written in a tester can be handed to it directly.
+- **a function reference.** `Z889` list equality takes the element comparator as its third
+  argument and nearly every list tester passes `Z866` there; dereferencing it landed on a
+  `Z8` that nothing could convert. It is a function value, and the engine has those.
+- **an enum member.** `Z16109` is stored as `{Z1K1: Z16098, Z16098K1: "Z16109"}`, exactly
+  as `Z41` is `{Z1K1: Z40, Z40K1: "Z41"}`. Following the inner reference builds a tower of
+  the same type wrapped around the identity; the reference *is* the value.
+
+Between them that moved about 5,400 cases out of "skipped" and into being run. Most now
+report a reason the engine can state — `Z6820` Fetch Wikidata entities has no
+implementation, 767 times — where before they were silent. Moving a case from skipped to
+error is progress: it is the difference between not knowing and knowing.
+
 The largest remaining buckets are honest limits, not silence:
 
-- an argument this harness cannot convert to a literal is still the largest bucket
-- a validator this engine cannot run is the second: errors as values would move most of it
-- 264 report a depth limit, from compositions defined through each other with no base case
-- `Z889` list equality with both arguments supplied leaves no expected value to infer
-- 102 disagree and are worth individual investigation
+- 1,407 arguments still cannot be converted, down from 7,165 — mostly generic types
+- 811 exhaust fuel and 639 hit the depth limit
+- 767 reach `Z6820` Fetch Wikidata entities, which is a data fetch rather than a function
+- 292 reach `Z805` reify on a list or a pair, which it refuses because those carry no
+  element type — the one real gap left in the value model
+- 190 disagree and are worth individual investigation. They are ordinary scalar
+  disagreements — a string in, a boolean or a string out — not artefacts of the harness
 
 `make tester-report` groups all of it by cause rather than by message, as
 [what still fails](./tester-report.html): 561 failing functions resolve to 101 causes.
@@ -303,8 +324,8 @@ checks: render the tree back to a canonical composition, read it again, and comp
 is *self-consistency* — it shows this repo's writer and reader agree, and both are this
 repo's.
 
-Compared against the pinned composition each body was translated from, **2,816 of 3,890
-match and 1,074 differ**. `test/fidelity.test.js` holds that second number and it may only
+Compared against the pinned composition each body was translated from, **2,388 of 3,351
+match and 963 differ**. `test/fidelity.test.js` holds that second number and it may only
 be lowered. Most of what differs is spelling rather than meaning, because canonical
 Wikifunctions has more than one way to write the same thing — but the description "all
 back as canonical Wikifunctions compositions" implied the stronger claim, and nothing was
@@ -382,8 +403,106 @@ Z882(Z99, Z883(Z6, Z881(Z6)))            -> "Z882 (Z99, Z883 (Z6, Z881 (Z6)))"
 One limit is real and is the value model's, not this code's: a `VList` and a `VPair` carry
 no element type, so the best that can be said of a list of strings is that it is a list.
 The corpus writes that parameter and `Z22764`'s testers ask for it back. Carrying type
-parameters on lists and pairs is what would close it, and it is also what `Z805` reify
-needs — reify's whole job is to expose the encoding those parameters live in.
+parameters on lists and pairs is what would close it, and it is also why `Z805` reify
+refuses a list or a pair — reify's whole job is to say what something is made of, and for
+those two the answer would have to leave out the part that matters.
+
+## Quoting, and taking an object apart
+
+A quote holds an expression rather than a value, so `value` and `expr` in `Wikifn.Eval`
+are one mutually recursive family and `VQuote` carries an `expr`. Unquoting is not
+unwrapping: `Z899` evaluates the body in the environment the unquote sits in, which is why
+it is a form in `eval` rather than an entry in `apply_primitive`.
+
+That also settles how a quote is printed. Scheme's `(quote x)` is a datum and opening it
+again would need `eval`, so the listing prints a quote as `(lambda () …)` and the prelude's
+unquote calls it. Same semantics, no `eval`, still self-contained.
+
+`Z805` reify takes an object apart into the key-value pairs it is made of, and `Z808`
+abstract puts one back together. Wikifunctions has no type system; this pair is what it
+uses instead. `Z15818 is Natural number` is written as
+
+```
+Z13052(Z811(Z805(x)), Z811(Z805(natural 0)))
+```
+
+— reify both, take the first pair of each, compare. That only works if the two agree, so
+they are **proved** inverses in `Wikifn.Roundtrip`, for every shape reify answers for,
+resting on `Wikifn.Zid.Laws`: a natural, a ZID and a key each read back as themselves after
+being written out.
+
+Two side conditions came out of the proof rather than being designed in. Reify refuses a
+record whose own fields include `Z1K1`, and one whose type is a scalar's — in both cases
+abstract could not tell what it was looking at, and the encoding would not be reversible.
+Nothing in the corpus writes either shape.
+
+`Z828` fetch persistent object is still open. What replaced part of it is resolution at
+generation time: a bare reference to a persistent object holding a value is read from the
+pinned cache and inlined, whatever shape that value has. `Z33395` is the language fallback
+table, stored on the wiki as a `Z99`, and `Z24307` reads it with `Z899`; before this the
+reference became a call to a function nobody implements and the answer was quietly wrong.
+
+## What a compiler can do that an interpreter cannot
+
+`Z10070 has substring` did not return in ten minutes. Not on a pathological
+input — on a 55-character URL.
+
+It reaches `Z28715 index of first sub-list start`, whose composition asks *is the
+answer for the tail zero?* and then, if it is not, returns *that same answer plus
+one*. Written out as an F\* function, that is two identical recursive calls per
+level, and the work doubles per character: on 55 characters, 2^55 calls.
+
+Fuel does not save it. Compiled fuel bounds the **depth** of a recursion, one
+level per step, and every one of those 2^55 calls is within depth 55. The
+interpreter survives the same composition only because its fuel counts **total
+steps**, so it stops and reports exhaustion rather than answering.
+
+The fix is the oldest compiler optimisation there is. Anything computed in a
+conditional's condition and again in one of its branches is now computed once
+and named:
+
+```fstar
+else (let shared_1 = (compiled_Z28715_index_of_first_sub_list_start next_fuel (call_primitive 812 [a0]) a1) in
+      let cond_3 : eval_result bool = condition_of 802 (compiled_Z23883_is_zero_natural_number shared_1) in
+      match cond_3 with
+      | EErr e -> EErr e
+      | EOk b -> if b then (EOk (VNat 0))
+                 else (call_primitive 13578 [shared_1]))
+```
+
+2^n becomes n. **53 of the 1,637 compiled functions** had a call computed twice
+like this.
+
+Binding *at the conditional* is what makes it safe. The condition is evaluated on
+every path through it, so naming what it computes adds no evaluation; hoisting
+out of a branch would evaluate the recursive call that the branch exists to
+guard, and nearly every recursive composition in the corpus is guarded that way.
+
+This is the concrete answer to what extracting *function definitions* buys over
+extracting an interpreter. An interpreter cannot do this: it sees a tree, walks
+it, and walks the same subtree twice because that is what the tree says. A
+compiler sees the whole function at once.
+
+The other half is the budget itself. Compiled fuel is a **depth** bound and a
+level is a stack frame in the extracted JavaScript, so it is the same quantity
+the interpreter bounds with `max_depth` — and it is now the same number, 900.
+At ten thousand, `Z11420 discard until end of first substring` answered with a
+JavaScript stack overflow, which is a crash rather than a limit; at 900 it
+reports fuel exhaustion, which a caller can read. A library must not crash its
+caller, and that rule applies to the compiled path exactly as it does to the
+interpreted one.
+
+Fuel is also threaded rather than restarted. A recursive function passes its own
+remaining fuel to any recursive callee, not only to one in its own group, so a
+chain spends one budget between them instead of one each; only a non-recursive
+caller starts a budget, and a non-recursive caller cannot loop.
+
+The guard against it coming back is `scripts/compiled-sweep.js`, run from
+`test/compiled.test.js` in a child process with a deadline. It writes which call
+it is about to make before making it, so when a call does not return the test
+reports the function by name instead of hanging — which is exactly what the
+previous version did, in-process, for five minutes. It also fails on a *throw*,
+because a throw from a compiled function is a crash rather than a limit.
 
 ## Counting what a missing primitive blocks
 
@@ -400,20 +519,37 @@ difference. It is roughly thirty times smaller and it reorders the list.
 |---|---|---|
 | `Z22764` String from Type | **+49**, done | blocks 1,455 |
 | `Z10047`/`Z10018` case conversion | **+41**, done | blocks 1,301 |
-| quoting — `Z99`, `Z805`, `Z899`, `Z29267` | **+39** | blocks 1,392 |
-| `Z828` fetch persistent object | +8 | blocks 1,446 |
-| `Z881` typed list | +2 | blocks 1,368 |
+| quoting — `Z99`, `Z805`, `Z899`, `Z29267` | **+56**, done | blocks 1,392 |
+| `Z27861` HTML raw content to fragment | **+67**, done as a composition | blocks 267 |
+| `Z6820` Fetch Wikidata entities | **+316** | blocks 671 |
+| `Z828` fetch persistent object | +20 | blocks 1,186 |
+| `Z12316` regex substitute with flags | 0, was +45 | blocks 636 |
 | `Z10249` K combinator | **0** | blocks 1,263 |
 
-The last row is the one to keep in mind. `Z10249` looked like the seventh most valuable
-thing to ground and grounding it would change nothing at all, because everything it gates
-is gated by something else too.
+Two rows are the ones to keep in mind. `Z10249` looked like the seventh most valuable thing
+to ground and grounding it would change nothing at all, because everything it gates is gated
+by something else too. And `Z12316` was worth +45 before quoting landed and is worth nothing
+now — the marginal number moves as the frontier does, which is the whole reason to measure
+it again rather than to quote it.
+
+The measurement is `node scripts/analyze-closure.js --set engine --marginal 20`. It adds
+each candidate to the primitive set, re-runs the fixpoint, and reports the difference. It
+counts compositions written in `compositions/` as well, because the engine runs those.
+
+`Z27861` is the shape worth noticing: `Z89` HTML fragment is a type with one string field,
+both of the wiki's implementations are code, and the composition that fills the gap is one
+record construction. It unlocks 67 functions and adds no semantics at all.
 
 ## Known limits
 
-- No references. Arguments are literal values; the engine has no object store, and a
-  ZID-shaped string is refused rather than read as text.
-- No errors (`Z5`) as values, and no quoting. Records exist now; these do not.
+- No object store at run time. Arguments are literal values and a ZID-shaped string is
+  refused rather than read as text. A reference *inside a composition* is resolved from the
+  pinned cache when the generator translates it, which covers the constants the corpus
+  stores as persistent objects — but `Z828` fetch persistent object, which takes a
+  reference computed at run time, is still open.
+- A list and a pair carry no element type. Reify refuses both rather than answering
+  without the part that matters, and `Z22764` cannot render a fully parameterised generic
+  from a value.
 - Implementation choice is made without any notion of correctness. A function can have
   several composition implementations and they are not interchangeable for a tool that
   follows them transitively: ROT13 has one written as thirteen nested rot1 calls that does
@@ -429,10 +565,22 @@ is gated by something else too.
   computes rather than changing it. Each one is named in `Wikifn.Eval` with the reason.
 - Deep recursion exhausts fuel before it produces an answer. The evaluator is not
   tail-recursive after extraction.
-- One body cannot be checked at all. See the section on splitting above.
-- The s-expression printer recurses over the body, so a deep enough body exhausts the
-  *JavaScript* stack before F* notices anything. `Z33163` does; it is counted and named
-  rather than allowed to end the export.
+- Two bodies cannot be checked at all: `Z24460` at 166,813 rendered bytes and
+  `Z37473` at 94,602. Both are expression trees rather than literals, so there is
+  nothing to lift out of them. Every other body that was over the limit is now
+  under it — a large literal is given a name at module level and shared, so it is
+  checked once instead of landing in every query its body generates.
+- Every tool in the chain has a size at which it stops working, and each one
+  fails differently: F* OOMs on a module, gives up or overflows on a term, and
+  `js_of_ocaml` overflows its stack on a long cons chain with no location at all.
+  `.claude/skills/generated-term-size` records the measured limits and what
+  actually fixes each one. F* passing proves nothing about `js_of_ocaml`.
+- ~~The s-expression printer exhausts the JavaScript stack on a deep enough body.~~ Fixed.
+  It was 38 of 3,892 definitions, including `Z33163`, which had been named here as a
+  permanent limit. It was not one: `scripts/export-all-scheme.js` now re-execs itself with
+  the OS thread stack raised to its hard limit and V8's stack raised to just under it, and
+  all 3,892 render. Both limits have to move together — `--stack-size` above the thread
+  stack segfaults V8 rather than throwing.
 - `Wikifn.Model.has_type` is still assumed. The catalogue and the listing now carry each
   function's declared argument and return types, read from the pinned `Z8` — but nothing
   checks them, so they are documentation. A wrong one is a wrong comment, not a wrong
@@ -444,14 +592,11 @@ Ranked by what the measurements say, not by what is interesting. The two counts 
 different questions: *testers* is how much evidence a change buys, *closure* is how many
 functions it makes reachable at all.
 
-1. **Errors as values, and the functions around them** — `Z5`, `Z851` throw, `Z850`
-   try-catch, `Z853` get-error. Closure: 1,456 / 1,383 / 1,293 functions blocked. This is
-   also most of what a tester's *validator* needs, and 3,122 tester cases are currently
-   skipped because their validator cannot run. Largest single structural unlock.
+1. ~~**Errors as values**~~ — done. `Z5`, `Z851` throw, `Z850` try-catch, `Z853`
+   get-error. An error is data a composition can raise, catch and return.
 
-2. **Quoting** — `Z99` quote, `Z805` reify, `Z899` unquote, `Z29267` quoted reference.
-   Closure: 1,450 / 1,320 / 1,454. Needed before any function that manipulates function
-   values as data can run.
+2. ~~**Quoting**~~ — done. `Z99` quote, `Z805` reify, `Z808` abstract, `Z899` unquote,
+   `Z29267` quoted reference, with reify and abstract proved inverses.
 
 3. **Teach the tester harness more argument forms** — records, pairs, monolingual text.
    2,926 tester cases are skipped for "argument is not a readable literal" and a further
