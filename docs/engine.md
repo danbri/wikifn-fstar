@@ -1,6 +1,6 @@
 # The Wikifn Engine
 
-1,586 real Wikifunctions compositions compiled into F* functions, checked by F*, and
+1,170 real Wikifunctions compositions compiled into F* functions, checked by F*, and
 extracted to OCaml and then JavaScript — plus an interpreter over 3,893 of them, which is
 how the rest are reached and how the compiled ones are checked against something.
 
@@ -14,7 +14,7 @@ object:
 
 | file | contents |
 |---|---|
-| `src/fstar/Wikifn.Compiled.Direct.fst` | **1,586 compositions as F\* functions**, each a translation of a pinned `Z14K2` tree |
+| `src/fstar/Wikifn.Compiled.Direct.fst` | **1,170 compositions as F\* functions**, each a translation of a pinned `Z14K2` tree |
 | `src/fstar/Wikifn.Generated.Eval.PartNN.fst` | the same compositions as data, for the interpreter |
 | `src/fstar/Wikifn.Generated.Eval.fst` | dispatch only; it holds no bodies |
 | `build/fstar/fn/Wikifn.Fn.ZNNNN.fst` | the same bodies again, one module per function, for verification |
@@ -98,7 +98,7 @@ Measured with `make closure` (a fixpoint over the call graph, not a per-seed wal
 | | count |
 |---|---|
 | functions in the corpus | 4,970 |
-| **compiled into F\* functions, checked by F\*** | **1,586** |
+| **compiled into F\* functions, checked by F\*** | **1,170** |
 | carried as data for the interpreter | 3,893 |
 | skipped by the translator, with reasons recorded | 7 |
 
@@ -324,8 +324,8 @@ checks: render the tree back to a canonical composition, read it again, and comp
 is *self-consistency* — it shows this repo's writer and reader agree, and both are this
 repo's.
 
-Compared against the pinned composition each body was translated from, **2,388 of 3,351
-match and 963 differ**. `test/fidelity.test.js` holds that second number and it may only
+Compared against the pinned composition each body was translated from, **2,858 of 3,890
+match and 1,032 differ**. `test/fidelity.test.js` holds that second number and it may only
 be lowered. Most of what differs is spelling rather than meaning, because canonical
 Wikifunctions has more than one way to write the same thing — but the description "all
 back as canonical Wikifunctions compositions" implied the stronger claim, and nothing was
@@ -483,18 +483,64 @@ extracting an interpreter. An interpreter cannot do this: it sees a tree, walks
 it, and walks the same subtree twice because that is what the tree says. A
 compiler sees the whole function at once.
 
-One shape it cannot fix is where the repeats are calls to *different* functions.
-`Z13728 prime divisors` calls `Z13735 largest prime divisor` on n — which is
-`last(prime_divisors(n))` — and `Z13745 n/largest` on the same n, which calls
-`Z13735` again. Three ways into the same group on the same argument, so the work
-triples per level, and only inlining would reveal that they compute the same
-thing. `Z11015 is leap year (Julian calendar)` on 2100 never returned.
+### A conditional written as a function is still a conditional
 
-Those are left to the interpreter, whose fuel counts total steps and which
-therefore stops and says so. The generator refuses to compile a function that
-reaches its own recursive group twice on the same argument: **51 functions**, out
-of 1,637 that would otherwise compile. A divide-and-conquer makes two calls too,
-on different arguments, and is linear — it stays.
+`Z11542 if string output` is exactly `Z802(K1, K2, K3)`. Compiled as an ordinary
+call it becomes strict, so both branches are evaluated — and a recursive
+composition guarded by one never reaches its base case. `Z14859 Delannoy number`
+guards its three recursive calls with `Z31490 if either`, and never returned.
+
+Where the guard can be put back, it is: a call to a non-recursive function whose
+body is headed by a conditional, and whose parameters are each used at most once,
+is inlined at the call site so the `if` lands where the corpus meant it.
+
+Where it cannot, the function is left to the interpreter. The generator refuses
+any recursive function with no path to an answer that avoids its own group —
+because once the guards are strict, that is a function with no base case,
+whatever the corpus intended.
+
+This one is not really about compilation. The interpreter is strict for these
+calls too; it survives only because its fuel counts total steps, so `Z14859`
+reports exhaustion rather than an answer. Neither is what the corpus means.
+Making a conditional alias lazy in the interpreter as well would fix both.
+
+### What is left to the interpreter, and why
+
+Common subexpression elimination merges the repeats it can see. What is left is
+genuine branching, and depth-bounded fuel cannot stop that:
+
+- `Z13728 prime divisors` calls `Z13735 largest prime divisor` on n — which is
+  `last(prime_divisors(n))` — and `Z13745 n/largest` on the same n, which calls
+  `Z13735` again. Three ways into the same group on the same argument, and only
+  inlining would reveal that they compute the same thing. `Z11015 is leap year
+  (Julian calendar)` on 2100 never returned.
+- `Z14894 Eulerian number` is `A(n,k) = (n−k)A(n−1,k−1) + (k+1)A(n−1,k)`. Two
+  different subproblems per level: the textbook case for memoisation, and there
+  is none here.
+
+Both are 2^depth or worse, and every one of those calls is *inside* the depth
+bound. So the generator refuses to compile a recursive function that reaches its
+own group more than once on any one path, and one that has no path to an answer
+avoiding its group at all.
+
+One more refusal is not about termination. `Z13318 apply`, and its three- and
+four-argument siblings, take a function *value* and call it. The interpreter can,
+because it has the policy; `call_primitive` cannot, because `apply_primitive` does
+not know how to call anything — so compiled code that reached one answered "no
+implementation for Z13318" while the interpreter answered correctly. Two paths
+giving different answers is the one thing this design must not do, so those are
+refused too.
+
+Together that is **105 functions**, cascading to leave **1,170** compiled.
+
+That number is lower than it was before this was understood, and the difference
+is not a regression. Some of what used to be counted as compiled did not return.
+
+The real fix for the first two is a step budget rather than a depth budget — the thing the
+interpreter has, and the reason it survives all of these by reporting exhaustion.
+Threading one through compiled functions would let every one of these compile,
+at the cost of a compiled function's type no longer being
+`args -> eval_result value`.
 
 The other half is the budget itself. Compiled fuel is a **depth** bound and a
 level is a stack frame in the extracted JavaScript, so it is the same quantity

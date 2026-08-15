@@ -136,6 +136,7 @@ const PRIMITIVES = new Set([
 
 const INTERNAL_FRESH_PRIVATE_USE = "1000000001";
 const INTERNAL_APPLY = "1000000002";
+const INTERNAL_APPLY_ZID = `Z${INTERNAL_APPLY}`;
 
 // A text literal long enough that F* cannot check it in one piece.
 //
@@ -390,7 +391,13 @@ async function translate(term, context) {
       // pinned to the same snapshot as everything else. Z11853 is the empty
       // string; without this it became a call to a function nobody implements.
       const value = await resolveValueReference(zid);
-      if (value) return value;
+      // Kept as a reference that remembers what it points at, rather than
+      // replaced by it. The F* renderers use the value, because the evaluator
+      // has no object store; the canonical rendering writes the ZID back,
+      // because that is what the corpus says and the round trip is how this
+      // repo checks that it still says it. Inlining outright cost 539 bodies
+      // their exact round trip.
+      if (value) return { kind: "reference", zid, value };
       return { kind: "func", zid };
     }
     return chunkedText(term);
@@ -560,6 +567,8 @@ const isLiteral = (node) => {
     // A quote holds an expression rather than a value, so it is a literal
     // whatever is inside it.
     case "quote": return true;
+    // A reference to a persistent object holding a value is a value.
+    case "reference": return isLiteral(node.value);
     case "list": return node.items.every(isLiteral);
     case "record": return node.fields.every(([, v]) => isLiteral(v));
     default: return false;
@@ -582,6 +591,7 @@ function renderFstarValue(node) {
     case "bool": return `VBool ${node.value}`;
     case "func": return `VFunc ${node.zid.slice(1)}`;
     case "quote": return `VQuote (${renderFstar(node.body)})`;
+    case "reference": return renderFstarValue(node.value);
     case "list": return `VList [${node.items.map(renderFstarValue).join("; ")}]`;
     case "computed-list": throw new Unsupported("a computed list is not a value");
     case "record":
@@ -674,6 +684,8 @@ function renderValueHoisted(node) {
         .map(([key, v]) => `(${schemeKey(key)}, ${hoistedPart(v)})`).join("; ")}]`;
     case "quote":
       return `VQuote (${renderFstar(node.body)})`;
+    case "reference":
+      return renderValueHoisted(node.value);
     default:
       return renderFstarValue(node);
   }
@@ -734,6 +746,8 @@ function renderZ14K2(node, argKeys) {
       return ["Z1", ...node.items.map((item) => renderZ14K2(item, argKeys))];
     case "quote":
       return { Z1K1: "Z99", Z99K1: renderZ14K2(node.body, argKeys) };
+    case "reference":
+      return node.zid;
     case "record": {
       const out = { Z1K1: node.typeTerm ?? node.type };
       for (const [key, v] of node.fields) out[key] = renderZ14K2(v, argKeys);
@@ -797,6 +811,8 @@ function renderSexpr(node, names, argNames) {
       // A thunk, not Scheme's quote: unquoting evaluates, and (quote x) is a
       // datum that would need eval to open again.
       return `(lambda () ${renderSexpr(node.body, names, argNames)})`;
+    case "reference":
+      return renderSexpr(node.value, names, argNames);
     case "record":
       return `(record ${names(node.type)} ${node.fields
         .map(([key, v]) => `(${key} ${renderSexpr(v, names, argNames)})`).join(" ")})`;
@@ -831,6 +847,8 @@ function collectCalls(node, acc = []) {
   } else if (node.kind === "quote") {
     // What a quote holds is reachable, because unquoting runs it.
     collectCalls(node.body, acc);
+  } else if (node.kind === "reference") {
+    collectCalls(node.value, acc);
   }
   return acc;
 }
@@ -1427,6 +1445,90 @@ async function main() {
     return found;
   }
 
+  // The body of a non-recursive function that is headed by a conditional, with
+  // this call's arguments substituted for its parameters.
+  //
+  // Only when every parameter is used at most once, so substituting cannot
+  // duplicate a computation, and only a few levels deep - a wrapper around a
+  // wrapper is common, a chain of ten is not.
+  function conditionalAlias(node, depth = 0) {
+    if (depth > 4) return undefined;
+    const entry = emittedIndex.get(node.zid);
+    if (!entry || recursiveSet.has(node.zid)) return undefined;
+    const body = entry.tree;
+    if (!body || body.kind !== "call") return undefined;
+
+    const uses = new Map();
+    const count = (n) => {
+      if (n.kind === "arg") uses.set(n.index, (uses.get(n.index) ?? 0) + 1);
+      else if (n.kind === "call") n.args.forEach(count);
+      else if (n.kind === "record") n.fields.forEach(([, v]) => count(v));
+    };
+    count(body);
+    if ([...uses.values()].some((n) => n > 1)) return undefined;
+
+    const substitute = (n) => {
+      if (n.kind === "arg") return node.args[n.index];
+      if (n.kind === "call") return { ...n, args: n.args.map(substitute) };
+      if (n.kind === "record") return { ...n, fields: n.fields.map(([k, v]) => [k, substitute(v)]) };
+      return n;
+    };
+    if (uses.size && [...uses.keys()].some((index) => node.args[index] === undefined)) {
+      return undefined;
+    }
+    if (CONDITIONALS.has(body.zid) && body.args.length === 3) return substitute(body);
+    // A wrapper around a wrapper: follow it, then substitute through.
+    const inner = conditionalAlias(body, depth + 1);
+    return inner ? substitute(inner) : undefined;
+  }
+
+  // The most calls into a function's own recursive group that any one path
+  // through it makes.
+  //
+  // More than one is exponential, and depth-bounded fuel cannot stop it: two
+  // calls per level is 2^depth, and every one of those calls is inside the
+  // depth. Z14894 Eulerian number is A(n,k) = (n-k)A(n-1,k-1) + (k+1)A(n-1,k),
+  // which is the textbook case for memoisation and has none here.
+  function groupCallsOnLongestPath(node, members) {
+    if (node.kind === "call") {
+      if (CONDITIONALS.has(node.zid) && node.args.length === 3) {
+        return groupCallsOnLongestPath(node.args[0], members)
+          + Math.max(groupCallsOnLongestPath(node.args[1], members),
+                     groupCallsOnLongestPath(node.args[2], members));
+      }
+      const alias = conditionalAlias(node);
+      if (alias) return groupCallsOnLongestPath(alias, members);
+      return (members.has(node.zid) ? 1 : 0)
+        + node.args.reduce((n, a) => n + groupCallsOnLongestPath(a, members), 0);
+    }
+    if (node.kind === "record") {
+      return node.fields.reduce((n, [, v]) => n + groupCallsOnLongestPath(v, members), 0);
+    }
+    return 0;
+  }
+
+  // Can this body reach an answer without calling into its own recursive
+  // group? A recursive function that cannot has no base case once compiled,
+  // whatever the corpus intended, because everything outside a compiled `if`
+  // is evaluated.
+  function hasGroupFreePath(node, members) {
+    const reaches = (n) => {
+      if (n.kind === "call") return members.has(n.zid) || n.args.some(reaches);
+      if (n.kind === "record") return n.fields.some(([, v]) => reaches(v));
+      return false;
+    };
+    if (node.kind === "call" && CONDITIONALS.has(node.zid) && node.args.length === 3) {
+      // The condition is evaluated on every path through the conditional.
+      if (reaches(node.args[0])) return false;
+      return hasGroupFreePath(node.args[1], members) || hasGroupFreePath(node.args[2], members);
+    }
+    if (node.kind === "call") {
+      const alias = conditionalAlias(node);
+      if (alias) return hasGroupFreePath(alias, members);
+    }
+    return !reaches(node);
+  }
+
   function renderDirect(node, context) {
     switch (node.kind) {
       case "arg":
@@ -1439,6 +1541,16 @@ async function main() {
         // Already computed under a name earlier in this function.
         const shared = context.shared.get(subtreeKey(node));
         if (shared) return shared;
+
+        // A conditional written as a function is still a conditional.
+        //
+        // Z11542 if string output is exactly Z802(K1, K2, K3). Compiled as an
+        // ordinary call it becomes strict, so both branches are evaluated -
+        // and a recursive composition guarded by one never reaches its base
+        // case. Substituting the arguments into its body puts the `if` back
+        // where the corpus meant it to be.
+        const inlined = conditionalAlias(node);
+        if (inlined) return renderDirect(inlined, context);
         // A conditional becomes an F* if, so only the taken branch is
         // evaluated. Everything recursive in the corpus depends on that.
         if (CONDITIONALS.has(node.zid) && node.args.length === 3) {
@@ -1586,6 +1698,15 @@ async function main() {
             : "";
           return `(${compiledName(node.zid)} ${fuel}${args.join(" ")})`;
         }
+        // The apply family takes a function *value* and calls it. The
+        // interpreter can, because it has the policy; call_primitive cannot,
+        // because apply_primitive does not know how to call anything. Compiled
+        // code that reached one answered "no implementation for Z13318" while
+        // the interpreter answered correctly, which is the one thing the two
+        // paths must never do.
+        if (["Z13318", "Z21216", "Z30438", "Z14779", INTERNAL_APPLY_ZID].includes(node.zid)) {
+          refuse(context.zid, `applies a function value through ${node.zid}`);
+        }
         if (!isPrimitive(node.zid)) refuse(context.zid, `calls ${node.zid}, which does not compile`);
         return `(call_primitive ${node.zid.slice(1)} [${args.join("; ")}])`;
       }
@@ -1684,6 +1805,47 @@ async function main() {
         });
       }
       if (failed) { dropped.push(...group); continue; }
+
+      // A recursive function with no way to an answer that avoids its own
+      // group has no base case once compiled.
+      //
+      // Z14859 Delannoy number guards its three recursive calls with Z31490
+      // if either, and Z31490 is a function rather than a conditional - so
+      // compiled code evaluates all three before the guard can choose, and the
+      // base case is never reached. Where the guard can be put back by
+      // inlining, it is; where it cannot, the interpreter takes it.
+      if (recursive) {
+        const noBase = rendered.filter(
+          (item) => !hasGroupFreePath(emittedIndex.get(item.zid).tree, members));
+        if (noBase.length) {
+          for (const item of noBase) {
+            directRefusals.set(item.zid, "has no base case once its guards are made strict");
+          }
+          dropped.push(...group);
+          continue;
+        }
+      }
+
+      // More than one call into the group on a single path is exponential.
+      //
+      // Common subexpression elimination has already merged the repeats it can
+      // see, so what is left is genuine branching: two different subproblems
+      // per level, or two routes to the same one through different functions.
+      // Either way the work multiplies within the depth bound, and depth is
+      // all compiled fuel bounds. The interpreter counts total steps, so it
+      // stops and says so - which makes it the right place for these.
+      if (recursive) {
+        const branching = rendered.filter(
+          (item) => groupCallsOnLongestPath(emittedIndex.get(item.zid).tree, members) > 1);
+        if (branching.length) {
+          for (const item of branching) {
+            directRefusals.set(
+              item.zid, "branches into its own recursive group more than once on a path");
+          }
+          dropped.push(...group);
+          continue;
+        }
+      }
 
       // Two routes to the same subproblem is exponential here, and nothing
       // downstream will notice.

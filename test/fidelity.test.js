@@ -75,9 +75,12 @@ function measure() {
   return { identical, different, examples };
 }
 
-// Lower this as fidelity improves; never raise it. Raising it means something
-// that used to come back exactly no longer does.
-const DIFFERENT_BUDGET = 963;
+// Lower this as fidelity improves; never raise it without saying why. It went
+// from 1,074 to 963 when 539 bodies stopped round-tripping at all - those were
+// dropped from the comparison rather than fixed - and back to 1,032 once
+// references were kept as references and all 3,893 were compared again. The
+// count that matters is the pair: 2,858 identical of 3,890 compared.
+const DIFFERENT_BUDGET = 1032;
 
 test("every emitted composition is carried back with its pinned original available", skip, () => {
   const { identical, different } = measure();
