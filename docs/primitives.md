@@ -3,32 +3,39 @@
 > **The ranked frontier below counts wrong.** It reports how many functions each
 > missing primitive "blocks", which counts a function once per blocking leaf.
 > Those leaf sets overlap almost completely, so several entries each appear to
-> block about 1,400 of the same functions. What matters is the *marginal* unlock:
-> add the primitive, re-run `make closure`, take the difference. Measured:
-> `Z22764` +49, case conversion +41, quoting +39, `Z828` +8, `Z881` +2,
-> `Z10249` **+0**. Read every "blocks N" figure below as an upper bound on a
-> shared total, not as a count of what grounding that one thing would buy.
+> block about 1,400 of the same functions. What matters is the *marginal*
+> unlock: add the primitive, re-run the fixpoint, take the difference. That is
+> now a mode of the tool rather than something done by hand:
 >
-> **Status, re-measured.** The engine grounds 53 primitives. Records, value by
-> key (`Z803`), type of object (`Z16829`), object equality (`Z13052`), the
-> codepoint conversions (`Z22693`, `Z22717`), reverse and append (`Z12668`,
-> `Z12961`) and natural division (`Z13546`) are done. What still gates the most
-> functions is errors as values (`Z5`, `Z851`, `Z850`, `Z853`), quoting
-> (`Z805`, `Z899`, `Z29267`), `Z22764` String from Type and `Z828` fetch
-> persistent object. Closure over the current primitives: 936 functions without
-> recursion, 1,168 with. Sections below this line predate that and are kept for
-> the reasoning, not for the counts.
-
-> **Status note.** Lists, pairs and the higher-order list functions described
-> below as future work are now implemented in `Wikifn.Eval`: `Z810` cons,
-> `Z811` car, `Z812` cdr, `Z813` null?, `Z12681` length, `Z821`/`Z822` pair
-> accessors, `Z872` filter, `Z873` map, `Z876` fold, plus natural-number
-> arithmetic (`Z13521`, `Z13539`, `Z13578`, `Z13630`, `Z13633`, `Z13647`).
-> The current frontier is `Z803` value by key, `Z851` throw, `Z805` reify,
-> `Z899` unquote, and the codepoint-list conversions `Z22693`/`Z22717`.
-> See [engine.md](./engine.md) for what is grounded today, and run
-> `make closure` for the live ranking. The rankings below are kept as a record
-> of how the frontier was chosen and are no longer current.
+> ```
+> node scripts/analyze-closure.js --set engine --marginal 20
+> ```
+>
+> Read every "blocks N" figure below this line as an upper bound on a shared
+> total, not as a count of what grounding that one thing would buy.
+>
+> **Status, re-measured (68 primitives).** Errors as values and quoting are
+> done: `Z5`, `Z851` throw, `Z850` try-catch, `Z853` get-error; `Z99` quote,
+> `Z805` reify, `Z808` abstract, `Z899` unquote, `Z29267` quoted reference.
+> Reify and abstract are proved inverses in `Wikifn.Roundtrip`. Also done and
+> once on this list: records, `Z803` value by key, `Z16829` type of object,
+> `Z13052`/`Z29294` equality, `Z22693`/`Z22717` codepoint conversions,
+> `Z12668`/`Z12961` reverse and append, `Z13546` natural division, `Z22764`
+> String from Type, `Z10047`/`Z10018` Unicode case mapping, and the generic
+> type constructors `Z881`/`Z882`/`Z883`.
+>
+> Closure over the current primitives, counting the compositions written in
+> `compositions/`: **1,074** functions without recursion, **1,365** more with.
+>
+> The largest marginal unlock left is `Z6820` Fetch Wikidata entities at
+> **+316**, which is a data fetch rather than a function and would mean pinning
+> a second dump. After that the numbers fall off sharply: `Z828` fetch
+> persistent object +20, `Z20854` Rational number as float +15, `Z21028`
+> exponentiation (float64) +9, `Z150` Validate error type +8. `Z12316` regular
+> expression substitute was +45 before quoting landed and is **0** now.
+>
+> Sections below this line predate all of that and are kept for the reasoning,
+> not for the counts.
 
 Current checked primitive modules:
 

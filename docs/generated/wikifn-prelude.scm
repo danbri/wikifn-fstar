@@ -113,6 +113,29 @@
       (error "Z13546 divide natural numbers" "division by zero")
       (quotient a b)))
 
+(define (Z899_unquote q) (if (procedure? q) (q) q))
+
+(define (Z29267_quoted_reference xs)
+  (let ((x (if (pair? xs) (car xs) xs)))
+    (lambda () x)))
+
+(define (Z805_reify v)
+  (cond ((string? v) (list (list 'Z1K1 'Z6) (list 'Z6K1 v)))
+        ((boolean? v) (list (list 'Z1K1 'Z40) (list 'Z40K1 (if v 'Z41 'Z42))))
+        ((number? v) (list (list 'Z1K1 'Z13518) (list 'Z13518K1 (number->string v))))
+        ((pair? v)
+         (if (eq? (car v) 'record)
+             (cons (list 'Z1K1 (cadr v)) (cddr v))
+             (list (list 'Z1K1 'Z1))))
+        (else (list (list 'Z1K1 'Z1)))))
+
+(define (Z808_abstract pairs)
+  (let ((t (cadr (assq 'Z1K1 pairs))))
+    (cond ((eq? t 'Z6) (cadr (assq 'Z6K1 pairs)))
+          ((eq? t 'Z40) (eq? (cadr (assq 'Z40K1 pairs)) 'Z41))
+          ((eq? t 'Z13518) (string->number (cadr (assq 'Z13518K1 pairs))))
+          (else (cons 'record (cons t (filter (lambda (p) (not (eq? (car p) 'Z1K1))) pairs)))))))
+
 (define (Z22693_codepoint_list_to_string cs) (list->string (map integer->char cs)))
 
 (define (Z14520_remove_all_characters_in_second_string s chars)
@@ -240,6 +263,10 @@
 (define Z868 Z868_deprecated_z22717)
 (define Z886 Z886_deprecated_z22693)
 (define Z13546 Z13546_divide_natural_numbers)
+(define Z899 Z899_unquote)
+(define Z29267 Z29267_quoted_reference)
+(define Z805 Z805_reify)
+(define Z808 Z808_abstract)
 (define Z22693 Z22693_codepoint_list_to_string)
 (define Z14520 Z14520_remove_all_characters_in_second_string)
 (define Z14124 Z14124_string_of_characters_from_unicode_range)
