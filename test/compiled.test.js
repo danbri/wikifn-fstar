@@ -16,8 +16,10 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { createRequire } from "node:module";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
+import os from "node:os";
 import path from "node:path";
+import { spawnSync } from "node:child_process";
 
 const require = createRequire(import.meta.url);
 const engine = path.resolve("docs/generated/wikifn_engine.cjs");
@@ -59,6 +61,50 @@ test("a compiled function is a function, not an interpreted tree", skip, () => {
   assert.ok(response.ok, `Z10012 compiled: ${response.message}`);
   assert.equal(response.compiled, true, "the answer did not come from the compiled path");
   assert.equal(response.result.text, "desserts");
+});
+
+// No compiled function may take an unreasonable amount of time.
+//
+// This is not a performance test. A compiled recursive function used to be
+// handed a fresh full fuel budget by every caller, so a function that walked a
+// string and called a recursive helper per character had that budget for each
+// of them - and `Z11053` did not return in five minutes. Nothing caught it,
+// because the sweep that would have caught it was running in this process and
+// hung on the same call.
+//
+// So the sweep runs in a child process with a deadline, and the child writes
+// which call it is on before making it. If the deadline passes, the last line
+// of that file names the function that did not come back.
+test("no compiled function takes an unreasonable time to answer", {
+  ...skip,
+  timeout: 600_000
+}, () => {
+  const progress = path.join(os.tmpdir(), `wikifn-compiled-sweep-${process.pid}.log`);
+  const result = spawnSync(process.execPath, [
+    path.resolve("scripts/compiled-sweep.js"), "--json", "--slow-ms", "2000",
+    "--progress", progress
+  ], { encoding: "utf8", timeout: 300_000, maxBuffer: 32 * 1024 * 1024 });
+
+  if (result.error?.code === "ETIMEDOUT" || result.signal) {
+    let last = "(no progress written)";
+    try {
+      const lines = readFileSync(progress, "utf8").trim().split("\n");
+      last = lines[lines.length - 1];
+    } catch { /* the message below still says what happened */ }
+    assert.fail(
+      "the compiled sweep did not finish. The call it was on when it stopped:\n" +
+      `      ${last}\n` +
+      "  A compiled function that does not return is almost always fuel: a\n" +
+      "  recursive callee handed a fresh budget instead of the caller's."
+    );
+  }
+  assert.equal(result.status, 0, `the sweep failed: ${result.stderr}`);
+  const report = JSON.parse(result.stdout);
+  assert.deepEqual(
+    report.slow.map((row) => `${row.zid} ${row.label}: ${row.ms} ms`), [],
+    `${report.slowCount} compiled calls took ${report.slowMs} ms or more, out of ` +
+    `${report.calls} in ${report.totalMs} ms total`
+  );
 });
 
 test("compiled and interpreted agree on every tester example", skip, () => {

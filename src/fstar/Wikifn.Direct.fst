@@ -29,12 +29,24 @@ open Wikifn.Eval
 
 let ok (v:value) : Tot (eval_result value) = EOk v
 
-(* What a recursive compiled function is given when it is called from outside
-   its own recursive group. Inside the group a call spends the caller's fuel, so
-   a group cannot loop for ever; entering one from outside has to start the
-   budget somewhere, and this is that number. Running out is reported, as
-   everywhere else, rather than hidden. *)
-let default_fuel : nat = 100000
+(* What a recursive compiled function is given when a non-recursive one calls
+   it. Anywhere inside a recursive function the caller's own remaining fuel is
+   spent instead - both within its group and outside it - so a budget is started
+   only where nothing is looping, and total work stays bounded by the budget
+   rather than multiplying.
+   
+   That distinction is not cosmetic. When every recursive callee was handed a
+   fresh 100,000 regardless, a function that walks a string and calls a
+   recursive helper per character had a hundred thousand steps of licence for
+   each of them, and `Z11053` did not finish in five minutes. Threading the
+   caller's fuel makes the same call return immediately.
+   
+   The number is smaller for the same reason. Fuel here bounds recursion depth,
+   one level per step, and the JavaScript stack gives out long before ten
+   thousand frames - so a larger allowance buys nothing and costs the time it
+   takes to spend it. Running out is reported, as everywhere else, rather than
+   hidden. *)
+let default_fuel : nat = 10000
 
 (* Arguments, left to right, stopping at the first error. *)
 let rec sequence (results:list (eval_result value)) : Tot (eval_result (list value)) =
