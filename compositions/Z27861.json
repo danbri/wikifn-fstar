@@ -1,0 +1,11 @@
+{
+  "zid": "Z27861",
+  "label": "HTML raw content to HTML fragment",
+  "why": "Both implementations on the wiki are code, so there is no composition to follow and every function that reaches it stops there. Measured marginal unlock: 67 functions, the largest of anything left that a composition can express.",
+  "note": "Z89 HTML fragment is a type with one string field, Z89K1. Turning raw content into a fragment is building that record - there is nothing to escape or parse, because the input is already the raw content the type is meant to carry. The wiki's own two implementations do the same thing in Python and JavaScript.",
+  "arguments": ["Z27861K1"],
+  "Z14K2": {
+    "Z1K1": "Z89",
+    "Z89K1": { "Z1K1": "Z18", "Z18K1": "Z27861K1" }
+  }
+}

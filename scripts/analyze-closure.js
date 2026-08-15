@@ -23,12 +23,14 @@
 
 import { execFile } from "node:child_process";
 import { writeFile } from "node:fs/promises";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { promisify } from "node:util";
 import { fileURLToPath } from "node:url";
 
 const execFileAsync = promisify(execFile);
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const authoredDir = path.join(root, "compositions");
 
 // Functions the current F* primitive kernel implements directly: the leaves an
 // F* translation may bottom out in today. Mirrors the non-composition
@@ -65,6 +67,7 @@ export const ENGINE_PRIMITIVES = [
   "Z13052", "Z29294",
   "Z10047", "Z10018",
   "Z881", "Z882", "Z883", "Z22764",
+  "Z99", "Z805", "Z808", "Z899", "Z29267",
   "Z851", "Z850", "Z853"
 ];
 
@@ -113,6 +116,29 @@ async function loadGraph(dbPath) {
     compositionImplsByFunction.get(row.function_zid).push(row.zid);
   }
 
+  // Compositions written in compositions/ to fill a gap. They are real
+  // implementations as far as this analysis is concerned - the generator
+  // translates them and the engine runs them - so leaving them out made the
+  // measurement report a frontier that had already moved.
+  const authoredCalls = (body, acc) => {
+    if (Array.isArray(body)) { for (const item of body) authoredCalls(item, acc); return acc; }
+    if (body === null || typeof body !== "object") return acc;
+    if (body.Z1K1 === "Z7" && typeof body.Z7K1 === "string") acc.add(body.Z7K1);
+    for (const key of Object.keys(body)) authoredCalls(body[key], acc);
+    return acc;
+  };
+  let authoredCount = 0;
+  for (const name of (existsSync(authoredDir) ? readdirSync(authoredDir) : [])) {
+    if (!name.endsWith(".json")) continue;
+    const entry = JSON.parse(readFileSync(path.join(authoredDir, name), "utf8"));
+    if (!entry.zid || entry.Z14K2 === undefined) continue;
+    const implZid = `${entry.zid}-authored`;
+    callsByImpl.set(implZid, [...authoredCalls(entry.Z14K2, new Set())]);
+    if (!compositionImplsByFunction.has(entry.zid)) compositionImplsByFunction.set(entry.zid, []);
+    compositionImplsByFunction.get(entry.zid).push(implZid);
+    authoredCount += 1;
+  }
+
   return {
     functionZids: functions.map((row) => row.zid),
     compositionImplsByFunction,
@@ -125,7 +151,8 @@ async function loadGraph(dbPath) {
       implementations: implementations.length,
       compositionImplementations: implementations.filter((row) => row.body_kind === "composition").length,
       callEdges: calls.length,
-      implsWithDynamicCalls: dynamicImpls.size
+      implsWithDynamicCalls: dynamicImpls.size,
+      authoredCompositions: authoredCount
     }
   };
 }
@@ -223,6 +250,36 @@ function rankBlockers(graph, primitives, closedRec) {
     .sort((a, b) => b.blockedFunctions - a.blockedFunctions);
 }
 
+// What one more primitive would actually buy.
+//
+// The blocker ranking above counts every function that mentions a leaf
+// anywhere below it, which is not the same question and is roughly thirty
+// times larger: a function blocked by six leaves is counted by all six, and
+// adding any one of them unlocks none of it. This measures the thing that
+// decides what to implement next - close the corpus again with the candidate
+// added, and report the difference.
+//
+// Candidates are the blocking leaves, so this is quadratic in the number
+// considered; the default takes the top few by the cheap ranking and measures
+// only those.
+function rankMarginal(graph, primitives, closedRec, blockers, limit) {
+  const baseline = closedRec.size;
+  const rows = [];
+  for (const blocker of blockers.slice(0, limit)) {
+    const withCandidate = new Set(primitives);
+    withCandidate.add(blocker.zid);
+    const closed = closedWithRecursion(graph, withCandidate);
+    rows.push({
+      zid: blocker.zid,
+      label: blocker.label,
+      // Less one for the candidate itself, which is not an unlock.
+      unlocks: closed.size - baseline - 1,
+      blockedFunctions: blocker.blockedFunctions
+    });
+  }
+  return rows.sort((a, b) => b.unlocks - a.unlocks);
+}
+
 async function main() {
   const args = process.argv.slice(2);
   const setName = valueOf(args, "--set") ?? "kernel";
@@ -241,6 +298,10 @@ async function main() {
   const { closed: nonRecursive, chosen } = closedWithoutRecursion(graph, primitives);
   const withRecursion = closedWithRecursion(graph, primitives);
   const blockers = rankBlockers(graph, primitives, withRecursion);
+  const marginalLimit = Number(valueOf(args, "--marginal") ?? 0);
+  const marginal = marginalLimit > 0
+    ? rankMarginal(graph, primitives, withRecursion, blockers, marginalLimit)
+    : [];
 
   const nonRecursiveFunctions = [...nonRecursive].filter((zid) => !primitives.has(zid)).sort();
   const recursiveOnly = [...withRecursion].filter((zid) => !primitives.has(zid) && !nonRecursive.has(zid)).sort();
@@ -268,6 +329,7 @@ async function main() {
       testers: graph.testerCount.get(zid) ?? 0
     })),
     topBlockers: blockers.slice(0, 50),
+    marginal,
     elapsedMs: Date.now() - started
   };
 
@@ -287,6 +349,15 @@ async function main() {
   console.log("top blocking leaves (must be added to the kernel):");
   for (const blocker of output.topBlockers.slice(0, 20)) {
     console.log(`  ${blocker.zid.padEnd(9)} ${String(blocker.blockedFunctions).padStart(5)}  ${blocker.label}`);
+  }
+  if (marginal.length) {
+    console.log("");
+    console.log("what one more would actually unlock (marginal, not transitive):");
+    for (const row of marginal) {
+      console.log(
+        `  ${row.zid.padEnd(9)} ${String(row.unlocks).padStart(5)} ` +
+        `(mentioned by ${row.blockedFunctions})  ${row.label}`);
+    }
   }
   console.log(`\n${output.elapsedMs} ms`);
 }

@@ -1,0 +1,14 @@
+{
+  "zid": "Z877",
+  "label": "HTML fragment equality",
+  "why": "The wiki has one implementation and it is code, so no composition to follow. Without it the three testers for Z27861 cannot run at all - the validator is the thing that is missing, not the function under test.",
+  "note": "Z89 HTML fragment is a type with one string field, so two fragments are equal exactly when that field is. Z13052 object equality says so structurally, which for this type is the same comparison. If the wiki's own implementation normalises the markup before comparing - collapsing whitespace, say - this would disagree with it on inputs that differ only in that way. Nothing in the corpus tests such a case, so the difference is stated here rather than claimed not to exist.",
+  "checkedBy": ["Z27861"],
+  "arguments": ["Z877K1", "Z877K2"],
+  "Z14K2": {
+    "Z1K1": "Z7",
+    "Z7K1": "Z13052",
+    "Z13052K1": { "Z1K1": "Z18", "Z18K1": "Z877K1" },
+    "Z13052K2": { "Z1K1": "Z18", "Z18K1": "Z877K2" }
+  }
+}
