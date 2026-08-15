@@ -100,6 +100,14 @@ test("no compiled function takes an unreasonable time to answer", {
   }
   assert.equal(result.status, 0, `the sweep failed: ${result.stderr}`);
   const report = JSON.parse(result.stdout);
+  // A throw is a crash, not a limit. Fuel bounds the recursion depth and a
+  // level is a stack frame, so a budget larger than the stack turns "fuel
+  // exhausted", which a caller can read, into a stack overflow, which takes
+  // the caller down with it.
+  assert.deepEqual(
+    report.threw.map((row) => `${row.zid} ${row.label}: ${row.error}`), [],
+    `${report.threwCount} compiled calls threw instead of returning a result`
+  );
   assert.deepEqual(
     report.slow.map((row) => `${row.zid} ${row.label}: ${row.ms} ms`), [],
     `${report.slowCount} compiled calls took ${report.slowMs} ms or more, out of ` +

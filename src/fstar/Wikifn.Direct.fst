@@ -41,12 +41,14 @@ let ok (v:value) : Tot (eval_result value) = EOk v
    each of them, and `Z11053` did not finish in five minutes. Threading the
    caller's fuel makes the same call return immediately.
    
-   The number is smaller for the same reason. Fuel here bounds recursion depth,
-   one level per step, and the JavaScript stack gives out long before ten
-   thousand frames - so a larger allowance buys nothing and costs the time it
-   takes to spend it. Running out is reported, as everywhere else, rather than
-   hidden. *)
-let default_fuel : nat = 10000
+   The number is max_depth, and deliberately the same one. Fuel here bounds
+   recursion depth, one level per step, and a level is a stack frame in the
+   extracted JavaScript - so this is the same quantity the interpreter bounds
+   with max_depth and for the same reason: a library must not crash its caller.
+   At ten thousand, Z11420 discard until end of first substring answered with
+   a JavaScript stack overflow, which is a crash rather than a limit. At 900 it
+   reports fuel exhaustion, which a caller can read. *)
+let default_fuel : nat = 900
 
 (* Arguments, left to right, stopping at the first error. *)
 let rec sequence (results:list (eval_result value)) : Tot (eval_result (list value)) =
