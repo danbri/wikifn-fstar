@@ -392,8 +392,9 @@
           10,
           "."
         ],
+        "expected": "hello.....",
         "tester": "Z17007",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z10112": [
@@ -1428,18 +1429,19 @@
     "Z10393": [
       {
         "args": [
+          "xxx",
+          "zzzz"
+        ],
+        "expected": 4,
+        "tester": "Z22784",
+        "status": "pass"
+      },
+      {
+        "args": [
           "kitten",
           "sitting"
         ],
         "tester": "Z18137",
-        "status": "error"
-      },
-      {
-        "args": [
-          "xxx",
-          "zzzz"
-        ],
-        "tester": "Z22784",
         "status": "error"
       }
     ],
@@ -2414,15 +2416,17 @@
         "args": [
           "File:George H. Sharpe.jpg"
         ],
+        "expected": "jpg",
         "tester": "Z10747",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "File:Ivory Coast.png"
         ],
+        "expected": "png",
         "tester": "Z28561",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z10753": [
@@ -2630,8 +2634,9 @@
         "args": [
           "abcdef123"
         ],
+        "expected": "abcdef123",
         "tester": "Z10778",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -2812,40 +2817,45 @@
           "abcde",
           ","
         ],
+        "expected": "a,b,c,d,e",
         "tester": "Z10834",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "Hello",
           "👏"
         ],
+        "expected": "H👏e👏l👏l👏o",
         "tester": "Z10835",
-        "status": "error"
-      },
-      {
-        "args": [
-          "Hello, world!",
-          ""
-        ],
-        "tester": "Z10839",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "",
           "test"
         ],
+        "expected": "",
         "tester": "Z10840",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "a😊b",
           ","
         ],
+        "expected": "a,😊,b",
         "tester": "Z10841",
-        "status": "error"
+        "status": "pass"
+      },
+      {
+        "args": [
+          "Hello, world!",
+          ""
+        ],
+        "expected": "Hello, world!",
+        "tester": "Z10839",
+        "status": "fail"
       }
     ],
     "Z10846": [
@@ -3164,17 +3174,9 @@
           4,
           "~"
         ],
+        "expected": "wf~wf~wf~wf",
         "tester": "Z10915",
-        "status": "error"
-      },
-      {
-        "args": [
-          "👏™️",
-          6,
-          ""
-        ],
-        "tester": "Z10916",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -3182,8 +3184,19 @@
           0,
           "~"
         ],
+        "expected": "Z10008 to hold",
         "tester": "Z10917",
-        "status": "error"
+        "status": "pass"
+      },
+      {
+        "args": [
+          "👏™️",
+          6,
+          ""
+        ],
+        "expected": "👏™️👏™️👏™️👏™️👏™️👏™️",
+        "tester": "Z10916",
+        "status": "fail"
       }
     ],
     "Z10919": [
@@ -4347,8 +4360,9 @@
           "'''Hello, world!'''",
           "nowiki"
         ],
+        "expected": "<nowiki>'''Hello, world!'''</nowiki>",
         "tester": "Z11158",
-        "status": "error"
+        "status": "fail"
       }
     ],
     "Z11165": [
@@ -4998,15 +5012,25 @@
         "args": [
           "John"
         ],
+        "expected": "John's",
         "tester": "Z11303",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "bricks"
         ],
+        "expected": "bricks'",
         "tester": "Z11304",
-        "status": "error"
+        "status": "pass"
+      },
+      {
+        "args": [
+          "him"
+        ],
+        "expected": "his",
+        "tester": "Z14723",
+        "status": "pass"
       },
       {
         "args": [
@@ -5027,13 +5051,6 @@
           "her"
         ],
         "tester": "Z14722",
-        "status": "error"
-      },
-      {
-        "args": [
-          "him"
-        ],
-        "tester": "Z14723",
         "status": "error"
       },
       {
@@ -5448,6 +5465,15 @@
       },
       {
         "args": [
+          "Wikifunctions",
+          ""
+        ],
+        "expected": "Wikifunctions",
+        "tester": "Z27842",
+        "status": "pass"
+      },
+      {
+        "args": [
           "Hello, hello, hello!",
           "hello"
         ],
@@ -5461,17 +5487,18 @@
         ],
         "tester": "Z11440",
         "status": "error"
-      },
-      {
-        "args": [
-          "Wikifunctions",
-          ""
-        ],
-        "tester": "Z27842",
-        "status": "error"
       }
     ],
     "Z11412": [
+      {
+        "args": [
+          "Ciao!",
+          ""
+        ],
+        "expected": "Ciao!",
+        "tester": "Z27843",
+        "status": "pass"
+      },
       {
         "args": [
           "Hello, hello, hello!",
@@ -5486,14 +5513,6 @@
           "goodbye"
         ],
         "tester": "Z12839",
-        "status": "error"
-      },
-      {
-        "args": [
-          "Ciao!",
-          ""
-        ],
-        "tester": "Z27843",
         "status": "error"
       }
     ],
@@ -5572,6 +5591,15 @@
     "Z11422": [
       {
         "args": [
+          "somestring",
+          ""
+        ],
+        "expected": "somestring",
+        "tester": "Z38137",
+        "status": "pass"
+      },
+      {
+        "args": [
           "Hello, hello, hello!",
           "hello"
         ],
@@ -5584,14 +5612,6 @@
           "goodbye"
         ],
         "tester": "Z12845",
-        "status": "error"
-      },
-      {
-        "args": [
-          "somestring",
-          ""
-        ],
-        "tester": "Z38137",
         "status": "error"
       }
     ],
@@ -10094,16 +10114,27 @@
           "a",
           5
         ],
+        "expected": "aaaaa",
         "tester": "Z12970",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "A",
           0
         ],
+        "expected": "",
         "tester": "Z14045",
-        "status": "error"
+        "status": "pass"
+      },
+      {
+        "args": [
+          "🇦🇺",
+          3
+        ],
+        "expected": "🇦🇺🇦🇺🇦🇺",
+        "tester": "Z32723",
+        "status": "pass"
       },
       {
         "args": [
@@ -10111,14 +10142,6 @@
           10000
         ],
         "tester": "Z17606",
-        "status": "error"
-      },
-      {
-        "args": [
-          "🇦🇺",
-          3
-        ],
-        "tester": "Z32723",
         "status": "error"
       }
     ],
@@ -12928,8 +12951,9 @@
           ],
           " "
         ],
+        "expected": "cogito ergo sum",
         "tester": "Z12901",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -12940,16 +12964,18 @@
           ],
           ", "
         ],
+        "expected": "{a, b, c}",
         "tester": "Z14591",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           [],
           ","
         ],
+        "expected": "",
         "tester": "Z26659",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z12905": [
@@ -13774,6 +13800,24 @@
         "args": [
           [
             [
+              {
+                "type": "Z86",
+                "fields": {
+                  "Z86K1": "A"
+                }
+              }
+            ],
+            []
+          ]
+        ],
+        "expected": "Z889 to hold",
+        "tester": "Z13253",
+        "status": "pass"
+      },
+      {
+        "args": [
+          [
+            [
               "1",
               "2"
             ],
@@ -13790,23 +13834,6 @@
         "expected": "Z889 to hold",
         "tester": "Z13298",
         "status": "pass"
-      },
-      {
-        "args": [
-          [
-            [
-              {
-                "type": "Z86",
-                "fields": {
-                  "Z86K1": "A"
-                }
-              }
-            ],
-            []
-          ]
-        ],
-        "tester": "Z13253",
-        "status": "error"
       },
       {
         "args": [
@@ -13885,8 +13912,9 @@
           "key 2",
           ""
         ],
+        "expected": "value 2",
         "tester": "Z13174",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -13903,8 +13931,9 @@
           "key 3",
           "key value not found"
         ],
+        "expected": "key value not found",
         "tester": "Z13175",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z13177": [
@@ -14005,6 +14034,14 @@
     "Z13220": [
       {
         "args": [
+          []
+        ],
+        "expected": true,
+        "tester": "Z13223",
+        "status": "pass"
+      },
+      {
+        "args": [
           [
             "Hello",
             "World"
@@ -14026,13 +14063,6 @@
           ]
         ],
         "tester": "Z13222",
-        "status": "error"
-      },
-      {
-        "args": [
-          []
-        ],
-        "tester": "Z13223",
         "status": "error"
       },
       {
@@ -14170,57 +14200,65 @@
         "args": [
           "act"
         ],
+        "expected": "action",
         "tester": "Z13281",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "conclude"
         ],
+        "expected": "conclusion",
         "tester": "Z13283",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "solve"
         ],
+        "expected": "solution",
         "tester": "Z13290",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "compose"
         ],
+        "expected": "composition",
         "tester": "Z34053",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "create"
         ],
+        "expected": "creation",
         "tester": "Z34054",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "adopt"
         ],
+        "expected": "adoption",
         "tester": "Z34055",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "confess"
         ],
+        "expected": "confession",
         "tester": "Z34057",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "confuse"
         ],
+        "expected": "confusion",
         "tester": "Z34058",
-        "status": "error"
+        "status": "fail"
       }
     ],
     "Z13306": [
@@ -16415,8 +16453,9 @@
             "third"
           ]
         ],
+        "expected": 2,
         "tester": "Z13710",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -16427,8 +16466,9 @@
             "third"
           ]
         ],
+        "expected": 0,
         "tester": "Z13711",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -16439,8 +16479,9 @@
             "repeated"
           ]
         ],
+        "expected": 2,
         "tester": "Z13712",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -16474,72 +16515,9 @@
             }
           ]
         ],
+        "expected": 2,
         "tester": "Z16285",
-        "status": "error"
-      },
-      {
-        "args": [
-          {
-            "type": "Z8",
-            "zid": "Z16939"
-          },
-          [
-            {
-              "type": "Z8",
-              "zid": "Z16928"
-            },
-            {
-              "type": "Z8",
-              "zid": "Z16929"
-            },
-            {
-              "type": "Z8",
-              "zid": "Z16930"
-            },
-            {
-              "type": "Z8",
-              "zid": "Z16931"
-            },
-            {
-              "type": "Z8",
-              "zid": "Z16932"
-            },
-            {
-              "type": "Z8",
-              "zid": "Z16933"
-            },
-            {
-              "type": "Z8",
-              "zid": "Z16934"
-            },
-            {
-              "type": "Z8",
-              "zid": "Z16935"
-            },
-            {
-              "type": "Z8",
-              "zid": "Z16936"
-            },
-            {
-              "type": "Z8",
-              "zid": "Z16937"
-            },
-            {
-              "type": "Z8",
-              "zid": "Z16938"
-            },
-            {
-              "type": "Z8",
-              "zid": "Z16939"
-            },
-            {
-              "type": "Z8",
-              "zid": "Z16940"
-            }
-          ]
-        ],
-        "tester": "Z18503",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -16570,8 +16548,9 @@
             }
           ]
         ],
+        "expected": 2,
         "tester": "Z24210",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -16594,8 +16573,9 @@
             }
           ]
         ],
+        "expected": 2,
         "tester": "Z24216",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -16682,7 +16662,72 @@
             }
           ]
         ],
+        "expected": 3,
         "tester": "Z24322",
+        "status": "pass"
+      },
+      {
+        "args": [
+          {
+            "type": "Z8",
+            "zid": "Z16939"
+          },
+          [
+            {
+              "type": "Z8",
+              "zid": "Z16928"
+            },
+            {
+              "type": "Z8",
+              "zid": "Z16929"
+            },
+            {
+              "type": "Z8",
+              "zid": "Z16930"
+            },
+            {
+              "type": "Z8",
+              "zid": "Z16931"
+            },
+            {
+              "type": "Z8",
+              "zid": "Z16932"
+            },
+            {
+              "type": "Z8",
+              "zid": "Z16933"
+            },
+            {
+              "type": "Z8",
+              "zid": "Z16934"
+            },
+            {
+              "type": "Z8",
+              "zid": "Z16935"
+            },
+            {
+              "type": "Z8",
+              "zid": "Z16936"
+            },
+            {
+              "type": "Z8",
+              "zid": "Z16937"
+            },
+            {
+              "type": "Z8",
+              "zid": "Z16938"
+            },
+            {
+              "type": "Z8",
+              "zid": "Z16939"
+            },
+            {
+              "type": "Z8",
+              "zid": "Z16940"
+            }
+          ]
+        ],
+        "tester": "Z18503",
         "status": "error"
       }
     ],
@@ -16729,8 +16774,9 @@
             "fruit 3"
           ]
         ],
+        "expected": "Z889 to hold",
         "tester": "Z13722",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -16751,8 +16797,9 @@
             3
           ]
         ],
+        "expected": "Z889 to hold",
         "tester": "Z13723",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z13726": [
@@ -17280,18 +17327,19 @@
     "Z13822": [
       {
         "args": [
+          2,
+          7
+        ],
+        "expected": 4,
+        "tester": "Z35965",
+        "status": "pass"
+      },
+      {
+        "args": [
           1000,
           1337
         ],
         "tester": "Z13824",
-        "status": "error"
-      },
-      {
-        "args": [
-          2,
-          7
-        ],
-        "tester": "Z35965",
         "status": "error"
       }
     ],
@@ -18224,8 +18272,9 @@
         "args": [
           1
         ],
+        "expected": 0,
         "tester": "Z14915",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -18277,16 +18326,17 @@
     "Z13999": [
       {
         "args": [
-          4
+          1
         ],
-        "tester": "Z14076",
-        "status": "error"
+        "expected": 1,
+        "tester": "Z14077",
+        "status": "pass"
       },
       {
         "args": [
-          1
+          4
         ],
-        "tester": "Z14077",
+        "tester": "Z14076",
         "status": "error"
       },
       {
@@ -18718,16 +18768,17 @@
     "Z14180": [
       {
         "args": [
-          3
+          1
         ],
-        "tester": "Z14181",
-        "status": "error"
+        "expected": "3",
+        "tester": "Z14182",
+        "status": "pass"
       },
       {
         "args": [
-          1
+          3
         ],
-        "tester": "Z14182",
+        "tester": "Z14181",
         "status": "error"
       }
     ],
@@ -22223,30 +22274,33 @@
     "Z14726": [
       {
         "args": [
-          9
-        ],
-        "tester": "Z14727",
-        "status": "error"
-      },
-      {
-        "args": [
           2
         ],
+        "expected": "half",
         "tester": "Z14728",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           4
         ],
+        "expected": "quarter",
         "tester": "Z14729",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           1
         ],
+        "expected": "whole",
         "tester": "Z14730",
+        "status": "pass"
+      },
+      {
+        "args": [
+          9
+        ],
+        "tester": "Z14727",
         "status": "error"
       }
     ],
@@ -22832,16 +22886,18 @@
           0,
           0
         ],
+        "expected": 1,
         "tester": "Z14902",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           5,
           0
         ],
+        "expected": 0,
         "tester": "Z14903",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -22886,8 +22942,9 @@
         "args": [
           1
         ],
+        "expected": true,
         "tester": "Z14927",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -24556,8 +24613,9 @@
           6,
           2
         ],
+        "expected": 274,
         "tester": "Z15336",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z15337": [
@@ -26891,27 +26949,6 @@
     "Z16199": [
       {
         "args": [
-          "Saturday",
-          [
-            "Sunday",
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday",
-            "Sunday"
-          ],
-          {
-            "type": "Z8",
-            "zid": "Z866"
-          }
-        ],
-        "tester": "Z16201",
-        "status": "error"
-      },
-      {
-        "args": [
           "May",
           [
             "January",
@@ -26932,8 +26969,9 @@
             "zid": "Z866"
           }
         ],
+        "expected": "Z889 to hold",
         "tester": "Z16202",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -26948,7 +26986,29 @@
             "zid": "Z844"
           }
         ],
+        "expected": "Z889 to hold",
         "tester": "Z16204",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "Saturday",
+          [
+            "Sunday",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
+          ],
+          {
+            "type": "Z8",
+            "zid": "Z866"
+          }
+        ],
+        "tester": "Z16201",
         "status": "error"
       }
     ],
@@ -26965,8 +27025,9 @@
             }
           }
         ],
+        "expected": 1,
         "tester": "Z16231",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -26980,8 +27041,9 @@
             }
           }
         ],
+        "expected": 2,
         "tester": "Z16232",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -26995,8 +27057,9 @@
             }
           }
         ],
+        "expected": 3,
         "tester": "Z16233",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -27010,8 +27073,9 @@
             }
           }
         ],
+        "expected": 4,
         "tester": "Z16234",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -27025,8 +27089,9 @@
             }
           }
         ],
+        "expected": 5,
         "tester": "Z16235",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -27040,8 +27105,9 @@
             }
           }
         ],
+        "expected": 6,
         "tester": "Z16236",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -29539,6 +29605,31 @@
             "fields": {
               "Z16098K1": {
                 "type": "Z8",
+                "zid": "Z16101"
+              }
+            }
+          },
+          {
+            "type": "Z16098",
+            "fields": {
+              "Z16098K1": {
+                "type": "Z8",
+                "zid": "Z16101"
+              }
+            }
+          }
+        ],
+        "expected": false,
+        "tester": "Z16650",
+        "status": "pass"
+      },
+      {
+        "args": [
+          {
+            "type": "Z16098",
+            "fields": {
+              "Z16098K1": {
+                "type": "Z8",
                 "zid": "Z16111"
               }
             }
@@ -29554,30 +29645,6 @@
           }
         ],
         "tester": "Z16649",
-        "status": "error"
-      },
-      {
-        "args": [
-          {
-            "type": "Z16098",
-            "fields": {
-              "Z16098K1": {
-                "type": "Z8",
-                "zid": "Z16101"
-              }
-            }
-          },
-          {
-            "type": "Z16098",
-            "fields": {
-              "Z16098K1": {
-                "type": "Z8",
-                "zid": "Z16101"
-              }
-            }
-          }
-        ],
-        "tester": "Z16650",
         "status": "error"
       },
       {
@@ -31441,35 +31508,39 @@
         "args": [
           "one"
         ],
+        "expected": 1,
         "tester": "Z16856",
-        "status": "error"
+        "status": "pass"
+      },
+      {
+        "args": [
+          "zero"
+        ],
+        "expected": 0,
+        "tester": "Z16859",
+        "status": "pass"
+      },
+      {
+        "args": [
+          ""
+        ],
+        "expected": 0,
+        "tester": "Z16860",
+        "status": "pass"
+      },
+      {
+        "args": [
+          "twenty"
+        ],
+        "expected": 0,
+        "tester": "Z16861",
+        "status": "pass"
       },
       {
         "args": [
           "nineteen"
         ],
         "tester": "Z16858",
-        "status": "error"
-      },
-      {
-        "args": [
-          "zero"
-        ],
-        "tester": "Z16859",
-        "status": "error"
-      },
-      {
-        "args": [
-          ""
-        ],
-        "tester": "Z16860",
-        "status": "error"
-      },
-      {
-        "args": [
-          "twenty"
-        ],
-        "tester": "Z16861",
         "status": "error"
       }
     ],
@@ -31529,29 +31600,33 @@
         "args": [
           "twenty"
         ],
+        "expected": 20,
         "tester": "Z16871",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "thirty"
         ],
+        "expected": 30,
         "tester": "Z16872",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "twenty-seven"
         ],
+        "expected": 0,
         "tester": "Z16873",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "ten"
         ],
+        "expected": 0,
         "tester": "Z16874",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z16878": [
@@ -32045,8 +32120,9 @@
             }
           }
         ],
+        "expected": 1,
         "tester": "Z16975",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -32060,8 +32136,9 @@
             }
           }
         ],
+        "expected": 5,
         "tester": "Z16976",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -36080,8 +36157,9 @@
             "zid": "Z17409"
           }
         ],
+        "expected": 1,
         "tester": "Z17487",
-        "status": "error"
+        "status": "fail"
       },
       {
         "args": [
@@ -36090,8 +36168,9 @@
             "zid": "Z17408"
           }
         ],
+        "expected": 7,
         "tester": "Z17488",
-        "status": "error"
+        "status": "fail"
       }
     ],
     "Z17491": [
@@ -37155,8 +37234,9 @@
             0
           ]
         ],
+        "expected": "#000000",
         "tester": "Z17689",
-        "status": "error"
+        "status": "fail"
       },
       {
         "args": [
@@ -40927,8 +41007,9 @@
           "he",
           "ate"
         ],
+        "expected": "He ate.",
         "tester": "Z18847",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z18859": [
@@ -40973,8 +41054,9 @@
         "args": [
           "go"
         ],
+        "expected": "Go!",
         "tester": "Z18873",
-        "status": "error"
+        "status": "fail"
       }
     ],
     "Z18874": [
@@ -40983,8 +41065,9 @@
           "go",
           "quickly"
         ],
+        "expected": "Go quickly!",
         "tester": "Z18876",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z18886": [
@@ -40993,8 +41076,9 @@
           "read",
           "the book"
         ],
+        "expected": "Read the book!",
         "tester": "Z18888",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z18889": [
@@ -41205,15 +41289,17 @@
         "args": [
           "AD"
         ],
+        "expected": "CE",
         "tester": "Z19042",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "CE"
         ],
+        "expected": "AD",
         "tester": "Z19043",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z19065": [
@@ -41412,36 +41498,41 @@
         "args": [
           "dog"
         ],
+        "expected": "dogs'",
         "tester": "Z19126",
-        "status": "error"
-      },
-      {
-        "args": [
-          "fish"
-        ],
-        "tester": "Z19127",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           "volunteer"
         ],
+        "expected": "volunteers'",
         "tester": "Z19128",
-        "status": "error"
+        "status": "pass"
+      },
+      {
+        "args": [
+          "fish"
+        ],
+        "expected": "Z13381 to hold",
+        "tester": "Z19127",
+        "status": "fail"
       },
       {
         "args": [
           "Matrix"
         ],
+        "expected": "Z13381 to hold",
         "tester": "Z19130",
-        "status": "error"
+        "status": "fail"
       },
       {
         "args": [
           "kiss"
         ],
+        "expected": "kisses'",
         "tester": "Z19131",
-        "status": "error"
+        "status": "fail"
       }
     ],
     "Z19170": [
@@ -42622,6 +42713,20 @@
       {
         "args": [
           [
+            "hello"
+          ],
+          {
+            "type": "Z8",
+            "zid": "Z11040"
+          }
+        ],
+        "expected": "Z889 to hold",
+        "tester": "Z19546",
+        "status": "pass"
+      },
+      {
+        "args": [
+          [
             "abc",
             "de",
             "f"
@@ -42632,19 +42737,6 @@
           }
         ],
         "tester": "Z19511",
-        "status": "error"
-      },
-      {
-        "args": [
-          [
-            "hello"
-          ],
-          {
-            "type": "Z8",
-            "zid": "Z11040"
-          }
-        ],
-        "tester": "Z19546",
         "status": "error"
       }
     ],
@@ -42663,8 +42755,9 @@
           },
           2
         ],
+        "expected": 3,
         "tester": "Z19537",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -42678,8 +42771,9 @@
           },
           3
         ],
+        "expected": 1,
         "tester": "Z19539",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -42693,8 +42787,9 @@
           },
           2
         ],
+        "expected": 0,
         "tester": "Z19540",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -42710,8 +42805,9 @@
           },
           512
         ],
+        "expected": 4,
         "tester": "Z19562",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z19549": [
@@ -43007,8 +43103,9 @@
             "D"
           ]
         ],
+        "expected": "B",
         "tester": "Z19606",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -43024,8 +43121,9 @@
             "D"
           ]
         ],
+        "expected": "D",
         "tester": "Z19609",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -43039,8 +43137,9 @@
             "c"
           ]
         ],
+        "expected": "c",
         "tester": "Z20684",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -43064,8 +43163,9 @@
             2
           ]
         ],
+        "expected": 1,
         "tester": "Z20685",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -43089,8 +43189,9 @@
             2
           ]
         ],
+        "expected": 2,
         "tester": "Z20686",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -43106,8 +43207,9 @@
             4
           ]
         ],
+        "expected": 3,
         "tester": "Z22185",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z19602": [
@@ -43119,8 +43221,9 @@
             false
           ]
         ],
+        "expected": 2,
         "tester": "Z19604",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -43130,8 +43233,9 @@
             false
           ]
         ],
+        "expected": 0,
         "tester": "Z19608",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z19612": [
@@ -61998,8 +62102,9 @@
         "args": [
           "wikitext"
         ],
+        "expected": "<code><nowiki>wikitext</nowiki></code>",
         "tester": "Z22046",
-        "status": "error"
+        "status": "fail"
       }
     ],
     "Z22049": [
@@ -64449,8 +64554,9 @@
             "world"
           ]
         ],
+        "expected": "Hello world",
         "tester": "Z22506",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -64459,8 +64565,9 @@
             " two"
           ]
         ],
+        "expected": "one   two",
         "tester": "Z22762",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -64470,15 +64577,17 @@
             "three"
           ]
         ],
+        "expected": "one two three",
         "tester": "Z22763",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           []
         ],
+        "expected": "",
         "tester": "Z28291",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z22507": [
@@ -64595,8 +64704,9 @@
           ],
           "man"
         ],
+        "expected": "tall dark handsome man",
         "tester": "Z22519",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z22529": [
@@ -75680,8 +75790,9 @@
           ],
           " → "
         ],
+        "expected": "(en) one → (fr) un → (sv) en",
         "tester": "Z24161",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z24166": [
@@ -76179,6 +76290,20 @@
       {
         "args": [
           [
+            false,
+            false,
+            true,
+            false
+          ],
+          true
+        ],
+        "expected": "Z889 to hold",
+        "tester": "Z24318",
+        "status": "pass"
+      },
+      {
+        "args": [
+          [
             0,
             1,
             2,
@@ -76261,19 +76386,6 @@
           }
         ],
         "tester": "Z24209",
-        "status": "error"
-      },
-      {
-        "args": [
-          [
-            false,
-            false,
-            true,
-            false
-          ],
-          true
-        ],
-        "tester": "Z24318",
         "status": "error"
       },
       {
@@ -78336,15 +78448,17 @@
         "args": [
           0
         ],
+        "expected": 1,
         "tester": "Z24518",
-        "status": "error"
+        "status": "fail"
       },
       {
         "args": [
           6
         ],
+        "expected": 1000000,
         "tester": "Z24519",
-        "status": "error"
+        "status": "fail"
       }
     ],
     "Z24525": [
@@ -103869,6 +103983,25 @@
         "args": [
           {
             "type": "Z8",
+            "zid": "Z10000"
+          },
+          "",
+          {
+            "type": "Z21",
+            "fields": {}
+          },
+          [
+            "avoid the void?"
+          ]
+        ],
+        "expected": "avoid the void?",
+        "tester": "Z27010",
+        "status": "pass"
+      },
+      {
+        "args": [
+          {
+            "type": "Z8",
             "zid": "Z19708"
           },
           {
@@ -103906,24 +104039,6 @@
           []
         ],
         "tester": "Z27009",
-        "status": "error"
-      },
-      {
-        "args": [
-          {
-            "type": "Z8",
-            "zid": "Z10000"
-          },
-          "",
-          {
-            "type": "Z21",
-            "fields": {}
-          },
-          [
-            "avoid the void?"
-          ]
-        ],
-        "tester": "Z27010",
         "status": "error"
       }
     ],
@@ -114709,8 +114824,9 @@
             }
           ]
         ],
+        "expected": "en-in;en;mul",
         "tester": "Z28283",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -114723,8 +114839,9 @@
             }
           ]
         ],
+        "expected": "fr",
         "tester": "Z28285",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z28294": [
@@ -122094,8 +122211,9 @@
             "afternoon"
           ]
         ],
+        "expected": "Z889 to hold",
         "tester": "Z29287",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -122112,8 +122230,9 @@
             4
           ]
         ],
+        "expected": "Z29294 to hold",
         "tester": "Z29289",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z29290": [
@@ -122739,6 +122858,33 @@
             },
             {
               "type": "Z8",
+              "zid": "Z25340"
+            }
+          ],
+          [
+            {
+              "type": "Z8",
+              "zid": "Z25340"
+            },
+            {
+              "type": "Z8",
+              "zid": "Z6"
+            }
+          ]
+        ],
+        "expected": "Z889 to hold",
+        "tester": "Z29398",
+        "status": "pass"
+      },
+      {
+        "args": [
+          [
+            {
+              "type": "Z8",
+              "zid": "Z6"
+            },
+            {
+              "type": "Z8",
               "zid": "Z40"
             },
             {
@@ -122761,34 +122907,9 @@
             }
           ]
         ],
+        "expected": "Z889 to hold",
         "tester": "Z29397",
-        "status": "error"
-      },
-      {
-        "args": [
-          [
-            {
-              "type": "Z8",
-              "zid": "Z6"
-            },
-            {
-              "type": "Z8",
-              "zid": "Z25340"
-            }
-          ],
-          [
-            {
-              "type": "Z8",
-              "zid": "Z25340"
-            },
-            {
-              "type": "Z8",
-              "zid": "Z6"
-            }
-          ]
-        ],
-        "tester": "Z29398",
-        "status": "error"
+        "status": "fail"
       },
       {
         "args": [
@@ -122805,8 +122926,9 @@
             }
           ]
         ],
+        "expected": "Z889 to hold",
         "tester": "Z29399",
-        "status": "error"
+        "status": "fail"
       }
     ],
     "Z29400": [
@@ -123166,8 +123288,9 @@
             10
           ]
         ],
+        "expected": 5,
         "tester": "Z29427",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -123178,8 +123301,9 @@
             4
           ]
         ],
+        "expected": 2,
         "tester": "Z29428",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z29429": [
@@ -125211,6 +125335,19 @@
         "args": [
           {
             "type": "Z8",
+            "zid": "Z10000"
+          },
+          [],
+          []
+        ],
+        "expected": "Z889 to hold",
+        "tester": "Z29821",
+        "status": "pass"
+      },
+      {
+        "args": [
+          {
+            "type": "Z8",
             "zid": "Z12624"
           },
           [
@@ -125223,20 +125360,9 @@
             3
           ]
         ],
+        "expected": "Z889 to hold",
         "tester": "Z29801",
-        "status": "error"
-      },
-      {
-        "args": [
-          {
-            "type": "Z8",
-            "zid": "Z10000"
-          },
-          [],
-          []
-        ],
-        "tester": "Z29821",
-        "status": "error"
+        "status": "fail"
       }
     ],
     "Z29795": [
@@ -128229,8 +128355,9 @@
             "hatnote"
           ]
         ],
+        "expected": "class=\"hatnote\"",
         "tester": "Z30093",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z30145": [
@@ -129677,8 +129804,9 @@
             }
           }
         ],
+        "expected": "Z14392 to hold",
         "tester": "Z30485",
-        "status": "error"
+        "status": "fail"
       },
       {
         "args": [
@@ -129701,8 +129829,9 @@
             }
           }
         ],
+        "expected": "Z14392 to hold",
         "tester": "Z35347",
-        "status": "error"
+        "status": "fail"
       },
       {
         "args": [
@@ -129725,8 +129854,9 @@
             }
           }
         ],
+        "expected": "Z14392 to hold",
         "tester": "Z35348",
-        "status": "error"
+        "status": "fail"
       },
       {
         "args": [
@@ -129749,8 +129879,9 @@
             }
           }
         ],
+        "expected": "Z14392 to hold",
         "tester": "Z35350",
-        "status": "error"
+        "status": "fail"
       },
       {
         "args": [
@@ -129773,8 +129904,9 @@
             }
           }
         ],
+        "expected": "Z14392 to hold",
         "tester": "Z35351",
-        "status": "error"
+        "status": "fail"
       },
       {
         "args": [
@@ -129797,8 +129929,9 @@
             }
           }
         ],
+        "expected": "Z14392 to hold",
         "tester": "Z35358",
-        "status": "error"
+        "status": "fail"
       }
     ],
     "Z30489": [
@@ -131355,24 +131488,27 @@
           true,
           false
         ],
+        "expected": "-q",
         "tester": "Z30760",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           false,
           true
         ],
+        "expected": "-v",
         "tester": "Z30761",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
           false,
           false
         ],
+        "expected": "",
         "tester": "Z30764",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z30768": [
@@ -133867,13 +134003,28 @@
           {
             "type": "Z86",
             "fields": {
+              "Z86K1": 97
+            }
+          },
+          "Hello, world!"
+        ],
+        "expected": 0,
+        "tester": "Z31271",
+        "status": "pass"
+      },
+      {
+        "args": [
+          {
+            "type": "Z86",
+            "fields": {
               "Z86K1": 111
             }
           },
           "Hello, world!"
         ],
+        "expected": 5,
         "tester": "Z31269",
-        "status": "error"
+        "status": "fail"
       },
       {
         "args": [
@@ -133885,21 +134036,9 @@
           },
           "Hello, world!"
         ],
+        "expected": 10,
         "tester": "Z31270",
-        "status": "error"
-      },
-      {
-        "args": [
-          {
-            "type": "Z86",
-            "fields": {
-              "Z86K1": 97
-            }
-          },
-          "Hello, world!"
-        ],
-        "tester": "Z31271",
-        "status": "error"
+        "status": "fail"
       }
     ],
     "Z31294": [
@@ -140939,8 +141078,9 @@
             }
           }
         ],
+        "expected": "A, B, C",
         "tester": "Z32285",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -140956,8 +141096,9 @@
             }
           }
         ],
+        "expected": "A、B、C",
         "tester": "Z32286",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z32299": [
@@ -141021,8 +141162,9 @@
             }
           }
         ],
+        "expected": "A, B and C",
         "tester": "Z32310",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z32319": [
@@ -143245,8 +143387,9 @@
             }
           }
         ],
+        "expected": "North Epping, New South Wales, Australia",
         "tester": "Z37258",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z32626": [
@@ -143264,8 +143407,9 @@
             }
           }
         ],
+        "expected": "Seattle, Washington, United States",
         "tester": "Z32628",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z32652": [
@@ -146436,8 +146580,9 @@
             }
           }
         ],
+        "expected": "-{zh-hans:zh-Hans; zh-hant:zh-Hant; zh-hk:zh-Hant-HK;}-",
         "tester": "Z33047",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z33040": [
@@ -155659,8 +155804,9 @@
             }
           }
         ],
+        "expected": "Z14392 to hold",
         "tester": "Z34673",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -155691,8 +155837,9 @@
             }
           }
         ],
+        "expected": "Z14392 to hold",
         "tester": "Z34674",
-        "status": "error"
+        "status": "pass"
       },
       {
         "args": [
@@ -155735,8 +155882,9 @@
             }
           }
         ],
+        "expected": "Z14392 to hold",
         "tester": "Z34675",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z34736": [
@@ -159147,8 +159295,9 @@
         "args": [
           "2212675374"
         ],
+        "expected": "2-212-67537-4",
         "tester": "Z35258",
-        "status": "error"
+        "status": "pass"
       }
     ],
     "Z35261": [

@@ -58,11 +58,11 @@ let body_Z16000_igbo_month_name_in_igbo : expr =
 
 (* Z16012 (!) grammatical number for languages with singular, dual and plural | Z16012@271191 -> Z34594@271190 digest a0c189fcce8af7fc434045433c6d628e1beebe7c1aca3e3f6243b92e297e72f7 *)
 let body_Z16012_grammatical_number_for_languages_with_singular_dual_and_plur : expr =
-  ECall 19565 [ECall 31547 [EArg 0]; EValue (VText [115; 105; 110; 103; 117; 108; 97; 114]); ECall 31554 [EArg 0]; EValue (VText [100; 117; 97; 108]); EValue (VText [112; 108; 117; 114; 97; 108])]
+  ECall 802 [ECall 31547 [EArg 0]; EValue (VText [115; 105; 110; 103; 117; 108; 97; 114]); ECall 802 [ECall 31554 [EArg 0]; EValue (VText [100; 117; 97; 108]); EValue (VText [112; 108; 117; 114; 97; 108])]]
 
 (* Z16015 (!) grammatical number for languages with singular, paucal (2-5) and plural | Z16015@271193 -> Z34595@271192 digest e49b1d72af72ffd2aa403cc23bd52f04b891865326f8b5787446ba790ad24f0e *)
 let body_Z16015_grammatical_number_for_languages_with_singular_paucal_2_5_an : expr =
-  ECall 19565 [ECall 31547 [EArg 0]; EValue (VText [115; 105; 110; 103; 117; 108; 97; 114]); ECall 13695 [EArg 0; EValue (VNat 5)]; EValue (VText [112; 97; 117; 99; 97; 108]); EValue (VText [112; 108; 117; 114; 97; 108])]
+  ECall 802 [ECall 31547 [EArg 0]; EValue (VText [115; 105; 110; 103; 117; 108; 97; 114]); ECall 802 [ECall 13695 [EArg 0; EValue (VNat 5)]; EValue (VText [112; 97; 117; 99; 97; 108]); EValue (VText [112; 108; 117; 114; 97; 108])]]
 
 (* Z16085 Croatian cardinal | Z16085@210131 -> Z22626@168389 digest 4687d6da9386cd54a80360197fdd3931a66e76a4b83ea7c3edb091a5753ed986 *)
 let body_Z16085_croatian_cardinal : expr =
@@ -130,7 +130,7 @@ let body_Z16313_l_adan_cardinals : expr =
 
 (* Z16316 days in month when not a leap year | Z16316@290828 -> Z32890@261856 digest ada20f4e89bb8981505161170d9517dddbdd3765835e48df0fc68b5057d77791 *)
 let body_Z16316_days_in_month_when_not_a_leap_year : expr =
-  ECall 19565 [ECall 16137 [EArg 0; EValue (VRecord 16098 [({ key_owner = Some 16098; key_index = 1 }, VFunc 16102)])]; EValue (VNat 28); ECall 16289 [EArg 0; EValue (VList [VRecord 16098 [({ key_owner = Some 16098; key_index = 1 }, VFunc 16104)]; VRecord 16098 [({ key_owner = Some 16098; key_index = 1 }, VFunc 16106)]; VRecord 16098 [({ key_owner = Some 16098; key_index = 1 }, VFunc 16109)]; VRecord 16098 [({ key_owner = Some 16098; key_index = 1 }, VFunc 16111)]])]; EValue (VNat 30); EValue (VNat 31)]
+  ECall 802 [ECall 16137 [EArg 0; EValue (VRecord 16098 [({ key_owner = Some 16098; key_index = 1 }, VFunc 16102)])]; EValue (VNat 28); ECall 802 [ECall 16289 [EArg 0; EValue (VList [VRecord 16098 [({ key_owner = Some 16098; key_index = 1 }, VFunc 16104)]; VRecord 16098 [({ key_owner = Some 16098; key_index = 1 }, VFunc 16106)]; VRecord 16098 [({ key_owner = Some 16098; key_index = 1 }, VFunc 16109)]; VRecord 16098 [({ key_owner = Some 16098; key_index = 1 }, VFunc 16111)]])]; EValue (VNat 30); EValue (VNat 31)]]
 
 (* Z16330 months in period (list) | Z16330@212525 -> Z16352@212975 digest 194671e77b35ffc588aa493df06ccb19496ba038174fbba45eab438ecd087c66 *)
 let body_Z16330_months_in_period_list : expr =
@@ -286,11 +286,11 @@ let body_Z16693_add_integers : expr =
 
 (* Z16700 display Integer | Z16700@265819 -> Z17200@230808 digest 3dbf5e08f45b8cd8f3ceca7214cb22f77974456640bc54517206ffb6c9d22a3a *)
 let body_Z16700_display_integer : expr =
-  ECall 11542 [ECall 17173 [EArg 0; EValue (VRecord 16683 [({ key_owner = Some 16683; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16661)])]); ({ key_owner = Some 16683; key_index = 2 }, VNat 0)])]; ECall 14280 [ECall 17144 [EArg 0]; EArg 1]; ECall 10000 [EValue (VText [45]); ECall 14280 [ECall 17144 [EArg 0]; EArg 1]]]
+  ECall 802 [ECall 17173 [EArg 0; EValue (VRecord 16683 [({ key_owner = Some 16683; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16661)])]); ({ key_owner = Some 16683; key_index = 2 }, VNat 0)])]; ECall 14280 [ECall 17144 [EArg 0]; EArg 1]; ECall 10000 [EValue (VText [45]); ECall 14280 [ECall 17144 [EArg 0]; EArg 1]]]
 
 (* Z16705 read Integer | Z16705@223155 -> Z25081@223150 digest 871ece3f2ab4bec312b2773c841ab01c5a553c9fe4432ae9421176d03ea8d7c5 *)
 let body_Z16705_read_integer : expr =
-  ECall 17192 [ECall 866 [ECall 10908 [ECall 10901 [EArg 0]]; EValue (VText [45])]; ECall 17267 [ECall 14290 [ECall 14456 [EArg 0]; EArg 1]]; ECall 17101 [ECall 14290 [ECall 10075 [EArg 0; EValue (VText [43]); EValue (VText [])]; EArg 1]]]
+  ECall 802 [ECall 866 [ECall 10908 [ECall 10901 [EArg 0]]; EValue (VText [45])]; ECall 17267 [ECall 14290 [ECall 14456 [EArg 0]; EArg 1]]; ECall 17101 [ECall 14290 [ECall 10075 [EArg 0; EValue (VText [43]); EValue (VText [])]; EArg 1]]]
 
 (* Z16711 subsequence exists | Z16711@246689 -> Z31290@246685 digest 6a83be7983ec3bfa14267c074f1e178f4a4db37c48a2299ce971ae8fe5f61ba8 *)
 let body_Z16711_subsequence_exists : expr =
@@ -422,7 +422,7 @@ let body_Z17073_vietnamese_cardinal : expr =
 
 (* Z17101 natural number to integer | Z17101@266853 -> Z17286@232486 digest 1ce43671a9d891f5beb9c54140d62a5c5689e2b66be53a89941e04e717595d2e *)
 let body_Z17101_natural_number_to_integer : expr =
-  ECall 17192 [ECall 13522 [EArg 0; EValue (VNat 0)]; EValue (VRecord 16683 [({ key_owner = Some 16683; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16661)])]); ({ key_owner = Some 16683; key_index = 2 }, VNat 0)]); ERecord 16683 [({ key_owner = Some 16683; key_index = 1 }, EValue (VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16660)])); ({ key_owner = Some 16683; key_index = 2 }, EArg 0)]]
+  ECall 802 [ECall 13522 [EArg 0; EValue (VNat 0)]; EValue (VRecord 16683 [({ key_owner = Some 16683; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16661)])]); ({ key_owner = Some 16683; key_index = 2 }, VNat 0)]); ERecord 16683 [({ key_owner = Some 16683; key_index = 1 }, EValue (VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16660)])); ({ key_owner = Some 16683; key_index = 2 }, EArg 0)]]
 
 (* Z17105 sign of integer | Z17105@225359 -> Z17213@231195 digest be4301fbd500ec9e53d5783994d7b1ebcdd5a3fb39a68762d831ac6e8fe055c8 *)
 let body_Z17105_sign_of_integer : expr =
@@ -438,7 +438,7 @@ let body_Z17120_multiply_integers : expr =
 
 (* Z17128 absolute value of integer | Z17128@229364 -> Z17284@253770 digest 95852a2ada62470921b1fe2d630ad1086ae1119a2f42c2f7735d1a3994d96c00 *)
 let body_Z17128_absolute_value_of_integer : expr =
-  ECall 17192 [ECall 17215 [EArg 0]; ECall 17186 [EArg 0]; EArg 0]
+  ECall 802 [ECall 17215 [EArg 0]; ECall 17186 [EArg 0]; EArg 0]
 
 (* Z17132 greater than (integer) | Z17132@265836 -> Z17614@239920 digest d0c4c8976dc1a0052f0b9b1473f85f0c0bd53292ecf5015cc12c07e80030a507 *)
 let body_Z17132_greater_than_integer : expr =
@@ -454,11 +454,11 @@ let body_Z17144_absolute_value_of_integer_as_natural_number : expr =
 
 (* Z17151 sign to unit integer | Z17151@230093 -> Z17282@232482 digest 1a7c7ae5ec4e7b5d1e31e41c937bef9d024c8b78e814bc6e2024f3dd2e61fc14 *)
 let body_Z17151_sign_to_unit_integer : expr =
-  ECall 17192 [ECall 16667 [EArg 0; EValue (VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16660)])]; EValue (VRecord 16683 [({ key_owner = Some 16683; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16660)])]); ({ key_owner = Some 16683; key_index = 2 }, VNat 1)]); ECall 17192 [ECall 16667 [EArg 0; EValue (VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16662)])]; EValue (VRecord 16683 [({ key_owner = Some 16683; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16662)])]); ({ key_owner = Some 16683; key_index = 2 }, VNat 1)]); EValue (VRecord 16683 [({ key_owner = Some 16683; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16661)])]); ({ key_owner = Some 16683; key_index = 2 }, VNat 0)])]]
+  ECall 802 [ECall 16667 [EArg 0; EValue (VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16660)])]; EValue (VRecord 16683 [({ key_owner = Some 16683; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16660)])]); ({ key_owner = Some 16683; key_index = 2 }, VNat 1)]); ECall 802 [ECall 16667 [EArg 0; EValue (VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16662)])]; EValue (VRecord 16683 [({ key_owner = Some 16683; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16662)])]); ({ key_owner = Some 16683; key_index = 2 }, VNat 1)]); EValue (VRecord 16683 [({ key_owner = Some 16683; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16661)])]); ({ key_owner = Some 16683; key_index = 2 }, VNat 0)])]]
 
 (* Z17153 increment integer | Z17153@277086 -> Z17273@232327 digest 4a5fb7d0a40960942ed7b1463363e01f3c602c88f4d2347d3e9fa24cf42794bd *)
 let body_Z17153_increment_integer : expr =
-  ECall 17192 [ECall 17229 [EArg 0]; ECall 17101 [ECall 13578 [ECall 17144 [EArg 0]]]; ECall 17267 [ECall 13582 [ECall 17144 [EArg 0]]]]
+  ECall 802 [ECall 17229 [EArg 0]; ECall 17101 [ECall 13578 [ECall 17144 [EArg 0]]]; ECall 17267 [ECall 13582 [ECall 17144 [EArg 0]]]]
 
 (* Z17160 decrement integer | Z17160@230102 -> Z17165@230343 digest 0aea449288510fd628244e660ac67a79ac6fa56d1c3f174915ad44c6064f8f5c *)
 let body_Z17160_decrement_integer : expr =
@@ -466,7 +466,7 @@ let body_Z17160_decrement_integer : expr =
 
 (* Z17167 integer modulo another integer | Z17167@265963 -> Z17210@231016 digest adda9cc235f8354c3f89d88913f95ef9577cc3678389c85f51a59b344637f0d3 *)
 let body_Z17167_integer_modulo_another_integer : expr =
-  ECall 17192 [ECall 17204 [EArg 1]; ECall 17192 [ECall 17204 [EArg 0]; ECall 13551 [ECall 17144 [EArg 0]; ECall 17144 [EArg 1]]; ECall 13551 [ECall 13569 [ECall 17144 [EArg 1]; ECall 13551 [ECall 17144 [EArg 0]; ECall 17144 [EArg 1]]]; ECall 17144 [EArg 1]]]; ECall 17186 [ECall 17167 [ECall 17186 [EArg 0]; ECall 17186 [EArg 1]]]]
+  ECall 802 [ECall 17204 [EArg 1]; ECall 802 [ECall 17204 [EArg 0]; ECall 13551 [ECall 17144 [EArg 0]; ECall 17144 [EArg 1]]; ECall 13551 [ECall 13569 [ECall 17144 [EArg 1]; ECall 13551 [ECall 17144 [EArg 0]; ECall 17144 [EArg 1]]]; ECall 17144 [EArg 1]]]; ECall 17186 [ECall 17167 [ECall 17186 [EArg 0]; ECall 17186 [EArg 1]]]]
 
 (* Z17173 greater than or equal (integer) | Z17173@265822 -> Z17178@230467 digest c1ddfadff97ecec30c273533661ce5972421568de0114bb4f57a8217df087887 *)
 let body_Z17173_greater_than_or_equal_integer : expr =
@@ -522,7 +522,7 @@ let body_Z17267_negate_natural_number_to_integer : expr =
 
 (* Z17291 floor divide integers | Z17291@271344 -> Z34628@271343 digest d633f61d47cdb90473cd96c2ce60eacefa07fe5cb64498bccb6b88ba83f97ca8 *)
 let body_Z17291_floor_divide_integers : expr =
-  ECall 19565 [ECall 17239 [EArg 1]; ECall 851 [EValue (VRecord 50 [({ key_owner = Some 50; key_index = 1 }, shared_value_19); ({ key_owner = Some 50; key_index = 2 }, VFunc 28194)]); ECall 810 [EValue (VText [90; 49; 55; 50; 57; 49; 75; 50]); ECall 810 [EArg 1; EValue (VList [])]]]; ECall 17239 [EArg 0]; EValue (VRecord 16683 [({ key_owner = Some 16683; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16661)]); ({ key_owner = Some 16683; key_index = 2 }, VNat 0)]); ERecord 16683 [({ key_owner = Some 16683; key_index = 1 }, ECall 16728 [ECall 17105 [EArg 0]; ECall 17105 [EArg 1]]); ({ key_owner = Some 16683; key_index = 2 }, ECall 13546 [ECall 802 [ECall 16667 [ECall 16728 [ECall 17105 [EArg 0]; ECall 17105 [EArg 1]]; EValue (VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16662)])]; ECall 13582 [ECall 13521 [ECall 17144 [EArg 0]; ECall 17144 [EArg 1]]]; ECall 17144 [EArg 0]]; ECall 17144 [EArg 1]])]]
+  ECall 802 [ECall 17239 [EArg 1]; ECall 851 [EValue (VRecord 50 [({ key_owner = Some 50; key_index = 1 }, shared_value_19); ({ key_owner = Some 50; key_index = 2 }, VFunc 28194)]); ECall 810 [EValue (VText [90; 49; 55; 50; 57; 49; 75; 50]); ECall 810 [EArg 1; EValue (VList [])]]]; ECall 802 [ECall 17239 [EArg 0]; EValue (VRecord 16683 [({ key_owner = Some 16683; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16661)]); ({ key_owner = Some 16683; key_index = 2 }, VNat 0)]); ERecord 16683 [({ key_owner = Some 16683; key_index = 1 }, ECall 16728 [ECall 17105 [EArg 0]; ECall 17105 [EArg 1]]); ({ key_owner = Some 16683; key_index = 2 }, ECall 13546 [ECall 802 [ECall 16667 [ECall 16728 [ECall 17105 [EArg 0]; ECall 17105 [EArg 1]]; EValue (VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16662)])]; ECall 13582 [ECall 13521 [ECall 17144 [EArg 0]; ECall 17144 [EArg 1]]]; ECall 17144 [EArg 0]]; ECall 17144 [EArg 1]])]]]
 
 (* Z17301 ordered pair of natural numbers representing integer | Z17301@233325 -> Z17305@233329 digest 04965825c0f07f108d0e16988478541054257189f79d36ba3a4e6d0fd20ba7a2 *)
 let body_Z17301_ordered_pair_of_natural_numbers_representing_integer : expr =
@@ -582,11 +582,11 @@ let body_Z17380_lesser_of_two_integers : expr =
 
 (* Z17386 Lucas sequence U_n(P,Q) | Z17386@235704 -> Z17393@235910 digest 7bc6a7b4714639e35d60d14c313c913b05c7095f0cd2eb680c8cd0a2ffd16f39 *)
 let body_Z17386_lucas_sequence_u_n_p_q : expr =
-  ECall 17192 [ECall 13695 [EArg 2; EValue (VNat 1)]; ECall 17101 [EArg 2]; ECall 17111 [ECall 17120 [EArg 0; ECall 17386 [EArg 0; EArg 1; ECall 13582 [EArg 2]]]; ECall 17120 [EArg 1; ECall 17386 [EArg 0; EArg 1; ECall 13569 [EArg 2; EValue (VNat 2)]]]]]
+  ECall 802 [ECall 13695 [EArg 2; EValue (VNat 1)]; ECall 17101 [EArg 2]; ECall 17111 [ECall 17120 [EArg 0; ECall 17386 [EArg 0; EArg 1; ECall 13582 [EArg 2]]]; ECall 17120 [EArg 1; ECall 17386 [EArg 0; EArg 1; ECall 13569 [EArg 2; EValue (VNat 2)]]]]]
 
 (* Z17394 Lucas sequence V_n(P,Q) | Z17394@271357 -> Z34632@271356 digest 61147ac2b4537e33f33c539854b638dccbf3fb380faa88212f24fde7be9511e2 *)
 let body_Z17394_lucas_sequence_v_n_p_q : expr =
-  ECall 17192 [ECall 13695 [EArg 2; EValue (VNat 1)]; ECall 802 [ECall 17239 [EArg 2]; EValue (VRecord 16683 [({ key_owner = Some 16683; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16660)]); ({ key_owner = Some 16683; key_index = 2 }, VNat 2)]); EArg 0]; ECall 17111 [ECall 17120 [EArg 0; ECall 17394 [EArg 0; EArg 1; ECall 13582 [EArg 2]]]; ECall 17120 [EArg 1; ECall 17394 [EArg 0; EArg 1; ECall 13569 [EArg 2; EValue (VNat 2)]]]]]
+  ECall 802 [ECall 13695 [EArg 2; EValue (VNat 1)]; ECall 802 [ECall 17239 [EArg 2]; EValue (VRecord 16683 [({ key_owner = Some 16683; key_index = 1 }, VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16660)]); ({ key_owner = Some 16683; key_index = 2 }, VNat 2)]); EArg 0]; ECall 17111 [ECall 17120 [EArg 0; ECall 17394 [EArg 0; EArg 1; ECall 13582 [EArg 2]]]; ECall 17120 [EArg 1; ECall 17394 [EArg 0; EArg 1; ECall 13569 [EArg 2; EValue (VNat 2)]]]]]
 
 (* Z17414 same day of the week | Z17414@236008 -> Z18605@265660 digest 52206f459c687ffea7e3e725d206c7b9e815cf8ae0d4ec4871cfa0b9476d7947 *)
 let body_Z17414_same_day_of_the_week : expr =
@@ -682,7 +682,7 @@ let body_Z17628_same_list_of_natural_numbers : expr =
 
 (* Z17639 Spanish plural | Z17639@240365 -> Z26332@203310 digest ee9458c8435f194748a96277c6a6a2c991b48355461d6dcc6fdb36f02be1879e *)
 let body_Z17639_spanish_plural : expr =
-  ECall 11542 [ECall 12696 [EValue (VList [VText [108]; VText [114]; VText [110]; VText [106]; VText [100]; VText [115]; VText [237]; VText [250]]); ECall 11060 [EArg 0]]; ECall 10000 [EArg 0; EValue (VText [101; 115])]; ECall 11542 [ECall 866 [ECall 11060 [EArg 0]; EValue (VText [122])]; ECall 10000 [ECall 11879 [EArg 0]; EValue (VText [99; 101; 115])]; ECall 10000 [EArg 0; EValue (VText [115])]]]
+  ECall 802 [ECall 12696 [EValue (VList [VText [108]; VText [114]; VText [110]; VText [106]; VText [100]; VText [115]; VText [237]; VText [250]]); ECall 11060 [EArg 0]]; ECall 10000 [EArg 0; EValue (VText [101; 115])]; ECall 802 [ECall 866 [ECall 11060 [EArg 0]; EValue (VText [122])]; ECall 10000 [ECall 11879 [EArg 0]; EValue (VText [99; 101; 115])]; ECall 10000 [EArg 0; EValue (VText [115])]]]
 
 (* Z17651 Acute Spanish word | Z17651@246931 -> Z26343@203436 digest 99f0fa47b913c2da5d93ef8e993edb5d4d8db3a2012dfe7983a71a0a608daaf9 *)
 let body_Z17651_acute_spanish_word : expr =
@@ -946,7 +946,7 @@ let body_Z18072_gregorian_era_to_sign : expr =
 
 (* Z18080 sign to Gregorian era | Z18080@271458 -> Z34655@271457 digest cd3c67deeca9da328d958b107f2f7e66c414705f18ba6e4f1b80bad8a85ef66e *)
 let body_Z18080_sign_to_gregorian_era : expr =
-  ECall 19565 [ECall 16667 [EArg 0; EValue (VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16660)])]; EValue (VRecord 17813 [({ key_owner = Some 17813; key_index = 1 }, VFunc 17814)]); ECall 16667 [EArg 0; EValue (VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16662)])]; EValue (VRecord 17813 [({ key_owner = Some 17813; key_index = 1 }, VFunc 17815)]); ECall 851 [EValue (VRecord 50 [({ key_owner = Some 50; key_index = 1 }, VList [VRecord 3 [({ key_owner = Some 3; key_index = 1 }, shared_value_2); ({ key_owner = Some 3; key_index = 2 }, VText [90; 53; 49; 54; 75; 49]); ({ key_owner = Some 3; key_index = 3 }, VRecord 12 [({ key_owner = Some 12; key_index = 1 }, VList [VRecord 11 [({ key_owner = Some 11; key_index = 1 }, VRecord 60 [({ key_owner = Some 60; key_index = 1 }, VText [101; 110])]); ({ key_owner = Some 11; key_index = 2 }, VText [97; 114; 103; 117; 109; 101; 110; 116])]; VRecord 11 [({ key_owner = Some 11; key_index = 1 }, VRecord 60 [({ key_owner = Some 60; key_index = 1 }, VText [100; 101])]); ({ key_owner = Some 11; key_index = 2 }, VText [65; 114; 103; 117; 109; 101; 110; 116])]; VRecord 11 [({ key_owner = Some 11; key_index = 1 }, VRecord 60 [({ key_owner = Some 60; key_index = 1 }, VText [105; 116])]); ({ key_owner = Some 11; key_index = 2 }, VText [97; 114; 103; 111; 109; 101; 110; 116; 111])]; VRecord 11 [({ key_owner = Some 11; key_index = 1 }, VRecord 60 [({ key_owner = Some 60; key_index = 1 }, VText [99; 115])]); ({ key_owner = Some 11; key_index = 2 }, VText [97; 114; 103; 117; 109; 101; 110; 116])]])])]; VRecord 3 [({ key_owner = Some 3; key_index = 1 }, VRecord 4 [({ key_owner = Some 4; key_index = 1 }, VFunc 99); ({ key_owner = Some 4; key_index = 2 }, VList [shared_value_4]); ({ key_owner = Some 4; key_index = 3 }, VFunc 199)]); ({ key_owner = Some 3; key_index = 2 }, VText [90; 53; 49; 54; 75; 50]); ({ key_owner = Some 3; key_index = 3 }, VRecord 12 [({ key_owner = Some 12; key_index = 1 }, VList [VRecord 11 [({ key_owner = Some 11; key_index = 1 }, VRecord 60 [({ key_owner = Some 60; key_index = 1 }, VText [101; 110])]); ({ key_owner = Some 11; key_index = 2 }, VText [98; 97; 100; 32; 118; 97; 108; 117; 101])]; VRecord 11 [({ key_owner = Some 11; key_index = 1 }, VRecord 60 [({ key_owner = Some 60; key_index = 1 }, VText [100; 101])]); ({ key_owner = Some 11; key_index = 2 }, VText [115; 99; 104; 108; 101; 99; 104; 116; 101; 114; 32; 87; 101; 114; 116])]; VRecord 11 [({ key_owner = Some 11; key_index = 1 }, VRecord 60 [({ key_owner = Some 60; key_index = 1 }, VText [105; 116])]); ({ key_owner = Some 11; key_index = 2 }, VText [118; 97; 108; 111; 114; 101; 32; 115; 98; 97; 103; 108; 105; 97; 116; 111])]; VRecord 11 [({ key_owner = Some 11; key_index = 1 }, VRecord 60 [({ key_owner = Some 60; key_index = 1 }, VText [99; 115])]); ({ key_owner = Some 11; key_index = 2 }, VText [99; 104; 121; 98; 110; 225; 32; 104; 111; 100; 110; 111; 116; 97])]])])]]); ({ key_owner = Some 50; key_index = 2 }, VFunc 516)]); ECall 810 [EValue (VText [90; 49; 56; 48; 56; 48; 75; 49]); ECall 810 [EArg 0; EValue (VList [])]]]]
+  ECall 802 [ECall 16667 [EArg 0; EValue (VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16660)])]; EValue (VRecord 17813 [({ key_owner = Some 17813; key_index = 1 }, VFunc 17814)]); ECall 802 [ECall 16667 [EArg 0; EValue (VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16662)])]; EValue (VRecord 17813 [({ key_owner = Some 17813; key_index = 1 }, VFunc 17815)]); ECall 851 [EValue (VRecord 50 [({ key_owner = Some 50; key_index = 1 }, VList [VRecord 3 [({ key_owner = Some 3; key_index = 1 }, shared_value_2); ({ key_owner = Some 3; key_index = 2 }, VText [90; 53; 49; 54; 75; 49]); ({ key_owner = Some 3; key_index = 3 }, VRecord 12 [({ key_owner = Some 12; key_index = 1 }, VList [VRecord 11 [({ key_owner = Some 11; key_index = 1 }, VRecord 60 [({ key_owner = Some 60; key_index = 1 }, VText [101; 110])]); ({ key_owner = Some 11; key_index = 2 }, VText [97; 114; 103; 117; 109; 101; 110; 116])]; VRecord 11 [({ key_owner = Some 11; key_index = 1 }, VRecord 60 [({ key_owner = Some 60; key_index = 1 }, VText [100; 101])]); ({ key_owner = Some 11; key_index = 2 }, VText [65; 114; 103; 117; 109; 101; 110; 116])]; VRecord 11 [({ key_owner = Some 11; key_index = 1 }, VRecord 60 [({ key_owner = Some 60; key_index = 1 }, VText [105; 116])]); ({ key_owner = Some 11; key_index = 2 }, VText [97; 114; 103; 111; 109; 101; 110; 116; 111])]; VRecord 11 [({ key_owner = Some 11; key_index = 1 }, VRecord 60 [({ key_owner = Some 60; key_index = 1 }, VText [99; 115])]); ({ key_owner = Some 11; key_index = 2 }, VText [97; 114; 103; 117; 109; 101; 110; 116])]])])]; VRecord 3 [({ key_owner = Some 3; key_index = 1 }, VRecord 4 [({ key_owner = Some 4; key_index = 1 }, VFunc 99); ({ key_owner = Some 4; key_index = 2 }, VList [shared_value_4]); ({ key_owner = Some 4; key_index = 3 }, VFunc 199)]); ({ key_owner = Some 3; key_index = 2 }, VText [90; 53; 49; 54; 75; 50]); ({ key_owner = Some 3; key_index = 3 }, VRecord 12 [({ key_owner = Some 12; key_index = 1 }, VList [VRecord 11 [({ key_owner = Some 11; key_index = 1 }, VRecord 60 [({ key_owner = Some 60; key_index = 1 }, VText [101; 110])]); ({ key_owner = Some 11; key_index = 2 }, VText [98; 97; 100; 32; 118; 97; 108; 117; 101])]; VRecord 11 [({ key_owner = Some 11; key_index = 1 }, VRecord 60 [({ key_owner = Some 60; key_index = 1 }, VText [100; 101])]); ({ key_owner = Some 11; key_index = 2 }, VText [115; 99; 104; 108; 101; 99; 104; 116; 101; 114; 32; 87; 101; 114; 116])]; VRecord 11 [({ key_owner = Some 11; key_index = 1 }, VRecord 60 [({ key_owner = Some 60; key_index = 1 }, VText [105; 116])]); ({ key_owner = Some 11; key_index = 2 }, VText [118; 97; 108; 111; 114; 101; 32; 115; 98; 97; 103; 108; 105; 97; 116; 111])]; VRecord 11 [({ key_owner = Some 11; key_index = 1 }, VRecord 60 [({ key_owner = Some 60; key_index = 1 }, VText [99; 115])]); ({ key_owner = Some 11; key_index = 2 }, VText [99; 104; 121; 98; 110; 225; 32; 104; 111; 100; 110; 111; 116; 97])]])])]]); ({ key_owner = Some 50; key_index = 2 }, VFunc 516)]); ECall 810 [EValue (VText [90; 49; 56; 48; 56; 48; 75; 49]); ECall 810 [EArg 0; EValue (VList [])]]]]]
 
 (* Z18084 Gregorian era is AD | Z18084@254268 -> Z25066@192143 digest eb30398acaaace29693ca68999f3c5249485bb29b47a42794d0d14d24f3ac6db *)
 let body_Z18084_gregorian_era_is_ad : expr =
@@ -1214,7 +1214,7 @@ let body_Z18898_echo_string_except_for_specific_replacement : expr =
 
 (* Z18939 character to sign | Z18939@280943 -> Z35856@279318 digest 15908cc5e43d943d564e31b3ca1d4fe9b92ca2ad0ce29492e54705134ecd91a6 *)
 let body_Z18939_character_to_sign : expr =
-  ECall 19565 [ECall 866 [EArg 0; EValue (VText [43])]; EValue (VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16660)]); ECall 10184 [ECall 866 [EArg 0; EValue (VText [45])]; ECall 866 [EArg 0; EValue (VText [8722])]]; EValue (VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16662)]); EValue (VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16661)])]
+  ECall 802 [ECall 866 [EArg 0; EValue (VText [43])]; EValue (VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16660)]); ECall 802 [ECall 10184 [ECall 866 [EArg 0; EValue (VText [45])]; ECall 866 [EArg 0; EValue (VText [8722])]]; EValue (VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16662)]); EValue (VRecord 16659 [({ key_owner = Some 16659; key_index = 1 }, VFunc 16661)])]]
 
 (* Z18983 Convert Bangla numerals to Arabic numerals | Z18983@277749 -> Z19045@279482 digest 7079f126acf228690e00e67cc4ca76eb78b1bc01c6fc39fa680d9c82d78c0c31 *)
 let body_Z18983_convert_bangla_numerals_to_arabic_numerals : expr =
@@ -1230,7 +1230,7 @@ let body_Z19026_is_mersenne_prime : expr =
 
 (* Z19033 Hamming distance on strings of binary digits | Z19033@279470 -> Z31031@241068 digest b8a5f9d7620e6f257b9902fafce1e7769358f97e860e2c2dbcb62211a6f0ddd6 *)
 let body_Z19033_hamming_distance_on_strings_of_binary_digits : expr =
-  ECall 19565 [ECall 11690 [EArg 0; EArg 1]; ECall 31026 [ECall 22717 [EArg 0]; ECall 22717 [EArg 1]]; ECall 13324 [EArg 0; EArg 1]; ECall 31026 [ECall 22717 [EArg 0]; ECall 22717 [ECall 14770 [EArg 1; ECall 11040 [EArg 0]; EValue (VText [48])]]]; ECall 31026 [ECall 22717 [ECall 14770 [EArg 0; ECall 11040 [EArg 1]; EValue (VText [48])]]; ECall 22717 [EArg 1]]]
+  ECall 802 [ECall 11690 [EArg 0; EArg 1]; ECall 31026 [ECall 22717 [EArg 0]; ECall 22717 [EArg 1]]; ECall 802 [ECall 13324 [EArg 0; EArg 1]; ECall 31026 [ECall 22717 [EArg 0]; ECall 22717 [ECall 14770 [EArg 1; ECall 11040 [EArg 0]; EValue (VText [48])]]]; ECall 31026 [ECall 22717 [ECall 14770 [EArg 0; ECall 11040 [EArg 1]; EValue (VText [48])]]; ECall 22717 [EArg 1]]]]
 
 (* Z19041 Anno Domini to Common Era and vice versa (English) | Z19041@279478 -> Z34704@271854 digest 2484025603e9dd254feeae06518be963aa70dac530a64eb0ef63dd3a2afa2db9 *)
 let body_Z19041_anno_domini_to_common_era_and_vice_versa_english : expr =
@@ -1258,7 +1258,7 @@ let body_Z19112_reverse_domain_name_notation : expr =
 
 (* Z19121 to s-expression | Z19121@271862 -> Z19137@154162 digest 90027833376755476efd6327c928f6045cb601113e6bdbbcc63685f7c474ad84 *)
 let body_Z19121_to_s_expression : expr =
-  ECall 11542 [ECall 19020 [EArg 0]; ECall 10000 [EValue (VText [40]); ECall 10000 [ECall 12899 [ECall 873 [EValue (VFunc 19121); EArg 0]; EValue (VText [32])]; EValue (VText [41])]]; ECall 802 [ECall 15777 [EArg 0]; ECall 11145 [EArg 0; EValue (VText [34])]; ECall 11542 [ECall 15818 [EArg 0]; ECall 13713 [EArg 0]; EArg 0]]]
+  ECall 802 [ECall 19020 [EArg 0]; ECall 10000 [EValue (VText [40]); ECall 10000 [ECall 12899 [ECall 873 [EValue (VFunc 19121); EArg 0]; EValue (VText [32])]; EValue (VText [41])]]; ECall 802 [ECall 15777 [EArg 0]; ECall 11145 [EArg 0; EValue (VText [34])]; ECall 802 [ECall 15818 [EArg 0]; ECall 13713 [EArg 0]; EArg 0]]]
 
 (* Z19125 English plural possessive | Z19125@281478 -> Z19129@281482 digest ad611bad95a0f24b83f960f95ebf9be58828295b4209169c168049dc60815df1 *)
 let body_Z19125_english_plural_possessive : expr =

@@ -5,17 +5,18 @@
     "functionsInEngine": 3893,
     "testersConsidered": 10287,
     "counts": {
-      "pass": 2385,
-      "fail": 197,
-      "error": 6000,
+      "pass": 2509,
+      "fail": 222,
+      "error": 5851,
       "skipped": 1705
     },
-    "functionsWithAtLeastOnePass": 1021,
+    "functionsWithAtLeastOnePass": 1078,
     "passingFunctions": [
       "Z10012",
       "Z10052",
       "Z10070",
       "Z10096",
+      "Z10108",
       "Z10171",
       "Z10199",
       "Z10206",
@@ -39,6 +40,7 @@
       "Z10346",
       "Z10348",
       "Z10379",
+      "Z10393",
       "Z10423",
       "Z10539",
       "Z10559",
@@ -50,9 +52,12 @@
       "Z10725",
       "Z10730",
       "Z10742",
+      "Z10745",
       "Z10753",
       "Z10770",
       "Z10771",
+      "Z10774",
+      "Z10831",
       "Z10846",
       "Z10851",
       "Z10866",
@@ -60,6 +65,7 @@
       "Z10888",
       "Z10891",
       "Z10897",
+      "Z10911",
       "Z10919",
       "Z10962",
       "Z10964",
@@ -92,6 +98,7 @@
       "Z11284",
       "Z11288",
       "Z11298",
+      "Z11302",
       "Z11306",
       "Z11308",
       "Z11314",
@@ -107,6 +114,8 @@
       "Z11370",
       "Z11383",
       "Z11410",
+      "Z11412",
+      "Z11422",
       "Z11424",
       "Z11441",
       "Z11445",
@@ -207,6 +216,7 @@
       "Z12587",
       "Z12593",
       "Z12599",
+      "Z12624",
       "Z12626",
       "Z12630",
       "Z12676",
@@ -230,6 +240,7 @@
       "Z12875",
       "Z12877",
       "Z12892",
+      "Z12899",
       "Z12964",
       "Z12967",
       "Z13013",
@@ -238,7 +249,10 @@
       "Z13081",
       "Z13087",
       "Z13155",
+      "Z13173",
+      "Z13220",
       "Z13262",
+      "Z13280",
       "Z13310",
       "Z13322",
       "Z13324",
@@ -265,6 +279,8 @@
       "Z13663",
       "Z13667",
       "Z13701",
+      "Z13708",
+      "Z13717",
       "Z13726",
       "Z13752",
       "Z13781",
@@ -276,6 +292,7 @@
       "Z13812",
       "Z13813",
       "Z13818",
+      "Z13822",
       "Z13825",
       "Z13827",
       "Z13829",
@@ -307,11 +324,14 @@
       "Z13982",
       "Z13986",
       "Z13989",
+      "Z13993",
+      "Z13999",
       "Z14023",
       "Z14038",
       "Z14046",
       "Z14058",
       "Z14112",
+      "Z14180",
       "Z14209",
       "Z14244",
       "Z14317",
@@ -342,6 +362,7 @@
       "Z14686",
       "Z14694",
       "Z14711",
+      "Z14726",
       "Z14732",
       "Z14742",
       "Z14762",
@@ -355,7 +376,9 @@
       "Z14883",
       "Z14888",
       "Z14894",
+      "Z14900",
       "Z14905",
+      "Z14924",
       "Z15037",
       "Z15044",
       "Z15047",
@@ -381,6 +404,7 @@
       "Z15313",
       "Z15318",
       "Z15326",
+      "Z15334",
       "Z15337",
       "Z15341",
       "Z15438",
@@ -431,6 +455,8 @@
       "Z15996",
       "Z16012",
       "Z16015",
+      "Z16199",
+      "Z16230",
       "Z16250",
       "Z16255",
       "Z16273",
@@ -442,6 +468,7 @@
       "Z16624",
       "Z16629",
       "Z16634",
+      "Z16648",
       "Z16667",
       "Z16688",
       "Z16711",
@@ -453,7 +480,10 @@
       "Z16781",
       "Z16793",
       "Z16798",
+      "Z16855",
+      "Z16869",
       "Z16897",
+      "Z16973",
       "Z17065",
       "Z17132",
       "Z17140",
@@ -543,8 +573,13 @@
       "Z18504",
       "Z18597",
       "Z18683",
+      "Z18845",
+      "Z18874",
+      "Z18886",
       "Z18898",
       "Z19033",
+      "Z19041",
+      "Z19125",
       "Z19185",
       "Z19198",
       "Z19254",
@@ -561,8 +596,11 @@
       "Z19405",
       "Z19509",
       "Z19510",
+      "Z19536",
       "Z19550",
       "Z19565",
+      "Z19601",
+      "Z19602",
       "Z19612",
       "Z19661",
       "Z19686",
@@ -632,8 +670,10 @@
       "Z22431",
       "Z22448",
       "Z22499",
+      "Z22504",
       "Z22507",
       "Z22511",
+      "Z22518",
       "Z22535",
       "Z22549",
       "Z22562",
@@ -690,6 +730,7 @@
       "Z24049",
       "Z24126",
       "Z24130",
+      "Z24159",
       "Z24166",
       "Z24203",
       "Z24207",
@@ -752,6 +793,7 @@
       "Z26950",
       "Z26966",
       "Z26971",
+      "Z27006",
       "Z27053",
       "Z27068",
       "Z27092",
@@ -787,6 +829,7 @@
       "Z28159",
       "Z28182",
       "Z28209",
+      "Z28282",
       "Z28294",
       "Z28297",
       "Z28308",
@@ -812,9 +855,12 @@
       "Z29023",
       "Z29045",
       "Z29052",
+      "Z29286",
       "Z29370",
+      "Z29396",
       "Z29400",
       "Z29413",
+      "Z29426",
       "Z29429",
       "Z29438",
       "Z29446",
@@ -824,6 +870,7 @@
       "Z29661",
       "Z29685",
       "Z29727",
+      "Z29794",
       "Z29884",
       "Z29894",
       "Z29911",
@@ -832,6 +879,7 @@
       "Z30016",
       "Z30035",
       "Z30075",
+      "Z30092",
       "Z30145",
       "Z30148",
       "Z30164",
@@ -847,6 +895,7 @@
       "Z30747",
       "Z30751",
       "Z30755",
+      "Z30759",
       "Z30784",
       "Z30785",
       "Z30795",
@@ -858,6 +907,7 @@
       "Z31177",
       "Z31208",
       "Z31262",
+      "Z31268",
       "Z31294",
       "Z31331",
       "Z31340",
@@ -893,12 +943,16 @@
       "Z32220",
       "Z32276",
       "Z32277",
+      "Z32283",
       "Z32299",
       "Z32302",
+      "Z32308",
       "Z32406",
       "Z32453",
       "Z32506",
       "Z32516",
+      "Z32625",
+      "Z32626",
       "Z32673",
       "Z32756",
       "Z32757",
@@ -908,6 +962,7 @@
       "Z32891",
       "Z32929",
       "Z33011",
+      "Z33039",
       "Z33040",
       "Z33105",
       "Z33281",
@@ -930,6 +985,7 @@
       "Z34585",
       "Z34644",
       "Z34663",
+      "Z34669",
       "Z34736",
       "Z34827",
       "Z34902",
@@ -938,6 +994,7 @@
       "Z35085",
       "Z35087",
       "Z35094",
+      "Z35256",
       "Z35352",
       "Z35428",
       "Z35475",
@@ -1034,7 +1091,7 @@
       "Z844",
       "Z889"
     ],
-    "functionsFullyPassing": 771,
+    "functionsFullyPassing": 800,
     "topReasons": [
       {
         "reason": "argument is not a readable literal",
@@ -1042,27 +1099,23 @@
       },
       {
         "reason": "fuel exhausted",
-        "count": 811
+        "count": 832
       },
       {
         "reason": "no implementation for Z6820",
-        "count": 767
+        "count": 777
       },
       {
         "reason": "type mismatch in Z803",
-        "count": 683
+        "count": 702
       },
       {
         "reason": "nesting depth limit reached; this composition may be defined in terms of itself without a base case",
-        "count": 639
+        "count": 599
       },
       {
         "reason": "result is not a readable literal",
-        "count": 439
-      },
-      {
-        "reason": "type mismatch in Z805",
-        "count": 292
+        "count": 477
       },
       {
         "reason": "no implementation for Z6830",
@@ -1078,19 +1131,23 @@
       },
       {
         "reason": "type mismatch in Z811",
-        "count": 161
+        "count": 100
       },
       {
         "reason": "no implementation for Z10196",
         "count": 97
       },
       {
-        "reason": "no implementation for Z19886",
-        "count": 82
+        "reason": "type mismatch in Z812",
+        "count": 96
+      },
+      {
+        "reason": "type mismatch in Z805",
+        "count": 70
       },
       {
         "reason": "no implementation for Z6896",
-        "count": 68
+        "count": 69
       },
       {
         "reason": "no implementation for Z6825",
@@ -1247,17 +1304,6 @@
           "type": "Z40",
           "value": false
         }
-      },
-      {
-        "function_zid": "Z10108",
-        "tester_zid": "Z17007",
-        "status": "error",
-        "reason": "nesting depth limit reached; this composition may be defined in terms of itself without a base case",
-        "input": [
-          "hello",
-          10,
-          "."
-        ]
       },
       {
         "function_zid": "Z10112",
@@ -1616,20 +1662,10 @@
         "function_zid": "Z10393",
         "tester_zid": "Z18137",
         "status": "error",
-        "reason": "type mismatch in Z811",
+        "reason": "fuel exhausted",
         "input": [
           "kitten",
           "sitting"
-        ]
-      },
-      {
-        "function_zid": "Z10393",
-        "tester_zid": "Z22784",
-        "status": "error",
-        "reason": "type mismatch in Z811",
-        "input": [
-          "xxx",
-          "zzzz"
         ]
       },
       {
@@ -1667,12 +1703,30 @@
         "input": [
           "๑๒๓.१२३.١٢٣.२३३"
         ]
+      },
+      {
+        "function_zid": "Z10476",
+        "tester_zid": "Z10481",
+        "status": "error",
+        "reason": "no implementation for Z10196",
+        "input": [
+          "0.0.0.0"
+        ]
+      },
+      {
+        "function_zid": "Z10476",
+        "tester_zid": "Z14224",
+        "status": "error",
+        "reason": "no implementation for Z10196",
+        "input": [
+          "::1"
+        ]
       }
     ]
   },
   "functionsWithTesters": 3553,
-  "functionsFullyPassing": 771,
-  "functionsFailing": 2220,
+  "functionsFullyPassing": 800,
+  "functionsFailing": 2191,
   "unproductiveGroups": 25,
   "functionsInsideAGroup": 66,
   "causes": [
@@ -1680,8 +1734,8 @@
       "kind": "missing",
       "title": "Z6820 Z6820 is not implemented",
       "members": [],
-      "functions": 335,
-      "cases": 772,
+      "functions": 338,
+      "cases": 786,
       "examples": [
         {
           "zid": "Z35505",
@@ -1689,6 +1743,14 @@
           "pass": 0,
           "fail": 0,
           "error": 14,
+          "disagreements": []
+        },
+        {
+          "zid": "Z13596",
+          "label": "English name of month",
+          "pass": 0,
+          "fail": 0,
+          "error": 12,
           "disagreements": []
         },
         {
@@ -1994,14 +2056,6 @@
           "fail": 0,
           "error": 4,
           "disagreements": []
-        },
-        {
-          "zid": "Z26771",
-          "label": "Classifying sentence in Swedish",
-          "pass": 0,
-          "fail": 0,
-          "error": 4,
-          "disagreements": []
         }
       ]
     },
@@ -2009,8 +2063,8 @@
       "kind": "fuel",
       "title": "runs out of fuel",
       "members": [],
-      "functions": 295,
-      "cases": 859,
+      "functions": 311,
+      "cases": 890,
       "examples": [
         {
           "zid": "Z11089",
@@ -2180,16 +2234,16 @@
           "disagreements": []
         },
         {
-          "zid": "Z16972",
-          "label": "following month (Igbo)",
-          "pass": 0,
+          "zid": "Z16230",
+          "label": "month to month number",
+          "pass": 6,
           "fail": 0,
           "error": 6,
           "disagreements": []
         },
         {
-          "zid": "Z17167",
-          "label": "integer modulo another integer",
+          "zid": "Z16972",
+          "label": "following month (Igbo)",
           "pass": 0,
           "fail": 0,
           "error": 6,
@@ -2284,14 +2338,6 @@
           "disagreements": []
         },
         {
-          "zid": "Z16973",
-          "label": "Igbo month to month number",
-          "pass": 0,
-          "fail": 0,
-          "error": 5,
-          "disagreements": []
-        },
-        {
           "zid": "Z17120",
           "label": "multiply Integers",
           "pass": 0,
@@ -2326,6 +2372,14 @@
         {
           "zid": "Z20257",
           "label": "Gregorian year to ISO 8601 year integer",
+          "pass": 0,
+          "fail": 0,
+          "error": 5,
+          "disagreements": []
+        },
+        {
+          "zid": "Z22514",
+          "label": "sentence from list of words (English conventions)",
           "pass": 0,
           "fail": 0,
           "error": 5,
@@ -2369,8 +2423,8 @@
       "kind": "other",
       "title": "type mismatch in Z803",
       "members": [],
-      "functions": 192,
-      "cases": 661,
+      "functions": 200,
+      "cases": 689,
       "examples": [
         {
           "zid": "Z26039",
@@ -2418,6 +2472,14 @@
           "pass": 0,
           "fail": 0,
           "error": 12,
+          "disagreements": []
+        },
+        {
+          "zid": "Z22941",
+          "label": "display Day of Roman Year",
+          "pass": 0,
+          "fail": 0,
+          "error": 10,
           "disagreements": []
         },
         {
@@ -2683,14 +2745,6 @@
           "fail": 0,
           "error": 4,
           "disagreements": []
-        },
-        {
-          "zid": "Z15050",
-          "label": "is palindromic number",
-          "pass": 0,
-          "fail": 0,
-          "error": 4,
-          "disagreements": []
         }
       ]
     },
@@ -2698,8 +2752,8 @@
       "kind": "other",
       "title": "result is not a readable literal",
       "members": [],
-      "functions": 168,
-      "cases": 420,
+      "functions": 178,
+      "cases": 450,
       "examples": [
         {
           "zid": "Z16955",
@@ -2774,6 +2828,14 @@
           "disagreements": []
         },
         {
+          "zid": "Z22143",
+          "label": "and (Kleenean)",
+          "pass": 0,
+          "fail": 0,
+          "error": 6,
+          "disagreements": []
+        },
+        {
           "zid": "Z28624",
           "label": "read RGBA color",
           "pass": 0,
@@ -2822,6 +2884,14 @@
           "disagreements": []
         },
         {
+          "zid": "Z24749",
+          "label": "nand (kleenean)",
+          "pass": 0,
+          "fail": 0,
+          "error": 5,
+          "disagreements": []
+        },
+        {
           "zid": "Z24936",
           "label": "day of year from calendar date",
           "pass": 0,
@@ -2848,6 +2918,14 @@
         {
           "zid": "Z16272",
           "label": "twelve months",
+          "pass": 0,
+          "fail": 0,
+          "error": 4,
+          "disagreements": []
+        },
+        {
+          "zid": "Z17291",
+          "label": "floor divide integers",
           "pass": 0,
           "fail": 0,
           "error": 4,
@@ -2996,30 +3074,6 @@
           "fail": 0,
           "error": 3,
           "disagreements": []
-        },
-        {
-          "zid": "Z14311",
-          "label": "select a function based on lists of languages",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z15844",
-          "label": "unit integer sign of integer",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z16676",
-          "label": "invert sign",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
         }
       ]
     },
@@ -3027,8 +3081,8 @@
       "kind": "disagree",
       "title": "runs, and disagrees with its tester",
       "members": [],
-      "functions": 90,
-      "cases": 170,
+      "functions": 103,
+      "cases": 194,
       "examples": [
         {
           "zid": "Z12203",
@@ -3143,6 +3197,138 @@
               "actual": {
                 "type": "Z6",
                 "text": "hoter"
+              }
+            }
+          ]
+        },
+        {
+          "zid": "Z30484",
+          "label": "state location using entity and class, German",
+          "pass": 0,
+          "fail": 6,
+          "error": 0,
+          "disagreements": [
+            {
+              "input": [
+                {
+                  "type": "Z6091",
+                  "fields": {
+                    "Z6091K1": "Q62"
+                  }
+                },
+                {
+                  "type": "Z6091",
+                  "fields": {
+                    "Z6091K1": "Q515"
+                  }
+                },
+                {
+                  "type": "Z6091",
+                  "fields": {
+                    "Z6091K1": "Q99"
+                  }
+                }
+              ],
+              "expected": "Z14392 to hold",
+              "actual": {
+                "type": "Z11",
+                "fields": {
+                  "Z11K1": {
+                    "type": "Z60",
+                    "fields": {
+                      "Z60K1": {
+                        "type": "Z6",
+                        "text": "de"
+                      }
+                    }
+                  },
+                  "Z11K2": {
+                    "type": "Z6",
+                    "text": "."
+                  }
+                }
+              }
+            },
+            {
+              "input": [
+                {
+                  "type": "Z6091",
+                  "fields": {
+                    "Z6091K1": "Q39"
+                  }
+                },
+                {
+                  "type": "Z6091",
+                  "fields": {
+                    "Z6091K1": "Q6256"
+                  }
+                },
+                {
+                  "type": "Z6091",
+                  "fields": {
+                    "Z6091K1": "Q46"
+                  }
+                }
+              ],
+              "expected": "Z14392 to hold",
+              "actual": {
+                "type": "Z11",
+                "fields": {
+                  "Z11K1": {
+                    "type": "Z60",
+                    "fields": {
+                      "Z60K1": {
+                        "type": "Z6",
+                        "text": "de"
+                      }
+                    }
+                  },
+                  "Z11K2": {
+                    "type": "Z6",
+                    "text": "."
+                  }
+                }
+              }
+            },
+            {
+              "input": [
+                {
+                  "type": "Z6091",
+                  "fields": {
+                    "Z6091K1": "Q30"
+                  }
+                },
+                {
+                  "type": "Z6091",
+                  "fields": {
+                    "Z6091K1": "Q6256"
+                  }
+                },
+                {
+                  "type": "Z6091",
+                  "fields": {
+                    "Z6091K1": "Q49"
+                  }
+                }
+              ],
+              "expected": "Z14392 to hold",
+              "actual": {
+                "type": "Z11",
+                "fields": {
+                  "Z11K1": {
+                    "type": "Z60",
+                    "fields": {
+                      "Z60K1": {
+                        "type": "Z6",
+                        "text": "de"
+                      }
+                    }
+                  },
+                  "Z11K2": {
+                    "type": "Z6",
+                    "text": "."
+                  }
+                }
               }
             }
           ]
@@ -3380,6 +3566,45 @@
               "actual": {
                 "type": "Z6",
                 "text": "amplifyer"
+              }
+            }
+          ]
+        },
+        {
+          "zid": "Z19125",
+          "label": "English plural possessive",
+          "pass": 2,
+          "fail": 3,
+          "error": 0,
+          "disagreements": [
+            {
+              "input": [
+                "fish"
+              ],
+              "expected": "Z13381 to hold",
+              "actual": {
+                "type": "Z6",
+                "text": "fishs'"
+              }
+            },
+            {
+              "input": [
+                "Matrix"
+              ],
+              "expected": "Z13381 to hold",
+              "actual": {
+                "type": "Z6",
+                "text": "Matrixs'"
+              }
+            },
+            {
+              "input": [
+                "kiss"
+              ],
+              "expected": "kisses'",
+              "actual": {
+                "type": "Z6",
+                "text": "kisss'"
               }
             }
           ]
@@ -3933,6 +4158,41 @@
           ]
         },
         {
+          "zid": "Z17485",
+          "label": "day to day number (starting Sunday=1)",
+          "pass": 0,
+          "fail": 2,
+          "error": 0,
+          "disagreements": [
+            {
+              "input": [
+                {
+                  "type": "Z8",
+                  "zid": "Z17409"
+                }
+              ],
+              "expected": 1,
+              "actual": {
+                "type": "Z13518",
+                "value": 0
+              }
+            },
+            {
+              "input": [
+                {
+                  "type": "Z8",
+                  "zid": "Z17408"
+                }
+              ],
+              "expected": 7,
+              "actual": {
+                "type": "Z13518",
+                "value": 0
+              }
+            }
+          ]
+        },
+        {
           "zid": "Z17491",
           "label": "is Monday to Friday",
           "pass": 2,
@@ -4377,6 +4637,35 @@
           ]
         },
         {
+          "zid": "Z24517",
+          "label": "10^n (natural number)",
+          "pass": 0,
+          "fail": 2,
+          "error": 0,
+          "disagreements": [
+            {
+              "input": [
+                0
+              ],
+              "expected": 1,
+              "actual": {
+                "type": "Z6",
+                "text": "1"
+              }
+            },
+            {
+              "input": [
+                6
+              ],
+              "expected": 1000000,
+              "actual": {
+                "type": "Z6",
+                "text": "1000000"
+              }
+            }
+          ]
+        },
+        {
           "zid": "Z25200",
           "label": "is rational number 1?",
           "pass": 2,
@@ -4506,6 +4795,132 @@
                     }
                   }
                 ]
+              }
+            }
+          ]
+        },
+        {
+          "zid": "Z29396",
+          "label": "indices of required arguments",
+          "pass": 1,
+          "fail": 2,
+          "error": 0,
+          "disagreements": [
+            {
+              "input": [
+                [
+                  {
+                    "type": "Z8",
+                    "zid": "Z6"
+                  },
+                  {
+                    "type": "Z8",
+                    "zid": "Z40"
+                  },
+                  {
+                    "type": "Z8",
+                    "zid": "Z1"
+                  }
+                ],
+                [
+                  {
+                    "type": "Z8",
+                    "zid": "Z6"
+                  },
+                  {
+                    "type": "Z8",
+                    "zid": "Z40"
+                  },
+                  {
+                    "type": "Z8",
+                    "zid": "Z13518"
+                  }
+                ]
+              ],
+              "expected": "Z889 to hold",
+              "actual": {
+                "type": "Z881",
+                "items": [
+                  {
+                    "type": "Z13518",
+                    "value": 1
+                  },
+                  {
+                    "type": "Z13518",
+                    "value": 2
+                  },
+                  {
+                    "type": "Z13518",
+                    "value": 0
+                  }
+                ]
+              }
+            },
+            {
+              "input": [
+                [
+                  {
+                    "type": "Z8",
+                    "zid": "Z1"
+                  }
+                ],
+                [
+                  {
+                    "type": "Z8",
+                    "zid": "Z40"
+                  }
+                ]
+              ],
+              "expected": "Z889 to hold",
+              "actual": {
+                "type": "Z881",
+                "items": [
+                  {
+                    "type": "Z13518",
+                    "value": 0
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "zid": "Z31268",
+          "label": "first index (1..=N) of character in String",
+          "pass": 1,
+          "fail": 2,
+          "error": 0,
+          "disagreements": [
+            {
+              "input": [
+                {
+                  "type": "Z86",
+                  "fields": {
+                    "Z86K1": 111
+                  }
+                },
+                "Hello, world!"
+              ],
+              "expected": 5,
+              "actual": {
+                "type": "Z13518",
+                "value": 0
+              }
+            },
+            {
+              "input": [
+                {
+                  "type": "Z86",
+                  "fields": {
+                    "Z86K1": 114
+                  }
+                },
+                "Hello, world!"
+              ],
+              "expected": 10,
+              "actual": {
+                "type": "Z13518",
+                "value": 0
               }
             }
           ]
@@ -4653,6 +5068,47 @@
           ]
         },
         {
+          "zid": "Z10831",
+          "label": "string intersperse",
+          "pass": 4,
+          "fail": 1,
+          "error": 0,
+          "disagreements": [
+            {
+              "input": [
+                "Hello, world!",
+                ""
+              ],
+              "expected": "Hello, world!",
+              "actual": {
+                "type": "Z6",
+                "text": "H​e​l​l​o​,​ ​w​o​r​l​d​!"
+              }
+            }
+          ]
+        },
+        {
+          "zid": "Z10911",
+          "label": "duplicate string N times",
+          "pass": 2,
+          "fail": 1,
+          "error": 0,
+          "disagreements": [
+            {
+              "input": [
+                "👏™️",
+                6,
+                ""
+              ],
+              "expected": "👏™️👏™️👏™️👏™️👏™️👏™️",
+              "actual": {
+                "type": "Z6",
+                "text": "👏™️​👏™️​👏™️​👏™️​👏™️​👏™️"
+              }
+            }
+          ]
+        },
+        {
           "zid": "Z10919",
           "label": "csv record to wikitable row",
           "pass": 3,
@@ -4670,928 +5126,6 @@
               }
             }
           ]
-        },
-        {
-          "zid": "Z11383",
-          "label": "has and is lowercase",
-          "pass": 3,
-          "fail": 1,
-          "error": 0,
-          "disagreements": [
-            {
-              "input": [
-                "Capital"
-              ],
-              "expected": false,
-              "actual": {
-                "type": "Z40",
-                "value": true
-              }
-            }
-          ]
-        },
-        {
-          "zid": "Z12326",
-          "label": "Breton conjugation present 3rd person singular",
-          "pass": 1,
-          "fail": 1,
-          "error": 0,
-          "disagreements": [
-            {
-              "input": [
-                "kistin"
-              ],
-              "expected": "kistina",
-              "actual": {
-                "type": "Z6",
-                "text": "kistin"
-              }
-            }
-          ]
-        },
-        {
-          "zid": "Z12696",
-          "label": "contains",
-          "pass": 14,
-          "fail": 1,
-          "error": 0,
-          "disagreements": [
-            {
-              "input": [
-                [
-                  2,
-                  3,
-                  5,
-                  7,
-                  11
-                ],
-                {
-                  "type": "Z16683",
-                  "fields": {
-                    "Z16683K1": {
-                      "type": "Z16659",
-                      "fields": {
-                        "Z16659K1": {
-                          "type": "Z8",
-                          "zid": "Z16660"
-                        }
-                      }
-                    },
-                    "Z16683K2": 11
-                  }
-                }
-              ],
-              "expected": true,
-              "actual": {
-                "type": "Z40",
-                "value": false
-              }
-            }
-          ]
-        },
-        {
-          "zid": "Z12846",
-          "label": "contains all of list",
-          "pass": 10,
-          "fail": 1,
-          "error": 0,
-          "disagreements": [
-            {
-              "input": [
-                [
-                  {
-                    "type": "Z11",
-                    "fields": {
-                      "Z11K1": {
-                        "type": "Z60",
-                        "fields": {
-                          "Z60K1": "en"
-                        }
-                      },
-                      "Z11K2": "hello"
-                    }
-                  },
-                  {
-                    "type": "Z11",
-                    "fields": {
-                      "Z11K1": {
-                        "type": "Z60",
-                        "fields": {
-                          "Z60K1": "es"
-                        }
-                      },
-                      "Z11K2": "hola"
-                    }
-                  },
-                  {
-                    "type": "Z11",
-                    "fields": {
-                      "Z11K1": {
-                        "type": "Z60",
-                        "fields": {
-                          "Z60K1": "it"
-                        }
-                      },
-                      "Z11K2": "ciao"
-                    }
-                  }
-                ],
-                [
-                  {
-                    "type": "Z11",
-                    "fields": {
-                      "Z11K1": {
-                        "type": "Z60",
-                        "fields": {
-                          "Z60K1": "es",
-                          "Z60K2": []
-                        }
-                      },
-                      "Z11K2": "hola"
-                    }
-                  },
-                  {
-                    "type": "Z11",
-                    "fields": {
-                      "Z11K1": {
-                        "type": "Z60",
-                        "fields": {
-                          "Z60K1": "en"
-                        }
-                      },
-                      "Z11K2": "hello"
-                    }
-                  }
-                ]
-              ],
-              "expected": true,
-              "actual": {
-                "type": "Z40",
-                "value": false
-              }
-            }
-          ]
-        },
-        {
-          "zid": "Z15907",
-          "label": "limited Natural number",
-          "pass": 3,
-          "fail": 1,
-          "error": 0,
-          "disagreements": [
-            {
-              "input": [
-                1,
-                7,
-                2
-              ],
-              "expected": 1,
-              "actual": {
-                "type": "Z13518",
-                "value": 7
-              }
-            }
-          ]
-        },
-        {
-          "zid": "Z15969",
-          "label": "reified Z1K1 (object for Key reference)",
-          "pass": 0,
-          "fail": 1,
-          "error": 0,
-          "disagreements": [
-            {
-              "input": [
-                "Wikifunctions"
-              ],
-              "expected": "Z6",
-              "actual": {
-                "type": "Z8",
-                "zid": "Z6"
-              }
-            }
-          ]
-        },
-        {
-          "zid": "Z16756",
-          "label": "sign non-negative",
-          "pass": 2,
-          "fail": 1,
-          "error": 0,
-          "disagreements": [
-            {
-              "input": [
-                {
-                  "type": "Z16659",
-                  "fields": {
-                    "Z16659K1": {
-                      "type": "Z8",
-                      "zid": "Z16662"
-                    }
-                  }
-                }
-              ],
-              "expected": false,
-              "actual": {
-                "type": "Z40",
-                "value": true
-              }
-            }
-          ]
-        },
-        {
-          "zid": "Z16781",
-          "label": "do these charges electrostatically attract?",
-          "pass": 3,
-          "fail": 1,
-          "error": 0,
-          "disagreements": [
-            {
-              "input": [
-                {
-                  "type": "Z16659",
-                  "fields": {
-                    "Z16659K1": {
-                      "type": "Z8",
-                      "zid": "Z16662"
-                    }
-                  }
-                },
-                {
-                  "type": "Z16659",
-                  "fields": {
-                    "Z16659K1": {
-                      "type": "Z8",
-                      "zid": "Z16660"
-                    }
-                  }
-                }
-              ],
-              "expected": true,
-              "actual": {
-                "type": "Z40",
-                "value": false
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "other",
-      "title": "type mismatch in Z805",
-      "members": [],
-      "functions": 82,
-      "cases": 306,
-      "examples": [
-        {
-          "zid": "Z13596",
-          "label": "English name of month",
-          "pass": 0,
-          "fail": 0,
-          "error": 12,
-          "disagreements": []
-        },
-        {
-          "zid": "Z16230",
-          "label": "month to month number",
-          "pass": 0,
-          "fail": 0,
-          "error": 12,
-          "disagreements": []
-        },
-        {
-          "zid": "Z27641",
-          "label": "Luxembourgish name of month",
-          "pass": 0,
-          "fail": 0,
-          "error": 12,
-          "disagreements": []
-        },
-        {
-          "zid": "Z31217",
-          "label": "Dutch name of month",
-          "pass": 0,
-          "fail": 0,
-          "error": 12,
-          "disagreements": []
-        },
-        {
-          "zid": "Z22941",
-          "label": "display Day of Roman Year",
-          "pass": 0,
-          "fail": 0,
-          "error": 10,
-          "disagreements": []
-        },
-        {
-          "zid": "Z13280",
-          "label": "English -ion base form",
-          "pass": 0,
-          "fail": 0,
-          "error": 8,
-          "disagreements": []
-        },
-        {
-          "zid": "Z13708",
-          "label": "index of first listing (1...N) – note limitation",
-          "pass": 0,
-          "fail": 0,
-          "error": 8,
-          "disagreements": []
-        },
-        {
-          "zid": "Z24041",
-          "label": "display day of the week",
-          "pass": 0,
-          "fail": 0,
-          "error": 8,
-          "disagreements": []
-        },
-        {
-          "zid": "Z11302",
-          "label": "English possessive",
-          "pass": 0,
-          "fail": 0,
-          "error": 7,
-          "disagreements": []
-        },
-        {
-          "zid": "Z31231",
-          "label": "Dutch name of the day of the week",
-          "pass": 0,
-          "fail": 0,
-          "error": 7,
-          "disagreements": []
-        },
-        {
-          "zid": "Z19601",
-          "label": "N-ifs",
-          "pass": 0,
-          "fail": 0,
-          "error": 6,
-          "disagreements": []
-        },
-        {
-          "zid": "Z22143",
-          "label": "and (Kleenean)",
-          "pass": 0,
-          "fail": 0,
-          "error": 6,
-          "disagreements": []
-        },
-        {
-          "zid": "Z24203",
-          "label": "discard tail of Typed list after first match",
-          "pass": 1,
-          "fail": 0,
-          "error": 6,
-          "disagreements": []
-        },
-        {
-          "zid": "Z31592",
-          "label": "depth of list of lists up to jaggedness",
-          "pass": 0,
-          "fail": 0,
-          "error": 6,
-          "disagreements": []
-        },
-        {
-          "zid": "Z31605",
-          "label": "dimensions of list of lists",
-          "pass": 0,
-          "fail": 0,
-          "error": 6,
-          "disagreements": []
-        },
-        {
-          "zid": "Z16855",
-          "label": "English number <20 to natural number",
-          "pass": 0,
-          "fail": 0,
-          "error": 5,
-          "disagreements": []
-        },
-        {
-          "zid": "Z17879",
-          "label": "is this list untyped?",
-          "pass": 0,
-          "fail": 0,
-          "error": 5,
-          "disagreements": []
-        },
-        {
-          "zid": "Z19125",
-          "label": "English plural possessive",
-          "pass": 0,
-          "fail": 0,
-          "error": 5,
-          "disagreements": []
-        },
-        {
-          "zid": "Z19177",
-          "label": "is subword of string",
-          "pass": 0,
-          "fail": 0,
-          "error": 5,
-          "disagreements": []
-        },
-        {
-          "zid": "Z24749",
-          "label": "nand (kleenean)",
-          "pass": 0,
-          "fail": 0,
-          "error": 5,
-          "disagreements": []
-        },
-        {
-          "zid": "Z13220",
-          "label": "are all elements of the list the same type",
-          "pass": 0,
-          "fail": 0,
-          "error": 4,
-          "disagreements": []
-        },
-        {
-          "zid": "Z16648",
-          "label": "is later month in the year",
-          "pass": 0,
-          "fail": 0,
-          "error": 4,
-          "disagreements": []
-        },
-        {
-          "zid": "Z16869",
-          "label": "English multiple of 10 between 20 and 90 (inclusive) to natural number",
-          "pass": 0,
-          "fail": 0,
-          "error": 4,
-          "disagreements": []
-        },
-        {
-          "zid": "Z18759",
-          "label": "reverse list preserving list typing/untyping",
-          "pass": 0,
-          "fail": 0,
-          "error": 4,
-          "disagreements": []
-        },
-        {
-          "zid": "Z19121",
-          "label": "to s-expression",
-          "pass": 0,
-          "fail": 0,
-          "error": 4,
-          "disagreements": []
-        },
-        {
-          "zid": "Z19536",
-          "label": "index of element on list with metric value",
-          "pass": 0,
-          "fail": 0,
-          "error": 4,
-          "disagreements": []
-        },
-        {
-          "zid": "Z22933",
-          "label": "date as English \"Month day\" string",
-          "pass": 0,
-          "fail": 0,
-          "error": 4,
-          "disagreements": []
-        },
-        {
-          "zid": "Z24086",
-          "label": "display Gregorian calendar month",
-          "pass": 0,
-          "fail": 0,
-          "error": 4,
-          "disagreements": []
-        },
-        {
-          "zid": "Z24974",
-          "label": "date as English \"day Month\" string",
-          "pass": 0,
-          "fail": 0,
-          "error": 4,
-          "disagreements": []
-        },
-        {
-          "zid": "Z27685",
-          "label": "wrap in list unless list",
-          "pass": 0,
-          "fail": 0,
-          "error": 4,
-          "disagreements": []
-        },
-        {
-          "zid": "Z10774",
-          "label": "URI percent decode",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z13163",
-          "label": "Get day of week from date",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z13224",
-          "label": "split list into a list of two ~equal length lists",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z13247",
-          "label": "faro out-shuffle",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z16199",
-          "label": "rest of list",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z16914",
-          "label": "get weekday number (starting Sunday=1) from date",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z17442",
-          "label": "day to day number (starting Sunday=1, integer)",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z17536",
-          "label": "total occurrences of day in year",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z17556",
-          "label": "is date on day",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z17578",
-          "label": "days from one day to another",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        }
-      ]
-    },
-    {
-      "kind": "other",
-      "title": "type mismatch in Z811",
-      "members": [],
-      "functions": 77,
-      "cases": 157,
-      "examples": [
-        {
-          "zid": "Z23291",
-          "label": "compose Italian preposition",
-          "pass": 0,
-          "fail": 0,
-          "error": 8,
-          "disagreements": []
-        },
-        {
-          "zid": "Z37174",
-          "label": "binary search (index, Natural numbers)",
-          "pass": 0,
-          "fail": 0,
-          "error": 8,
-          "disagreements": []
-        },
-        {
-          "zid": "Z30484",
-          "label": "state location using entity and class, German",
-          "pass": 0,
-          "fail": 0,
-          "error": 6,
-          "disagreements": []
-        },
-        {
-          "zid": "Z10831",
-          "label": "string intersperse",
-          "pass": 0,
-          "fail": 0,
-          "error": 5,
-          "disagreements": []
-        },
-        {
-          "zid": "Z22514",
-          "label": "sentence from list of words (English conventions)",
-          "pass": 0,
-          "fail": 0,
-          "error": 5,
-          "disagreements": []
-        },
-        {
-          "zid": "Z26184",
-          "label": "solfege to sargam",
-          "pass": 0,
-          "fail": 0,
-          "error": 5,
-          "disagreements": []
-        },
-        {
-          "zid": "Z22504",
-          "label": "join list of strings with spaces",
-          "pass": 0,
-          "fail": 0,
-          "error": 4,
-          "disagreements": []
-        },
-        {
-          "zid": "Z26830",
-          "label": "Get SSHWS category from sustained winds (English)",
-          "pass": 0,
-          "fail": 0,
-          "error": 4,
-          "disagreements": []
-        },
-        {
-          "zid": "Z37201",
-          "label": "binary search (mapped value, Natural numbers)",
-          "pass": 0,
-          "fail": 0,
-          "error": 4,
-          "disagreements": []
-        },
-        {
-          "zid": "Z10911",
-          "label": "duplicate string N times",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z12899",
-          "label": "join list of strings with delimiter",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z26424",
-          "label": "calculate inflation",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z30155",
-          "label": "emulate WD statement object from WD property claim",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z30777",
-          "label": "Baoulé male names from day of birth",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z31032",
-          "label": "index of first mismatching element",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z34669",
-          "label": "join list of Monolingual texts with delimiter",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z35797",
-          "label": "Get EF rating from estimated max winds (English)",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z36425",
-          "label": "Baoulé female names from day of birth",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z10393",
-          "label": "Levenshtein distance",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z13155",
-          "label": "interleave lists",
-          "pass": 2,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z13173",
-          "label": "get value string from key string",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z13366",
-          "label": "get the first n elements of an untyped list",
-          "pass": 4,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z20679",
-          "label": "Two Sum",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z21835",
-          "label": "rational from finite simple continued fraction",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z22179",
-          "label": "Circular shift right",
-          "pass": 2,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z22193",
-          "label": "switch",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z23917",
-          "label": "rational from truncated simple continued fraction",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z25526",
-          "label": "Circular shift left",
-          "pass": 3,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z26437",
-          "label": "get Function for country's CPI by year",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z28282",
-          "label": "list of languages to sequence of ISO codes",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z29286",
-          "label": "table from function of row and column elements",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z31600",
-          "label": "are all elements equal?",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z31874",
-          "label": "trim element from start of list",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z32283",
-          "label": "join list of strings in given language",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z37259",
-          "label": "binary search (index, generic)",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z37289",
-          "label": "join list of monolingual texts without Oxford comm",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z37647",
-          "label": "infobox color scheme",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z38472",
-          "label": "switch on String",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z38477",
-          "label": "switch on Type",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z38482",
-          "label": "switch on Type of Object",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
         }
       ]
     },
@@ -5603,8 +5137,8 @@
         "Z13735",
         "Z13745"
       ],
-      "functions": 73,
-      "cases": 239,
+      "functions": 74,
+      "cases": 238,
       "examples": [
         {
           "zid": "Z12427",
@@ -5650,14 +5184,6 @@
           "zid": "Z13726",
           "label": "divisors",
           "pass": 1,
-          "fail": 0,
-          "error": 5,
-          "disagreements": []
-        },
-        {
-          "zid": "Z14924",
-          "label": "is harmonic divisor number",
-          "pass": 0,
           "fail": 0,
           "error": 5,
           "disagreements": []
@@ -5730,6 +5256,14 @@
           "zid": "Z14792",
           "label": "is Poulet number",
           "pass": 0,
+          "fail": 0,
+          "error": 4,
+          "disagreements": []
+        },
+        {
+          "zid": "Z14924",
+          "label": "is harmonic divisor number",
+          "pass": 1,
           "fail": 0,
           "error": 4,
           "disagreements": []
@@ -5863,14 +5397,6 @@
           "disagreements": []
         },
         {
-          "zid": "Z13999",
-          "label": "sum of squares of divisors",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
           "zid": "Z14001",
           "label": "number of odd divisors",
           "pass": 0,
@@ -5921,6 +5447,14 @@
         {
           "zid": "Z15031",
           "label": "is arithmetic number",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z15115",
+          "label": "exponent of highest power of 2 dividing n",
           "pass": 0,
           "fail": 0,
           "error": 3,
@@ -6923,6 +6457,335 @@
       ]
     },
     {
+      "kind": "other",
+      "title": "type mismatch in Z811",
+      "members": [],
+      "functions": 46,
+      "cases": 100,
+      "examples": [
+        {
+          "zid": "Z23291",
+          "label": "compose Italian preposition",
+          "pass": 0,
+          "fail": 0,
+          "error": 8,
+          "disagreements": []
+        },
+        {
+          "zid": "Z37174",
+          "label": "binary search (index, Natural numbers)",
+          "pass": 0,
+          "fail": 0,
+          "error": 8,
+          "disagreements": []
+        },
+        {
+          "zid": "Z19177",
+          "label": "is subword of string",
+          "pass": 0,
+          "fail": 0,
+          "error": 5,
+          "disagreements": []
+        },
+        {
+          "zid": "Z26184",
+          "label": "solfege to sargam",
+          "pass": 0,
+          "fail": 0,
+          "error": 5,
+          "disagreements": []
+        },
+        {
+          "zid": "Z26830",
+          "label": "Get SSHWS category from sustained winds (English)",
+          "pass": 0,
+          "fail": 0,
+          "error": 4,
+          "disagreements": []
+        },
+        {
+          "zid": "Z37201",
+          "label": "binary search (mapped value, Natural numbers)",
+          "pass": 0,
+          "fail": 0,
+          "error": 4,
+          "disagreements": []
+        },
+        {
+          "zid": "Z26424",
+          "label": "calculate inflation",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z30155",
+          "label": "emulate WD statement object from WD property claim",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z30777",
+          "label": "Baoulé male names from day of birth",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z31032",
+          "label": "index of first mismatching element",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z35797",
+          "label": "Get EF rating from estimated max winds (English)",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z36425",
+          "label": "Baoulé female names from day of birth",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z13366",
+          "label": "get the first n elements of an untyped list",
+          "pass": 4,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z20679",
+          "label": "Two Sum",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z22179",
+          "label": "Circular shift right",
+          "pass": 2,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z22193",
+          "label": "switch",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z25526",
+          "label": "Circular shift left",
+          "pass": 3,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z26437",
+          "label": "get Function for country's CPI by year",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z31600",
+          "label": "are all elements equal?",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z31874",
+          "label": "trim element from start of list",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z37259",
+          "label": "binary search (index, generic)",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z37289",
+          "label": "join list of monolingual texts without Oxford comm",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z37647",
+          "label": "infobox color scheme",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z38472",
+          "label": "switch on String",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z38477",
+          "label": "switch on Type",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z38482",
+          "label": "switch on Type of Object",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z11170",
+          "label": "String without suffix",
+          "pass": 5,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z18151",
+          "label": "add suffix \"dde\" if string does not already end with \"dde\"",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z18531",
+          "label": "Byzantine to Arabic numeral",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z21613",
+          "label": "Typed list has as its first item",
+          "pass": 1,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z23680",
+          "label": "best ranked statement from list",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z26556",
+          "label": "take sub-sequence of list",
+          "pass": 4,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z29515",
+          "label": "lexeme sense ID for solfège syllable",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z29787",
+          "label": "apply with common 1st arg and N 2nd and 3rd args",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z31095",
+          "label": "apply with N 1st and 2nd args and common 3rd arg",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z31294",
+          "label": "list starts with",
+          "pass": 5,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z35087",
+          "label": "reference HTML marker content from reference",
+          "pass": 1,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z35421",
+          "label": "apply3: common 2nd, list 1st and 3rd",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z36610",
+          "label": "definite article (simple)",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z36622",
+          "label": "indefinite article (simple)",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        }
+      ]
+    },
+    {
       "kind": "missing",
       "title": "Z12316 Z12316 is not implemented",
       "members": [],
@@ -7255,9 +7118,17 @@
       "kind": "other",
       "title": "type mismatch in Z808",
       "members": [],
-      "functions": 34,
-      "cases": 47,
+      "functions": 35,
+      "cases": 59,
       "examples": [
+        {
+          "zid": "Z32410",
+          "label": "X has Y, fully specified, English",
+          "pass": 0,
+          "fail": 0,
+          "error": 12,
+          "disagreements": []
+        },
         {
           "zid": "Z31471",
           "label": "escape HTML",
@@ -7533,288 +7404,15 @@
       ]
     },
     {
-      "kind": "cycle",
-      "title": "reaches a depth limit with no group identified",
-      "members": [],
-      "functions": 32,
-      "cases": 94,
-      "examples": [
-        {
-          "zid": "Z13489",
-          "label": "is decimal natural number string of Arabic numerals",
-          "pass": 1,
-          "fail": 0,
-          "error": 17,
-          "disagreements": []
-        },
-        {
-          "zid": "Z23041",
-          "label": "read code point",
-          "pass": 0,
-          "fail": 0,
-          "error": 9,
-          "disagreements": []
-        },
-        {
-          "zid": "Z23031",
-          "label": "codepoint from string leniently",
-          "pass": 0,
-          "fail": 0,
-          "error": 7,
-          "disagreements": []
-        },
-        {
-          "zid": "Z15684",
-          "label": "is truthy",
-          "pass": 0,
-          "fail": 0,
-          "error": 6,
-          "disagreements": []
-        },
-        {
-          "zid": "Z15717",
-          "label": "is Boolean",
-          "pass": 0,
-          "fail": 0,
-          "error": 6,
-          "disagreements": []
-        },
-        {
-          "zid": "Z12624",
-          "label": "Replicate string n-times",
-          "pass": 0,
-          "fail": 0,
-          "error": 4,
-          "disagreements": []
-        },
-        {
-          "zid": "Z14864",
-          "label": "central Delannoy number",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z14900",
-          "label": "Lah number",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z15728",
-          "label": "iffy",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z17958",
-          "label": "run unary endofunction n times",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z13419",
-          "label": "is identity relation over elements of list",
-          "pass": 4,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z13822",
-          "label": "modular multiplicative inverse",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z14672",
-          "label": "is FEN field 6",
-          "pass": 1,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z14859",
-          "label": "Delannoy number",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z14876",
-          "label": "Schröder number",
-          "pass": 1,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z15651",
-          "label": "nth Belphegor number",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z15811",
-          "label": "if is Boolean",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z24117",
-          "label": "if true, returns tested argument",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z24517",
-          "label": "10^n (natural number)",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z29794",
-          "label": "Cartesian product of 2 lists with pairing function",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z33453",
-          "label": "Filter but fallback if empty",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z10108",
-          "label": "string end padding",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z14112",
-          "label": "is empty relation over elements of list",
-          "pass": 1,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z14894",
-          "label": "Eulerian number",
-          "pass": 1,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z15334",
-          "label": "unsigned Stirling number of the first kind",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z15769",
-          "label": "repunit number",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z16629",
-          "label": "is function symmetric relation over elements of list",
-          "pass": 1,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z16688",
-          "label": "same Integer",
-          "pass": 3,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z21809",
-          "label": "partition list",
-          "pass": 2,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z24542",
-          "label": "object metric meets criteria",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z30009",
-          "label": "apply String transformation to Monolingual text",
-          "pass": 2,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z33163",
-          "label": "day of Roman year to wikidata item reference",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        }
-      ]
-    },
-    {
       "kind": "other",
       "title": "argument is not a readable literal",
       "members": [],
-      "functions": 31,
-      "cases": 40,
+      "functions": 32,
+      "cases": 39,
       "examples": [
         {
           "zid": "Z13397",
           "label": "get the nth element of a list",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z16542",
-          "label": "is this month earlier than that month in the year?",
           "pass": 0,
           "fail": 0,
           "error": 2,
@@ -7831,14 +7429,6 @@
         {
           "zid": "Z21000",
           "label": "float as percent",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z27006",
-          "label": "apply two-argument function unless void argument",
           "pass": 0,
           "fail": 0,
           "error": 2,
@@ -7901,6 +7491,14 @@
           "disagreements": []
         },
         {
+          "zid": "Z13708",
+          "label": "index of first listing (1...N) – note limitation",
+          "pass": 7,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
           "zid": "Z16463",
           "label": "sine (float64, rad)",
           "pass": 0,
@@ -7917,9 +7515,25 @@
           "disagreements": []
         },
         {
+          "zid": "Z16855",
+          "label": "English number <20 to natural number",
+          "pass": 4,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
           "zid": "Z18569",
           "label": "type of list (as string)",
           "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z27006",
+          "label": "apply two-argument function unless void argument",
+          "pass": 1,
           "fail": 0,
           "error": 1,
           "disagreements": []
@@ -8058,8 +7672,8 @@
       "kind": "missing",
       "title": "Z6896 Z6896 is not implemented",
       "members": [],
-      "functions": 26,
-      "cases": 67,
+      "functions": 27,
+      "cases": 68,
       "examples": [
         {
           "zid": "Z29036",
@@ -8094,14 +7708,6 @@
           "disagreements": []
         },
         {
-          "zid": "Z27148",
-          "label": "o,a,i,e based on gender (m/f) and number (s/p)",
-          "pass": 0,
-          "fail": 0,
-          "error": 4,
-          "disagreements": []
-        },
-        {
           "zid": "Z26766",
           "label": "Hijri calendar month to month number",
           "pass": 0,
@@ -8128,6 +7734,22 @@
         {
           "zid": "Z29453",
           "label": "best instance of (P31) qid of first enum instance",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z35641",
+          "label": "Season a month falls in (Northern Hemisphere)",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z35646",
+          "label": "Season a Month falls in (Southern Hemisphere)",
           "pass": 0,
           "fail": 0,
           "error": 3,
@@ -8198,14 +7820,6 @@
           "disagreements": []
         },
         {
-          "zid": "Z27748",
-          "label": "switch on gender (m/f) and number (s/p)",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
           "zid": "Z28197",
           "label": "chemical element from atomic number",
           "pass": 0,
@@ -8246,6 +7860,22 @@
           "disagreements": []
         },
         {
+          "zid": "Z12735",
+          "label": "all meet criteria",
+          "pass": 3,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z12738",
+          "label": "any meet criteria",
+          "pass": 2,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
           "zid": "Z26522",
           "label": "switch with grammatical gender (m/f)",
           "pass": 0,
@@ -8260,10 +7890,629 @@
           "fail": 0,
           "error": 1,
           "disagreements": []
+        }
+      ]
+    },
+    {
+      "kind": "cycle",
+      "title": "reaches a depth limit with no group identified",
+      "members": [],
+      "functions": 26,
+      "cases": 79,
+      "examples": [
+        {
+          "zid": "Z13489",
+          "label": "is decimal natural number string of Arabic numerals",
+          "pass": 1,
+          "fail": 0,
+          "error": 17,
+          "disagreements": []
+        },
+        {
+          "zid": "Z23041",
+          "label": "read code point",
+          "pass": 0,
+          "fail": 0,
+          "error": 9,
+          "disagreements": []
+        },
+        {
+          "zid": "Z23031",
+          "label": "codepoint from string leniently",
+          "pass": 0,
+          "fail": 0,
+          "error": 7,
+          "disagreements": []
+        },
+        {
+          "zid": "Z15684",
+          "label": "is truthy",
+          "pass": 0,
+          "fail": 0,
+          "error": 6,
+          "disagreements": []
+        },
+        {
+          "zid": "Z15717",
+          "label": "is Boolean",
+          "pass": 0,
+          "fail": 0,
+          "error": 6,
+          "disagreements": []
+        },
+        {
+          "zid": "Z14864",
+          "label": "central Delannoy number",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z15728",
+          "label": "iffy",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z17958",
+          "label": "run unary endofunction n times",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z13419",
+          "label": "is identity relation over elements of list",
+          "pass": 4,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z14672",
+          "label": "is FEN field 6",
+          "pass": 1,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z14859",
+          "label": "Delannoy number",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z14876",
+          "label": "Schröder number",
+          "pass": 1,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z15811",
+          "label": "if is Boolean",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z24117",
+          "label": "if true, returns tested argument",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z33453",
+          "label": "Filter but fallback if empty",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z12624",
+          "label": "Replicate string n-times",
+          "pass": 3,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z13155",
+          "label": "interleave lists",
+          "pass": 3,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z13822",
+          "label": "modular multiplicative inverse",
+          "pass": 1,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z14112",
+          "label": "is empty relation over elements of list",
+          "pass": 1,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z14894",
+          "label": "Eulerian number",
+          "pass": 1,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z16629",
+          "label": "is function symmetric relation over elements of list",
+          "pass": 1,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z16688",
+          "label": "same Integer",
+          "pass": 3,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z21809",
+          "label": "partition list",
+          "pass": 2,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z24542",
+          "label": "object metric meets criteria",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z30009",
+          "label": "apply String transformation to Monolingual text",
+          "pass": 2,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z33163",
+          "label": "day of Roman year to wikidata item reference",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        }
+      ]
+    },
+    {
+      "kind": "other",
+      "title": "type mismatch in Z812",
+      "members": [],
+      "functions": 25,
+      "cases": 80,
+      "examples": [
+        {
+          "zid": "Z27641",
+          "label": "Luxembourgish name of month",
+          "pass": 0,
+          "fail": 0,
+          "error": 12,
+          "disagreements": []
+        },
+        {
+          "zid": "Z31217",
+          "label": "Dutch name of month",
+          "pass": 0,
+          "fail": 0,
+          "error": 12,
+          "disagreements": []
+        },
+        {
+          "zid": "Z24041",
+          "label": "display day of the week",
+          "pass": 0,
+          "fail": 0,
+          "error": 8,
+          "disagreements": []
+        },
+        {
+          "zid": "Z31231",
+          "label": "Dutch name of the day of the week",
+          "pass": 0,
+          "fail": 0,
+          "error": 7,
+          "disagreements": []
+        },
+        {
+          "zid": "Z22933",
+          "label": "date as English \"Month day\" string",
+          "pass": 0,
+          "fail": 0,
+          "error": 4,
+          "disagreements": []
+        },
+        {
+          "zid": "Z24086",
+          "label": "display Gregorian calendar month",
+          "pass": 0,
+          "fail": 0,
+          "error": 4,
+          "disagreements": []
+        },
+        {
+          "zid": "Z19549",
+          "label": "Mass replace given 2 lists",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z20165",
+          "label": "value by key index",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z22240",
+          "label": "Gregorian calendar month to Wikidata reference",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z23419",
+          "label": "day of the week to Wikidata reference",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z38619",
+          "label": "substitute reference in s-expression",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z14244",
+          "label": "get Nth character of a string",
+          "pass": 3,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z20656",
+          "label": "Intro for Day of Roman year in English",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z31120",
+          "label": "string from object",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z35874",
+          "label": "preferred implementation of function as ZID",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z11879",
+          "label": "remove last character",
+          "pass": 2,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z14636",
+          "label": "remove first N characters of string",
+          "pass": 3,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z18284",
+          "label": "list without last element (natural numbers)",
+          "pass": 1,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z26394",
+          "label": "converge iteratively to fixed point",
+          "pass": 1,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z28231",
+          "label": "ZID of a function",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z28439",
+          "label": "value of first key",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z28442",
+          "label": "value of second key",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z29290",
+          "label": "flatten a list completely",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z29400",
+          "label": "filter list through list of indices",
+          "pass": 1,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z35766",
+          "label": "join multiple HTML fragments with a separator",
+          "pass": 1,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        }
+      ]
+    },
+    {
+      "kind": "missing",
+      "title": "Z6895 Z6895 is not implemented",
+      "members": [],
+      "functions": 24,
+      "cases": 59,
+      "examples": [
+        {
+          "zid": "Z23171",
+          "label": "Italian definite article",
+          "pass": 0,
+          "fail": 0,
+          "error": 9,
+          "disagreements": []
+        },
+        {
+          "zid": "Z27148",
+          "label": "o,a,i,e based on gender (m/f) and number (s/p)",
+          "pass": 0,
+          "fail": 0,
+          "error": 4,
+          "disagreements": []
+        },
+        {
+          "zid": "Z27954",
+          "label": "atomic number of chemical element",
+          "pass": 0,
+          "fail": 0,
+          "error": 4,
+          "disagreements": []
+        },
+        {
+          "zid": "Z27962",
+          "label": "chemical element symbol",
+          "pass": 0,
+          "fail": 0,
+          "error": 4,
+          "disagreements": []
+        },
+        {
+          "zid": "Z36785",
+          "label": "English grammatic determiner",
+          "pass": 0,
+          "fail": 0,
+          "error": 4,
+          "disagreements": []
+        },
+        {
+          "zid": "Z37170",
+          "label": "(wip) guess German grammatical gender of item",
+          "pass": 0,
+          "fail": 0,
+          "error": 4,
+          "disagreements": []
+        },
+        {
+          "zid": "Z28670",
+          "label": "German article",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z23308",
+          "label": "Italian determinative article in connected form",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z25733",
+          "label": "equal Wikidata time precision",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z26364",
+          "label": "convert (m/f) grammatical genders to (m/f/n)",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z26853",
+          "label": "change type of instance of Wikidata enumeration",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z27748",
+          "label": "switch on gender (m/f) and number (s/p)",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z28267",
+          "label": "previous chemical element",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z28272",
+          "label": "same chemical element",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z29335",
+          "label": "Wikidata item reference from object",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z29559",
+          "label": "regular English present tense from lemma",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z37767",
+          "label": "switch on number (s/p)",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z28086",
+          "label": "switch grammatical gender (m/f/n)",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z28174",
+          "label": "atomic mass (quantity)",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z28180",
+          "label": "full electron configuration of element",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z29706",
+          "label": "convert (s/p) grammatical number to (s/d/p)",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
         },
         {
           "zid": "Z36447",
           "label": "Z36447",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z36935",
+          "label": "English noun phrase from noun",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z37154",
+          "label": "German noun from eight strings",
           "pass": 0,
           "fail": 0,
           "error": 1,
@@ -8650,175 +8899,183 @@
       ]
     },
     {
-      "kind": "missing",
-      "title": "Z6895 Z6895 is not implemented",
+      "kind": "other",
+      "title": "type mismatch in Z805",
       "members": [],
-      "functions": 21,
-      "cases": 52,
+      "functions": 22,
+      "cases": 62,
       "examples": [
         {
-          "zid": "Z23171",
-          "label": "Italian definite article",
+          "zid": "Z31592",
+          "label": "depth of list of lists up to jaggedness",
           "pass": 0,
           "fail": 0,
-          "error": 9,
+          "error": 6,
           "disagreements": []
         },
         {
-          "zid": "Z27954",
-          "label": "atomic number of chemical element",
+          "zid": "Z31605",
+          "label": "dimensions of list of lists",
           "pass": 0,
           "fail": 0,
-          "error": 4,
+          "error": 6,
           "disagreements": []
         },
         {
-          "zid": "Z27962",
-          "label": "chemical element symbol",
+          "zid": "Z17879",
+          "label": "is this list untyped?",
           "pass": 0,
           "fail": 0,
-          "error": 4,
+          "error": 5,
           "disagreements": []
         },
         {
-          "zid": "Z36785",
-          "label": "English grammatic determiner",
-          "pass": 0,
-          "fail": 0,
-          "error": 4,
-          "disagreements": []
-        },
-        {
-          "zid": "Z37170",
-          "label": "(wip) guess German grammatical gender of item",
+          "zid": "Z18759",
+          "label": "reverse list preserving list typing/untyping",
           "pass": 0,
           "fail": 0,
           "error": 4,
           "disagreements": []
         },
         {
-          "zid": "Z28670",
-          "label": "German article",
+          "zid": "Z19121",
+          "label": "to s-expression",
+          "pass": 0,
+          "fail": 0,
+          "error": 4,
+          "disagreements": []
+        },
+        {
+          "zid": "Z27685",
+          "label": "wrap in list unless list",
+          "pass": 0,
+          "fail": 0,
+          "error": 4,
+          "disagreements": []
+        },
+        {
+          "zid": "Z13220",
+          "label": "are all elements of the list the same type",
+          "pass": 1,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z13224",
+          "label": "split list into a list of two ~equal length lists",
           "pass": 0,
           "fail": 0,
           "error": 3,
           "disagreements": []
         },
         {
-          "zid": "Z23308",
-          "label": "Italian determinative article in connected form",
+          "zid": "Z13247",
+          "label": "faro out-shuffle",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z19020",
+          "label": "is a Typed list",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z29409",
+          "label": "most common element on list",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z38590",
+          "label": "evaluate list or element in s-expression",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z12741",
+          "label": "is permutation",
+          "pass": 10,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z17900",
+          "label": "is this list typed?",
           "pass": 0,
           "fail": 0,
           "error": 2,
           "disagreements": []
         },
         {
-          "zid": "Z25733",
-          "label": "equal Wikidata time precision",
+          "zid": "Z19205",
+          "label": "remove duplicates preserving typing/untyping",
           "pass": 0,
           "fail": 0,
           "error": 2,
           "disagreements": []
         },
         {
-          "zid": "Z26364",
-          "label": "convert (m/f) grammatical genders to (m/f/n)",
+          "zid": "Z28755",
+          "label": "index of match in list",
           "pass": 0,
           "fail": 0,
           "error": 2,
           "disagreements": []
         },
         {
-          "zid": "Z26853",
-          "label": "change type of instance of Wikidata enumeration",
+          "zid": "Z34273",
+          "label": "Equality of hereditary sets",
           "pass": 0,
           "fail": 0,
           "error": 2,
           "disagreements": []
         },
         {
-          "zid": "Z28267",
-          "label": "previous chemical element",
-          "pass": 0,
+          "zid": "Z15801",
+          "label": "object type equality",
+          "pass": 6,
           "fail": 0,
-          "error": 2,
+          "error": 1,
           "disagreements": []
         },
         {
-          "zid": "Z28272",
-          "label": "same chemical element",
-          "pass": 0,
+          "zid": "Z29413",
+          "label": "count occurrences of element on list",
+          "pass": 4,
           "fail": 0,
-          "error": 2,
+          "error": 1,
           "disagreements": []
         },
         {
-          "zid": "Z29335",
-          "label": "Wikidata item reference from object",
-          "pass": 0,
+          "zid": "Z30692",
+          "label": "are multisets equivalent?",
+          "pass": 3,
           "fail": 0,
-          "error": 2,
+          "error": 1,
           "disagreements": []
         },
         {
-          "zid": "Z29559",
-          "label": "regular English present tense from lemma",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z37767",
-          "label": "switch on number (s/p)",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z28086",
-          "label": "switch grammatical gender (m/f/n)",
+          "zid": "Z31682",
+          "label": "validated equality",
           "pass": 0,
           "fail": 0,
           "error": 1,
           "disagreements": []
         },
         {
-          "zid": "Z28174",
-          "label": "atomic mass (quantity)",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z28180",
-          "label": "full electron configuration of element",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z29706",
-          "label": "convert (s/p) grammatical number to (s/d/p)",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z36935",
-          "label": "English noun phrase from noun",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z37154",
-          "label": "German noun from eight strings",
+          "zid": "Z38595",
+          "label": "evaluate anonymous function",
           "pass": 0,
           "fail": 0,
           "error": 1,
@@ -8973,254 +9230,111 @@
     },
     {
       "kind": "other",
-      "title": "type mismatch in Z812",
+      "title": "validator Z18646: type mismatch in Z803",
       "members": [],
-      "functions": 15,
-      "cases": 24,
+      "functions": 13,
+      "cases": 22,
       "examples": [
         {
-          "zid": "Z19549",
-          "label": "Mass replace given 2 lists",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z20165",
-          "label": "value by key index",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z38619",
-          "label": "substitute reference in s-expression",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z14244",
-          "label": "get Nth character of a string",
-          "pass": 3,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z31120",
-          "label": "string from object",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z35874",
-          "label": "preferred implementation of function as ZID",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z11879",
-          "label": "remove last character",
+          "zid": "Z24203",
+          "label": "discard tail of Typed list after first match",
           "pass": 2,
           "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z14636",
-          "label": "remove first N characters of string",
-          "pass": 3,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z18284",
-          "label": "list without last element (natural numbers)",
-          "pass": 1,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z26394",
-          "label": "converge iteratively to fixed point",
-          "pass": 1,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z28231",
-          "label": "ZID of a function",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z28439",
-          "label": "value of first key",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z28442",
-          "label": "value of second key",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z29290",
-          "label": "flatten a list completely",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z29400",
-          "label": "filter list through list of indices",
-          "pass": 1,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        }
-      ]
-    },
-    {
-      "kind": "cycle",
-      "title": "Z16693 add Integers  ↔  Z17111 subtract an Integer  ↔  Z17186 negate integer  ↔  Z17307 integer represented by ordered pair of natural numbers  ↔  Z17315 subtract natural numbers as integer",
-      "members": [
-        "Z16693",
-        "Z17111",
-        "Z17186",
-        "Z17307",
-        "Z17315"
-      ],
-      "functions": 14,
-      "cases": 58,
-      "examples": [
-        {
-          "zid": "Z25362",
-          "label": "display rational as formatted decimal",
-          "pass": 0,
-          "fail": 0,
-          "error": 10,
-          "disagreements": []
-        },
-        {
-          "zid": "Z30950",
-          "label": "is a valid CAS Registry Number",
-          "pass": 3,
-          "fail": 0,
-          "error": 9,
-          "disagreements": []
-        },
-        {
-          "zid": "Z25445",
-          "label": "rational as plain decimal to decimal places",
-          "pass": 0,
-          "fail": 0,
-          "error": 8,
-          "disagreements": []
-        },
-        {
-          "zid": "Z17263",
-          "label": "natural number exponentiation of integers",
-          "pass": 0,
-          "fail": 0,
           "error": 5,
           "disagreements": []
         },
         {
-          "zid": "Z20367",
-          "label": "Move N dates",
-          "pass": 0,
-          "fail": 0,
-          "error": 5,
-          "disagreements": []
-        },
-        {
-          "zid": "Z20355",
-          "label": "next day in a standard year",
+          "zid": "Z21821",
+          "label": "generate untyped list of length",
           "pass": 0,
           "fail": 0,
           "error": 4,
           "disagreements": []
         },
         {
-          "zid": "Z15659",
-          "label": "subfactorial",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z20399",
-          "label": "next day in leap year",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z34575",
-          "label": "generate alternating sign terms for summation",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z17386",
-          "label": "Lucas sequence U_n(P,Q)",
+          "zid": "Z24150",
+          "label": "append element to Typed list conditionally",
           "pass": 0,
           "fail": 0,
           "error": 2,
           "disagreements": []
         },
         {
-          "zid": "Z25636",
-          "label": "rational as formatted decimal (comma separators)",
+          "zid": "Z31211",
+          "label": "error argument list as ordered strings",
           "pass": 0,
           "fail": 0,
           "error": 2,
           "disagreements": []
         },
         {
-          "zid": "Z29116",
-          "label": "rational as formatted decimal (dot separators)",
-          "pass": 0,
+          "zid": "Z17301",
+          "label": "ordered pair of natural numbers representing integer",
+          "pass": 2,
           "fail": 0,
-          "error": 2,
+          "error": 1,
           "disagreements": []
         },
         {
-          "zid": "Z25639",
-          "label": "rational as formatted decimal (nbsp separators)",
+          "zid": "Z19202",
+          "label": "remove duplicates from Typed list",
           "pass": 0,
           "fail": 0,
           "error": 1,
           "disagreements": []
         },
         {
-          "zid": "Z36033",
-          "label": "generate finite geometric progression of Integers",
+          "zid": "Z19510",
+          "label": "sort list by increasing metric function",
+          "pass": 2,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z22839",
+          "label": "first Object or default",
+          "pass": 2,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z24846",
+          "label": "map to natural number",
           "pass": 1,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z24849",
+          "label": "filter list for natural numbers",
+          "pass": 3,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z24855",
+          "label": "type untyped list as natural number",
+          "pass": 2,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z32753",
+          "label": "list of strings from Monolingual stringset",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z32772",
+          "label": "list of strings from multilingual stringset & lang",
+          "pass": 0,
           "fail": 0,
           "error": 1,
           "disagreements": []
@@ -9342,111 +9456,6 @@
     },
     {
       "kind": "missing",
-      "title": "Z19886 Z19886 is not implemented",
-      "members": [],
-      "functions": 12,
-      "cases": 84,
-      "examples": [
-        {
-          "zid": "Z19866",
-          "label": "string to rational number",
-          "pass": 0,
-          "fail": 0,
-          "error": 29,
-          "disagreements": []
-        },
-        {
-          "zid": "Z21642",
-          "label": "read floating point number leniently",
-          "pass": 0,
-          "fail": 0,
-          "error": 21,
-          "disagreements": []
-        },
-        {
-          "zid": "Z21105",
-          "label": "is string 1",
-          "pass": 0,
-          "fail": 0,
-          "error": 8,
-          "disagreements": []
-        },
-        {
-          "zid": "Z12606",
-          "label": "Round to decimal places (string)",
-          "pass": 0,
-          "fail": 0,
-          "error": 7,
-          "disagreements": []
-        },
-        {
-          "zid": "Z21930",
-          "label": "rational number reader",
-          "pass": 0,
-          "fail": 0,
-          "error": 5,
-          "disagreements": []
-        },
-        {
-          "zid": "Z15560",
-          "label": "Fahrenheit to Celsius",
-          "pass": 0,
-          "fail": 0,
-          "error": 4,
-          "disagreements": []
-        },
-        {
-          "zid": "Z12727",
-          "label": "list median",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z12720",
-          "label": "(!) sum list of numerical strings",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z12723",
-          "label": "arithmetic mean of numeric strings as string",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z13085",
-          "label": "hyperbolic arccotangent",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z16468",
-          "label": "(!) subtract floating point numbers (strings)",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z16483",
-          "label": "(!) gamma function (strings)",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        }
-      ]
-    },
-    {
-      "kind": "missing",
       "title": "Z34270 Z34270 is not implemented",
       "members": [],
       "functions": 12,
@@ -9543,103 +9552,6 @@
         {
           "zid": "Z36959",
           "label": "strong option",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        }
-      ]
-    },
-    {
-      "kind": "other",
-      "title": "validator Z18646: type mismatch in Z803",
-      "members": [],
-      "functions": 11,
-      "cases": 16,
-      "examples": [
-        {
-          "zid": "Z21821",
-          "label": "generate untyped list of length",
-          "pass": 0,
-          "fail": 0,
-          "error": 4,
-          "disagreements": []
-        },
-        {
-          "zid": "Z24150",
-          "label": "append element to Typed list conditionally",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z31211",
-          "label": "error argument list as ordered strings",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        },
-        {
-          "zid": "Z17301",
-          "label": "ordered pair of natural numbers representing integer",
-          "pass": 2,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z19202",
-          "label": "remove duplicates from Typed list",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z22839",
-          "label": "first Object or default",
-          "pass": 2,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z24846",
-          "label": "map to natural number",
-          "pass": 1,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z24849",
-          "label": "filter list for natural numbers",
-          "pass": 3,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z24855",
-          "label": "type untyped list as natural number",
-          "pass": 2,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z32753",
-          "label": "list of strings from Monolingual stringset",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z32772",
-          "label": "list of strings from multilingual stringset & lang",
           "pass": 0,
           "fail": 0,
           "error": 1,
@@ -9992,6 +9904,150 @@
     },
     {
       "kind": "cycle",
+      "title": "Z16693 add Integers  ↔  Z17111 subtract an Integer  ↔  Z17186 negate integer  ↔  Z17307 integer represented by ordered pair of natural numbers  ↔  Z17315 subtract natural numbers as integer",
+      "members": [
+        "Z16693",
+        "Z17111",
+        "Z17186",
+        "Z17307",
+        "Z17315"
+      ],
+      "functions": 8,
+      "cases": 33,
+      "examples": [
+        {
+          "zid": "Z30950",
+          "label": "is a valid CAS Registry Number",
+          "pass": 3,
+          "fail": 0,
+          "error": 9,
+          "disagreements": []
+        },
+        {
+          "zid": "Z17263",
+          "label": "natural number exponentiation of integers",
+          "pass": 0,
+          "fail": 0,
+          "error": 5,
+          "disagreements": []
+        },
+        {
+          "zid": "Z20367",
+          "label": "Move N dates",
+          "pass": 0,
+          "fail": 0,
+          "error": 5,
+          "disagreements": []
+        },
+        {
+          "zid": "Z20355",
+          "label": "next day in a standard year",
+          "pass": 0,
+          "fail": 0,
+          "error": 4,
+          "disagreements": []
+        },
+        {
+          "zid": "Z15659",
+          "label": "subfactorial",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z20399",
+          "label": "next day in leap year",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z34575",
+          "label": "generate alternating sign terms for summation",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z36033",
+          "label": "generate finite geometric progression of Integers",
+          "pass": 1,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        }
+      ]
+    },
+    {
+      "kind": "missing",
+      "title": "Z21682 Z21682 is not implemented",
+      "members": [],
+      "functions": 7,
+      "cases": 36,
+      "examples": [
+        {
+          "zid": "Z21642",
+          "label": "read floating point number leniently",
+          "pass": 0,
+          "fail": 0,
+          "error": 21,
+          "disagreements": []
+        },
+        {
+          "zid": "Z12606",
+          "label": "Round to decimal places (string)",
+          "pass": 0,
+          "fail": 0,
+          "error": 7,
+          "disagreements": []
+        },
+        {
+          "zid": "Z12727",
+          "label": "list median",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z12720",
+          "label": "(!) sum list of numerical strings",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z13085",
+          "label": "hyperbolic arccotangent",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z16468",
+          "label": "(!) subtract floating point numbers (strings)",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z16483",
+          "label": "(!) gamma function (strings)",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        }
+      ]
+    },
+    {
+      "kind": "cycle",
       "title": "Z16293 N months before month  ↔  Z16299 previous month",
       "members": [
         "Z16293",
@@ -10181,6 +10237,63 @@
       ]
     },
     {
+      "kind": "missing",
+      "title": "Z1000000002 Z1000000002 is not implemented",
+      "members": [],
+      "functions": 6,
+      "cases": 11,
+      "examples": [
+        {
+          "zid": "Z13351",
+          "label": "apply list of functions",
+          "pass": 1,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z36303",
+          "label": "convert string, monolingual, or HTML to HTML",
+          "pass": 0,
+          "fail": 0,
+          "error": 3,
+          "disagreements": []
+        },
+        {
+          "zid": "Z32234",
+          "label": "join text-like objects into HTML fragment",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z27622",
+          "label": "compare after applying several unary functions",
+          "pass": 1,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z30768",
+          "label": "is valid arguments to Z30708?",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        },
+        {
+          "zid": "Z35839",
+          "label": "mark mul text",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        }
+      ]
+    },
+    {
       "kind": "other",
       "title": "type mismatch in Z866",
       "members": [],
@@ -10230,6 +10343,63 @@
         {
           "zid": "Z23513",
           "label": "statement has value type string?",
+          "pass": 0,
+          "fail": 0,
+          "error": 1,
+          "disagreements": []
+        }
+      ]
+    },
+    {
+      "kind": "other",
+      "title": "type mismatch in Z13539",
+      "members": [],
+      "functions": 6,
+      "cases": 27,
+      "examples": [
+        {
+          "zid": "Z25362",
+          "label": "display rational as formatted decimal",
+          "pass": 0,
+          "fail": 0,
+          "error": 10,
+          "disagreements": []
+        },
+        {
+          "zid": "Z25445",
+          "label": "rational as plain decimal to decimal places",
+          "pass": 0,
+          "fail": 0,
+          "error": 8,
+          "disagreements": []
+        },
+        {
+          "zid": "Z15824",
+          "label": "is integer equivalent",
+          "pass": 2,
+          "fail": 0,
+          "error": 4,
+          "disagreements": []
+        },
+        {
+          "zid": "Z25636",
+          "label": "rational as formatted decimal (comma separators)",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z29116",
+          "label": "rational as formatted decimal (dot separators)",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        },
+        {
+          "zid": "Z25639",
+          "label": "rational as formatted decimal (nbsp separators)",
           "pass": 0,
           "fail": 0,
           "error": 1,
@@ -10454,6 +10624,55 @@
     },
     {
       "kind": "missing",
+      "title": "Z19886 Z19886 is not implemented",
+      "members": [],
+      "functions": 5,
+      "cases": 48,
+      "examples": [
+        {
+          "zid": "Z19866",
+          "label": "string to rational number",
+          "pass": 0,
+          "fail": 0,
+          "error": 29,
+          "disagreements": []
+        },
+        {
+          "zid": "Z21105",
+          "label": "is string 1",
+          "pass": 0,
+          "fail": 0,
+          "error": 8,
+          "disagreements": []
+        },
+        {
+          "zid": "Z21930",
+          "label": "rational number reader",
+          "pass": 0,
+          "fail": 0,
+          "error": 5,
+          "disagreements": []
+        },
+        {
+          "zid": "Z15560",
+          "label": "Fahrenheit to Celsius",
+          "pass": 0,
+          "fail": 0,
+          "error": 4,
+          "disagreements": []
+        },
+        {
+          "zid": "Z12723",
+          "label": "arithmetic mean of numeric strings as string",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
+          "disagreements": []
+        }
+      ]
+    },
+    {
+      "kind": "missing",
       "title": "Z12908 Z12908 is not implemented",
       "members": [],
       "functions": 5,
@@ -10555,7 +10774,7 @@
       "title": "Z13587 Z13587 is not implemented",
       "members": [],
       "functions": 5,
-      "cases": 26,
+      "cases": 23,
       "examples": [
         {
           "zid": "Z20118",
@@ -10574,14 +10793,6 @@
           "disagreements": []
         },
         {
-          "zid": "Z14726",
-          "label": "English denominator to fractional ordinal",
-          "pass": 0,
-          "fail": 0,
-          "error": 4,
-          "disagreements": []
-        },
-        {
           "zid": "Z15151",
           "label": "is eban number",
           "pass": 0,
@@ -10595,6 +10806,14 @@
           "pass": 0,
           "fail": 0,
           "error": 4,
+          "disagreements": []
+        },
+        {
+          "zid": "Z14726",
+          "label": "English denominator to fractional ordinal",
+          "pass": 3,
+          "fail": 0,
+          "error": 1,
           "disagreements": []
         }
       ]
@@ -11385,47 +11604,6 @@
     },
     {
       "kind": "missing",
-      "title": "Z32314 Z32314 is not implemented",
-      "members": [],
-      "functions": 4,
-      "cases": 50,
-      "examples": [
-        {
-          "zid": "Z21739",
-          "label": "an or a? (English)",
-          "pass": 0,
-          "fail": 0,
-          "error": 32,
-          "disagreements": []
-        },
-        {
-          "zid": "Z32410",
-          "label": "X has Y, fully specified, English",
-          "pass": 0,
-          "fail": 0,
-          "error": 12,
-          "disagreements": []
-        },
-        {
-          "zid": "Z32319",
-          "label": "add indefinite article in English",
-          "pass": 0,
-          "fail": 0,
-          "error": 4,
-          "disagreements": []
-        },
-        {
-          "zid": "Z38814",
-          "label": "prefix with indefinite article, English",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        }
-      ]
-    },
-    {
-      "kind": "missing",
       "title": "Z20730 Z20730 is not implemented",
       "members": [],
       "functions": 4,
@@ -11667,39 +11845,6 @@
       ]
     },
     {
-      "kind": "missing",
-      "title": "Z1000000002 Z1000000002 is not implemented",
-      "members": [],
-      "functions": 3,
-      "cases": 5,
-      "examples": [
-        {
-          "zid": "Z13351",
-          "label": "apply list of functions",
-          "pass": 1,
-          "fail": 0,
-          "error": 3,
-          "disagreements": []
-        },
-        {
-          "zid": "Z27622",
-          "label": "compare after applying several unary functions",
-          "pass": 1,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        },
-        {
-          "zid": "Z30768",
-          "label": "is valid arguments to Z30708?",
-          "pass": 0,
-          "fail": 0,
-          "error": 1,
-          "disagreements": []
-        }
-      ]
-    },
-    {
       "kind": "cycle",
       "title": "Z14166 nth digit of π  ↔  Z14175 nth decimal place of π",
       "members": [
@@ -11707,7 +11852,7 @@
         "Z14175"
       ],
       "functions": 3,
-      "cases": 14,
+      "cases": 13,
       "examples": [
         {
           "zid": "Z14166",
@@ -11728,9 +11873,9 @@
         {
           "zid": "Z14180",
           "label": "pi string up to the nth digit",
-          "pass": 0,
+          "pass": 1,
           "fail": 0,
-          "error": 2,
+          "error": 1,
           "disagreements": []
         }
       ]
@@ -11933,6 +12078,39 @@
           "pass": 0,
           "fail": 0,
           "error": 1,
+          "disagreements": []
+        }
+      ]
+    },
+    {
+      "kind": "missing",
+      "title": "Z32314 Z32314 is not implemented",
+      "members": [],
+      "functions": 3,
+      "cases": 38,
+      "examples": [
+        {
+          "zid": "Z21739",
+          "label": "an or a? (English)",
+          "pass": 0,
+          "fail": 0,
+          "error": 32,
+          "disagreements": []
+        },
+        {
+          "zid": "Z32319",
+          "label": "add indefinite article in English",
+          "pass": 0,
+          "fail": 0,
+          "error": 4,
+          "disagreements": []
+        },
+        {
+          "zid": "Z38814",
+          "label": "prefix with indefinite article, English",
+          "pass": 0,
+          "fail": 0,
+          "error": 2,
           "disagreements": []
         }
       ]
@@ -12402,6 +12580,31 @@
           "pass": 0,
           "fail": 0,
           "error": 1,
+          "disagreements": []
+        }
+      ]
+    },
+    {
+      "kind": "other",
+      "title": "validator Z16688: type mismatch in Z803",
+      "members": [],
+      "functions": 2,
+      "cases": 10,
+      "examples": [
+        {
+          "zid": "Z17167",
+          "label": "integer modulo another integer",
+          "pass": 0,
+          "fail": 0,
+          "error": 6,
+          "disagreements": []
+        },
+        {
+          "zid": "Z20032",
+          "label": "floor of rational number",
+          "pass": 0,
+          "fail": 0,
+          "error": 4,
           "disagreements": []
         }
       ]
@@ -13276,23 +13479,6 @@
       ]
     },
     {
-      "kind": "other",
-      "title": "type mismatch in Z13539",
-      "members": [],
-      "functions": 1,
-      "cases": 4,
-      "examples": [
-        {
-          "zid": "Z15824",
-          "label": "is integer equivalent",
-          "pass": 2,
-          "fail": 0,
-          "error": 4,
-          "disagreements": []
-        }
-      ]
-    },
-    {
       "kind": "missing",
       "title": "Z16741 Z16741 is not implemented",
       "members": [],
@@ -13356,23 +13542,6 @@
           "pass": 0,
           "fail": 0,
           "error": 1,
-          "disagreements": []
-        }
-      ]
-    },
-    {
-      "kind": "other",
-      "title": "error raised by the composition: {\"type\":\"Z5\",\"fields\":{\"Z5K1\":{\"type\":\"Z50\",\"fields\":{\"Z50K1\":{\"type\":\"Z881\",\"items\":[{\"type\":\"Z3\",\"fields\":{\"Z3K1\":{\"type\":\"Z4\",\"fields\":{\"Z4K1\":{\"type\":\"Z8\",\"zid\":\"Z6\"},\"Z4K2\":{\"type\":\"Z881\",\"items\":[{\"type\":\"Z3\",\"fields\":{\"Z3K1\":{\"type\":\"Z8\",\"zid\":\"Z6\"},\"Z3K2\":{\"type\":\"Z6\",\"text\":\"Z6K1\"},\"Z3K3\":{\"type\":\"Z12\",\"fields\":{\"Z12K1\":{\"type\":\"Z881\",\"items\":[{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"en\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"value\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"pl\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"wartość\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"zh-hans\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"值\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"cs\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"hodnota\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"sv\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"värde\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"he\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"ערך\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"de\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"Wert\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"en-au\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"value\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"id\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"nilai\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"nl\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"waarde\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"zh-hant\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"值\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"fr\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"valeur\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"ru\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"значение\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"ro-cyrl-md\"},\"Z60K2\":{\"type\":\"Z881\",\"items\":[{\"type\":\"Z6\",\"text\":\"ro\"}]}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"valoare\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"ar\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"قيمة\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"it\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"valore\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"hi\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"वैल्यू\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"tg\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"қимат\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"tl\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"halaga\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"bg\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"стойност\"}}}]}}}}}]},\"Z4K3\":{\"type\":\"Z8\",\"zid\":\"Z106\"},\"Z4K4\":{\"type\":\"Z8\",\"zid\":\"Z866\"},\"Z4K7\":{\"type\":\"Z881\",\"items\":[]},\"Z4K8\":{\"type\":\"Z881\",\"items\":[]}}},\"Z3K2\":{\"type\":\"Z6\",\"text\":\"Z28194K1\"},\"Z3K3\":{\"type\":\"Z12\",\"fields\":{\"Z12K1\":{\"type\":\"Z881\",\"items\":[{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"en\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"dividend\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"it\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"dividendo\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"bn\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"ভাজ্য\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"id\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"terbagi\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"nl\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"deeltal\"}}}]}}},\"Z3K4\":{\"type\":\"Z40\",\"value\":false}}},{\"type\":\"Z3\",\"fields\":{\"Z3K1\":{\"type\":\"Z4\",\"fields\":{\"Z4K1\":{\"type\":\"Z8\",\"zid\":\"Z6\"},\"Z4K2\":{\"type\":\"Z881\",\"items\":[{\"type\":\"Z3\",\"fields\":{\"Z3K1\":{\"type\":\"Z8\",\"zid\":\"Z6\"},\"Z3K2\":{\"type\":\"Z6\",\"text\":\"Z6K1\"},\"Z3K3\":{\"type\":\"Z12\",\"fields\":{\"Z12K1\":{\"type\":\"Z881\",\"items\":[{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"en\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"value\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"pl\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"wartość\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"zh-hans\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"值\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"cs\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"hodnota\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"sv\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"värde\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"he\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"ערך\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"de\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"Wert\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"en-au\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"value\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"id\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"nilai\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"nl\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"waarde\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"zh-hant\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"值\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"fr\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"valeur\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"ru\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"значение\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"ro-cyrl-md\"},\"Z60K2\":{\"type\":\"Z881\",\"items\":[{\"type\":\"Z6\",\"text\":\"ro\"}]}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"valoare\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"ar\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"قيمة\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"it\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"valore\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"hi\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"वैल्यू\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"tg\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"қимат\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"tl\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"halaga\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"bg\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"стойност\"}}}]}}}}}]},\"Z4K3\":{\"type\":\"Z8\",\"zid\":\"Z106\"},\"Z4K4\":{\"type\":\"Z8\",\"zid\":\"Z866\"},\"Z4K7\":{\"type\":\"Z881\",\"items\":[]},\"Z4K8\":{\"type\":\"Z881\",\"items\":[]}}},\"Z3K2\":{\"type\":\"Z6\",\"text\":\"Z28194K2\"},\"Z3K3\":{\"type\":\"Z12\",\"fields\":{\"Z12K1\":{\"type\":\"Z881\",\"items\":[{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"en\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"dividend key\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"it\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"chiave del dividendo\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"bn\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"ভাজ্য নির্দেশক\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"id\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"kunci terbagi\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"nl\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"deeltalsleutel\"}}}]}}},\"Z3K4\":{\"type\":\"Z40\",\"value\":false}}},{\"type\":\"Z3\",\"fields\":{\"Z3K1\":{\"type\":\"Z4\",\"fields\":{\"Z4K1\":{\"type\":\"Z8\",\"zid\":\"Z6\"},\"Z4K2\":{\"type\":\"Z881\",\"items\":[{\"type\":\"Z3\",\"fields\":{\"Z3K1\":{\"type\":\"Z8\",\"zid\":\"Z6\"},\"Z3K2\":{\"type\":\"Z6\",\"text\":\"Z6K1\"},\"Z3K3\":{\"type\":\"Z12\",\"fields\":{\"Z12K1\":{\"type\":\"Z881\",\"items\":[{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"en\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"value\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"pl\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"wartość\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"zh-hans\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"值\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"cs\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"hodnota\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"sv\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"värde\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"he\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"ערך\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"de\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"Wert\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"en-au\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"value\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"id\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"nilai\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"nl\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"waarde\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"zh-hant\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"值\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"fr\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"valeur\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"ru\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"значение\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"ro-cyrl-md\"},\"Z60K2\":{\"type\":\"Z881\",\"items\":[{\"type\":\"Z6\",\"text\":\"ro\"}]}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"valoare\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"ar\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"قيمة\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"it\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"valore\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"hi\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"वैल्यू\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"tg\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"қимат\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"tl\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"halaga\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"bg\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"стойност\"}}}]}}}}}]},\"Z4K3\":{\"type\":\"Z8\",\"zid\":\"Z106\"},\"Z4K4\":{\"type\":\"Z8\",\"zid\":\"Z866\"},\"Z4K7\":{\"type\":\"Z881\",\"items\":[]},\"Z4K8\":{\"type\":\"Z881\",\"items\":[]}}},\"Z3K2\":{\"type\":\"Z6\",\"text\":\"Z28194K3\"},\"Z3K3\":{\"type\":\"Z12\",\"fields\":{\"Z12K1\":{\"type\":\"Z881\",\"items\":[{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"en\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"divisor key\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"it\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"chiave del divisore\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"bn\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"ভাজক নির্দেশক\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"id\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"kunci pembagi\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"nl\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"delersleutel\"}}}]}}},\"Z3K4\":{\"type\":\"Z40\",\"value\":false}}}]},\"Z50K2\":{\"type\":\"Z8\",\"zid\":\"Z28194\"}}},\"Z5K2\":{\"type\":\"Z881\",\"items\":[{\"type\":\"Z6\",\"text\":\"Z17291K2\"},{\"type\":\"Z16683\",\"fields\":{\"Z16683K1\":{\"type\":\"Z16659\",\"fields\":{\"Z16659K1\":{\"type\":\"Z8\",\"zid\":\"Z16660\"}}},\"Z16683K2\":{\"type\":\"Z13518\",\"value\":3}}}]}}}",
-      "members": [],
-      "functions": 1,
-      "cases": 4,
-      "examples": [
-        {
-          "zid": "Z17291",
-          "label": "floor divide integers",
-          "pass": 0,
-          "fail": 0,
-          "error": 4,
           "disagreements": []
         }
       ]
@@ -13531,23 +13700,6 @@
       ]
     },
     {
-      "kind": "other",
-      "title": "error raised by the composition: {\"type\":\"Z5\",\"fields\":{\"Z5K1\":{\"type\":\"Z50\",\"fields\":{\"Z50K1\":{\"type\":\"Z881\",\"items\":[{\"type\":\"Z3\",\"fields\":{\"Z3K1\":{\"type\":\"Z4\",\"fields\":{\"Z4K1\":{\"type\":\"Z8\",\"zid\":\"Z39\"},\"Z4K2\":{\"type\":\"Z881\",\"items\":[{\"type\":\"Z3\",\"fields\":{\"Z3K1\":{\"type\":\"Z4\",\"fields\":{\"Z4K1\":{\"type\":\"Z8\",\"zid\":\"Z6\"},\"Z4K2\":{\"type\":\"Z881\",\"items\":[{\"type\":\"Z3\",\"fields\":{\"Z3K1\":{\"type\":\"Z8\",\"zid\":\"Z6\"},\"Z3K2\":{\"type\":\"Z6\",\"text\":\"Z6K1\"},\"Z3K3\":{\"type\":\"Z12\",\"fields\":{\"Z12K1\":{\"type\":\"Z881\",\"items\":[{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"en\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"value\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"pl\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"wartość\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"zh-hans\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"值\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"cs\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"hodnota\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"sv\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"värde\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"he\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"ערך\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"de\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"Wert\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"en-au\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"value\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"id\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"nilai\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"nl\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"waarde\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"zh-hant\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"值\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"fr\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"valeur\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"ru\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"значение\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"ro-cyrl-md\"},\"Z60K2\":{\"type\":\"Z881\",\"items\":[{\"type\":\"Z6\",\"text\":\"ro\"}]}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"valoare\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"ar\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"قيمة\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"it\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"valore\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"hi\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"वैल्यू\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"tg\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"қимат\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"tl\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"halaga\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"bg\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"стойност\"}}}]}}}}}]},\"Z4K3\":{\"type\":\"Z8\",\"zid\":\"Z106\"},\"Z4K4\":{\"type\":\"Z8\",\"zid\":\"Z866\"},\"Z4K7\":{\"type\":\"Z881\",\"items\":[]},\"Z4K8\":{\"type\":\"Z881\",\"items\":[]}}},\"Z3K2\":{\"type\":\"Z6\",\"text\":\"Z39K1\"},\"Z3K3\":{\"type\":\"Z12\",\"fields\":{\"Z12K1\":{\"type\":\"Z881\",\"items\":[{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"en\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"reference\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"pl\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"odwołanie\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"zh-hans\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"引用\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"bn\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"তথ্যসূত্র\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"de\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"Referenz\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"en-au\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"reference\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"id\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"referensi\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"he\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"התייחסות\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"zh-hant\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"參照\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"fr\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"référence\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"ar\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"إحالة\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"it\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"riferimento\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"hi\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"संदर्भ\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"bg\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"референция\"}}}]}}},\"Z3K4\":{\"type\":\"Z40\",\"value\":false}}}]},\"Z4K3\":{\"type\":\"Z8\",\"zid\":\"Z139\"},\"Z4K4\":{\"type\":\"Z8\",\"zid\":\"Z22499\"},\"Z4K7\":{\"type\":\"Z881\",\"items\":[]},\"Z4K8\":{\"type\":\"Z881\",\"items\":[]}}},\"Z3K2\":{\"type\":\"Z6\",\"text\":\"Z516K1\"},\"Z3K3\":{\"type\":\"Z12\",\"fields\":{\"Z12K1\":{\"type\":\"Z881\",\"items\":[{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"en\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"argument\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"de\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"Argument\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"it\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"argomento\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"cs\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"argument\"}}}]}}}}},{\"type\":\"Z3\",\"fields\":{\"Z3K1\":{\"type\":\"Z4\",\"fields\":{\"Z4K1\":{\"type\":\"Z8\",\"zid\":\"Z99\"},\"Z4K2\":{\"type\":\"Z881\",\"items\":[{\"type\":\"Z3\",\"fields\":{\"Z3K1\":{\"type\":\"Z4\",\"fields\":{\"Z4K1\":{\"type\":\"Z8\",\"zid\":\"Z1\"},\"Z4K2\":{\"type\":\"Z881\",\"items\":[{\"type\":\"Z3\",\"fields\":{\"Z3K1\":{\"type\":\"Z8\",\"zid\":\"Z4\"},\"Z3K2\":{\"type\":\"Z6\",\"text\":\"Z1K1\"},\"Z3K3\":{\"type\":\"Z12\",\"fields\":{\"Z12K1\":{\"type\":\"Z881\",\"items\":[{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"en\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"type\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"bn\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"ধরণ\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"pa\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"ਕਿਸਮ\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"pnb\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"قسم\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"pl\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"typ\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"sv\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"typ\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"zh-hans\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"类型\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"cs\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"typ\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"he\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"סוג\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"de\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"Typ\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"en-au\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"type\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"ru\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"тип\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"mg\"},\"Z60K2\":{\"type\":\"Z881\",\"items\":[{\"type\":\"Z6\",\"text\":\"plt\"}]}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"karazana\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"nl\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"type\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"id\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"tipe\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"vi\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"Loại\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"zh-hant\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"類型\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"fr\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"type\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"ro-cyrl-md\"},\"Z60K2\":{\"type\":\"Z881\",\"items\":[{\"type\":\"Z6\",\"text\":\"ro\"}]}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"tip\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"ar\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"نوع\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"ko\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"유형\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"it\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"tipo\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"sr-cyrl\"},\"Z60K2\":{\"type\":\"Z881\",\"items\":[{\"type\":\"Z6\",\"text\":\"sr-ec\"}]}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"тип\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"hi\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"प्रकार\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"es\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"tipo\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"hsb\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"typ\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"tl\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"uri\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"bg\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"тип\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"tok\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"poki\"}}}]}}}}}]},\"Z4K3\":{\"type\":\"Z8\",\"zid\":\"Z101\"}}},\"Z3K2\":{\"type\":\"Z6\",\"text\":\"Z99K1\"},\"Z3K3\":{\"type\":\"Z12\",\"fields\":{\"Z12K1\":{\"type\":\"Z881\",\"items\":[{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"en\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"Quote\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"sv\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"Citat\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"de\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"Zitat\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"bn\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"উদ্ধৃতি\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"ja\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"引用\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"ja-hira\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"いんよう\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"ja-kana\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"インヨウ\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"he\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"ציטוט\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"vi\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"Trích dẫn\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"nl\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"citaat\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"en-au\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"Quote\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"th\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"อัญพจน์\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"id\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"Kutipan\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"ig\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"Kwootu\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"fr\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"citation\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"it\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"citazione\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"hi\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"उद्धरण\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"bg\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"цитат\"}}}]}}}}}]},\"Z4K3\":{\"type\":\"Z8\",\"zid\":\"Z199\"}}},\"Z3K2\":{\"type\":\"Z6\",\"text\":\"Z516K2\"},\"Z3K3\":{\"type\":\"Z12\",\"fields\":{\"Z12K1\":{\"type\":\"Z881\",\"items\":[{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"en\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"bad value\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"de\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"schlechter Wert\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"it\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"valore sbagliato\"}}},{\"type\":\"Z11\",\"fields\":{\"Z11K1\":{\"type\":\"Z60\",\"fields\":{\"Z60K1\":{\"type\":\"Z6\",\"text\":\"cs\"}}},\"Z11K2\":{\"type\":\"Z6\",\"text\":\"chybná hodnota\"}}}]}}}}}]},\"Z50K2\":{\"type\":\"Z8\",\"zid\":\"Z516\"}}},\"Z5K2\":{\"type\":\"Z881\",\"items\":[{\"type\":\"Z6\",\"text\":\"Z18080K1\"},{\"type\":\"Z16659\",\"fields\":{\"Z16659K1\":{\"type\":\"Z8\",\"zid\":\"Z16660\"}}}]}}}",
-      "members": [],
-      "functions": 1,
-      "cases": 2,
-      "examples": [
-        {
-          "zid": "Z19065",
-          "label": "Gregorian era of year number",
-          "pass": 0,
-          "fail": 0,
-          "error": 2,
-          "disagreements": []
-        }
-      ]
-    },
-    {
       "kind": "missing",
       "title": "Z19334 Z19334 is not implemented",
       "members": [],
@@ -13560,23 +13712,6 @@
           "pass": 0,
           "fail": 0,
           "error": 6,
-          "disagreements": []
-        }
-      ]
-    },
-    {
-      "kind": "other",
-      "title": "validator Z16688: type mismatch in Z803",
-      "members": [],
-      "functions": 1,
-      "cases": 4,
-      "examples": [
-        {
-          "zid": "Z20032",
-          "label": "floor of rational number",
-          "pass": 0,
-          "fail": 0,
-          "error": 4,
           "disagreements": []
         }
       ]
@@ -14042,23 +14177,6 @@
           "pass": 0,
           "fail": 0,
           "error": 5,
-          "disagreements": []
-        }
-      ]
-    },
-    {
-      "kind": "other",
-      "title": "error raised by the composition: {\"type\":\"Z5\",\"fields\":{\"Z5K1\":{\"type\":\"Z50\",\"fields\":{\"Z50K1\":{\"type\":\"Z881\",\"items\":[]},\"Z50K2\":{\"type\":\"Z8\",\"zid\":\"Z30762\"}}},\"Z5K2\":{\"type\":\"Z881\",\"items\":[]}}}",
-      "members": [],
-      "functions": 1,
-      "cases": 3,
-      "examples": [
-        {
-          "zid": "Z30759",
-          "label": "(quiet or verbose) or empty string",
-          "pass": 0,
-          "fail": 0,
-          "error": 3,
           "disagreements": []
         }
       ]

@@ -1,7 +1,9 @@
 import assert from "node:assert/strict";
 import { createRequire } from "node:module";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
+import os from "node:os";
 import path from "node:path";
+import { spawnSync } from "node:child_process";
 import test from "node:test";
 
 const require = createRequire(import.meta.url);
@@ -147,6 +149,44 @@ test("no function in the catalogue can crash the host", { skip }, () => {
     }
   }
   assert.deepEqual(problems.slice(0, 10), [], `${problems.length} functions misbehaved`);
+});
+
+// A library must not crash its caller, and that is not the same claim as "it
+// reports a limit". Fuel and the depth limit make a non-productive composition
+// return an error; a JavaScript stack overflow is thrown straight through the
+// extracted engine and no fuel accounting turns it into a value.
+//
+// The sweep runs as its own process, writing which call it is about to make, so
+// a call that does not return is named rather than hanging this one. That is
+// how `Z10108 string end padding` was found: it threw where the compiled path
+// answered, and the test that was supposed to cover this called every function
+// on four made-up argument shapes and never reached it.
+test("no function in the catalogue can crash the host, on its own testers", {
+  skip,
+  timeout: 900_000
+}, () => {
+  const progress = path.join(os.tmpdir(), `wikifn-interpreter-sweep-${process.pid}.log`);
+  const result = spawnSync(process.execPath, [
+    path.resolve("scripts/interpreter-sweep.js"), "--json", "--progress", progress
+  ], { encoding: "utf8", timeout: 600_000, maxBuffer: 32 * 1024 * 1024 });
+
+  if (result.error?.code === "ETIMEDOUT" || result.signal) {
+    let last = "(no progress written)";
+    try {
+      const lines = readFileSync(progress, "utf8").trim().split("\n");
+      last = lines[lines.length - 1];
+    } catch { /* the message below still says what happened */ }
+    assert.fail(`the interpreter sweep did not finish. It was on:\n      ${last}`);
+  }
+  assert.equal(result.status, 0, `the sweep failed: ${result.stderr}`);
+  const report = JSON.parse(result.stdout);
+  assert.deepEqual(
+    report.threw.map((row) => `${row.zid} ${row.label} ${JSON.stringify(row.args)}: ${row.error}`),
+    [],
+    `${report.threwCount} of ${report.calls} interpreted calls threw instead of ` +
+    "returning a result. Every limit this engine has is supposed to come back " +
+    "as an error value."
+  );
 });
 
 test("a non-productive definition reports a limit rather than hanging", { skip }, () => {

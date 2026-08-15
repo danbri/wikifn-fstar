@@ -66,7 +66,7 @@ let body_Z13006_is_the_day_name_part_of_the_french_republican_calendar_rural : e
 
 (* Z13013 Thai nominalization of adjective | Z13013@267879 -> Z13014@130601 digest c5785f5dfd523a66c10dceb9fe193e19764aa12b99a280f837bfad759a06d40f *)
 let body_Z13013_thai_nominalization_of_adjective : expr =
-  ECall 11542 [ECall 10615 [EArg 0; EValue (VText [3588; 3623; 3634; 3617])]; EArg 0; ECall 10000 [EValue (VText [3588; 3623; 3634; 3617]); EArg 0]]
+  ECall 802 [ECall 10615 [EArg 0; EValue (VText [3588; 3623; 3634; 3617])]; EArg 0; ECall 10000 [EValue (VText [3588; 3623; 3634; 3617]); EArg 0]]
 
 (* Z13034 Thai nominalization of verb | Z13034@130683 -> Z13035@130684 digest 0ff7943b1baa1ea6c656eb06b7f75a7b0cc1e1115c3b9958b2472da64286f995 *)
 let body_Z13034_thai_nominalization_of_verb : expr =
@@ -106,7 +106,7 @@ let body_Z13163_get_day_of_week_from_date : expr =
 
 (* Z13173 get value string from key string | Z13173@131520 -> Z13176@131523 digest 30edc67c6d306a1731d74d4bd10dc231dcbeb6b39e0ef47db8033859071c9486 *)
 let body_Z13173_get_value_string_from_key_string : expr =
-  ECall 11542 [ECall 813 [EArg 0]; EArg 2; ECall 11542 [ECall 866 [EArg 1; ECall 811 [ECall 811 [EArg 0]]]; ECall 12964 [ECall 811 [EArg 0]]; ECall 13173 [ECall 812 [EArg 0]; EArg 1; EArg 2]]]
+  ECall 802 [ECall 813 [EArg 0]; EArg 2; ECall 802 [ECall 866 [EArg 1; ECall 811 [ECall 811 [EArg 0]]]; ECall 12964 [ECall 811 [EArg 0]]; ECall 13173 [ECall 812 [EArg 0]; EArg 1; EArg 2]]]
 
 (* Z13177 English -ed form (regular) | Z13177@270922 -> Z13516@164771 digest 1c0af2dd8566d993b203706754a94497f9a9d1a3c4189b49441686e8ed235fb5 *)
 let body_Z13177_english_ed_form_regular : expr =
@@ -118,7 +118,7 @@ let body_Z13213_regular_english_past_participle : expr =
 
 (* Z13220 are all elements of the list the same type | Z13220@209010 -> Z27170@209015 digest 00d1676b1a6b7c18bfef5ef6adb093b15cc08d11dc4f0a8a3823b904efd74eb6 *)
 let body_Z13220_are_all_elements_of_the_list_the_same_type : expr =
-  ECall 20305 [ECall 20305 [ECall 17900 [ECall 18475 [EArg 0]]; ECall 813 [ECall 812 [EArg 0]]; EValue (VBool true)]; ECall 813 [EArg 0]; EValue (VBool true)]
+  ECall 802 [ECall 813 [EArg 0]; EValue (VBool true); ECall 802 [ECall 813 [ECall 812 [EArg 0]]; EValue (VBool true); ECall 17900 [ECall 18475 [EArg 0]]]]
 
 (* Z13224 split list into a list of two ~equal length lists | Z13224@219979 -> Z18697@269553 digest be76876d347660733b3a2f476b31e5bf206db046e992537c6aa2f7de0b6b01d4 *)
 let body_Z13224_split_list_into_a_list_of_two_equal_length_lists : expr =
@@ -310,7 +310,7 @@ let body_Z13701_are_coprime_natural_numbers : expr =
 
 (* Z13708 index of first listing (1...N) – note limitation | Z13708@237063 -> Z28728@222749 digest ec9966e8bce3b08e69feedf006832abde01258dee5ab1a4498c4cad3271d5a00 *)
 let body_Z13708_index_of_first_listing_1_n_note_limitation : expr =
-  ECall 20305 [ECall 28715 [EArg 1; ECall 810 [EArg 0; EValue (VList [])]]; ECall 28724 [ECall 16829 [EArg 0]]; ECall 802 [ECall 17879 [EArg 1]; ECall 28715 [EArg 1; ECall 810 [EArg 0; EValue (VList [])]]; ECall 28715 [EArg 1; ECall 18475 [ECall 810 [EArg 0; EValue (VList [])]]]]]
+  ECall 802 [ECall 28724 [ECall 16829 [EArg 0]]; ECall 802 [ECall 17879 [EArg 1]; ECall 28715 [EArg 1; ECall 810 [EArg 0; EValue (VList [])]]; ECall 28715 [EArg 1; ECall 18475 [ECall 810 [EArg 0; EValue (VList [])]]]]; ECall 28715 [EArg 1; ECall 810 [EArg 0; EValue (VList [])]]]
 
 (* Z13713 natural number to digit string | Z13713@202263 -> Z16371@213902 digest 2c199cd9bc35cd5bf30300cef4f2892518c9aabe63a573576bedf85d04b6edd2 *)
 let body_Z13713_natural_number_to_digit_string : expr =
@@ -598,11 +598,11 @@ let body_Z14001_number_of_odd_divisors : expr =
 
 (* Z14003 Thue-Morse sequence | Z14003@270075 -> Z34415@270073 digest 271fb291a8225589f0806d1b66995c461e21c8b62578601d6b9fed2014c97f57 *)
 let body_Z14003_thue_morse_sequence : expr =
-  ECall 17065 [ECall 34353 [ECall 13860 [EArg 0]]]
+  ECall 802 [ECall 34353 [ECall 13860 [EArg 0]]; EValue (VNat 1); EValue (VNat 0)]
 
 (* Z14005 1-2 Thue-Morse sequence | Z14005@291133 -> Z34416@270079 digest 7e5eb94f6fbfd54258f56d7fba5bb68b796281c6afba10ad3743b66c9d777171 *)
 let body_Z14005_1_2_thue_morse_sequence : expr =
-  ECall 13578 [ECall 14003 [EArg 0]]
+  ECall 13578 [ECall 802 [ECall 34353 [ECall 13860 [EArg 0]]; EValue (VNat 1); EValue (VNat 0)]]
 
 (* Z14007 binomial(n, floor(n/2)) | Z14007@270081 -> Z22060@162101 digest e6f95b65fbc29c02f9ddaa5038a253b9796155cd7c63f3eb457345c68f028d2c *)
 let body_Z14007_binomial_n_floor_n_2 : expr =
@@ -686,7 +686,7 @@ let body_Z14175_nth_decimal_place_of : expr =
 
 (* Z14180 pi string up to the nth digit | Z14180@157035 -> Z14184@157239 digest d925b453cd671bf27f748be43ada545da9f3964ca5cdfa2eaf47626b07b39a50 *)
 let body_Z14180_pi_string_up_to_the_nth_digit : expr =
-  ECall 11542 [ECall 13695 [EArg 0; EValue (VNat 1)]; EValue (VText [51]); ECall 11542 [ECall 13522 [EArg 0; EValue (VNat 2)]; EValue (VText [51; 46; 49]); ECall 10000 [ECall 14180 [ECall 13582 [EArg 0]]; ECall 13713 [ECall 14166 [EArg 0]]]]]
+  ECall 802 [ECall 13695 [EArg 0; EValue (VNat 1)]; EValue (VText [51]); ECall 802 [ECall 13522 [EArg 0; EValue (VNat 2)]; EValue (VText [51; 46; 49]); ECall 10000 [ECall 14180 [ECall 13582 [EArg 0]]; ECall 13713 [ECall 14166 [EArg 0]]]]]
 
 (* Z14209 sum of natural numbers in interval | Z14209@252726 -> Z22063@162112 digest 472043f19e33da3a5048caa9178c626c980775eaf235be48322fc73d438288a0 *)
 let body_Z14209_sum_of_natural_numbers_in_interval : expr =
@@ -854,7 +854,7 @@ let body_Z14531_natural_number_with_english_ordinal_suffix : expr =
 
 (* Z14542 Natural number from ordinal with English suffix | Z14542@168591 -> Z14544@168595 digest 7721bb143a5db6dd53a6118f0da11213b72108acbee33242deacaa279011144b *)
 let body_Z14542_natural_number_from_ordinal_with_english_suffix : expr =
-  ECall 14283 [ECall 11542 [ECall 12696 [EValue (VList [VText [110; 100]; VText [114; 100]; VText [116; 104]]); ECall 14460 [EArg 0; EValue (VNat 2)]]; ECall 11879 [ECall 11879 [EArg 0]]; EArg 0]]
+  ECall 14283 [ECall 802 [ECall 12696 [EValue (VList [VText [110; 100]; VText [114; 100]; VText [116; 104]]); ECall 14460 [EArg 0; EValue (VNat 2)]]; ECall 11879 [ECall 11879 [EArg 0]]; EArg 0]]
 
 (* Z14548 number of function options in configuration | Z14548@273614 -> Z33915@267600 digest a599cd42db9a65a62ad67d29c62a866bb32a41b2e05153fe0cdac4ee444a1513 *)
 let body_Z14548_number_of_function_options_in_configuration : expr =
@@ -942,7 +942,7 @@ let body_Z14711_natural_number_is_between : expr =
 
 (* Z14726 English denominator to fractional ordinal | Z14726@172663 -> Z14731@270458 digest 9e63d26febadfd121180072f31f66178099967c6525c80034860b4adbb9aa911 *)
 let body_Z14726_english_denominator_to_fractional_ordinal : expr =
-  ECall 11542 [ECall 14711 [EArg 0; EValue (VNat 1); EValue (VNat 4)]; ECall 11542 [ECall 13695 [EArg 0; EValue (VNat 2)]; ECall 11542 [ECall 13522 [EArg 0; EValue (VNat 1)]; EValue (VText [119; 104; 111; 108; 101]); EValue (VText [104; 97; 108; 102])]; ECall 11542 [ECall 13522 [EArg 0; EValue (VNat 3)]; EValue (VText [116; 104; 105; 114; 100]); EValue (VText [113; 117; 97; 114; 116; 101; 114])]]; ECall 14526 [EArg 0]]
+  ECall 802 [ECall 14711 [EArg 0; EValue (VNat 1); EValue (VNat 4)]; ECall 802 [ECall 13695 [EArg 0; EValue (VNat 2)]; ECall 802 [ECall 13522 [EArg 0; EValue (VNat 1)]; EValue (VText [119; 104; 111; 108; 101]); EValue (VText [104; 97; 108; 102])]; ECall 802 [ECall 13522 [EArg 0; EValue (VNat 3)]; EValue (VText [116; 104; 105; 114; 100]); EValue (VText [113; 117; 97; 114; 116; 101; 114])]]; ECall 14526 [EArg 0]]
 
 (* Z14732 hyperoperation | Z14732@294226 -> Z33413@265065 digest ba53f9b2b300e216b5c86bc6a7a0d3d4ae13cc7db01a8f01296f398e6fddabe9 *)
 let body_Z14732_hyperoperation : expr =
@@ -1114,7 +1114,7 @@ let body_Z15061_riordan_number : expr =
 
 (* Z15068 nth number in Baum–Sweet sequence | Z15068@270951 -> Z34517@270950 digest 4b0d501a2d65d894b645e10ec69701abf8585b67e3ac3bf5c60b63abaf6d67e0 *)
 let body_Z15068_nth_number_in_baum_sweet_sequence : expr =
-  ECall 17065 [ECall 813 [ECall 872 [EValue (VFunc 34353); ECall 873 [EValue (VFunc 11040); ECall 25614 [ECall 13779 [EArg 0]; EValue (VText [49])]]]]]
+  ECall 802 [ECall 813 [ECall 872 [EValue (VFunc 34353); ECall 873 [EValue (VFunc 11040); ECall 25614 [ECall 13779 [EArg 0]; EValue (VText [49])]]]]; EValue (VNat 1); EValue (VNat 0)]
 
 (* Z15075 Padovan number | Z15075@220283 -> Z15774@197354 digest 316f6e6e0ab059550a739f58e48113b606311165a408d3d1aa5b41529e138522 *)
 let body_Z15075_padovan_number : expr =
@@ -1122,7 +1122,7 @@ let body_Z15075_padovan_number : expr =
 
 (* Z15080 Perrin number | Z15080@281881 -> Z34518@270952 digest 8a1f200f25f9458a8add757157516037d36897a5078114132f83ace89076c74b *)
 let body_Z15080_perrin_number : expr =
-  ECall 802 [ECall 13695 [EArg 0; EValue (VNat 3)]; ECall 19565 [ECall 23883 [EArg 0]; EValue (VNat 3); ECall 31547 [EArg 0]; EValue (VNat 0); EValue (VNat 2)]; ECall 13521 [ECall 15080 [ECall 13569 [EArg 0; EValue (VNat 2)]]; ECall 15080 [ECall 13569 [EArg 0; EValue (VNat 3)]]]]
+  ECall 802 [ECall 13695 [EArg 0; EValue (VNat 3)]; ECall 802 [ECall 23883 [EArg 0]; EValue (VNat 3); ECall 802 [ECall 31547 [EArg 0]; EValue (VNat 0); EValue (VNat 2)]]; ECall 13521 [ECall 15080 [ECall 13569 [EArg 0; EValue (VNat 2)]]; ECall 15080 [ECall 13569 [EArg 0; EValue (VNat 3)]]]]
 
 (* Z15085 Padovan's spiral number | Z15085@179033 -> Z15086@179034 digest 2711edcee3f48b39635ace09091ef4b0dce36929d7322362a394d06f48983d4a *)
 let body_Z15085_padovan_s_spiral_number : expr =
@@ -1154,7 +1154,7 @@ let body_Z15117_highest_power_of_2_dividing_n : expr =
 
 (* Z15121 is odious number | Z15121@273622 -> Z15126@180223 digest 5381d9c7fd71942afe870f7c04e00cef61bd8e430973550f1f4f8766a0427c33 *)
 let body_Z15121_is_odious_number : expr =
-  ECall 13522 [ECall 14003 [EArg 0]; EValue (VNat 1)]
+  ECall 13522 [ECall 802 [ECall 34353 [ECall 13860 [EArg 0]]; EValue (VNat 1); EValue (VNat 0)]; EValue (VNat 1)]
 
 (* Z15127 is evil number | Z15127@220832 -> Z15133@180595 digest 38350922f1b07715813f043e1ae2640c735d064a1d7056015abff77f7aa4cc02 *)
 let body_Z15127_is_evil_number : expr =
@@ -1302,7 +1302,7 @@ let body_Z15330_zag_number : expr =
 
 (* Z15334 unsigned Stirling number of the first kind | Z15334@271081 -> Z34552@271082 digest 0b20cee18569ffbd330b45106ce4612836b0ae5b060e2019f4295ddbbe1e1591 *)
 let body_Z15334_unsigned_stirling_number_of_the_first_kind : expr =
-  ECall 19565 [ECall 23883 [EArg 0]; ECall 802 [ECall 23883 [EArg 1]; EValue (VNat 1); EValue (VNat 0)]; ECall 23883 [EArg 1]; EValue (VNat 0); ECall 13521 [ECall 13539 [ECall 13582 [EArg 0]; ECall 15334 [ECall 13582 [EArg 0]; EArg 1]]; ECall 15334 [ECall 13582 [EArg 0]; ECall 13582 [EArg 1]]]]
+  ECall 802 [ECall 23883 [EArg 0]; ECall 802 [ECall 23883 [EArg 1]; EValue (VNat 1); EValue (VNat 0)]; ECall 802 [ECall 23883 [EArg 1]; EValue (VNat 0); ECall 13521 [ECall 13539 [ECall 13582 [EArg 0]; ECall 15334 [ECall 13582 [EArg 0]; EArg 1]]; ECall 15334 [ECall 13582 [EArg 0]; ECall 13582 [EArg 1]]]]]
 
 (* Z15337 Stirling number of the second kind | Z15337@271084 -> Z34553@271083 digest acf4f6cb66486a60911d5270fd5d32d0ae5367bab386f982a9eff49abf8cbdec *)
 let body_Z15337_stirling_number_of_the_second_kind : expr =

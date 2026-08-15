@@ -133,21 +133,21 @@ value this harness can read:
 | | count | was |
 |---|---|---|
 | testers considered | 10,287 | 10,281 |
-| pass | **2,385** | 1,414 |
-| fail | 197 | 111 |
-| error | 6,000 | 1,594 |
+| pass | **2,509** | 1,414 |
+| fail | 222 | 111 |
+| error | 5,851 | 1,594 |
 | skipped, with reasons | 1,705 | 7,165 |
 
 | | count | was |
 |---|---|---|
-| functions with at least one passing tester | 1,021 | 600 |
-| functions passing every tester that could be read | **771** | 493 |
+| functions with at least one passing tester | 1,078 | 600 |
+| functions passing every tester that could be read | **800** | 493 |
 
 A tester is only counted as passing when both its call and its expected value were
 readable. Everything else is skipped with a stated reason, never counted as a pass.
 
 Read the error column carefully. It quadrupled in the same change that raised passes from
-1,414 to 2,385, and that is not a regression — it is the same cases, differently
+1,414 to 2,509, and that is not a regression — it is the same cases, differently
 classified. The harness learned three things it could not read before, all of them about
 arguments rather than about the engine:
 
@@ -172,7 +172,7 @@ The largest remaining buckets are honest limits, not silence:
 - 767 reach `Z6820` Fetch Wikidata entities, which is a data fetch rather than a function
 - 292 reach `Z805` reify on a list or a pair, which it refuses because those carry no
   element type — the one real gap left in the value model
-- 197 disagree and are worth individual investigation. They are ordinary scalar
+- 222 disagree and are worth individual investigation. They are ordinary scalar
   disagreements — a string in, a boolean or a string out — not artefacts of the harness
 
 `make tester-report` groups all of it by cause rather than by message, as
@@ -499,10 +499,24 @@ any recursive function with no path to an answer that avoids its own group —
 because once the guards are strict, that is a function with no base case,
 whatever the corpus intended.
 
-This one is not really about compilation. The interpreter is strict for these
-calls too; it survives only because its fuel counts total steps, so `Z14859`
-reports exhaustion rather than an answer. Neither is what the corpus means.
-Making a conditional alias lazy in the interpreter as well would fix both.
+This is not only about compilation, and in the interpreter it was giving **wrong
+answers**, not slow ones. `Z12899 join list of strings with delimiter` is written
+as `Z19565(null?(l), "", …, car(l), …)`, where `Z19565` is a five-argument `if`
+written as a function. Every argument evaluated means `car` of the empty list is
+taken before the guard can choose, and the interpreter answered *"type mismatch
+in Z811"* where the answer is `""`.
+
+So the aliases are put back before either path sees them: when the generator has
+translated every body, a call to a non-recursive function whose body is headed by
+a conditional is replaced by that body with the arguments substituted in.
+**187 bodies** change, and the interpreter's own `Z802` form makes them lazy
+again. What is contributable back to Wikifunctions keeps the original — only what
+runs here is rewritten.
+
+Measured: testers passing 2,385 → **2,509**, functions passing every readable
+tester 771 → **800**. `Z10108 string end padding` stopped throwing
+`Maximum call stack size exceeded` at the same time: the overflow was strict
+evaluation of a guarded recursive branch, not the depth limit.
 
 ### What is left to the interpreter, and why
 

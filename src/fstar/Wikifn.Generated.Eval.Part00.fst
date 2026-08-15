@@ -334,7 +334,7 @@ let body_Z10715_is_numeric : expr =
 
 (* Z10725 join booleans | Z10725@156731 -> Z10736@156844 digest 2529ded4db5d1f2f84a3c734fb1bd906721de66019df4012dc72d6103883b196 *)
 let body_Z10725_join_booleans : expr =
-  ECall 10000 [ECall 10730 [EArg 0]; ECall 10730 [EArg 1]]
+  ECall 10000 [ECall 802 [EArg 0; EValue (VText [116; 114; 117; 101]); EValue (VText [102; 97; 108; 115; 101])]; ECall 802 [EArg 1; EValue (VText [116; 114; 117; 101]); EValue (VText [102; 97; 108; 115; 101])]]
 
 (* Z10730 boolean to string | Z10730@149728 -> Z12274@128341 digest 3e3d899d94fc719d95d5935e69098766c71607165fa06b53e10332de0d312da7 *)
 let body_Z10730_boolean_to_string : expr =
@@ -358,7 +358,7 @@ let body_Z10753_duplicate_string : expr =
 
 (* Z10761 URI percent encode | Z10761@280071 -> Z35987@280073 digest f66390fb2d6763cb1043f867f59cb8732bf48d01adf84355d2dc1724c8b1f434 *)
 let body_Z10761_uri_percent_encode : expr =
-  ECall 802 [ECall 10008 [EArg 0]; EArg 0; ECall 10000 [ECall 19565 [ECall 13676 [ECall 11515 [EArg 0]; EValue (VNat 126)]; ECall 10000 [EValue (VText [37]); ECall 19654 [ECall 10018 [ECall 10366 [ECall 10901 [EArg 0]]]; EValue (VNat 2); EValue (VText [37])]]; ECall 10070 [EValue (VText [32; 34; 37; 60; 62; 91; 92; 93; 94; 96; 123; 124; 125]); ECall 10901 [EArg 0]]; ECall 22193 [ECall 10901 [EArg 0]; EValue (VList [VText [32]; VText [34]; VText [37]; VText [60]; VText [62]; VText [91]; VText [92]; VText [93]; VText [94]; VText [96]; VText [123]; VText [124]; VText [125]]); EValue (VList [VText [37; 50; 48]; VText [37; 50; 50]; VText [37; 50; 53]; VText [37; 51; 67]; VText [37; 51; 69]; VText [37; 53; 66]; VText [37; 53; 67]; VText [37; 53; 68]; VText [37; 53; 69]; VText [37; 54; 48]; VText [37; 55; 66]; VText [37; 55; 67]; VText [37; 55; 68]])]; ECall 10901 [EArg 0]]; ECall 10761 [ECall 14456 [EArg 0]]]]
+  ECall 802 [ECall 10008 [EArg 0]; EArg 0; ECall 10000 [ECall 802 [ECall 13676 [ECall 11515 [EArg 0]; EValue (VNat 126)]; ECall 10000 [EValue (VText [37]); ECall 19654 [ECall 10018 [ECall 10366 [ECall 10901 [EArg 0]]]; EValue (VNat 2); EValue (VText [37])]]; ECall 802 [ECall 10070 [EValue (VText [32; 34; 37; 60; 62; 91; 92; 93; 94; 96; 123; 124; 125]); ECall 10901 [EArg 0]]; ECall 22193 [ECall 10901 [EArg 0]; EValue (VList [VText [32]; VText [34]; VText [37]; VText [60]; VText [62]; VText [91]; VText [92]; VText [93]; VText [94]; VText [96]; VText [123]; VText [124]; VText [125]]); EValue (VList [VText [37; 50; 48]; VText [37; 50; 50]; VText [37; 50; 53]; VText [37; 51; 67]; VText [37; 51; 69]; VText [37; 53; 66]; VText [37; 53; 67]; VText [37; 53; 68]; VText [37; 53; 69]; VText [37; 54; 48]; VText [37; 55; 66]; VText [37; 55; 67]; VText [37; 55; 68]])]; ECall 10901 [EArg 0]]]; ECall 10761 [ECall 14456 [EArg 0]]]]
 
 (* Z10765 is ISSN | Z10765@280502 -> Z36060@280501 digest efd6662abdc74f31e8443e8381c3cb04cc0d67d154ceaa70f73433459ef0e3a2 *)
 let body_Z10765_is_issn : expr =
@@ -502,7 +502,7 @@ let body_Z11044_url_fragment : expr =
 
 (* Z11053 URL query string | Z11053@176071 -> Z13511@134235 digest 49610bafc6652cd070d3290f5739248d8d7d275e079c4911016d7eb7d7cba972 *)
 let body_Z11053_url_query_string : expr =
-  ECall 11542 [ECall 10070 [EArg 0; EValue (VText [63])]; ECall 11410 [ECall 11420 [EArg 0; EValue (VText [63])]; EValue (VText [35])]; EValue (VText [])]
+  ECall 802 [ECall 10070 [EArg 0; EValue (VText [63])]; ECall 11410 [ECall 11420 [EArg 0; EValue (VText [63])]; EValue (VText [35])]; EValue (VText [])]
 
 (* Z11060 get last character of string | Z11060@206626 -> Z11062@94763 digest a8040cdf49797add1de490108669ad83b441898f96bd537ec533fc4c8c0e0a34 *)
 let body_Z11060_get_last_character_of_string : expr =
@@ -630,7 +630,7 @@ let body_Z11298_regular_croatian_feminine_dative_plural : expr =
 
 (* Z11302 English possessive | Z11302@257936 -> Z11305@257935 digest c0505cc7f1072851cea25ede181c83b34363ff1cabf63259c893d656b5240219 *)
 let body_Z11302_english_possessive : expr =
-  ECall 11542 [ECall 10618 [EArg 0; EValue (VText [115])]; ECall 802 [ECall 866 [EArg 0; EValue (VText [117; 115])]; EValue (VText [111; 117; 114; 115]); ECall 10000 [EArg 0; EValue (VText [39])]]; ECall 802 [ECall 23883 [ECall 13708 [EArg 0; EValue (VList [VText [109; 101]; VText [117; 115]; VText [116; 104; 101; 101]; VText [121; 111; 117]; VText [104; 105; 109]; VText [104; 101; 114]; VText [105; 116]; VText [116; 104; 101; 109]; VText [119; 104; 111; 109]; VText [73]; VText [119; 101]; VText [116; 104; 111; 117]; VText [121; 101]; VText [104; 101]; VText [115; 104; 101]; VText [116; 104; 101; 121]; VText [119; 104; 111]])]]; ECall 10000 [EArg 0; EValue (VText [39; 115])]; ECall 13397 [EValue (VList [VText [109; 105; 110; 101]; VText [111; 117; 114; 115]; VText [116; 104; 105; 110; 101]; VText [121; 111; 117; 114; 115]; VText [104; 105; 115]; VText [104; 101; 114; 115]; VText [105; 116; 115]; VText [116; 104; 101; 105; 114; 115]; VText [119; 104; 111; 115; 101]; VText [109; 105; 110; 101]; VText [111; 117; 114; 115]; VText [116; 104; 105; 110; 101]; VText [121; 111; 117; 114; 115]; VText [104; 105; 115]; VText [104; 101; 114; 115]; VText [116; 104; 101; 105; 114; 115]; VText [119; 104; 111; 115; 101]]); ECall 13708 [EArg 0; EValue (VList [VText [109; 101]; VText [117; 115]; VText [116; 104; 101; 101]; VText [121; 111; 117]; VText [104; 105; 109]; VText [104; 101; 114]; VText [105; 116]; VText [116; 104; 101; 109]; VText [119; 104; 111; 109]; VText [73]; VText [119; 101]; VText [116; 104; 111; 117]; VText [121; 101]; VText [104; 101]; VText [115; 104; 101]; VText [116; 104; 101; 121]; VText [119; 104; 111]])]]]]
+  ECall 802 [ECall 10618 [EArg 0; EValue (VText [115])]; ECall 802 [ECall 866 [EArg 0; EValue (VText [117; 115])]; EValue (VText [111; 117; 114; 115]); ECall 10000 [EArg 0; EValue (VText [39])]]; ECall 802 [ECall 23883 [ECall 13708 [EArg 0; EValue (VList [VText [109; 101]; VText [117; 115]; VText [116; 104; 101; 101]; VText [121; 111; 117]; VText [104; 105; 109]; VText [104; 101; 114]; VText [105; 116]; VText [116; 104; 101; 109]; VText [119; 104; 111; 109]; VText [73]; VText [119; 101]; VText [116; 104; 111; 117]; VText [121; 101]; VText [104; 101]; VText [115; 104; 101]; VText [116; 104; 101; 121]; VText [119; 104; 111]])]]; ECall 10000 [EArg 0; EValue (VText [39; 115])]; ECall 13397 [EValue (VList [VText [109; 105; 110; 101]; VText [111; 117; 114; 115]; VText [116; 104; 105; 110; 101]; VText [121; 111; 117; 114; 115]; VText [104; 105; 115]; VText [104; 101; 114; 115]; VText [105; 116; 115]; VText [116; 104; 101; 105; 114; 115]; VText [119; 104; 111; 115; 101]; VText [109; 105; 110; 101]; VText [111; 117; 114; 115]; VText [116; 104; 105; 110; 101]; VText [121; 111; 117; 114; 115]; VText [104; 105; 115]; VText [104; 101; 114; 115]; VText [116; 104; 101; 105; 114; 115]; VText [119; 104; 111; 115; 101]]); ECall 13708 [EArg 0; EValue (VList [VText [109; 101]; VText [117; 115]; VText [116; 104; 101; 101]; VText [121; 111; 117]; VText [104; 105; 109]; VText [104; 101; 114]; VText [105; 116]; VText [116; 104; 101; 109]; VText [119; 104; 111; 109]; VText [73]; VText [119; 101]; VText [116; 104; 111; 117]; VText [121; 101]; VText [104; 101]; VText [115; 104; 101]; VText [116; 104; 101; 121]; VText [119; 104; 111]])]]]]
 
 (* Z11306 is an Igbo vowel | Z11306@277536 -> Z32116@257856 digest a0caf7d5f55fe7037ced83287724abf8fd067864e35a9d6b2015e59e2469a00c *)
 let body_Z11306_is_an_igbo_vowel : expr =
@@ -694,11 +694,11 @@ let body_Z11383_has_and_is_lowercase : expr =
 
 (* Z11410 discard from start of first substring | Z11410@213456 -> Z27841@213437 digest 3bed12c7b1f15bab6d5a6f0ce4fe7693b63d9c212f9661f49c85ba4970e543f5 *)
 let body_Z11410_discard_from_start_of_first_substring : expr =
-  ECall 20305 [ECall 811 [ECall 25614 [EArg 0; EArg 1]]; ECall 10008 [EArg 1]; EArg 0]
+  ECall 802 [ECall 10008 [EArg 1]; EArg 0; ECall 811 [ECall 25614 [EArg 0; EArg 1]]]
 
 (* Z11412 discard from end of first substring | Z11412@257964 -> Z11432@112228 digest 9b840255d27ba11f22f41accfc4bcd362f36b3028fe03b23c303b7d4ea1e35a1 *)
 let body_Z11412_discard_from_end_of_first_substring : expr =
-  ECall 10000 [ECall 11410 [EArg 0; EArg 1]; ECall 11542 [ECall 10070 [EArg 0; EArg 1]; EArg 1; EValue (VText [])]]
+  ECall 10000 [ECall 11410 [EArg 0; EArg 1]; ECall 802 [ECall 10070 [EArg 0; EArg 1]; EArg 1; EValue (VText [])]]
 
 (* Z11414 discard from start of last substring | Z11414@213286 -> Z11434@102694 digest 705f291f35cc90f361955ab627aa42a0da332b84c8ac86c7219c2b865df2907e *)
 let body_Z11414_discard_from_start_of_last_substring : expr =
@@ -706,11 +706,11 @@ let body_Z11414_discard_from_start_of_last_substring : expr =
 
 (* Z11416 discard from end of last substring | Z11416@102779 -> Z11435@112355 digest efd7917be70395ec6bea4b414e0161fff67cc89f3cc1d5aac2444c7f29656c02 *)
 let body_Z11416_discard_from_end_of_last_substring : expr =
-  ECall 10000 [ECall 11414 [EArg 0; EArg 1]; ECall 11542 [ECall 10070 [EArg 0; EArg 1]; EArg 1; EValue (VText [])]]
+  ECall 10000 [ECall 11414 [EArg 0; EArg 1]; ECall 802 [ECall 10070 [EArg 0; EArg 1]; EArg 1; EValue (VText [])]]
 
 (* Z11418 discard until start of first substring | Z11418@102776 -> Z11433@112231 digest a3bbb17c6119da7637ba976464fd05d7a9142482b286381bbdbf6d32c16d8088 *)
 let body_Z11418_discard_until_start_of_first_substring : expr =
-  ECall 10000 [ECall 11542 [ECall 10070 [EArg 0; EArg 1]; EArg 1; EValue (VText [])]; ECall 11420 [EArg 0; EArg 1]]
+  ECall 10000 [ECall 802 [ECall 10070 [EArg 0; EArg 1]; EArg 1; EValue (VText [])]; ECall 11420 [EArg 0; EArg 1]]
 
 (* Z11420 discard until end of first substring | Z11420@164251 -> Z11436@112100 digest 24873fc373f8645e17a36db7a1d5d0d3d28747db8c9edabfb3c93b2a2923abc9 *)
 let body_Z11420_discard_until_end_of_first_substring : expr =
@@ -718,7 +718,7 @@ let body_Z11420_discard_until_end_of_first_substring : expr =
 
 (* Z11422 discard until start of last substring | Z11422@293350 -> Z11439@112356 digest 34d5af804f14a9c3eed4c47fb5f801f5036af120108442b8a6104fd7f46c69fe *)
 let body_Z11422_discard_until_start_of_last_substring : expr =
-  ECall 10000 [ECall 11542 [ECall 10070 [EArg 0; EArg 1]; EArg 1; EValue (VText [])]; ECall 11424 [EArg 0; EArg 1]]
+  ECall 10000 [ECall 802 [ECall 10070 [EArg 0; EArg 1]; EArg 1; EValue (VText [])]; ECall 11424 [EArg 0; EArg 1]]
 
 (* Z11424 discard until end of last substring | Z11424@102781 -> Z11438@112358 digest f3546a8ecc576731d06a8952fe8a67f99ef1467fd0cde7e2dd38b24c3ee2f9d8 *)
 let body_Z11424_discard_until_end_of_last_substring : expr =
@@ -798,7 +798,7 @@ let body_Z11528_in_codepoint_order_three_characters : expr =
 
 (* Z11531 remove characters in character range | Z11531@220323 -> Z11545@111570 digest fbb32a6c38a663e74c3752540e5b8fd4495a7cda633f63e2856917994b65263a *)
 let body_Z11531_remove_characters_in_character_range : expr =
-  ECall 11542 [ECall 11523 [EArg 1; EArg 2]; ECall 11531 [ECall 10075 [EArg 0; EArg 1; EValue (VText [])]; ECall 11538 [EArg 1]; EArg 2]; EArg 0]
+  ECall 802 [ECall 11523 [EArg 1; EArg 2]; ECall 11531 [ECall 10075 [EArg 0; EArg 1; EValue (VText [])]; ECall 11538 [EArg 1]; EArg 2]; EArg 0]
 
 (* Z11534 chr of codepoint value | Z11534@255991 -> Z31853@255990 digest 421fd3416b4b54384a84679fce1b9ec7faef8111ae2f01bbd1da6581cb4e8efe *)
 let body_Z11534_chr_of_codepoint_value : expr =
@@ -914,7 +914,7 @@ let body_Z11789_german_noun_e_declension : expr =
 
 (* Z11795 English comparative adjective | Z11795@257916 -> Z11798@108723 digest 80baead14d3c5ab0e5328d6561609e6fe26fd98229281aa46b5d88981e9b86c3 *)
 let body_Z11795_english_comparative_adjective : expr =
-  ECall 11542 [ECall 10618 [EArg 0; EValue (VText [101])]; ECall 10000 [EArg 0; EValue (VText [114])]; ECall 10000 [EArg 0; EValue (VText [101; 114])]]
+  ECall 802 [ECall 10618 [EArg 0; EValue (VText [101])]; ECall 10000 [EArg 0; EValue (VText [114])]; ECall 10000 [EArg 0; EValue (VText [101; 114])]]
 
 (* Z11811 remove isotopic specificity in SMILES | Z11811@241800 -> Z11814@113181 digest ef9e7bf789e59b6d2631a6176f4e61fcd3951ccc051b7c46c5788c1d489270f6 *)
 let body_Z11811_remove_isotopic_specificity_in_smiles : expr =
@@ -1122,7 +1122,7 @@ let body_Z12183_sindhi_devanagari_feminine_u_uni : expr =
 
 (* Z12203 English regular superlative form | Z12203@259443 -> Z12211@164754 digest c69b8f79d7b7e58722db99697c1a11638d8f681619df842f7058ba17e09f1d0c *)
 let body_Z12203_english_regular_superlative_form : expr =
-  ECall 11542 [ECall 10618 [EArg 0; EValue (VText [101])]; ECall 10000 [EArg 0; EValue (VText [115; 116])]; ECall 10000 [EArg 0; EValue (VText [101; 115; 116])]]
+  ECall 802 [ECall 10618 [EArg 0; EValue (VText [101])]; ECall 10000 [EArg 0; EValue (VText [115; 116])]; ECall 10000 [EArg 0; EValue (VText [101; 115; 116])]]
 
 (* Z12225 Urdu remove gerund suffix | Z12225@260773 -> Z32713@260772 digest 2c1fc60688f780964903b00454b2fc51ed89c038edb280c5707120816aaa5097 *)
 let body_Z12225_urdu_remove_gerund_suffix : expr =
@@ -1466,7 +1466,7 @@ let body_Z12617_remove_charges_from_smiles_string : expr =
 
 (* Z12624 Replicate string n-times | Z12624@262028 -> Z14074@152861 digest fd51215534d7bcfbb4c27fc44baba89796e4d6712f37ec79e71183a147a762f1 *)
 let body_Z12624_replicate_string_n_times : expr =
-  ECall 11542 [ECall 13522 [EArg 1; EValue (VNat 0)]; EValue (VText []); ECall 10000 [EArg 0; ECall 12624 [EArg 0; ECall 13582 [EArg 1]]]]
+  ECall 802 [ECall 13522 [EArg 1; EValue (VNat 0)]; EValue (VText []); ECall 10000 [EArg 0; ECall 12624 [EArg 0; ECall 13582 [EArg 1]]]]
 
 (* Z12626 is pangram (Latin alphabet) | Z12626@293032 -> Z13122@131271 digest 3299b6d8db38c1e9ddb3c0de0541b169cd89c1de7db4a93475dfd053a7a0d39b *)
 let body_Z12626_is_pangram_latin_alphabet : expr =
@@ -1550,7 +1550,7 @@ let body_Z12781_left_fold : expr =
 
 (* Z12787 Korean add (-eun) to the end of a noun | Z12787@237240 -> Z12788@209885 digest d4d6a04e3514a8826c9ddc9240abb695454244bdbf4186044c4b92edd0bbda8b *)
 let body_Z12787_korean_add_eun_to_the_end_of_a_noun : expr =
-  ECall 21394 [ECall 810 [EArg 0; ECall 810 [ECall 11542 [ECall 12778 [EArg 0]; EValue (VText [51008]); EValue (VText [45716])]; EValue (VList [])]]]
+  ECall 21394 [ECall 810 [EArg 0; ECall 810 [ECall 802 [ECall 12778 [EArg 0]; EValue (VText [51008]); EValue (VText [45716])]; EValue (VList [])]]]
 
 (* Z12812 Caesar cipher (Latin alphabet) | Z12812@293040 -> Z14641@170897 digest 269c47ac7f0bf8a4daa4d2f82a7890284e87a62a73582110fbc816945d3eb06e *)
 let body_Z12812_caesar_cipher_latin_alphabet : expr =
@@ -1598,7 +1598,7 @@ let body_Z12895_esperanto_accusative_plural : expr =
 
 (* Z12899 join list of strings with delimiter | Z12899@266634 -> Z21304@251012 digest 99f1ee75d642efa78de5cae43404a7ba8f84e98db5d9797c926d58aafede7cc7 *)
 let body_Z12899_join_list_of_strings_with_delimiter : expr =
-  ECall 19565 [ECall 813 [EArg 0]; EValue (VText []); ECall 12755 [EArg 0]; ECall 811 [EArg 0]; ECall 15175 [ECall 811 [EArg 0]; ECall 12899 [ECall 812 [EArg 0]; EArg 1]; EArg 1]]
+  ECall 802 [ECall 813 [EArg 0]; EValue (VText []); ECall 802 [ECall 12755 [EArg 0]; ECall 811 [EArg 0]; ECall 15175 [ECall 811 [EArg 0]; ECall 12899 [ECall 812 [EArg 0]; EArg 1]; EArg 1]]]
 
 (* Z12905 Decimal to ASCII | Z12905@267858 -> Z33968@267857 digest b370f26ef256457733014e8ea0e34d24cc6be9965da4af2448ce3b1324c3f364 *)
 let body_Z12905_decimal_to_ascii : expr =
