@@ -23,3 +23,6 @@ third_party/wikifunctions-dumps/**/*.xml
 *.log
 *.checked
 src/fstar/.cache/
+
+# Personal Claude Code settings; the skills beside them are shared.
+.claude/settings.local.json

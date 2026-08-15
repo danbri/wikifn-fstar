@@ -25,10 +25,20 @@ ocamlfind_run() {
   fi
 }
 
+# js_of_ocaml recurses over the whole program, and the values lifted out of
+# large compositions are lists of thousands of elements - a cons chain that deep
+# overflows the default 8 MB stack on macOS with nothing but "Stack overflow" to
+# show for it. Raised to the hard limit for this step only. OCAMLRUNPARAM covers
+# the same thing if the binary is bytecode rather than native.
+#
+# Best effort: a platform that refuses either setting still gets a build
+# attempt, and the failure is the same one it would have had anyway.
 js_of_ocaml_run() {
-  if command -v js_of_ocaml >/dev/null 2>&1; then js_of_ocaml "$@"
-  else opam exec --switch=fstar -- js_of_ocaml "$@"
-  fi
+  ( ulimit -s "$(ulimit -Hs)" 2>/dev/null || true
+    export OCAMLRUNPARAM="${OCAMLRUNPARAM:-l=1000000000}"
+    if command -v js_of_ocaml >/dev/null 2>&1; then js_of_ocaml "$@"
+    else opam exec --switch=fstar -- js_of_ocaml "$@"
+    fi )
 }
 
 mkdir -p "$ocaml_out" "$(dirname "$bytecode")" "$(dirname "$js_out")"
@@ -40,6 +50,11 @@ generated_parts=()
 while IFS= read -r part; do
   generated_parts+=("$part")
 done < <(find "$root/src/fstar" -name 'Wikifn.Generated.Eval.Part*.fst' | sort)
+
+generated_values=()
+while IFS= read -r part; do
+  generated_values+=("$part")
+done < <(find "$root/src/fstar" -name 'Wikifn.Generated.Eval.Values*.fst' | sort)
 
 if [[ ${#generated_parts[@]} -eq 0 ]]; then
   echo "No Wikifn.Generated.Eval.Part*.fst found; run make fstar-generate-eval first." >&2
@@ -56,10 +71,17 @@ fstar \
   "$root/src/fstar/Wikifn.Zid.fst" \
   "$root/src/fstar/Wikifn.Eval.fst" \
   "$root/src/fstar/Wikifn.Print.fst" \
+  "${generated_values[@]}" \
   "${generated_parts[@]}" \
   "$root/src/fstar/Wikifn.Generated.Eval.fst" \
   "$root/src/fstar/Wikifn.Direct.fst" \
   "$root/src/fstar/Wikifn.Compiled.Direct.fst"
+
+generated_values_ml=()
+for part in "${generated_values[@]}"; do
+  name="$(basename "$part" .fst)"
+  generated_values_ml+=("$ocaml_out/${name//./_}.ml")
+done
 
 generated_part_ml=()
 for part in "${generated_parts[@]}"; do
@@ -92,6 +114,7 @@ ocamlfind_run ocamlc \
   "$ocaml_out/Wikifn_Zid.ml" \
   "$ocaml_out/Wikifn_Eval.ml" \
   "$ocaml_out/Wikifn_Print.ml" \
+  "${generated_values_ml[@]}" \
   "${generated_part_ml[@]}" \
   "$ocaml_out/Wikifn_Generated_Eval.ml" \
   "$ocaml_out/Wikifn_Direct.ml" \

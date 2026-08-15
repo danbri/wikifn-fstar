@@ -10,11 +10,34 @@
 //   node scripts/export-all-scheme.js
 
 import { createRequire } from "node:module";
+import { spawnSync } from "node:child_process";
 import { copyFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const require = createRequire(import.meta.url);
+
+// The printer recurses over the body, so a deep enough composition exhausts
+// the JavaScript stack before F* notices anything. On the default 8 MB that was
+// 38 of 3,892 definitions - and one of them, Z33163, had been named in the docs
+// as a permanent limit for months.
+//
+// It is not one. Raising the V8 stack to just under the OS thread stack renders
+// all of them. Both have to move together: --stack-size above the thread stack
+// segfaults V8 rather than throwing, which is a worse failure than the one it
+// replaces.
+//
+// Re-exec rather than a Makefile flag, so running the script directly gives the
+// same output as running it through make.
+if (!process.env.WIKIFN_DEEP_STACK) {
+  const result = spawnSync(
+    "/bin/sh",
+    ["-c", `ulimit -s "$(ulimit -Hs)" 2>/dev/null || true; exec "$0" --stack-size=60000 "$@"`,
+      process.execPath, fileURLToPath(import.meta.url), ...process.argv.slice(2)],
+    { stdio: "inherit", env: { ...process.env, WIKIFN_DEEP_STACK: "1" } }
+  );
+  process.exit(result.status ?? 1);
+}
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const catalog = require(path.join(root, "docs", "generated", "functions.json"));
 require(path.join(root, "docs", "generated", "wikifn_engine.cjs"));

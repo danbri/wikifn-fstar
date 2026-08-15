@@ -54,6 +54,9 @@ const TEXT_CHUNK = 400;
 // with the number of definitions and with the size of the terms in them, and a
 // handful of large bodies can make a part of ordinary length expensive.
 const PART_BYTES = 262144;
+const valuesName = (index) => `Wikifn.Generated.Eval.Values${String(index).padStart(2, "0")}`;
+const valuesPath = (index) =>
+  path.join(root, "src", "fstar", `${valuesName(index)}.fst`);
 const partPath = (index) =>
   path.join(root, "src", "fstar", `Wikifn.Generated.Eval.Part${String(index).padStart(2, "0")}.fst`);
 
@@ -113,6 +116,12 @@ const PRIMITIVES = new Set([
   "Z10047", "Z10018",
   // Types as values: the generic type constructors, and rendering a type.
   "Z881", "Z882", "Z883", "Z22764",
+  // Quoting: Z99 is a type so it is never called, but reify, unquote and
+  // quoted-reference are.
+  "Z805", "Z899", "Z29267",
+  // Z808 Abstract, the inverse of Z805: a list of key-value pairs back into the
+  // object it describes.
+  "Z808",
   // Text and codepoint lists are the same data in two shapes.
   "Z22693", "Z22717",
   // Higher-order application, which is how the corpus writes higher-order code.
@@ -282,6 +291,11 @@ async function signature(zid, labelOf) {
 // cannot hold, so those stay references.
 const valueReferenceCache = new Map();
 
+// Guards against a data object that reaches itself. Nothing in the corpus does
+// today, but a persistent object is free to mention any ZID and the resolver
+// now follows structure rather than a fixed list of types.
+const resolvingReferences = new Set();
+
 async function resolveValueReference(zid) {
   if (valueReferenceCache.has(zid)) return valueReferenceCache.get(zid);
   let result;
@@ -289,6 +303,33 @@ async function resolveValueReference(zid) {
   const body = object?.canonical?.Z2K2;
   if (body !== undefined) {
     const type = refZid(body?.Z1K1);
+    // A persistent object holding a quote. Z33395 is the language fallback
+    // table, stored as a Z99 and read with Z899 unquote; before this it became
+    // a reference to a function that does not exist.
+    //
+    // Anything else structural - a list, a pair, a record - is resolved by
+    // translating it, and kept only if what comes back is a value rather than
+    // something that would have to be computed. That covers the shapes the
+    // value model holds without naming them one at a time, which the earlier
+    // Z6/Z40/Z13518 list did.
+    if (type !== "Z8" && type !== "Z14" && !resolvingReferences.has(zid) &&
+        (type === "Z99" || Array.isArray(body) ||
+         (body !== null && typeof body === "object" && body.Z1K1 !== undefined &&
+          !["Z6", "Z40", "Z13518", "Z10", "Z9"].includes(type)))) {
+      resolvingReferences.add(zid);
+      try {
+        const translated = await translate(body, { argIndex: new Map() });
+        if (isLiteral(translated)) result = translated;
+      } catch (error) {
+        if (!(error instanceof Unsupported)) throw error;
+      } finally {
+        resolvingReferences.delete(zid);
+      }
+      if (result !== undefined) {
+        valueReferenceCache.set(zid, result);
+        return result;
+      }
+    }
     if (typeof body === "string" && !/^Z[1-9][0-9]*$/.test(body)) {
       result = chunkedText(body);
     } else if (type === "Z6" && typeof stringOf(body) === "string") {
@@ -432,6 +473,13 @@ async function translate(term, context) {
     // A typed object literal: Wikidata references, monolingual text, rationals
     // and floats are all written this way. Fields that are themselves literals
     // make the whole thing a value.
+    // A quote. Z99 is a type, not a function, so this is always a literal
+    // object - and a quote is always a value even when what it holds is
+    // computed, which is why it needs no expression form.
+    if (type === "Z99" && term.Z99K1 !== undefined) {
+      return { kind: "quote", body: await translate(term.Z99K1, context) };
+    }
+
     // A type can be a generic applied to its parameters - Z882(Z6, Z6) for a
     // pair of strings, Z881(Z6) for a list of them. The object's type is the
     // generic being applied; refusing the object because its type was not a
@@ -509,6 +557,9 @@ const isLiteral = (node) => {
   if (!node || typeof node !== "object") return false;
   switch (node.kind) {
     case "text": case "nat": case "bool": case "func": return true;
+    // A quote holds an expression rather than a value, so it is a literal
+    // whatever is inside it.
+    case "quote": return true;
     case "list": return node.items.every(isLiteral);
     case "record": return node.fields.every(([, v]) => isLiteral(v));
     default: return false;
@@ -530,6 +581,7 @@ function renderFstarValue(node) {
     case "nat": return `VNat ${node.value}`;
     case "bool": return `VBool ${node.value}`;
     case "func": return `VFunc ${node.zid.slice(1)}`;
+    case "quote": return `VQuote (${renderFstar(node.body)})`;
     case "list": return `VList [${node.items.map(renderFstarValue).join("; ")}]`;
     case "computed-list": throw new Unsupported("a computed list is not a value");
     case "record":
@@ -558,6 +610,80 @@ const asConsChain = (node) => {
   return chain;
 };
 
+// Big literal values are lifted out of a body and given a name of their own at
+// module level.
+//
+// The size limit above is not F* being fussy about characters: a term that
+// large lands whole in every query the body generates, and the solver gives up.
+// A named definition is checked once, and everything that mentions it carries
+// only its type. That is the same reason a module is cached rather than
+// re-proved, and it is what the direct compiler already does for its literals.
+//
+// It also shares. The language fallback table is one value quoted in Z33395,
+// and eleven functions unquote it; without this each carried its own copy and
+// all eleven were refused for size.
+const LITERAL_HOIST_OVER = 4096;
+const hoistedValues = { byCode: new Map(), order: [] };
+
+function nameFor(code, kind = "value") {
+  const existing = hoistedValues.byCode.get(code);
+  if (existing) return existing;
+  const name = kind === "items"
+    ? `shared_items_${hoistedValues.byCode.size + 1}`
+    : `shared_value_${hoistedValues.byCode.size + 1}`;
+  hoistedValues.byCode.set(code, name);
+  hoistedValues.order.push({ name, code, type: kind === "items" ? "list value" : "value" });
+  return name;
+}
+
+// A name alone is not enough past a point: F* overflows its stack on a single
+// term of half a megabyte, whether it sits inside a body or in a definition of
+// its own. Measured on Z30098, whose value renders to 452,933 bytes.
+//
+// So the naming goes all the way down. A record with a huge field names the
+// field; a list with a huge element names the element; a list that is merely
+// long is split into runs and concatenated. What reaches F* is never one
+// enormous term, whichever of those shapes the corpus wrote.
+function renderValueHoisted(node) {
+  switch (node.kind) {
+    case "list": {
+      const items = node.items.map(hoistedPart);
+      const joined = `VList [${items.join("; ")}]`;
+      if (joined.length <= MAX_BODY_BYTES) return joined;
+      // Too big because there are simply a lot of them.
+      const chunks = [];
+      let chunk = [];
+      let bytes = 0;
+      for (const item of items) {
+        if (chunk.length && bytes + item.length > MAX_BODY_BYTES / 2) {
+          chunks.push(chunk);
+          chunk = [];
+          bytes = 0;
+        }
+        chunk.push(item);
+        bytes += item.length;
+      }
+      if (chunk.length) chunks.push(chunk);
+      const names = chunks.map((c) => nameFor(`[${c.join("; ")}]`, "items"));
+      const appended = names.reduceRight(
+        (rest, name) => rest === null ? name : `(FStar.List.Tot.append ${name} ${rest})`, null);
+      return `VList ${appended}`;
+    }
+    case "record":
+      return `VRecord ${node.type.slice(1)} [${node.fields
+        .map(([key, v]) => `(${schemeKey(key)}, ${hoistedPart(v)})`).join("; ")}]`;
+    case "quote":
+      return `VQuote (${renderFstar(node.body)})`;
+    default:
+      return renderFstarValue(node);
+  }
+}
+
+function hoistedPart(node) {
+  const code = renderValueHoisted(node);
+  return code.length > LITERAL_HOIST_OVER ? nameFor(code) : code;
+}
+
 function renderFstar(node) {
   if (node.kind === "arg") return `EArg ${node.index}`;
   if (isComputedList(node)) return renderFstar(asConsChain(node));
@@ -569,7 +695,11 @@ function renderFstar(node) {
     return `ERecord ${node.type.slice(1)} [${node.fields
       .map(([key, v]) => `(${schemeKey(key)}, ${renderFstar(v)})`).join("; ")}]`;
   }
-  return `EValue (${renderFstarValue(node)})`;
+  // The hoisted rendering, even when the result is small - a record whose two
+  // fields were named is short, and rendering it again without the names would
+  // undo the whole point.
+  const code = renderValueHoisted(node);
+  return code.length > LITERAL_HOIST_OVER ? `EValue ${nameFor(code)}` : `EValue (${code})`;
 }
 
 // Canonical Wikifunctions rendering. This is the constraint that keeps the F*
@@ -602,6 +732,8 @@ function renderZ14K2(node, argKeys) {
       return node.zid;
     case "list":
       return ["Z1", ...node.items.map((item) => renderZ14K2(item, argKeys))];
+    case "quote":
+      return { Z1K1: "Z99", Z99K1: renderZ14K2(node.body, argKeys) };
     case "record": {
       const out = { Z1K1: node.typeTerm ?? node.type };
       for (const [key, v] of node.fields) out[key] = renderZ14K2(v, argKeys);
@@ -661,6 +793,10 @@ function renderSexpr(node, names, argNames) {
     case "bool": return node.value ? "#t" : "#f";
     case "func": return names(node.zid);
     case "list": return `(list ${node.items.map((i) => renderSexpr(i, names, argNames)).join(" ")})`;
+    case "quote":
+      // A thunk, not Scheme's quote: unquoting evaluates, and (quote x) is a
+      // datum that would need eval to open again.
+      return `(lambda () ${renderSexpr(node.body, names, argNames)})`;
     case "record":
       return `(record ${names(node.type)} ${node.fields
         .map(([key, v]) => `(${key} ${renderSexpr(v, names, argNames)})`).join(" ")})`;
@@ -692,6 +828,9 @@ function collectCalls(node, acc = []) {
     acc.push(node.zid);
   } else if (node.kind === "record") {
     for (const [, v] of node.fields) collectCalls(v, acc);
+  } else if (node.kind === "quote") {
+    // What a quote holds is reachable, because unquoting runs it.
+    collectCalls(node.body, acc);
   }
   return acc;
 }
@@ -1029,6 +1168,8 @@ async function main() {
   if (current.length) parts.push(current);
 
   const partName = (index) => `Wikifn.Generated.Eval.Part${String(index).padStart(2, "0")}`;
+  const partTexts = [];
+  let valuesModuleCount = 0;
 
   for (const [index, part] of parts.entries()) {
     const lines = [
@@ -1037,6 +1178,7 @@ async function main() {
       "open Wikifn.Primitive.Kernel",
       "open Wikifn.Zid",
       "open Wikifn.Eval",
+      "@@VALUES_OPENS@@",
       "",
       "(*",
       "  Generated by scripts/generate-fstar-eval.js from pinned cache objects.",
@@ -1069,7 +1211,90 @@ async function main() {
     lines.push("  | _ -> None");
     lines.push("");
 
-    await writeFile(partPath(index), lines.join("\n"), "utf8");
+    partTexts.push({ index, text: lines.join("\n") });
+  }
+
+  // The values module, written after the parts because only now is it known
+  // which hoisted literals any of them mentions. A candidate body that was
+  // rejected on size or on a later choice can leave an entry behind, and an
+  // unused definition would still be checked.
+  {
+    const mentioned = new Set();
+    for (const { text } of partTexts) {
+      for (const match of text.matchAll(/\bshared_(value|items)_[0-9]+\b/g)) mentioned.add(match[0]);
+    }
+    // A hoisted value can be built from hoisted chunks, and those are named
+    // only inside it - so what the parts mention is the start of the set, not
+    // the whole of it.
+    let growing = true;
+    while (growing) {
+      growing = false;
+      for (const entry of hoistedValues.order) {
+        if (!mentioned.has(entry.name)) continue;
+        for (const match of entry.code.matchAll(/\bshared_(value|items)_[0-9]+\b/g)) {
+          if (!mentioned.has(match[0])) { mentioned.add(match[0]); growing = true; }
+        }
+      }
+    }
+    const used = hoistedValues.order.filter((entry) => mentioned.has(entry.name));
+    // Split on the same byte budget as the bodies. Each definition is closed
+    // and independent, so where the split falls does not matter; what matters
+    // is that no one module holds a megabyte and a half.
+    const groups = [];
+    let group = [];
+    let groupBytes = 0;
+    for (const entry of used) {
+      if (group.length && groupBytes + entry.code.length > PART_BYTES) {
+        groups.push(group);
+        group = [];
+        groupBytes = 0;
+      }
+      group.push(entry);
+      groupBytes += entry.code.length;
+    }
+    if (group.length) groups.push(group);
+    for (const [groupIndex, entries] of groups.entries()) {
+      await writeFile(valuesPath(groupIndex), valuesModule(groupIndex, entries, groups.length), "utf8");
+    }
+    valuesModuleCount = groups.length;
+  }
+
+  function valuesModule(groupIndex, used, total) {
+    const lines = [
+      `module ${valuesName(groupIndex)}`,
+      "",
+      "open Wikifn.Primitive.Kernel",
+      "open Wikifn.Zid",
+      "open Wikifn.Eval",
+      // A value split into chunks can have its chunks land in an earlier
+      // module, so each one opens the ones before it.
+      ...Array.from({ length: groupIndex }, (_, i) => `open ${valuesName(i)}`),
+      "",
+      "(*",
+      "  Generated by scripts/generate-fstar-eval.js from pinned cache objects.",
+      "  Do not edit.",
+      "",
+      "  Literal values too large to sit inside a body. Each is a value from a",
+      "  pinned composition, lifted out and named so that F* checks it once",
+      "  rather than carrying it into every query its body generates. Several",
+      "  are shared: the same table appears in more than one composition.",
+      "",
+      `  part:   ${groupIndex + 1} of ${total}`,
+      `  values: ${used.length}`,
+      "*)",
+      ""
+    ];
+    for (const entry of used) {
+      lines.push(`let ${entry.name} : ${entry.type ?? "value"} = ${entry.code}`);
+      lines.push("");
+    }
+    return lines.join("\n");
+  }
+
+  const valuesOpens = Array.from(
+    { length: valuesModuleCount }, (_, i) => `open ${valuesName(i)}`).join("\n");
+  for (const { index, text } of partTexts) {
+    await writeFile(partPath(index), text.replace("@@VALUES_OPENS@@", valuesOpens), "utf8");
   }
 
   // Every composition that can be, as a real F* function.
@@ -1160,6 +1385,48 @@ async function main() {
     throw new Unsupported(reason);
   };
 
+  // A stable key for a subtree, so two occurrences of the same computation can
+  // be recognised as the same. Compiled functions are pure and total, so equal
+  // trees compute equal values.
+  const subtreeKeyCache = new Map();
+  function subtreeKey(node) {
+    const cached = subtreeKeyCache.get(node);
+    if (cached !== undefined) return cached;
+    let key;
+    switch (node.kind) {
+      case "arg": key = `a${node.index}`; break;
+      case "call": key = `(${node.zid} ${node.args.map(subtreeKey).join(" ")})`; break;
+      case "record":
+        key = `{${node.type} ${node.fields.map(([k, v]) => `${k}:${subtreeKey(v)}`).join(" ")}}`;
+        break;
+      default: key = `v${renderFstarValue(node)}`; break;
+    }
+    subtreeKeyCache.set(node, key);
+    return key;
+  }
+
+  // The largest subtrees of `here` that also occur somewhere in `elsewhere`.
+  // Largest, so an inner one is not bound separately from the outer one that
+  // contains it. Only calls: a literal or an argument costs nothing to repeat.
+  function sharedBetween(here, elsewhere) {
+    const seen = new Set();
+    const collect = (node) => {
+      seen.add(subtreeKey(node));
+      if (node.kind === "call") node.args.forEach(collect);
+      else if (node.kind === "record") node.fields.forEach(([, v]) => collect(v));
+    };
+    elsewhere.forEach(collect);
+
+    const found = [];
+    const walk = (node) => {
+      if (node.kind === "call" && seen.has(subtreeKey(node))) { found.push(node); return; }
+      if (node.kind === "call") node.args.forEach(walk);
+      else if (node.kind === "record") node.fields.forEach(([, v]) => walk(v));
+    };
+    walk(here);
+    return found;
+  }
+
   function renderDirect(node, context) {
     switch (node.kind) {
       case "arg":
@@ -1169,10 +1436,42 @@ async function main() {
           .map(([key, v]) => `(${schemeKey(key)}, ${hoist(renderDirect(v, context), context)})`)
           .join("; ")}])`;
       case "call": {
+        // Already computed under a name earlier in this function.
+        const shared = context.shared.get(subtreeKey(node));
+        if (shared) return shared;
         // A conditional becomes an F* if, so only the taken branch is
         // evaluated. Everything recursive in the corpus depends on that.
         if (CONDITIONALS.has(node.zid) && node.args.length === 3) {
           const [condition, consequent, alternative] = node.args;
+          // Anything computed in the condition and again in a branch is
+          // computed once.
+          //
+          // This is not a nicety. Z28715 index of first sub-list start asks
+          // "is the answer for the tail zero?" and then, if it is not, returns
+          // that same answer plus one - so each level made two identical
+          // recursive calls and the work doubled per character. On a 55
+          // character string that is 2^55 calls, and `Z10070 has substring`,
+          // which reaches it, did not return in ten minutes.
+          //
+          // Fuel does not save it: fuel bounds the depth of the recursion, and
+          // every one of those calls is within the depth. The interpreter
+          // survives the same composition only because its fuel counts total
+          // steps rather than depth, so it stops and says so.
+          //
+          // Binding before the conditional is safe precisely here: the
+          // condition is evaluated on every path, so naming what it computes
+          // adds no evaluation. That is why this is done at the conditional
+          // and not in general - hoisting out of a branch would evaluate the
+          // recursive call the branch exists to guard.
+          for (const shared of sharedBetween(condition, [consequent, alternative])) {
+            const key = subtreeKey(shared);
+            if (context.shared.has(key)) continue;
+            const code = renderDirect(shared, context);
+            context.bound += 1;
+            const name = `shared_${context.bound}`;
+            context.bindings.push(`let ${name} = ${code} in`);
+            context.shared.set(key, name);
+          }
           // The condition is bound to a name before it is matched on.
           //
           // Matching directly on the expression puts the whole nested term into
@@ -1189,10 +1488,14 @@ async function main() {
           // corpus guards its recursive branch with this conditional.
           const branch = (child) => {
             const outer = context.bindings;
+            const outerShared = new Map(context.shared);
             context.bindings = [];
             const code = renderDirect(child, context);
             const local = context.bindings;
             context.bindings = outer;
+            // A name bound inside a branch is out of scope outside it. What was
+            // in scope on the way in stays in scope.
+            context.shared = outerShared;
             return local.length ? `(${local.join(" ")} ${code})` : code;
           };
           const scrutinee = `condition_of ${node.zid.slice(1)} ${renderDirect(condition, context)}`;
@@ -1264,13 +1567,22 @@ async function main() {
           return `(with_items ${node.zid.slice(1)} ${renderDirect(node.args[1], context)} (fun items ->\n` +
             `     ${apply} ${call} items))`;
         }
+        // Unquote runs the expression a quote holds, and compiled code has no
+        // evaluator to run it with. A quote is still a perfectly good value in
+        // compiled code - it just cannot be opened there.
+        if (node.zid === "Z899") refuse(context.zid, "unquotes, which needs an evaluator");
         const args = node.args.map((a) => renderDirect(a, context)).map((a) => hoist(a, context));
         if (compilable.has(node.zid)) {
-          // Every call to a recursive function supplies fuel. Inside its own
-          // group that is the caller's fuel, less one, so the group cannot loop
-          // for ever. From outside, the budget has to start somewhere.
+          // Every call to a recursive function supplies fuel, and it is the
+          // caller's own wherever the caller has one - inside its group, so the
+          // group cannot loop for ever, and outside it, so a chain of recursive
+          // functions spends one budget between them rather than one each.
+          //
+          // Only a non-recursive caller starts a fresh budget, and a
+          // non-recursive caller cannot loop, so that is where a budget can
+          // safely begin.
           const fuel = context.recursive.has(node.zid)
-            ? (context.group.has(node.zid) ? "next_fuel " : "default_fuel ")
+            ? (context.recursive.has(context.zid) ? "next_fuel " : "default_fuel ")
             : "";
           return `(${compiledName(node.zid)} ${fuel}${args.join(" ")})`;
         }
@@ -1341,7 +1653,7 @@ async function main() {
       let failed = false;
       for (const zid of group) {
         const entry = emittedIndex.get(zid);
-        const context = { zid, group: recursive ? members : new Set(), recursive: recursiveSet, conditions: 0, bound: 0, bindings: [], literals: [] };
+        const context = { zid, group: recursive ? members : new Set(), recursive: recursiveSet, conditions: 0, bound: 0, bindings: [], literals: [], shared: new Map() };
         let body;
         try {
           body = renderDirect(entry.tree, context);
