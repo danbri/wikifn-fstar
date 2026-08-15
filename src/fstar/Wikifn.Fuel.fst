@@ -243,19 +243,19 @@ and higher_order_extra (p:policy) (fuel:nat) (extra:nat) (depth:nat) (fid:zid) (
   admit ();
   if fid = fid_map then
     (match args with
-     | [VFunc f; VList items] -> map_extra p fuel extra depth f items
+     | [VFunc f; VList _ items] -> map_extra p fuel extra depth f items
      | _ -> ())
   else if fid = fid_filter then
     (match args with
-     | [VFunc f; VList items] -> filter_extra p fuel extra depth f items
+     | [VFunc f; VList t items] -> filter_extra p fuel extra depth t f items
      | _ -> ())
   else if fid = fid_fold then
     (match args with
-     | [VFunc f; VList items; seed] -> reduce_extra p fuel extra depth f seed items
+     | [VFunc f; VList _ items; seed] -> reduce_extra p fuel extra depth f seed items
      | _ -> ())
   else if fid = fid_zip_with then
     (match args with
-     | [VFunc f; VList left; VList right] -> zip_extra p fuel extra depth f left right
+     | [VFunc f; VList _ left; VList _ right] -> zip_extra p fuel extra depth f left right
      | _ -> ())
   else if fid = fid_apply2 then
     (match args with
@@ -287,9 +287,9 @@ and map_extra (p:policy) (fuel:nat) (extra:nat) (depth:nat) (f:zid) (items:list 
       | EErr _ -> ()
       | EOk _ -> map_extra p after extra depth f rest
 
-and filter_extra (p:policy) (fuel:nat) (extra:nat) (depth:nat) (f:zid) (items:list value)
-  : Lemma (ensures agrees_on fuel extra (filter_values p fuel depth f items)
-                               (filter_values p (fuel + extra) depth f items))
+and filter_extra (p:policy) (fuel:nat) (extra:nat) (depth:nat) (t:value) (f:zid) (items:list value)
+  : Lemma (ensures agrees_on fuel extra (filter_values p fuel depth t f items)
+                               (filter_values p (fuel + extra) depth t f items))
           (decreases %[fuel; 2; items])
 =
   match items with
@@ -298,7 +298,7 @@ and filter_extra (p:policy) (fuel:nat) (extra:nat) (depth:nat) (f:zid) (items:li
       eval_extra p fuel extra depth [] (ECall f [EValue head]);
       let (kept, after) = eval p fuel depth [] (ECall f [EValue head]) in
       match kept with
-      | EOk (VBool _) -> filter_extra p after extra depth f rest
+      | EOk (VBool _) -> filter_extra p after extra depth t f rest
       | _ -> ()
 
 and zip_extra (p:policy) (fuel:nat) (extra:nat) (depth:nat) (f:zid)

@@ -61910,9 +61910,9 @@
         "Object"
       ],
       "returnType": "Object",
-      "implementation": "Z33274",
-      "revision": 264165,
-      "digest": "9f978cafc106a978e8142bf9b10b2507fd46bea746b87b006db5a6d149af0aba"
+      "implementation": "Z30817",
+      "revision": 257226,
+      "digest": "144894101b838c9c54cd8939382e09c1732924895cf21c4de9934331b85a1176"
     },
     {
       "zid": "Z30813",
@@ -69247,9 +69247,9 @@
         "Natural language"
       ],
       "returnType": "HTML fragment",
-      "implementation": "Z33773",
-      "revision": 266943,
-      "digest": "3da92f91265c8cae14524dcb2527a197688352812d723ddca7a06c12192d6020"
+      "implementation": "Z32879",
+      "revision": 261752,
+      "digest": "7479dd627cf51866bb646ad0d625e6ac6597ec4cd01fad35e09df0537744ee2e"
     },
     {
       "zid": "Z32881",

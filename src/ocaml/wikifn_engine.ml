@@ -86,9 +86,12 @@ let rec encode_value (v : Wikifn_Eval.value) =
       Printf.sprintf "{\"type\":\"Z40\",\"value\":%b}" b
   | Wikifn_Eval.VNat n ->
       Printf.sprintf "{\"type\":\"Z13518\",\"value\":%s}" (Z.to_string n)
-  | Wikifn_Eval.VList items ->
-      Printf.sprintf "{\"type\":\"Z881\",\"items\":[%s]}"
-        (String.concat "," (List.map encode_value items))
+  (* The element type travels with the list. Without it a list handed back in -
+     which is exactly what a caller does when chaining two calls - came back as
+     a list of Z1, and Z16829 could only say so. *)
+  | Wikifn_Eval.VList (t, items) ->
+      Printf.sprintf "{\"type\":\"Z881\",\"elementType\":%s,\"items\":[%s]}"
+        (encode_value t) (String.concat "," (List.map encode_value items))
   | Wikifn_Eval.VPair (l, r) ->
       Printf.sprintf "{\"type\":\"Z882\",\"first\":%s,\"second\":%s}"
         (encode_value l) (encode_value r)
@@ -198,7 +201,7 @@ let rec parse_argument s i : Wikifn_Eval.value * int =
         else raise (Bad_argument "malformed list argument")
     in
     let (values, next) = items (i + 1) [] in
-    (Wikifn_Eval.VList values, next)
+    (Wikifn_Eval.VList (Wikifn_Eval.VFunc (Z.of_int 1), values), next)
   end
   else if s.[i] = '{' then parse_object s i
   else if i + 3 < n && String.sub s i 4 = "true" then (Wikifn_Eval.VBool true, i + 4)
@@ -256,7 +259,7 @@ and parse_object s i : Wikifn_Eval.value * int =
         let (entries, j) = entries j [] in
         let j = skip_ws s j in
         let j = if j < n && s.[j] = ',' then j + 1 else j in
-        fields j (("fields", Wikifn_Eval.VList (List.map (fun (k, v) ->
+        fields j (("fields", Wikifn_Eval.VList (Wikifn_Eval.VFunc (Z.of_int 1), List.map (fun (k, v) ->
           Wikifn_Eval.VPair (Wikifn_Eval.VText (List.map Z.of_int (decode_utf8 k)), v)) entries)) :: acc)
       else
         let (value, j) =
@@ -303,7 +306,14 @@ and parse_object s i : Wikifn_Eval.value * int =
      malformed list is what "Z881 needs items" used to mean. *)
   | Some t when text_of t = "Z881" && find "items" <> None ->
       (match find "items" with
-       | Some (Wikifn_Eval.VList items) -> (Wikifn_Eval.VList items, next)
+       | Some (Wikifn_Eval.VList (_, items)) ->
+           (* The element type if it was printed; Z1 if the caller wrote the
+              list by hand, which is all that can honestly be said of it. *)
+           let element = match find "elementType" with
+             | Some e -> e
+             | None -> Wikifn_Eval.VFunc (Z.of_int 1)
+           in
+           (Wikifn_Eval.VList (element, items), next)
        | _ -> raise (Bad_argument "Z881 needs items"))
   | Some t when text_of t = "Z8" ->
       (match find "zid" with
@@ -319,7 +329,7 @@ and parse_object s i : Wikifn_Eval.value * int =
       (* Anything else with fields is a record, including a Z882 written that
          way. Keys are parsed back into the zkey they were printed from. *)
       (match find "fields" with
-       | Some (Wikifn_Eval.VList entries) ->
+       | Some (Wikifn_Eval.VList (_, entries)) ->
            let field v = match v with
              | Wikifn_Eval.VPair (k, value) ->
                  let spelling = List.map Z.of_int (decode_utf8 (text_of k)) in

@@ -232,6 +232,31 @@ function zListItems(value) {
   return Array.isArray(value) ? value.slice(1) : undefined;
 }
 
+// The element type at the head of a typed list literal, as a value.
+//
+// Wikifunctions writes a list as ["Z6", "a", "b"] - the head is the type, not an
+// element. That was read and thrown away; it is the parameter Z22764's own
+// testers ask for, and an empty list has nothing else to give it.
+//
+// A type is a value here, so a plain identifier becomes a function value and a
+// generic becomes the constructor applied to its parameters - the same shape
+// Z881 and Z882 build at run time.
+function translateType(term) {
+  if (typeof term === "string" && /^Z[1-9][0-9]*$/.test(term)) return { kind: "func", zid: term };
+  const inner = term?.Z1K1 === "Z9" ? term.Z9K1 : undefined;
+  if (typeof inner === "string") return { kind: "func", zid: inner };
+  const head = term?.Z1K1 === "Z7" ? refZid(term.Z7K1) : undefined;
+  if (head) {
+    const fields = Object.keys(term)
+      .filter((key) => key !== "Z1K1" && key !== "Z7K1")
+      .sort((a, b) => Number(a.split("K")[1]) - Number(b.split("K")[1]))
+      .map((key) => [key, translateType(term[key])]);
+    return { kind: "record", type: head, typeTerm: term, fields };
+  }
+  // Nothing readable. Z1 is the top type and is always true of a list.
+  return { kind: "func", zid: "Z1" };
+}
+
 // Declared argument keys, in order, so Z18 references resolve to indices.
 async function argumentKeys(zid) {
   if (argOrderCache.has(zid)) return argOrderCache.get(zid);
@@ -414,14 +439,20 @@ async function translate(term, context) {
   if (Array.isArray(term)) {
     const items = zListItems(term);
     if (!items) throw new Unsupported("malformed typed list literal");
+    const elementType = translateType(term[0]);
+    const typeTerm = term[0];
     const translated = [];
     for (const item of items) translated.push(await translate(item, context));
     // A list of literals is a value. A list containing expressions is built
     // with cons, which is a primitive, so nothing new is needed to express it.
-    if (translated.every(isLiteral)) return { kind: "list", items: translated };
+    if (translated.every(isLiteral)) {
+      return { kind: "list", items: translated, elementType, typeTerm };
+    }
     return translated.reduceRight(
       (rest, head) => ({ kind: "call", zid: "Z810", args: [head, rest], calleeKeys: ["Z810K1", "Z810K2"] }),
-      { kind: "list", items: [] }
+      // The empty tail a cons chain ends in keeps the type: cons takes the
+      // list's type from the list, so the tail is where it comes from.
+      { kind: "list", items: [], elementType, typeTerm }
     );
   }
 
@@ -600,7 +631,9 @@ function renderFstarValue(node) {
     case "func": return `VFunc ${node.zid.slice(1)}`;
     case "quote": return `VQuote (${renderFstar(node.body)})`;
     case "reference": return renderFstarValue(node.value);
-    case "list": return `VList [${node.items.map(renderFstarValue).join("; ")}]`;
+    case "list":
+      return `VList (${renderFstarValue(node.elementType ?? { kind: "func", zid: "Z1" })}) ` +
+        `[${node.items.map(renderFstarValue).join("; ")}]`;
     case "computed-list": throw new Unsupported("a computed list is not a value");
     case "record":
       return `VRecord ${node.type.slice(1)} [${node.fields
@@ -666,7 +699,8 @@ function renderValueHoisted(node) {
   switch (node.kind) {
     case "list": {
       const items = node.items.map(hoistedPart);
-      const joined = `VList [${items.join("; ")}]`;
+      const elementType = renderFstarValue(node.elementType ?? { kind: "func", zid: "Z1" });
+      const joined = `VList (${elementType}) [${items.join("; ")}]`;
       if (joined.length <= MAX_BODY_BYTES) return joined;
       // Too big because there are simply a lot of them.
       const chunks = [];
@@ -685,7 +719,7 @@ function renderValueHoisted(node) {
       const names = chunks.map((c) => nameFor(`[${c.join("; ")}]`, "items"));
       const appended = names.reduceRight(
         (rest, name) => rest === null ? name : `(FStar.List.Tot.append ${name} ${rest})`, null);
-      return `VList ${appended}`;
+      return `VList (${elementType}) ${appended}`;
     }
     case "record":
       return `VRecord ${node.type.slice(1)} [${node.fields
@@ -751,7 +785,10 @@ function renderZ14K2(node, argKeys) {
     case "func":
       return node.zid;
     case "list":
-      return ["Z1", ...node.items.map((item) => renderZ14K2(item, argKeys))];
+      // The type the corpus wrote, not Z1: the round trip is how this repo
+      // checks that what it emits is what the corpus says, and writing Z1 over
+      // a list of strings made 2,166 sites differ for no reason.
+      return [node.typeTerm ?? "Z1", ...node.items.map((item) => renderZ14K2(item, argKeys))];
     case "quote":
       return { Z1K1: "Z99", Z99K1: renderZ14K2(node.body, argKeys) };
     case "reference":
@@ -1833,6 +1870,12 @@ async function main() {
             return `(with_items ${node.zid.slice(1)} ${renderDirect(node.args[1], context)} (fun left ->\n` +
               `     with_items ${node.zid.slice(1)} ${renderDirect(node.args[2], context)} (fun right ->\n` +
               `       zip_direct ${call} left right)))`;
+          }
+          if (node.zid === "Z872") {
+            // Filtering keeps the element type: what is left is a sublist of
+            // what came in.
+            return `(with_typed_items ${node.zid.slice(1)} ${renderDirect(node.args[1], context)} (fun t items ->\n` +
+              `     ${apply} t ${call} items))`;
           }
           return `(with_items ${node.zid.slice(1)} ${renderDirect(node.args[1], context)} (fun items ->\n` +
             `     ${apply} ${call} items))`;

@@ -176,7 +176,9 @@ let rec print_value (lookup:name_lookup) (names:list text) (v:value)
   | VPair left right ->
       parenthesise (join_with [cp_space]
         [[99; 111; 110; 115]; print_value lookup names left; print_value lookup names right])
-  | VList items ->
+  | VList _ items ->
+      (* The element type is not printed. A Scheme list has no room for one, and
+         the listing is meant to be loadable rather than complete. *)
       parenthesise (join_with [cp_space]
         ([108; 105; 115; 116] :: print_values lookup names items))
   | VRecord t fields ->

@@ -35,7 +35,7 @@ open Wikifn.Eval
    stated over the list rather than over an option of an unknown shape. *)
 let reify_answers_a_list (v:value)
   : Lemma (ensures (match reify_value v with
-                    | Some (VList _) -> True
+                    | Some (VList _ _) -> True
                     | Some _ -> False
                     | None -> True))
 = ()
@@ -76,7 +76,7 @@ let type_entry_found (t:zid) (rest:list value)
    own key - and each is an instance of the key round trip. *)
 let reify_abstract_text (t:text)
   : Lemma (ensures (match reify_value (VText t) with
-                    | Some (VList items) -> abstract_value items == Some (VText t)
+                    | Some (VList _ items) -> abstract_value items == Some (VText t)
                     | _ -> False))
 =
   parse_render_zkey key_z1k1;
@@ -84,7 +84,7 @@ let reify_abstract_text (t:text)
 
 let reify_abstract_bool (b:bool)
   : Lemma (ensures (match reify_value (VBool b) with
-                    | Some (VList items) -> abstract_value items == Some (VBool b)
+                    | Some (VList _ items) -> abstract_value items == Some (VBool b)
                     | _ -> False))
 =
   parse_render_zkey key_z1k1;
@@ -92,7 +92,7 @@ let reify_abstract_bool (b:bool)
 
 let reify_abstract_nat (n:nat)
   : Lemma (ensures (match reify_value (VNat n) with
-                    | Some (VList items) -> abstract_value items == Some (VNat n)
+                    | Some (VList _ items) -> abstract_value items == Some (VNat n)
                     | _ -> False))
 =
   parse_render_zkey key_z1k1;
@@ -101,7 +101,7 @@ let reify_abstract_nat (n:nat)
 
 let reify_abstract_func (f:zid)
   : Lemma (ensures (match reify_value (VFunc f) with
-                    | Some (VList items) -> abstract_value items == Some (VFunc f)
+                    | Some (VList _ items) -> abstract_value items == Some (VFunc f)
                     | _ -> False))
 =
   parse_render_zkey key_z1k1;
@@ -110,7 +110,7 @@ let reify_abstract_func (f:zid)
 let reify_abstract_record (t:zid) (fields:list (zkey & value))
   : Lemma (requires record_type_is_a_record t /\ fields_avoid_type_key fields)
           (ensures (match reify_value (VRecord t fields) with
-                    | Some (VList items) -> abstract_value items == Some (VRecord t fields)
+                    | Some (VList _ items) -> abstract_value items == Some (VRecord t fields)
                     | _ -> False))
 =
   parse_render_zkey key_z1k1;
@@ -118,7 +118,7 @@ let reify_abstract_record (t:zid) (fields:list (zkey & value))
 
 let reify_abstract (v:value)
   : Lemma (ensures (match reify_value v with
-                    | Some (VList items) -> abstract_value items == Some v
+                    | Some (VList _ items) -> abstract_value items == Some v
                     | _ -> True))
 =
   match v with
@@ -129,7 +129,7 @@ let reify_abstract (v:value)
   | VRecord t fields ->
       if record_type_is_a_record t && fields_avoid_type_key fields
       then reify_abstract_record t fields else ()
-  | VList _ -> ()
+  | VList _ _ -> ()
   | VPair _ _ -> ()
   | VQuote _ -> ()
 
@@ -138,7 +138,7 @@ let reify_abstract (v:value)
 let reify_then_abstract (v:value)
   : Lemma (requires Some? (reify_value v))
           (ensures (match reify_value v with
-                    | Some (VList items) -> abstract_value items == Some v
+                    | Some (VList _ items) -> abstract_value items == Some v
                     | _ -> False))
 =
   reify_answers_a_list v;
@@ -148,7 +148,7 @@ let reify_then_abstract (v:value)
    than a condition a caller has to guess at. *)
 let reify_answers_for (v:value)
   : Lemma (ensures Some? (reify_value v) <==> (match v with
-                                               | VList _ | VPair _ _ | VQuote _ -> False
+                                               | VList _ _ | VPair _ _ | VQuote _ -> False
                                                | VRecord t fields ->
                                                    record_type_is_a_record t /\ fields_avoid_type_key fields
                                                | _ -> True))

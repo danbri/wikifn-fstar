@@ -400,12 +400,34 @@ Z882(Z6, Z16683)       rendered          -> "Z882 (Z6, Z16683)"
 Z882(Z99, Z883(Z6, Z881(Z6)))            -> "Z882 (Z99, Z883 (Z6, Z881 (Z6)))"
 ```
 
-One limit is real and is the value model's, not this code's: a `VList` and a `VPair` carry
-no element type, so the best that can be said of a list of strings is that it is a list.
-The corpus writes that parameter and `Z22764`'s testers ask for it back. Carrying type
-parameters on lists and pairs is what would close it, and it is also why `Z805` reify
-refuses a list or a pair — reify's whole job is to say what something is made of, and for
-those two the answer would have to leave out the part that matters.
+A list now carries its element type, and a pair needs none.
+
+Wikifunctions writes a list as `["Z6", "a", "b"]` — the head of that array is the
+type, not an element. It was read and thrown away. `VList` carries it now, so
+
+```
+Z16829(Z22717("ab"))    rendered    ->  "Z881 (Z13518)"
+Z16829(Z17534("l","r")) rendered    ->  "Z882 (Z6, Z6)"
+```
+
+— a list of codepoints knows it is a list of natural numbers, without being told.
+
+A pair stores nothing, because it does not need to: the types of its components
+*are* the types of its components, and both are always there to ask. That is why
+`type_of_value` is recursive and why only one of the two constructors changed.
+
+Where the type is not known it is `Z1`, the top type: a `map`'s result, a `zip`'s,
+a list read from a JSON argument. Saying `Z1` is honest; saying `Z6` because the
+first element happened to be a string would not be. `filter` is the exception —
+what it leaves is a sublist, so it keeps the type it was given.
+
+Equality does **not** compare the element type. Ours is exact where the corpus
+wrote it and `Z1` where a computation produced it, so comparing would make a
+computed list of strings differ from a written one, which is not what `Z13052`
+means.
+
+It also improved fidelity rather than costing it: the canonical rendering writes
+the type the corpus wrote instead of `Z1`, which it had been doing to every list.
 
 ## Quoting, and taking an object apart
 

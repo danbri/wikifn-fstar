@@ -33,7 +33,17 @@ type value =
   | VText : text -> value
   | VBool : bool -> value
   | VNat : nat -> value
-  | VList : list value -> value
+  (* A typed list: its element type, and its elements.
+ 
+     The type is carried because an empty list has no element to ask, and
+     Wikifunctions writes it: ["Z6", "a", "b"] is a list *of strings* and the
+     head of that array is the type. Without it the best that could be said of a
+     list of strings was that it was a list, and Z22764 could not render the
+     parameter its own testers ask for.
+ 
+     A pair needs no such field. Its component types are the types of its
+     components, and those are always there to ask. *)
+  | VList : value -> list value -> value
   | VPair : value -> value -> value
   | VFunc : zid -> value
   (* A typed object: its type and its fields. Wikidata references, monolingual
@@ -288,7 +298,11 @@ let rec value_eq (left:value) (right:value) : Tot bool (decreases left) =
   | VBool l, VBool r -> l = r
   | VFunc l, VFunc r -> l = r
   | VPair la lb, VPair ra rb -> if value_eq la ra then value_eq lb rb else false
-  | VList l, VList r -> value_list_eq l r
+  (* The element type is not compared. Where the corpus wrote it, it is exact;
+     where a map or a zip produced the list, the best that can be said is Z1 -
+     so comparing types would make a computed list of strings differ from a
+     written one, which is not what Z13052 means. *)
+  | VList _ l, VList _ r -> value_list_eq l r
   | VRecord lt lf, VRecord rt rf -> if lt = rt then field_list_eq lf rf else false
   | _, _ -> false
 
@@ -316,13 +330,31 @@ and field_list_eq (left:list (zkey & value)) (right:list (zkey & value))
    that can be said of a list of strings is that it is a list. The corpus writes
    that parameter and Z22764's own testers ask for it back, so this is a real
    limit and not a rounding. *)
-let type_of_value (v:value) : Tot value =
+(* Z1 is Wikifunctions' top type: every object is one. It is what a list's
+   element type is when nothing better is known - a map's result, a zip's, a
+   list read from a JSON argument. Saying Z1 is honest; saying Z6 because the
+   first element happened to be a string would not be. *)
+let type_any : value = VFunc 1
+
+(* The element type a list carries. Anything that is not a list has already
+   failed on as_list by the time this is asked, so Z1 is a safe answer. *)
+let list_element_type (v:value) : Tot value =
+  match v with
+  | VList t _ -> t
+  | _ -> type_any
+
+let rec type_of_value (v:value) : Tot value (decreases v) =
   match v with
   | VText _ -> VFunc 6
   | VBool _ -> VFunc 40
   | VNat _ -> VFunc 13518
-  | VList _ -> VFunc fid_typed_list
-  | VPair _ _ -> VFunc fid_typed_pair
+  (* The generic applied to its parameter, which is what Z22764 renders as
+     "Z881 (Z6)" - not the bare constructor. A pair's parameters are the types
+     of its two components, which is why this is recursive and why a pair needs
+     no stored type. *)
+  | VList t _ -> VRecord fid_typed_list [(global_key 881 1, t)]
+  | VPair a b -> VRecord fid_typed_pair
+                   [(global_key 882 1, type_of_value a); (global_key 882 2, type_of_value b)]
   | VFunc _ -> VFunc 8
   | VRecord t _ -> VFunc t
   | VQuote _ -> VFunc type_z99
@@ -356,6 +388,10 @@ let key_reference_value (k:zkey) : Tot value =
    have to guess which was which. Nothing in the corpus writes one - the type
    of a record lives outside its fields - and refusing is the only answer that
    keeps Reify and Abstract inverses. *)
+(* What Z805 Reify returns a list of: pairs of a key reference and a value. *)
+let reified_pair_type : value =
+  VRecord fid_typed_pair [(global_key 882 1, VFunc 39); (global_key 882 2, VFunc 1)]
+
 let rec fields_avoid_type_key (fields:list (zkey & value)) : Tot bool (decreases fields) =
   match fields with
   | [] -> true
@@ -378,21 +414,22 @@ let rec reify_fields (fields:list (zkey & value)) : Tot (list value) (decreases 
 let reify_value (v:value) : Tot (option value) =
   match v with
   | VText t ->
-      Some (VList [ VPair (key_reference_value key_z1k1) (VFunc 6)
+      Some (VList reified_pair_type [ VPair (key_reference_value key_z1k1) (VFunc 6)
                   ; VPair (key_reference_value key_z6k1) (VText t) ])
   | VBool b ->
-      Some (VList [ VPair (key_reference_value key_z1k1) (VFunc 40)
+      Some (VList reified_pair_type [ VPair (key_reference_value key_z1k1) (VFunc 40)
                   ; VPair (key_reference_value (global_key 40 1))
                           (VFunc (if b then 41 else 42)) ])
   | VNat n ->
-      Some (VList [ VPair (key_reference_value key_z1k1) (VFunc 13518)
+      Some (VList reified_pair_type [ VPair (key_reference_value key_z1k1) (VFunc 13518)
                   ; VPair (key_reference_value (global_key 13518 1)) (VText (if n = 0 then [48] else render_nat n [])) ])
   | VFunc f ->
-      Some (VList [ VPair (key_reference_value key_z1k1) (VFunc 9)
+      Some (VList reified_pair_type [ VPair (key_reference_value key_z1k1) (VFunc 9)
                   ; VPair (key_reference_value (global_key 9 1)) (VFunc f) ])
   | VRecord t fields ->
       if record_type_is_a_record t && fields_avoid_type_key fields
-      then Some (VList (VPair (key_reference_value key_z1k1) (VFunc t) :: reify_fields fields))
+      then Some (VList reified_pair_type
+                   (VPair (key_reference_value key_z1k1) (VFunc t) :: reify_fields fields))
       else None
   (* A list and a pair carry no element type, and reify's whole job is to say
      what something is made of. Refused rather than answered wrongly. *)
@@ -433,7 +470,7 @@ let zid_of_reference (v:value) : Tot (option zid) =
   match v with
   | VFunc f -> Some f
   | VText spelling -> parse_zid spelling
-  | VList items -> begin
+  | VList _ items -> begin
       match pairs_lookup (global_key 9 1) items with
       | Some (VText spelling) -> parse_zid spelling
       | Some (VFunc f) -> Some f
@@ -595,7 +632,7 @@ let key_reference (v:value) : Tot (option zkey) =
 
 let as_list (fid:zid) (v:value) : Tot (eval_result (list value)) =
   match v with
-  | VList items -> EOk items
+  | VList _ items -> EOk items
   | _ -> EErr (ETypeMismatch fid)
 
 (* Primitives over already-evaluated arguments. Keeping this separate from the
@@ -642,7 +679,7 @@ let apply_primitive (fid:zid) (args:list value) : Tot (option (eval_result value
               | EErr e -> EErr e)
       else if fid = fid_cdr then
         Some (match as_list fid a with
-              | EOk (_ :: tail) -> EOk (VList tail)
+              | EOk (_ :: tail) -> EOk (VList (list_element_type a) tail)
               | EOk [] -> EErr (ETypeMismatch fid)
               | EErr e -> EErr e)
       else if fid = fid_null_p then
@@ -655,7 +692,7 @@ let apply_primitive (fid:zid) (args:list value) : Tot (option (eval_result value
               | EErr e -> EErr e)
       else if fid = fid_reverse_list then
         Some (match as_list fid a with
-              | EOk items -> EOk (VList (value_reverse items))
+              | EOk items -> EOk (VList (list_element_type a) (value_reverse items))
               | EErr e -> EErr e)
       (* A Z882 pair is written two ways: as a pair value, and as an object with
          K1 and K2 whose type is the generic Z882 applied to its element types.
@@ -680,7 +717,7 @@ let apply_primitive (fid:zid) (args:list value) : Tot (option (eval_result value
               | None -> EErr (ETypeMismatch fid))
       else if fid = fid_abstract then
         Some (match a with
-              | VList items -> begin
+              | VList _ items -> begin
                   match abstract_value items with
                   | Some built -> EOk built
                   | None -> EErr (ETypeMismatch fid)
@@ -688,7 +725,7 @@ let apply_primitive (fid:zid) (args:list value) : Tot (option (eval_result value
               | _ -> EErr (ETypeMismatch fid))
       else if fid = fid_quoted_reference then
         Some (match a with
-              | VList (first :: _) -> begin
+              | VList _ (first :: _) -> begin
                   match quoted_reference first with
                   | Some q -> EOk q
                   | None -> EErr (ETypeMismatch fid)
@@ -714,7 +751,7 @@ let apply_primitive (fid:zid) (args:list value) : Tot (option (eval_result value
               | EErr e -> EErr e)
       else if fid = fid_string_to_codepoints || fid = fid_z868_string_to_codepoints then
         Some (match as_text fid a with
-              | EOk t -> EOk (VList (codepoints_as_values t))
+              | EOk t -> EOk (VList (VFunc 13518) (codepoints_as_values t))
               | EErr e -> EErr e)
       else if fid = fid_codepoints_to_string || fid = fid_z886_codepoints_to_string then
         Some (match as_list fid a with
@@ -852,14 +889,14 @@ let apply_primitive (fid:zid) (args:list value) : Tot (option (eval_result value
               | _, _ -> EErr (ETypeMismatch fid))
       else if fid = fid_cons then
         Some (match as_list fid b with
-              | EOk items -> EOk (VList (a :: items))
+              | EOk items -> EOk (VList (list_element_type b) (a :: items))
               | EErr e -> EErr e)
       else if fid = fid_append_last then
         (* Z12961 takes the element first and the list second, the opposite of
            the order the name suggests. Its own composition is
            reverse(cons(x, reverse(list))), so this matches it exactly. *)
         Some (match as_list fid b with
-              | EOk items -> EOk (VList (value_append_last items a))
+              | EOk items -> EOk (VList (list_element_type b) (value_append_last items a))
               | EErr e -> EErr e)
       else None
   | [a; b; c] ->
@@ -1033,21 +1070,21 @@ and higher_order (p:policy) (fuel:nat) (depth:nat) (fid:zid) (args:list value)
      answers for all of them and the rest report no implementation. *)
   if fid = fid_map then
     (match args with
-     | [VFunc f; VList items] -> Some (map_values p fuel depth f items)
+     | [VFunc f; VList _ items] -> Some (map_values p fuel depth f items)
      | _ -> None)
   else if fid = fid_filter then
     (match args with
-     | [VFunc f; VList items] -> Some (filter_values p fuel depth f items)
+     | [VFunc f; VList t items] -> Some (filter_values p fuel depth t f items)
      | _ -> None)
   else if fid = fid_fold then
     (* Z876 declares Z876K1 function, Z876K2 iterable, Z876K3 initial object:
        the list is the second argument and the seed is the third. *)
     (match args with
-     | [VFunc f; VList items; seed] -> Some (reduce_values p fuel depth f seed items)
+     | [VFunc f; VList _ items; seed] -> Some (reduce_values p fuel depth f seed items)
      | _ -> None)
   else if fid = fid_zip_with then
     (match args with
-     | [VFunc f; VList left; VList right] -> Some (zip_with_values p fuel depth f left right)
+     | [VFunc f; VList _ left; VList _ right] -> Some (zip_with_values p fuel depth f left right)
      | _ -> None)
   else if fid = internal_apply then
     (match args with
@@ -1072,30 +1109,34 @@ and map_values (p:policy) (fuel:nat) (depth:nat) (f:zid) (items:list value)
   : Tot (eval_result value & (remaining:nat{remaining <= fuel})) (decreases %[fuel; 2; items])
 =
   match items with
-  | [] -> (EOk (VList []), fuel)
+  | [] -> (EOk (VList type_any []), fuel)
   | head :: rest -> begin
       match eval p fuel depth [] (ECall f [EValue head]) with
       | (EErr err, after) -> (EErr err, after)
       | (EOk mapped, after) -> begin
           match map_values p after depth f rest with
           | (EErr err, left) -> (EErr err, left)
-          | (EOk (VList others), left) -> (EOk (VList (mapped :: others)), left)
+          | (EOk (VList t others), left) -> (EOk (VList t (mapped :: others)), left)
           | (EOk _, left) -> (EErr (ETypeMismatch f), left)
         end
     end
 
-and filter_values (p:policy) (fuel:nat) (depth:nat) (f:zid) (items:list value)
+and filter_values (p:policy) (fuel:nat) (depth:nat) (t:value) (f:zid) (items:list value)
   : Tot (eval_result value & (remaining:nat{remaining <= fuel})) (decreases %[fuel; 2; items])
 =
   match items with
-  | [] -> (EOk (VList []), fuel)
+  (* Filtering keeps the element type: what is left is a sublist of what came
+     in, whatever ends up in it. Mapping and zipping do not, because what their
+     function returns is not known here. *)
+  | [] -> (EOk (VList t []), fuel)
   | head :: rest -> begin
       match eval p fuel depth [] (ECall f [EValue head]) with
       | (EErr err, after) -> (EErr err, after)
       | (EOk (VBool keep), after) -> begin
-          match filter_values p after depth f rest with
+          match filter_values p after depth t f rest with
           | (EErr err, left) -> (EErr err, left)
-          | (EOk (VList others), left) -> (EOk (VList (if keep then head :: others else others)), left)
+          | (EOk (VList _ others), left) ->
+              (EOk (VList t (if keep then head :: others else others)), left)
           | (EOk _, left) -> (EErr (ETypeMismatch f), left)
         end
       | (EOk _, after) -> (EErr (ETypeMismatch f), after)
@@ -1105,15 +1146,15 @@ and zip_with_values (p:policy) (fuel:nat) (depth:nat) (f:zid) (left:list value) 
   : Tot (eval_result value & (remaining:nat{remaining <= fuel})) (decreases %[fuel; 2; left])
 =
   match left, right with
-  | [], _ -> (EOk (VList []), fuel)
-  | _, [] -> (EOk (VList []), fuel)
+  | [], _ -> (EOk (VList type_any []), fuel)
+  | _, [] -> (EOk (VList type_any []), fuel)
   | l :: ltail, r :: rtail -> begin
       match eval p fuel depth [] (ECall f [EValue l; EValue r]) with
       | (EErr err, after) -> (EErr err, after)
       | (EOk combined, after) -> begin
           match zip_with_values p after depth f ltail rtail with
           | (EErr err, left_over) -> (EErr err, left_over)
-          | (EOk (VList others), left_over) -> (EOk (VList (combined :: others)), left_over)
+          | (EOk (VList t others), left_over) -> (EOk (VList t (combined :: others)), left_over)
           | (EOk _, left_over) -> (EErr (ETypeMismatch f), left_over)
         end
     end

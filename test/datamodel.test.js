@@ -149,7 +149,12 @@ test("every value has a type, and a type is a value", skip, () => {
     ["abc", "Z6", "a string"],
     [true, "Z40", "a boolean"],
     [7, "Z13518", "a natural number"],
-    [[1, 2], "Z881", "a list"]
+    // A list handed in as a JSON argument has no declared element type, so the
+    // best that can be said of it is that it is a list of Z1 - and saying so is
+    // the point. Before lists carried a type at all, every list rendered as a
+    // bare "Z881" and the parameter Z22764's own testers ask for could not be
+    // produced from a value.
+    [[1, 2], "Z881 (Z1)", "a list"]
   ];
   for (const [v, want, what] of shapes) {
     const r = typeOf(v);
@@ -182,6 +187,39 @@ test("a generic type renders with its parameters, nested", skip, () => {
     render(pair(Z("Z99"), map(Z("Z6"), list(Z("Z6"))))),
     "Z882 (Z99, Z883 (Z6, Z881 (Z6)))",
     "tester Z31202"
+  );
+});
+
+// Where the element type is known, it is the real one rather than Z1. Z22717
+// turns a string into its codepoints, which are natural numbers, and the engine
+// says so without being told.
+test("a list produced by the corpus carries the element type it really has", skip, () => {
+  const { call } = engine();
+  const codepoints = call("Z22717", ["ab"]);
+  assert.ok(codepoints.ok, `Z22717 did not evaluate: ${codepoints.message}`);
+  const type = call("Z16829", [codepoints.result]);
+  assert.ok(type.ok, `Z16829 did not evaluate: ${type.message}`);
+  const rendered = call("Z22764", [type.result]);
+  assert.ok(rendered.ok, `Z22764 did not evaluate: ${rendered.message}`);
+  assert.equal(
+    rendered.result.text, "Z881 (Z13518)",
+    "a list of codepoints is a list of natural numbers, and its type should say so"
+  );
+});
+
+// A pair carries no stored type because it does not need one: the types of its
+// components are the types of its components. Built with Z810 cons onto the
+// empty list, which is where a real VPair comes from - Z17534 returns a record
+// whose type is Z882, which is a different shape and reports that type.
+test("a pair reports the types of the things in it", skip, () => {
+  const { call } = engine();
+  const pair = call("Z882", [{ type: "Z8", zid: "Z6" }, { type: "Z8", zid: "Z6" }]);
+  assert.ok(pair.ok, `Z882 did not evaluate: ${pair.message}`);
+  const rendered = call("Z22764", [pair.result]);
+  assert.ok(rendered.ok, `Z22764 did not evaluate: ${rendered.message}`);
+  assert.equal(
+    rendered.result.text, "Z882 (Z6, Z6)",
+    "the generic applied to two string types"
   );
 });
 

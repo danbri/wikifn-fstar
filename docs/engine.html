@@ -141,7 +141,15 @@ call  Z10627("Hello, Wikifunctions!")  fuel 100000
 Z881(Z40)              rendered          -&gt; "Z881 (Z40)"
 Z882(Z6, Z16683)       rendered          -&gt; "Z882 (Z6, Z16683)"
 Z882(Z99, Z883(Z6, Z881(Z6)))            -&gt; "Z882 (Z99, Z883 (Z6, Z881 (Z6)))"</code></pre>
-<p>One limit is real and is the value model's, not this code's: a <code>VList</code> and a <code>VPair</code> carry no element type, so the best that can be said of a list of strings is that it is a list. The corpus writes that parameter and <code>Z22764</code>'s testers ask for it back. Carrying type parameters on lists and pairs is what would close it, and it is also why <code>Z805</code> reify refuses a list or a pair — reify's whole job is to say what something is made of, and for those two the answer would have to leave out the part that matters.</p>
+<p>A list now carries its element type, and a pair needs none.</p>
+<p>Wikifunctions writes a list as <code>["Z6", "a", "b"]</code> — the head of that array is the type, not an element. It was read and thrown away. <code>VList</code> carries it now, so</p>
+<pre><code>Z16829(Z22717("ab"))    rendered    -&gt;  "Z881 (Z13518)"
+Z16829(Z17534("l","r")) rendered    -&gt;  "Z882 (Z6, Z6)"</code></pre>
+<p>— a list of codepoints knows it is a list of natural numbers, without being told.</p>
+<p>A pair stores nothing, because it does not need to: the types of its components <em>are</em> the types of its components, and both are always there to ask. That is why <code>type_of_value</code> is recursive and why only one of the two constructors changed.</p>
+<p>Where the type is not known it is <code>Z1</code>, the top type: a <code>map</code>'s result, a <code>zip</code>'s, a list read from a JSON argument. Saying <code>Z1</code> is honest; saying <code>Z6</code> because the first element happened to be a string would not be. <code>filter</code> is the exception — what it leaves is a sublist, so it keeps the type it was given.</p>
+<p>Equality does <strong>not</strong> compare the element type. Ours is exact where the corpus wrote it and <code>Z1</code> where a computation produced it, so comparing would make a computed list of strings differ from a written one, which is not what <code>Z13052</code> means.</p>
+<p>It also improved fidelity rather than costing it: the canonical rendering writes the type the corpus wrote instead of <code>Z1</code>, which it had been doing to every list.</p>
 <h2 id="quoting-and-taking-an-object-apart">Quoting, and taking an object apart</h2>
 <p>A quote holds an expression rather than a value, so <code>value</code> and <code>expr</code> in <code>Wikifn.Eval</code> are one mutually recursive family and <code>VQuote</code> carries an <code>expr</code>. Unquoting is not unwrapping: <code>Z899</code> evaluates the body in the environment the unquote sits in, which is why it is a form in <code>eval</code> rather than an entry in <code>apply_primitive</code>.</p>
 <p>That also settles how a quote is printed. Scheme's <code>(quote x)</code> is a datum and opening it again would need <code>eval</code>, so the listing prints a quote as <code>(lambda () …)</code> and the prelude's unquote calls it. Same semantics, no <code>eval</code>, still self-contained.</p>

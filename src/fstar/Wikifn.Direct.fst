@@ -117,28 +117,31 @@ let rec map_direct (f:value -> Tot (eval_result value)) (items:list value)
   : Tot (eval_result value) (decreases items)
 =
   match items with
-  | [] -> EOk (VList [])
+  (* Mapping does not know what its function returns, so the result is a list
+     of Z1. Filtering does know, because what is left is a sublist of what came
+     in - which is why that one takes the element type and this one does not. *)
+  | [] -> EOk (VList type_any [])
   | head :: tail ->
       match f head with
       | EErr e -> EErr e
       | EOk mapped ->
           match map_direct f tail with
           | EErr e -> EErr e
-          | EOk (VList others) -> EOk (VList (mapped :: others))
+          | EOk (VList t others) -> EOk (VList t (mapped :: others))
           | EOk _ -> EErr (ETypeMismatch fid_map)
 
-let rec filter_direct (f:value -> Tot (eval_result value)) (items:list value)
+let rec filter_direct (t:value) (f:value -> Tot (eval_result value)) (items:list value)
   : Tot (eval_result value) (decreases items)
 =
   match items with
-  | [] -> EOk (VList [])
+  | [] -> EOk (VList t [])
   | head :: tail ->
       match f head with
       | EErr e -> EErr e
       | EOk (VBool keep) ->
-          begin match filter_direct f tail with
+          begin match filter_direct t f tail with
           | EErr e -> EErr e
-          | EOk (VList others) -> EOk (VList (if keep then head :: others else others))
+          | EOk (VList _ others) -> EOk (VList t (if keep then head :: others else others))
           | EOk _ -> EErr (ETypeMismatch fid_filter)
           end
       | EOk _ -> EErr (ETypeMismatch fid_filter)
@@ -160,15 +163,15 @@ let rec zip_direct (f:value -> value -> Tot (eval_result value))
   : Tot (eval_result value) (decreases left)
 =
   match left, right with
-  | [], _ -> EOk (VList [])
-  | _, [] -> EOk (VList [])
+  | [], _ -> EOk (VList type_any [])
+  | _, [] -> EOk (VList type_any [])
   | l :: ltail, r :: rtail ->
       match f l r with
       | EErr e -> EErr e
       | EOk combined ->
           match zip_direct f ltail rtail with
           | EErr e -> EErr e
-          | EOk (VList others) -> EOk (VList (combined :: others))
+          | EOk (VList t others) -> EOk (VList t (combined :: others))
           | EOk _ -> EErr (ETypeMismatch fid_zip_with)
 
 (*
@@ -211,8 +214,24 @@ let caught (attempted:eval_result value) (errortype:eval_result value) : Tot boo
 let as_items (fid:zid) (r:eval_result value) : Tot (eval_result (list value)) =
   match r with
   | EErr e -> EErr e
-  | EOk (VList items) -> EOk items
+  | EOk (VList _ items) -> EOk items
   | EOk _ -> EErr (ETypeMismatch fid)
+
+(* A list argument with the element type it carries. Filtering needs it: what
+   is left is a sublist, so it keeps the type it came in with. *)
+let as_typed_items (fid:zid) (r:eval_result value) : Tot (eval_result (value & list value)) =
+  match r with
+  | EErr e -> EErr e
+  | EOk (VList t items) -> EOk (t, items)
+  | EOk _ -> EErr (ETypeMismatch fid)
+
+let with_typed_items (fid:zid) (r:eval_result value)
+                     (k:value -> list value -> Tot (eval_result value))
+  : Tot (eval_result value)
+=
+  match as_typed_items fid r with
+  | EErr e -> EErr e
+  | EOk (t, items) -> k t items
 
 let with_items (fid:zid) (r:eval_result value) (k:list value -> Tot (eval_result value))
   : Tot (eval_result value)
