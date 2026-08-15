@@ -194,16 +194,16 @@ test("compiled and interpreted agree on every tester example", skip, () => {
 // Not every runnable function can be compiled, and the number that cannot is a
 // budget rather than a bug.
 //
-// Compiled fuel bounds recursion depth; the interpreter's bounds total steps.
-// A composition that branches into its own recursive group more than once is
-// exponential within the depth bound, so it is left to the interpreter, which
-// stops and says so. Same for one whose guard is a function rather than a
-// conditional, and one that applies a function value - call_primitive cannot
-// call anything. Each refusal is named in the generation report.
+// What is left is not about termination. A compiled function threads a step
+// budget now, so anything that branches stops and reports exhaustion exactly as
+// the interpreter does. The three that remain all want the same missing thing:
+// a dispatcher reachable from inside a compiled function, so that applying a
+// function value - Z13318 and its siblings, and a computed function passed to
+// map, filter, fold or zip - can be compiled at all. Unquoting needs an
+// evaluator, which compiled code does not have.
 //
-// Lower this as the compiled path grows; raising it needs a reason. Giving
-// compiled code a step budget would take it to near zero.
-const NOT_COMPILED_BUDGET = 400;
+// Lower this as the compiled path grows; raising it needs a reason.
+const NOT_COMPILED_BUDGET = 300;
 
 test("what cannot be compiled stays a stated number", skip, () => {
   const { catalogue: cat } = loaded();

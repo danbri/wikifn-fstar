@@ -29,26 +29,31 @@ open Wikifn.Eval
 
 let ok (v:value) : Tot (eval_result value) = EOk v
 
-(* What a recursive compiled function is given when a non-recursive one calls
-   it. Anywhere inside a recursive function the caller's own remaining fuel is
-   spent instead - both within its group and outside it - so a budget is started
-   only where nothing is looping, and total work stays bounded by the budget
-   rather than multiplying.
+(* The budget a compiled function starts with when nothing is spending one
+   already.
    
-   That distinction is not cosmetic. When every recursive callee was handed a
-   fresh 100,000 regardless, a function that walks a string and calls a
-   recursive helper per character had a hundred thousand steps of licence for
-   each of them, and `Z11053` did not finish in five minutes. Threading the
-   caller's fuel makes the same call return immediately.
+   A recursive compiled function takes a budget and returns what is left of it,
+   so every call it makes spends from the same one. That makes the number a
+   bound on *total steps*, which is what the interpreter's fuel has always been
+   - and it is why a composition that reaches its own recursive group twice per
+   level now stops and says so instead of running for ever inside a bound that
+   only counted depth.
    
-   The number is max_depth, and deliberately the same one. Fuel here bounds
-   recursion depth, one level per step, and a level is a stack frame in the
-   extracted JavaScript - so this is the same quantity the interpreter bounds
-   with max_depth and for the same reason: a library must not crash its caller.
-   At ten thousand, Z11420 discard until end of first substring answered with
-   a JavaScript stack overflow, which is a crash rather than a limit. At 900 it
-   reports fuel exhaustion, which a caller can read. *)
-let default_fuel : nat = 900
+   Depth is bounded separately, by max_depth, the same number and for the same
+   reason the interpreter uses it: a level is a stack frame in the extracted
+   JavaScript. One counter is not enough, and trying it is how that was
+   established - at a threaded budget of 5,000 with no depth limit, 143 compiled
+   calls answered with a JavaScript stack overflow. Steps and nesting are
+   different questions and each needs its own answer.
+   
+   The number is the interpreter's, because the two now bound the same thing.
+   
+   Where a budget cannot be threaded - inside the function a map, filter, fold
+   or zip applies, which is called once per element with nowhere to carry the
+   remainder - each call starts a fresh one. Work is then bounded by elements
+   times budget, which is bounded; it is the nested case that multiplied, and
+   that one threads. *)
+let default_fuel : nat = 100000
 
 (* Arguments, left to right, stopping at the first error. *)
 let rec sequence (results:list (eval_result value)) : Tot (eval_result (list value)) =

@@ -135,6 +135,14 @@ const PRIMITIVES = new Set([
 ]);
 
 const INTERNAL_FRESH_PRIVATE_USE = "1000000001";
+// Z802 and Z13846 are the two conditionals the corpus writes. Both take a
+// condition and two branches, and only the taken branch may be evaluated.
+const CONDITIONALS = new Set(["Z802", "Z13846"]);
+
+// Applying a function to arguments. Z14779 is not here: it is zip-with, and
+// it is in HIGHER_ORDER.
+const APPLY = new Set(["Z13318", "Z21216", "Z30438", "Z1000000002"]);
+
 const INTERNAL_APPLY = "1000000002";
 const INTERNAL_APPLY_ZID = `Z${INTERNAL_APPLY}`;
 
@@ -1170,6 +1178,86 @@ async function main() {
   // 4.9 s and 300 MB, while 3,679 in a single module climb to 66 GB and are
   // killed. Splitting also means a regeneration only re-verifies the parts that
   // actually changed, because F* caches per module.
+  // A conditional written as a function is still a conditional.
+  //
+  // Z12899 join list of strings is written as Z19565(null?(l), "", ..., car(l),
+  // ...), and Z19565 is a five-argument if written as a function. As an
+  // ordinary call every argument is evaluated, so car of the empty list is
+  // taken before the guard can choose - and the interpreter answered "type
+  // mismatch in Z811" where the answer is "". That is a wrong answer, not a
+  // limit.
+  //
+  // So a call to a non-recursive function whose body is headed by a conditional
+  // is replaced by that body with the arguments substituted in, and the
+  // interpreter's Z802 form makes it lazy again. Only when every parameter is
+  // used at most once, so substituting cannot duplicate work, and never through
+  // a function already being inlined, so a chain cannot loop.
+  //
+  // The canonical rendering keeps the original: what is contributable upstream
+  // is what the corpus wrote, and only what runs here is rewritten.
+  const conditionalBodyOf = (zid, seen) => {
+    if (seen.has(zid) || seen.size > 4) return undefined;
+    const entry = emittedIndex.get(zid);
+    const body = entry?.tree;
+    if (!body || body.kind !== "call") return undefined;
+    // A function that mentions itself is recursive; inlining it would not stop.
+    if ((entry.calls ?? []).includes(zid)) return undefined;
+    const uses = new Map();
+    const count = (n) => {
+      if (n.kind === "arg") uses.set(n.index, (uses.get(n.index) ?? 0) + 1);
+      else if (n.kind === "call") n.args.forEach(count);
+      else if (n.kind === "record") n.fields.forEach(([, v]) => count(v));
+      else if (n.kind === "quote") count(n.body);
+    };
+    count(body);
+    if ([...uses.values()].some((n) => n > 1)) return undefined;
+    if (CONDITIONALS.has(body.zid) && body.args.length === 3) return body;
+    // A wrapper around a wrapper.
+    return conditionalBodyOf(body.zid, new Set(seen).add(zid))
+      ? inlineAliases(body, new Set(seen).add(zid))
+      : undefined;
+  };
+
+  const substituteArgs = (node, args) => {
+    if (node.kind === "arg") return args[node.index] ?? node;
+    if (node.kind === "call") return { ...node, args: node.args.map((a) => substituteArgs(a, args)) };
+    if (node.kind === "record") {
+      return { ...node, fields: node.fields.map(([k, v]) => [k, substituteArgs(v, args)]) };
+    }
+    return node;
+  };
+
+  function inlineAliases(node, seen = new Set()) {
+    if (node.kind === "call") {
+      const args = node.args.map((a) => inlineAliases(a, seen));
+      const body = conditionalBodyOf(node.zid, seen);
+      if (body && args.every((a, index) => index < node.args.length)) {
+        const substituted = substituteArgs(body, args);
+        // The substituted body may itself contain a call to another alias.
+        return inlineAliases(substituted, new Set(seen).add(node.zid));
+      }
+      return { ...node, args };
+    }
+    if (node.kind === "record") {
+      return { ...node, fields: node.fields.map(([k, v]) => [k, inlineAliases(v, seen)]) };
+    }
+    return node;
+  }
+
+  {
+    let inlined = 0;
+    for (const entry of emitted) {
+      const rewritten = inlineAliases(entry.tree);
+      if (JSON.stringify(rewritten) === JSON.stringify(entry.tree)) continue;
+      // Kept, because this is what is contributable back to Wikifunctions.
+      entry.canonicalTree = entry.tree;
+      entry.tree = rewritten;
+      entry.calls = [...new Set(collectCalls(rewritten))];
+      inlined += 1;
+    }
+    console.log(`\n${inlined} bodies had a conditional written as a function put back as a conditional`);
+  }
+
   const parts = [];
   let current = [];
   let currentBytes = 0;
@@ -1334,7 +1422,6 @@ async function main() {
     ["Z873", "map_direct"], ["Z872", "filter_direct"],
     ["Z876", "fold_direct"], ["Z14779", "zip_direct"]
   ]);
-  const CONDITIONALS = new Set(["Z802", "Z13846"]);
 
   const compiledName = (zid) => `compiled_${emittedIndex.get(zid).name}`;
 
@@ -1369,9 +1456,24 @@ async function main() {
   // is recursive before it can be written.
   let recursiveSet = new Set();
   let groupOfZid = new Map();
-  const targetFuel = (zid, context) =>
-    !context.recursive.has(zid) ? ""
-      : (context.group.has(zid) ? "next_fuel " : "default_fuel ");
+  // A call from inside a lambda - the function a map, filter, fold or zip
+  // applies - cannot thread a budget, because the lambda is called once per
+  // element and there is nowhere to carry what is left. Each starts a fresh
+  // budget and keeps the answer. Total work is bounded by the number of
+  // elements times the budget, which is bounded; it is the *nested* case that
+  // multiplies, and that one threads.
+  const targetCall = (zid, context, args) => {
+    if (!context.recursive.has(zid)) return `${compiledName(zid)} ${args}`;
+    // A call back into the enclosing function's own recursive group has to
+    // decrease, or F* cannot see the recursion end - and a fresh budget does
+    // not decrease. next_fuel is the caller's, one less than what it was given,
+    // which is what the termination argument needs. It is not threaded, because
+    // a lambda called once per element has nowhere to carry the remainder, so
+    // each element gets that much and the total is bounded by elements times
+    // it. Outside the group nothing can come back, so a fresh budget is safe.
+    const budget = context.group.has(zid) ? "next_fuel deeper" : "default_fuel 0";
+    return `fst (${compiledName(zid)} ${budget} ${args})`;
+  };
 
   // Anything above this, in a position that is evaluated anyway, gets a name.
   //
@@ -1529,6 +1631,17 @@ async function main() {
     return !reaches(node);
   }
 
+  // Bind an expression that yields (value, budget left) to a pair of names, and
+  // carry the budget forward. Everything else in a body is a plain value.
+  function bindThreaded(code, context) {
+    context.bound += 1;
+    const result = `spent_${context.bound}`;
+    const left = `left_${context.bound}`;
+    context.bindings.push(`let (${result}, ${left}) = ${code} in`);
+    context.fuelVar = left;
+    return result;
+  }
+
   function renderDirect(node, context) {
     switch (node.kind) {
       case "arg":
@@ -1598,17 +1711,26 @@ async function main() {
           // the function would evaluate both branches, which is the one thing
           // that must not happen: nearly every recursive composition in the
           // corpus guards its recursive branch with this conditional.
+          // A branch keeps its own bindings and its own budget. Only one of
+          // them runs, so what the other would have spent is not spent - which
+          // means the two branches leave different amounts, and a threaded
+          // function has to say which by returning the pair from inside the
+          // branch rather than after the conditional.
           const branch = (child) => {
             const outer = context.bindings;
             const outerShared = new Map(context.shared);
+            const outerFuel = context.fuelVar;
             context.bindings = [];
             const code = renderDirect(child, context);
             const local = context.bindings;
+            const inner = context.fuelVar;
             context.bindings = outer;
             // A name bound inside a branch is out of scope outside it. What was
             // in scope on the way in stays in scope.
             context.shared = outerShared;
-            return local.length ? `(${local.join(" ")} ${code})` : code;
+            context.fuelVar = outerFuel;
+            const value = context.threading ? `(${code}, ${inner})` : code;
+            return local.length ? `(${local.join(" ")} ${value})` : value;
           };
           const scrutinee = `condition_of ${node.zid.slice(1)} ${renderDirect(condition, context)}`;
           const consequentCode = branch(consequent);
@@ -1617,11 +1739,19 @@ async function main() {
           // the binding is before it can decide the match covers it, and it
           // reports incomplete patterns for a two-constructor type rather than
           // saying that is what it is stuck on.
-          return `(let ${name} : eval_result bool = ${scrutinee} in\n` +
+          const failed = context.threading ? `(EErr e, ${context.fuelVar})` : "EErr e";
+          const whole =
+            `(let ${name} : eval_result bool = ${scrutinee} in\n` +
             `   match ${name} with\n` +
-            `   | EErr e -> EErr e\n` +
+            `   | EErr e -> ${failed}\n` +
             `   | EOk b -> if b then ${consequentCode}\n` +
             `              else ${alternativeCode})`;
+          if (!context.threading) return whole;
+          // The two branches leave different amounts of budget, so the
+          // conditional yields a pair - and everything around it expects a
+          // plain value. Binding it here keeps every expression in the body a
+          // value and puts the budget only in the bindings.
+          return bindThreaded(whole, context);
         }
         // Errors as values. Z851 and Z853 are ordinary calls in compiled code
         // because eval_result already carries the error; Z850 is a form,
@@ -1648,9 +1778,37 @@ async function main() {
           const call = renderDirect(node.args[0], context);
           const errortype = renderDirect(node.args[1], context);
           const handler = branch(node.args[2]);
-          return `(let ${attempted} = ${call} in\n` +
+          const otherwise = context.threading ? `(${attempted}, ${context.fuelVar})` : attempted;
+          const whole =
+            `(let ${attempted} = ${call} in\n` +
             `   let ${wanted} = ${errortype} in\n` +
-            `   if caught ${attempted} ${wanted} then ${handler} else ${attempted})`;
+            `   if caught ${attempted} ${wanted} then ${handler} else ${otherwise})`;
+          if (!context.threading) return whole;
+          return bindThreaded(whole, context);
+        }
+        // Applying a function that is named in the composition.
+        //
+        // Z13318 and its siblings take a function and its arguments. Where the
+        // function is written out - which is how the corpus uses them, to pass
+        // a named function to something expecting one - the application is just
+        // that call, and compiled code can make it. Only a function computed at
+        // run time needs a dispatcher, and that is what stays refused: the
+        // interpreter has the policy and call_primitive does not, so compiled
+        // code answered "no implementation for Z13318" where the interpreter
+        // answered correctly.
+        if (APPLY.has(node.zid) && node.args.length >= 1) {
+          const applied = node.args[0];
+          if (applied.kind !== "func") {
+            refuse(context.zid, `applies a function value through ${node.zid}`);
+          }
+          const rest = node.args.slice(1).map((a) => hoist(renderDirect(a, context), context));
+          if (isPrimitive(applied.zid)) {
+            return `(call_primitive ${applied.zid.slice(1)} [${rest.join("; ")}])`;
+          }
+          if (!compilable.has(applied.zid)) {
+            refuse(context.zid, `applies ${applied.zid}, which does not compile`);
+          }
+          return `(${targetCall(applied.zid, context, rest.join(" "))})`;
         }
         const target = higherOrderTarget(node);
         if (HIGHER_ORDER.has(node.zid)) {
@@ -1660,10 +1818,10 @@ async function main() {
           const call = arity === 2
             ? (isPrimitive(target)
                 ? `(fun x y -> call_primitive ${target.slice(1)} [EOk x; EOk y])`
-                : `(fun x y -> ${compiledName(target)} ${targetFuel(target, context)}(EOk x) (EOk y))`)
+                : `(fun x y -> ${targetCall(target, context, "(EOk x) (EOk y)")})`)
             : (isPrimitive(target)
                 ? `(fun x -> call_primitive ${target.slice(1)} [EOk x])`
-                : `(fun x -> ${compiledName(target)} ${targetFuel(target, context)}(EOk x))`);
+                : `(fun x -> ${targetCall(target, context, "(EOk x)")})`);
           if (node.zid === "Z876") {
             // (function, iterable, initial object)
             return `(with_items ${node.zid.slice(1)} ${renderDirect(node.args[1], context)} (fun items ->\n` +
@@ -1693,10 +1851,21 @@ async function main() {
           // Only a non-recursive caller starts a fresh budget, and a
           // non-recursive caller cannot loop, so that is where a budget can
           // safely begin.
-          const fuel = context.recursive.has(node.zid)
-            ? (context.recursive.has(context.zid) ? "next_fuel " : "default_fuel ")
-            : "";
-          return `(${compiledName(node.zid)} ${fuel}${args.join(" ")})`;
+          if (!context.recursive.has(node.zid)) {
+            return `(${compiledName(node.zid)} ${args.join(" ")})`;
+          }
+          // A recursive callee is given the caller's remaining budget and hands
+          // back what is left, so the work of everything called from here is
+          // counted against one budget rather than each starting a fresh one.
+          // That is what makes the budget a bound on total steps rather than on
+          // depth, and it is what the interpreter has always done.
+          if (context.threading) {
+            return bindThreaded(
+              `${compiledName(node.zid)} ${context.fuelVar} deeper ${args.join(" ")}`, context);
+          }
+          // A non-recursive caller cannot loop, so it starts a budget and does
+          // not need what is left of it.
+          return `(fst (${compiledName(node.zid)} default_fuel 0 ${args.join(" ")}))`;
         }
         // The apply family takes a function *value* and calls it. The
         // interpreter can, because it has the policy; call_primitive cannot,
@@ -1704,9 +1873,6 @@ async function main() {
         // code that reached one answered "no implementation for Z13318" while
         // the interpreter answered correctly, which is the one thing the two
         // paths must never do.
-        if (["Z13318", "Z21216", "Z30438", "Z14779", INTERNAL_APPLY_ZID].includes(node.zid)) {
-          refuse(context.zid, `applies a function value through ${node.zid}`);
-        }
         if (!isPrimitive(node.zid)) refuse(context.zid, `calls ${node.zid}, which does not compile`);
         return `(call_primitive ${node.zid.slice(1)} [${args.join("; ")}])`;
       }
@@ -1774,7 +1940,13 @@ async function main() {
       let failed = false;
       for (const zid of group) {
         const entry = emittedIndex.get(zid);
-        const context = { zid, group: recursive ? members : new Set(), recursive: recursiveSet, conditions: 0, bound: 0, bindings: [], literals: [], shared: new Map() };
+        const context = {
+          zid, group: recursive ? members : new Set(), recursive: recursiveSet,
+          conditions: 0, bound: 0, bindings: [], literals: [], shared: new Map(),
+          // A recursive function takes a budget and says what is left of it.
+          // Everything it calls that can recurse spends from that one budget.
+          threading: recursive, fuelVar: "next_fuel"
+        };
         let body;
         try {
           body = renderDirect(entry.tree, context);
@@ -1783,8 +1955,16 @@ async function main() {
           break;
         }
         const params = entry.argNames.map((name) => `(${name}:eval_result value)`).join(" ");
-        const signature = recursive ? `(fuel:nat) ${params}`.trim() : (params || "()");
+        const signature = recursive ? `(fuel:nat) (depth:nat) ${params}`.trim() : (params || "()");
         const decreases = recursive ? " (decreases fuel)" : "";
+        // What a recursive function returns: the value, and what is left of the
+        // budget. The refinement is what lets F* see the recursion terminate -
+        // a callee cannot hand back more than it was given, so the next call
+        // starts from something no larger, and `fuel - 1` at the top makes it
+        // strictly smaller.
+        const returns = recursive
+          ? "Tot (eval_result value & (remaining:nat{remaining <= fuel}))"
+          : "Tot (eval_result value)";
         // Bound once, and named, because `fuel - 1` written inside a lambda
         // loses the proof that fuel is not zero and F* then sees an int where
         // it wants a nat.
@@ -1795,107 +1975,31 @@ async function main() {
         const prelude = preludeLines.length
           ? preludeLines.map((line) => `  ${line}`).join("\n") + "\n"
           : "";
+        // Two limits, and they are different questions. Fuel is the total work
+        // and is threaded, so everything called from here spends the same
+        // budget. Depth is the nesting and is not, because siblings are at the
+        // same level - it is there because a level is a stack frame in the
+        // extracted JavaScript and a library must not crash its caller. The
+        // interpreter has had both for the same reasons.
         const guarded = recursive
-          ? `\n  if fuel = 0 then EErr EFuelExhausted else\n` +
-            `  let next_fuel : nat = fuel - 1 in\n${prelude}  ${body}`
+          ? `\n  if fuel = 0 then (EErr EFuelExhausted, 0) else\n` +
+            `  if depth >= max_depth then (EErr EDepthExceeded, fuel) else\n` +
+            `  let next_fuel : nat = fuel - 1 in\n` +
+            `  let deeper : nat = depth + 1 in\n${prelude}  (${body}, ${context.fuelVar})`
           : `\n${prelude}  ${body}`;
         rendered.push({
           zid, entry, recursive,
-          text: `${compiledName(zid)} ${signature} : Tot (eval_result value)${decreases} =${guarded}`
+          text: `${compiledName(zid)} ${signature} : ${returns}${decreases} =${guarded}`
         });
       }
       if (failed) { dropped.push(...group); continue; }
 
-      // A recursive function with no way to an answer that avoids its own
-      // group has no base case once compiled.
-      //
-      // Z14859 Delannoy number guards its three recursive calls with Z31490
-      // if either, and Z31490 is a function rather than a conditional - so
-      // compiled code evaluates all three before the guard can choose, and the
-      // base case is never reached. Where the guard can be put back by
-      // inlining, it is; where it cannot, the interpreter takes it.
-      if (recursive) {
-        const noBase = rendered.filter(
-          (item) => !hasGroupFreePath(emittedIndex.get(item.zid).tree, members));
-        if (noBase.length) {
-          for (const item of noBase) {
-            directRefusals.set(item.zid, "has no base case once its guards are made strict");
-          }
-          dropped.push(...group);
-          continue;
-        }
-      }
-
-      // More than one call into the group on a single path is exponential.
-      //
-      // Common subexpression elimination has already merged the repeats it can
-      // see, so what is left is genuine branching: two different subproblems
-      // per level, or two routes to the same one through different functions.
-      // Either way the work multiplies within the depth bound, and depth is
-      // all compiled fuel bounds. The interpreter counts total steps, so it
-      // stops and says so - which makes it the right place for these.
-      if (recursive) {
-        const branching = rendered.filter(
-          (item) => groupCallsOnLongestPath(emittedIndex.get(item.zid).tree, members) > 1);
-        if (branching.length) {
-          for (const item of branching) {
-            directRefusals.set(
-              item.zid, "branches into its own recursive group more than once on a path");
-          }
-          dropped.push(...group);
-          continue;
-        }
-      }
-
-      // Two routes to the same subproblem is exponential here, and nothing
-      // downstream will notice.
-      //
-      // Z13728 prime divisors calls Z13735 largest prime divisor on n, which is
-      // last(prime_divisors(n)), and Z13745 n/largest on the same n, which
-      // calls Z13735 again. Three ways into the same group on the same
-      // argument, so the work triples per level. Compiled fuel bounds the
-      // depth, not the total, so every one of those calls is inside the budget
-      // and `Z11015 is leap year (Julian calendar)` on 2100 never returns.
-      //
-      // Common subexpression elimination cannot see it: the repeats are calls
-      // to different functions, and only inlining would reveal that they
-      // compute the same thing. So the function is left to the interpreter,
-      // whose fuel counts total steps and which therefore stops and says so.
-      //
-      // The signature looked for is two calls into the group with identical
-      // arguments. A divide-and-conquer makes two calls too, on different
-      // arguments, and is linear - it stays.
-      const repeated = rendered.filter((item) => {
-        const byArguments = new Map();
-        let found = false;
-        const walk = (node) => {
-          if (found) return;
-          if (node.kind === "call") {
-            if (members.has(node.zid)) {
-              const key = node.args.map(subtreeKey).join(" ");
-              const seen = byArguments.get(key);
-              // Two different ways into the group on the same argument. The
-              // same callee twice is common subexpression elimination's job
-              // and is already done above.
-              if (seen !== undefined && seen !== node.zid) { found = true; return; }
-              byArguments.set(key, node.zid);
-            }
-            node.args.forEach(walk);
-          } else if (node.kind === "record") {
-            node.fields.forEach(([, v]) => walk(v));
-          }
-        };
-        walk(emittedIndex.get(item.zid).tree);
-        return found;
-      });
-      if (repeated.length) {
-        for (const item of repeated) {
-          directRefusals.set(
-            item.zid, "reaches its own recursive group twice on the same argument");
-        }
-        dropped.push(...group);
-        continue;
-      }
+      // Neither "no base case once the guards are strict" nor "branches into
+      // its own group more than once" is refused any more. Both were
+      // consequences of a budget that bounded depth: work multiplied inside the
+      // bound and nothing noticed. A threaded budget is spent by every call,
+      // so those bodies now terminate and report exhaustion, exactly as the
+      // interpreter does with them.
       rendered.forEach((item, position) => {
         directLines.push(
           `(* ${item.zid} ${item.entry.label} | ${item.zid}@${item.entry.functionRevision}` +
@@ -1978,13 +2082,18 @@ async function main() {
     const entry = emittedIndex.get(zid);
     if (!directLines.some((line) => line.includes(`${compiledName(zid)} `))) continue;
     const params = entry.argNames.map((_n, index) => `a${index}`);
-    const fuel = recursiveSet.has(zid) ? "default_fuel " : "";
     // A function of no arguments is written to take unit, so it has to be
     // called with unit; passing nothing leaves the function itself as the
     // result rather than what it computes.
     const applied = params.length ? params.join(" ") : "()";
+    // A recursive function is given a budget and returns what is left of it.
+    // A caller arriving by ZID has nothing to spend it against, so it starts a
+    // fresh one and keeps only the answer.
+    const call = recursiveSet.has(zid)
+      ? `fst (${compiledName(zid)} default_fuel 0 ${applied})`
+      : `${compiledName(zid)} ${applied}`;
     dispatchLines.push(
-      `  | ${entry.number}, [${params.join("; ")}] -> Some (${compiledName(zid)} ${fuel}${applied})`
+      `  | ${entry.number}, [${params.join("; ")}] -> Some (${call})`
     );
     dispatched.push(zid);
   }
@@ -2271,7 +2380,7 @@ async function main() {
     compositions[entry.zid] = {
       label: entry.label,
       arguments: entry.argKeys,
-      Z14K2: renderZ14K2(entry.tree, entry.argKeys)
+      Z14K2: renderZ14K2(entry.canonicalTree ?? entry.tree, entry.argKeys)
     };
   }
   await writeFile(

@@ -1,6 +1,6 @@
 # The Wikifn Engine
 
-1,170 real Wikifunctions compositions compiled into F* functions, checked by F*, and
+1,370 real Wikifunctions compositions compiled into F* functions, checked by F*, and
 extracted to OCaml and then JavaScript — plus an interpreter over 3,893 of them, which is
 how the rest are reached and how the compiled ones are checked against something.
 
@@ -14,7 +14,7 @@ object:
 
 | file | contents |
 |---|---|
-| `src/fstar/Wikifn.Compiled.Direct.fst` | **1,170 compositions as F\* functions**, each a translation of a pinned `Z14K2` tree |
+| `src/fstar/Wikifn.Compiled.Direct.fst` | **1,370 compositions as F\* functions**, each a translation of a pinned `Z14K2` tree |
 | `src/fstar/Wikifn.Generated.Eval.PartNN.fst` | the same compositions as data, for the interpreter |
 | `src/fstar/Wikifn.Generated.Eval.fst` | dispatch only; it holds no bodies |
 | `build/fstar/fn/Wikifn.Fn.ZNNNN.fst` | the same bodies again, one module per function, for verification |
@@ -98,7 +98,7 @@ Measured with `make closure` (a fixpoint over the call graph, not a per-seed wal
 | | count |
 |---|---|
 | functions in the corpus | 4,970 |
-| **compiled into F\* functions, checked by F\*** | **1,170** |
+| **compiled into F\* functions, checked by F\*** | **1,370** |
 | carried as data for the interpreter | 3,893 |
 | skipped by the translator, with reasons recorded | 7 |
 
@@ -520,55 +520,73 @@ evaluation of a guarded recursive branch, not the depth limit.
 
 ### What is left to the interpreter, and why
 
-Common subexpression elimination merges the repeats it can see. What is left is
-genuine branching, and depth-bounded fuel cannot stop that:
+Sixty functions still do not compile, and none of them is about termination any
+more.
 
-- `Z13728 prime divisors` calls `Z13735 largest prime divisor` on n — which is
-  `last(prime_divisors(n))` — and `Z13745 n/largest` on the same n, which calls
-  `Z13735` again. Three ways into the same group on the same argument, and only
-  inlining would reveal that they compute the same thing. `Z11015 is leap year
-  (Julian calendar)` on 2100 never returned.
-- `Z14894 Eulerian number` is `A(n,k) = (n−k)A(n−1,k−1) + (k+1)A(n−1,k)`. Two
-  different subproblems per level: the textbook case for memoisation, and there
-  is none here.
+- **39 apply a function value.** `Z13318` and its siblings take a function and
+  call it. The interpreter can, because it has the policy; `call_primitive`
+  cannot, because `apply_primitive` does not know how to call anything. Every one
+  of these has a function computed at run time — a statically named one would
+  compile, and the corpus never writes one.
+- **17 pass a computed function to `map`, `filter`, `fold` or `zip`.** Same gap.
+- **4 unquote**, which needs an evaluator, and compiled code has none.
 
-Both are 2^depth or worse, and every one of those calls is *inside* the depth
-bound. So the generator refuses to compile a recursive function that reaches its
-own group more than once on any one path, and one that has no path to an answer
-avoiding its group at all.
+All three want the same thing: a dispatcher reachable from inside a compiled
+function. `compiled_by_zid` exists but is defined after everything it selects, so
+calling it from within would make the whole module one mutually recursive group —
+which is the shape that cannot be checked. Splitting into a module that needs no
+dispatch and one that does, layered so the second can call the first's
+dispatcher, is the way through; the partition is closed, because anything calling
+a function that needs dispatch needs it too.
 
-One more refusal is not about termination. `Z13318 apply`, and its three- and
-four-argument siblings, take a function *value* and call it. The interpreter can,
-because it has the policy; `call_primitive` cannot, because `apply_primitive` does
-not know how to call anything — so compiled code that reached one answered "no
-implementation for Z13318" while the interpreter answered correctly. Two paths
-giving different answers is the one thing this design must not do, so those are
-refused too.
+### The budget counts steps, not depth
 
-Together that is **105 functions**, cascading to leave **1,170** compiled.
+That was the deeper problem, and it took three separate hangs to see it. A
+compiled function used to take `fuel` and decrement it per level, which bounds
+the *depth* of a recursion and nothing else. The interpreter threads one counter
+through the whole evaluation, which bounds *total steps*. Anything that branches
+is exponential inside a depth bound and finite inside a step bound.
 
-That number is lower than it was before this was understood, and the difference
-is not a regression. Some of what used to be counted as compiled did not return.
+So a recursive compiled function now takes a budget and returns what is left of
+it:
 
-The real fix for the first two is a step budget rather than a depth budget — the thing the
-interpreter has, and the reason it survives all of these by reporting exhaustion.
-Threading one through compiled functions would let every one of these compile,
-at the cost of a compiled function's type no longer being
-`args -> eval_result value`.
+```fstar
+let rec compiled_Z28715_index_of_first_sub_list_start (fuel:nat) (depth:nat) (a0 a1:eval_result value)
+  : Tot (eval_result value & (remaining:nat{remaining <= fuel})) (decreases fuel) =
+  if fuel = 0 then (EErr EFuelExhausted, 0) else
+  if depth >= max_depth then (EErr EDepthExceeded, fuel) else
+  let next_fuel : nat = fuel - 1 in
+  let deeper : nat = depth + 1 in
+  let (spent_1, left_1) = compiled_Z12851_is_longer_list next_fuel deeper a1 a0 in
+  ...
+```
 
-The other half is the budget itself. Compiled fuel is a **depth** bound and a
-level is a stack frame in the extracted JavaScript, so it is the same quantity
-the interpreter bounds with `max_depth` — and it is now the same number, 900.
-At ten thousand, `Z11420 discard until end of first substring` answered with a
-JavaScript stack overflow, which is a crash rather than a limit; at 900 it
-reports fuel exhaustion, which a caller can read. A library must not crash its
-caller, and that rule applies to the compiled path exactly as it does to the
-interpreted one.
+The refinement is the whole termination argument: a callee cannot hand back more
+than it was given, so the next call starts from something no larger, and
+`fuel - 1` at the top makes it strictly smaller. F\* discharges it for all 1,370
+functions.
 
-Fuel is also threaded rather than restarted. A recursive function passes its own
-remaining fuel to any recursive callee, not only to one in its own group, so a
-chain spends one budget between them instead of one each; only a non-recursive
-caller starts a budget, and a non-recursive caller cannot loop.
+One counter is not enough, and trying it is how that was established. Every level
+costs at least one step, so a budget the stack can take is also a depth the stack
+can take — but a budget that small is a poor bound on *work*. At a threaded
+budget of 5,000 with no separate depth limit, **143 compiled calls answered with
+a JavaScript stack overflow**, which the sweep caught and named. Steps and
+nesting are different questions: fuel is threaded and bounds the total, `depth`
+is counted and bounds the nesting, and both are the interpreter's numbers —
+100,000 and `max_depth`.
+
+Two places cannot thread. Inside the function a `map`, `filter`, `fold` or `zip`
+applies, there is nowhere to carry the remainder, so each element gets a fresh
+budget and total work is elements × budget — bounded, and it was never the case
+that multiplied. And a call back into the caller's own group from inside such a
+lambda gets `next_fuel` rather than a fresh budget, because a fresh one does not
+decrease and F\* rightly refuses it.
+
+What this bought: the two refusals above stopped being necessary. `Z14894
+Eulerian number`, `Z14859 Delannoy number` and `Z13728 prime divisors` all
+compile now, and all report exhaustion rather than running for ever — which is
+what the interpreter does with them and therefore what agreement requires.
+**Compiled functions: 1,170 → 1,370.**
 
 The guard against it coming back is `scripts/compiled-sweep.js`, run from
 `test/compiled.test.js` in a child process with a deadline. It writes which call
