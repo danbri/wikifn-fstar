@@ -1684,6 +1684,56 @@ async function main() {
         });
       }
       if (failed) { dropped.push(...group); continue; }
+
+      // Two routes to the same subproblem is exponential here, and nothing
+      // downstream will notice.
+      //
+      // Z13728 prime divisors calls Z13735 largest prime divisor on n, which is
+      // last(prime_divisors(n)), and Z13745 n/largest on the same n, which
+      // calls Z13735 again. Three ways into the same group on the same
+      // argument, so the work triples per level. Compiled fuel bounds the
+      // depth, not the total, so every one of those calls is inside the budget
+      // and `Z11015 is leap year (Julian calendar)` on 2100 never returns.
+      //
+      // Common subexpression elimination cannot see it: the repeats are calls
+      // to different functions, and only inlining would reveal that they
+      // compute the same thing. So the function is left to the interpreter,
+      // whose fuel counts total steps and which therefore stops and says so.
+      //
+      // The signature looked for is two calls into the group with identical
+      // arguments. A divide-and-conquer makes two calls too, on different
+      // arguments, and is linear - it stays.
+      const repeated = rendered.filter((item) => {
+        const byArguments = new Map();
+        let found = false;
+        const walk = (node) => {
+          if (found) return;
+          if (node.kind === "call") {
+            if (members.has(node.zid)) {
+              const key = node.args.map(subtreeKey).join(" ");
+              const seen = byArguments.get(key);
+              // Two different ways into the group on the same argument. The
+              // same callee twice is common subexpression elimination's job
+              // and is already done above.
+              if (seen !== undefined && seen !== node.zid) { found = true; return; }
+              byArguments.set(key, node.zid);
+            }
+            node.args.forEach(walk);
+          } else if (node.kind === "record") {
+            node.fields.forEach(([, v]) => walk(v));
+          }
+        };
+        walk(emittedIndex.get(item.zid).tree);
+        return found;
+      });
+      if (repeated.length) {
+        for (const item of repeated) {
+          directRefusals.set(
+            item.zid, "reaches its own recursive group twice on the same argument");
+        }
+        dropped.push(...group);
+        continue;
+      }
       rendered.forEach((item, position) => {
         directLines.push(
           `(* ${item.zid} ${item.entry.label} | ${item.zid}@${item.entry.functionRevision}` +

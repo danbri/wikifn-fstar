@@ -1,6 +1,6 @@
 # The Wikifn Engine
 
-1,637 real Wikifunctions compositions compiled into F* functions, checked by F*, and
+1,586 real Wikifunctions compositions compiled into F* functions, checked by F*, and
 extracted to OCaml and then JavaScript — plus an interpreter over 3,893 of them, which is
 how the rest are reached and how the compiled ones are checked against something.
 
@@ -14,7 +14,7 @@ object:
 
 | file | contents |
 |---|---|
-| `src/fstar/Wikifn.Compiled.Direct.fst` | **1,369 compositions as F\* functions**, each a translation of a pinned `Z14K2` tree |
+| `src/fstar/Wikifn.Compiled.Direct.fst` | **1,586 compositions as F\* functions**, each a translation of a pinned `Z14K2` tree |
 | `src/fstar/Wikifn.Generated.Eval.PartNN.fst` | the same compositions as data, for the interpreter |
 | `src/fstar/Wikifn.Generated.Eval.fst` | dispatch only; it holds no bodies |
 | `build/fstar/fn/Wikifn.Fn.ZNNNN.fst` | the same bodies again, one module per function, for verification |
@@ -98,7 +98,7 @@ Measured with `make closure` (a fixpoint over the call graph, not a per-seed wal
 | | count |
 |---|---|
 | functions in the corpus | 4,970 |
-| **compiled into F\* functions, checked by F\*** | **1,637** |
+| **compiled into F\* functions, checked by F\*** | **1,586** |
 | carried as data for the interpreter | 3,893 |
 | skipped by the translator, with reasons recorded | 7 |
 
@@ -133,21 +133,21 @@ value this harness can read:
 | | count | was |
 |---|---|---|
 | testers considered | 10,287 | 10,281 |
-| pass | **2,326** | 1,414 |
-| fail | 190 | 111 |
-| error | 6,066 | 1,594 |
+| pass | **2,385** | 1,414 |
+| fail | 197 | 111 |
+| error | 6,000 | 1,594 |
 | skipped, with reasons | 1,705 | 7,165 |
 
 | | count | was |
 |---|---|---|
-| functions with at least one passing tester | 986 | 600 |
-| functions passing every tester that could be read | **742** | 493 |
+| functions with at least one passing tester | 1,021 | 600 |
+| functions passing every tester that could be read | **771** | 493 |
 
 A tester is only counted as passing when both its call and its expected value were
 readable. Everything else is skipped with a stated reason, never counted as a pass.
 
 Read the error column carefully. It quadrupled in the same change that raised passes from
-1,414 to 2,326, and that is not a regression — it is the same cases, differently
+1,414 to 2,385, and that is not a regression — it is the same cases, differently
 classified. The harness learned three things it could not read before, all of them about
 arguments rather than about the engine:
 
@@ -172,7 +172,7 @@ The largest remaining buckets are honest limits, not silence:
 - 767 reach `Z6820` Fetch Wikidata entities, which is a data fetch rather than a function
 - 292 reach `Z805` reify on a list or a pair, which it refuses because those carry no
   element type — the one real gap left in the value model
-- 190 disagree and are worth individual investigation. They are ordinary scalar
+- 197 disagree and are worth individual investigation. They are ordinary scalar
   disagreements — a string in, a boolean or a string out — not artefacts of the harness
 
 `make tester-report` groups all of it by cause rather than by message, as
@@ -470,8 +470,8 @@ else (let shared_1 = (compiled_Z28715_index_of_first_sub_list_start next_fuel (c
                  else (call_primitive 13578 [shared_1]))
 ```
 
-2^n becomes n. **53 of the 1,637 compiled functions** had a call computed twice
-like this.
+2^n becomes n. **53 of the compiled functions** had a call computed twice like
+this.
 
 Binding *at the conditional* is what makes it safe. The condition is evaluated on
 every path through it, so naming what it computes adds no evaluation; hoisting
@@ -482,6 +482,19 @@ This is the concrete answer to what extracting *function definitions* buys over
 extracting an interpreter. An interpreter cannot do this: it sees a tree, walks
 it, and walks the same subtree twice because that is what the tree says. A
 compiler sees the whole function at once.
+
+One shape it cannot fix is where the repeats are calls to *different* functions.
+`Z13728 prime divisors` calls `Z13735 largest prime divisor` on n — which is
+`last(prime_divisors(n))` — and `Z13745 n/largest` on the same n, which calls
+`Z13735` again. Three ways into the same group on the same argument, so the work
+triples per level, and only inlining would reveal that they compute the same
+thing. `Z11015 is leap year (Julian calendar)` on 2100 never returned.
+
+Those are left to the interpreter, whose fuel counts total steps and which
+therefore stops and says so. The generator refuses to compile a function that
+reaches its own recursive group twice on the same argument: **51 functions**, out
+of 1,637 that would otherwise compile. A divide-and-conquer makes two calls too,
+on different arguments, and is linear — it stays.
 
 The other half is the budget itself. Compiled fuel is a **depth** bound and a
 level is a stack frame in the extracted JavaScript, so it is the same quantity
