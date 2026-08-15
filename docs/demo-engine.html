@@ -249,6 +249,7 @@
 
         let functions = [];
         let examples = {};
+        let omitted = {};
         let nameTable = "{}";
         let selected = null;
         const runnableOnly = document.getElementById("engine-runnable-only");
@@ -286,6 +287,7 @@
             try {
               const sampled = await fetch("./generated/examples.json").then((r) => r.json());
               examples = sampled.examples || {};
+              omitted = sampled.omitted || {};
             } catch (error) {
               examples = {};
             }
@@ -435,8 +437,13 @@
             fill(sampled[0]);
             const note = document.createElement("p");
             note.className = "count";
+            // What was left out is said, not silently dropped. The file has a
+            // per-function byte budget because the page fetches it on arrival.
+            const left = omitted[entry.zid] || 0;
             note.textContent = sampled.length + " example" + (sampled.length === 1 ? "" : "s")
-              + " from this function's own Wikifunctions testers. Click to load one, or copy it.";
+              + " from this function's own Wikifunctions testers"
+              + (left ? " (" + left + " more not shown, to keep this page small)" : "")
+              + ". Click to load one, or copy it.";
             exampleEl.append(note);
             for (const sample of sampled) {
               const item = document.createElement("span");
