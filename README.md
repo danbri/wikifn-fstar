@@ -42,7 +42,7 @@ make site-stats
 
 `make fstar-check` expects `FSTAR=/path/to/fstar.exe`, `fstar.exe`/`fstar` on `PATH`, or an opam switch named `fstar`.
 
-`npm test` needs the local object cache, so run `make import-vendored-dump` after a fresh checkout. Six tests compare what this repo emits against the pinned original it was translated from, and they fail rather than skip when there is nothing to compare against. `.github/workflows/test.yml` runs the same two commands on every push and pull request.
+`npm test` needs the local object cache and the SQLite index, so run `make import-vendored-dump` and then `node ./bin/wikifn.js db build` after a fresh checkout. Six tests compare what this repo emits against the pinned original it was translated from, and they fail rather than skip when there is nothing to compare against. `.github/workflows/test.yml` runs those two commands before the suite on every push and pull request.
 
 `make site-stats` regenerates the counts on the homepage from the committed artifacts under `docs/generated/`. Every number on `docs/index.html` is generated - editing one by hand fails `test/site-stats.test.js`. `make docs` runs it first. The counts come from `closure-summary.json` (corpus size and closure), `functions.json` (translated, compiled, runnable), `tester-report.json` (what passes Wikifunctions' own testers), and `wikifn-compositions.json` (what was rendered back); refresh `closure-summary.json` with `make closure`, which needs the SQLite index.
 

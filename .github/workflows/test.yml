@@ -37,6 +37,13 @@ jobs:
       - name: Import the vendored Wikifunctions dump
         run: make import-vendored-dump
 
+      # And the derived index over it. Three of those six tests reach the
+      # testers through `db query`, not through the object cache, so importing
+      # the dump alone leaves them failing on a missing table. About 15
+      # seconds; `sqlite3` is already on the runner.
+      - name: Build the SQLite index
+        run: node ./bin/wikifn.js db build
+
       # No install step: the package has no dependencies, by policy.
       - name: Run the test suite
         run: npm test
