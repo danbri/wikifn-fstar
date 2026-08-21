@@ -25,6 +25,7 @@
     "fstar:eval-zobject": "node ./bin/wikifn.js fstar-eval-zobject '{\"Z1K1\":\"Z7\",\"Z7K1\":\"Z22294\",\"Z22294K1\":\"१२३\"}'",
     "fstar:call-browser": "make fstar-call-browser",
     "fstar:browser-demo": "make fstar-browser-demo",
+    "site-stats": "make site-stats",
     "doctor": "make doctor",
     "dump:import": "make import-vendored-dump",
     "dump:download": "make download-dump"

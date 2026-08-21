@@ -1,0 +1,48 @@
+name: Tests
+
+# The site deploys on every push to main and the tests did not run at all, so a
+# regression reached the published page before it reached anyone's attention.
+# This is that missing half.
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # The pinned object cache. Six tests compare what we emit against the
+      # pinned original it was translated from, and without the cache there is
+      # nothing to compare against - they fail rather than skip, which is the
+      # right behaviour for a correctness check and the reason this step is not
+      # optional. The dump is vendored in the repository, so this reads no
+      # Wikimedia server; `bzip2` and `md5sum` are all it needs beyond Node.
+      - name: Import the vendored Wikifunctions dump
+        run: make import-vendored-dump
+
+      # No install step: the package has no dependencies, by policy.
+      - name: Run the test suite
+        run: npm test
+
+# Not run here, and deliberately: `make fstar-check` needs F* and a pinned Z3
+# and takes minutes even warm, and `make fstar-engine` needs an OCaml switch
+# and js_of_ocaml. What those produce is committed under docs/generated/ and
+# src/fstar/, and the tests above read it. Verifying that the committed
+# artifacts still rebuild from source belongs in a separate, slower job.

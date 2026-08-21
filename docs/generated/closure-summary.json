@@ -1,0 +1,20 @@
+{
+  "generated": "scripts/analyze-closure.js",
+  "primitiveSet": "engine",
+  "primitiveCount": 68,
+  "corpus": {
+    "functions": 4970,
+    "implementations": 8529,
+    "compositionImplementations": 4981,
+    "callEdges": 17930,
+    "implsWithDynamicCalls": 31,
+    "authoredCompositions": 3
+  },
+  "counts": {
+    "functionsAnalyzed": 4970,
+    "closedWithoutRecursion": 1076,
+    "closedNeedingRecursion": 1374,
+    "closedTotal": 2450,
+    "open": 2520
+  }
+}

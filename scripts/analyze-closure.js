@@ -19,7 +19,12 @@
 // the call graph rather than a per-seed tree walk.
 //
 //   node scripts/analyze-closure.js [--set kernel|kernel+list|toy] [--json]
-//                                   [--out FILE] [--db PATH]
+//                                   [--out FILE] [--summary-out FILE] [--db PATH]
+//
+// `--out` writes the whole answer, which names every closed function and is
+// large. `--summary-out` writes only the counts. The summary is what the site
+// quotes, and it is committed, so the homepage can be regenerated from a clean
+// checkout without the SQLite index this script needs.
 
 import { execFile } from "node:child_process";
 import { writeFile } from "node:fs/promises";
@@ -285,6 +290,7 @@ async function main() {
   const setName = valueOf(args, "--set") ?? "kernel";
   const dbPath = valueOf(args, "--db");
   const outFile = valueOf(args, "--out");
+  const summaryFile = valueOf(args, "--summary-out");
   const asJson = args.includes("--json");
   const primitiveList = PRIMITIVE_SETS[setName];
   if (!primitiveList) {
@@ -334,6 +340,17 @@ async function main() {
   };
 
   if (outFile) await writeFile(outFile, JSON.stringify(output, null, 2), "utf8");
+  if (summaryFile) {
+    // No elapsedMs: a summary that changes on every run is a summary that
+    // cannot be committed and diffed.
+    await writeFile(summaryFile, `${JSON.stringify({
+      generated: "scripts/analyze-closure.js",
+      primitiveSet: output.primitiveSet,
+      primitiveCount: output.primitives.length,
+      corpus: output.corpus,
+      counts: output.counts
+    }, null, 2)}\n`, "utf8");
+  }
   if (asJson) {
     console.log(JSON.stringify(output, null, 2));
     return;

@@ -1,4 +1,4 @@
-.PHONY: test example fstar-generate-eval fstar-engine engine-testers tester-report docs closure fstar-check fstar-verify-functions fstar-ocaml fstar-generate-compositions fstar-js-demo fstar-call-js fstar-call-browser fstar-browser-demo setup-fstar doctor verify import-vendored-dump download-dump
+.PHONY: test example site-stats fstar-generate-eval fstar-engine engine-testers tester-report docs closure fstar-check fstar-verify-functions fstar-ocaml fstar-generate-compositions fstar-js-demo fstar-call-js fstar-call-browser fstar-browser-demo setup-fstar doctor verify import-vendored-dump download-dump
 
 test:
 	node --test
@@ -38,11 +38,19 @@ tester-report:
 
 # GitHub Pages serves .md as text/plain, so every documentation link from a demo
 # page dropped the reader into raw Markdown. These are the rendered pages.
-docs:
+docs: site-stats
 	node scripts/render-docs.js
 
+# The homepage's counts, put back under the generator that measures them. Reads
+# only committed artifacts, so it needs neither the dump nor F*; run it after
+# anything that regenerates one of them. test/site-stats.test.js fails if the
+# page and the artifacts disagree.
+site-stats:
+	node scripts/render-site-stats.js
+
 closure:
-	node scripts/analyze-closure.js --set engine
+	node scripts/analyze-closure.js --set engine \
+	  --summary-out docs/generated/closure-summary.json
 
 fstar-js-demo:
 	./scripts/build-fstar-js-demo.sh

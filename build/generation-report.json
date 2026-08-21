@@ -1,0 +1,61 @@
+{
+  "candidates": 3900,
+  "emitted": 3893,
+  "skipped": 7,
+  "skippedByReason": [
+    {
+      "reason": "Z34644 call is missing Z34644K2",
+      "count": 2
+    },
+    {
+      "reason": "unreadable argument declaration",
+      "count": 1
+    },
+    {
+      "reason": "unknown argument order for Z21053",
+      "count": 1
+    },
+    {
+      "reason": "body renders to 166813 bytes, over the 65536 F* can check",
+      "count": 1
+    },
+    {
+      "reason": "Z24766 call is missing Z24766K1",
+      "count": 1
+    },
+    {
+      "reason": "body renders to 94602 bytes, over the 65536 F* can check",
+      "count": 1
+    }
+  ],
+  "skippedFunctions": [
+    {
+      "zid": "Z13284",
+      "reason": "unreadable argument declaration"
+    },
+    {
+      "zid": "Z21070",
+      "reason": "unknown argument order for Z21053"
+    },
+    {
+      "zid": "Z24460",
+      "reason": "body renders to 166813 bytes, over the 65536 F* can check"
+    },
+    {
+      "zid": "Z34867",
+      "reason": "Z34644 call is missing Z34644K2"
+    },
+    {
+      "zid": "Z34938",
+      "reason": "Z24766 call is missing Z24766K1"
+    },
+    {
+      "zid": "Z37342",
+      "reason": "Z34644 call is missing Z34644K2"
+    },
+    {
+      "zid": "Z37473",
+      "reason": "body renders to 94602 bytes, over the 65536 F* can check"
+    }
+  ]
+}
